@@ -7,7 +7,6 @@
 #include "CircularSpatial3UI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/assetvk/command/circular3/Circular3LockCommand.hpp>
-#include <yq/assetvk/command/circular3/Circular3OriginCommand.hpp>
 #include <yq/assetvk/command/circular3/Circular3PeriodCommand.hpp>
 #include <yq/assetvk/command/circular3/Circular3RadiusCommand.hpp>
 #include <yq/assetvk/spatial/CircularSpatial3.hpp>
@@ -24,10 +23,8 @@ namespace yq::tachyon {
         w.edits<CircularSpatial³>();
         w.field("Angle", &CircularSpatial³UI::angle);
         w.field("Locked", &CircularSpatial³UI::locked);
-        w.field("Origin", &CircularSpatial³UI::origin);
         w.field("Period", &CircularSpatial³UI::period);
         w.field("Radius", &CircularSpatial³UI::radius);
-        w.field("Plane", &CircularSpatial³UI::plane);
     }
     
     CircularSpatial³UI::CircularSpatial³UI(UIFlags flags)
@@ -66,17 +63,6 @@ namespace yq::tachyon {
         }
     }
     
-    void    CircularSpatial³UI::origin()
-    {
-        const CircularSpatial³Snap*     sn  = snap();
-        if(!sn)
-            return;
-            
-        Vector3D    v   = sn->origin;
-        if(ImGui::Input("##Origin", v)){
-            send(new Circular³OriginCommand({.target=sn->self},v));
-        }
-    }
     
     void    CircularSpatial³UI::period()
     {
@@ -100,13 +86,6 @@ namespace yq::tachyon {
         if(ImGui::InputDouble("##Radius", &r)){
             send(new Circular³RadiusCommand({.target=sn->self}, r));
         }
-    }
-    
-    void    CircularSpatial³UI::plane()
-    {
-        const CircularSpatial³Snap*     sn  = snap();
-        if(!sn)
-            return;
     }
 
     const CircularSpatial³Snap*   CircularSpatial³UI::snap() const

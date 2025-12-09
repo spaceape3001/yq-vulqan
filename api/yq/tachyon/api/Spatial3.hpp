@@ -9,6 +9,7 @@
 #include <yq/tachyon/api/Spatial.hpp>
 #include <yq/tachyon/typedef/spatial3.hpp>
 #include <yq/typedef/quaternion3.hpp>
+#include <yq/typedef/tensor33.hpp>
 #include <yq/typedef/tensor44.hpp>
 #include <yq/typedef/vector3.hpp>
 
@@ -48,6 +49,8 @@ namespace yq::tachyon {
         void        snap(Spatial³Snap&) const;
         void        snap(Spatial³Snap&, const Vector3D& pos, const Quaternion3D& ori) const;
         void        snap(Spatial³Snap&, const Vector3D& pos, const Quaternion3D& ori, const Vector3D& scale) const;
+        void        snap(Spatial³Snap&, const Vector3D& pos, const Tensor33D& ori) const;
+        void        snap(Spatial³Snap&, const Vector3D& pos, const Tensor33D& ori, const Vector3D& scale) const;
     };
 }
 

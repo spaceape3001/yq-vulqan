@@ -50,11 +50,10 @@ namespace yq::tachyon {
         Spatial::snap(sn);
     }
 
-    void        Spatial³::snap(Spatial³Snap&sn, const Vector3D& pos, const Quaternion3D& ori) const
+    void        Spatial³::snap(Spatial³Snap&sn, const Vector3D& pos, const Tensor33D& T) const
     {
         Spatial::snap(sn);
 
-        Tensor33D   T    = tensor(ori);
         Tensor33D   T2   = inverse(T);
         Vector3D    pos2 = T2 * pos;
         
@@ -71,31 +70,22 @@ namespace yq::tachyon {
             T2.zx, T2.zy, T2.zz, -pos2.z,
             0., 0., 0., 1.
         );
+    }
+    
+    void        Spatial³::snap(Spatial³Snap&sn, const Vector3D& pos, const Tensor33D& T, const Vector3D& scale) const
+    {
+        Spatial³::snap(sn, pos, T*diagonal(scale));
+    }
+
+    void        Spatial³::snap(Spatial³Snap&sn, const Vector3D& pos, const Quaternion3D& ori) const
+    {
+        Spatial³::snap(sn, pos, tensor(ori));
     }
     
     void        Spatial³::snap(Spatial³Snap&sn, const Vector3D& pos, const Quaternion3D& ori, const Vector3D& scale) const
     {
-        Spatial::snap(sn);
-
-        Tensor33D   T    = tensor(ori) * diagonal(scale);
-        Tensor33D   T2   = inverse(T);
-        Vector3D    pos2 = T2 * pos;
-        
-        sn.local2domain = Tensor44D(
-            T.xx, T.xy, T.xz, pos.x,
-            T.yx, T.yy, T.yz, pos.y,
-            T.zx, T.zy, T.zz, pos.z,
-            0., 0., 0., 1.
-        );
-        
-        sn.domain2local = Tensor44D(
-            T2.xx, T2.xy, T2.xz, -pos2.x,
-            T2.yx, T2.yy, T2.yz, -pos2.y,
-            T2.zx, T2.zy, T2.zz, -pos2.z,
-            0., 0., 0., 1.
-        );
+        Spatial³::snap(sn, pos, tensor(ori)*diagonal(scale));
     }
-    
 
     ////////////////////////////////////////////////////////////////////////////
 

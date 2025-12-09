@@ -7,7 +7,9 @@
 #pragma once
 
 #include <yq/tachyon/api/Spatial3.hpp>
-#include <yq/tachyon/interface/IPosition3.hpp>
+#include <yq/tachyon/aspect/AOrientation3.hpp>
+#include <yq/tachyon/aspect/APosition3.hpp>
+#include <yq/tachyon/aspect/AScale3.hpp>
 #include <yq/tensor/Tensor33.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
@@ -18,24 +20,24 @@ namespace yq::tachyon {
     class Circular³LockCommand;
     class Circular³PeriodCommand;
     class Circular³RadiusCommand;
-    class Circular³OriginCommand;
     
     #ifdef NAN
         #undef NAN
     #endif
     
-    class CircularSpatial³ : public Spatial³, public IPosition³ {
+    class CircularSpatial³ : public Spatial³, public APosition³, public AScale³, public AOrientation³ {
         YQ_TACHYON_SNAP(CircularSpatial³Snap)
         YQ_TACHYON_DECLARE(CircularSpatial³, Spatial³)
     public:
     
+        // note, revision, position is now the origin....
+        // and orientation covers the rotor
+    
         struct Param : public Spatial³::Param {
             Radian          angle0      = 0._rad;   //!< Starting angle
             bool            locked      = false;
-            Vector3D        origin      = ZERO;
             Second          period      = 10._s;
             double          radius      = 5.;
-            Quaternion3D    rotor       = IDENTITY;
         };
     
         CircularSpatial³();
@@ -44,8 +46,6 @@ namespace yq::tachyon {
         
         static void init_meta();
         
-        virtual bool position(disabled_k) const { return false; }
-        virtual bool position(settable_k) const { return false; }
         virtual Vector3D position() const;
 
     protected:
@@ -53,8 +53,10 @@ namespace yq::tachyon {
     
     private:
     
+        using Spatial³::mark;
+        using Spatial³::send;
+    
         void    on_lock_command(const Circular³LockCommand&);
-        void    on_origin_command(const Circular³OriginCommand&);
         void    on_period_command(const Circular³PeriodCommand&);
         void    on_radius_command(const Circular³RadiusCommand&);
     
@@ -63,12 +65,11 @@ namespace yq::tachyon {
         Radian              m_angle0;
         Radian              m_angle;
         bool                m_locked;   // TODO: replace with gimbal mode (maybe delegate time???)
-        Vector3D            m_origin;
         Second              m_period;
-        Vector3D            m_position  = NAN;
         double              m_radius;
-        Quaternion3D        m_rotor     = IDENTITY;
-        Tensor33D           m_R         = IDENTITY;
+
+        // computed.... 
+        Vector3D            m_local     = NAN;
     };
 }
 

@@ -25,10 +25,8 @@ namespace yq::tachyon {
         
         void    angle();
         void    locked();
-        void    origin();
         void    period();
         void    radius();
-        void    plane();
         
         static void init_meta();
         

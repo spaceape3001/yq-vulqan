@@ -9,11 +9,9 @@
 #include <yq/math/trigonometry.hpp>
 #include <yq/math/utility.hpp>
 #include <yq/assetvk/command/circular3/Circular3LockCommand.hpp>
-#include <yq/assetvk/command/circular3/Circular3OriginCommand.hpp>
 #include <yq/assetvk/command/circular3/Circular3PeriodCommand.hpp>
 #include <yq/assetvk/command/circular3/Circular3RadiusCommand.hpp>
 #include <yq/assetvk/event/circular3/Circular3LockEvent.hpp>
-#include <yq/assetvk/event/circular3/Circular3OriginEvent.hpp>
 #include <yq/assetvk/event/circular3/Circular3PeriodEvent.hpp>
 #include <yq/assetvk/event/circular3/Circular3RadiusEvent.hpp>
 #include <yq/tachyon/logging.hpp>
@@ -23,6 +21,9 @@
 #include <yq/trait/numbers.hpp>
 #include <yq/vector/Quaternion3.hpp>
 
+#include <yq/tachyon/aspect/AOrientation3Writer.hxx>
+#include <yq/tachyon/aspect/APosition3Writer.hxx>
+#include <yq/tachyon/aspect/AScale3Writer.hxx>
 #include <yq/tensor/Tensor33.hxx>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/vector/Vector3.hxx>
@@ -33,16 +34,16 @@ namespace yq::tachyon {
     void CircularSpatial³::init_meta()
     {
         auto w = writer<CircularSpatial³>();
-        w.property("origin", &CircularSpatial³::m_origin).tag(kTag_Save);
-        w.property("rotor", &CircularSpatial³::m_rotor).tag(kTag_Save);
-        w.property("radius", &CircularSpatial³::m_radius).tag(kTag_Save);
-        w.property("period", &CircularSpatial³::m_period).tag(kTag_Save);
         w.property("angle0", &CircularSpatial³::m_angle0).tag(kTag_Save);
+        w.property("locked", &CircularSpatial³::m_locked).tag(kTag_Save);
+        w.property("period", &CircularSpatial³::m_period).tag(kTag_Save);
+        w.property("radius", &CircularSpatial³::m_radius).tag(kTag_Save);
         w.slot(&CircularSpatial³::on_lock_command);
-        w.slot(&CircularSpatial³::on_origin_command);
         w.slot(&CircularSpatial³::on_period_command);
         w.slot(&CircularSpatial³::on_radius_command);
-        w.interface<IPosition³>();
+        APosition³::init_meta(w);
+        AScale³::init_meta(w);
+        AOrientation³::init_meta(w);
     }
 
 
@@ -53,10 +54,8 @@ namespace yq::tachyon {
     CircularSpatial³::CircularSpatial³(const Param& p) : Spatial³(p), 
         m_angle0(p.angle0),
         m_locked(p.locked),
-        m_origin(p.origin), 
         m_period(p.period),
-        m_radius(p.radius),
-        m_rotor(p.rotor)
+        m_radius(p.radius)
     {
     }
     
@@ -70,15 +69,6 @@ namespace yq::tachyon {
             return;
         m_locked    = cmd.lock();
         send(new Circular³LockEvent({}, m_locked));
-        mark();
-    }
-
-    void    CircularSpatial³::on_origin_command(const Circular³OriginCommand& cmd)
-    {
-        if(cmd.target() != id())
-            return;
-        m_origin    = cmd.origin();
-        send(new Circular³OriginEvent({}, m_origin));
         mark();
     }
 
@@ -107,44 +97,19 @@ namespace yq::tachyon {
     
     void CircularSpatial³::snap(CircularSpatial³Snap& sn) const
     {
-        Spatial³::snap(sn);
+        Spatial³::snap(sn, m_position + m_local, m_locked ? m_orientation : Quaternion3D(IDENTITY), m_scale);
         
-        sn.origin   = m_origin;
         sn.period   = m_period;
         sn.radius   = m_radius;
         sn.angle    = m_angle;
         sn.angle0   = m_angle0;
         sn.locked   = m_locked;
-        sn.rotor    = m_rotor;
-        
-        sn.local2domain = Tensor44D(
-            m_R.xx, m_R.xy, m_R.xz, m_position.x,
-            m_R.yx, m_R.yy, m_R.yz, m_position.y,
-            m_R.zx, m_R.zy, m_R.zz, m_position.z,
-            0., 0., 0., 1.
-        );
-        
-        Vector3D    pInv    = m_position * m_R;
-        
-        sn.domain2local = Tensor44D(
-            m_R.xx, m_R.yx, m_R.zx, -pInv.x,
-            m_R.xy, m_R.yy, m_R.zy, -pInv.y,
-            m_R.xz, m_R.yz, m_R.zz, -pInv.z,
-            0., 0., 0., 1.
-        );
     }
 
     Execution CircularSpatial³::tick(const Context& u)
     {
-        m_angle = wrap<Radian>(m_angle0 + Radian(two_pi) * u.time / m_period, 0., two_pi);
-        if(m_locked){
-            Quaternion3D    Q(CCW, Z, m_angle);
-            m_R = tensor(m_rotor * Q);
-        } else {
-            m_R = tensor(m_rotor);
-        }
-        
-        m_position  = m_origin + m_rotor*Vector3D(m_radius*cos(m_angle), m_radius*sin(m_angle), 0.);
+        m_angle  = wrap<Radian>(m_angle0 + Radian(two_pi) * u.time / m_period, 0., two_pi);
+        m_local  = m_orientation * Vector3D(m_radius*cos(m_angle), m_radius*sin(m_angle), 0.);
         mark();
         return Spatial³::tick(u);
     }

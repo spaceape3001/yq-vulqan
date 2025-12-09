@@ -9,6 +9,7 @@
 #include <yq/math/trigonometry.hpp>
 #include <yq/math/utility.hpp>
 #include <yq/assetvk/command/circular3/Circular3LockCommand.hpp>
+#include <yq/assetvk/command/circular3/Circular3OriginCommand.hpp>
 #include <yq/assetvk/command/circular3/Circular3PeriodCommand.hpp>
 #include <yq/assetvk/command/circular3/Circular3RadiusCommand.hpp>
 #include <yq/tachyon/logging.hpp>
@@ -34,6 +35,7 @@ namespace yq::tachyon {
         w.property("period", &CircularSpatial³::m_period).tag(kTag_Save);
         w.property("angle0", &CircularSpatial³::m_angle0).tag(kTag_Save);
         w.slot(&CircularSpatial³::on_lock_command);
+        w.slot(&CircularSpatial³::on_origin_command);
         w.slot(&CircularSpatial³::on_period_command);
         w.slot(&CircularSpatial³::on_radius_command);
         w.interface<IPosition³>();
@@ -63,6 +65,14 @@ namespace yq::tachyon {
         if(cmd.target() != id())
             return;
         m_locked    = cmd.lock();
+        mark();
+    }
+
+    void    CircularSpatial³::on_origin_command(const Circular³OriginCommand& cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_origin    = cmd.origin();
         mark();
     }
 

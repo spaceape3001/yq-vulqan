@@ -18,6 +18,7 @@ namespace yq::tachyon {
     class Circular³LockCommand;
     class Circular³PeriodCommand;
     class Circular³RadiusCommand;
+    class Circular³OriginCommand;
     
     #ifdef NAN
         #undef NAN
@@ -53,6 +54,7 @@ namespace yq::tachyon {
     private:
     
         void    on_lock_command(const Circular³LockCommand&);
+        void    on_origin_command(const Circular³OriginCommand&);
         void    on_period_command(const Circular³PeriodCommand&);
         void    on_radius_command(const Circular³RadiusCommand&);
     

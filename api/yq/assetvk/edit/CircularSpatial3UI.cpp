@@ -7,6 +7,7 @@
 #include "CircularSpatial3UI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/assetvk/command/circular3/Circular3LockCommand.hpp>
+#include <yq/assetvk/command/circular3/Circular3OriginCommand.hpp>
 #include <yq/assetvk/command/circular3/Circular3PeriodCommand.hpp>
 #include <yq/assetvk/command/circular3/Circular3RadiusCommand.hpp>
 #include <yq/assetvk/spatial/CircularSpatial3.hpp>
@@ -47,8 +48,8 @@ namespace yq::tachyon {
         const CircularSpatial³Snap*     sn  = snap();
         if(!sn)
             return;
-        double  d   = Degree(sn->angle).value;
-        if(ImGui::InputDouble("##Angle", &d)){
+        Degree  d   = sn->angle;
+        if(ImGui::Input("##Angle", d)){
             // change it
         }
     }
@@ -71,7 +72,10 @@ namespace yq::tachyon {
         if(!sn)
             return;
             
-        //Vector3D    v   = sn->origin;
+        Vector3D    v   = sn->origin;
+        if(ImGui::Input("##Origin", v)){
+            send(new Circular³OriginCommand({.target=sn->self},v));
+        }
     }
     
     void    CircularSpatial³UI::period()
@@ -80,8 +84,8 @@ namespace yq::tachyon {
         if(!sn)
             return;
             
-        double s    = sn->period.value;
-        if(ImGui::InputDouble("##Period", &s)){
+        unit::Second s    = sn->period;
+        if(ImGui::Input("##Period", s)){
             send(new Circular³PeriodCommand({.target=sn->self}, { s }));
         }
     }

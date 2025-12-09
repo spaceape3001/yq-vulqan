@@ -36,11 +36,6 @@ namespace yq::tachyon {
     public:
     
         struct Param : public Light::Param {
-            // setting *ANY* of these creates a simple spatial (3D)
-        
-            Vector3D        position        = NAN;
-            Quaternion3D    orientation     = NAN;
-            Vector3D        scale           = NAN;
         };
     
         static void init_meta();

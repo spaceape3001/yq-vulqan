@@ -13,6 +13,7 @@
 #include <yq/assetvk/rendered/Quadrilateral3.hpp>
 #include <yq/assetvk/rendered/SkyBox3.hpp>
 #include <yq/assetvk/rendered/GradTriangle3.hpp>
+#include <yq/assetvk/spatial/SimpleSpatial3.hpp>
 
 #include <yq/color/colors.hpp>
 #include <yq/shape/AxBox2.hpp>
@@ -27,6 +28,7 @@
 #include <yq/vector/Vector3.hxx>
 #include <yq/typedef/string_initlists.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
+#include <yq/tachyon/api/N.hxx>
 
 using namespace yq;
 using namespace yq::tachyon;
@@ -121,7 +123,7 @@ Execution  CameraScene::setup(const Context&ctx)
         );
         
         //  Bottom box (so +Z)
-        ImageQuad³* iq  = nullptr;
+        Ref<ImageQuad³> iq  = nullptr;
         
         #if 0
         iq = create_child<ImageQuad³>(
@@ -193,40 +195,41 @@ Execution  CameraScene::setup(const Context&ctx)
             AxBox2D(Vector2D(-1, -1), Vector2D(1, 1)), 
             "sdk/camera/swirl.png"
         );
-        bq->make_simple_spatial(
-            { 14., 14., 0. }
-        );
+        bq->create_spatial<SimpleSpatial³>(Vector3D( 14., 14., 0. ));
 
-        Triangle³*   tri    = create_child<GradTriangle³>(TriData);
-        tri->make_simple_spatial(ZERO, IDENTITY, Vector3D(ALL, 0.5));
+        Ref<Triangle³>   tri    = create_child<GradTriangle³>(TriData);
+        tri->create_spatial<SimpleSpatial³>(Vector3D(ZERO), Quaternion3D(IDENTITY), Vector3D(ALL, 0.5));
 
 
         GradTetrahedron³::Param t4p;
 
+        SimpleSpatial³::Param   sp;
+
         // north BLUE
-        Rendered³*    dir     = create_child<GradTetrahedron³>(NorthData, t4p);
-        dir -> make_simple_spatial({15., 0., 0. });
+        Ref<Rendered³>    dir     = create_child<GradTetrahedron³>(NorthData, t4p);
+        dir -> create_spatial<SimpleSpatial³>(Vector3D(15., 0., 0.));
 
         // south YELLOW
+        
         dir     = create_child<GradTetrahedron³>(SouthData, t4p);
-        dir -> make_simple_spatial({-15., 0., 0. });
+        dir -> create_spatial<SimpleSpatial³>(Vector3D(-15., 0., 0.));
             
         dir     = create_child<GradTetrahedron³>(EastData, t4p);
-        dir -> make_simple_spatial({0., 15., 0. });
+        dir -> create_spatial<SimpleSpatial³>(Vector3D(0., 15., 0.));
 
         dir     = create_child<GradTetrahedron³>(WestData, t4p);
-        dir -> make_simple_spatial({0., -15., 0. });
+        dir -> create_spatial<SimpleSpatial³>(Vector3D(0., -15., 0.));
         
         dir     = create_child<GradTetrahedron³>(TopData, t4p);
-        dir -> make_simple_spatial({0., 0., -15. });
+        dir -> create_spatial<SimpleSpatial³>(Vector3D(0., 0., -15.));
         
         // MAGENTA
         dir     = create_child<GradTetrahedron³>(BottomData, t4p);
-        dir -> make_simple_spatial({0., 0., 15. });
+        dir -> create_spatial<SimpleSpatial³>(Vector3D(0., 0., 15.));
         
-        Quadrilateral³* quad = create_child<Quadrilateral³>(QuadData);
-        quad->make_simple_spatial(
-            { 0.5, 0.5, 0. },
+        Ref<Quadrilateral³> quad = create_child<Quadrilateral³>(QuadData);
+        quad -> create_spatial<SimpleSpatial³>(
+            Vector3D(0.5, 0.5, 0.),
             Quaternion3D(CCW, Z, (Radian) 45._deg ),
             Vector3D(ALL, 0.5)
         );

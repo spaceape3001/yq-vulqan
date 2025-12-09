@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/spatial/SimpleSpatial3.hpp>
+#include "SimpleSpatial3.hpp"
 #include <yq/tachyon/api/Spatial3MetaWriter.hpp>
 #include <yq/tachyon/aspect/AOrientation3Writer.hxx>
 #include <yq/tachyon/aspect/APosition3Writer.hxx>
@@ -20,16 +20,17 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::SimpleSpatial³)
 
 namespace yq::tachyon {
-    SimpleSpatial³::SimpleSpatial³(const Param&p) : Spatial³(p)
+    SimpleSpatial³::SimpleSpatial³(const Vector3D& pos, const Quaternion3D& ori, const Vector3D& scale, const Param& p) :
+        Spatial³(p)
     {
-        if(!is_nan(p.position))
-            m_position    = p.position;
-        if(!is_nan(p.orientation))
-            m_orientation = p.orientation;
-        if(!is_nan(p.scale))
-            m_scale       = p.scale;
+        if(!is_nan(pos))
+            m_position    = pos;
+        if(!is_nan(ori))
+            m_orientation = ori;
+        if(!is_nan(scale))
+            m_scale       = scale;
     }
-    
+
     SimpleSpatial³::~SimpleSpatial³()
     {
     }    

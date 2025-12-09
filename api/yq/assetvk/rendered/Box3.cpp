@@ -78,13 +78,6 @@ namespace yq::tachyon {
         w.property("z_tne", &Box³::z_tne);
     }
 
-    Box³::Param    Box³::set_position(const AxBox3D& bx, const Param& p)
-    {
-        Param ret   = p;
-        ret.position  = bx.center();
-        return ret;
-    }
-    
     Box³::Box³(const Size3D& sz, const Param& p) : Shape³(p)
     {
         m_size  = sz;
@@ -93,10 +86,6 @@ namespace yq::tachyon {
             v.color = { 1., 1., 1., 1. };
     }
 
-    Box³::Box³(const AxBox3D& bx, const Param& p) : Box³(bx.size(), set_position(bx, p))
-    {
-    }
-    
     Box³::~Box³()
     {
     }

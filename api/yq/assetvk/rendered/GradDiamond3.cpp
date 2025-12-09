@@ -45,10 +45,6 @@ namespace yq::tachyon {
     {
     }
     
-    GradDiamond³::GradDiamond³(const AxBox3D& bx, const Param& p) : Diamond³(bx, p)
-    {
-    }
-    
     GradDiamond³::~GradDiamond³()
     {
     }

@@ -33,21 +33,6 @@ namespace yq::tachyon {
     public:
 
         virtual uint8_t dimensions(count_k) const override final { return 3; }
-
-        struct SimpleParam {
-            Vector3D        position        = NAN;
-            Quaternion3D    orientation     = NAN;
-            Vector3D        scale           = NAN;
-        };
-    
-
-        //! Creates/sets a position (NOTE NOT THREAD SAFE!)
-        //! Returns empty if one was not made (ie, we're not a tachyon)
-        Spatial³ID    make_simple_spatial(
-            const Vector3D& position,
-            const Quaternion3D& orientation=IDENTITY,
-            const Vector3D& scale=ONE
-        );
     
         template <typename C>
         static void     init_meta(TachyonMeta::Writer<C>&);

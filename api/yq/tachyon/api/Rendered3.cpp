@@ -29,9 +29,6 @@ namespace yq::tachyon {
 
     Rendered³::Rendered³(const Param&p) : Rendered(p), m_camera(p.camera)
     {
-        if(!(is_nan(p.position) && is_nan(p.orientation) && is_nan(p.scale))){
-            make_simple_spatial(p.position, p.orientation, p.scale);
-        }
     }
     
     Rendered³::~Rendered³()   = default;

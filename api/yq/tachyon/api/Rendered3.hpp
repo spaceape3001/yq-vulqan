@@ -45,9 +45,6 @@ namespace yq::tachyon {
             
             // setting *ANY* of these creates a simple spatial (3D)
         
-            Vector3D        position        = NAN;
-            Quaternion3D    orientation     = NAN;
-            Vector3D        scale           = NAN;
             Camera³ID       camera;
         };
         

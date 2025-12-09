@@ -18,7 +18,6 @@ namespace yq::tachyon {
         
         GradBox³(const Param& p={});
         GradBox³(const Size3D&sz, const Param& p={});
-        GradBox³(const AxBox3D&, const Param& p={});
         ~GradBox³();
 
         using MyVertices::vertices;

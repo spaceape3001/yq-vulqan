@@ -38,6 +38,7 @@
 #include <yq/assetvk/scene/BackgroundScene.hpp>
 #include <yq/assetvk/scene/ForegroundScene.hpp>
 #include <yq/assetvk/scene/SimpleScene.hpp>
+#include <yq/assetvk/spatial/SimpleSpatial3.hpp>
 #include <yq/assetvk/tweak/OriginCameraTweak.hpp>
 #include <yq/assetvk/ui/UIFrameMetrics.hpp>
 #include <yq/assetvk/ui/UIBuildableMetaList.hpp>
@@ -99,7 +100,6 @@
 
 #include <yq/tachyon/request/viewer/ViewerScreenshotRequest.hpp>
 
-#include <yq/tachyon/spatial/SimpleSpatial3.hpp>
 
 
 #include <yq/tachyon/ui/UIMenuBar.hpp>
@@ -122,6 +122,7 @@
 #include <iostream>
 
 #include <yq/tachyon/api/Tachyon.hxx>
+#include <yq/tachyon/api/N.hxx>
 #include <yq/tachyon/errors.hpp>
 
 YQ_TACHYON_IMPLEMENT(SceneEditor)
@@ -841,9 +842,9 @@ void    SceneEditor::_default()
         SpaceCamera::Param p;
         p.near      = 0.1;
         p.far       = 60.;
-        p.position  = ZERO;
         
-        Camera* cam     = create_on<SpaceCamera>(AUX, p);
+        Camera³* cam     = create_on<SpaceCamera>(AUX, p);
+        cam->create_spatial<SimpleSpatial³>();
         cam->set_name("SceneEditor Space Camera");
         m_camera.space  = *cam;
     }

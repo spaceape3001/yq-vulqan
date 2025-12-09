@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SimpleSpatial3UI.hpp"
+#include <yq/assetvk/spatial/SimpleSpatial3.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
-#include <yq/tachyon/spatial/SimpleSpatial3.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PPosition3.hpp>
 

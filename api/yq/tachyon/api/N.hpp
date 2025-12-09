@@ -40,6 +40,14 @@ namespace yq::tachyon {
 
         template <typename C>
         static void     init_meta(TachyonMeta::Writer<C>&);
+        
+        //! Creates a "child" spatial and sets it as our spatial
+        template <SomeSpatial T, typename ... Args>
+        T*          create_spatial(Args&&...);
+
+        //! Creates a "child" spatial and sets it as our spatial
+        template <SomeSpatial T=Spatial>
+        T*          create_spatial(const typename T::MyMeta&);        
 
     protected:
         И();

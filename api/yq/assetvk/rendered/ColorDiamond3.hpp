@@ -26,7 +26,6 @@ namespace yq::tachyon {
         
         ColorDiamond³(const Param& p={});
         ColorDiamond³(const Size3D&sz, const Param& p={});
-        ColorDiamond³(const AxBox3D&, const Param& p={});
         ~ColorDiamond³();
         
     protected:

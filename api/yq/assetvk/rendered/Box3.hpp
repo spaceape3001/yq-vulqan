@@ -74,15 +74,12 @@ namespace yq::tachyon {
         double              z_tne() const { return point_tne().z; }
 
         Box³(const Size3D& sz=kDefSize, const Param& p = Param());
-        Box³(const AxBox3D& bx, const Param& p = Param());
         
         static void init_meta();
 
     protected:
 
         virtual ~Box³();
-    
-        static Param    set_position(const AxBox3D& sz, const Param&);
     
         Vertex³&            vertex_bsw()  { return m_vertices[0]; }
         Vertex³&            vertex_bse()  { return m_vertices[1]; }

@@ -64,15 +64,12 @@ namespace yq::tachyon {
         double              z_bottom() const { return point_bottom().z; }
 
         Diamond³(const Size3D& sz=kDefSize, const Param& p = Param());
-        Diamond³(const AxBox3D& bx, const Param& p = Param());
         
         static void init_meta();
 
     protected:
 
         virtual ~Diamond³();
-    
-        static Param    set_position(const AxBox3D& sz, const Param&);
     
         Vertex³&            vertex_east()   { return m_vertices[0]; }
         Vertex³&            vertex_west()   { return m_vertices[1]; }

@@ -28,7 +28,14 @@
   - use `#include <>`
   - include path uses all data paths
   - first shader needs the `#version` and the rest is an error
-
+*  Circular Spatial
+  - Simple circular motion, some features TBD
+*  User Spatial
+  - Allows for simple user defined expressions for the parameters
+*  Removed 3D's default "make spatial" helper, as this prevented a library
+   reorganization, use the new "create_spatial" methods.
+*  create_spatial() -- meant as a one stop helper to 1/2/3D objects to 
+   create & add a new spatial to an object.
 
 ## 2025.12.05
 

@@ -38,6 +38,8 @@
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hxx>
 
+#include <yq/assetvk/spatial/SimpleSpatial3.hpp>
+
 #include <yq/tachyon/application.hpp>
 #include <yq/tachyon/buffer.hpp>
 #include <yq/tachyon/rendered.hpp>
@@ -47,12 +49,12 @@
 #include <yq/tachyon/widget.hpp>
 
 #include <yq/tachyon/command/orientation/SetOrientation3Command.hpp>
-#include <yq/tachyon/api/Spatial3.hpp>
 #include <yq/tachyon/api/Scene3MetaWriter.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
 #include <yq/assetvk/widget/SceneWidget.hpp>
 #include <yq/tachyon/utility/LoggerBox.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
+#include <yq/tachyon/api/N.hxx>
 
 #ifdef WANT_FRAME_INSPECTOR
 #include <yq/tachyon/widget/FrameInspector.hpp>
@@ -197,9 +199,9 @@ public:
         start           = std::chrono::steady_clock::now();
         triangle        = create_child<HelloTriangle>();
         
-        GradTriangle³::Param p;
-        p.position      = {0.,0.,0.1};
-        tri2            = create_child<GradTriangle³>(TriData, p);
+        tri2            = create_child<GradTriangle³>(TriData);
+        tri2->create_spatial<SimpleSpatial³>(Vector3(0.,0.,0.1));
+        
         triSpatialID    = tri2 -> spatial();
         quad            = create_child<HelloQuad>();
         

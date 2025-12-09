@@ -18,7 +18,6 @@ namespace yq::tachyon {
         
         GradDiamond³(const Param& p={});
         GradDiamond³(const Size3D&sz, const Param& p={});
-        GradDiamond³(const AxBox3D&, const Param& p={});
         ~GradDiamond³();
 
         using MyVertices::vertices;

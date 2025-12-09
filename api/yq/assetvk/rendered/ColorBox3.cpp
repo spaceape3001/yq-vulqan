@@ -43,11 +43,6 @@ namespace yq::tachyon {
         m_color = p.color;
     }
     
-    ColorBox³::ColorBox³(const AxBox3D&bx, const Param& p) : Box³(bx, p)
-    {
-        m_color = p.color;
-    }
-    
     ColorBox³::~ColorBox³()
     {
     }

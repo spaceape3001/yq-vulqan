@@ -26,7 +26,6 @@ namespace yq::tachyon {
         
         ColorBox³(const Param& p={});
         ColorBox³(const Size3D&sz, const Param& p={});
-        ColorBox³(const AxBox3D&, const Param& p={});
         ~ColorBox³();
         
     protected:

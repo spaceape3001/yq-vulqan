@@ -8,7 +8,6 @@
 #include <yq/tachyon/api/Light3Data.hpp>
 #include <yq/tachyon/api/Light3MetaWriter.hpp>
 #include <yq/tachyon/command/SpatialCommand.hpp>
-#include <yq/tachyon/spatial/SimpleSpatial3.hpp>
 #include <yq/tachyon/api/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
 
@@ -29,9 +28,6 @@ namespace yq::tachyon {
 
     Light³::Light³(const Param& p) : Light(p)
     {
-        if(!(is_nan(p.position) && is_nan(p.orientation) && is_nan(p.scale))){
-            make_simple_spatial(p.position, p.orientation, p.scale);
-        }
     }
     
     Light³::~Light³()

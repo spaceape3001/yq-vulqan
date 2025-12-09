@@ -41,11 +41,6 @@ namespace yq::tachyon {
         m_color = p.color;
     }
     
-    ColorDiamond³::ColorDiamond³(const AxBox3D&bx, const Param& p) : Diamond³(bx, p)
-    {
-        m_color = p.color;
-    }
-    
     ColorDiamond³::~ColorDiamond³()
     {
     }

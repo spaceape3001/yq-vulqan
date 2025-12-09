@@ -47,10 +47,6 @@ namespace yq::tachyon {
     {
     }
     
-    GradBox³::GradBox³(const AxBox3D& bx, const Param& p) : Box³(bx, p)
-    {
-    }
-    
     GradBox³::~GradBox³()
     {
     }

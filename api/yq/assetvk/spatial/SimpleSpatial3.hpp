@@ -47,14 +47,10 @@ namespace yq::tachyon {
         */
     
         struct Param : public Spatial³::Param {
-            Vector3D        position        = NAN;
-            Quaternion3D    orientation     = NAN;
-            Vector3D        scale           = NAN;
-            
             Param(){}
         };
     
-        SimpleSpatial³(const Param&p = Param());
+        SimpleSpatial³(const Vector3D& pos = NAN, const Quaternion3D& ori = NAN, const Vector3D& scale = NAN, const Param& p=Param());
         ~SimpleSpatial³();
         
         void    move_by(const Vector3D&);

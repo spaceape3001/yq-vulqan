@@ -7,7 +7,6 @@
 #include <yq/tachyon/api/Scene3.hpp>
 #include <yq/tachyon/api/Scene3Data.hpp>
 #include <yq/tachyon/api/Scene3MetaWriter.hpp>
-#include <yq/tachyon/spatial/SimpleSpatial3.hpp>
 #include <yq/tachyon/api/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
 
@@ -40,9 +39,6 @@ namespace yq::tachyon {
 
     Scene³::Scene³(const Param& p) : Scene(p)
     {
-        if(!(is_nan(p.position) && is_nan(p.orientation) && is_nan(p.scale))){
-            make_simple_spatial(p.position, p.orientation, p.scale);
-        }
     }
     
     Scene³::~Scene³()

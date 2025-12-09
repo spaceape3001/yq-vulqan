@@ -383,8 +383,6 @@ add_library(${PROJECT_NAME} SHARED
     request/viewer/ViewerScreenshotRequest.cpp
 
     
-    #   This one can't tag along with the move as it's used in the 3D (above)
-    spatial/SimpleSpatial3.cpp
 
     ui/UIAppMain.cpp
     ui/UIAppMainWriter.cpp

@@ -91,6 +91,7 @@ add_library(yq_assetvk SHARED
     spatial/GeoSpatial3.cpp
     #spatial/OrbitSpatial3.cpp
     spatial/SimpleSpatial2.cpp
+    spatial/SimpleSpatial3.cpp
     spatial/UserSpatial3.cpp
 
     tweak/OriginCameraTweak.cpp

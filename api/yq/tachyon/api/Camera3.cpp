@@ -9,7 +9,6 @@
 #include <yq/tachyon/api/Camera3MetaWriter.hpp>
 #include <yq/tachyon/command/SpatialCommand.hpp>
 #include <yq/tachyon/command/camera/SetScreenCommand.hpp>
-#include <yq/tachyon/spatial/SimpleSpatial3.hpp>
 #include <yq/tachyon/api/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
 #include <yq/tachyon/logging.hpp>
@@ -32,9 +31,6 @@ namespace yq::tachyon {
 
     Camera³::Camera³(const Param& p) : Camera(p)
     {
-        if(!(is_nan(p.position) && is_nan(p.orientation) && is_nan(p.scale))){
-            make_simple_spatial(p.position, p.orientation, p.scale);
-        }
         
         //  total hack (for now)
         m_screen.size.x = 1920;

@@ -9,6 +9,7 @@
 
 #include <yq/assetvk/camera/SpaceCamera.hpp>
 #include <yq/assetvk/controller/Space3Controller.hpp>
+#include <yq/assetvk/spatial/SimpleSpatial3.hpp>
 #include <yq/assetvk/widget/SpaceCameraRemote.hpp>
 #include <yq/assetvk/widget/FrameInspector.hpp>
 
@@ -22,6 +23,7 @@
 #include <yq/text/match.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
+#include <yq/tachyon/api/N.hxx>
 
 using namespace yq;
 using namespace yq::tachyon;
@@ -165,11 +167,7 @@ Execution    MainWidget::setup(const Context& ctx)
         }
         if(!m_camera){
             SpaceCamera* cam    = create_on<SpaceCamera>(SIM);
-            cam->make_simple_spatial(
-                ZERO, IDENTITY, ONE
-                //Vector3D(-10, 0, -5.),
-                //Quaternion3D(HPR, (Radian) 0._deg, (Radian) 180._deg, (Radian) 0._deg)
-            );
+            cam->create_spatial<SimpleSpatial³>();
             cam->set_near(.1);
             cam->set_far(60.);
             m_camera    = *cam;

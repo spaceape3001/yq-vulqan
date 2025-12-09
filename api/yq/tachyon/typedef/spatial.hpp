@@ -27,4 +27,7 @@ namespace yq::tachyon {
     using SpatialID = ID<Spatial>;
     
     class SpatialMeta;
+
+    template <class E>
+    concept SomeSpatial = std::derived_from<E,Spatial>;
 }

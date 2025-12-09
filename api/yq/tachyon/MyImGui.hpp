@@ -52,6 +52,7 @@
         constexpr explicit operator yq::RGBA4F() const { return { x, y, z, w }; }
 
 #include "imgui.h"
+#include "misc/cpp/imgui_stdlib.h"
 
 namespace yq {
 }

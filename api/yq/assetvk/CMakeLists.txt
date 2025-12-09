@@ -43,6 +43,7 @@ add_library(yq_assetvk SHARED
     edit/TachyonUI.cpp
     edit/TextureUI.cpp
     edit/TopologyUI.cpp
+    edit/UserSpatial3UI.cpp
     edit/Vertices3UI.cpp
 
     event/panel/MetaSelectionChangedEvent.cpp
@@ -90,6 +91,7 @@ add_library(yq_assetvk SHARED
     spatial/GeoSpatial3.cpp
     #spatial/OrbitSpatial3.cpp
     spatial/SimpleSpatial2.cpp
+    spatial/UserSpatial3.cpp
 
     tweak/OriginCameraTweak.cpp
     
@@ -114,6 +116,7 @@ add_library(yq_assetvk SHARED
 target_link_libraries(yq_assetvk 
 PUBLIC
     yq_tachyon
+    yq_userexpr
 )
 
 vulqan_library(yq_assetvk)

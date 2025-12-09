@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/tachyon/api/Spatial3Data.hpp>
+#include <yq/userexpr/Algebra.hpp>
+
+namespace yq::tachyon {
+    struct UserSpatial³Snap : public Spatial³Snap {
+        Algebra h, p, r, x, y, z;
+    };
+}

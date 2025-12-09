@@ -99,25 +99,7 @@ namespace yq::tachyon {
 
     void SimpleSpatial³::snap(Spatial³Snap& sn) const
     {
-        Spatial³::snap(sn);
-
-        Tensor33D   T    = tensor(m_orientation) * diagonal(m_scale);
-        Tensor33D   T2   = inverse(T);
-        Vector3D    pos2 = T2 * m_position;
-        
-        sn.local2domain = Tensor44D(
-            T.xx, T.xy, T.xz, m_position.x,
-            T.yx, T.yy, T.yz, m_position.y,
-            T.zx, T.zy, T.zz, m_position.z,
-            0., 0., 0., 1.
-        );
-        
-        sn.domain2local = Tensor44D(
-            T2.xx, T2.xy, T2.xz, -pos2.x,
-            T2.yx, T2.yy, T2.yz, -pos2.y,
-            T2.zx, T2.zy, T2.zz, -pos2.z,
-            0., 0., 0., 1.
-        );
+        Spatial³::snap(sn, m_position, m_orientation, m_scale);
     }
 
     void SimpleSpatial³::init_meta()

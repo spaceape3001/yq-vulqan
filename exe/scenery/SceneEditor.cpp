@@ -78,6 +78,7 @@
 #include <yq/tachyon/command/sim/PauseCommand.hpp>
 #include <yq/tachyon/command/sim/ResumeCommand.hpp>
 #include <yq/tachyon/command/sim/SetTimeCommand.hpp>
+#include <yq/tachyon/command/tachyon/SetEditModeCommand.hpp>
 #include <yq/tachyon/command/thread/ScheduleCommand.hpp>
 #include <yq/tachyon/command/ui/TitleCommand.hpp>
 
@@ -1411,9 +1412,13 @@ Execution   SceneEditor::setup(const Context&ctx)
 #endif
 
     if(m_number == 1){
-        TypedID   eThread   = curFrame->typed(EDIT);
-        send(new SetTimeCommand({.target=eThread}, 0.));
-        send(new PauseCommand({.target=eThread}));
+        TypedID   editThread   = curFrame->typed(EDIT);
+        TypedID   auxThread    = curFrame->typed(AUX);
+        
+        send(new SetTimeCommand({.target=editThread}, 0.));
+        send(new PauseCommand({.target=editThread}));
+        send(new SetEditModeCommand({.target=editThread}, Tristate::Yes));
+        send(new SetEditModeCommand({.target=auxThread}, Tristate::Yes));
     }
 
     return ret;

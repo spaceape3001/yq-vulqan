@@ -11,6 +11,7 @@
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/api/ThreadData.hpp>
+#include <yq/tachyon/command/tachyon/SetEditModeCommand.hpp>
 #include <yq/tachyon/command/tachyon/SetNameCommand.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/logging.hpp>
@@ -28,6 +29,7 @@ namespace yq::tachyon {
         w.field("ID", &TachyonUI::id);
         w.field("Parent", &TachyonUI::parent);
         w.field("Thread", &TachyonUI::thread);
+        w.field("Edit Mode", &TachyonUI::edit_mode);
         w.edits<Tachyon>();
     }
 
@@ -46,6 +48,17 @@ namespace yq::tachyon {
     TachyonUI*  TachyonUI::clone() const 
     {
         return new TachyonUI(*this);
+    }
+
+    void    TachyonUI::edit_mode()
+    {
+        const TachyonSnap*  sn    = snap();
+        if(!sn)
+            return;
+            
+        Tristate    v   = sn->edit_mode;
+        if(ImGui::Checkbox("##EditMode", v))
+            send(new SetEditModeCommand({.target=sn->self}, v));
     }
 
     void    TachyonUI::id()

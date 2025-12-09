@@ -21,6 +21,7 @@ namespace yq::tachyon {
         TachyonUI*  clone() const override;
         
         void    id();
+        void    edit_mode();
         void    type();
         void    name();
         void    thread();

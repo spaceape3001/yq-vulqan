@@ -5,3 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "event/Circular3Event.ipp"
+#include "event/circular3/Circular3LockEvent.ipp"
+#include "event/circular3/Circular3OriginEvent.ipp"
+#include "event/circular3/Circular3PeriodEvent.ipp"
+#include "event/circular3/Circular3RadiusEvent.ipp"

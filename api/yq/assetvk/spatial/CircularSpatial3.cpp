@@ -12,6 +12,10 @@
 #include <yq/assetvk/command/circular3/Circular3OriginCommand.hpp>
 #include <yq/assetvk/command/circular3/Circular3PeriodCommand.hpp>
 #include <yq/assetvk/command/circular3/Circular3RadiusCommand.hpp>
+#include <yq/assetvk/event/circular3/Circular3LockEvent.hpp>
+#include <yq/assetvk/event/circular3/Circular3OriginEvent.hpp>
+#include <yq/assetvk/event/circular3/Circular3PeriodEvent.hpp>
+#include <yq/assetvk/event/circular3/Circular3RadiusEvent.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/tags.hpp>
 #include <yq/tachyon/api/Context.hpp>
@@ -65,6 +69,7 @@ namespace yq::tachyon {
         if(cmd.target() != id())
             return;
         m_locked    = cmd.lock();
+        send(new Circular³LockEvent({}, m_locked));
         mark();
     }
 
@@ -73,6 +78,7 @@ namespace yq::tachyon {
         if(cmd.target() != id())
             return;
         m_origin    = cmd.origin();
+        send(new Circular³OriginEvent({}, m_origin));
         mark();
     }
 
@@ -81,6 +87,7 @@ namespace yq::tachyon {
         if(cmd.target() != id())
             return;
         m_period    = cmd.period();
+        send(new Circular³PeriodEvent({}, m_period));
         mark();
     }
     
@@ -89,6 +96,7 @@ namespace yq::tachyon {
         if(cmd.target() != id())
             return;
         m_radius    = cmd.radius();
+        send(new Circular³RadiusEvent({}, m_radius));
         mark();
     }
 

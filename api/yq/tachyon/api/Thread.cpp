@@ -576,6 +576,7 @@ namespace yq::tachyon {
         ctx.wall            = frame->wallclock();
         ctx.tick            = m_tick;
         ctx.overclock       = m_overclock;
+        ctx.edit_mode       = m_editMode;
         
         if(m_lastTickTime != time_point_t{}){
             ctx.Δwall       = unit::Picosecond(duration_picoseconds_t(frame->wallclock() - m_lastTickTime).count());

@@ -23,6 +23,7 @@
 #include <yq/tachyon/command/tachyon/RemoveChildCommand.hpp>
 #include <yq/tachyon/command/tachyon/RethreadCommand.hpp>
 #include <yq/tachyon/command/tachyon/SetAttributeCommand.hpp>
+#include <yq/tachyon/command/tachyon/SetEditModeCommand.hpp>
 #include <yq/tachyon/command/tachyon/SetNameCommand.hpp>
 #include <yq/tachyon/command/tachyon/SetParentCommand.hpp>
 #include <yq/tachyon/command/tachyon/SnoopCommand.hpp>
@@ -781,6 +782,13 @@ namespace yq::tachyon {
     {
         return m_stage >= Stage::Teardown;
     }
+    
+    bool            Tachyon::editing() const
+    {
+        if(!m_context)
+            return false;
+        return (m_context->edit_mode != Tristate::No) && (m_editMode != Tristate::No) && ((m_context->edit_mode == Tristate::Yes) || (m_editMode == Tristate::Yes));
+    }
 
     void            Tachyon::finalize(TachyonData&) const
     {
@@ -954,6 +962,13 @@ namespace yq::tachyon {
             m_userAttrs[*p] = cmd.value();
     }
 
+    void    Tachyon::on_set_edit_mode_command(const SetEditModeCommand& cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_editMode  = cmd.edit_mode();
+    }
+
     void    Tachyon::on_set_name_command(const SetNameCommand& cmd)
     {
         if(cmd.target() != id())
@@ -1099,19 +1114,20 @@ namespace yq::tachyon {
         return {};
     }
 
-    void Tachyon::snap(TachyonSnap&snap) const
+    void Tachyon::snap(TachyonSnap&sn) const
     {
-        snap.parent     = m_parent;
-        snap.self       = this;
-        snap.children   = m_children;
-        snap.started    = m_stage > Stage::Setup;
-        snap.running    = m_stage == Stage::Running;
-        snap.paused     = m_stage == Stage::Paused;
-        snap.teardown   = m_stage >= Stage::Teardown;
-        snap.name       = m_name;
+        sn.parent     = m_parent;
+        sn.self       = this;
+        sn.children   = m_children;
+        sn.started    = m_stage > Stage::Setup;
+        sn.running    = m_stage == Stage::Running;
+        sn.paused     = m_stage == Stage::Paused;
+        sn.teardown   = m_stage >= Stage::Teardown;
+        sn.name       = m_name;
+        sn.edit_mode  = m_editMode;
         
-        //snap.userattrs  = m_userAttrs;
-        //snap.progattrs  = m_progAttrs;
+        //sn.userattrs  = m_userAttrs;
+        //sn.progattrs  = m_progAttrs;
         
         for(const InterfaceMeta* ii : metaInfo().interfaces(ALL).all){
             Proxy*  p   = ii->proxy(const_cast<Tachyon*>(this));
@@ -1121,7 +1137,7 @@ namespace yq::tachyon {
             p->m_interface  = ii;
             p->m_tachyon    = const_cast<Tachyon*>(this);
             p->m_revision   = m_revision;
-            snap.proxies.push_back(p);
+            sn.proxies.push_back(p);
         }
     }
 
@@ -1614,6 +1630,7 @@ namespace yq::tachyon {
         w.slot(&Tachyon::on_resume_command);
         w.slot(&Tachyon::on_rethread_command);
         w.slot(&Tachyon::on_set_attribute_command);
+        w.slot(&Tachyon::on_set_edit_mode_command);
         w.slot(&Tachyon::on_set_name_command);
         w.slot(&Tachyon::on_set_parent_command);
         w.slot(&Tachyon::on_snoop_command);

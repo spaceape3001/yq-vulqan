@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/core/Tristate.hpp>
 #include <yq/tachyon/typedef/clock.hpp>
 #include <yq/unit/MKS.hpp>
 
@@ -31,5 +32,7 @@ namespace yq::tachyon {
         unit::Second    Δwall       = { 0. };
         
         //  we'll have tachyon startup map here?
+        
+        Tristate        edit_mode   = Tristate::Inherit;
     };
 }

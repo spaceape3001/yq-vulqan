@@ -10,6 +10,7 @@
 #include <yq/core/LogPriority.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/core/Object.hpp>
+#include <yq/core/Tristate.hpp>
 #include <yq/core/UniqueID.hpp>
 #include <yq/meta/MetaLookup.hpp>
 #include <yq/net/Url.hpp>
@@ -55,6 +56,7 @@ namespace yq::tachyon {
     class RemoveChildCommand;
     class ResumeCommand;
     class SetAttributeCommand;
+    class SetEditModeCommand;
     class SetNameCommand;
     class SetParentCommand;
     class SnoopCommand;
@@ -483,6 +485,10 @@ namespace yq::tachyon {
         //! Initiates the teardown/destruction process
         void            cmd_teardown() { teardown(); }
 
+        //! "Edit" mode tells the tachyon to dump its detailed data
+        //! to the snaps (so... if it's an expensive-to-copy structure, don't unless editing is true)
+        Tristate        edit_mode() const { return m_editMode; }
+
         ////////////////////////////////////////////////////////////
         //  Save/Load (v2.0)
         
@@ -568,7 +574,8 @@ namespace yq::tachyon {
 
         mutable mutex_t         m_mutex;          // used for guards
 
-
+        //! Same conditions to the frame & data methods
+        bool            editing() const;
     
         #define TXLOCK  \
             lock_t  _lock(m_mutex, true);
@@ -775,6 +782,7 @@ namespace yq::tachyon {
         TypedID                     m_parent;
         std::vector<TypedID>        m_children;
         template_t                  m_template;     // what we're a template of
+        Tristate                    m_editMode      = Tristate::Inherit;
         
     protected:
         std::string                 m_name;
@@ -833,6 +841,7 @@ namespace yq::tachyon {
         void    on_resume_command(const ResumeCommand&);
         void    on_rethread_command(const RethreadCommand&);
         void    on_set_attribute_command(const SetAttributeCommand&);
+        void    on_set_edit_mode_command(const SetEditModeCommand&);
         void    on_set_name_command(const SetNameCommand&);
         void    on_set_parent_command(const SetParentCommand&);
         void    on_snoop_command(const SnoopCommand&);

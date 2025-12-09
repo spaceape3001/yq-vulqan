@@ -10,6 +10,7 @@
 #include "command/tachyon/RemoveChildCommand.ipp"
 #include "command/tachyon/RethreadCommand.ipp"
 #include "command/tachyon/SetAttributeCommand.ipp"
+#include "command/tachyon/SetEditModeCommand.ipp"
 #include "command/tachyon/SetNameCommand.ipp"
 #include "command/tachyon/SetParentCommand.ipp"
 #include "command/tachyon/SnoopCommand.ipp"

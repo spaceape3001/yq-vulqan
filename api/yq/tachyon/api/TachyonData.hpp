@@ -36,6 +36,7 @@ namespace yq::tachyon {
         TypedID                 self;
         std::vector<TypedID>    children;
         std::string             name;
+        Tristate                edit_mode;
         bool                    started     = false;
         bool                    running     = false;
         bool                    paused      = false;

@@ -138,6 +138,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ADrawMode.cpp
     aspect/AFarPlane.cpp
     aspect/AFieldOfView.cpp
+    aspect/AHeightField.cpp
     aspect/AMaterial.cpp
     aspect/AMaxSize1.cpp
     aspect/AMaxSize2.cpp
@@ -168,6 +169,8 @@ add_library(${PROJECT_NAME} SHARED
         
     asset/AssetPak.cpp
     asset/CameraSpec.cpp
+    asset/GriddedData.cpp
+    asset/HeightField.cpp
     asset/LightSpec.cpp
     asset/Material.cpp
     asset/Mesh.cpp
@@ -207,7 +210,10 @@ add_library(${PROJECT_NAME} SHARED
     command/generic/SetSpatialCommand.cpp
     command/io/SaveCommand.cpp
     command/joystick/JoystickZeroCommand.cpp
+    
     command/shape/SetDrawModeCommand.cpp
+    command/shape/SetHeightFieldCommand.cpp
+    command/shape/SetHeightFieldUrlCommand.cpp
     command/shape/SetMaterialCommand.cpp
     command/shape/SetMaterialUrlCommand.cpp
     command/shape/SetMeshCommand.cpp
@@ -215,6 +221,7 @@ add_library(${PROJECT_NAME} SHARED
     command/shape/SetTextureCommand.cpp
     command/shape/SetTextureUrlCommand.cpp
     command/shape/SetTopologyCommand.cpp
+    
     command/widget/SetViewer.cpp
 
     config/build.cpp
@@ -242,6 +249,8 @@ add_library(${PROJECT_NAME} SHARED
 
     event/camera/FarPlaneEvent.cpp
     event/camera/NearPlaneEvent.cpp
+    
+    event/shape/SetHeightFieldEvent.cpp
     event/shape/SetMaterialEvent.cpp
     event/shape/SetMeshEvent.cpp
     event/shape/SetTextureEvent.cpp
@@ -251,6 +260,7 @@ add_library(${PROJECT_NAME} SHARED
     
     interface/IFarPlane.cpp
     interface/IFieldOfView.cpp
+    interface/IHeightField.cpp
     interface/IMaterial.cpp
     interface/IMesh.cpp
     interface/INearPlane.cpp
@@ -291,6 +301,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy/PDrawMode.cpp
     proxy/PFarPlane.cpp
     proxy/PFieldOfView.cpp
+    proxy/PHeightField.cpp
     proxy/PMaterial.cpp
     proxy/PMaxSize1.cpp
     proxy/PMaxSize2.cpp

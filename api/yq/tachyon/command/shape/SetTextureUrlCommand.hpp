@@ -7,7 +7,6 @@
 #pragma once
 
 #include <yq/tachyon/command/ShapeCommand.hpp>
-#include <yq/tachyon/typedef/texture.hpp>
 #include <yq/net/Url.hpp>
 
 namespace yq::tachyon {

@@ -26,6 +26,7 @@ add_library(yq_assetvk SHARED
     edit/DrawModeUI.cpp
     edit/FarPlaneUI.cpp
     edit/FieldOfViewUI.cpp
+    edit/HeightFieldUI.cpp
     edit/LightUI.cpp
     edit/MaterialUI.cpp
     edit/MeshUI.cpp

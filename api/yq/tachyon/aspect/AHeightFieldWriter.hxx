@@ -1,0 +1,25 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/tachyon/tags.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/aspect/AHeightField.hpp>
+#include <yq/tachyon/command/shape/SetHeightFieldCommand.hpp>
+#include <yq/tachyon/command/shape/SetHeightFieldUrlCommand.hpp>
+
+namespace yq::tachyon {
+    template <typename C>
+    void AHeightField::init_meta(TachyonMeta::Writer<C>&w)
+    {
+        w.template interface<IHeightField>();
+        w.resource("height_field", &AHeightField::m_heightField).tag(kTag_Save);
+
+        w.slot(UNSAFE, &AHeightField::on_set_height_field);
+        w.slot(UNSAFE, &AHeightField::on_set_height_field_url);
+    }
+}

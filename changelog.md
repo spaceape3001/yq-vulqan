@@ -36,6 +36,9 @@
    reorganization, use the new "create_spatial" methods.
 *  create_spatial() -- meant as a one stop helper to 1/2/3D objects to 
    create & add a new spatial to an object.
+*  Draw calls can now be enumerated; default behavior is as before, if empty
+   then the full range of the VBO/IBO is used.  (Note: the draw call vertex 
+   used will depend on whether an IBO is defined for the pipeline.)
 
 ## 2025.12.05
 

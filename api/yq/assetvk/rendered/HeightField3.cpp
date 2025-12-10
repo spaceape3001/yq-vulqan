@@ -9,6 +9,7 @@
 #include <yq/tachyon/aspect/AColorWriter.hxx>
 #include <yq/tachyon/aspect/AHeightFieldWriter.hxx>
 #include <yq/tachyon/aspect/AMaterialWriter.hxx>
+#include <yq/tachyon/aspect/ASpatial3Writer.hxx>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::HeightField³)
 
@@ -20,6 +21,7 @@ namespace yq::tachyon {
         AColor::init_meta(w);
         AHeightField::init_meta(w);
         AMaterial::init_meta(w);
+        ASpatial³::init_meta(w);
     }
 
     HeightField³::HeightField³() : HeightField³(Param())

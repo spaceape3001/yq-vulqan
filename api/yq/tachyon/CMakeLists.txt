@@ -164,6 +164,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ASize2.cpp
     aspect/ASize3.cpp
     aspect/ASize4.cpp
+    aspect/ASpatial3.cpp
     aspect/ATexture.cpp
     aspect/ATopology.cpp
     aspect/AVertices3.cpp

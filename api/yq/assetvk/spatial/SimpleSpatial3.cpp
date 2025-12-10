@@ -6,9 +6,7 @@
 
 #include "SimpleSpatial3.hpp"
 #include <yq/tachyon/api/Spatial3MetaWriter.hpp>
-#include <yq/tachyon/aspect/AOrientation3Writer.hxx>
-#include <yq/tachyon/aspect/APosition3Writer.hxx>
-#include <yq/tachyon/aspect/AScale3Writer.hxx>
+#include <yq/tachyon/aspect/ASpatial3Writer.hxx>
 #include <yq/tachyon/command/position/MoveBy3Command.hpp>
 #include <yq/tachyon/command/position/MoveByXCommand.hpp>
 #include <yq/tachyon/command/position/MoveByYCommand.hpp>
@@ -107,9 +105,7 @@ namespace yq::tachyon {
     {
         auto w = writer<SimpleSpatial³>();
         
-        APosition³::init_meta(w);
-        AScale³::init_meta(w);
-        AOrientation³::init_meta(w);
+        ASpatial³::init_meta(w);
         
         w.slot(&SimpleSpatial³::on_move³);
         w.slot(&SimpleSpatial³::on_moveˣ);

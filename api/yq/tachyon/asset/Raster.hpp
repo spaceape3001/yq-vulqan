@@ -29,10 +29,10 @@ namespace yq::tachyon {
         // Need to transition these toward getters... I think....
     
         //! Data for the image
-        const Memory        memory;
+        Memory        memory;
         
         //! Information for the image
-        const RasterInfo    info;
+        RasterInfo    info;
         
         //! Constructor (takes info & data)
         Raster(const RasterInfo&, Memory&&);

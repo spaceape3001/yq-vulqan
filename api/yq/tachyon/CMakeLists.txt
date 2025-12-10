@@ -169,8 +169,8 @@ add_library(${PROJECT_NAME} SHARED
         
     asset/AssetPak.cpp
     asset/CameraSpec.cpp
-    asset/GriddedData.cpp
-    asset/HeightField.cpp
+    #asset/GriddedData.cpp
+    #asset/HeightField.cpp
     asset/LightSpec.cpp
     asset/Material.cpp
     asset/Mesh.cpp

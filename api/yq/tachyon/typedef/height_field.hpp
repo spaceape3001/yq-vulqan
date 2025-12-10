@@ -11,13 +11,18 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class HeightField;
+    class Texture;
+    class TextureInfo;
+    
+    //class HeightField;
+    using HeightField = Texture;    // temporary... for now
+
     using HeightFieldPtr            = Ref<HeightField>;
     using HeightFieldCPtr           = Ref<const HeightField>;
     
-    struct HeightFieldInfo;
+    //struct HeightFieldInfo;
+    using HeightFieldInfo       = TextureInfo;
 
     template <class> class ID;
-    
     using HeightFieldID     = ID<HeightField>;
 }

@@ -16,6 +16,7 @@
 #include <yq/tachyon/api/Rendered3Data.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
 #include <yq/tachyon/api/RenderedData.hpp>
+#include <yq/tachyon/pipeline/DrawCall.hpp>
 #include <yq/tachyon/pipeline/PushData.hpp>
 #include <yq/tachyon/pipeline/Pipeline.hpp>
 #include <yq/tachyon/proxy/PTopology.hpp>
@@ -213,10 +214,24 @@ namespace yq::tachyon {
         }
         
         if(m_status(S::Index)){
-            vkCmdBindIndexBuffer(u.command_buffer, m_ibo.buffer, 0, m_ibo.type);
-            vkCmdDrawIndexed(u.command_buffer, m_ibo.count, 1, 0, 0, 0);  // possible point of speedup in future
+            if(m_ibo.count){
+                vkCmdBindIndexBuffer(u.command_buffer, m_ibo.buffer, 0, m_ibo.type);
+                if(m_indexDraws.empty()){
+                    vkCmdDrawIndexed(u.command_buffer, m_ibo.count, 1, 0, 0, 0);  // possible point of speedup in future
+                } else {
+                    for(auto& dc : m_indexDraws)
+                        vkCmdDrawIndexed(u.command_buffer, dc.index_count, dc.instance_count, dc.first_index, dc.vertex_offset, dc.first_instance);
+                }
+            }
         } else if(m_status(S::Vertex)){
-            vkCmdDraw(u.command_buffer, m_vtxCount, 1, 0, 0);
+            if(m_vtxCount){
+                if(m_vertexDraws.empty()){
+                    vkCmdDraw(u.command_buffer, m_vtxCount, 1, 0, 0);
+                } else {
+                    for(auto& dc : m_vertexDraws)
+                        vkCmdDraw(u.command_buffer, dc.vertex_count, dc.instance_count, dc.first_vertex, dc.first_instance);
+                }
+            }
         }
     }
     
@@ -244,6 +259,9 @@ namespace yq::tachyon {
                 m_topology  = (VkPrimitiveTopology) p->topology().value();
             }
         }
+        
+        m_indexDraws    = sn.index_draws;
+        m_vertexDraws   = sn.vertex_draws;
     }
     
     bool    ViRendered::consistent() const

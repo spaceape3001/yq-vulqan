@@ -10,6 +10,7 @@
 #include <yq/tachyon/api/RenderedData.hpp>
 #include <yq/tachyon/api/RenderedMetaWriter.hpp>
 #include <yq/tachyon/command/rendered/SetWireframeCommand.hpp>
+#include <yq/tachyon/pipeline/DrawCall.hpp>
 #include <yq/tachyon/vulkan/ViBuffer.hpp>
 #include <yq/tachyon/vulkan/ViTexture.hpp>
 #include <yq/meta/Init.hpp>
@@ -254,6 +255,9 @@ namespace yq::tachyon {
                 }
             }
         }
+        
+        sn.index_draws  = m_indexDraws;
+        sn.vertex_draws = m_vertexDraws;
     }
 
     void Rendered::init_meta()

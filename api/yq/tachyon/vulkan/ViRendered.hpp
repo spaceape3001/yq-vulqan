@@ -24,6 +24,8 @@ namespace yq::tachyon {
     class ViVisualizer;
     struct ViContext;
     class Rendered³;
+    struct IndexDrawCall;
+    struct VertexDrawCall;
     
    struct ViRenderedOptions {
         VkDescriptorPool        descriptor_pool = nullptr;
@@ -85,14 +87,17 @@ namespace yq::tachyon {
             Wireframe
         };
     
-        uint64_t                m_id            = 0;
-        ViPipelineLayoutCPtr    m_layout;
-        VkPrimitiveTopology     m_topology      = VK_PRIMITIVE_TOPOLOGY_POINT_LIST; // *IF* dynamic
-        ViPipelineCPtr          m_pipeline;
-        uint64_t                m_pipelineId    = 0;
-        Flags<S>                m_status = {};
-        bool                    m_good          = false;
-        ViVisualizer*           m_viz = nullptr;
+        uint64_t                    m_id            = 0;
+        ViPipelineLayoutCPtr        m_layout;
+        VkPrimitiveTopology         m_topology      = VK_PRIMITIVE_TOPOLOGY_POINT_LIST; // *IF* dynamic
+        ViPipelineCPtr              m_pipeline;
+        uint64_t                    m_pipelineId    = 0;
+        Flags<S>                    m_status = {};
+        bool                        m_good          = false;
+        ViVisualizer*               m_viz = nullptr;
+        std::vector<IndexDrawCall>  m_indexDraws;
+        std::vector<VertexDrawCall> m_vertexDraws;
+        
 
         std::error_code _init(ViVisualizer&, const RenderedSnap&, const ViRenderedOptions& opts, const Pipeline*p);
         void            _kill();

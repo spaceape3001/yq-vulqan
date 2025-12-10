@@ -20,6 +20,8 @@
 namespace yq::tachyon {
 
     class SetWireframeCommand;
+    struct IndexDrawCall;
+    struct VertexDrawCall;
 
     //! Information to a rendered object
     class RenderedMeta : public TachyonMeta {
@@ -146,6 +148,13 @@ namespace yq::tachyon {
         
         bool            m_good      = true;
         bool            m_template  = false;
+        
+        //! If empty, old behavior of all index is used when IBO defined.
+        std::vector<IndexDrawCall>  m_indexDraws;
+
+        //! If empty, old behavior of all vertex is used when VBO defined.
+        std::vector<VertexDrawCall> m_vertexDraws;
+        
         
     private:
         void    on_set_wireframe_command(const SetWireframeCommand&);

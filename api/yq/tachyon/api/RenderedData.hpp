@@ -22,16 +22,18 @@
 
 namespace yq::tachyon {
     class Pipeline;
+    struct IndexDrawCall;
+    struct VertexDrawCall;
     
     struct RenderedSnap : public TachyonSnap {
-        PushBuffer              push;
-        Buffered                ibo;  //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)
-        std::vector<Buffered>   ubos; //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)
-        std::vector<Buffered>   vbos; //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)
-        std::vector<Buffered>   sbos; //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)
-        std::vector<Textured>   texs; //< Textured defined in vi_texture.hpp (as Texture or ViTexture)
-        
-        const Pipeline*         pipeline(RenderMode rm=RenderMode::Simple) const;
+        PushBuffer                  push;
+        Buffered                    ibo;  //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)
+        std::vector<Buffered>       ubos; //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)
+        std::vector<Buffered>       vbos; //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)
+        std::vector<Buffered>       sbos; //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)
+        std::vector<Textured>       texs; //< Textured defined in vi_texture.hpp (as Texture or ViTexture)
+        std::vector<IndexDrawCall>  index_draws;
+        std::vector<VertexDrawCall> vertex_draws;
         
         const Pipeline*         pipeline_simple = nullptr;
         const Pipeline*         pipeline_light  = nullptr;
@@ -44,6 +46,8 @@ namespace yq::tachyon {
         
         RenderedSnap();
         ~RenderedSnap();
+
+        const Pipeline*         pipeline(RenderMode rm=RenderMode::Simple) const;
     };
     
     struct RenderedData : public TachyonData {

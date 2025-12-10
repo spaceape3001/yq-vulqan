@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/command/size/SetMaxSizeXCommand.hpp>
+#include "SetMaxSizeXCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMaxSizeˣCommand)

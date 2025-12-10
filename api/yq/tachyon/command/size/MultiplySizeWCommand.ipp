@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/command/size/MultiplySizeWCommand.hpp>
+#include "MultiplySizeWCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplySizeʷCommand)

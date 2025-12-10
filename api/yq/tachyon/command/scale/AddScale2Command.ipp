@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/command/scale/AddScale2Command.hpp>
+#include "AddScale2Command.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AddScale²Command)

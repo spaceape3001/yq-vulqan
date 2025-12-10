@@ -6,6 +6,7 @@
 
 // Auto-generated file
 
+#include "command/SizeCommand.ipp"
 #include "command/size/AddMaxSize1Command.ipp"
 #include "command/size/AddMaxSize2Command.ipp"
 #include "command/size/AddMaxSize3Command.ipp"

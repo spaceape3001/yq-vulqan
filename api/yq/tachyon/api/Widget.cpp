@@ -176,17 +176,17 @@ namespace yq::tachyon {
         const Spatial³Snap* s³ = ctx.frame.snap(Spatial³ID(sn.spatial));
         if(sn.vm_override){
             if(s³){
-                Tensor44D   vm  = comingle(ctx.view, ctx.domain * s³->local2domain, sn.vm_tensor);
+                Tensor44D   vm  = comingle(ctx.view, ctx.domain * s³->local2domain * sn.R2L, sn.vm_tensor);
                 pd.matrix   = glm::dmat4(ctx.projection * vm);
             } else {
-                Tensor44D   vm  = comingle(ctx.view, ctx.domain, sn.vm_tensor);
+                Tensor44D   vm  = comingle(ctx.view, ctx.domain * sn.R2L, sn.vm_tensor);
                 pd.matrix   = glm::dmat4(ctx.projection * vm);
             }
         } else {
             if(s³){
-                pd.matrix   = glm::dmat4(ctx.projection * ctx.view * ctx.domain * s³->local2domain);
+                pd.matrix   = glm::dmat4(ctx.projection * ctx.view * ctx.domain * s³->local2domain * sn.R2L);
             } else {
-                pd.matrix   = glm::dmat4(ctx.projection * ctx.view * ctx.domain);
+                pd.matrix   = glm::dmat4(ctx.projection * ctx.view * ctx.domain * sn.R2L);
             }
         }
     }
@@ -211,9 +211,9 @@ namespace yq::tachyon {
         
         const Spatial³Snap* s³ = ctx.frame.snap(Spatial³ID(sn.spatial));
         if(s³){
-            pd.model        = glm::dmat4(ctx.domain * s³->local2domain);
+            pd.model        = glm::dmat4(ctx.domain * s³->local2domain * sn.R2L);
         } else {
-            pd.model        = glm::dmat4(ctx.domain);
+            pd.model        = glm::dmat4(ctx.domain * sn.R2L);
         }
     }
     

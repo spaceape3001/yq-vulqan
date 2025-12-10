@@ -22,6 +22,8 @@ namespace yq::tachyon {
         Tensor44D       vm_tensor       = NAN;
         Vector3D        bias{};
         
+        Tensor44D       R2L             = IDENTITY;    // thus, local = R2L * rendered
+        
         // Our "bounds" in model coordinates
         bounds³_t       bounds;
 
@@ -36,4 +38,19 @@ namespace yq::tachyon {
     
     struct Rendered³Data : public RenderedData, public ③Data {
     };
+    
+/*
+
+    Coordinate transforms... 
+    
+        P   => projection matrix, maps view space to camera space
+        V   => view matrix, maps world space to camera space (which, to compute, is really the inverse of the camera's model matrix)
+        D   => domain space (these will have to stack as they may be nested)
+        L   => local space (for the rendered/asset)
+        R   => rendered space
+        M   => model matrix
+        
+        So, when a bit is missing, use the identity matrix
+*/
+    
 }

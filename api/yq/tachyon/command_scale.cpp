@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "command/ScaleCommand.ipp"
 #include "command/scale/AddScale1Command.ipp"
 #include "command/scale/AddScale2Command.ipp"
 #include "command/scale/AddScale3Command.ipp"

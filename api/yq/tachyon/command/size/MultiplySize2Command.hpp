@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/command/spatial/SizeCommand.hpp>
+#include <yq/tachyon/command/SizeCommand.hpp>
 #include <yq/vector/Vector2.hpp>
 
 namespace yq::tachyon {

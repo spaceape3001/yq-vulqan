@@ -4,17 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Spatial3.hpp>
+#include "Spatial3.hpp"
 #include <yq/tachyon/api/Spatial3Data.hpp>
 #include <yq/tachyon/api/Spatial3MetaWriter.hpp>
-#include <yq/tensor/Tensor33.hpp>
-#include <yq/vector/Quaternion3.hpp>
-#include <yq/vector/Vector3.hpp>
+#include <yq/tachyon/api/Math.hpp>
 #include <yq/meta/Init.hpp>
-
-#include <yq/tensor/Tensor33.hxx>
-#include <yq/vector/Quaternion3.hxx>
-#include <yq/vector/Vector3.hxx>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Spatial³);
 YQ_TYPE_IMPLEMENT(yq::tachyon::Spatial³ID)
@@ -52,39 +46,26 @@ namespace yq::tachyon {
 
     void        Spatial³::snap(Spatial³Snap&sn, const Vector3D& pos, const Tensor33D& T) const
     {
-        Spatial::snap(sn);
-
-        Tensor33D   T2   = inverse(T);
-        Vector3D    pos2 = T2 * pos;
-        
-        sn.local2domain = Tensor44D(
-            T.xx, T.xy, T.xz, pos.x,
-            T.yx, T.yy, T.yz, pos.y,
-            T.zx, T.zy, T.zz, pos.z,
-            0., 0., 0., 1.
-        );
-        
-        sn.domain2local = Tensor44D(
-            T2.xx, T2.xy, T2.xz, -pos2.x,
-            T2.yx, T2.yy, T2.yz, -pos2.y,
-            T2.zx, T2.zy, T2.zz, -pos2.z,
-            0., 0., 0., 1.
-        );
+        snap(sn);
+        calculate_transform_matrix(sn.local2domain, &sn.domain2local, pos, T);
     }
     
     void        Spatial³::snap(Spatial³Snap&sn, const Vector3D& pos, const Tensor33D& T, const Vector3D& scale) const
     {
-        Spatial³::snap(sn, pos, T*diagonal(scale));
+        snap(sn);
+        calculate_transform_matrix(sn.local2domain, &sn.domain2local, pos, T, scale);
     }
 
     void        Spatial³::snap(Spatial³Snap&sn, const Vector3D& pos, const Quaternion3D& ori) const
     {
-        Spatial³::snap(sn, pos, tensor(ori));
+        snap(sn);
+        calculate_transform_matrix(sn.local2domain, &sn.domain2local, pos, ori);
     }
     
     void        Spatial³::snap(Spatial³Snap&sn, const Vector3D& pos, const Quaternion3D& ori, const Vector3D& scale) const
     {
-        Spatial³::snap(sn, pos, tensor(ori)*diagonal(scale));
+        snap(sn);
+        calculate_transform_matrix(sn.local2domain, &sn.domain2local, pos, ori, scale);
     }
 
     ////////////////////////////////////////////////////////////////////////////

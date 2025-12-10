@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/command/spatial/ScaleCommand.hpp>
+#include <yq/tachyon/command/ScaleCommand.hpp>
 
 namespace yq::tachyon {
 

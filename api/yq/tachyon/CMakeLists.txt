@@ -101,6 +101,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Light.cpp    
     api/Light3.cpp
     api/Manager.cpp
+    api/Math.cpp
     api/Message.cpp
     api/Mini.cpp
     api/Model.cpp

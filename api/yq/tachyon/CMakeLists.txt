@@ -271,6 +271,7 @@ add_library(${PROJECT_NAME} SHARED
     
     io/GLSLShader.cpp
     io/GLTFLoader.cpp
+    io/ImageHMV.cpp
     io/MaterialKV.cpp
     #io/MeshXML.cpp
     io/ObjLoader.cpp

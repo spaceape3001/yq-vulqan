@@ -25,10 +25,6 @@ namespace yq::tachyon {
     class SetRollCommand;
     class YawByCommand;
     
-    class MoveBy³Command;
-    class MoveByˣCommand;
-    class MoveByʸCommand;
-    class MoveByᶻCommand;
 
     /*! \brief Simple 3D Spatial
     
@@ -51,32 +47,10 @@ namespace yq::tachyon {
         SimpleSpatial³(const Vector3D& pos = NAN, const Quaternion3D& ori = NAN, const Vector3D& scale = NAN, const Param& p=Param());
         ~SimpleSpatial³();
         
-        void    move_by(const Vector3D&);
-        void    rotate_by(const Quaternion3D&);
-        void    rotate_by(const unit::Radian3D&);
-        void    inflate_by(const Vector3D&);
-
-        void    set_position(const Vector3D&);
-        void    set_orientation(const Quaternion3D&);
-        void    set_scale(const Vector3D&);
-        
-        using APosition³::position;
-        using AScale³::scale;
-        using AOrientation³::orientation;
-
         static void init_meta();
         
     protected:
         void        snap(Spatial³Snap&) const;
         
-        void    on_move³(const MoveBy³Command&);
-        void    on_moveˣ(const MoveByˣCommand&);
-        void    on_moveʸ(const MoveByʸCommand&);
-        void    on_moveᶻ(const MoveByᶻCommand&);
-
-    private:
-        
-        using Tachyon::mark;
-        using Tachyon::send;
     };
 }

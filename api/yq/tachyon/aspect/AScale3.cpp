@@ -22,8 +22,10 @@
 
 
 namespace yq::tachyon {
-    AScale³::AScale³()
+    AScale³::AScale³(const Vector3D& sca)
     {
+        if(!is_nan(sca))
+            m_scale = sca;
     }
     
     AScale³::~AScale³()
@@ -37,6 +39,9 @@ namespace yq::tachyon {
 
     void        AScale³::scale(set_k, const Vector3D& sz) 
     {
+        if(is_nan(sz))
+            return ;
+            
         m_scale  =    sz;
         mark();
         scale(EMIT);

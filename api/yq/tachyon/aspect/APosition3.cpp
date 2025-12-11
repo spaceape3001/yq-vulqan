@@ -25,8 +25,10 @@
 #include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
-    APosition³::APosition³()
+    APosition³::APosition³(const Vector3D& pos)
     {
+        if(!is_nan(pos))
+            m_position  = pos;
     }
     
     APosition³::~APosition³()
@@ -40,6 +42,9 @@ namespace yq::tachyon {
 
     void        APosition³::position(set_k, const Vector3D& sz) 
     {
+        if(is_nan(sz))
+            return ;
+            
         m_position  =    sz;
         mark();
         position(EMIT);

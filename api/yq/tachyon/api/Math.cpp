@@ -14,6 +14,11 @@
 #include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
+    void    calculate_transform_matrix(Tensor44D& l2d, Tensor44D* p_d2l, const Vector3D& pos, identity_k, const Vector3D& scale)
+    {
+        calculate_transform_matrix(l2d, p_d2l, pos, diagonal(scale));
+    }
+
     void    calculate_transform_matrix(Tensor44D& l2d, Tensor44D* p_d2l, const Vector3D&pos, const Quaternion3D&T)
     {
         calculate_transform_matrix(l2d, p_d2l, pos, tensor(T));

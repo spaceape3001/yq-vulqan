@@ -20,8 +20,10 @@
 #include <yq/vector/Quaternion3.hxx>
 
 namespace yq::tachyon {
-    AOrientation³::AOrientation³()
+    AOrientation³::AOrientation³(const Quaternion3D& ori)
     {
+        if(!is_nan(ori))
+            m_orientation   = ori;
     }
     
     AOrientation³::~AOrientation³()
@@ -37,6 +39,8 @@ namespace yq::tachyon {
     {
         double  q   = Q.length²();
         if(q < 1e-6)
+            return ;
+        if(is_nan(q))
             return ;
         m_orientation = Q / sqrt(q);
         mark();

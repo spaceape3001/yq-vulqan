@@ -59,7 +59,7 @@ namespace yq::tachyon {
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        AOrientation³();
+        AOrientation³(const Quaternion3D& ori=IDENTITY);
         virtual ~AOrientation³();
         
         void        orientation(emit_k);

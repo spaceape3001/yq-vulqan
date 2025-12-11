@@ -67,7 +67,7 @@ namespace yq::tachyon {
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        APosition³();
+        APosition³(const Vector3D& pos=ZERO);
         virtual ~APosition³();
         
         void        position(emit_k);

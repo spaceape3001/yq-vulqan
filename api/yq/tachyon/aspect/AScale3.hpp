@@ -67,7 +67,7 @@ namespace yq::tachyon {
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        AScale³();
+        AScale³(const Vector3D& sca=ONE);
         virtual ~AScale³();
 
         void            scale(emit_k);

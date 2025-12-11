@@ -20,6 +20,9 @@ namespace yq::tachyon {
     class HeightField³ : public Rendered³, public AColor, public AHeightField, public AMaterial, public ASpatial³ {
         YQ_TACHYON_DECLARE(HeightField³, Rendered³)
     public:
+    
+        struct Param : public Rendered³::Param {
+        };
         
         HeightField³();
         HeightField³(const Param&);

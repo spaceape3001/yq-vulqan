@@ -52,11 +52,32 @@ bool cmd_help(ExecAPI&)
 
 bool cmd_save(ExecAPI& api)
 {
-    if(api.args.empty()){
+    if(api.res.empty()){
         yError() << "Need a resource in order to save.";
         return false;
     }
-    return false;
+    if(api.res.size() > 1){
+        yError() << "Can only save ONE resource!";
+        return false;
+    }
+    if(api.args.empty()){
+        yError() << "Need a place to save it...";
+        return false;
+    }
+    
+    return api.res[0] -> save_to(api.args[0], {.collision = FileCollisionStrategy::Backup}) == std::error_code();
+}
+
+bool cmd_type(ExecAPI& api)
+{
+    for(auto& r : api.res){
+        if(!r)
+            continue;
+            
+        //  eventually the full info... for now...
+        std::cout << r->metaInfo().name() << ": " << r->url() << '\n';
+    }
+    return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -67,7 +88,9 @@ struct CmdInfo {
     const char*     name    = nullptr;
     CmdFN           fn      = nullptr;
 } kCommands[] = {
-    { "help", cmd_help }
+    { "help", cmd_help },
+    { "save", cmd_save },
+    { "type", cmd_type }
 };
 
 
@@ -89,7 +112,7 @@ Cmd parse_cmd(const char* txt)
     Cmd ret;
     ret.cmd = std::string_view(txt, eq);
     
-    vsplit(txt+1, ',', [&](std::string_view bit){
+    vsplit(eq+1, ',', [&](std::string_view bit){
         ret.args.push_back(bit);
     });
     return ret;

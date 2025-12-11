@@ -62,6 +62,7 @@ namespace yq::tachyon {
                     if(!x)
                         return true;
                     data.push_back(*x);
+                    ++cnt;
                     return false;
                 }))
                     return true;
@@ -149,7 +150,7 @@ namespace yq::tachyon {
     
     RasterPtr       loadHMV(std::istream&istr, const Url& url)
     {
-        static constexpr const size_t   kBufferSize = 1024;
+        static constexpr const size_t   kBufferSize = 131072;
         char                                    buffer[kBufferSize];
         bool                                    extractMode = false;
         RasterInfo                              info;
@@ -161,11 +162,9 @@ namespace yq::tachyon {
         memset(buffer, 0, kBufferSize);
 
         while(!istr.eof()){
+            buffer[0] = '\0';   // safety
+            
             istr.getline(buffer, kBufferSize);
-            if(istr.fail()){
-                tachyonError << "Loading " << url << ": Encountered a read error.";
-                return {};
-            }
             
             if(!buffer[0]){
                 if(!extractor){
@@ -338,13 +337,13 @@ namespace yq::tachyon {
                         info.size.w     = sizes[3];
                         [[fallthrough]];
                     case 3:
-                        info.size.w     = sizes[2];
+                        info.size.z     = sizes[2];
                         [[fallthrough]];
                     case 2:
-                        info.size.w     = sizes[1];
+                        info.size.y     = sizes[1];
                         [[fallthrough]];
                     case 1:
-                        info.size.w     = sizes[0];
+                        info.size.x     = sizes[0];
                         break;
                     case 0:
                     default:
@@ -386,6 +385,7 @@ namespace yq::tachyon {
             tachyonError << "Loading " << url << ": Unable to commit values to memory";
             return {};
         }
+        
         return new Raster(info, std::move(mem));
     }
     
@@ -414,7 +414,7 @@ namespace yq::tachyon {
             const void* write(std::ostream& str, const void* buffer, size_t count) const  override
             {
                 const T* data = (const T*) buffer;
-                for(size_t i=0; i<count; ++count){
+                for(size_t i=0; i<count; ++i){
                     if(i)
                         str << "; ";
                     for(uint8_t n=0;n<N;++n){
@@ -561,10 +561,10 @@ namespace yq::tachyon {
             return errors::unsupported_data_format();
         
         
-        size_t nx = std::min(0U, ras.info.size.x);
-        size_t ny = std::min(0U, ras.info.size.y);
-        size_t nz = std::min(0U, ras.info.size.z);
-        size_t nw = std::min(0U, ras.info.size.w);
+        size_t nx = std::max(1U, ras.info.size.x);
+        size_t ny = std::max(1U, ras.info.size.y);
+        size_t nz = std::max(1U, ras.info.size.z);
+        size_t nw = std::max(1U, ras.info.size.w);
         
         size_t  size    = nx * ny * nz * nw * writor->per_channel_byte() * writor->multiplier();
         if(ras.memory.bytes() < size)
@@ -581,7 +581,7 @@ namespace yq::tachyon {
         ostr << "tiling=" << ras.info.tiling.key() << '\n';
         ostr << "type=" << ras.info.type.key() << '\n';
         ostr << '\n';
-        
+
         for(unsigned w = 0; w<nw; ++w)
             for(unsigned z = 0; z<nz; ++z)
                 for(unsigned y = 0; y<ny; ++y)
@@ -589,7 +589,6 @@ namespace yq::tachyon {
             data    = writor->write(ostr, data, nx);
             ostr << '\n';
         }
-    
         return {};
     }
 }

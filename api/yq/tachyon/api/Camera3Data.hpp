@@ -16,7 +16,7 @@ namespace yq::tachyon {
     struct Camera³Snap : public CameraSnap, public ③Snap {
         //  This is to apply any corrections to get the coordinate system correct... 
         //  the spatial will be on top of this.
-        //Tensor44D   view        = IDENTITY;
+        Tensor44D   view        = IDENTITY;
         Tensor44D   projection  = IDENTITY;
         Rectangle2D screen      = Rectangle2D(ZERO, ONE);
     };

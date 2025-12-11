@@ -47,25 +47,25 @@ namespace yq::tachyon {
     void        Spatial³::snap(Spatial³Snap&sn, const Vector3D& pos, const Tensor33D& T) const
     {
         snap(sn);
-        calculate_transform_matrix(sn.local2domain, &sn.domain2local, pos, T);
+        calculate_transform_matrix(&sn.local2domain, &sn.domain2local, pos, T);
     }
     
     void        Spatial³::snap(Spatial³Snap&sn, const Vector3D& pos, const Tensor33D& T, const Vector3D& scale) const
     {
         snap(sn);
-        calculate_transform_matrix(sn.local2domain, &sn.domain2local, pos, T, scale);
+        calculate_transform_matrix(&sn.local2domain, &sn.domain2local, pos, T, scale);
     }
 
     void        Spatial³::snap(Spatial³Snap&sn, const Vector3D& pos, const Quaternion3D& ori) const
     {
         snap(sn);
-        calculate_transform_matrix(sn.local2domain, &sn.domain2local, pos, ori);
+        calculate_transform_matrix(&sn.local2domain, &sn.domain2local, pos, ori);
     }
     
     void        Spatial³::snap(Spatial³Snap&sn, const Vector3D& pos, const Quaternion3D& ori, const Vector3D& scale) const
     {
         snap(sn);
-        calculate_transform_matrix(sn.local2domain, &sn.domain2local, pos, ori, scale);
+        calculate_transform_matrix(&sn.local2domain, &sn.domain2local, pos, ori, scale);
     }
 
     ////////////////////////////////////////////////////////////////////////////

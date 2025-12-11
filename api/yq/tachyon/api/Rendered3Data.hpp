@@ -22,7 +22,7 @@ namespace yq::tachyon {
         Tensor44D       vm_tensor       = NAN;
         Vector3D        bias{};
         
-        Tensor44D       R2L             = IDENTITY;    // thus, local = R2L * rendered
+        Tensor44D       model           = IDENTITY;    // model matrix (if there's no spatials, otherwise, it's in domain coordinates)
         
         // Our "bounds" in model coordinates
         bounds³_t       bounds;

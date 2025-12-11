@@ -6,7 +6,6 @@
 
 #include <yq/tachyon/io/GLSLShader.hpp>
 
-#include <yq/resource/Resource.hxx>
 #include <yq/core/ErrorDB.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/file/FileUtils.hpp>
@@ -14,6 +13,8 @@
 #include <yq/tachyon/asset/Shader.hpp>
 #include <yq/text/chars.hpp>
 #include <yq/tachyon/logging.hpp>
+
+#include <yq/resource/Resource.hxx>
 
 namespace yq::errors {
    using shader_compile_failure     = error_db::entry<"Shader failed to compile">;
@@ -175,7 +176,7 @@ namespace yq::tachyon::glsl {
     }
     
     namespace {
-        Shader* compile_load_shader(const std::filesystem::path& pth)
+        ShaderPtr compile_load_shader(const std::filesystem::path& pth)
         {
             ShaderType  st  = shader_type(pth);
             if(st == ShaderType())

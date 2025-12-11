@@ -14,29 +14,31 @@
 #include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
-    void    calculate_transform_matrix(Tensor44D& l2d, Tensor44D* p_d2l, const Vector3D& pos, identity_k, const Vector3D& scale)
+    void    calculate_transform_matrix(Tensor44D* p_l2d, Tensor44D* p_d2l, const Vector3D& pos, identity_k, const Vector3D& scale)
     {
-        calculate_transform_matrix(l2d, p_d2l, pos, diagonal(scale));
+        calculate_transform_matrix(p_l2d, p_d2l, pos, diagonal(scale));
     }
 
-    void    calculate_transform_matrix(Tensor44D& l2d, Tensor44D* p_d2l, const Vector3D&pos, const Quaternion3D&T)
+    void    calculate_transform_matrix(Tensor44D* p_l2d, Tensor44D* p_d2l, const Vector3D&pos, const Quaternion3D&T)
     {
-        calculate_transform_matrix(l2d, p_d2l, pos, tensor(T));
+        calculate_transform_matrix(p_l2d, p_d2l, pos, tensor(T));
     }
     
-    void    calculate_transform_matrix(Tensor44D& l2d, Tensor44D* p_d2l, const Vector3D&pos, const Quaternion3D&T, const Vector3D&scale)
+    void    calculate_transform_matrix(Tensor44D* p_l2d, Tensor44D* p_d2l, const Vector3D&pos, const Quaternion3D&T, const Vector3D&scale)
     {
-        calculate_transform_matrix(l2d, p_d2l, pos, tensor(T), scale);
+        calculate_transform_matrix(p_l2d, p_d2l, pos, tensor(T), scale);
     }
     
-    void    calculate_transform_matrix(Tensor44D& l2d, Tensor44D* p_d2l, const Vector3D&pos, const Tensor33D&T)
+    void    calculate_transform_matrix(Tensor44D* p_l2d, Tensor44D* p_d2l, const Vector3D&pos, const Tensor33D&T)
     {
-        l2d = Tensor44D(
-            T.xx, T.xy, T.xz, pos.x,
-            T.yx, T.yy, T.yz, pos.y,
-            T.zx, T.zy, T.zz, pos.z,
-            0., 0., 0., 1.
-        );
+        if(p_l2d){
+            *p_l2d = Tensor44D(
+                T.xx, T.xy, T.xz, pos.x,
+                T.yx, T.yy, T.yz, pos.y,
+                T.zx, T.zy, T.zz, pos.z,
+                0., 0., 0., 1.
+            );
+        }
         
         if(p_d2l){
             Tensor33D   T2   = inverse(T);
@@ -51,9 +53,9 @@ namespace yq::tachyon {
         }
     }
     
-    void    calculate_transform_matrix(Tensor44D& l2d, Tensor44D* p_d2l, const Vector3D&pos, const Tensor33D&T, const Vector3D&scale)
+    void    calculate_transform_matrix(Tensor44D* p_l2d, Tensor44D* p_d2l, const Vector3D&pos, const Tensor33D&T, const Vector3D&scale)
     {
-        calculate_transform_matrix(l2d, p_d2l, pos, T*diagonal(scale));
+        calculate_transform_matrix(p_l2d, p_d2l, pos, T*diagonal(scale));
     }
 }
 

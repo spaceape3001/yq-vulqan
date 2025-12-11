@@ -11,11 +11,11 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::ScaleCommand)
 
 namespace yq::tachyon {
 
-    ScaleCommand::ScaleCommand(const Header&h) : Command(h)
+    ScaleCommand::ScaleCommand(const Header&h) : SpatialCommand(h)
     {
     }
 
-    ScaleCommand::ScaleCommand(const ScaleCommand& cp, const Header& h) : Command(cp, h)
+    ScaleCommand::ScaleCommand(const ScaleCommand& cp, const Header& h) : SpatialCommand(cp, h)
     {
     }
     

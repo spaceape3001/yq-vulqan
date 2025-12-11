@@ -8,3 +8,5 @@
 #include "command/spatial/AABBCommand.ipp"
 #include "command/spatial/OrientationCommand.ipp"
 #include "command/spatial/PositionCommand.ipp"
+#include "command/spatial/ScaleCommand.ipp"
+

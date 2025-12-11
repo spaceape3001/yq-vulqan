@@ -97,9 +97,9 @@ namespace yq::tachyon {
         if(camera){
             proj        = camera->projection;
             if(const Spatial³Snap* s³ = frame.snap(Spatial³ID(camera -> spatial))){
-                view        = s³ -> domain2local;
+                view        = s³ -> domain2local * camera->view;
             } else {
-                view        = IDENTITY;
+                view        = camera->view;
             }
         } else {
             view            = IDENTITY;
@@ -176,17 +176,17 @@ namespace yq::tachyon {
         const Spatial³Snap* s³ = ctx.frame.snap(Spatial³ID(sn.spatial));
         if(sn.vm_override){
             if(s³){
-                Tensor44D   vm  = comingle(ctx.view, ctx.domain * s³->local2domain * sn.R2L, sn.vm_tensor);
+                Tensor44D   vm  = comingle(ctx.view, ctx.domain * s³->local2domain * sn.model, sn.vm_tensor);
                 pd.matrix   = glm::dmat4(ctx.projection * vm);
             } else {
-                Tensor44D   vm  = comingle(ctx.view, ctx.domain * sn.R2L, sn.vm_tensor);
+                Tensor44D   vm  = comingle(ctx.view, ctx.domain * sn.model, sn.vm_tensor);
                 pd.matrix   = glm::dmat4(ctx.projection * vm);
             }
         } else {
             if(s³){
-                pd.matrix   = glm::dmat4(ctx.projection * ctx.view * ctx.domain * s³->local2domain * sn.R2L);
+                pd.matrix   = glm::dmat4(ctx.projection * ctx.view * ctx.domain * s³->local2domain * sn.model);
             } else {
-                pd.matrix   = glm::dmat4(ctx.projection * ctx.view * ctx.domain * sn.R2L);
+                pd.matrix   = glm::dmat4(ctx.projection * ctx.view * ctx.domain * sn.model);
             }
         }
     }
@@ -211,9 +211,9 @@ namespace yq::tachyon {
         
         const Spatial³Snap* s³ = ctx.frame.snap(Spatial³ID(sn.spatial));
         if(s³){
-            pd.model        = glm::dmat4(ctx.domain * s³->local2domain * sn.R2L);
+            pd.model        = glm::dmat4(ctx.domain * s³->local2domain * sn.model);
         } else {
-            pd.model        = glm::dmat4(ctx.domain * sn.R2L);
+            pd.model        = glm::dmat4(ctx.domain * sn.model);
         }
     }
     

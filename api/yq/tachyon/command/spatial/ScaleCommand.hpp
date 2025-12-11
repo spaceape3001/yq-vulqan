@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Command.hpp>
+#include <yq/tachyon/command/SpatialCommand.hpp>
 
 namespace yq::tachyon {
-    class ScaleCommand : public Command {
-        YQ_OBJECT_DECLARE(ScaleCommand, Command)
+    class ScaleCommand : public SpatialCommand {
+        YQ_OBJECT_DECLARE(ScaleCommand, SpatialCommand)
     public:
         ScaleCommand(const Header&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

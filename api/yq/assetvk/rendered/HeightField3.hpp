@@ -11,13 +11,13 @@
 #include <yq/tachyon/aspect/AColor.hpp>
 #include <yq/tachyon/aspect/AHeightField.hpp>
 #include <yq/tachyon/aspect/AMaterial.hpp>
-#include <yq/tachyon/aspect/ASpatial3.hpp>
+#include <yq/tachyon/aspect/ASize3.hpp>
 #include <yq/tachyon/asset/Texture.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 
 namespace yq::tachyon {
-    class HeightField³ : public Rendered³, public AColor, public AHeightField, public AMaterial, public ASpatial³ {
+    class HeightField³ : public Rendered³, public AColor, public AHeightField, public AMaterial, public ASize³ {
         YQ_TACHYON_DECLARE(HeightField³, Rendered³)
     public:
     

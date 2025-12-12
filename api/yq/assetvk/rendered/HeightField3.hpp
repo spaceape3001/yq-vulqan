@@ -9,6 +9,7 @@
 #include <yq/math/glm.hpp>
 #include <yq/tachyon/api/Rendered3.hpp>
 #include <yq/tachyon/aspect/AColor.hpp>
+#include <yq/tachyon/aspect/ACount2.hpp>
 #include <yq/tachyon/aspect/AHeightField.hpp>
 #include <yq/tachyon/aspect/AMaterial.hpp>
 #include <yq/tachyon/aspect/ASize3.hpp>
@@ -24,11 +25,12 @@ namespace yq::tachyon {
         
         By default, the dimensions will be [-1,1] on each axis, with the UV being 0,0 on the -1,-1 corner.
     */
-    class HeightField³ : public Rendered³, public AColor, public AHeightField, public AMaterial, public ASize³ {
+    class HeightField³ : public Rendered³, public AColor, public ACount², public AHeightField, public AMaterial, public ASize³ {
         YQ_TACHYON_DECLARE(HeightField³, Rendered³)
     public:
     
         struct Param : public Rendered³::Param {
+            Vector2U    count   = { 20, 20 };
         };
         
         HeightField³();
@@ -52,13 +54,16 @@ namespace yq::tachyon {
             glm::vec2   uv;
         };
         
+        struct Gridder;
+        
         //  Idea is coloration (by altitude) instead of all the same... another draw mode...
         //TextureCPtr     m_color;
         
         IB1<uint32_t>       m_index;
         VB1<glm::vec2>      m_vboPos;
         UB1<UData>          m_ubo;
-        Size2U              m_count = { 11, 11 };
+        
+        void        divide(const Vector2U&);
         
         bool good_heightfield() const;
     };

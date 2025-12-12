@@ -19,6 +19,7 @@
 #include <yq/tachyon/asset/Texture.hpp>
 
 namespace yq::tachyon {
+    HeightFieldCPtr     load_heightfield(const Url&);
 
 #if 0
 

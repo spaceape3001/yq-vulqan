@@ -11,6 +11,7 @@
 #include <yq/resource/ResourceMetaWriter.hpp>
 
 namespace yq::tachyon {
+#if 0
     void HeightField::init_meta()
     {
         auto w = writer<HeightField>();
@@ -66,6 +67,23 @@ namespace yq::tachyon {
     HeightField::~HeightField()
     {
     }
+#endif
+
+    HeightFieldCPtr     load_heightfield(const Url& u)
+    {
+        ResourceCPtr    res = Resource::resource_load({&meta<Texture>(), &meta<Raster>()}, u);
+        if(!res)
+            return {};
+        if(const HeightField* h = dynamic_cast<const HeightField*>(res.ptr()))
+            return h;
+        if(const Raster* r = dynamic_cast<const Raster*>(res.ptr())){
+            TextureInfo2    texInfo;
+            // if we need to tweak...
+            return new Texture(r, texInfo);
+        }
+        return {};
+    }
+    
 }
 
-YQ_RESOURCE_IMPLEMENT(yq::tachyon::HeightField)
+//YQ_RESOURCE_IMPLEMENT(yq::tachyon::HeightField)

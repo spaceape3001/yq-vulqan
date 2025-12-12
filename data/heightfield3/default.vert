@@ -13,10 +13,10 @@ layout(push_constant) uniform constants {
     mat4    model2screen;
 } k;
 
-layout(binding = 0) uniform sampler2D heightSampler;
+//layout(binding = 0) uniform sampler2D heightSampler;
 
 void main() {
-    float z = texture(heightSampler, inUV).x;
-    gl_Position = k.model2screen * vec4(inPosition.x, inPosition.y, z, 1.0);
+    //float z = texture(heightSampler, inUV).x;
+    gl_Position = k.model2screen * vec4(inPosition.x, inPosition.y, 0., 1.0);
 }
 

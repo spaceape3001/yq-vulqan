@@ -9,6 +9,7 @@
 #include <yq/core/IntRange.hpp>
 #include <yq/math/UV.hpp>
 #include <yq/shape/AxBox2.hpp>
+#include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Math.hpp>
 #include <yq/tachyon/api/Rendered3MetaWriter.hpp>
 #include <yq/tachyon/asset/Raster.hpp>
@@ -17,6 +18,7 @@
 
 #include <yq/shape/AxBox2.hxx>
 #include <yq/tachyon/aspect/AColorWriter.hxx>
+#include <yq/tachyon/aspect/ACount2Writer.hxx>
 #include <yq/tachyon/aspect/AHeightFieldWriter.hxx>
 #include <yq/tachyon/aspect/AMaterialWriter.hxx>
 #include <yq/tachyon/aspect/ASize3Writer.hxx>
@@ -29,18 +31,20 @@ namespace yq::tachyon {
         auto w = writer<HeightField³>();
         w.description("Height Field Render Object");
         AColor::init_meta(w);
+        ACount²::init_meta(w);
         AHeightField::init_meta(w);
         AMaterial::init_meta(w);
         ASize³::init_meta(w);
         
-        {
-            auto p = w.pipeline();
-            p.shaders({ "heightfield3/default.vert", "debug/color/cyan.frag" });
-            p.topology(Topology::TriangleStrip);
-            p.vertex(&HeightField³::m_vboPos, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-        }
+        
+        auto& p = w.pipeline();
+        p.shader( "heightfield3/default.vert");
+        p.shader( "debug/color/cyan.frag" );
+        p.topology(Topology::TriangleStrip);
+        p.vertex(&HeightField³::m_vboPos, {.activity=DYNAMIC});
+        p.index(&HeightField³::m_index);
+        p.polygons(PolygonMode::Line);
+        p.push_full();
     }
 
     HeightField³::HeightField³() : HeightField³(Param())
@@ -49,6 +53,7 @@ namespace yq::tachyon {
     
     HeightField³::HeightField³(const Param& p) : Rendered³(Param()), ACount²(p.count)
     {
+        rebuild();
     }
     
     HeightField³::~HeightField³()
@@ -152,10 +157,12 @@ namespace yq::tachyon {
             }
             
             uint32_t    n1  = (uint32_t) m_index.data.size();
+            #if 0
             m_indexDraws.push_back({
                 .index_count    = n1 - n,
                 .first_index    = n
             });
+            #endif
         }
         m_index.update();
     }
@@ -173,10 +180,20 @@ namespace yq::tachyon {
     
     void    HeightField³::rebuild()
     {
-        if(!good_heightfield()){
-            m_good = false;
+        // alter so a bad height field is... still there, just a no-heightmap shader... 
+        // Have the AHeightField ... detect for Raster ... smart sampler
+        // Resource might need multiple meta for verification
+        //if(!good_heightfield()){
+            //m_good = false;
+            //return ;
+        //}
+        
+        auto& cnt   = ACount²::m_count;
+        m_good    = cnt.x && cnt.y;
+        if(!m_good)
             return ;
-        }
+            
+        
         
         divide(ACount²::m_count);
     }

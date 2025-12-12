@@ -9,6 +9,7 @@
 #include <yq/tachyon/command/SetHeightFieldCommand.hpp>
 #include <yq/tachyon/command/SetHeightFieldUrlCommand.hpp>
 #include <yq/tachyon/event/SetHeightFieldEvent.hpp>
+#include <yq/tachyon/asset/TextureInfo.hpp>
 
 namespace yq::tachyon {
     AHeightField::AHeightField()
@@ -48,7 +49,7 @@ namespace yq::tachyon {
         if(u.empty()){
             m_heightField   = {};
         } else {
-            m_heightField   = HeightField::IO::load(u);
+            m_heightField   = load_heightfield(u);
         }
         mark();
         height_field(EMIT);

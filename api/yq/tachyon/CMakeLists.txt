@@ -25,6 +25,7 @@ add_library(${PROJECT_NAME} SHARED
     command_camera.cpp
     command_color.cpp
     command_controller.cpp
+    command_count.cpp
     command_cursor.cpp
     command_light.cpp
     command_orientation.cpp

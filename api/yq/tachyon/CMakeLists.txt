@@ -22,6 +22,9 @@ add_library(${PROJECT_NAME} SHARED
     
     api_meta.cpp
 
+    aspect_count.cpp
+    aspect_max_size.cpp
+    aspect_min_size.cpp
     aspect_position.cpp
     aspect_size.cpp
 
@@ -45,6 +48,7 @@ add_library(${PROJECT_NAME} SHARED
     command_vertex.cpp
     command_viewer.cpp
 
+    event_camera.cpp
     event_color.cpp
     event_count.cpp
     event_cursor.cpp
@@ -66,6 +70,12 @@ add_library(${PROJECT_NAME} SHARED
     os_glfw.cpp
     
     post.cpp
+    
+    proxy_count.cpp
+    proxy_max_size.cpp
+    proxy_min_size.cpp
+    proxy_position.cpp
+    proxy_size.cpp
 
     thread.cpp
     
@@ -142,24 +152,12 @@ add_library(${PROJECT_NAME} SHARED
 
     aspect/ABgColor.cpp
     aspect/AColor.cpp
-    aspect/ACount1.cpp
-    aspect/ACount2.cpp
-    aspect/ACount3.cpp
-    aspect/ACount4.cpp
     aspect/ADrawMode.cpp
     aspect/AFarPlane.cpp
     aspect/AFieldOfView.cpp
     aspect/AHeightField.cpp
     aspect/AMaterial.cpp
-    aspect/AMaxSize1.cpp
-    aspect/AMaxSize2.cpp
-    aspect/AMaxSize3.cpp
-    aspect/AMaxSize4.cpp
     aspect/AMesh.cpp
-    aspect/AMinSize1.cpp
-    aspect/AMinSize2.cpp
-    aspect/AMinSize3.cpp
-    aspect/AMinSize4.cpp
     aspect/ANearPlane.cpp
     aspect/AOrientation2.cpp
     aspect/AOrientation3.cpp
@@ -238,7 +236,6 @@ add_library(${PROJECT_NAME} SHARED
     enum/UIFlags.cpp
 
     event/AppEvent.cpp
-    event/CameraEvent.cpp
     event/EditorEvent.cpp
     event/EmptyEvent.cpp
     event/InputEvent.cpp
@@ -254,9 +251,6 @@ add_library(${PROJECT_NAME} SHARED
     event/VulqanEvent.cpp
     event/WidgetEvent.cpp
 
-    event/camera/FarPlaneEvent.cpp
-    event/camera/NearPlaneEvent.cpp
-    
     event/shape/SetMeshEvent.cpp
     event/thread/ThreadAddTachyonEvent.cpp
     
@@ -299,38 +293,18 @@ add_library(${PROJECT_NAME} SHARED
 
     proxy/PBgColor.cpp
     proxy/PColor.cpp
-    proxy/PCount1.cpp
-    proxy/PCount2.cpp
-    proxy/PCount3.cpp
-    proxy/PCount4.cpp
     proxy/PDrawMode.cpp
     proxy/PFarPlane.cpp
     proxy/PFieldOfView.cpp
     proxy/PHeightField.cpp
     proxy/PMaterial.cpp
-    proxy/PMaxSize1.cpp
-    proxy/PMaxSize2.cpp
-    proxy/PMaxSize3.cpp
-    proxy/PMaxSize4.cpp
     proxy/PMesh.cpp
-    proxy/PMinSize1.cpp
-    proxy/PMinSize2.cpp
-    proxy/PMinSize3.cpp
-    proxy/PMinSize4.cpp
     proxy/PNearPlane.cpp
     proxy/POrientation2.cpp
     proxy/POrientation3.cpp
-    proxy/PPosition1.cpp
-    proxy/PPosition2.cpp
-    proxy/PPosition3.cpp
-    proxy/PPosition4.cpp
     proxy/PScale1.cpp
     proxy/PScale2.cpp
     proxy/PScale3.cpp
-    proxy/PSize1.cpp
-    proxy/PSize2.cpp
-    proxy/PSize3.cpp
-    proxy/PSize4.cpp
     proxy/PTexture.cpp
     proxy/PTopology.cpp
     proxy/PVertices3.cpp

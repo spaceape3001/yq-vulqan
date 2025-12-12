@@ -12,12 +12,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SetTextureCommand)
 
 namespace yq::tachyon {
 
-    SetTextureCommand::SetTextureCommand(const Header&h, const TextureCPtr& dm) : ShapeCommand(h), m_texture(dm)
+    SetTextureCommand::SetTextureCommand(const Header&h, const TextureCPtr& dm) : Command(h), m_texture(dm)
     {
     }
 
     SetTextureCommand::SetTextureCommand(const SetTextureCommand& cp, const Header& h) : 
-        ShapeCommand(cp, h), m_texture(cp.m_texture)
+        Command(cp, h), m_texture(cp.m_texture)
     {
     }
     

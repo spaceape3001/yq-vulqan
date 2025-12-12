@@ -6,9 +6,9 @@
 
 #include "AHeightField.hpp"
 #include <yq/tachyon/asset/HeightField.hpp>
-#include <yq/tachyon/command/shape/SetHeightFieldCommand.hpp>
-#include <yq/tachyon/command/shape/SetHeightFieldUrlCommand.hpp>
-#include <yq/tachyon/event/shape/SetHeightFieldEvent.hpp>
+#include <yq/tachyon/command/SetHeightFieldCommand.hpp>
+#include <yq/tachyon/command/SetHeightFieldUrlCommand.hpp>
+#include <yq/tachyon/event/SetHeightFieldEvent.hpp>
 
 namespace yq::tachyon {
     AHeightField::AHeightField()

@@ -198,6 +198,12 @@ add_library(${PROJECT_NAME} SHARED
     command/JoystickCommand.cpp
     command/MouseCommand.cpp
     command/SceneCommand.cpp
+    command/SetHeightFieldCommand.cpp
+    command/SetHeightFieldUrlCommand.cpp
+    command/SetMaterialCommand.cpp
+    command/SetMaterialUrlCommand.cpp
+    command/SetTextureCommand.cpp
+    command/SetTextureUrlCommand.cpp
     command/ShapeCommand.cpp
     command/WidgetCommand.cpp
     command/WindowCommand.cpp
@@ -214,14 +220,8 @@ add_library(${PROJECT_NAME} SHARED
     command/joystick/JoystickZeroCommand.cpp
     
     command/shape/SetDrawModeCommand.cpp
-    command/shape/SetHeightFieldCommand.cpp
-    command/shape/SetHeightFieldUrlCommand.cpp
-    command/shape/SetMaterialCommand.cpp
-    command/shape/SetMaterialUrlCommand.cpp
     command/shape/SetMeshCommand.cpp
     command/shape/SetMeshUrlCommand.cpp
-    command/shape/SetTextureCommand.cpp
-    command/shape/SetTextureUrlCommand.cpp
     command/shape/SetTopologyCommand.cpp
     
     command/widget/SetViewer.cpp
@@ -243,6 +243,9 @@ add_library(${PROJECT_NAME} SHARED
     event/IOEvent.cpp
     event/OSEvent.cpp
     event/PanelEvent.cpp
+    event/SetHeightFieldEvent.cpp
+    event/SetMaterialEvent.cpp
+    event/SetTextureEvent.cpp
     event/ShapeEvent.cpp
     event/ThreadEvent.cpp
     event/ViewerEvent.cpp
@@ -252,10 +255,7 @@ add_library(${PROJECT_NAME} SHARED
     event/camera/FarPlaneEvent.cpp
     event/camera/NearPlaneEvent.cpp
     
-    event/shape/SetHeightFieldEvent.cpp
-    event/shape/SetMaterialEvent.cpp
     event/shape/SetMeshEvent.cpp
-    event/shape/SetTextureEvent.cpp
     event/thread/ThreadAddTachyonEvent.cpp
     
     im/KVTable.cpp

@@ -7,12 +7,12 @@
 #pragma once
 
 #include <yq/net/Url.hpp>
-#include <yq/tachyon/event/ShapeEvent.hpp>
+#include <yq/tachyon/api/Event.hpp>
 #include <yq/tachyon/typedef/texture.hpp>
 
 namespace yq::tachyon {
-    class SetTextureEvent : public ShapeEvent {
-        YQ_OBJECT_DECLARE(SetTextureEvent, ShapeEvent)
+    class SetTextureEvent : public Event {
+        YQ_OBJECT_DECLARE(SetTextureEvent, Event)
     public:
         SetTextureEvent(const Header&, const TextureCPtr&, const Url&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

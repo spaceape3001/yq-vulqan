@@ -11,12 +11,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMaterialUrlCommand)
 
 namespace yq::tachyon {
 
-    SetMaterialUrlCommand::SetMaterialUrlCommand(const Header&h, const Url& dm) : ShapeCommand(h), m_url(dm)
+    SetMaterialUrlCommand::SetMaterialUrlCommand(const Header&h, const Url& dm) : Command(h), m_url(dm)
     {
     }
 
     SetMaterialUrlCommand::SetMaterialUrlCommand(const SetMaterialUrlCommand& cp, const Header& h) : 
-        ShapeCommand(cp, h), m_url(cp.m_url)
+        Command(cp, h), m_url(cp.m_url)
     {
     }
     

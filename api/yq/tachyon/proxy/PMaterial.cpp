@@ -6,8 +6,8 @@
 
 #include "PMaterial.hpp"
 #include <yq/tachyon/asset/Material.hpp>
-#include <yq/tachyon/command/shape/SetMaterialCommand.hpp>
-#include <yq/tachyon/command/shape/SetMaterialUrlCommand.hpp>
+#include <yq/tachyon/command/SetMaterialCommand.hpp>
+#include <yq/tachyon/command/SetMaterialUrlCommand.hpp>
 
 namespace yq::tachyon {
     PMaterial::PMaterial(const IMaterial& i) : m_material(i.material()), m_url(i.material(URL))

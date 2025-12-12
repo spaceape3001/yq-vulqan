@@ -6,8 +6,8 @@
 
 #include "PHeightField.hpp"
 #include <yq/tachyon/asset/HeightField.hpp>
-#include <yq/tachyon/command/shape/SetHeightFieldCommand.hpp>
-#include <yq/tachyon/command/shape/SetHeightFieldUrlCommand.hpp>
+#include <yq/tachyon/command/SetHeightFieldCommand.hpp>
+#include <yq/tachyon/command/SetHeightFieldUrlCommand.hpp>
 
 namespace yq::tachyon {
     PHeightField::PHeightField(const IHeightField& i) : m_heightField(i.height_field()), m_url(i.height_field(URL))

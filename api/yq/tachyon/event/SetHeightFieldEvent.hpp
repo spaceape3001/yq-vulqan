@@ -7,12 +7,12 @@
 #pragma once
 
 #include <yq/net/Url.hpp>
-#include <yq/tachyon/event/ShapeEvent.hpp>
+#include <yq/tachyon/api/Event.hpp>
 #include <yq/tachyon/typedef/height_field.hpp>
 
 namespace yq::tachyon {
-    class SetHeightFieldEvent : public ShapeEvent {
-        YQ_OBJECT_DECLARE(SetHeightFieldEvent, ShapeEvent)
+    class SetHeightFieldEvent : public Event {
+        YQ_OBJECT_DECLARE(SetHeightFieldEvent, Event)
     public:
         SetHeightFieldEvent(const Header&, const HeightFieldCPtr&, const Url&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

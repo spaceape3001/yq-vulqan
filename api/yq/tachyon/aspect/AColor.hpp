@@ -35,7 +35,7 @@ namespace yq::tachyon {
         AColor();
         virtual ~AColor();
         
-        void    color(emit_k);
+        virtual void    color(emit_k);
 
     private:
         void    on_set_color(const SetColorCommand&);

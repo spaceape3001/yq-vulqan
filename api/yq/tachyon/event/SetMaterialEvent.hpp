@@ -7,12 +7,12 @@
 #pragma once
 
 #include <yq/net/Url.hpp>
-#include <yq/tachyon/event/ShapeEvent.hpp>
+#include <yq/tachyon/api/Event.hpp>
 #include <yq/tachyon/typedef/material.hpp>
 
 namespace yq::tachyon {
-    class SetMaterialEvent : public ShapeEvent {
-        YQ_OBJECT_DECLARE(SetMaterialEvent, ShapeEvent)
+    class SetMaterialEvent : public Event {
+        YQ_OBJECT_DECLARE(SetMaterialEvent, Event)
     public:
         SetMaterialEvent(const Header&, const MaterialCPtr&, const Url&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

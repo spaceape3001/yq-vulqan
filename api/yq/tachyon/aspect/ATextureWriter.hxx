@@ -9,8 +9,8 @@
 #include <yq/tachyon/tags.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/aspect/ATexture.hpp>
-#include <yq/tachyon/command/shape/SetTextureCommand.hpp>
-#include <yq/tachyon/command/shape/SetTextureUrlCommand.hpp>
+#include <yq/tachyon/command/SetTextureCommand.hpp>
+#include <yq/tachyon/command/SetTextureUrlCommand.hpp>
 
 namespace yq::tachyon {
     template <typename C>

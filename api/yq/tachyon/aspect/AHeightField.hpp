@@ -38,11 +38,12 @@ namespace yq::tachyon {
         AHeightField();
         virtual ~AHeightField();
 
-        void        height_field(emit_k);
+        virtual void            height_field(emit_k);
         
     private:
         void        on_set_height_field(const SetHeightFieldCommand&);
         void        on_set_height_field_url(const SetHeightFieldUrlCommand&);
+        
     };
 
 }

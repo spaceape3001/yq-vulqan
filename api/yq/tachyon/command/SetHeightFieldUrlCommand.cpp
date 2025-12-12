@@ -11,12 +11,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SetHeightFieldUrlCommand)
 
 namespace yq::tachyon {
 
-    SetHeightFieldUrlCommand::SetHeightFieldUrlCommand(const Header&h, const Url& dm) : ShapeCommand(h), m_url(dm)
+    SetHeightFieldUrlCommand::SetHeightFieldUrlCommand(const Header&h, const Url& dm) : Command(h), m_url(dm)
     {
     }
 
     SetHeightFieldUrlCommand::SetHeightFieldUrlCommand(const SetHeightFieldUrlCommand& cp, const Header& h) : 
-        ShapeCommand(cp, h), m_url(cp.m_url)
+        Command(cp, h), m_url(cp.m_url)
     {
     }
     

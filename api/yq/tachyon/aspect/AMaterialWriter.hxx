@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/tachyon/aspect/AMaterial.hpp>
-#include <yq/tachyon/command/shape/SetMaterialCommand.hpp>
-#include <yq/tachyon/command/shape/SetMaterialUrlCommand.hpp>
+#include <yq/tachyon/command/SetMaterialCommand.hpp>
+#include <yq/tachyon/command/SetMaterialUrlCommand.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/asset/Material.hpp>
 #include <yq/tachyon/tags.hpp>

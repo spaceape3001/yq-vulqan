@@ -6,9 +6,9 @@
 
 #include "AMaterial.hpp"
 #include <yq/tachyon/asset/Material.hpp>
-#include <yq/tachyon/command/shape/SetMaterialCommand.hpp>
-#include <yq/tachyon/command/shape/SetMaterialUrlCommand.hpp>
-#include <yq/tachyon/event/shape/SetMaterialEvent.hpp>
+#include <yq/tachyon/command/SetMaterialCommand.hpp>
+#include <yq/tachyon/command/SetMaterialUrlCommand.hpp>
+#include <yq/tachyon/event/SetMaterialEvent.hpp>
 
 namespace yq::tachyon {
     AMaterial::AMaterial()

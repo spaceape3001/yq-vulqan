@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq/tachyon/command/ShapeCommand.hpp>
+#include <yq/tachyon/api/Command.hpp>
 #include <yq/net/Url.hpp>
 
 namespace yq::tachyon {
-    class SetHeightFieldUrlCommand : public ShapeCommand {
-        YQ_OBJECT_DECLARE(SetHeightFieldUrlCommand, ShapeCommand)
+    class SetHeightFieldUrlCommand : public Command {
+        YQ_OBJECT_DECLARE(SetHeightFieldUrlCommand, Command)
     public:
         SetHeightFieldUrlCommand(const Header&, const Url&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

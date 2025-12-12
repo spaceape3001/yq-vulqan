@@ -13,12 +13,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMaterialEvent)
 namespace yq::tachyon {
 
     SetMaterialEvent::SetMaterialEvent(const Header&h, const MaterialCPtr& dm, const Url& u) : 
-        ShapeEvent(h), m_material(dm), m_url(u)
+        Event(h), m_material(dm), m_url(u)
     {
     }
 
     SetMaterialEvent::SetMaterialEvent(const SetMaterialEvent& cp, const Header& h) : 
-        ShapeEvent(cp, h), m_material(cp.m_material), m_url(cp.m_url)
+        Event(cp, h), m_material(cp.m_material), m_url(cp.m_url)
     {
     }
     

@@ -233,10 +233,15 @@ namespace yq::tachyon {
                         extractor   = std::make_unique<Extract<uint8_t>>(3);
                         break;
                     case DataFormat::R8G8B8A8_SINT:
+                    case DataFormat::B8G8R8A8_SINT:
                         extractor   = std::make_unique<Extract<int8_t>>(4);
                         break;
                     case DataFormat::R8G8B8A8_UINT:
+                    case DataFormat::B8G8R8A8_UINT:
                         extractor   = std::make_unique<Extract<uint8_t>>(4);
+                        break;
+                    case DataFormat::R16_SFLOAT:
+                        //Need half
                         break;
                     case DataFormat::R16_SINT:
                         extractor   = std::make_unique<Extract<int16_t>>();
@@ -244,17 +249,26 @@ namespace yq::tachyon {
                     case DataFormat::R16_UINT:
                         extractor   = std::make_unique<Extract<uint16_t>>();
                         break;
+                    case DataFormat::R16G16_SFLOAT:
+                        //Need half
+                        break;
                     case DataFormat::R16G16_SINT:
                         extractor   = std::make_unique<Extract<int16_t>>(2);
                         break;
                     case DataFormat::R16G16_UINT:
                         extractor   = std::make_unique<Extract<uint16_t>>(2);
                         break;
+                    case DataFormat::R16G16B16_SFLOAT:
+                        //  need half
+                        break;
                     case DataFormat::R16G16B16_SINT:
                         extractor   = std::make_unique<Extract<int16_t>>(3);
                         break;
                     case DataFormat::R16G16B16_UINT:
                         extractor   = std::make_unique<Extract<uint16_t>>(3);
+                        break;
+                    case DataFormat::R16G16B16A16_SFLOAT:
+                        //  need half
                         break;
                     case DataFormat::R16G16B16A16_SINT:
                         extractor   = std::make_unique<Extract<int16_t>>(4);
@@ -452,10 +466,15 @@ namespace yq::tachyon {
             writor  = std::make_unique<Writor<uint8_t>>(3);
             break;
         case DataFormat::R8G8B8A8_SINT:
+        case DataFormat::B8G8R8A8_SINT:
             writor  = std::make_unique<Writor<int8_t>>(4);
             break;
         case DataFormat::R8G8B8A8_UINT:
+        case DataFormat::B8G8R8A8_UINT:
             writor  = std::make_unique<Writor<uint8_t>>(4);
+            break;
+        case DataFormat::R16_SFLOAT:
+            //Need half
             break;
         case DataFormat::R16_SINT:
             writor  = std::make_unique<Writor<int16_t>>();
@@ -463,17 +482,26 @@ namespace yq::tachyon {
         case DataFormat::R16_UINT:
             writor  = std::make_unique<Writor<uint16_t>>();
             break;
+        case DataFormat::R16G16_SFLOAT:
+            //Need half
+            break;
         case DataFormat::R16G16_SINT:
             writor  = std::make_unique<Writor<int16_t>>(2);
             break;
         case DataFormat::R16G16_UINT:
             writor  = std::make_unique<Writor<uint16_t>>(2);
             break;
+        case DataFormat::R16G16B16_SFLOAT:
+            //  need half
+            break;
         case DataFormat::R16G16B16_SINT:
             writor  = std::make_unique<Writor<int16_t>>(3);
             break;
         case DataFormat::R16G16B16_UINT:
             writor  = std::make_unique<Writor<uint16_t>>(3);
+            break;
+        case DataFormat::R16G16B16A16_SFLOAT:
+            //  need half
             break;
         case DataFormat::R16G16B16A16_SINT:
             writor  = std::make_unique<Writor<int16_t>>(4);

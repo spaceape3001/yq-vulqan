@@ -12,12 +12,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SetHeightFieldCommand)
 
 namespace yq::tachyon {
 
-    SetHeightFieldCommand::SetHeightFieldCommand(const Header&h, const HeightFieldCPtr& dm) : ShapeCommand(h), m_heightField(dm)
+    SetHeightFieldCommand::SetHeightFieldCommand(const Header&h, const HeightFieldCPtr& dm) : Command(h), m_heightField(dm)
     {
     }
 
     SetHeightFieldCommand::SetHeightFieldCommand(const SetHeightFieldCommand& cp, const Header& h) : 
-        ShapeCommand(cp, h), m_heightField(cp.m_heightField)
+        Command(cp, h), m_heightField(cp.m_heightField)
     {
     }
     

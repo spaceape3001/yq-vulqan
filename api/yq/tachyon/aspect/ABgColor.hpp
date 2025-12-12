@@ -35,7 +35,7 @@ namespace yq::tachyon {
         ABgColor();
         virtual ~ABgColor();
         
-        void    bgcolor(emit_k);
+        virtual void    bgcolor(emit_k);
 
     private:
         void    on_set_bgcolor(const SetBgColorCommand&);

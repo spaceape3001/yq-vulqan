@@ -38,7 +38,7 @@ namespace yq::tachyon {
         ATexture();
         virtual ~ATexture();
 
-        void        texture(emit_k);
+        virtual void    texture(emit_k);
         
     private:
         void        on_set_texture(const SetTextureCommand&);

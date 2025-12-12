@@ -6,8 +6,8 @@
 
 #include "PTexture.hpp"
 #include <yq/tachyon/asset/Texture.hpp>
-#include <yq/tachyon/command/shape/SetTextureCommand.hpp>
-#include <yq/tachyon/command/shape/SetTextureUrlCommand.hpp>
+#include <yq/tachyon/command/SetTextureCommand.hpp>
+#include <yq/tachyon/command/SetTextureUrlCommand.hpp>
 
 namespace yq::tachyon {
     PTexture::PTexture(const ITexture& i) : m_texture(i.texture()), m_url(i.texture(URL))

@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq/tachyon/command/ShapeCommand.hpp>
+#include <yq/tachyon/api/Command.hpp>
 #include <yq/net/Url.hpp>
 
 namespace yq::tachyon {
-    class SetTextureUrlCommand : public ShapeCommand {
-        YQ_OBJECT_DECLARE(SetTextureUrlCommand, ShapeCommand)
+    class SetTextureUrlCommand : public Command {
+        YQ_OBJECT_DECLARE(SetTextureUrlCommand, Command)
     public:
         SetTextureUrlCommand(const Header&, const Url&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

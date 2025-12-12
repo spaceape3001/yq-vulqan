@@ -15,9 +15,9 @@ namespace yq::tachyon {
     class MultiplyCount⁴Command : public CountCommand {
         YQ_OBJECT_DECLARE(MultiplyCount⁴Command, CountCommand)
     public:
-        MultiplyCount⁴Command(const Header&, const Vector4D&);
+        MultiplyCount⁴Command(const Header&, const Vector4U&);
     
-        const Vector4D&   δ() const  { return m_δ; }
+        const Vector4U&   δ() const  { return m_δ; }
         
         static void init_meta();
         
@@ -34,7 +34,7 @@ namespace yq::tachyon {
         ~MultiplyCount⁴Command();
 
     private:
-        Vector4D  m_δ;
+        Vector4U  m_δ;
         
         MultiplyCount⁴Command(const MultiplyCount⁴Command&) = delete;
         MultiplyCount⁴Command(MultiplyCount⁴Command&&) = delete;

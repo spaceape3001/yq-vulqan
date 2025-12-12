@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+// Auto-generated file
+
+#include "event/CountEvent.ipp"
+#include "event/count/Count1Event.ipp"
+#include "event/count/Count2Event.ipp"
+#include "event/count/Count3Event.ipp"
+#include "event/count/Count4Event.ipp"

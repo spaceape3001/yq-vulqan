@@ -18,8 +18,10 @@
 #include <yq/tachyon/event/spatial/Position2Event.hpp>
 
 namespace yq::tachyon {
-    APosition²::APosition²()
+    APosition²::APosition²(const Vector2D& pos)
     {
+        if(!is_nan(pos))
+            m_position  = pos;
     }
     
     APosition²::~APosition²()

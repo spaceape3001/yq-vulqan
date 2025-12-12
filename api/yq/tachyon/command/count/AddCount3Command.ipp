@@ -14,7 +14,7 @@ namespace yq::tachyon {
     {
     }
     
-    AddCount³Command::AddCount³Command(const Header& h, const Vector3D& v) : 
+    AddCount³Command::AddCount³Command(const Header& h, const Vector3U& v) : 
         CountCommand(h), m_Δ(v)
     {
     }

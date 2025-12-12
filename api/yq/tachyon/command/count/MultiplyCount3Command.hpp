@@ -15,9 +15,9 @@ namespace yq::tachyon {
     class MultiplyCount³Command : public CountCommand {
         YQ_OBJECT_DECLARE(MultiplyCount³Command, CountCommand)
     public:
-        MultiplyCount³Command(const Header&, const Vector3D&);
+        MultiplyCount³Command(const Header&, const Vector3U&);
     
-        const Vector3D&   δ() const  { return m_δ; }
+        const Vector3U&   δ() const  { return m_δ; }
         
         static void init_meta();
         
@@ -33,7 +33,7 @@ namespace yq::tachyon {
         ~MultiplyCount³Command();
 
     private:
-        Vector3D  m_δ;
+        Vector3U  m_δ;
         
         MultiplyCount³Command(const MultiplyCount³Command&) = delete;
         MultiplyCount³Command(MultiplyCount³Command&&) = delete;

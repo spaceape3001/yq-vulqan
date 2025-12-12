@@ -7,11 +7,10 @@
 #pragma once
 
 #include <yq/tachyon/api/Event.hpp>
-#include <yq/tachyon/typedef/spatial.hpp>
 
 namespace yq::tachyon {
 
-    //! Instructs an object to set it's position
+    //! Instructs an object to set it's count
     class CursorEvent : public Event {
         YQ_OBJECT_DECLARE(CursorEvent, Event)
     public:

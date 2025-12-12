@@ -15,9 +15,9 @@ namespace yq::tachyon {
     class AddCount²Command : public CountCommand {
         YQ_OBJECT_DECLARE(AddCount²Command, CountCommand)
     public:
-        AddCount²Command(const Header&, const Vector2D&);
+        AddCount²Command(const Header&, const Vector2U&);
     
-        const Vector2D&   Δ() const  { return m_Δ; }
+        const Vector2U&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
@@ -32,7 +32,7 @@ namespace yq::tachyon {
         ~AddCount²Command();
 
     private:
-        Vector2D  m_Δ = ZERO;
+        Vector2U  m_Δ = ZERO;
         
         AddCount²Command(const AddCount²Command&) = delete;
         AddCount²Command(AddCount²Command&&) = delete;

@@ -69,12 +69,12 @@ namespace yq::tachyon {
 
     protected:
         
-        Vector4D    m_position = ONE;
+        Vector4D    m_position = ZERO;
 
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        APosition⁴();
+        APosition⁴(const Vector4D& pos=ZERO);
         virtual ~APosition⁴();
         
         void        position(emit_k);

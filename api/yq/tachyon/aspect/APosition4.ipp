@@ -28,8 +28,10 @@
 #include <yq/vector/Vector4.hxx>
 
 namespace yq::tachyon {
-    APosition⁴::APosition⁴()
+    APosition⁴::APosition⁴(const Vector4D& pos) 
     {
+        if(!is_nan(pos))
+            m_position = pos;
     }
     
     APosition⁴::~APosition⁴()
@@ -43,6 +45,9 @@ namespace yq::tachyon {
 
     void        APosition⁴::position(set_k, const Vector4D& sz) 
     {
+        if(is_nan(sz))
+            return;
+            
         m_position  =    sz;
         mark();
         position(EMIT);

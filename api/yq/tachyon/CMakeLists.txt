@@ -22,12 +22,16 @@ add_library(${PROJECT_NAME} SHARED
     
     api_meta.cpp
 
+    aspect_position.cpp
+    aspect_size.cpp
+
     command_camera.cpp
     command_color.cpp
     command_controller.cpp
     command_count.cpp
     command_cursor.cpp
     command_light.cpp
+    #command_offset.cpp
     command_orientation.cpp
     command_position.cpp
     command_rendered.cpp
@@ -42,6 +46,7 @@ add_library(${PROJECT_NAME} SHARED
     command_viewer.cpp
 
     event_color.cpp
+    event_count.cpp
     event_cursor.cpp
     event_gamepad.cpp
     event_joystick.cpp
@@ -137,6 +142,10 @@ add_library(${PROJECT_NAME} SHARED
 
     aspect/ABgColor.cpp
     aspect/AColor.cpp
+    aspect/ACount1.cpp
+    aspect/ACount2.cpp
+    aspect/ACount3.cpp
+    aspect/ACount4.cpp
     aspect/ADrawMode.cpp
     aspect/AFarPlane.cpp
     aspect/AFieldOfView.cpp
@@ -154,17 +163,9 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ANearPlane.cpp
     aspect/AOrientation2.cpp
     aspect/AOrientation3.cpp
-    aspect/APosition1.cpp
-    aspect/APosition2.cpp
-    aspect/APosition3.cpp
-    aspect/APosition4.cpp
     aspect/AScale1.cpp
     aspect/AScale2.cpp
     aspect/AScale3.cpp
-    aspect/ASize1.cpp
-    aspect/ASize2.cpp
-    aspect/ASize3.cpp
-    aspect/ASize4.cpp
     aspect/ASpatial3.cpp
     aspect/ATexture.cpp
     aspect/ATopology.cpp
@@ -261,14 +262,10 @@ add_library(${PROJECT_NAME} SHARED
     
     im/KVTable.cpp
     
-    interface/IFarPlane.cpp
-    interface/IFieldOfView.cpp
     interface/IHeightField.cpp
     interface/IMaterial.cpp
     interface/IMesh.cpp
-    interface/INearPlane.cpp
     interface/ITexture.cpp
-    interface/ITopology.cpp
     
     io/GLSLShader.cpp
     io/GLTFLoader.cpp
@@ -302,6 +299,10 @@ add_library(${PROJECT_NAME} SHARED
 
     proxy/PBgColor.cpp
     proxy/PColor.cpp
+    proxy/PCount1.cpp
+    proxy/PCount2.cpp
+    proxy/PCount3.cpp
+    proxy/PCount4.cpp
     proxy/PDrawMode.cpp
     proxy/PFarPlane.cpp
     proxy/PFieldOfView.cpp

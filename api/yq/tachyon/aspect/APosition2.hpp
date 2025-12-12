@@ -55,14 +55,14 @@ namespace yq::tachyon {
 
     protected:
 
-        Vector2D        m_position = ONE;
+        Vector2D        m_position = ZERO;
     
         void            position(emit_k);
         
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        APosition²();
+        APosition²(const Vector2D& pos=ZERO);
         virtual ~APosition²();
         
     private:

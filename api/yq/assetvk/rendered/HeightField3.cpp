@@ -53,7 +53,6 @@ namespace yq::tachyon {
     
     HeightField³::HeightField³(const Param& p) : Rendered³(Param()), ACount²(p.count)
     {
-        rebuild();
     }
     
     HeightField³::~HeightField³()
@@ -193,8 +192,6 @@ namespace yq::tachyon {
         if(!m_good)
             return ;
             
-        
-        
         divide(ACount²::m_count);
     }
 

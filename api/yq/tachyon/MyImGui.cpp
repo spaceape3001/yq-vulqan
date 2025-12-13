@@ -237,6 +237,11 @@ namespace ImGui {
     {
         return Input3(label, (double*) &v, options);
     }
+
+    bool    Input(const char* label, yq::Vector1D&v, const InputDoubleOptions& options)
+    {
+        return Input(label, (double*) &v, options);
+    }
     
     bool    Input(const char* label, yq::Vector2D& v, const InputDoubleOptions& options)
     {
@@ -300,7 +305,7 @@ namespace ImGui {
 
     bool    Input(const char* label, float&v, const InputFloatOptions& options)
     {
-        return InputFloat(label, &v, options.step, options.step_fast, options.format, options.flags);
+        return InputFloat(label, &v,options.step, options.step_fast, options.format, options.flags);
     }
 
     bool    Input(const char* label, yq::Size2F&v, const InputFloatOptions& options)
@@ -326,6 +331,11 @@ namespace ImGui {
     bool    Input(const char* label, yq::UVW3F&v, const InputFloatOptions& options)
     {
         return Input3(label, (float*) &v, options);
+    }
+
+    bool    Input(const char* label, yq::Vector1F&v, const InputFloatOptions& options)
+    {
+        return Input(label, (float*) &v, options);
     }
 
     bool    Input(const char* label, yq::Vector2F&v, const InputFloatOptions& options)
@@ -361,6 +371,66 @@ namespace ImGui {
     bool    Input4(const char* label, float v[4], const InputFloatOptions& options)  
     {
         return InputScalarN(label, ImGuiDataType_Float, v, 4, stepptr(options), stepfastptr(options), options.format, options.flags);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    //  INPUT (UNSIGNED)
+
+    namespace {
+        const void* stepptr(const InputUnsignedOptions& options)
+        {
+            if(options.step > 0)
+                return &options.step;
+            return nullptr;
+        }
+
+        const void* stepfastptr(const InputUnsignedOptions& options)
+        {
+            if(options.step_fast > 0)
+                return &options.step_fast;
+            return nullptr;
+        }
+    }
+        
+
+    bool    Input(const char* label, unsigned& v, const InputUnsignedOptions& options)
+    {
+        return InputScalar(label, ImGuiDataType_U32, &v, stepptr(options), stepfastptr(options), options.format, options.flags);
+    }
+    
+    bool    Input(const char* label, yq::Vector1U&v, const InputUnsignedOptions& options)
+    {
+        return Input(label, v.x, options);
+    }
+
+    bool    Input(const char* label, yq::Vector2U&v, const InputUnsignedOptions& options)
+    {
+        return Input2(label, (unsigned*) &v, options);
+    }
+
+    bool    Input(const char* label, yq::Vector3U&v, const InputUnsignedOptions& options)
+    {
+        return Input3(label, (unsigned*) &v, options);
+    }
+
+    bool    Input(const char* label, yq::Vector4U&v, const InputUnsignedOptions& options)
+    {
+        return Input4(label, (unsigned*) &v, options);
+    }
+
+    bool    Input2(const char* label, unsigned v[2], const InputUnsignedOptions& options)  
+    {
+        return InputScalarN(label, ImGuiDataType_U32, v, 2, stepptr(options), stepfastptr(options), options.format, options.flags);
+    }
+    
+    bool    Input3(const char* label, unsigned v[3], const InputUnsignedOptions& options)
+    {
+        return InputScalarN(label, ImGuiDataType_U32, v, 3, stepptr(options), stepfastptr(options), options.format, options.flags);
+    }
+    
+    bool    Input4(const char* label, unsigned v[4], const InputUnsignedOptions& options) 
+    {
+        return InputScalarN(label, ImGuiDataType_U32, v, 4, stepptr(options), stepfastptr(options), options.format, options.flags);
     }
 
     ///////////////////////////

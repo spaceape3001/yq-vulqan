@@ -23,6 +23,10 @@ add_library(yq_assetvk SHARED
     edit/BgColorUI.cpp
     edit/CircularSpatial3UI.cpp
     edit/ColorUI.cpp
+    edit/Count1UI.cpp
+    edit/Count2UI.cpp
+    edit/Count3UI.cpp
+    edit/Count4UI.cpp
     edit/DrawModeUI.cpp
     edit/FarPlaneUI.cpp
     edit/FieldOfViewUI.cpp
@@ -32,6 +36,7 @@ add_library(yq_assetvk SHARED
     edit/MeshUI.cpp
     edit/NearPlaneUI.cpp
     edit/Orientation3UI.cpp
+    edit/Position1UI.cpp
     edit/Position2UI.cpp
     edit/Position3UI.cpp
     edit/Position4UI.cpp

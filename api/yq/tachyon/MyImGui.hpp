@@ -242,6 +242,7 @@ namespace ImGui {
     bool    Input(const char* label, yq::Size4D&, const InputDoubleOptions& options={});
     bool    Input(const char* label, yq::UV2D&, const InputDoubleOptions& options={});
     bool    Input(const char* label, yq::UVW3D&, const InputDoubleOptions& options={});
+    bool    Input(const char* label, yq::Vector1D&, const InputDoubleOptions& options={});
     bool    Input(const char* label, yq::Vector2D&, const InputDoubleOptions& options={});
     bool    Input(const char* label, yq::Vector3D&, const InputDoubleOptions& options={});
     bool    Input(const char* label, yq::Vector4D&, const InputDoubleOptions& options={});
@@ -377,6 +378,7 @@ namespace ImGui {
     bool    Input(const char* label, yq::Size4F&, const InputFloatOptions& options={});
     bool    Input(const char* label, yq::UV2F&, const InputFloatOptions& options={});
     bool    Input(const char* label, yq::UVW3F&, const InputFloatOptions& options={});
+    bool    Input(const char* label, yq::Vector1F&, const InputFloatOptions& options={});
     bool    Input(const char* label, yq::Vector2F&, const InputFloatOptions& options={});
     bool    Input(const char* label, yq::Vector3F&, const InputFloatOptions& options={});
     bool    Input(const char* label, yq::Vector4F&, const InputFloatOptions& options={});
@@ -482,6 +484,28 @@ namespace ImGui {
             .step_fast  = options.step_fast.value
         });
     }
+
+    ///////////////////////////
+    //  INPUTS (UNSIGNED INTS)
+    ///////////////////////////
+
+    struct InputUnsignedOptions {
+        ImGuiInputTextFlags         flags       = 0;
+        const char*                 format      = "%d";
+        unsigned                    step        = 0;
+        unsigned                    step_fast   = 0;
+    };
+    
+    bool    Input(const char* label, unsigned&, const InputUnsignedOptions& options={});
+    bool    Input(const char* label, yq::Vector1U&, const InputUnsignedOptions& options={});
+    bool    Input(const char* label, yq::Vector2U&, const InputUnsignedOptions& options={});
+    bool    Input(const char* label, yq::Vector3U&, const InputUnsignedOptions& options={});
+    bool    Input(const char* label, yq::Vector4U&, const InputUnsignedOptions& options={});
+
+    bool    Input2(const char* label, unsigned[2], const InputUnsignedOptions& options);  
+    bool    Input3(const char* label, unsigned[3], const InputUnsignedOptions& options);  
+    bool    Input4(const char* label, unsigned[4], const InputUnsignedOptions& options);  
+
 
     ///////////////////////////
     //  Spacing

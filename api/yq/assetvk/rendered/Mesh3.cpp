@@ -31,8 +31,8 @@ namespace yq::tachyon {
         
         {
             auto& p     = w.pipeline(Pipeline::Role::DbgBlack);
-            p.shader("debug/position.vert");
-            p.shader("debug/color/black.frag");
+            p.shader("yq/debug/position.vert");
+            p.shader("yq/debug/color/black.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
             p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
@@ -42,8 +42,8 @@ namespace yq::tachyon {
 
         {
             auto& p     = w.pipeline(Pipeline::Role::DbgRed);
-            p.shader("debug/position.vert");
-            p.shader("debug/color/red.frag");
+            p.shader("yq/debug/position.vert");
+            p.shader("yq/debug/color/red.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
             p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
@@ -53,8 +53,8 @@ namespace yq::tachyon {
 
         {
             auto& p     = w.pipeline(Pipeline::Role::DbgOrange);
-            p.shader("debug/position.vert");
-            p.shader("debug/color/orange.frag");
+            p.shader("yq/debug/position.vert");
+            p.shader("yq/debug/color/orange.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
             p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
@@ -64,8 +64,8 @@ namespace yq::tachyon {
         
         {
             auto& p     = w.pipeline(Pipeline::Role::DbgYellow);
-            p.shader("debug/position.vert");
-            p.shader("debug/color/yellow.frag");
+            p.shader("yq/debug/position.vert");
+            p.shader("yq/debug/color/yellow.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
             p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
@@ -75,8 +75,8 @@ namespace yq::tachyon {
 
         {
             auto& p     = w.pipeline(Pipeline::Role::DbgGreen);
-            p.shader("debug/position.vert");
-            p.shader("debug/color/green.frag");
+            p.shader("yq/debug/position.vert");
+            p.shader("yq/debug/color/green.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
             p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
@@ -86,8 +86,8 @@ namespace yq::tachyon {
 
         {
             auto& p     = w.pipeline(Pipeline::Role::DbgBlue);
-            p.shader("debug/position.vert");
-            p.shader("debug/color/blue.frag");
+            p.shader("yq/debug/position.vert");
+            p.shader("yq/debug/color/blue.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
             p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
@@ -97,8 +97,8 @@ namespace yq::tachyon {
 
         {
             auto& p     = w.pipeline(Pipeline::Role::DbgMagenta);
-            p.shader("debug/position.vert");
-            p.shader("debug/color/magenta.frag");
+            p.shader("yq/debug/position.vert");
+            p.shader("yq/debug/color/magenta.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
             p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
@@ -108,8 +108,8 @@ namespace yq::tachyon {
 
         {
             auto& p     = w.pipeline(Pipeline::Role::DbgGray);
-            p.shader("debug/position.vert");
-            p.shader("debug/color/gray.frag");
+            p.shader("yq/debug/position.vert");
+            p.shader("yq/debug/color/gray.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
             p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);
@@ -119,8 +119,8 @@ namespace yq::tachyon {
 
         {
             auto& p     = w.pipeline(Pipeline::Role::DbgWhite);
-            p.shader("debug/position.vert");
-            p.shader("debug/color/white.frag");
+            p.shader("yq/debug/position.vert");
+            p.shader("yq/debug/color/white.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
             p.vertex(&Mesh³::m_vxyz, {.activity=DYNAMIC});
             p.polygons(PolygonMode::Line);

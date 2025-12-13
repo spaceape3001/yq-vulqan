@@ -19,7 +19,8 @@
 #include <yq/tachyon/asset/Texture.hpp>
 
 namespace yq::tachyon {
-    HeightFieldCPtr     load_heightfield(const Url&);
+    HeightFieldCPtr         load_heightfield(const Url&);
+    std::pair<float,float>  minmax_elevation(const HeightField&);
 
 #if 0
 

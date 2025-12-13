@@ -36,18 +36,35 @@ namespace yq::tachyon {
         AMaterial::init_meta(w);
         ASize³::init_meta(w);
         
-        
-        auto& p = w.pipeline();
-        p.shader( "asset/heightfield3/default.vert" );
-        p.shader( "asset/heightfield3/default.tesc" );
-        p.shader( "asset/heightfield3/default.tese" );
-        p.shader( "debug/color/cyan.frag" );
-        p.topology(Topology::PatchList);
-        p.vertex(&HeightField³::m_vboPos, {.activity=DYNAMIC});
-        p.index(&HeightField³::m_index);
-        p.polygons(PolygonMode::Line);
-        p.push_full();
-        p.patch_control_points(4);
+        {
+            auto& p = w.pipeline();
+            p.shader( "yq/heightfield3/default.vert" );
+            p.shader( "yq/heightfield3/default.tesc" );
+            p.shader( "yq/heightfield3/default.tese" );
+            p.shader( "yq/debug/color/cyan.frag" );
+            p.topology(Topology::PatchList);
+            p.vertex(&HeightField³::m_vboPos, {.activity=DYNAMIC});
+            p.index(&HeightField³::m_index);
+            p.polygons(PolygonMode::Line);
+            p.push_full();
+            p.patch_control_points(4);
+        }
+
+#if 0
+        {
+            auto& p = w.pipeline();
+            p.shader( "asset/heightfield3/default.vert" );
+            p.shader( "asset/heightfield3/default.tesc" );
+            p.shader( "asset/heightfield3/default.tese" );
+            p.shader( "debug/color/cyan.frag" );
+            p.topology(Topology::PatchList);
+            p.vertex(&HeightField³::m_vboPos, {.activity=DYNAMIC});
+            p.index(&HeightField³::m_index);
+            p.polygons(PolygonMode::Line);
+            p.push_full();
+            p.patch_control_points(4);
+        }
+#endif
     }
 
     HeightField³::HeightField³() : HeightField³(Param())

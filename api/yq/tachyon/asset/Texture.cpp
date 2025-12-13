@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
+#include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/asset/Raster.hpp>
 #include <yq/tachyon/asset/Sampler.hpp>
 #include <yq/tachyon/asset/Texture.hpp>
@@ -17,9 +18,29 @@ namespace yq::tachyon {
         w.description("Texture");
     }
 
+    TextureCPtr  Texture::load(const UrlView&u)
+    {
+        if(ResourceCPtr    rp  = Resource::resource_load({ &meta<Texture>(), &meta<Raster>() }, u)){
+            if(const Texture* tex   = dynamic_cast<const Texture*>(rp.ptr()))
+                return tex;
+            if(const Raster* ras    = dynamic_cast<const Raster*>(rp.ptr()))
+                return new Texture(ras, Sampler::simple(), TextureInfo{});
+        }
+        tachyonInfo << "Unable to load '" << to_string(u) << "' as a texture (sorry)";
+        return {};
+    }
+    
+
     TextureCPtr  Texture::load(std::string_view pp)
     {
-        return load(pp, Sampler::simple(), TextureInfo());
+        if(ResourceCPtr    rp  = Resource::resource_load({ &meta<Texture>(), &meta<Raster>() }, pp)){
+            if(const Texture* tex   = dynamic_cast<const Texture*>(rp.ptr()))
+                return tex;
+            if(const Raster* ras    = dynamic_cast<const Raster*>(rp.ptr()))
+                return new Texture(ras, Sampler::simple(), TextureInfo{});
+        }
+        tachyonInfo << "Unable to load '" << pp << "' as a texture (sorry)";
+        return {};
     }
     
     TextureCPtr  Texture::load(std::string_view pp, const SamplerCPtr& _sampler, const TextureInfo& _info)

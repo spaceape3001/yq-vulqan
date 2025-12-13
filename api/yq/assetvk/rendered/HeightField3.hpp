@@ -14,8 +14,10 @@
 #include <yq/tachyon/aspect/AMaterial.hpp>
 #include <yq/tachyon/aspect/ASize3.hpp>
 #include <yq/tachyon/asset/Texture.hpp>
+#include <yq/tachyon/pipeline/Pipeline.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
+#include <yq/vector/Vector4.hpp>
 
 namespace yq::tachyon {
 
@@ -45,11 +47,63 @@ namespace yq::tachyon {
         
     private:
     
+        /*
+            Permutations in geometry... with & w/o a real height map
+            Permutations in color ... material/texture/colorprofile/solid/debug (w & w/o height map)
+            Permutations in lighting ... simple, lit, ray
+        */
+    
+        enum {
+            kRoleUser           = (Pipeline::role_t) Pipeline::Role::User,
+
+            kRoleDbgBlackHM,
+            kRoleDbgRedHM,
+            kRoleDbgOrangeHM,
+            kRoleDbgYellowHM,
+            kRoleDbgGreenHM,
+            kRoleDbgCyanHM,
+            kRoleDbgBlueHM,
+            kRoleDbgMagentaHM,
+            kRoleDbgGrayHM,
+            kRoleDbgWhiteHM,
+
+            kRoleSolid,   
+            kRoleSolidLit,
+            kRoleSolidRay,
+
+            kRoleSolidHM,
+            kRoleSolidHMLit,
+            kRoleSolidHMRay,
+
+            kRoleProfile,
+            kRoleProfileLit,
+            kRoleProfileRay,
+
+            kRoleProfileHM,
+            kRoleProfileHMLit,
+            kRoleProfileHMRay,
+            
+            kRoleTexture,
+            kRoleTextureLit,
+            kRoleTextureRay,
+            
+            kRoleTextureHM,
+            kRoleTextureHMLit,
+            kRoleTextureHMRay,
+            
+            kRoleMaterialHM,
+            kRoleMaterialHMLit,
+            kRoleMaterialHMRay
+        };
+    
+    
         void    snap(Rendered³Snap&) const;
         void    rebuild();
         
         struct UData {
-            glm::vec4   rgba;
+            glm::vec4   itess;
+            glm::vec2   otess;
+            glm::vec2   vscale  = { 0., 1. };
         };
         
         struct Vertex {
@@ -65,6 +119,9 @@ namespace yq::tachyon {
         IB1<uint32_t>       m_index;
         VB1<glm::vec2>      m_vboPos;
         UB1<UData>          m_ubo;
+        Vector4U            m_iTess = { 1, 1, 1, 1 };
+        Vector2U            m_oTess = { 1, 1 };
+        Vector2F            m_vScale = { 0., 1. };
         
         void        divide(const Vector2U&);
         

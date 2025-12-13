@@ -49,7 +49,7 @@ namespace yq::tachyon {
         if(u.empty()){
             m_heightField   = {};
         } else {
-            m_heightField   = load_heightfield(u);
+            m_heightField   = HeightField::load(u);
         }
         mark();
         height_field(EMIT);

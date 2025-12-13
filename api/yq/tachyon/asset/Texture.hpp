@@ -37,6 +37,7 @@ namespace yq::tachyon {
         //! View information
         TextureInfo               info;
 
+        static TextureCPtr  load(const UrlView&);
         static TextureCPtr  load(std::string_view);
         static TextureCPtr  load(std::string_view, const TextureInfo& texInfo);
         static TextureCPtr  load(std::string_view, const TextureInfo2& texInfo);

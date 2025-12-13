@@ -93,6 +93,11 @@ namespace yq::tachyon {
             pipelineInfo.pStages    = shaders.data();
         }
         
+        auto shader_mask    = pLay->shader_mask();
+        
+        static constexpr const VkShaderStageFlagBits kTessellation  = (VkShaderStageFlagBits)(VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT|VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT);
+        
+        
         pipelineInfo.pVertexInputState = &pLay->vertex_create_info();
 
         VqPipelineInputAssemblyStateCreateInfo inputAssembly;
@@ -114,6 +119,18 @@ namespace yq::tachyon {
         default:
             inputAssembly.primitiveRestartEnable = VK_FALSE;
             break;
+        }
+        
+        VqPipelineTessellationStateCreateInfo  tessellation;
+        if(shader_mask & kTessellation){
+            if((shader_mask & kTessellation) != kTessellation)
+                tachyonWarning << "Pipeline has one tessellation shader, but not the other, are you sure?";
+            if(inputAssembly.topology != VK_PRIMITIVE_TOPOLOGY_PATCH_LIST)
+                tachyonWarning << "Pipeline has tessellation shaders, but topoology IS NOT the required patch list";
+            tessellation.patchControlPoints = cfg->patch_control_points();
+            if(tessellation.patchControlPoints < 2)
+                tachyonWarning << "Pipeline tessellation needs patch control points";
+            pipelineInfo.pTessellationState = &tessellation;
         }
         
         pipelineInfo.pInputAssemblyState    = &inputAssembly;
@@ -367,6 +384,8 @@ namespace yq::tachyon {
             } else {
                 rasterizer.polygonMode              = (VkPolygonMode) polyMode.value();
             }
+
+    
 
             VkResult res  = vkCreateGraphicsPipelines(viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &me.pipeline);
             if(res != VK_SUCCESS){

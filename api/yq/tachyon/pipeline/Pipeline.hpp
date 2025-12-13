@@ -307,6 +307,7 @@ namespace yq::tachyon {
         constexpr Role          role() const { return m_role; }
         Topology                topology() const { return m_topology; }
         bool                    wireframe_permitted() const { return m_wireframePermitted; }
+        uint32_t                patch_control_points() const { return m_patchControlPoints; }
         
         constexpr uint64_t      id() const { return m_id; }
 
@@ -343,6 +344,8 @@ namespace yq::tachyon {
         //! \note Variation supported
         void  line_width(float);
         
+        void    patch_control_points(uint32_t);
+
         //! Set the polygon mode
         //! \note Variation supported
         void  polygons(PolygonMode);
@@ -497,6 +500,7 @@ namespace yq::tachyon {
             std::optional<float>        lineWidthMultiplier;    //! If set and lineWidth isn't, scales default line width
             std::optional<PolygonMode>  polygonMode;
             std::optional<ColorBlend>   colorBlend;
+            std::optional<uint32_t>     patchControlPoints;
             Tristate                    wireframePermitted  = Tristate::INHERIT;
         };
 
@@ -561,6 +565,7 @@ namespace yq::tachyon {
         Topology                        m_topology              = Topology::TriangleList;
         bool                            m_wireframePermitted    = true;
         ColorBlend                      m_colorBlend            = ColorBlend::Disabled;
+        uint32_t                        m_patchControlPoints    = 0;
 
         push_t                          m_push                  = {};
         std::optional<index_buffer_t>   m_indexBuffer;

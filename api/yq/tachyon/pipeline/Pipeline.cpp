@@ -131,6 +131,15 @@ namespace yq::tachyon {
         return loc;
     }
     
+    void  Pipeline::patch_control_points(uint32_t u)
+    {
+        if(m_variation){
+            m_variation -> patchControlPoints = u;
+        } else {
+            m_patchControlPoints = u;
+        }
+    }
+
     void  Pipeline::polygons(PolygonMode v)
     {
         if(m_variation){

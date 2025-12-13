@@ -38,13 +38,16 @@ namespace yq::tachyon {
         
         
         auto& p = w.pipeline();
-        p.shader( "asset/heightfield3/default.vert");
+        p.shader( "asset/heightfield3/default.vert" );
+        p.shader( "asset/heightfield3/default.tesc" );
+        p.shader( "asset/heightfield3/default.tese" );
         p.shader( "debug/color/cyan.frag" );
-        p.topology(Topology::TriangleStrip);
+        p.topology(Topology::PatchList);
         p.vertex(&HeightField³::m_vboPos, {.activity=DYNAMIC});
         p.index(&HeightField³::m_index);
         p.polygons(PolygonMode::Line);
         p.push_full();
+        p.patch_control_points(4);
     }
 
     HeightField³::HeightField³() : HeightField³(Param())
@@ -145,23 +148,13 @@ namespace yq::tachyon {
         m_vboPos.update();
         
         m_index.data.clear();
-        m_indexDraws.clear();
-        
-        for(unsigned j : grid.yint()){
-
-            uint32_t    n   = (uint32_t) m_index.data.size();
-            for(unsigned i : grid.xext()){
-                m_index.data.push_back( grid.post(i,j  ));
-                m_index.data.push_back( grid.post(i,j+1));
-            }
-            
-            uint32_t    n1  = (uint32_t) m_index.data.size();
-            //#if 0
-            m_indexDraws.push_back({
-                .index_count    = n1 - n,
-                .first_index    = n
-            });
-            //#endif
+        for(unsigned i : grid.xint())
+            for(unsigned j : grid.yint())
+        {
+            m_index.data.push_back( grid.post(i,j  ));
+            m_index.data.push_back( grid.post(i,j+1));
+            m_index.data.push_back( grid.post(i+1,j));
+            m_index.data.push_back( grid.post(i+1,j+1));
         }
         m_index.update();
     }

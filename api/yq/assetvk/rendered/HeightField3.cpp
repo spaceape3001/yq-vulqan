@@ -38,7 +38,7 @@ namespace yq::tachyon {
         
         
         auto& p = w.pipeline();
-        p.shader( "heightfield3/default.vert");
+        p.shader( "asset/heightfield3/default.vert");
         p.shader( "debug/color/cyan.frag" );
         p.topology(Topology::TriangleStrip);
         p.vertex(&HeightField³::m_vboPos, {.activity=DYNAMIC});
@@ -156,12 +156,12 @@ namespace yq::tachyon {
             }
             
             uint32_t    n1  = (uint32_t) m_index.data.size();
-            #if 0
+            //#if 0
             m_indexDraws.push_back({
                 .index_count    = n1 - n,
                 .first_index    = n
             });
-            #endif
+            //#endif
         }
         m_index.update();
     }
@@ -177,6 +177,13 @@ namespace yq::tachyon {
         return true;
     }
     
+    std::error_code     HeightField³::load(const StateSave&ss) 
+    {
+        std::error_code ec  = Rendered³::load(ss);
+        rebuild();
+        return ec;
+    }
+
     void    HeightField³::rebuild()
     {
         // alter so a bad height field is... still there, just a no-heightmap shader... 

@@ -40,6 +40,9 @@ namespace yq::tachyon {
         static void init_meta();
         Execution tick(const Context&) override;
         
+    protected:
+        std::error_code     load(const StateSave&) override;
+        
     private:
     
         void    snap(Rendered³Snap&) const;

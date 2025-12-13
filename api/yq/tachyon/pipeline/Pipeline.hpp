@@ -570,6 +570,12 @@ namespace yq::tachyon {
         std::vector<texture_t>          m_textures;
         std::vector<vertex_buffer_t>    m_vertexBuffers;
         std::set<DynamicState>          m_dynamicStates;
+        
+    private:
+        Pipeline(const Pipeline&) = delete;
+        Pipeline(Pipeline&&) = delete;
+        Pipeline& operator=(const Pipeline&) = delete;
+        Pipeline& operator=(Pipeline&&) = delete;
     };
     
     enum {

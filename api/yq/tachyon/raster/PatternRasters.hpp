@@ -13,5 +13,6 @@
 namespace yq::tachyon {
     RasterPtr   checkerboard_raster(RGB3U8 a, RGB3U8 b, unsigned half=2);
     RasterPtr   checkerboard_raster(RGBA4U8 a, RGBA4U8 b, unsigned half=2);
+    RasterPtr   square_raster(float, unsigned cnt=2);
 }
 

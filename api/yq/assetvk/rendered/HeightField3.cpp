@@ -13,8 +13,10 @@
 #include <yq/tachyon/api/Math.hpp>
 #include <yq/tachyon/api/Rendered3MetaWriter.hpp>
 #include <yq/tachyon/asset/Raster.hpp>
+#include <yq/tachyon/asset/Sampler.hpp>
 #include <yq/tachyon/asset/Shader.hpp>
 #include <yq/tachyon/pipeline/DrawCall.hpp>
+#include <yq/tachyon/raster/PatternRasters.hpp>
 
 #include <yq/shape/AxBox2.hxx>
 #include <yq/tachyon/aspect/AColorWriter.hxx>
@@ -31,7 +33,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::HeightField³)
 
 namespace yq::tachyon {
     namespace {
-        static constexpr const uint32_t kT_heightMap        = 2;
+        static constexpr const uint32_t kT_heightMap        = 3;
         static constexpr const uint32_t kU_heightUniform    = 2;
         
 
@@ -105,6 +107,8 @@ namespace yq::tachyon {
 
     }
 
+    
+
 
     void HeightField³::init_meta()
     {
@@ -117,6 +121,7 @@ namespace yq::tachyon {
         AMaterial::init_meta(w);
         ASize³::init_meta(w);
         
+        #if 0
         {
             auto& p = w.pipeline();
             p.shader( "yq/heightfield3/simple.vert" );
@@ -131,287 +136,63 @@ namespace yq::tachyon {
             p.push_full();
             p.patch_control_points(4);
         }
+        #endif
+        
+        static const struct {
+            Pipeline::Role  role;
+            bool            hm;
+            const char*     frag;
+        } kDebugPipes[] = {
+            { kDbgBlack,        false, "yq/debug/color/black.frag" },
+            { kDbgBlackHM,      true,  "yq/debug/color/black.frag" },
+            { kDbgRed,          false, "yq/debug/color/red.frag" },
+            { kDbgRedHM,        true,  "yq/debug/color/red.frag" },
+            { kDbgOrange,       false, "yq/debug/color/orange.frag" },
+            { kDbgOrangeHM,     true,  "yq/debug/color/orange.frag" },
+            { kDbgYellow,       false, "yq/debug/color/yellow.frag" },
+            { kDbgYellowHM,     true,  "yq/debug/color/yellow.frag" },
+            { kDbgGreen,        false, "yq/debug/color/green.frag" },
+            { kDbgGreenHM,      true,  "yq/debug/color/green.frag" },
+            { kDbgCyan,         false, "yq/debug/color/cyan.frag" },
+            { kDbgCyanHM,       true,  "yq/debug/color/cyan.frag" },
+            { kDbgBlue,         false, "yq/debug/color/blue.frag" },
+            { kDbgBlueHM,       true,  "yq/debug/color/blue.frag" },
+            { kDbgMagenta,      false, "yq/debug/color/magenta.frag" },
+            { kDbgMagentaHM,    true,  "yq/debug/color/magenta.frag" },
+            { kDbgGray,         false, "yq/debug/color/gray.frag" },
+            { kDbgGrayHM,       true,  "yq/debug/color/gray.frag" },
+            { kDbgWhite,        false, "yq/debug/color/white.frag" },
+            { kDbgWhiteHM,      true,  "yq/debug/color/white.frag" }
+        };
 
-        {
-            auto& p = w.pipeline(kDbgBlack);
-            p.shader( "yq/heightfield3/simple.vert" );
+        for(auto& k : kDebugPipes){
+            assert(!w.has_pipeline(k.role));
+        
+        
+            auto& p = w.pipeline(k.role);
+            p.shader( k.hm ? 
+                        "yq/heightfield3/heightmap.vert" :
+                        "yq/heightfield3/simple.vert" 
+            );
             p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/simple.tese" );
-            p.shader( "yq/debug/color/black.frag" );
+            p.shader( k.hm ? 
+                        "yq/heightfield3/heightmap.tese" :
+                        "yq/heightfield3/simple.tese" 
+            );
+            p.shader( k.frag );
             p.topology(Topology::PatchList);
             p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
             p.index(&HeightField³::m_index);
             p.polygons(PolygonMode::Line);
             p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
+            if(k.hm){
+                p.texture(&HeightField³::m_heightMap, {.activity=DYNAMIC, .binding = kT_heightMap});
+            }
             p.push_full();
             p.patch_control_points(4);
+            
         }
 
-        {
-            auto& p = w.pipeline(kDbgBlackHM);
-            p.shader( "yq/heightfield3/heightmap.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/heightmap.tese" );
-            p.shader( "yq/debug/color/black.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.texture(&AHeightField::m_heightField, {.activity=DYNAMIC, .binding = kT_heightMap});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-        {
-            auto& p = w.pipeline(kDbgRed);
-            p.shader( "yq/heightfield3/simple.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/simple.tese" );
-            p.shader( "yq/debug/color/red.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-        {
-            auto& p = w.pipeline(kDbgRedHM);
-            p.shader( "yq/heightfield3/heightmap.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/heightmap.tese" );
-            p.shader( "yq/debug/color/red.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.texture(&AHeightField::m_heightField, {.activity=DYNAMIC, .binding = kT_heightMap});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-        {
-            auto& p = w.pipeline(kDbgOrange);
-            p.shader( "yq/heightfield3/simple.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/simple.tese" );
-            p.shader( "yq/debug/color/orange.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-        {
-            auto& p = w.pipeline(kDbgOrangeHM);
-            p.shader( "yq/heightfield3/heightmap.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/heightmap.tese" );
-            p.shader( "yq/debug/color/orange.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.texture(&AHeightField::m_heightField, {.activity=DYNAMIC, .binding = kT_heightMap});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-        {
-            auto& p = w.pipeline(kDbgYellow);
-            p.shader( "yq/heightfield3/simple.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/simple.tese" );
-            p.shader( "yq/debug/color/yellow.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-        {
-            auto& p = w.pipeline(kDbgYellowHM);
-            p.shader( "yq/heightfield3/heightmap.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/heightmap.tese" );
-            p.shader( "yq/debug/color/yellow.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.texture(&AHeightField::m_heightField, {.activity=DYNAMIC, .binding = kT_heightMap});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-        {
-            auto& p = w.pipeline(kDbgGreen);
-            p.shader( "yq/heightfield3/simple.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/simple.tese" );
-            p.shader( "yq/debug/color/green.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-        {
-            auto& p = w.pipeline(kDbgGreenHM);
-            p.shader( "yq/heightfield3/heightmap.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/heightmap.tese" );
-            p.shader( "yq/debug/color/green.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.texture(&AHeightField::m_heightField, {.activity=DYNAMIC, .binding = kT_heightMap});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-
-        {
-            auto& p = w.pipeline(kDbgCyan);
-            p.shader( "yq/heightfield3/simple.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/simple.tese" );
-            p.shader( "yq/debug/color/cyan.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-
-        {
-            auto& p = w.pipeline(kDbgCyanHM);
-            p.shader( "yq/heightfield3/heightmap.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/heightmap.tese" );
-            p.shader( "yq/debug/color/cyan.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.texture(&AHeightField::m_heightField, {.activity=DYNAMIC, .binding = kT_heightMap});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-        {
-            auto& p = w.pipeline(kDbgMagenta);
-            p.shader( "yq/heightfield3/simple.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/simple.tese" );
-            p.shader( "yq/debug/color/magenta.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-        {
-            auto& p = w.pipeline(kDbgMagentaHM);
-            p.shader( "yq/heightfield3/heightmap.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/heightmap.tese" );
-            p.shader( "yq/debug/color/magenta.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.texture(&AHeightField::m_heightField, {.activity=DYNAMIC, .binding = kT_heightMap});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-        {
-            auto& p = w.pipeline(kDbgGray);
-            p.shader( "yq/heightfield3/simple.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/simple.tese" );
-            p.shader( "yq/debug/color/gray.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-        {
-            auto& p = w.pipeline(kDbgGrayHM);
-            p.shader( "yq/heightfield3/heightmap.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/heightmap.tese" );
-            p.shader( "yq/debug/color/gray.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.texture(&AHeightField::m_heightField, {.activity=DYNAMIC, .binding = kT_heightMap});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-        {
-            auto& p = w.pipeline(kDbgWhite);
-            p.shader( "yq/heightfield3/simple.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/simple.tese" );
-            p.shader( "yq/debug/color/white.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.push_full();
-            p.patch_control_points(4);
-        }
-
-        {
-            auto& p = w.pipeline(kDbgWhiteHM);
-            p.shader( "yq/heightfield3/heightmap.vert" );
-            p.shader( "yq/heightfield3/simple.tesc" );
-            p.shader( "yq/heightfield3/heightmap.tese" );
-            p.shader( "yq/debug/color/white.frag" );
-            p.topology(Topology::PatchList);
-            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
-            p.index(&HeightField³::m_index);
-            p.polygons(PolygonMode::Line);
-            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.texture(&AHeightField::m_heightField, {.activity=DYNAMIC, .binding = kT_heightMap});
-            p.push_full();
-            p.patch_control_points(4);
-        }
 
         {
             auto& p = w.pipeline(kSimple);
@@ -440,7 +221,7 @@ namespace yq::tachyon {
             p.index(&HeightField³::m_index);
             p.polygons(PolygonMode::Fill);
             p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
-            p.texture(&AHeightField::m_heightField, {.activity=DYNAMIC, .binding = kT_heightMap});
+            p.texture(&HeightField³::m_heightMap, {.activity=DYNAMIC, .binding = kT_heightMap});
             p.push_full();
             p.patch_control_points(4);
         }
@@ -598,6 +379,8 @@ namespace yq::tachyon {
             //return ;
         //}
         
+        static const TextureCPtr    sZeroHM  = new Texture(square_raster(0., 2), Sampler::simple());
+        
         auto& cnt   = ACount²::m_count;
         m_good    = cnt.x && cnt.y;
         if(!m_good)
@@ -607,81 +390,49 @@ namespace yq::tachyon {
         
         m_ubo.data.oTess = m_oTess.cast<float>();
         m_ubo.data.iTess = m_iTess.cast<float>();
+        m_heightMap     = m_heightField ? m_heightField : sZeroHM;
 
-        tachyonInfo << "HeightField³::rebuild() ... height field? " << (m_heightField ? "yes" : "no");
-
+        tachyonInfo << "HeightField³::rebuild() ... height field? " << (m_heightMap ? "yes" : "no");
+        
         switch(m_drawMode){
         case DrawMode::Auto:
-            set_pipeline(kDbgCyan);
+            set_pipeline(kDbgCyanHM);
             break;
             
         case DrawMode::Color:
             m_ubo.data.rgba  = m_color;
-            if(m_heightField){
-                set_pipeline(kSimpleHM);
-            } else
-                set_pipeline(kSimple);
+            set_pipeline(kSimpleHM);
             break;
         case DrawMode::DbgBlack:
-            if(m_heightField){
-                set_pipeline(kDbgBlackHM);
-            } else
-                set_pipeline(kDbgBlack);
+            set_pipeline(kDbgBlackHM);
             break;
         case DrawMode::DbgRed:
-            if(m_heightField){
-                set_pipeline(kDbgRedHM);
-            } else
-                set_pipeline(kDbgRed);
+            set_pipeline(kDbgRedHM);
             break;
         case DrawMode::DbgOrange:
-            if(m_heightField){
-                set_pipeline(kDbgRedHM);
-            } else
-                set_pipeline(kDbgOrange);
+            set_pipeline(kDbgOrangeHM);
             break;
         case DrawMode::DbgYellow:
-            if(m_heightField){
-                set_pipeline(kDbgYellowHM);
-            } else
-                set_pipeline(kDbgYellow);
+            set_pipeline(kDbgYellowHM);
             break;
         case DrawMode::DbgGreen:
-            if(m_heightField){
-                set_pipeline(kDbgGreenHM);
-            } else
-                set_pipeline(kDbgGreen);
+            set_pipeline(kDbgGreenHM);
             break;
         default:
         case DrawMode::DbgCyan:
-            if(m_heightField){
-                set_pipeline(kDbgCyanHM);
-            } else
-                set_pipeline(kDbgCyan);
+            set_pipeline(kDbgCyanHM);
             break;
         case DrawMode::DbgBlue:
-            if(m_heightField){
-                set_pipeline(kDbgBlueHM);
-            } else
-                set_pipeline(kDbgBlue);
+            set_pipeline(kDbgBlueHM);
             break;
         case DrawMode::DbgMagenta:
-            if(m_heightField){
-                set_pipeline(kDbgMagentaHM);
-            } else
-                set_pipeline(kDbgMagenta);
+            set_pipeline(kDbgMagentaHM);
             break;
         case DrawMode::DbgGray:
-            if(m_heightField){
-                set_pipeline(kDbgGrayHM);
-            } else
-                set_pipeline(kDbgGray);
+            set_pipeline(kDbgGrayHM);
             break;
         case DrawMode::DbgWhite:
-            if(m_heightField){
-                set_pipeline(kDbgWhiteHM);
-            } else
-                set_pipeline(kDbgWhite);
+            set_pipeline(kDbgWhiteHM);
             break;
         }
 

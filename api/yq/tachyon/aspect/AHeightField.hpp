@@ -29,10 +29,8 @@ namespace yq::tachyon {
 
         const HeightFieldCPtr&  height_field(ref_k) const { return m_heightField; }
 
-    // unfortunately, the using class must bind... and the compiler's considering it "protected" otherwise... sigh....
-        HeightFieldCPtr         m_heightField;
-
     protected:
+        HeightFieldCPtr         m_heightField;
         Url                     m_heightFieldUrl;
         
         template <typename C>

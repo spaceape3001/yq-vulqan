@@ -136,7 +136,7 @@ namespace yq::tachyon {
         cfg.size        = sizeof(V);
         cfg.count       = cnt;
         cfg.stages      = cc.stages;
-        cfg.binding     = cc.binding;
+        cfg.binding     = filter_binding(cc.binding);
         cfg.external    = cc.external;
         
         if(cfg.binding == UINT32_MAX){
@@ -158,7 +158,7 @@ namespace yq::tachyon {
         cfg.size        = sizeof(V);
         cfg.count       = cnt;
         cfg.stages      = cc.stages;
-        cfg.binding     = cc.binding;
+        cfg.binding     = filter_binding(cc.binding);
         cfg.external    = cc.external;
         if(cfg.binding == UINT32_MAX){
             cfg.binding = 0;

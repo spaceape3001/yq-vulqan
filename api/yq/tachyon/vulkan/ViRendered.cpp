@@ -38,6 +38,7 @@ namespace yq::tachyon {
         using rendered_null_pipeline        = error_db::entry<"Rendered unable to use null pipeline">;
         using rendered_bad_pipeline_layout  = error_db::entry<"Rendered unable to use bad pipeline layout">;
         using rendered_bad_pipeline         = error_db::entry<"Rendered unable to use bad pipeline">;
+        using rendered_mismatch_pipeline    = error_db::entry<"Rendered pipeline mismatch occured">;
     }
     
     static constexpr bool       RENDERED_DEBUG_REPORT  = true;
@@ -79,9 +80,8 @@ namespace yq::tachyon {
         m_id            = ren.id();
         
         m_layout        = viz.pipeline_layout_create(m_config);
-        if(!m_layout){
+        if(!m_layout)
             return errors::rendered_bad_pipeline_layout();
-        }
         
         if(m_layout->has_dynamic_state(VK_DYNAMIC_STATE_PRIMITIVE_TOPOLOGY) && ren.proxy<PTopology>())
             m_status |= S::Topology;
@@ -134,6 +134,17 @@ namespace yq::tachyon {
             m_status |= S::Descriptors;
         if(m_config->push().type != PushConfigType::None)
             m_status |= S::Push;
+
+        #ifdef _DEBUG
+        if(m_config != m_pipeline->config()){
+            vizAlert << "ViRendered::_init(): rendered=" << ren.id() << " pipeline=" << (int) m_config -> role() << ": PIPELINE MISMATCH DETECTED";
+            return errors::rendered_mismatch_pipeline();
+        }
+        if(m_config != m_layout->config()){
+            vizAlert << "ViRendered::_init(): rendered=" << ren.id() << " pipeline=" << (int) m_config -> role() << ": PIPELINE MISMATCH DETECTED";        
+            return errors::rendered_mismatch_pipeline();
+        }
+        #endif
 
         return {};
     }
@@ -201,8 +212,8 @@ namespace yq::tachyon {
             vkCmdPushConstants(u.command_buffer, u.pipeline_layout, u.pipeline_shaders, 0, pb.size(), pb.data() );
         }
         
-        if(m_status(S::Descriptors)){
-            vkCmdBindDescriptorSets(u.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, u.pipeline_layout, 0, m_descriptors.size(), m_descriptors.data(), 0, nullptr);
+        if(m_status(S::Descriptors) && m_descriptor){
+            vkCmdBindDescriptorSets(u.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, u.pipeline_layout, 0, 1, &m_descriptor, 0, nullptr);
         }
         
         if(m_status(S::Vertex)){

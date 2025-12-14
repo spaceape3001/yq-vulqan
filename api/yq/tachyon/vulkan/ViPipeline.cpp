@@ -72,14 +72,14 @@ namespace yq::tachyon {
 
     std::error_code ViPipeline::_init(ViVisualizer&viz, ViPipelineLayoutCPtr pLay, const ViPipelineOptions& opts)
     {
-        const Pipeline*    cfg = pLay->pipeline_config();
-        if(!cfg){
+        m_config = pLay->pipeline_config();
+        if(!m_config)
             return errors::pipeline_bad_config();
-        }
+        
         
         m_viz       = &viz;
         m_layout    = pLay;
-        m_binding   = (VkPipelineBindPoint) cfg->binding().value();
+        m_binding   = (VkPipelineBindPoint) m_config->binding().value();
         m_status    = {};
         m_id        = pLay -> id();
         
@@ -101,7 +101,7 @@ namespace yq::tachyon {
         pipelineInfo.pVertexInputState = &pLay->vertex_create_info();
 
         VqPipelineInputAssemblyStateCreateInfo inputAssembly;
-        inputAssembly.topology                  = (VkPrimitiveTopology) cfg->topology().value();
+        inputAssembly.topology                  = (VkPrimitiveTopology) m_config->topology().value();
         switch(opts.primitive_restart){
         case Tristate::No:
             inputAssembly.primitiveRestartEnable = VK_FALSE;
@@ -110,7 +110,7 @@ namespace yq::tachyon {
             inputAssembly.primitiveRestartEnable = VK_TRUE;
             break;
         case Tristate::Inherit:
-            if(cfg->primitive_restart()){
+            if(m_config->primitive_restart()){
                 inputAssembly.primitiveRestartEnable = VK_TRUE;
             } else {
                 inputAssembly.primitiveRestartEnable = VK_FALSE;
@@ -127,7 +127,7 @@ namespace yq::tachyon {
                 tachyonWarning << "Pipeline has one tessellation shader, but not the other, are you sure?";
             if(inputAssembly.topology != VK_PRIMITIVE_TOPOLOGY_PATCH_LIST)
                 tachyonWarning << "Pipeline has tessellation shaders, but topoology IS NOT the required patch list";
-            tessellation.patchControlPoints = cfg->patch_control_points();
+            tessellation.patchControlPoints = m_config->patch_control_points();
             if(tessellation.patchControlPoints < 2)
                 tachyonWarning << "Pipeline tessellation needs patch control points";
             pipelineInfo.pTessellationState = &tessellation;
@@ -174,11 +174,11 @@ namespace yq::tachyon {
 
         PolygonMode polyMode    = opts.polygon_mode;
         if(polyMode == PolygonMode::Auto)
-            polyMode    = cfg->polygons();
+            polyMode    = m_config->polygons();
         if(polyMode == PolygonMode::Auto)
             polyMode    = PolygonMode::Fill;
         #if 0
-        if((polyMode   == PolygonMode::Fill) && (opts.wireframe == Tristate::YES) && cfg->wireframe_permitted()){
+        if((polyMode   == PolygonMode::Fill) && (opts.wireframe == Tristate::YES) && m_config->wireframe_permitted()){
             m_status |= S::Wireframe;
         }
         #endif
@@ -188,15 +188,15 @@ namespace yq::tachyon {
 
         float lineWidth = opts.line_width;
         if(is_nan(lineWidth))
-            lineWidth   = cfg->line_width();
+            lineWidth   = m_config->line_width();
 
         VqPipelineRasterizationStateCreateInfo  rasterizer;
         rasterizer.polygonMode              = (VkPolygonMode) polyMode.value();
         rasterizer.depthClampEnable         = opts.depth_clamp ? VK_TRUE : VK_FALSE;
         rasterizer.rasterizerDiscardEnable  = opts.rasterizer_discard ? VK_TRUE : VK_FALSE;
         rasterizer.lineWidth                = lineWidth;
-        rasterizer.cullMode                 = (VkCullModeFlags) cfg->culling().value();
-        rasterizer.frontFace                = (VkFrontFace) cfg->front().value();
+        rasterizer.cullMode                 = (VkCullModeFlags) m_config->culling().value();
+        rasterizer.frontFace                = (VkFrontFace) m_config->front().value();
         rasterizer.depthBiasEnable          = VK_FALSE;
         rasterizer.depthBiasConstantFactor  = 0.0f; // Optional
         rasterizer.depthBiasClamp           = 0.0f; // Optional
@@ -277,7 +277,7 @@ namespace yq::tachyon {
             .blendConstants             = { 0., 0., 0., 0. }
         };
 
-        switch(cfg->color_blending()){
+        switch(m_config->color_blending()){
         case ColorBlend::Additive:
             pipelineInfo.pColorBlendState   = &colorBlend_additive;
             break;
@@ -340,7 +340,7 @@ namespace yq::tachyon {
                 pipelineInfo.pStages    = i.second.shaderInfo.data();
             }
 
-            ColorBlend   colorBlending   = i.second.define->colorBlend ? *(i.second.define->colorBlend) : cfg->color_blending();
+            ColorBlend   colorBlending   = i.second.define->colorBlend ? *(i.second.define->colorBlend) : m_config->color_blending();
             switch(colorBlending){
             case ColorBlend::Additive:
                 pipelineInfo.pColorBlendState   = &colorBlend_additive;
@@ -357,7 +357,7 @@ namespace yq::tachyon {
             if(i.second.define->cullMode){
                 rasterizer.cullMode                 = (VkCullModeFlags) (*(i.second.define->cullMode)).value();
             } else {
-                rasterizer.cullMode                 = (VkCullModeFlags) cfg->culling().value();
+                rasterizer.cullMode                 = (VkCullModeFlags) m_config->culling().value();
             }
 
             if(i.second.define->lineWidth){
@@ -371,7 +371,7 @@ namespace yq::tachyon {
             if(i.second.define->frontFace){
                 rasterizer.frontFace                = (VkFrontFace) (*(i.second.define->frontFace)).value();
             } else {
-                rasterizer.frontFace                = (VkFrontFace) cfg->front().value();
+                rasterizer.frontFace                = (VkFrontFace) m_config->front().value();
             }
 
             if(i.second.define->polygonMode){

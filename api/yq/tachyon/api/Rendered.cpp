@@ -69,6 +69,11 @@ namespace yq::tachyon {
         return {};
     }
 
+    bool    RenderedMeta::has_pipeline(Pipeline::Role r) const
+    {
+        return m_pipelines.contains(r);
+    }
+
     Pipeline*       RenderedMeta::create_pipeline(Pipeline::Role r, std::function<Pipeline*(Pipeline::Role)> make)
     {
         assert(Meta::thread_safe_write());

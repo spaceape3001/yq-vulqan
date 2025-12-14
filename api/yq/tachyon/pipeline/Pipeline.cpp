@@ -215,6 +215,31 @@ namespace yq::tachyon {
                 m_shaders.push_back(ss);
         }
     }
+    
+    uint32_t        Pipeline::filter_binding(uint32_t b) const
+    {
+        uint32_t    mx = 0;
+        for(auto& s : m_storageBuffers){
+            if(b == s.binding)
+                b   = UINT32_MAX;
+            mx  = std::max(s.binding+1, mx);
+        }
+
+        for(auto& t : m_textures){
+            if(b == t.binding)
+                b   = UINT32_MAX;
+            mx  = std::max(t.binding+1, mx);
+        }
+
+        for(auto& u : m_uniformBuffers){
+            if(b == u.binding)
+                b   = UINT32_MAX;
+            mx  = std::max(u.binding+1, mx);
+        }
+        if(b == UINT32_MAX)
+            b   = mx;
+        return b;
+    }
 
     Pipeline::texture_t  Pipeline::tex_(const t_config& cc)
     {   
@@ -222,13 +247,7 @@ namespace yq::tachyon {
         cfg.activity    = cc.activity;
         cfg.stages      = cc.stages;
         cfg.external    = cc.external;
-        if(cfg.binding == UINT32_MAX){
-            cfg.binding = 0;
-            for(auto& s : m_textures){
-                if(cfg.binding <= s.binding)
-                    cfg.binding = s.binding + 1;
-            }
-        }
+        cfg.binding     = filter_binding(cc.binding);
         return cfg;
     }
     

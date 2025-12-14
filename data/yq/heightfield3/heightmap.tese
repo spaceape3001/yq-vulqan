@@ -10,7 +10,6 @@ layout(quads, equal_spacing, ccw) in;
 
 #include <yq/qmix2.glsl>
 #include "heightfield.glsl"
-#include "heightmap.glsl"
 
 layout(location = 0) in vec2   inUV[];
 layout(location = 1) out vec2  outUV;

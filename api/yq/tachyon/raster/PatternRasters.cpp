@@ -30,5 +30,11 @@ namespace yq::tachyon {
     {
         return checkerboard_raster(rgba(a, 255), rgba(b, 255));
     }
+
+    RasterPtr   square_raster(float a, unsigned cnt)
+    {
+        Pixels2<float>  pixels({cnt, cnt}, a);
+        return new Raster(COPY, pixels);
+    }
 }
 

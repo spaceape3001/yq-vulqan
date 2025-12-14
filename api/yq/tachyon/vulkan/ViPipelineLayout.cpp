@@ -290,10 +290,12 @@ namespace yq::tachyon {
         }
         if(descriptors_defined()){
             out << "    VkDescriptorSetLayout:      [" << hex(descriptor_set_layout()) << "]\n";
+            #if 0
             for(const VkDescriptorSetLayoutBinding& desc : m_layoutBindings){
                 out << "        " << to_string_view(desc.descriptorType) << ", binding=" << desc.binding << ", count=" 
                     << desc.descriptorCount << ", shaders=" << hex(desc.stageFlags) << '\n';
             }
+            #endif
         }
     }
 

@@ -38,6 +38,8 @@ namespace yq::tachyon {
         
         static const std::vector<const RenderedMeta*>& all();
         
+        bool    has_pipeline(Pipeline::Role) const;
+        
     private:
         struct Repo;
         static Repo& repo();

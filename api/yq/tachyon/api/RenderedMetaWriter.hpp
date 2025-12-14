@@ -26,6 +26,12 @@ namespace yq::tachyon {
         {
         }
         
+        bool    has_pipeline(Pipeline::Role r) const
+        {
+            if(m_meta)
+                return static_cast<bool>(m_meta->pipeline(r));
+            return false;
+        }
         
         /*! \brief Creates and returns a new pipeline builder
         

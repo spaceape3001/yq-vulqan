@@ -32,10 +32,10 @@ namespace yq::tachyon {
     
     // pending...    might be a setting to rendered's update
     struct ViDataMap {
-        std::map<uint32_t, VkDescriptorSet> storages;
-        std::map<uint32_t, VkDescriptorSet> textures; 
-        std::map<uint32_t, VkDescriptorSet> uniforms; 
-        std::map<uint32_t, VkBuffer>        vertices;
+        std::map<uint32_t, VkBuffer>                            storages;
+        std::map<uint32_t, std::pair<VkImageView, VkSampler>>   textures; 
+        std::map<uint32_t, VkBuffer>                            uniforms; 
+        std::map<uint32_t, VkBuffer>                            vertices;
     };
     
     struct ViDataOptions {
@@ -128,54 +128,46 @@ namespace yq::tachyon {
         };
     
         uint32_t                buffer_count() const;
-        
-        uint32_t                descriptor_count() const;
-        
+         
         VkDescriptorSetLayout   descriptor_set_layout() const { return m_descriptorLayout; }
         VkDescriptorPool        descriptor_pool() const { return m_descriptorPool; }
         bool                    descriptors_defined() const;
         
-        std::span<const VkDescriptorSet>    descriptor_span() const;
+        const VkDescriptorSet&  descriptor() const { return m_descriptor; }
     
-        VkBuffer                index_buffer(uint32_t) const;
-        uint32_t                index_bytes() const;
-        uint32_t                index_bytes(uint32_t) const;
-        uint32_t                index_count() const;
-        uint32_t                index_max_size() const;
+        //VkBuffer                index_buffer(uint32_t) const;
+        //uint32_t                index_bytes() const;
+        //uint32_t                index_bytes(uint32_t) const;
+        //uint32_t                index_count() const;
+        //uint32_t                index_max_size() const;
         
         const Pipeline*         pipeline_config() const { return m_config; }
         
-        VkBuffer                storage_buffer(uint32_t) const;
-        uint32_t                storage_bytes() const;
-        uint32_t                storage_bytes(uint32_t) const;
+        //VkBuffer                storage_buffer(uint32_t) const;
+        //uint32_t                storage_bytes() const;
+        //uint32_t                storage_bytes(uint32_t) const;
         uint32_t                storage_count() const;
 
         uint32_t                texture_count() const;
-        VkImageView             texture_image_view(uint32_t) const;
-        VkSampler               texture_sampler(uint32_t) const;
+        //VkImageView             texture_image_view(uint32_t) const;
+        //VkSampler               texture_sampler(uint32_t) const;
         
         
-        VkBuffer                uniform_buffer(uint32_t) const;
-        uint32_t                uniform_bytes() const;
-        uint32_t                uniform_bytes(uint32_t) const;
+        //VkBuffer                uniform_buffer(uint32_t) const;
+        //uint32_t                uniform_bytes() const;
+        //uint32_t                uniform_bytes(uint32_t) const;
         uint32_t                uniform_count() const;
         
-        VkBuffer                vertex_buffer(uint32_t) const;
-        uint32_t                vertex_bytes() const;
-        uint32_t                vertex_bytes(uint32_t) const;
+        //VkBuffer                vertex_buffer(uint32_t) const;
+        //uint32_t                vertex_bytes() const;
+        //uint32_t                vertex_bytes(uint32_t) const;
         uint32_t                vertex_count() const;
-        uint32_t                vertex_max_size() const;
+        //uint32_t                vertex_max_size() const;
 
-            //   used for external storages
-        void    set_external_storage(uint32_t, VkDescriptorSet);
-        
-            //   used for external textures
-        void    set_external_texture(uint32_t, VkDescriptorSet);
-
-            //   used for external uniforms
-        void    set_external_uniform(uint32_t, VkDescriptorSet);
         
         bool    has_externals() const;
+        
+        const Pipeline* config () const { return m_config; }
 
     protected:
 
@@ -213,8 +205,8 @@ namespace yq::tachyon {
         ViDevice*                       m_device            = nullptr;
         const Pipeline*                 m_config            = nullptr;
         
-        std::vector<VkDescriptorSetLayoutBinding>   m_layoutBindings;
-        std::vector<VkDescriptorSet>                m_descriptors;
+        //std::vector<VkDescriptorSetLayoutBinding>   m_layoutBindings;
+        VkDescriptorSet                 m_descriptor;
         std::vector<VkWriteDescriptorSet>           m_dispatch;
         
         const Pipeline::push_t*         m_push              = nullptr;

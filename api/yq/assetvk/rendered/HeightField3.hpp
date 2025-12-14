@@ -86,6 +86,7 @@ namespace yq::tachyon {
         UB1<UData>          m_ubo;
         Vector4U            m_oTess = { 1, 1, 1, 1 };
         Vector2U            m_iTess = { 1, 1 };
+        TextureCPtr         m_heightMap;
         
         void        divide(const Vector2U&);
         

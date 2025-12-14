@@ -16,6 +16,8 @@ layout(binding = 2) uniform uniform_t {
     float   cmOffset;
 } u;
 
+layout(binding = 3) uniform sampler2D heightSampler;
+
 vec2    uv2xy(vec2 uv)
 {
     return 2.*uv - vec2(1.,1.);;
@@ -27,10 +29,19 @@ vec4    uv2screen(vec2 uv)
     return kPush.model2screen * vec4( xy.x, xy.y, 0., 1. );
 }
 
-
 vec4    uv2screen(vec2 uv, float z)
 {
     vec2 xy = uv2xy(uv);
     return kPush.model2screen * vec4( xy.x, xy.y, z, 1. );
+}
+
+float uvZ(vec2 uv)
+{
+    return -texture(heightSampler, uv).x;
+}
+
+vec4    uv2screenZ(vec2 uv)
+{
+    return uv2screen(uv, uvZ(uv));
 }
 

@@ -12,7 +12,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::SimpleSpatial³)
 
 namespace yq::tachyon {
     SimpleSpatial³::SimpleSpatial³(const Vector3D& pos, const Quaternion3D& ori, const Vector3D& scale, const Param& p) :
-        Spatial³(p)
+        Spatial³(p), ASpatial³(pos, ori, scale)
     {
     }
 

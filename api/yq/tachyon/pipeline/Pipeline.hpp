@@ -79,72 +79,72 @@ namespace yq::tachyon {
             //  Debug pipelines... solid?  
 
             //! Debug Black
-            DbgBlack,
+            DbgBlack, // 1
 
             //! Debug Red
-            DbgRed,
+            DbgRed, // 2
 
             //! Debug Orange
-            DbgOrange,
+            DbgOrange, // 3
 
             //! Debug Yellow
-            DbgYellow,
+            DbgYellow, // 4
 
             //! Debug Green
-            DbgGreen,
+            DbgGreen, // 5
 
             //! Debug Blue
-            DbgBlue,
+            DbgBlue, // 6
 
             //! Debug Cyan
-            DbgCyan,
+            DbgCyan, // 7
 
             //! Debug Magenta
-            DbgMagenta,
+            DbgMagenta, // 8
 
             //! Debug Gray
-            DbgGray,
+            DbgGray, // 9
 
             //! Debug White
-            DbgWhite,
+            DbgWhite, // 10
 
 
 
             //! Single solid color 
-            SolidColor,
+            SolidColor, // 11
             
             //! Solid color with lights
-            SolidColorLit,
+            SolidColorLit, // 12
             
             //! Solid color with ray racing
-            SolidColorRay,
+            SolidColorRay, // 13
 
             //! Color corners
-            ColorCorner,
+            ColorCorner, // 14
 
             //! Color corners with lights
-            ColorCornerLit,
+            ColorCornerLit, // 15
 
             //! Corner color with ray tracing
-            ColorCornerRay,
+            ColorCornerRay, // 16
             
             //! Regular textured
-            Textured,
+            Textured, // 17
             
             //! Regular textured with lights
-            TexturedLit,
+            TexturedLit, // 18
 
             //! Regular texture with ray tracing
-            TexturedRay,
+            TexturedRay, // 19
             
             //! Using Material
-            Material,
+            Material, // 20
             
             //! Lit material
-            MaterialLit,
+            MaterialLit, // 21
             
             //! Lit ray tracing with material
-            MaterialRay,
+            MaterialRay, // 22
 
             //! First user-based index (nice & large for future compatibility)
             User = 1001
@@ -532,6 +532,8 @@ namespace yq::tachyon {
         template <typename V>
         VBOMaker<V>                 vbo_(const v_config&);
 
+
+        uint32_t        filter_binding(uint32_t) const;
 
         virtual ~Pipeline();
         uint32_t                    location_filter(uint32_t loc, uint32_t req);

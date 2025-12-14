@@ -103,6 +103,8 @@ namespace yq::tachyon {
 
         VkPipeline          pipeline(Pipeline::Variation) const;
         VkPipeline          wireframe(Pipeline::Variation) const;
+
+        const Pipeline* config () const { return m_config; }
     
     private:
         std::error_code _init(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& options);
@@ -128,6 +130,7 @@ namespace yq::tachyon {
         VkPipelineBindPoint     m_binding       = VK_PIPELINE_BIND_POINT_GRAPHICS;
         Flags<S>                m_status        = {};
         uint64_t                m_id            = 0;
+        const Pipeline*         m_config        = nullptr;
         
         ViPipeline(const ViPipeline&) = delete;
         ViPipeline(ViPipeline&&) = delete;

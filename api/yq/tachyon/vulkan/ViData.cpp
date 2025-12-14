@@ -155,6 +155,8 @@ namespace yq::tachyon {
 
     bool    ViData::_create_descriptor_layout(const ViDataOptions& opts)
     {
+        std::vector<VkDescriptorSetLayoutBinding>   bindings;
+        
         for(const auto & s : m_sbo){
             VkDescriptorSetLayoutBinding a{};
             a.binding           = s.first;
@@ -162,17 +164,7 @@ namespace yq::tachyon {
             a.descriptorType    = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
             a.stageFlags        = s.second.config->stages & opts.shaders;
             a.pImmutableSamplers = nullptr;
-            m_layoutBindings.push_back(a);
-        }
-        
-        for(const auto& u : m_ubo){
-            VkDescriptorSetLayoutBinding a{};
-            a.binding           = u.first;
-            a.descriptorCount   = 1;
-            a.descriptorType    = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-            a.stageFlags        = u.second.config->stages & opts.shaders;
-            a.pImmutableSamplers = nullptr;
-            m_layoutBindings.push_back(a);
+            bindings.push_back(a);
         }
         
         for(const auto& t : m_tex){
@@ -182,17 +174,28 @@ namespace yq::tachyon {
             a.descriptorType    = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
             a.stageFlags        = t.second.config->stages & opts.shaders;
             a.pImmutableSamplers = nullptr;
-            m_layoutBindings.push_back(a);
+            bindings.push_back(a);
         }
             //allocInfo.flags                 = VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT;
 
-        if(m_layoutBindings.empty()){
+        for(const auto& u : m_ubo){
+            VkDescriptorSetLayoutBinding a{};
+            a.binding           = u.first;
+            a.descriptorCount   = 1;
+            a.descriptorType    = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+            a.stageFlags        = u.second.config->stages & opts.shaders;
+            a.pImmutableSamplers = nullptr;
+            bindings.push_back(a);
+        }
+        
+
+        if(bindings.empty()){
             vizWarning << "ViData(" << hex(this) << ") no descriptor infos to create with!";
         }
         
         VqDescriptorSetLayoutCreateInfo layoutInfo;
-        layoutInfo.bindingCount = m_layoutBindings.size();
-        layoutInfo.pBindings    = m_layoutBindings.data();
+        layoutInfo.bindingCount = bindings.size();
+        layoutInfo.pBindings    = bindings.data();
         layoutInfo.flags        = 0;
         VkResult    res = vkCreateDescriptorSetLayout(m_device->device(), &layoutInfo, nullptr, &m_descriptorLayout);
         if(res != VK_SUCCESS){
@@ -223,22 +226,22 @@ namespace yq::tachyon {
             return false;
         }
         
-        m_descriptors.resize(nDesc, nullptr);
         m_descriptorPool    = opts.pool;
         m_descriptorLayout  = opts.layout;
         m_dispatch.reserve(nDesc);
 
-        VqDescriptorSetAllocateInfo allocInfo;
-        allocInfo.descriptorPool        = opts.pool;
-        allocInfo.descriptorSetCount    = 1;
-        allocInfo.pSetLayouts           = &opts.layout;
+        //std::vector<VkDescriptorSetLayout>  layouts(nDesc, opts.layout);
 
-        VkResult    res = vkAllocateDescriptorSets(m_device->device(), &allocInfo, m_descriptors.data());
+        VqDescriptorSetAllocateInfo allocInfo;
+        allocInfo.descriptorPool        = m_descriptorPool;
+        allocInfo.descriptorSetCount    = 1;
+        allocInfo.pSetLayouts           = &m_descriptorLayout;
+
+        VkResult    res = vkAllocateDescriptorSets(m_device->device(), &allocInfo, &m_descriptor);
         if(res != VK_SUCCESS){
             vizWarning << "Unable to allocate descriptor sets.  VkResult " << (int32_t) res;
             return false;
         }
-        
         
         for(auto& itr : m_sbo){
             auto& s = itr.second;
@@ -246,24 +249,11 @@ namespace yq::tachyon {
             s.info.offset           = 0;
             s.info.range            = VK_WHOLE_SIZE;
             
-            s.write.dstSet          = m_descriptors[s.dIndex];
+            s.write.dstSet          = m_descriptor;
             s.write.dstBinding      = itr.first;
             s.write.descriptorType  = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
             s.write.descriptorCount = 1;
             s.write.pBufferInfo     = &s.info;
-        }
-        
-        for(auto& itr : m_ubo){
-            auto& u = itr.second;
-            u.info.buffer           = nullptr;
-            u.info.offset           = 0;
-            u.info.range            = VK_WHOLE_SIZE;
-            
-            u.write.dstSet          = m_descriptors[u.dIndex];
-            u.write.dstBinding      = itr.first;
-            u.write.descriptorType  = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-            u.write.descriptorCount = 1;
-            u.write.pBufferInfo     = &u.info;
         }
         
         for(auto& itr : m_tex){
@@ -271,12 +261,26 @@ namespace yq::tachyon {
             t.info.sampler          = nullptr;
             t.info.imageView        = nullptr;
             t.info.imageLayout      = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-            t.write.dstSet          = m_descriptors[t.dIndex];
+            t.write.dstSet          = m_descriptor;
             t.write.dstBinding      = itr.first;
             t.write.descriptorType  = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
             t.write.descriptorCount = 1;
             t.write.pImageInfo      = &t.info;
         }
+
+        for(auto& itr : m_ubo){
+            auto& u = itr.second;
+            u.info.buffer           = nullptr;
+            u.info.offset           = 0;
+            u.info.range            = VK_WHOLE_SIZE;
+            
+            u.write.dstSet          = m_descriptor;
+            u.write.dstBinding      = itr.first;
+            u.write.descriptorType  = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+            u.write.descriptorCount = 1;
+            u.write.pBufferInfo     = &u.info;
+        }
+        
 
         m_status |= S::DescSets;
         return true;
@@ -500,8 +504,8 @@ namespace yq::tachyon {
     void    ViData::_kill_data()
     {
         if(m_device && m_device->device()){
-            if(m_status(S::DescSets) && m_descriptorPool && !m_descriptors.empty()){
-                vkFreeDescriptorSets(m_device->device(), m_descriptorPool, m_descriptors.size(), m_descriptors.data());
+            if(m_status(S::DescSets) && m_descriptorPool && m_descriptor){
+                vkFreeDescriptorSets(m_device->device(), m_descriptorPool, 1, &m_descriptor);
             }
             if(m_status(S::DescLayout) && m_descriptorLayout){
                 vkDestroyDescriptorSetLayout(m_device->device(), m_descriptorLayout, nullptr);
@@ -513,13 +517,12 @@ namespace yq::tachyon {
         m_tex.clear();
         m_ubo.clear();
         m_vbo.clear();
-        m_layoutBindings.clear();
-        m_descriptors.clear();
         m_dispatch.clear();
         m_vboBuffers.clear();
         m_vboOffsets.clear();
 
         m_status            = {};
+        m_descriptor        = nullptr;
         m_descriptorPool    = nullptr;
         m_descriptorLayout  = nullptr;
         m_object            = nullptr;
@@ -542,6 +545,15 @@ namespace yq::tachyon {
         
         if(m_dispatch.empty())
             return ;
+        
+        #ifdef _DEBUG
+        for(auto& itr : m_dispatch){
+            if(!itr.dstSet){
+                tachyonFirstCritical(this) << "Descriptor is NULL!  on pipeline role=" << (int) m_config -> role();
+                return ;
+            }
+        }
+        #endif
             
         vkUpdateDescriptorSets(m_device->device(), m_dispatch.size(), m_dispatch.data(), 0, nullptr);
     }
@@ -673,9 +685,11 @@ namespace yq::tachyon {
                 continue;
                 
             if(s.external){
+            #if 0
                 auto x = dm.storages.find(itr.first);
                 if(x != dm.storages.end())
                     updated = _update_(m_descriptors[s.dIndex], x->second) || updated;
+            #endif
                 continue;
             }
 
@@ -702,9 +716,11 @@ namespace yq::tachyon {
             if(!t.config)
                 continue;
             if(t.external){
+            #if 0
                 auto x = dm.textures.find(itr.first);
                 if(x != dm.textures.end())
                     updated = _update_(m_descriptors[t.dIndex], x->second) || updated;
+            #endif
                 continue;
             }
 
@@ -729,9 +745,11 @@ namespace yq::tachyon {
             if(!u.config)
                 continue;
             if(u.external){
+                #if 0
                 auto x = dm.uniforms.find(itr.first);
                 if(x != dm.uniforms.end())
                     updated = _update_(m_descriptors[u.dIndex], x->second) || updated;
+                #endif
                 continue;
             }
                 
@@ -788,10 +806,6 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    uint32_t    ViData::descriptor_count() const
-    {
-        return (uint32_t) m_descriptors.size();
-    }
     
     bool        ViData::descriptors_defined() const
     {
@@ -801,30 +815,6 @@ namespace yq::tachyon {
     bool    ViData::has_externals() const
     {
         return m_status(S::External);
-    }
-
-    void    ViData::set_external_storage(uint32_t i, VkDescriptorSet ds)
-    {
-        auto x = _sbo(i);
-        if(!x || !x->external)
-            return;
-        m_descriptors[x->dIndex]    = ds;
-    }
-    
-    void    ViData::set_external_texture(uint32_t i, VkDescriptorSet ds)
-    {
-        auto x = _tex(i);
-        if(!x || !x->external)
-            return;
-        m_descriptors[x->dIndex]    = ds;
-    }
-
-    void    ViData::set_external_uniform(uint32_t i, VkDescriptorSet ds)
-    {
-        auto x = _ubo(i);
-        if(!x || !x->external)
-            return;
-        m_descriptors[x->dIndex]    = ds;
     }
 
     uint32_t    ViData::storage_count() const
@@ -837,411 +827,14 @@ namespace yq::tachyon {
         return m_tex.size();
     }
     
+    uint32_t    ViData::uniform_count() const
+    {
+        return m_ubo.size();
+    }
+
     uint32_t    ViData::vertex_count() const
     {
         return m_vtxCount;
     }
     
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#if 0
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    bool                ViData::_import_from(const RenderedSnap*sn)
-    {
-        bool    success = true;
-        for(uint32_t i=0;i<std::min(m_index.count,(uint32_t) sn->ibos.size());++i){
-            success = _import(m_index, i, m_config->m_indexBuffers[i], sn->ibos[i]) && success;
-        }
-        for(uint32_t i=0;i<std::min(m_storage.count,(uint32_t) sn->sbos.size());++i){
-            success = _import(m_storage, i, m_config->m_storageBuffers[i], sn->sbos[i]) && success;
-        }
-        for(uint32_t i=0;i<std::min(m_texture.count,(uint32_t) sn->texs.size());++i){
-            success = _import(m_texture, i, m_config->m_textures[i], sn->texs[i]) && success;
-        }
-        for(uint32_t i=0;i<std::min(m_uniform.count,(uint32_t) sn->ubos.size());++i){
-            success = _import(m_uniform, i, m_config->m_uniformBuffers[i], sn->ubos[i]) && success;
-        }
-        for(uint32_t i=0;i<std::min(m_vertex.count,(uint32_t) sn->vbos.size());++i){
-            success = _import(m_vertex, i, m_config->m_vertexBuffers[i], sn->vbos[i]) && success;
-        }
-        return success;
-    }
-
-    bool    ViData::_set(BB& bb, uint32_t i, const Buffer& buf)
-    {
-        return _set(bb, i, m_device->buffer_create(buf), buf.id());
-    }
-
-    bool    ViData::_set(BB& bb, uint32_t i, const ViBufferCPtr& x, uint64_t id)
-    {
-        if(!x || !x->valid()){
-            vizWarning << "ViData -- unable to load buffer";
-            return false;
-        }
-    
-        bb.managed[i]   = x;
-        bb.buffers[i]   = x->buffer();
-        bb.sizes[i]     = x->count();   // yeah, bit reversed here in naming...
-        bb.bytes[i]     = x->size();
-        bb.ids[i]       = id;
-        bb.modified    |= 1 << i;
-        return true;
-    }
-
-    bool    ViData::_set(TB&tb, uint32_t i, const Texture& tex)
-    {
-        return _set(tb, i, m_device->texture_create(tex), tex.id());
-    }
-    
-    bool    ViData::_set(TB&tb, uint32_t i, const ViTextureCPtr&x, uint64_t id)
-    {
-        if(!x || !x->valid()){
-            vizWarning << "ViData -- unable to load texture";
-            return false;
-        }
-        tb.managed[i]   = x;
-        tb.ids[i]       = id;
-        tb.views[i]     = x->image_view();
-        tb.samplers[i]  = x->sampler();
-        tb.extents[i]   = x->extents();
-        
-        return true;
-    }
-
-    static constexpr bool is_refreshed(DataActivity da)
-    {
-        switch(da){
-        case DataActivity::COMMON:
-        case DataActivity::FIXED:
-            return false;
-        case DataActivity::UNSURE:
-        case DataActivity::DYNAMIC:
-        case DataActivity::REFRESH:
-        default:
-            return true;
-        }
-    }
-
-    bool    ViData::_update(BB& bb, uint32_t i, const Pipeline::buffer_t& cfg)
-    {
-        if(i >= bb.count)
-            return false;
-        if(!cfg.fetch)
-            return false;
-        if(!is_refreshed(cfg.activity))
-            return true;
-        if(!m_object)
-            return false;
-
-        if(cfg.activity == DataActivity::DYNAMIC){
-            if(!cfg.revision)
-                return false;
-            uint64_t    n   = cfg.revision(m_object);
-            if(n == bb.revisions[i])
-                return true;
-            bb.revisions[i] = n;
-        }
-
-        BufferCPtr c       = cfg.fetch(m_object);
-        if(!c){
-            vizWarning << "ViData -- failed to fetch the buffer";
-            return false;
-        }
-        
-        return _set(bb, i, *c);
-    }
-
-    bool    ViData::_update(BB& bb, uint32_t i, const Pipeline::buffer_t& cfg, const Buffered& buf)
-    {
-        if(i >= bb.count)
-            return false;
-        if(!is_refreshed(cfg.activity))
-            return true;
-
-        if(auto p = std::get_if<BufferCPtr>(&buf)){
-            if(!*p){
-                vizFirstWarning(this) << "ViData -- failed to update from a null (cbuffer) buffer";
-                return false;
-            }
-            
-            return _set(bb, i, **p);
-        }
-        
-        if(auto p = std::get_if<ViBufferCPtr>(&buf)){
-            if(!*p){
-                vizFirstWarning(this) << "ViData -- failed to update from a null (vibuffer) buffer";
-                return false;
-            }
-
-            return _set(bb, i, *p);
-        }
-
-            vizWarning << "ViData -- failed to update from an unspecified buffer";
-        return false;
-    }
-    
-    bool    ViData::_update(TB& tb, uint32_t i, const Pipeline::texture_t& cfg)
-    {
-        if(i >= tb.count)
-            return false;
-        if(!cfg.fetch)
-            return false;
-        if(!is_refreshed(cfg.activity))
-            return true;
-        if(!m_object)
-            return false;
-
-        if(cfg.activity == DataActivity::DYNAMIC){
-            if(!cfg.revision)
-                return false;
-            uint64_t    n   = cfg.revision(m_object);
-            if(n == tb.revisions[i])
-                return true;
-            tb.revisions[i] = n;
-        }
-
-        TextureCPtr c       = cfg.fetch(m_object);
-        if(!c){
-            vizWarning << "ViData -- failed to fetch the texture";
-            return false;
-        }
-        
-        return _set(tb, i, *c);
-    }
-
-    
-    bool    ViData::_update(TB& tb, uint32_t i, const Pipeline::texture_t& cfg, const Textured& tex)
-    {
-        if(i >= tb.count)
-            return false;
-        if(!is_refreshed(cfg.activity))
-            return true;
-
-        if(auto p = std::get_if<TextureCPtr>(&tex)){
-            if(!*p){
-                vizWarning << "ViData -- failed to update from a null texture";
-                return false;
-            }
-            return _set(tb, i, **p);
-        }
-
-        if(auto p = std::get_if<ViTextureCPtr>(&tex)){
-            if(!*p){
-                vizWarning << "ViData -- failed to update from a null texture";
-                return false;
-            }
-            return _set(tb, i, *p);
-        }
-
-        vizWarning << "ViData -- failed to update from an unspecified texture";
-        return false;
-    }
-
-    //! Update the data (second time)
-    bool    ViData::_update_data(const RenderedSnap* sn)
-    {
-        if(m_config->is_static())
-            return true;
-    
-        m_index.modified = m_storage.modified = m_texture.modified = m_uniform.modified = m_vertex.modified = 0;
-        m_index.maxSize  = m_vertex.maxSize = 0;
-        
-        if(sn){
-            return _update_from(sn);
-        } else {
-            return _update_self();
-        }
-    }
-
-    bool    ViData::_update_from(const RenderedSnap* sn)
-    {
-        bool    success  = true;
-        for(uint32_t i=0;i<m_index.count;++i){
-            success = _update(m_index, i, m_config->m_indexBuffers[i], sn->ibos[i]) && success;
-            m_index.maxSize = std::max(m_index.maxSize, m_index.sizes[i]);
-        }
-        for(uint32_t i=0;i<m_storage.count;++i){
-            success = _update(m_storage, i, m_config->m_storageBuffers[i], sn->sbos[i]) && success;
-        }
-        for(uint32_t i=0;i<m_texture.count;++i){
-            success = _update(m_texture, i, m_config->m_textures[i], sn->texs[i]) && success;
-        }
-        for(uint32_t i=0;i<m_uniform.count;++i){
-            success = _update(m_uniform, i, m_config->m_uniformBuffers[i], sn->ubos[i]) && success;
-        }
-        for(uint32_t i=0;i<m_vertex.count;++i){
-            success = _update(m_vertex, i, m_config->m_vertexBuffers[i], sn->vbos[i]) && success;
-            m_vertex.maxSize = std::max(m_vertex.maxSize, m_vertex.sizes[i]);
-        }
-        return success;
-    }
-
-    bool    ViData::_update_self()
-    {
-        bool    success  = true;
-        for(uint32_t i=0;i<m_index.count;++i){
-            success = _update(m_index, i, m_config->m_indexBuffers[i]) && success;
-            m_index.maxSize = std::max(m_index.maxSize, m_index.sizes[i]);
-        }
-        for(uint32_t i=0;i<m_storage.count;++i){
-            success = _update(m_storage, i, m_config->m_storageBuffers[i]) && success;
-        }
-        for(uint32_t i=0;i<m_texture.count;++i){
-            success = _update(m_texture, i, m_config->m_textures[i]) && success;
-        }
-        for(uint32_t i=0;i<m_uniform.count;++i){
-            success = _update(m_uniform, i, m_config->m_uniformBuffers[i]) && success;
-        }
-        for(uint32_t i=0;i<m_vertex.count;++i){
-            success = _update(m_vertex, i, m_config->m_vertexBuffers[i]) && success;
-            m_vertex.maxSize = std::max(m_vertex.maxSize, m_vertex.sizes[i]);
-        }
-        return success;
-    }
-    
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    uint32_t    ViData::buffer_count() const
-    {
-        return (uint32_t) m_buffers.size();
-    }
-
-    VkBuffer    ViData::index_buffer(size_t i) const
-    {
-        if((i>=m_index.count) || !m_index.buffers)
-            return nullptr;
-        return m_index.buffers[i];
-    }
-    
-    uint32_t    ViData::index_bytes() const
-    {
-        if(!(m_index.bytes && m_index.count))
-            return 0;
-            
-        uint32_t ret = 0;
-        for(uint32_t i=0;i<m_index.count;++i)
-            ret += m_index.bytes[i];
-        return ret;
-    }
-    
-    uint32_t    ViData::index_bytes(size_t i) const
-    {
-        if((i>=m_index.count) || !m_index.bytes)
-            return 0;
-
-        return m_index.bytes[i];
-    }
-
-    uint32_t    ViData::index_count() const
-    {
-        return m_index.count;
-    }
-    
-    uint32_t    ViData::index_max_size() const
-    {
-        return m_index.maxSize;
-    }
-
-    VkBuffer    ViData::storage_buffer(size_t i) const
-    {
-        if((i>=m_storage.count) || !m_storage.buffers)
-            return nullptr;
-        return m_storage.buffers[i];
-    }
-    
-    uint32_t    ViData::storage_bytes() const
-    {
-        if(!(m_storage.count && m_storage.bytes))
-            return 0;
-            
-        uint32_t ret = 0;
-        for(uint32_t i=0; i<m_storage.count; ++i)
-            ret += m_storage.bytes[i];
-        return ret;
-    }
-    
-    uint32_t    ViData::storage_bytes(size_t i) const
-    {
-        if((i >= m_storage.count) || !m_storage.bytes)
-            return 0;
-        return m_storage.bytes[i];
-    }
-    VkImageView ViData::texture_image_view(size_t i) const
-    {
-        if((i>=m_texture.count) || !m_texture.views)
-            return nullptr;
-        return m_texture.views[i];
-    }
-    
-    VkSampler   ViData::texture_sampler(size_t i) const
-    {
-        if((i>=m_texture.count) || !m_texture.samplers)
-            return nullptr;
-        return m_texture.samplers[i];
-    }
-    
-    VkBuffer    ViData::uniform_buffer(size_t i) const
-    {
-        if((i>=m_uniform.count) || !m_uniform.buffers)
-            return nullptr;
-        return m_uniform.buffers[i];
-    }
-    
-    uint32_t    ViData::uniform_bytes() const
-    {
-        if(!(m_uniform.count && m_uniform.bytes))
-            return 0;
-            
-        uint32_t ret = 0;
-        for(uint32_t i=0; i<m_uniform.count; ++i)
-            ret += m_uniform.bytes[i];
-        return ret;
-    }
-    
-    uint32_t    ViData::uniform_bytes(size_t i) const
-    {
-        if((i >= m_uniform.count) || !m_uniform.bytes)
-            return 0;
-        return m_uniform.bytes[i];
-    }
-    
-    uint32_t    ViData::uniform_count() const
-    {
-        return m_uniform.count;
-    }
-    
-    VkBuffer    ViData::vertex_buffer(size_t i) const
-    {
-        if((i>=m_vertex.count) || !m_vertex.buffers)
-            return nullptr;
-        return m_vertex.buffers[i];
-    }
-    
-    uint32_t    ViData::vertex_bytes() const
-    {
-        if(!(m_vertex.count && m_vertex.bytes))
-            return 0;
-            
-        uint32_t ret = 0;
-        for(uint32_t i=0; i<m_vertex.count; ++i)
-            ret += m_vertex.bytes[i];
-        return ret;
-    }
-    
-    uint32_t    ViData::vertex_bytes(size_t i) const
-    {
-        if((i >= m_vertex.count) || !m_vertex.bytes)
-            return 0;
-        return m_vertex.bytes[i];
-    }
-    
-    uint32_t    ViData::vertex_max_size() const
-    {
-        return m_vertex.maxSize;
-    }
-#endif
 }

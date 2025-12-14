@@ -30,6 +30,7 @@ add_library(${PROJECT_NAME} SHARED
 
     command_camera.cpp
     command_color.cpp
+    command_color_profile.cpp
     command_controller.cpp
     command_count.cpp
     command_cursor.cpp
@@ -194,7 +195,6 @@ add_library(${PROJECT_NAME} SHARED
     command/AddChildCommand.cpp
     command/AppCommand.cpp
     command/AppDeleteViewerCommand.cpp
-    command/ColorProfileCommand.cpp
     command/EditorCommand.cpp
     command/EmptyCommand.cpp
     command/GamepadCommand.cpp
@@ -239,8 +239,10 @@ add_library(${PROJECT_NAME} SHARED
     event/IOEvent.cpp
     event/OSEvent.cpp
     event/PanelEvent.cpp
+    event/SetColorProfileEvent.cpp
     event/SetHeightFieldEvent.cpp
     event/SetMaterialEvent.cpp
+    event/SetMeshEvent.cpp
     event/SetTextureEvent.cpp
     event/ShapeEvent.cpp
     event/ThreadEvent.cpp
@@ -248,7 +250,6 @@ add_library(${PROJECT_NAME} SHARED
     event/VulqanEvent.cpp
     event/WidgetEvent.cpp
 
-    event/shape/SetMeshEvent.cpp
     event/thread/ThreadAddTachyonEvent.cpp
     
     im/KVTable.cpp

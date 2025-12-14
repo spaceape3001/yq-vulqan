@@ -7,12 +7,12 @@
 #pragma once
 
 #include <yq/net/Url.hpp>
-#include <yq/tachyon/event/ShapeEvent.hpp>
+#include <yq/tachyon/api/Event.hpp>
 #include <yq/tachyon/typedef/mesh.hpp>
 
 namespace yq::tachyon {
-    class SetMeshEvent : public ShapeEvent {
-        YQ_OBJECT_DECLARE(SetMeshEvent, ShapeEvent)
+    class SetMeshEvent : public Event {
+        YQ_OBJECT_DECLARE(SetMeshEvent, Event)
     public:
         SetMeshEvent(const Header&, const MeshCPtr&, const Url&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

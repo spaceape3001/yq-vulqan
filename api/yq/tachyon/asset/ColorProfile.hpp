@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "command/RenderedCommand.ipp"
-#include "command/rendered/SetTopologyCommand.ipp"
-#include "command/rendered/SetWireframeCommand.ipp"
+#pragma once
+
+#include <yq/tachyon/asset/Texture.hpp>
+#include <yq/tachyon/typedef/color_profile.hpp>

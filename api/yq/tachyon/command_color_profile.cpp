@@ -1,0 +1,10 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "command/ColorProfileCommand.ipp"
+#include "command/color_profile/SetColorProfileCommand.ipp"
+#include "command/color_profile/SetColorProfileSpecCommand.ipp"
+#include "command/color_profile/SetColorProfileUrlCommand.ipp"

@@ -9,7 +9,7 @@
 #include <yq/tachyon/command/mesh/SetMeshCommand.hpp>
 #include <yq/tachyon/command/mesh/SetMeshSpecCommand.hpp>
 #include <yq/tachyon/command/mesh/SetMeshUrlCommand.hpp>
-#include <yq/tachyon/event/shape/SetMeshEvent.hpp>
+#include <yq/tachyon/event/SetMeshEvent.hpp>
 #include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {

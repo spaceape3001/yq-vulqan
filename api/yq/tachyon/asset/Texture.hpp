@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <yq/core/Ref.hpp>
-#include <yq/core/UniqueID.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/tachyon/asset/TextureInfo.hpp>
 #include <yq/tachyon/typedef/raster.hpp>

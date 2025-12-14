@@ -262,6 +262,7 @@ add_library(${PROJECT_NAME} SHARED
     interface/IMesh.cpp
     interface/ITexture.cpp
     
+    io/CVPLoader.cpp
     io/GLSLShader.cpp
     io/GLTFLoader.cpp
     io/ImageHMV.cpp

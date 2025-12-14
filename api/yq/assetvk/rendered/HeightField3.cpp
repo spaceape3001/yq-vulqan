@@ -34,8 +34,9 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::HeightField³)
 
 namespace yq::tachyon {
     namespace {
-        static constexpr const uint32_t kT_heightMap        = 3;
         static constexpr const uint32_t kU_heightUniform    = 2;
+        static constexpr const uint32_t kT_heightMap        = 3;
+        static constexpr const uint32_t kT_colorZ           = 4;
         
 
         //enum {
@@ -83,6 +84,7 @@ namespace yq::tachyon {
             
         static constexpr const Pipeline::Role   kDebug          = YQ_PIPELINE_ROLE;
         static constexpr const Pipeline::Role   kSimple         = YQ_PIPELINE_ROLE;
+        static constexpr const Pipeline::Role   kGradient       = YQ_PIPELINE_ROLE;
 
     }
 
@@ -112,6 +114,7 @@ namespace yq::tachyon {
             p.polygons(PolygonMode::Line);
             p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
             p.texture(&HeightField³::m_heightMap, {.activity=DYNAMIC, .binding = kT_heightMap});
+            p.texture(&HeightField³::m_colorZ, {.activity=DYNAMIC, .binding = kT_colorZ});
             p.push_full();
             p.patch_control_points(4);
         }
@@ -128,10 +131,28 @@ namespace yq::tachyon {
             p.polygons(PolygonMode::Fill);
             p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
             p.texture(&HeightField³::m_heightMap, {.activity=DYNAMIC, .binding = kT_heightMap});
+            p.texture(&HeightField³::m_colorZ, {.activity=DYNAMIC, .binding = kT_colorZ});
             p.push_full();
             p.patch_control_points(4);
         }
 
+
+        {
+            auto& p = w.pipeline(kGradient);
+            p.shader( "yq/heightfield3/heightmap.vert" );
+            p.shader( "yq/heightfield3/simple.tesc" );
+            p.shader( "yq/heightfield3/heightmap.tese" );
+            p.shader( "yq/heightfield3/zcolor.frag" );
+            p.topology(Topology::PatchList);
+            p.vertex(&HeightField³::m_vbo, {.activity=DYNAMIC});
+            p.index(&HeightField³::m_index);
+            p.polygons(PolygonMode::Fill);
+            p.uniform(&HeightField³::m_ubo, {.activity=DYNAMIC, .binding = kU_heightUniform});
+            p.texture(&HeightField³::m_heightMap, {.activity=DYNAMIC, .binding = kT_heightMap});
+            p.texture(&HeightField³::m_colorZ, {.activity=DYNAMIC, .binding = kT_colorZ});
+            p.push_full();
+            p.patch_control_points(4);
+        }
 
 #if 0
         {
@@ -285,7 +306,8 @@ namespace yq::tachyon {
             //return ;
         //}
         
-        static const TextureCPtr    sZeroHM  = new Texture(square_raster(0., 2), Sampler::simple());
+        static const TextureCPtr    sZeroHM    = new Texture(square_raster(0., 2), Sampler::simple());
+        static const TextureCPtr    sStdColor  = Texture::IO::load("pp:yq/heightfield3/gradient.cvp");
         
         auto& cnt   = ACount²::m_count;
         m_good    = cnt.x && cnt.y;
@@ -294,55 +316,26 @@ namespace yq::tachyon {
             
         divide(ACount²::m_count);
         
-        m_ubo.data.oTess = m_oTess.cast<float>();
-        m_ubo.data.iTess = m_iTess.cast<float>();
-        m_heightMap     = m_heightField ? m_heightField : sZeroHM;
+        m_ubo.data.oTess    = m_oTess.cast<float>();
+        m_ubo.data.iTess    = m_iTess.cast<float>();
+        m_heightMap         = m_heightField ? m_heightField : sZeroHM;
+        m_colorZ            = sStdColor;
+        m_ubo.data.cmScale  = 0.25;
 
         switch(m_drawMode){
         case DrawMode::Color:
             m_ubo.data.rgba  = m_color;
             set_pipeline(kSimple);
             break;
-        case DrawMode::DbgBlack:
-            m_ubo.data.rgba  = rgba4f(color::Black);
-            set_pipeline(kDebug);
+        case DrawMode::Gradient:
+            set_pipeline(kGradient);
             break;
-        case DrawMode::DbgRed:
-            m_ubo.data.rgba  = rgba4f(color::Red);
-            set_pipeline(kDebug);
-            break;
-        case DrawMode::DbgOrange:
         case DrawMode::Auto:
             m_ubo.data.rgba  = rgba4f(color::Orange);
             set_pipeline(kDebug);
             break;
-        case DrawMode::DbgYellow:
-            m_ubo.data.rgba  = rgba4f(color::Yellow);
-            set_pipeline(kDebug);
-            break;
-        case DrawMode::DbgGreen:
-            m_ubo.data.rgba  = rgba4f(color::Green);
-            set_pipeline(kDebug);
-            break;
-        case DrawMode::DbgCyan:
-            m_ubo.data.rgba  = rgba4f(color::Cyan);
-            set_pipeline(kDebug);
-            break;
-        case DrawMode::DbgBlue:
-            m_ubo.data.rgba  = rgba4f(color::Blue);
-            set_pipeline(kDebug);
-            break;
-        case DrawMode::DbgMagenta:
-            m_ubo.data.rgba  = rgba4f(color::Magenta);
-            set_pipeline(kDebug);
-            break;
-        case DrawMode::DbgGray:
         default:
             m_ubo.data.rgba  = rgba4f(color::Gray);
-            set_pipeline(kDebug);
-            break;
-        case DrawMode::DbgWhite:
-            m_ubo.data.rgba  = rgba4f(color::White);
             set_pipeline(kDebug);
             break;
         }

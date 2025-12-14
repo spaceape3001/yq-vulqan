@@ -22,6 +22,7 @@
 #include <yq/tachyon/api/Context.hpp>
 #include <yq/tachyon/api/Spatial3MetaWriter.hpp>
 #include <yq/userexpr/Context.hpp>
+#include <yq/vector/Quaternion3.hxx>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::UserSpatial³)
 

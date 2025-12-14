@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include <yq/tachyon/command/ShapeCommand.hpp>
+#include <yq/tachyon/command/MeshCommand.hpp>
 #include <yq/tachyon/typedef/texture.hpp>
 #include <yq/net/Url.hpp>
 
 namespace yq::tachyon {
-    class SetMeshUrlCommand : public ShapeCommand {
-        YQ_OBJECT_DECLARE(SetMeshUrlCommand, ShapeCommand)
+    class SetMeshUrlCommand : public MeshCommand {
+        YQ_OBJECT_DECLARE(SetMeshUrlCommand, MeshCommand)
     public:
         SetMeshUrlCommand(const Header&, const Url&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

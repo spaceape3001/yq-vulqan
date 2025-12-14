@@ -11,7 +11,7 @@
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
-#include <yq/tachyon/command/SetHeightFieldSpecCommand.hpp>
+#include <yq/tachyon/command/height_field/SetHeightFieldSpecCommand.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PHeightField.hpp>
 #include <misc/cpp/imgui_stdlib.h>

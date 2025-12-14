@@ -13,6 +13,7 @@
 namespace yq::tachyon {
 
     class SetMeshCommand;
+    class SetMeshSpecCommand;
     class SetMeshUrlCommand;
 
     class AMesh : public IMesh, public virtual Tachyon::Helper {
@@ -42,6 +43,7 @@ namespace yq::tachyon {
         
     private:
         void        on_set_mesh(const SetMeshCommand&);
+        void        on_set_mesh_spec(const SetMeshSpecCommand&);
         void        on_set_mesh_url(const SetMeshUrlCommand&);
     };
 

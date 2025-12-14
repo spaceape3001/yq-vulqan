@@ -6,8 +6,9 @@
 
 #include "AMesh.hpp"
 #include <yq/tachyon/asset/Mesh.hpp>
-#include <yq/tachyon/command/shape/SetMeshCommand.hpp>
-#include <yq/tachyon/command/shape/SetMeshUrlCommand.hpp>
+#include <yq/tachyon/command/mesh/SetMeshCommand.hpp>
+#include <yq/tachyon/command/mesh/SetMeshSpecCommand.hpp>
+#include <yq/tachyon/command/mesh/SetMeshUrlCommand.hpp>
 #include <yq/tachyon/event/shape/SetMeshEvent.hpp>
 #include <yq/vector/Vector3.hxx>
 
@@ -60,6 +61,13 @@ namespace yq::tachyon {
         if(cmd.target() != typed())
             return;
         mesh(SET, cmd.mesh());
+    }
+
+    void        AMesh::on_set_mesh_spec(const SetMeshSpecCommand& cmd)
+    {
+        if(cmd.target() != typed())
+            return;
+        mesh(SET, Resource::resolve(cmd.spec()));
     }
     
     void        AMesh::on_set_mesh_url(const SetMeshUrlCommand&cmd)

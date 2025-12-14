@@ -10,6 +10,7 @@
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/command/mesh/SetMeshSpecCommand.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PMesh.hpp>
 #include <misc/cpp/imgui_stdlib.h>
@@ -45,10 +46,7 @@ namespace yq::tachyon {
             return ;
         
         std::string     v = to_string(p->mesh(URL));
-        if(ImGui::InputText("##mesh", &v, ImGuiInputTextFlags_EnterReturnsTrue)){
-            auto x  = to_url_view(v);
-            if(x.good)
-                p->mesh(SET, ::yq::copy(x.value));
-        }
+        if(ImGui::InputText("##mesh", &v, ImGuiInputTextFlags_EnterReturnsTrue))
+            send(new SetMeshSpecCommand({.target=snap()->self}, v));
     }
 }

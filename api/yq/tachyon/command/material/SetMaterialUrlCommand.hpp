@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Command.hpp>
+#include <yq/tachyon/command/MaterialCommand.hpp>
 #include <yq/net/Url.hpp>
 
 namespace yq::tachyon {
-    class SetMaterialUrlCommand : public Command {
-        YQ_OBJECT_DECLARE(SetMaterialUrlCommand, Command)
+    class SetMaterialUrlCommand : public MaterialCommand {
+        YQ_OBJECT_DECLARE(SetMaterialUrlCommand, MaterialCommand)
     public:
         SetMaterialUrlCommand(const Header&, const Url&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

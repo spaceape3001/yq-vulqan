@@ -12,12 +12,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMaterialCommand)
 
 namespace yq::tachyon {
 
-    SetMaterialCommand::SetMaterialCommand(const Header&h, const MaterialCPtr& dm) : Command(h), m_material(dm)
+    SetMaterialCommand::SetMaterialCommand(const Header&h, const MaterialCPtr& dm) : MaterialCommand(h), m_material(dm)
     {
     }
 
     SetMaterialCommand::SetMaterialCommand(const SetMaterialCommand& cp, const Header& h) : 
-        Command(cp, h), m_material(cp.m_material)
+        MaterialCommand(cp, h), m_material(cp.m_material)
     {
     }
     

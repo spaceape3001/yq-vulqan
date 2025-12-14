@@ -7,8 +7,9 @@
 #pragma once
 
 #include <yq/tachyon/aspect/AMaterial.hpp>
-#include <yq/tachyon/command/SetMaterialCommand.hpp>
-#include <yq/tachyon/command/SetMaterialUrlCommand.hpp>
+#include <yq/tachyon/command/material/SetMaterialCommand.hpp>
+#include <yq/tachyon/command/material/SetMaterialSpecCommand.hpp>
+#include <yq/tachyon/command/material/SetMaterialUrlCommand.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/asset/Material.hpp>
 #include <yq/tachyon/tags.hpp>
@@ -21,6 +22,7 @@ namespace yq::tachyon {
         w.resource("material", &AMaterial::m_material).tag(kTag_Save);
 
         w.slot(UNSAFE, &AMaterial::on_set_material);
+        w.slot(UNSAFE, &AMaterial::on_set_material_spec);
         w.slot(UNSAFE, &AMaterial::on_set_material_url);
     }
 }

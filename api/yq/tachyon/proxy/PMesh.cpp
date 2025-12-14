@@ -6,8 +6,8 @@
 
 #include "PMesh.hpp"
 #include <yq/tachyon/asset/Mesh.hpp>
-#include <yq/tachyon/command/shape/SetMeshCommand.hpp>
-#include <yq/tachyon/command/shape/SetMeshUrlCommand.hpp>
+#include <yq/tachyon/command/mesh/SetMeshCommand.hpp>
+#include <yq/tachyon/command/mesh/SetMeshUrlCommand.hpp>
 
 namespace yq::tachyon {
     PMesh::PMesh(const IMesh& i) : m_mesh(i.mesh()), m_url(i.mesh(URL))

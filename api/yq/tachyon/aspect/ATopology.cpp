@@ -6,7 +6,7 @@
 
 #include "ATopology.hpp"
 #include "ATopologyWriter.hxx"
-#include <yq/tachyon/command/shape/SetTopologyCommand.hpp>
+#include <yq/tachyon/command/rendered/SetTopologyCommand.hpp>
 
 namespace yq::tachyon {
     ATopology::ATopology() = default;

@@ -11,12 +11,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMeshUrlCommand)
 
 namespace yq::tachyon {
 
-    SetMeshUrlCommand::SetMeshUrlCommand(const Header&h, const Url& dm) : ShapeCommand(h), m_url(dm)
+    SetMeshUrlCommand::SetMeshUrlCommand(const Header&h, const Url& dm) : MeshCommand(h), m_url(dm)
     {
     }
 
     SetMeshUrlCommand::SetMeshUrlCommand(const SetMeshUrlCommand& cp, const Header& h) : 
-        ShapeCommand(cp, h), m_url(cp.m_url)
+        MeshCommand(cp, h), m_url(cp.m_url)
     {
     }
     

@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq/tachyon/command/ShapeCommand.hpp>
+#include <yq/tachyon/command/RenderedCommand.hpp>
 #include <yq/tachyon/pipeline/Topology.hpp>
 
 namespace yq::tachyon {
-    class SetTopologyCommand : public ShapeCommand {
-        YQ_OBJECT_DECLARE(SetTopologyCommand, ShapeCommand)
+    class SetTopologyCommand : public RenderedCommand {
+        YQ_OBJECT_DECLARE(SetTopologyCommand, RenderedCommand)
     public:
         SetTopologyCommand(const Header&, Topology);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq/tachyon/command/ShapeCommand.hpp>
+#include <yq/tachyon/command/MeshCommand.hpp>
 #include <yq/tachyon/typedef/mesh.hpp>
 
 namespace yq::tachyon {
-    class SetMeshCommand : public ShapeCommand {
-        YQ_OBJECT_DECLARE(SetMeshCommand, ShapeCommand)
+    class SetMeshCommand : public MeshCommand {
+        YQ_OBJECT_DECLARE(SetMeshCommand, MeshCommand)
     public:
         SetMeshCommand(const Header&, const MeshCPtr&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

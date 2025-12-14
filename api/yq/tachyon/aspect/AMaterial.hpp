@@ -13,6 +13,7 @@
 namespace yq::tachyon {
 
     class SetMaterialCommand;
+    class SetMaterialSpecCommand;
     class SetMaterialUrlCommand;
 
     class AMaterial : public IMaterial, public virtual Tachyon::Helper {
@@ -42,6 +43,7 @@ namespace yq::tachyon {
         
     private:
         void        on_set_material(const SetMaterialCommand&);
+        void        on_set_material_spec(const SetMaterialSpecCommand&);
         void        on_set_material_url(const SetMaterialUrlCommand&);
     };
 

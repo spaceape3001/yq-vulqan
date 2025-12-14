@@ -12,12 +12,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMeshCommand)
 
 namespace yq::tachyon {
 
-    SetMeshCommand::SetMeshCommand(const Header&h, const MeshCPtr& dm) : ShapeCommand(h), m_mesh(dm)
+    SetMeshCommand::SetMeshCommand(const Header&h, const MeshCPtr& dm) : MeshCommand(h), m_mesh(dm)
     {
     }
 
     SetMeshCommand::SetMeshCommand(const SetMeshCommand& cp, const Header& h) : 
-        ShapeCommand(cp, h), m_mesh(cp.m_mesh)
+        MeshCommand(cp, h), m_mesh(cp.m_mesh)
     {
     }
     

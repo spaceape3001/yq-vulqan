@@ -11,12 +11,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SetTextureUrlCommand)
 
 namespace yq::tachyon {
 
-    SetTextureUrlCommand::SetTextureUrlCommand(const Header&h, const Url& dm) : Command(h), m_url(dm)
+    SetTextureUrlCommand::SetTextureUrlCommand(const Header&h, const Url& dm) : TextureCommand(h), m_url(dm)
     {
     }
 
     SetTextureUrlCommand::SetTextureUrlCommand(const SetTextureUrlCommand& cp, const Header& h) : 
-        Command(cp, h), m_url(cp.m_url)
+        TextureCommand(cp, h), m_url(cp.m_url)
     {
     }
     

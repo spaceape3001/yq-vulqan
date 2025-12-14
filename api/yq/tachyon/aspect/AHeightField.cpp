@@ -7,9 +7,9 @@
 #include "AHeightField.hpp"
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/asset/HeightField.hpp>
-#include <yq/tachyon/command/SetHeightFieldCommand.hpp>
-#include <yq/tachyon/command/SetHeightFieldSpecCommand.hpp>
-#include <yq/tachyon/command/SetHeightFieldUrlCommand.hpp>
+#include <yq/tachyon/command/height_field/SetHeightFieldCommand.hpp>
+#include <yq/tachyon/command/height_field/SetHeightFieldSpecCommand.hpp>
+#include <yq/tachyon/command/height_field/SetHeightFieldUrlCommand.hpp>
 #include <yq/tachyon/event/SetHeightFieldEvent.hpp>
 #include <yq/tachyon/asset/TextureInfo.hpp>
 

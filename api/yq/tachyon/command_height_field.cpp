@@ -1,0 +1,10 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "command/HeightFieldCommand.ipp"
+#include "command/height_field/SetHeightFieldCommand.ipp"
+#include "command/height_field/SetHeightFieldSpecCommand.ipp"
+#include "command/height_field/SetHeightFieldUrlCommand.ipp"

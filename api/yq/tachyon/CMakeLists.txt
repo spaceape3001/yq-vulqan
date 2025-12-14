@@ -33,7 +33,10 @@ add_library(${PROJECT_NAME} SHARED
     command_controller.cpp
     command_count.cpp
     command_cursor.cpp
+    command_height_field.cpp
     command_light.cpp
+    command_material.cpp
+    command_mesh.cpp
     #command_offset.cpp
     command_orientation.cpp
     command_position.cpp
@@ -43,6 +46,7 @@ add_library(${PROJECT_NAME} SHARED
     command_size.cpp
     command_spatial.cpp
     command_tachyon.cpp
+    command_texture.cpp
     command_thread.cpp
     command_ui.cpp
     command_vertex.cpp
@@ -190,6 +194,7 @@ add_library(${PROJECT_NAME} SHARED
     command/AddChildCommand.cpp
     command/AppCommand.cpp
     command/AppDeleteViewerCommand.cpp
+    command/ColorProfileCommand.cpp
     command/EditorCommand.cpp
     command/EmptyCommand.cpp
     command/GamepadCommand.cpp
@@ -198,13 +203,6 @@ add_library(${PROJECT_NAME} SHARED
     command/JoystickCommand.cpp
     command/MouseCommand.cpp
     command/SceneCommand.cpp
-    command/SetHeightFieldCommand.cpp
-    command/SetHeightFieldSpecCommand.cpp
-    command/SetHeightFieldUrlCommand.cpp
-    command/SetMaterialCommand.cpp
-    command/SetMaterialUrlCommand.cpp
-    command/SetTextureCommand.cpp
-    command/SetTextureUrlCommand.cpp
     command/ShapeCommand.cpp
     command/WidgetCommand.cpp
     command/WindowCommand.cpp
@@ -217,13 +215,11 @@ add_library(${PROJECT_NAME} SHARED
     command/app/ViewerCreateCommand.cpp
     command/gamepad/GamepadZeroCommand.cpp
     command/generic/SetSpatialCommand.cpp
+    
     command/io/SaveCommand.cpp
     command/joystick/JoystickZeroCommand.cpp
     
     command/shape/SetDrawModeCommand.cpp
-    command/shape/SetMeshCommand.cpp
-    command/shape/SetMeshUrlCommand.cpp
-    command/shape/SetTopologyCommand.cpp
     
     command/widget/SetViewer.cpp
 

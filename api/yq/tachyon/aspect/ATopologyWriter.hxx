@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/aspect/ATopology.hpp>
-#include <yq/tachyon/command/shape/SetTopologyCommand.hpp>
+#include <yq/tachyon/command/rendered/SetTopologyCommand.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/tags.hpp>
 

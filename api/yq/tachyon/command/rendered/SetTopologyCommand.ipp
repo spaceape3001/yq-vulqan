@@ -11,12 +11,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SetTopologyCommand)
 
 namespace yq::tachyon {
 
-    SetTopologyCommand::SetTopologyCommand(const Header&h, Topology dm) : ShapeCommand(h), m_topology(dm)
+    SetTopologyCommand::SetTopologyCommand(const Header&h, Topology dm) : RenderedCommand(h), m_topology(dm)
     {
     }
 
     SetTopologyCommand::SetTopologyCommand(const SetTopologyCommand& cp, const Header& h) : 
-        ShapeCommand(cp, h), m_topology(cp.m_topology)
+        RenderedCommand(cp, h), m_topology(cp.m_topology)
     {
     }
     

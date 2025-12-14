@@ -6,8 +6,9 @@
 
 #include "ATexture.hpp"
 #include <yq/tachyon/asset/Texture.hpp>
-#include <yq/tachyon/command/SetTextureCommand.hpp>
-#include <yq/tachyon/command/SetTextureUrlCommand.hpp>
+#include <yq/tachyon/command/texture/SetTextureCommand.hpp>
+#include <yq/tachyon/command/texture/SetTextureSpecCommand.hpp>
+#include <yq/tachyon/command/texture/SetTextureUrlCommand.hpp>
 #include <yq/tachyon/event/SetTextureEvent.hpp>
 
 namespace yq::tachyon {
@@ -59,6 +60,13 @@ namespace yq::tachyon {
         if(cmd.target() != typed())
             return;
         texture(SET, cmd.texture());
+    }
+
+    void        ATexture::on_set_texture_spec(const SetTextureSpecCommand& cmd)
+    {
+        if(cmd.target() != typed())
+            return;
+        texture(SET, Resource::resolve(cmd.spec()));
     }
     
     void        ATexture::on_set_texture_url(const SetTextureUrlCommand&cmd)

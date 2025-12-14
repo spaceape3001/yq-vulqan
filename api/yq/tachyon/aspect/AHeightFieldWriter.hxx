@@ -9,9 +9,9 @@
 #include <yq/tachyon/tags.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/aspect/AHeightField.hpp>
-#include <yq/tachyon/command/SetHeightFieldCommand.hpp>
-#include <yq/tachyon/command/SetHeightFieldSpecCommand.hpp>
-#include <yq/tachyon/command/SetHeightFieldUrlCommand.hpp>
+#include <yq/tachyon/command/height_field/SetHeightFieldCommand.hpp>
+#include <yq/tachyon/command/height_field/SetHeightFieldSpecCommand.hpp>
+#include <yq/tachyon/command/height_field/SetHeightFieldUrlCommand.hpp>
 
 namespace yq::tachyon {
     template <typename C>

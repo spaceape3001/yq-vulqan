@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Command.hpp>
+#include <yq/tachyon/command/HeightFieldCommand.hpp>
 
 namespace yq::tachyon {
-    class SetHeightFieldSpecCommand : public Command {
-        YQ_OBJECT_DECLARE(SetHeightFieldSpecCommand, Command)
+    class SetHeightFieldSpecCommand : public HeightFieldCommand {
+        YQ_OBJECT_DECLARE(SetHeightFieldSpecCommand, HeightFieldCommand)
     public:
         SetHeightFieldSpecCommand(const Header&, const std::string&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

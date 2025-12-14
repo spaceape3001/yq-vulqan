@@ -4,8 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-// Auto-generated file
-
-#include "command/RenderedCommand.ipp"
-#include "command/rendered/SetTopologyCommand.ipp"
-#include "command/rendered/SetWireframeCommand.ipp"
+#include "command/MeshCommand.ipp"
+#include "command/mesh/SetMeshCommand.ipp"
+#include "command/mesh/SetMeshSpecCommand.ipp"
+#include "command/mesh/SetMeshUrlCommand.ipp"

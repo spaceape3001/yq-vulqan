@@ -6,8 +6,9 @@
 
 #include "AMaterial.hpp"
 #include <yq/tachyon/asset/Material.hpp>
-#include <yq/tachyon/command/SetMaterialCommand.hpp>
-#include <yq/tachyon/command/SetMaterialUrlCommand.hpp>
+#include <yq/tachyon/command/material/SetMaterialCommand.hpp>
+#include <yq/tachyon/command/material/SetMaterialSpecCommand.hpp>
+#include <yq/tachyon/command/material/SetMaterialUrlCommand.hpp>
 #include <yq/tachyon/event/SetMaterialEvent.hpp>
 
 namespace yq::tachyon {
@@ -60,6 +61,13 @@ namespace yq::tachyon {
         material(SET, cmd.material());
     }
     
+    void        AMaterial::on_set_material_spec(const SetMaterialSpecCommand& cmd)
+    {
+        if(cmd.target() != typed())
+            return;
+        material(SET, Resource::resolve(cmd.spec()));
+    }
+
     void        AMaterial::on_set_material_url(const SetMaterialUrlCommand&cmd)
     {
         if(cmd.target() != typed())

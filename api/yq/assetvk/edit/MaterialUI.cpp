@@ -10,6 +10,7 @@
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/command/material/SetMaterialSpecCommand.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PMaterial.hpp>
 #include <misc/cpp/imgui_stdlib.h>
@@ -45,10 +46,7 @@ namespace yq::tachyon {
             return ;
         
         std::string     v = to_string(p->material(URL));
-        if(ImGui::InputText("##material", &v, ImGuiInputTextFlags_EnterReturnsTrue)){
-            auto x  = to_url_view(v);
-            if(x.good)
-                p->material(SET, ::yq::copy(x.value));
-        }
+        if(ImGui::InputText("##material", &v, ImGuiInputTextFlags_EnterReturnsTrue))
+            send(new SetMaterialSpecCommand({.target=snap()->self}, v));
     }
 }

@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Command.hpp>
+#include <yq/tachyon/command/TextureCommand.hpp>
 #include <yq/tachyon/typedef/texture.hpp>
 
 namespace yq::tachyon {
-    class SetTextureCommand : public Command {
-        YQ_OBJECT_DECLARE(SetTextureCommand, Command)
+    class SetTextureCommand : public TextureCommand {
+        YQ_OBJECT_DECLARE(SetTextureCommand, TextureCommand)
     public:
         SetTextureCommand(const Header&, const TextureCPtr&);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;

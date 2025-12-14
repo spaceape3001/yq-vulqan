@@ -13,6 +13,7 @@
 namespace yq::tachyon {
 
     class SetTextureCommand;
+    class SetTextureSpecCommand;
     class SetTextureUrlCommand;
 
     class ATexture : public ITexture, public virtual Tachyon::Helper {
@@ -42,6 +43,7 @@ namespace yq::tachyon {
         
     private:
         void        on_set_texture(const SetTextureCommand&);
+        void        on_set_texture_spec(const SetTextureSpecCommand&);
         void        on_set_texture_url(const SetTextureUrlCommand&);
     };
 

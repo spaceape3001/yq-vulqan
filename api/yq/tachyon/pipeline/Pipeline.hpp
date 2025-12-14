@@ -39,6 +39,11 @@ namespace yq {
     class TypeMeta;
 }
 
+/*! \brief Generates distinct pipeline roles WITHIN a source file
+    \note These may clobber outside, so do NOT share (header, otherwise).
+*/
+#define YQ_PIPELINE_ROLE    (::yq::tachyon::Pipeline::Role) ((uint16_t) ::yq::tachyon::Pipeline::Role::User + (uint16_t) __COUNTER__)
+
 namespace yq::tachyon {
     class ViData;
     class ViPipeline;

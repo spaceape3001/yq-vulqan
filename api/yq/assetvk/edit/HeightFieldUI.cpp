@@ -7,9 +7,11 @@
 #include "HeightFieldUI.hpp"
 #include <yq/core/Result.hpp>
 #include <yq/net/Url.hpp>
+#include <yq/resource/Resource.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/command/SetHeightFieldSpecCommand.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PHeightField.hpp>
 #include <misc/cpp/imgui_stdlib.h>
@@ -45,10 +47,7 @@ namespace yq::tachyon {
             return ;
         
         std::string     v = to_string(p->height_field(URL));
-        if(ImGui::InputText("##height_field", &v, ImGuiInputTextFlags_EnterReturnsTrue)){
-            auto x  = to_url_view(v);
-            if(x.good)
-                p->height_field(SET, ::yq::copy(x.value));
-        }
+        if(ImGui::InputText("##height_field", &v, ImGuiInputTextFlags_EnterReturnsTrue))
+            send(new SetHeightFieldSpecCommand({.target=snap()->self}, v));
     }
 }

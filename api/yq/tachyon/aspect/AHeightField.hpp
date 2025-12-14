@@ -12,6 +12,7 @@
 
 namespace yq::tachyon {
 
+    class SetHeightFieldSpecCommand;
     class SetHeightFieldCommand;
     class SetHeightFieldUrlCommand;
 
@@ -28,8 +29,10 @@ namespace yq::tachyon {
 
         const HeightFieldCPtr&  height_field(ref_k) const { return m_heightField; }
 
-    protected:
+    // unfortunately, the using class must bind... and the compiler's considering it "protected" otherwise... sigh....
         HeightFieldCPtr         m_heightField;
+
+    protected:
         Url                     m_heightFieldUrl;
         
         template <typename C>
@@ -43,6 +46,7 @@ namespace yq::tachyon {
     private:
         void        on_set_height_field(const SetHeightFieldCommand&);
         void        on_set_height_field_url(const SetHeightFieldUrlCommand&);
+        void        on_set_height_field_spec(const SetHeightFieldSpecCommand&);
         
     };
 

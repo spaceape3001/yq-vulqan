@@ -199,6 +199,7 @@ add_library(${PROJECT_NAME} SHARED
     command/MouseCommand.cpp
     command/SceneCommand.cpp
     command/SetHeightFieldCommand.cpp
+    command/SetHeightFieldSpecCommand.cpp
     command/SetHeightFieldUrlCommand.cpp
     command/SetMaterialCommand.cpp
     command/SetMaterialUrlCommand.cpp

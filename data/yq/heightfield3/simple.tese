@@ -1,0 +1,21 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#version 450
+
+layout(quads, equal_spacing, ccw) in;
+
+#include <yq/qmix2.glsl>
+#include "heightfield.glsl"
+
+layout(location = 0) in vec2 inUV[];
+layout(location = 1) out vec2 outUV;
+
+void main()
+{
+    outUV       = qmix(inUV[0], inUV[1], inUV[2], inUV[3], gl_TessCoord.x, gl_TessCoord.y);
+    gl_Position = uv2screen(outUV);
+}

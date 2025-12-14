@@ -10,6 +10,7 @@
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/aspect/AHeightField.hpp>
 #include <yq/tachyon/command/SetHeightFieldCommand.hpp>
+#include <yq/tachyon/command/SetHeightFieldSpecCommand.hpp>
 #include <yq/tachyon/command/SetHeightFieldUrlCommand.hpp>
 
 namespace yq::tachyon {
@@ -20,6 +21,7 @@ namespace yq::tachyon {
         w.resource("height_field", &AHeightField::m_heightField).tag(kTag_Save);
 
         w.slot(UNSAFE, &AHeightField::on_set_height_field);
+        w.slot(UNSAFE, &AHeightField::on_set_height_field_spec);
         w.slot(UNSAFE, &AHeightField::on_set_height_field_url);
     }
 }

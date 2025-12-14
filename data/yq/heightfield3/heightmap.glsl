@@ -4,12 +4,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-//  This fragment shader produces a simple solid black.
+layout(binding = 2) uniform sampler2D heightSampler;
 
-#version 450
-
-layout(location = 0) out vec4 outColor;
-
-void main() {
-    outColor = vec4(0., 0., 0., 0.);
+float uvZ(vec2 uv)
+{
+    return texture(heightSampler, uv).x;
 }
+
+vec4    uv2screenZ(vec2 uv)
+{
+    return uv2screen(uv, uvZ(uv));
+}
+

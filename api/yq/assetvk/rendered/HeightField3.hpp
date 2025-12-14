@@ -10,6 +10,7 @@
 #include <yq/tachyon/api/Rendered3.hpp>
 #include <yq/tachyon/aspect/AColor.hpp>
 #include <yq/tachyon/aspect/ACount2.hpp>
+#include <yq/tachyon/aspect/ADrawMode.hpp>
 #include <yq/tachyon/aspect/AHeightField.hpp>
 #include <yq/tachyon/aspect/AMaterial.hpp>
 #include <yq/tachyon/aspect/ASize3.hpp>
@@ -27,7 +28,7 @@ namespace yq::tachyon {
         
         By default, the dimensions will be [-1,1] on each axis, with the UV being 0,0 on the -1,-1 corner.
     */
-    class HeightField³ : public Rendered³, public AColor, public ACount², public AHeightField, public AMaterial, public ASize³ {
+    class HeightField³ : public Rendered³, public AColor, public ACount², public ADrawMode, public AHeightField, public AMaterial, public ASize³ {
         YQ_TACHYON_DECLARE(HeightField³, Rendered³)
     public:
     
@@ -42,6 +43,12 @@ namespace yq::tachyon {
         static void init_meta();
         Execution tick(const Context&) override;
         
+        using ADrawMode::draw_mode;
+        virtual bool    draw_mode(settable_k) const override { return true; }
+
+        using AColor::color;
+        virtual bool    color(settable_k) const override { return true; }
+
     protected:
         std::error_code     load(const StateSave&) override;
         
@@ -53,75 +60,32 @@ namespace yq::tachyon {
             Permutations in lighting ... simple, lit, ray
         */
     
-        enum {
-            kRoleUser           = (Pipeline::role_t) Pipeline::Role::User,
-
-            kRoleDbgBlackHM,
-            kRoleDbgRedHM,
-            kRoleDbgOrangeHM,
-            kRoleDbgYellowHM,
-            kRoleDbgGreenHM,
-            kRoleDbgCyanHM,
-            kRoleDbgBlueHM,
-            kRoleDbgMagentaHM,
-            kRoleDbgGrayHM,
-            kRoleDbgWhiteHM,
-
-            kRoleSolid,   
-            kRoleSolidLit,
-            kRoleSolidRay,
-
-            kRoleSolidHM,
-            kRoleSolidHMLit,
-            kRoleSolidHMRay,
-
-            kRoleProfile,
-            kRoleProfileLit,
-            kRoleProfileRay,
-
-            kRoleProfileHM,
-            kRoleProfileHMLit,
-            kRoleProfileHMRay,
-            
-            kRoleTexture,
-            kRoleTextureLit,
-            kRoleTextureRay,
-            
-            kRoleTextureHM,
-            kRoleTextureHMLit,
-            kRoleTextureHMRay,
-            
-            kRoleMaterialHM,
-            kRoleMaterialHMLit,
-            kRoleMaterialHMRay
-        };
-    
+     
     
         void    snap(Rendered³Snap&) const;
         void    rebuild();
-        
-        struct UData {
-            glm::vec4   itess;
-            glm::vec2   otess;
-            glm::vec2   vscale  = { 0., 1. };
-        };
-        
-        struct Vertex {
-            glm::vec2   pos;
-            glm::vec2   uv;
-        };
         
         struct Gridder;
         
         //  Idea is coloration (by altitude) instead of all the same... another draw mode...
         //TextureCPtr     m_color;
-        
+
+
+        struct UData {
+            glm::vec4   oTess       = { 1., 1., 1., 1. };
+            glm::vec4   rgba        = { 1., 1., 1., 1. };
+            glm::vec2   iTess       = { 1., 1. };
+            glm::vec2   uvScale     = { 1., 1. };
+            glm::vec2   uvOffset    = { 0., 0. };
+            float       cmScale     = 1.;
+            float       cmOffset    = 0.;
+        };
+                
         IB1<uint32_t>       m_index;
-        VB1<glm::vec2>      m_vboPos;
+        VB1<glm::vec2>      m_vbo;  // UV coordinates....
         UB1<UData>          m_ubo;
-        Vector4U            m_iTess = { 1, 1, 1, 1 };
-        Vector2U            m_oTess = { 1, 1 };
-        Vector2F            m_vScale = { 0., 1. };
+        Vector4U            m_oTess = { 1, 1, 1, 1 };
+        Vector2U            m_iTess = { 1, 1 };
         
         void        divide(const Vector2U&);
         

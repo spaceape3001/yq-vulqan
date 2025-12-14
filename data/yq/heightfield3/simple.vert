@@ -4,12 +4,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-//  This fragment shader produces a simple solid black.
-
 #version 450
 
-layout(location = 0) out vec4 outColor;
+#include "heightfield.glsl"
+
+layout(location = 0) in  vec2 inUV;
+layout(location = 0) out vec2 outUV;
 
 void main() {
-    outColor = vec4(0., 0., 0., 0.);
+    outUV       = inUV;
+    gl_Position = uv2screen(inUV);
 }
+

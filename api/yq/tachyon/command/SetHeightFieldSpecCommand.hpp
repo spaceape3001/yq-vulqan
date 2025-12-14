@@ -1,0 +1,35 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/tachyon/api/Command.hpp>
+
+namespace yq::tachyon {
+    class SetHeightFieldSpecCommand : public Command {
+        YQ_OBJECT_DECLARE(SetHeightFieldSpecCommand, Command)
+    public:
+        SetHeightFieldSpecCommand(const Header&, const std::string&);
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+        static void init_meta();
+        
+        const std::string&     spec() const { return m_spec; }
+
+    protected:
+        SetHeightFieldSpecCommand(const SetHeightFieldSpecCommand&, const Header&);
+        virtual ~SetHeightFieldSpecCommand();
+        
+    private:
+    
+        std::string     m_spec;
+
+        SetHeightFieldSpecCommand(const SetHeightFieldSpecCommand&) = delete;
+        SetHeightFieldSpecCommand(SetHeightFieldSpecCommand&&) = delete;
+        SetHeightFieldSpecCommand& operator=(const SetHeightFieldSpecCommand&) = delete;
+        SetHeightFieldSpecCommand& operator=(SetHeightFieldSpecCommand&&) = delete;
+    };
+}

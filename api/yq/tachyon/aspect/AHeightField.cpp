@@ -7,6 +7,7 @@
 #include "AHeightField.hpp"
 #include <yq/tachyon/asset/HeightField.hpp>
 #include <yq/tachyon/command/SetHeightFieldCommand.hpp>
+#include <yq/tachyon/command/SetHeightFieldSpecCommand.hpp>
 #include <yq/tachyon/command/SetHeightFieldUrlCommand.hpp>
 #include <yq/tachyon/event/SetHeightFieldEvent.hpp>
 #include <yq/tachyon/asset/TextureInfo.hpp>
@@ -62,6 +63,13 @@ namespace yq::tachyon {
         height_field(SET, cmd.height_field());
     }
     
+    void        AHeightField::on_set_height_field_spec(const SetHeightFieldSpecCommand& cmd)
+    {
+        if(cmd.target() != typed())
+            return;
+        height_field(SET, Resource::resolve(cmd.spec()));
+    }
+
     void        AHeightField::on_set_height_field_url(const SetHeightFieldUrlCommand&cmd)
     {
         if(cmd.target() != typed())

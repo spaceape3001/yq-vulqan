@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AHeightField.hpp"
+#include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/asset/HeightField.hpp>
 #include <yq/tachyon/command/SetHeightFieldCommand.hpp>
 #include <yq/tachyon/command/SetHeightFieldSpecCommand.hpp>
@@ -50,7 +51,9 @@ namespace yq::tachyon {
         if(u.empty()){
             m_heightField   = {};
         } else {
-            m_heightField   = HeightField::load(u);
+            m_heightField   = HeightField::IO::load(u);
+            if(!m_heightField)
+                tachyonWarning << "Unable to load heightfield: " << to_string(u);
         }
         mark();
         height_field(EMIT);

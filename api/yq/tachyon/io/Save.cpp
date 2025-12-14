@@ -502,7 +502,7 @@ namespace yq::tachyon {
                 if(x == sv.resources.end())
                     continue;
                     
-                ResourceCPtr        res = Resource::resource_load(x->second);
+                ResourceCPtr        res = Resource::resource_load({ &r->resource() }, x->second);
                 if(!res)
                     return errors::bad_resource();
                 r->set(&t, res);

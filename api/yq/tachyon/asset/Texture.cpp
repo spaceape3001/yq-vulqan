@@ -10,37 +10,31 @@
 #include <yq/tachyon/asset/Sampler.hpp>
 #include <yq/tachyon/asset/Texture.hpp>
 #include <yq/resource/ResourceMetaWriter.hpp>
+#include <yq/resource/Resource.hxx>
 
 namespace yq::tachyon {
+
+    static TexturePtr raster_to_texture(const RasterCPtr& ras)
+    {
+        return new Texture(ras, Sampler::simple(), TextureInfo());
+    }
+
     void Texture::init_meta()
     {
         auto w = writer<Texture>();
         w.description("Texture");
+        Texture::IO::add_converter_from<Raster>(raster_to_texture);
     }
 
     TextureCPtr  Texture::load(const UrlView&u)
     {
-        if(ResourceCPtr    rp  = Resource::resource_load({ &meta<Texture>(), &meta<Raster>() }, u)){
-            if(const Texture* tex   = dynamic_cast<const Texture*>(rp.ptr()))
-                return tex;
-            if(const Raster* ras    = dynamic_cast<const Raster*>(rp.ptr()))
-                return new Texture(ras, Sampler::simple(), TextureInfo{});
-        }
-        tachyonInfo << "Unable to load '" << to_string(u) << "' as a texture (sorry)";
-        return {};
+        return Texture::IO::load(u);
     }
     
 
     TextureCPtr  Texture::load(std::string_view pp)
     {
-        if(ResourceCPtr    rp  = Resource::resource_load({ &meta<Texture>(), &meta<Raster>() }, pp)){
-            if(const Texture* tex   = dynamic_cast<const Texture*>(rp.ptr()))
-                return tex;
-            if(const Raster* ras    = dynamic_cast<const Raster*>(rp.ptr()))
-                return new Texture(ras, Sampler::simple(), TextureInfo{});
-        }
-        tachyonInfo << "Unable to load '" << pp << "' as a texture (sorry)";
-        return {};
+        return Texture::IO::load(pp);
     }
     
     TextureCPtr  Texture::load(std::string_view pp, const SamplerCPtr& _sampler, const TextureInfo& _info)

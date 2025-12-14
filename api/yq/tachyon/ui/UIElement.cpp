@@ -142,7 +142,7 @@ namespace yq::tachyon {
 
     TextureCPtr      UIElement::texture(std::string_view path)
     {
-        return Texture::load(path);
+        return Texture::IO::load(path);
     }
 
     Widget*  UIElement::widget()

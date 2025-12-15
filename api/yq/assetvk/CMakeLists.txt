@@ -22,6 +22,7 @@ add_library(yq_assetvk SHARED
 
     edit/BgColorUI.cpp
     edit/CircularSpatial3UI.cpp
+    edit/ColorProfileUI.cpp
     edit/ColorUI.cpp
     edit/Count1UI.cpp
     edit/Count2UI.cpp

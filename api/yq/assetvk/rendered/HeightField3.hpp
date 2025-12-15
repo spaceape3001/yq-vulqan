@@ -9,6 +9,7 @@
 #include <yq/math/glm.hpp>
 #include <yq/tachyon/api/Rendered3.hpp>
 #include <yq/tachyon/aspect/AColor.hpp>
+#include <yq/tachyon/aspect/AColorProfile.hpp>
 #include <yq/tachyon/aspect/ACount2.hpp>
 #include <yq/tachyon/aspect/ADrawMode.hpp>
 #include <yq/tachyon/aspect/AHeightField.hpp>
@@ -28,7 +29,7 @@ namespace yq::tachyon {
         
         By default, the dimensions will be [-1,1] on each axis, with the UV being 0,0 on the -1,-1 corner.
     */
-    class HeightField³ : public Rendered³, public AColor, public ACount², public ADrawMode, public AHeightField, public AMaterial, public ASize³ {
+    class HeightField³ : public Rendered³, public AColor, public AColorProfile, public ACount², public ADrawMode, public AHeightField, public AMaterial, public ASize³ {
         YQ_TACHYON_DECLARE(HeightField³, Rendered³)
     public:
     
@@ -48,6 +49,9 @@ namespace yq::tachyon {
 
         using AColor::color;
         virtual bool    color(settable_k) const override { return true; }
+
+        using AColor::color_profile;
+        virtual bool    color_profile(settable_k) const override { return true; }
 
     protected:
         std::error_code     load(const StateSave&) override;

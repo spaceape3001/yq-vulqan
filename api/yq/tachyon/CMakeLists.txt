@@ -157,6 +157,7 @@ add_library(${PROJECT_NAME} SHARED
 
     aspect/ABgColor.cpp
     aspect/AColor.cpp
+    aspect/AColorProfile.cpp
     aspect/ADrawMode.cpp
     aspect/AFarPlane.cpp
     aspect/AFieldOfView.cpp
@@ -254,6 +255,7 @@ add_library(${PROJECT_NAME} SHARED
     
     im/KVTable.cpp
     
+    interface/IColorProfile.cpp
     interface/IHeightField.cpp
     interface/IMaterial.cpp
     interface/IMesh.cpp
@@ -292,6 +294,7 @@ add_library(${PROJECT_NAME} SHARED
 
     proxy/PBgColor.cpp
     proxy/PColor.cpp
+    proxy/PColorProfile.cpp
     proxy/PDrawMode.cpp
     proxy/PFarPlane.cpp
     proxy/PFieldOfView.cpp

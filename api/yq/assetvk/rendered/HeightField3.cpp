@@ -319,7 +319,7 @@ namespace yq::tachyon {
         m_ubo.data.oTess    = m_oTess.cast<float>();
         m_ubo.data.iTess    = m_iTess.cast<float>();
         m_heightMap         = m_heightField ? m_heightField : sZeroHM;
-        m_colorZ            = sStdColor;
+        m_colorZ            = m_colorProfile ? m_colorProfile : sStdColor;
         m_ubo.data.cmScale  = 0.25;
 
         switch(m_drawMode){

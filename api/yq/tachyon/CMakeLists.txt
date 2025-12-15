@@ -26,6 +26,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect_max_size.cpp
     aspect_min_size.cpp
     aspect_position.cpp
+    aspect_range.cpp
     aspect_size.cpp
 
     command_camera.cpp
@@ -41,6 +42,7 @@ add_library(${PROJECT_NAME} SHARED
     #command_offset.cpp
     command_orientation.cpp
     command_position.cpp
+    command_range.cpp
     command_rendered.cpp
     command_scale.cpp
     command_sim.cpp
@@ -63,6 +65,7 @@ add_library(${PROJECT_NAME} SHARED
     event_light.cpp
     event_monitor.cpp
     event_mouse.cpp
+    event_range.cpp
     event_sim.cpp
     event_spatial.cpp
     event_tachyon.cpp
@@ -80,6 +83,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy_max_size.cpp
     proxy_min_size.cpp
     proxy_position.cpp
+    proxy_range.cpp
     proxy_size.cpp
 
     thread.cpp

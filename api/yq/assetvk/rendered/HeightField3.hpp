@@ -50,7 +50,7 @@ namespace yq::tachyon {
         using AColor::color;
         virtual bool    color(settable_k) const override { return true; }
 
-        using AColor::color_profile;
+        using AColorProfile::color_profile;
         virtual bool    color_profile(settable_k) const override { return true; }
 
     protected:

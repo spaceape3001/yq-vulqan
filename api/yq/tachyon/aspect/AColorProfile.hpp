@@ -19,7 +19,7 @@ namespace yq::tachyon {
     class AColorProfile : public IColorProfile, public virtual Tachyon::Helper {
     public:
     
-        ColorProfileCPtr         color_profile() const override;
+        ColorProfileCPtr        color_profile() const override;
         Url                     color_profile(url_k) const override;
         virtual void            color_profile(set_k, const ColorProfileCPtr&) override;
         virtual void            color_profile(set_k, const Url&) override;

@@ -32,11 +32,15 @@ add_library(yq_assetvk SHARED
     edit/FarPlaneUI.cpp
     edit/FieldOfViewUI.cpp
     edit/HeightFieldUI.cpp
+    edit/InnerTessellation1UI.cpp
+    edit/InnerTessellation2UI.cpp
     edit/LightUI.cpp
     edit/MaterialUI.cpp
     edit/MeshUI.cpp
     edit/NearPlaneUI.cpp
     edit/Orientation3UI.cpp
+    edit/OuterTessellation3UI.cpp
+    edit/OuterTessellation4UI.cpp
     edit/Position1UI.cpp
     edit/Position2UI.cpp
     edit/Position3UI.cpp

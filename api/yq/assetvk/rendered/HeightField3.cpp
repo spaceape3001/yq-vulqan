@@ -25,8 +25,10 @@
 #include <yq/tachyon/aspect/ACount2Writer.hxx>
 #include <yq/tachyon/aspect/ADrawModeWriter.hxx>
 #include <yq/tachyon/aspect/AHeightFieldWriter.hxx>
-#include <yq/tachyon/aspect/ARangeZWriter.hxx>
+#include <yq/tachyon/aspect/AInnerTessellation2Writer.hxx>
 #include <yq/tachyon/aspect/AMaterialWriter.hxx>
+#include <yq/tachyon/aspect/AOuterTessellation4Writer.hxx>
+#include <yq/tachyon/aspect/ARangeZWriter.hxx>
 #include <yq/tachyon/aspect/ASize3Writer.hxx>
 #include <yq/vector/Vector4.hxx>
 
@@ -102,7 +104,9 @@ namespace yq::tachyon {
         ACount²::init_meta(w);
         ADrawMode::init_meta(w);
         AHeightField::init_meta(w);
+        AInnerTessellation²::init_meta(w);
         AMaterial::init_meta(w);
+        AOuterTessellation⁴::init_meta(w);
         ARangeᶻ::init_meta(w);
         ASize³::init_meta(w);
 
@@ -179,7 +183,14 @@ namespace yq::tachyon {
     {
     }
     
-    HeightField³::HeightField³(const Param& p) : Rendered³(Param()), AColor(p), ACount²(p.count), ADrawMode(p), ARangeᶻ(p.z_range), ASize³(p.size)
+    HeightField³::HeightField³(const Param& p) : Rendered³(Param()), 
+        AColor(p), 
+        ACount²(p.count), 
+        ADrawMode(p), 
+        AInnerTessellation²(p.inner_tessellation),
+        AOuterTessellation⁴(p.outer_tessellation),
+        ARangeᶻ(p.z_range), 
+        ASize³(p.size)
     {
     }
     
@@ -320,8 +331,8 @@ namespace yq::tachyon {
             
         divide(ACount²::m_count);
         
-        m_ubo.data.oTess    = m_oTess.cast<float>();
-        m_ubo.data.iTess    = m_iTess.cast<float>();
+        m_ubo.data.oTess    = m_outerTessellation.cast<float>();
+        m_ubo.data.iTess    = m_innerTessellation.cast<float>();
         m_heightMap         = m_heightField ? m_heightField : sZeroHM;
         m_colorZ            = m_colorProfile ? m_colorProfile : sStdColor;
         

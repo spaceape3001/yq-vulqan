@@ -14,7 +14,7 @@
 #include <yq/tachyon/command/position/SetPositionXCommand.hpp>
 
 namespace yq::tachyon {
-    PPosition¹::PPosition¹(const IPosition¹& i)
+    PPosition¹::PPosition¹(const IPosition¹& i) : m_position(i.position())
     {
         if(i.position(DISABLED))
             m_flags |= F::Disabled;

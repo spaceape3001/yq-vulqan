@@ -4,8 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-// Auto-generated file
-
 #include "command/RangeCommand.ipp"
 #include "command/range/SetRangeWCommand.ipp"
 #include "command/range/SetRangeXCommand.ipp"

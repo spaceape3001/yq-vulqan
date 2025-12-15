@@ -28,6 +28,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect_position.cpp
     aspect_range.cpp
     aspect_size.cpp
+    aspect_tessellation.cpp
 
     command_camera.cpp
     command_color.cpp
@@ -49,6 +50,7 @@ add_library(${PROJECT_NAME} SHARED
     command_size.cpp
     command_spatial.cpp
     command_tachyon.cpp
+    command_tessellation.cpp
     command_texture.cpp
     command_thread.cpp
     command_ui.cpp
@@ -69,6 +71,7 @@ add_library(${PROJECT_NAME} SHARED
     event_sim.cpp
     event_spatial.cpp
     event_tachyon.cpp
+    event_tessellation.cpp
     event_ui.cpp
     event_window.cpp
     
@@ -85,6 +88,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy_position.cpp
     proxy_range.cpp
     proxy_size.cpp
+    proxy_tessellation.cpp
 
     thread.cpp
     

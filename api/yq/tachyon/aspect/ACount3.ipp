@@ -25,6 +25,10 @@
 #include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
+    ACount³::ACount³(const Param&p) : m_count(p.count)
+    {
+    }
+
     ACount³::ACount³(const Vector3U& c) : m_count(c)
     {
     }

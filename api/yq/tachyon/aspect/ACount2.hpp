@@ -25,6 +25,10 @@ namespace yq::tachyon {
     class ACount² : public ICount², public virtual Tachyon::Helper {
     public:
     
+        struct Param {
+            Vector2U    count   = ONE;
+        };
+        
         //!  Basic count in the 2D space
         Vector2U        count() const override { return m_count; }
         
@@ -55,13 +59,14 @@ namespace yq::tachyon {
 
     protected:
 
-        Vector2U        m_count = ONE;
+        Vector2U        m_count;
     
         void            count(emit_k);
         
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
+        ACount²(const Param&);
         ACount²(const Vector2U& cnt = ONE);
         virtual ~ACount²();
         

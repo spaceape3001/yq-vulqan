@@ -28,6 +28,10 @@
 #include <yq/vector/Vector4.hxx>
 
 namespace yq::tachyon {
+    ACount⁴::ACount⁴(const Param&p) : m_count(p.count)
+    {
+    }
+
     ACount⁴::ACount⁴(const Vector4U& cnt) : m_count(cnt)
     {
     }

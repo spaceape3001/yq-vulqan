@@ -20,10 +20,12 @@
 #include <yq/tachyon/raster/PatternRasters.hpp>
 
 #include <yq/shape/AxBox2.hxx>
+#include <yq/tachyon/aspect/AColorProfileWriter.hxx>
 #include <yq/tachyon/aspect/AColorWriter.hxx>
 #include <yq/tachyon/aspect/ACount2Writer.hxx>
 #include <yq/tachyon/aspect/ADrawModeWriter.hxx>
 #include <yq/tachyon/aspect/AHeightFieldWriter.hxx>
+#include <yq/tachyon/aspect/ARangeZWriter.hxx>
 #include <yq/tachyon/aspect/AMaterialWriter.hxx>
 #include <yq/tachyon/aspect/ASize3Writer.hxx>
 #include <yq/vector/Vector4.hxx>
@@ -96,10 +98,12 @@ namespace yq::tachyon {
         auto w = writer<HeightField³>();
         w.description("Height Field Render Object");
         AColor::init_meta(w);
+        AColorProfile::init_meta(w);
         ACount²::init_meta(w);
         ADrawMode::init_meta(w);
         AHeightField::init_meta(w);
         AMaterial::init_meta(w);
+        ARangeᶻ::init_meta(w);
         ASize³::init_meta(w);
 
         {
@@ -175,7 +179,7 @@ namespace yq::tachyon {
     {
     }
     
-    HeightField³::HeightField³(const Param& p) : Rendered³(Param()), ACount²(p.count)
+    HeightField³::HeightField³(const Param& p) : Rendered³(Param()), AColor(p), ACount²(p.count), ADrawMode(p), ARangeᶻ(p.z_range), ASize³(p.size)
     {
     }
     
@@ -320,7 +324,11 @@ namespace yq::tachyon {
         m_ubo.data.iTess    = m_iTess.cast<float>();
         m_heightMap         = m_heightField ? m_heightField : sZeroHM;
         m_colorZ            = m_colorProfile ? m_colorProfile : sStdColor;
-        m_ubo.data.cmScale  = 0.25;
+        
+        if(m_zRange.lo != m_zRange.hi){
+            m_ubo.data.cmScale  = (float)(1./(m_zRange.hi-m_zRange.lo));
+            m_ubo.data.cmOffset = m_zRange.lo;
+        }
 
         switch(m_drawMode){
         case DrawMode::Color:

@@ -11,7 +11,12 @@
 
 
 namespace yq::tachyon {
-    ARangeʷ::ARangeʷ()
+
+    ARangeʷ::ARangeʷ(const Param&p) : m_wRange(p.w_range)
+    {
+    }
+
+    ARangeʷ::ARangeʷ(const RangeD& r) : m_wRange(r)
     {
     }
     

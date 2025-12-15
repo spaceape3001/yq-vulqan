@@ -14,6 +14,7 @@
 #include <yq/tachyon/aspect/ADrawMode.hpp>
 #include <yq/tachyon/aspect/AHeightField.hpp>
 #include <yq/tachyon/aspect/AMaterial.hpp>
+#include <yq/tachyon/aspect/ARangeZ.hpp>
 #include <yq/tachyon/aspect/ASize3.hpp>
 #include <yq/tachyon/asset/Texture.hpp>
 #include <yq/tachyon/pipeline/Pipeline.hpp>
@@ -29,12 +30,14 @@ namespace yq::tachyon {
         
         By default, the dimensions will be [-1,1] on each axis, with the UV being 0,0 on the -1,-1 corner.
     */
-    class HeightField³ : public Rendered³, public AColor, public AColorProfile, public ACount², public ADrawMode, public AHeightField, public AMaterial, public ASize³ {
+    class HeightField³ : public Rendered³, public AColor, public AColorProfile, public ACount², public ADrawMode, public AHeightField, public AMaterial, public ARangeᶻ, public ASize³ {
         YQ_TACHYON_DECLARE(HeightField³, Rendered³)
     public:
     
-        struct Param : public Rendered³::Param {
+        struct Param : public Rendered³::Param, public AColor::Param, public ADrawMode::Param {
             Vector2U    count   = { 20, 20 };
+            RangeD      z_range = { 0., 10. };
+            Size3D      size    = { 20., 20., 1. };
         };
         
         HeightField³();

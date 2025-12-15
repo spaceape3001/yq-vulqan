@@ -16,6 +16,10 @@
 #include <yq/tachyon/event/count/Count1Event.hpp>
 
 namespace yq::tachyon {
+    ACount¹::ACount¹(const Param& p) : m_count(p.count)
+    {
+    }
+
     ACount¹::ACount¹(const Vector1U& cnt) : m_count(cnt)
     {
         

@@ -16,6 +16,10 @@ namespace yq::tachyon {
     class ARangeʸ : public IRangeʸ, public virtual Tachyon::Helper {
     public:
     
+        struct Param {
+            RangeD      y_range;
+        };
+
         //!  Basic y_range in the 4D space
         RangeD          y_range() const override { return m_yRange; }
         
@@ -29,12 +33,13 @@ namespace yq::tachyon {
 
     protected:
 
-        RangeD          m_yRange = ZERO;
+        RangeD          m_yRange;
         
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        ARangeʸ();
+        ARangeʸ(const Param&);
+        ARangeʸ(const RangeD& rng=ZERO);
         virtual ~ARangeʸ();
         
         void        y_range(emit_k);

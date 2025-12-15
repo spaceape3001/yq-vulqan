@@ -203,21 +203,17 @@ namespace ImGui {
         return InputDouble(label, &v, options.step, options.step_fast, options.format, options.flags);
     }
 
-    bool    Input(const char* label, yq::RGB3F& v, const InputFloatQuatOptions& options)
+    bool    Input(const char* label, yq::RangeD&v, const InputDoubleOptions& options)
     {
-        return Input3(label, (float*) &v, options);
+        return Input2(label, (double*) &v, options);
     }
     
-    bool    Input(const char* label, yq::RGBA4F& v, const InputFloatQuatOptions& options)
-    {
-        return Input4(label, (float*) &v, options);
-    }
 
     bool    Input(const char* label, yq::Size2D&v, const InputDoubleOptions& options)
     {
         return Input2(label, (double*) &v, options);
     }
-    
+
     bool    Input(const char* label, yq::Size3D&v, const InputDoubleOptions& options)
     {
         return Input3(label, (double*) &v, options);
@@ -308,6 +304,16 @@ namespace ImGui {
         return InputFloat(label, &v,options.step, options.step_fast, options.format, options.flags);
     }
 
+    bool    Input(const char* label, yq::RGB3F& v, const InputFloatQuatOptions& options)
+    {
+        return Input3(label, (float*) &v, options);
+    }
+    
+    bool    Input(const char* label, yq::RGBA4F& v, const InputFloatQuatOptions& options)
+    {
+        return Input4(label, (float*) &v, options);
+    }
+    
     bool    Input(const char* label, yq::Size2F&v, const InputFloatOptions& options)
     {
         return Input2(label, (float*) &v, options);

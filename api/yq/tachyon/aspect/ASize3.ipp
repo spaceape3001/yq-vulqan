@@ -22,10 +22,14 @@
 
 
 namespace yq::tachyon {
-    ASize³::ASize³()
+    ASize³::ASize³(const Param& p) : m_size(p.size)
     {
     }
     
+    ASize³::ASize³(const Size3D& sz) : m_size(sz)
+    {
+    }
+
     ASize³::~ASize³()
     {
     }

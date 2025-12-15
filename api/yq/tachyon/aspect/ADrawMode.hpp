@@ -13,6 +13,12 @@ namespace yq::tachyon {
     
     class ADrawMode : public IDrawMode, public virtual Tachyon::Helper {
     public:
+
+        static constexpr const DrawMode     kDefDrawMode    = DrawMode::Auto;
+    
+        struct Param {
+            DrawMode    draw_mode   = kDefDrawMode;
+        };
         
         DrawMode  draw_mode() const override { return m_drawMode; }
 
@@ -24,14 +30,14 @@ namespace yq::tachyon {
         
     protected:
 
-        static constexpr const DrawMode     kDefDrawMode    = DrawMode::Auto;
 
         DrawMode    m_drawMode  = kDefDrawMode;
 
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        ADrawMode();
+        ADrawMode(const Param&);
+        ADrawMode(DrawMode dm=kDefDrawMode);
         virtual ~ADrawMode();
         
     private:

@@ -41,11 +41,19 @@ add_library(yq_assetvk SHARED
     edit/Position2UI.cpp
     edit/Position3UI.cpp
     edit/Position4UI.cpp
+    edit/RangeWUI.cpp
+    edit/RangeXUI.cpp
+    edit/RangeYUI.cpp
+    edit/RangeZUI.cpp
     edit/RenderedUI.cpp
+    edit/Scale2UI.cpp
     edit/Scale3UI.cpp
+    #edit/Scale4UI.cpp  # Disabled until we need a 4D scale (and implement the interface/proxy)
     edit/SceneUI.cpp
     edit/SimpleSpatial3UI.cpp
+    edit/Size2UI.cpp
     edit/Size3UI.cpp
+    edit/Size4UI.cpp
     edit/SkyBox3UI.cpp
     edit/TachyonUI.cpp
     edit/TextureUI.cpp

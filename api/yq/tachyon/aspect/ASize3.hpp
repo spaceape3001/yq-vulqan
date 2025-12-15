@@ -28,6 +28,12 @@ namespace yq::tachyon {
     class ASize³ : public ISize³, public virtual Tachyon::Helper {
     public:
     
+        static constexpr const Size3D   kDefSize    = ONE;
+
+        struct Param {
+            Size3D      size    = kDefSize;
+        };
+    
         //!  Basic size in the 3D space
         Size3D          size() const override { return m_size; }
         
@@ -61,15 +67,14 @@ namespace yq::tachyon {
         const Size3D&   size(ref_k) const { return m_size; }
 
     protected:
-    
-        static constexpr const Size3D   kDefSize    = ONE;
 
-        Size3D      m_size = kDefSize;
+        Size3D      m_size;
         
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        ASize³();
+        ASize³(const Param&);
+        ASize³(const Size3D& sz=kDefSize);
         virtual ~ASize³();
         
         void        size(emit_k);

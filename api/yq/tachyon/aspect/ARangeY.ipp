@@ -11,7 +11,11 @@
 
 
 namespace yq::tachyon {
-    ARangeʸ::ARangeʸ()
+    ARangeʸ::ARangeʸ(const Param&p) : m_yRange(p.y_range)
+    {
+    }
+
+    ARangeʸ::ARangeʸ(const RangeD& r) : m_yRange(r)
     {
     }
     

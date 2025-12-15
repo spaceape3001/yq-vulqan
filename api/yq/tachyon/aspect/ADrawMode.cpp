@@ -9,7 +9,14 @@
 #include <yq/tachyon/command/shape/SetDrawModeCommand.hpp>
 
 namespace yq::tachyon {
-    ADrawMode::ADrawMode() = default;
+    ADrawMode::ADrawMode(const Param&p) : m_drawMode(p.draw_mode)
+    {
+    }
+    
+    ADrawMode::ADrawMode(DrawMode dm) : m_drawMode(dm)
+    {
+    }
+    
     ADrawMode::~ADrawMode() = default;
 
     void    ADrawMode::draw_mode(set_k, DrawMode v)

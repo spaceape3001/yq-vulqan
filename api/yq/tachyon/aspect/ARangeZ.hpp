@@ -16,6 +16,10 @@ namespace yq::tachyon {
     class ARangeᶻ : public IRangeᶻ, public virtual Tachyon::Helper {
     public:
     
+        struct Param {
+            RangeD      z_range;
+        };
+    
         //!  Basic z_range in the 4D space
         RangeD          z_range() const override { return m_zRange; }
         
@@ -29,12 +33,13 @@ namespace yq::tachyon {
 
     protected:
 
-        RangeD          m_zRange = ZERO;
+        RangeD          m_zRange;
         
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        ARangeᶻ();
+        ARangeᶻ(const Param&);
+        ARangeᶻ(const RangeD& r=ZERO);
         virtual ~ARangeᶻ();
         
         void        z_range(emit_k);

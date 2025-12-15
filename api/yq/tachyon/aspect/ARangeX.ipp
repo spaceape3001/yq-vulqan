@@ -11,7 +11,11 @@
 
 
 namespace yq::tachyon {
-    ARangeˣ::ARangeˣ()
+    ARangeˣ::ARangeˣ(const Param& p) : m_xRange(p.x_range)
+    {
+    }
+
+    ARangeˣ::ARangeˣ(const RangeD& r) : m_xRange(r)
     {
     }
     

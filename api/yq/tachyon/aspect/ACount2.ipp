@@ -19,6 +19,10 @@
 #include <yq/tachyon/event/count/Count2Event.hpp>
 
 namespace yq::tachyon {
+    ACount²::ACount²(const Param&p) : m_count(p.count)
+    {
+    }
+
     ACount²::ACount²(const Vector2U& cnt) : m_count(cnt)
     {
     }

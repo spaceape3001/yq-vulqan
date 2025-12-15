@@ -10,7 +10,14 @@
 #include <yq/tachyon/event/color/ColorChangeEvent.hpp>
 
 namespace yq::tachyon {
-    AColor::AColor() = default;
+    AColor::AColor(const Param& p) : m_color(p.color)
+    {
+    }
+    
+    AColor::AColor(const RGBA4F& clr) : m_color(clr)
+    {
+    }
+    
     AColor::~AColor() = default;
 
     void    AColor::color(emit_k)

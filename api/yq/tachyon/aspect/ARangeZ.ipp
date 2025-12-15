@@ -11,7 +11,11 @@
 
 
 namespace yq::tachyon {
-    ARangeᶻ::ARangeᶻ()
+    ARangeᶻ::ARangeᶻ(const Param& p) : m_zRange(p.z_range)
+    {
+    }
+
+    ARangeᶻ::ARangeᶻ(const RangeD& r) : m_zRange(r)
     {
     }
     

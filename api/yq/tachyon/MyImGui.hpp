@@ -13,9 +13,10 @@
 #include <yq/math/glm.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/typedef/quaternion3.hpp>
+#include <yq/typedef/range.hpp>
+#include <yq/typedef/rectangle2.hpp>
 #include <yq/typedef/rgb.hpp>
 #include <yq/typedef/rgba.hpp>
-#include <yq/typedef/rectangle2.hpp>
 #include <yq/typedef/size2.hpp>
 #include <yq/typedef/size3.hpp>
 #include <yq/typedef/size4.hpp>
@@ -237,6 +238,7 @@ namespace ImGui {
     bool    Input(const char* label, double& v, const InputDoubleOptions& options={});
 
     bool    Input(const char* label, yq::Quaternion3D&, const InputDoubleQuatOptions& options={});
+    bool    Input(const char* label, yq::RangeD&, const InputDoubleOptions& options={});
     bool    Input(const char* label, yq::Size2D&, const InputDoubleOptions& options={});
     bool    Input(const char* label, yq::Size3D&, const InputDoubleOptions& options={});
     bool    Input(const char* label, yq::Size4D&, const InputDoubleOptions& options={});

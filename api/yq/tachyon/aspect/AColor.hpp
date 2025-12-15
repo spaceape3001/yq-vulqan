@@ -14,6 +14,12 @@ namespace yq::tachyon {
     
     class AColor : public IColor, public virtual Tachyon::Helper {
     public:
+    
+        static constexpr const RGBA4F   kDefColor   = { 1., 1., 1., 1. };
+
+        struct Param {
+            RGBA4F  color   = kDefColor;
+        };
         
         RGBA4F  color() const override { return m_color; }
 
@@ -25,14 +31,14 @@ namespace yq::tachyon {
         
     protected:
     
-        static constexpr const RGBA4F   kDefColor   = { 1., 1., 1., 1. };
     
-        RGBA4F    m_color = kDefColor;
+        RGBA4F    m_color;
 
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        AColor();
+        AColor(const Param&);
+        AColor(const RGBA4F& clr=kDefColor);
         virtual ~AColor();
         
         virtual void    color(emit_k);

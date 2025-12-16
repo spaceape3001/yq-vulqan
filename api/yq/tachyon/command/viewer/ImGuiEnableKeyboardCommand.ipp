@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/command/viewer/ImGuiEnableKeyboardCommand.hpp>
+#include "ImGuiEnableKeyboardCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 #include <yq/tachyon/api/Widget.hpp>
 

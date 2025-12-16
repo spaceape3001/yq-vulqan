@@ -40,17 +40,26 @@ namespace yq::tachyon {
         RGBA4F                      clear   = { 0., 0., 0., 1. };
         
             //!  Set to make always-on-top
-        bool                        floating    = false;
+        bool                        floating        = false;
         
             //!  Set to make decorated (several window modes will override)
-        bool                        decorated   = true;
+        bool                        decorated       = true;
         
             //!  Set to make user-resizable (only usable in "normal" mode)
-        bool                        resizable   = false;
+        bool                        resizable       = false;
         
-            //!  Set to enable imgui
-        bool                        imgui       = false;
+            //!  Master switch to initialize/enable imgui (at all)
+        bool                        imgui           = false;
         
+            //!  Set to start imgui as enabled (ignored if imgui is false)
+        bool                        imgui_enabled   = true;
+        
+            //!  Set to start imgui as getting keyboard events (ignored if imgui is false)
+        bool                        imgui_keyboard  = true;
+
+            //!  Set to start imgui as getting mouse events (ignored if imgui is false)
+        bool                        imgui_mouse     = true;
+
             //!  Set to start "hidden"
         bool                        hidden      = false;
         

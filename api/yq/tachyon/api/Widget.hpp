@@ -107,9 +107,19 @@ namespace yq::tachyon {
         
         //! Default destructor
         virtual ~Widget();
+        
+        void        cmd_imgui_disable();
+        void        cmd_imgui_enable();
+
+        void        cmd_imgui_keyboard_disable();
+        void        cmd_imgui_keyboard_enable();
+
+        void        cmd_imgui_mouse_disable();
+        void        cmd_imgui_mouse_enable();
 
         void        cmd_hide();
         void        cmd_show();
+        
 
         //! Dimension count to the widget (ie...add dimensions to allow for layout resizing)
         virtual uint8_t dimensions(count_k) const { return 0; }

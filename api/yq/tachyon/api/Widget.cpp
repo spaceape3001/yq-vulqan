@@ -21,6 +21,12 @@
 #include <yq/tachyon/command/ui/StartupCommand.hpp>
 #include <yq/tachyon/command/ui/TitleCommand.hpp>
 #include <yq/tachyon/command/widget/SetViewer.hpp>
+#include <yq/tachyon/command/viewer/ImGuiDisableCommand.hpp>
+#include <yq/tachyon/command/viewer/ImGuiDisableKeyboardCommand.hpp>
+#include <yq/tachyon/command/viewer/ImGuiDisableMouseCommand.hpp>
+#include <yq/tachyon/command/viewer/ImGuiEnableCommand.hpp>
+#include <yq/tachyon/command/viewer/ImGuiEnableKeyboardCommand.hpp>
+#include <yq/tachyon/command/viewer/ImGuiEnableMouseCommand.hpp>
 #include <yq/tachyon/event/ui/HideEvent.hpp>
 #include <yq/tachyon/event/ui/ShowEvent.hpp>
 #include <yq/tachyon/event/window/FramebufferResizeEvent.hpp>
@@ -398,6 +404,42 @@ namespace yq::tachyon {
     void    Widget::cmd_show()
     {
         mail(new ShowCommand({.target=*this}));
+    }
+
+    void    Widget::cmd_imgui_disable()
+    {
+        if(m_viewer)
+            send(new ImGuiDisableCommand({.target=m_viewer}));
+    }
+    
+    void    Widget::cmd_imgui_enable()
+    {
+        if(m_viewer)
+            send(new ImGuiEnableCommand({.target=m_viewer}));
+    }
+
+    void    Widget::cmd_imgui_keyboard_disable()
+    {
+        if(m_viewer)
+            send(new ImGuiDisableKeyboardCommand({.target=m_viewer}));
+    }
+    
+    void    Widget::cmd_imgui_keyboard_enable()
+    {
+        if(m_viewer)
+            send(new ImGuiEnableKeyboardCommand({.target=m_viewer}));
+    }
+
+    void    Widget::cmd_imgui_mouse_disable()
+    {
+        if(m_viewer)
+            send(new ImGuiDisableMouseCommand({.target=m_viewer}));
+    }
+    
+    void    Widget::cmd_imgui_mouse_enable()
+    {
+        if(m_viewer)
+            send(new ImGuiEnableMouseCommand({.target=m_viewer}));
     }
 
     UIElement*      Widget::element(first_k, uint64_t bid) const

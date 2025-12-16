@@ -14,10 +14,6 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(ImGuiEnableKeyboardCommand, ViewerCommand)
     public:
     
-        /*
-            Since this is transferring an actual object, don't think we need to go widget IDs
-        */
-    
         ImGuiEnableKeyboardCommand(const Header&);
         
         static void init_meta();

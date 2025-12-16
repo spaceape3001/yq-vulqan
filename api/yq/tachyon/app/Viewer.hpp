@@ -70,9 +70,11 @@ namespace yq::tachyon {
     class HideEvent;
     class IconifyCommand;
     class IconifyEvent;
+    class ImGuiDisableCommand;
     class ImGuiDisableKeyboardCommand;
-    class ImGuiEnableKeyboardCommand;
     class ImGuiDisableMouseCommand;
+    class ImGuiEnableCommand;
+    class ImGuiEnableKeyboardCommand;
     class ImGuiEnableMouseCommand;
     class MaximizeCommand;
     class MaximizeEvent;
@@ -340,18 +342,17 @@ namespace yq::tachyon {
             HideEvent,
             DestroyCommand,
             
+            ImGuiDisable,         // skips ImGui on draw()
             NoImGuiKeyboard,
             NoImGuiMouse
         };
 
-        Cleanup                                 m_cleanup;
-        std::atomic<unit::Second>               m_drawTime      = { 0. };
-        TypedID                                 m_focus         = {};
-        std::unique_ptr<ViGui>                  m_imgui;
-        //std::atomic<bool>               m_paused;
+        Cleanup                                     m_cleanup;
+        std::atomic<unit::Second>                   m_drawTime      = { 0. };
+        TypedID                                     m_focus         = {};
+        std::unique_ptr<ViGui>                      m_imgui;
         ViewerState                                 m_state;
-        //std::atomic<Stage>              m_stage         = { Stage::Preinit };
-        Flags<X>                                    m_flags       = {};   //! Startup & shutdown
+        Flags<X>                                    m_flags       = {};
         std::atomic<uint64_t>                       m_ticks{0};
         std::unique_ptr<Visualizer>                 m_viz;
         TypedID                                     m_widget;
@@ -363,7 +364,7 @@ namespace yq::tachyon {
         uint64_t                                    m_setupCycles   = 0;
 
         // Might have a filter/time thing (later) so a spam of the close button triggers fast-close
-        RequestCPtr                     m_closeRequest;
+        RequestCPtr                                 m_closeRequest;
 
         void                _sweepwait();
         void                _widget(TypedID);     // Changes the widget
@@ -387,9 +388,11 @@ namespace yq::tachyon {
         void    on_hide_event(const HideEvent&);
         void    on_hide_command(const HideCommand&);
         void    on_iconify_command(const IconifyCommand&);
+        void    on_imgui_disable_command(const ImGuiDisableCommand&);
         void    on_imgui_disable_keyboard_command(const ImGuiDisableKeyboardCommand&);
-        void    on_imgui_enable_keyboard_command(const ImGuiEnableKeyboardCommand&);
         void    on_imgui_disable_mouse_command(const ImGuiDisableMouseCommand&);
+        void    on_imgui_enable_command(const ImGuiEnableCommand&);
+        void    on_imgui_enable_keyboard_command(const ImGuiEnableKeyboardCommand&);
         void    on_imgui_enable_mouse_command(const ImGuiEnableMouseCommand&);
         void    on_key_character_event(const KeyCharacterEvent&);
         void    on_key_press_event(const KeyPressEvent&);

@@ -54,7 +54,7 @@ namespace yq::tachyon {
 
         float w = ImGui::GetWindowWidth();
         
-        if(ImGui::BeginTable(table.c_str(), 2)){
+        if(ImGui::BeginTable(table.c_str(), 2, ImGuiTableFlags_SizingStretchProp)){
             float x = ImGui::GetCursorPosX();
             float kw    = std::max(sty.table.keycol()-x, sty.table.keycol.min);
             float vw    = std::max(sty.table.valcol.min, w-x);

@@ -14,10 +14,6 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(ImGuiDisableKeyboardCommand, ViewerCommand)
     public:
     
-        /*
-            Since this is transferring an actual object, don't think we need to go widget IDs
-        */
-    
         ImGuiDisableKeyboardCommand(const Header&);
         
         static void init_meta();

@@ -56,9 +56,11 @@
 #include <yq/tachyon/command/tachyon/UnsubscribeCommand.hpp>
 
 #include <yq/tachyon/command/widget/SetViewer.hpp>
+#include <yq/tachyon/command/viewer/ImGuiDisableCommand.hpp>
 #include <yq/tachyon/command/viewer/ImGuiDisableKeyboardCommand.hpp>
-#include <yq/tachyon/command/viewer/ImGuiEnableKeyboardCommand.hpp>
 #include <yq/tachyon/command/viewer/ImGuiDisableMouseCommand.hpp>
+#include <yq/tachyon/command/viewer/ImGuiEnableCommand.hpp>
+#include <yq/tachyon/command/viewer/ImGuiEnableKeyboardCommand.hpp>
 #include <yq/tachyon/command/viewer/ImGuiEnableMouseCommand.hpp>
 
 #include <yq/tachyon/event/keyboard/KeyCharacterEvent.hpp>
@@ -162,9 +164,11 @@ namespace yq::tachyon {
         w.slot(&Viewer::on_hide_command);
         w.slot(&Viewer::on_hide_event);
         w.slot(&Viewer::on_iconify_command);
+        w.slot(&Viewer::on_imgui_disable_command);
         w.slot(&Viewer::on_imgui_disable_keyboard_command);
-        w.slot(&Viewer::on_imgui_enable_keyboard_command);
         w.slot(&Viewer::on_imgui_disable_mouse_command);
+        w.slot(&Viewer::on_imgui_enable_command);
+        w.slot(&Viewer::on_imgui_enable_keyboard_command);
         w.slot(&Viewer::on_imgui_enable_mouse_command);
         
         w.slot(&Viewer::on_key_character_event);
@@ -212,6 +216,13 @@ namespace yq::tachyon {
         
         m_widgetPtr     = w;
         _widget(w);
+        
+        if(!vci.imgui_enabled)
+            m_flags |= X::ImGuiDisable;
+        if(!vci.imgui_keyboard)
+            m_flags |= X::NoImGuiKeyboard;
+        if(!vci.imgui_mouse)
+            m_flags |= X::NoImGuiMouse;
         
         ++s_count;
         tachyonInfo << "Viewer::Viewer(" << m_number << ") ID " << (uint64_t) id() << ", window=" 
@@ -430,7 +441,7 @@ namespace yq::tachyon {
         auto r1 = auto_reset(u.tick, m_viz->tick());
         auto r2 = auto_reset(u.viewer, this);
         //auto r3 = auto_reset(u.window, static_cast<Window*>(this));
-        if(w && m_imgui){
+        if(w && m_imgui && !m_flags(X::ImGuiDisable)){
             w -> m_size = { u.viewport.width, u.viewport.height };
             w -> m_flags |= Widget::F::HasSize;
             m_imgui -> draw(u, w);
@@ -440,7 +451,7 @@ namespace yq::tachyon {
                 if(w){
                     w -> prerecord(u);
                 }
-                if(m_imgui){
+                if(m_imgui  && !m_flags(X::ImGuiDisable)){
                     m_imgui -> prerecord(u);
                 }
             },
@@ -452,7 +463,7 @@ namespace yq::tachyon {
                 }
                 if(w)
                     w -> vulkan(u);
-                if(m_imgui)
+                if(m_imgui  && !m_flags(X::ImGuiDisable))
                     m_imgui -> record(u);
             }
         });
@@ -598,7 +609,7 @@ namespace yq::tachyon {
 
     void    Viewer::on_defocus_event(const DefocusEvent&evt)
     {
-        if(m_imgui){
+        if(m_imgui && !m_flags(X::ImGuiDisable)){
             m_imgui->on(evt);
         }
     }
@@ -641,7 +652,7 @@ namespace yq::tachyon {
     
     void    Viewer::on_focus_event(const FocusEvent& evt)
     {
-        if(m_imgui && (evt.source() == m_window)){
+        if(m_imgui && (evt.source() == m_window) && !m_flags(X::ImGuiDisable)){
             m_imgui->on(evt);
         }
     }
@@ -757,22 +768,34 @@ namespace yq::tachyon {
         }
     }
 
+    void    Viewer::on_imgui_disable_command(const ImGuiDisableCommand&cmd)
+    {
+        if(cmd.target() == id())
+            m_flags.set(X::ImGuiDisable);
+    }
+
     void    Viewer::on_imgui_disable_keyboard_command(const ImGuiDisableKeyboardCommand&cmd)
     {
         if(cmd.target() == id())
             m_flags.set(X::NoImGuiKeyboard);
     }
     
-    void    Viewer::on_imgui_enable_keyboard_command(const ImGuiEnableKeyboardCommand&cmd)
-    {
-        if(cmd.target() == id())
-            m_flags.clear(X::NoImGuiKeyboard);
-    }
-    
     void    Viewer::on_imgui_disable_mouse_command(const ImGuiDisableMouseCommand&cmd)
     {
         if(cmd.target() == id())
             m_flags.set(X::NoImGuiMouse);
+    }
+    
+    void    Viewer::on_imgui_enable_command(const ImGuiEnableCommand&cmd)
+    {
+        if(cmd.target() == id())
+            m_flags.clear(X::ImGuiDisable);
+    }
+
+    void    Viewer::on_imgui_enable_keyboard_command(const ImGuiEnableKeyboardCommand&cmd)
+    {
+        if(cmd.target() == id())
+            m_flags.clear(X::NoImGuiKeyboard);
     }
     
     void    Viewer::on_imgui_enable_mouse_command(const ImGuiEnableMouseCommand&cmd)
@@ -783,21 +806,21 @@ namespace yq::tachyon {
     
     void    Viewer::on_key_character_event(const KeyCharacterEvent&evt)
     {
-        if(m_imgui && !m_flags(X::NoImGuiKeyboard)){
+        if(m_imgui && !m_flags(X::NoImGuiKeyboard) && !m_flags(X::ImGuiDisable)){
             m_imgui->on(evt);
         }
     }
 
     void    Viewer::on_key_press_event(const KeyPressEvent&evt)
     {
-        if(m_imgui && !m_flags(X::NoImGuiKeyboard)){
+        if(m_imgui && !m_flags(X::NoImGuiKeyboard) && !m_flags(X::ImGuiDisable)){
             m_imgui->on(evt);
         }
     }
     
     void    Viewer::on_key_release_event(const KeyReleaseEvent&evt)
     {
-        if(m_imgui && !m_flags(X::NoImGuiKeyboard)){
+        if(m_imgui && !m_flags(X::NoImGuiKeyboard) && !m_flags(X::ImGuiDisable)){
             m_imgui->on(evt);
         }
     }
@@ -811,21 +834,21 @@ namespace yq::tachyon {
     
     void    Viewer::on_mouse_move_event(const MouseMoveEvent&evt)
     {
-        if(m_imgui && !m_flags(X::NoImGuiMouse)){
+        if(m_imgui && !m_flags(X::NoImGuiMouse) && !m_flags(X::ImGuiDisable)){
             m_imgui->on(evt);
         }
     }
 
     void    Viewer::on_mouse_press_event(const MousePressEvent&evt)
     {
-        if(m_imgui && !m_flags(X::NoImGuiMouse)){
+        if(m_imgui && !m_flags(X::NoImGuiMouse) && !m_flags(X::ImGuiDisable)){
             m_imgui->on(evt);
         }
     }
     
     void    Viewer::on_mouse_release_event(const MouseReleaseEvent&evt)
     {
-        if(m_imgui && !m_flags(X::NoImGuiMouse)){
+        if(m_imgui && !m_flags(X::NoImGuiMouse) && !m_flags(X::ImGuiDisable)){
             m_imgui->on(evt);
         }
     }
@@ -1058,7 +1081,7 @@ namespace yq::tachyon {
             }
         }
 
-        if(m_imgui)
+        if(m_imgui && !m_flags(X::ImGuiDisable))
             m_imgui->tick(m_state);
 
         if(running() && is_visible() && (!is_iconified()) && (all(m_state.window.pixels) != 0)){

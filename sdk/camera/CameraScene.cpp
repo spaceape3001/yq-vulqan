@@ -8,7 +8,7 @@
 
 #include <yq/assetvk/camera/SpaceCamera.hpp>
 #include <yq/assetvk/rendered/Billboard3.hpp>
-#include <yq/assetvk/rendered/GradTetrahedron3.hpp>
+#include <yq/assetvk/rendered/Tetrahedron3.hpp>
 #include <yq/assetvk/rendered/ImageQuad3.hpp>
 #include <yq/assetvk/rendered/Quadrilateral3.hpp>
 #include <yq/assetvk/rendered/SkyBox3.hpp>
@@ -201,30 +201,31 @@ Execution  CameraScene::setup(const Context&ctx)
         tri->create_spatial<SimpleSpatial³>(Vector3D(ZERO), Quaternion3D(IDENTITY), Vector3D(ALL, 0.5));
 
 
-        GradTetrahedron³::Param t4p;
+        Tetrahedron³::Param t4p;
+        t4p.draw_mode   = DrawMode::Gradient;
 
         SimpleSpatial³::Param   sp;
 
         // north BLUE
-        Ref<Rendered³>    dir     = create_child<GradTetrahedron³>(NorthData, t4p);
+        Ref<Rendered³>    dir     = create_child<Tetrahedron³>(NorthData, t4p);
         dir -> create_spatial<SimpleSpatial³>(Vector3D(15., 0., 0.));
 
         // south YELLOW
         
-        dir     = create_child<GradTetrahedron³>(SouthData, t4p);
+        dir     = create_child<Tetrahedron³>(SouthData, t4p);
         dir -> create_spatial<SimpleSpatial³>(Vector3D(-15., 0., 0.));
             
-        dir     = create_child<GradTetrahedron³>(EastData, t4p);
+        dir     = create_child<Tetrahedron³>(EastData, t4p);
         dir -> create_spatial<SimpleSpatial³>(Vector3D(0., 15., 0.));
 
-        dir     = create_child<GradTetrahedron³>(WestData, t4p);
+        dir     = create_child<Tetrahedron³>(WestData, t4p);
         dir -> create_spatial<SimpleSpatial³>(Vector3D(0., -15., 0.));
         
-        dir     = create_child<GradTetrahedron³>(TopData, t4p);
+        dir     = create_child<Tetrahedron³>(TopData, t4p);
         dir -> create_spatial<SimpleSpatial³>(Vector3D(0., 0., -15.));
         
         // MAGENTA
-        dir     = create_child<GradTetrahedron³>(BottomData, t4p);
+        dir     = create_child<Tetrahedron³>(BottomData, t4p);
         dir -> create_spatial<SimpleSpatial³>(Vector3D(0., 0., 15.));
         
         Ref<Quadrilateral³> quad = create_child<Quadrilateral³>(QuadData);

@@ -57,6 +57,12 @@ namespace yq::tachyon {
         static void init_meta();
         
         virtual void    render();
+        
+        enum class C {
+            Inspector
+        };
+        using CFlags = Flags<C>;
+        
        
     protected:
         virtual UIForm*       clone() const = 0;

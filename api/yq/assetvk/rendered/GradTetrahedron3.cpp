@@ -26,35 +26,10 @@ namespace yq::tachyon {
         w.description("Tetrahedron in 3D with gradient colros");
         w.category("Shape");
 
-        w.property("color1", &GradTetrahedron³::color1).setter(&GradTetrahedron³::set_color1).tag({kTag_Save, kTag_Log, kTag_Print});
-        w.property("color2", &GradTetrahedron³::color2).setter(&GradTetrahedron³::set_color2).tag({kTag_Save, kTag_Log, kTag_Print});
-        w.property("color3", &GradTetrahedron³::color3).setter(&GradTetrahedron³::set_color3).tag({kTag_Save, kTag_Log, kTag_Print});
-        w.property("color4", &GradTetrahedron³::color4).setter(&GradTetrahedron³::set_color4).tag({kTag_Save, kTag_Log, kTag_Print});
-
-        w.property("red1", &GradTetrahedron³::red1);
-        w.property("red2", &GradTetrahedron³::red2);
-        w.property("red3", &GradTetrahedron³::red3);
-        w.property("red4", &GradTetrahedron³::red4);
-
-        w.property("green1", &GradTetrahedron³::green1);
-        w.property("green2", &GradTetrahedron³::green2);
-        w.property("green3", &GradTetrahedron³::green3);
-        w.property("green4", &GradTetrahedron³::green4);
-        
-        w.property("blue1", &GradTetrahedron³::blue1);
-        w.property("blue2", &GradTetrahedron³::blue2);
-        w.property("blue3", &GradTetrahedron³::blue3);
-        w.property("blue4", &GradTetrahedron³::blue4);
-        
-        w.property("alpha1", &GradTetrahedron³::alpha1);
-        w.property("alpha2", &GradTetrahedron³::alpha2);
-        w.property("alpha3", &GradTetrahedron³::alpha3);
-        w.property("alpha4", &GradTetrahedron³::alpha4);
-
         auto& p = w.pipeline();
         
-        p.shader("resources/shape3/gradient.vert");
-        p.shader("resources/shape3/gradient.frag");
+        p.shader("yq/shape3/gradient.vert");
+        p.shader("yq/shape3/gradient.frag");
 
         p.vertex(&GradTetrahedron³::m_vbo, {.activity=DYNAMIC})
             .attribute(&VertexC::position)
@@ -83,30 +58,6 @@ namespace yq::tachyon {
     {
     }
 
-
-    void GradTetrahedron³::set_color1(const RGBA4F&v)
-    {
-        vertex1().color = v;
-        mark();
-    }
-    
-    void GradTetrahedron³::set_color2(const RGBA4F&v)
-    {
-        vertex2().color = v;
-        mark();
-    }
-    
-    void GradTetrahedron³::set_color3(const RGBA4F&v)
-    {
-        vertex3().color = v;
-        mark();
-    }
-
-    void GradTetrahedron³::set_color4(const RGBA4F&v)
-    {
-        vertex4().color = v;
-        mark();
-    }
 
     void    GradTetrahedron³::rebuild() 
     {

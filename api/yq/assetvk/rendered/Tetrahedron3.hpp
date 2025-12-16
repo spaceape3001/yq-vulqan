@@ -8,6 +8,8 @@
 
 #include <yq/tachyon/data/ColorVertexData.hpp>
 #include <yq/tachyon/aspect/AVertices3.hpp>
+#include <yq/tachyon/aspect/AColor.hpp>
+#include <yq/tachyon/aspect/ADrawMode.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
 #include <yq/tachyon/rendered/Shape3.hpp>
@@ -31,10 +33,10 @@ namespace yq::tachyon {
         
         using MyVertices::vertices;
         virtual bool        vertices(settable_k) const override { return true; }
-        //virtual bool        vertices(color_k) const;
+        virtual bool        vertices(color_k) const override;
         
-        //using Shape³::draw_mode;
-        //virtual DrawMode    draw_mode(use_k) const override;
+        using Shape³::draw_mode;
+        virtual DrawMode    draw_mode(use_k) const override;
         
         //! Note not all deriveds use these, however, leaving them present 
 
@@ -73,7 +75,6 @@ namespace yq::tachyon {
         double              z3() const { return point3().z; }
         double              z4() const { return point4().z; }
 
-#if 0
         const RGBA4F&       color1() const { return vertex1().color; }
         const RGBA4F&       color2() const { return vertex2().color; }
         const RGBA4F&       color3() const { return vertex3().color; }
@@ -123,7 +124,6 @@ namespace yq::tachyon {
         void                set_uv2(const UV2F&);
         void                set_uv3(const UV2F&);
         void                set_uv4(const UV2F&);
-#endif
 
         //! Constructor taking in the data
         Tetrahedron³(const TetrahedronData<ColorVertex3D>&, const Param& p={});
@@ -147,7 +147,7 @@ namespace yq::tachyon {
         static const Vertex³ kDefVertex3;
         static const Vertex³ kDefVertex4;
 
-        //virtual void    rebuild();
+        virtual void    rebuild();
 
         //void    rebuild_color();
         //void    rebuild_gradient();
@@ -156,12 +156,12 @@ namespace yq::tachyon {
         static const uint16_t   s_kIndices[];
         static IBO<uint16_t>    s_indices;
 
-        //VB1<VertexC>    m_vertexC;
-        //VB1<VertexCT>   m_vertexCT;
-        //VB1<VertexT>    m_vertexT;
-        //VB1<VertexS>    m_vertexS;
+        VB1<VertexC>    m_vertexC;
+        VB1<VertexCT>   m_vertexCT;
+        VB1<VertexT>    m_vertexT;
+        VB1<VertexS>    m_vertexS;
 
-        //UB1<UBS>        m_uniformS;
+        UB1<UBS>        m_uniformS;
         //TextureCPtr     m_texture;
     };
 }

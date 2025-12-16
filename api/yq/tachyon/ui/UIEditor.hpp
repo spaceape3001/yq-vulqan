@@ -78,9 +78,11 @@ namespace yq::tachyon {
         virtual UIEditor*       clone() const = 0;
         
         const TachyonSnap*      snap() const { return m_snap; }
+        const TachyonData*      data() const { return m_data; }
         
     private:
         TypedID                 m_bind;
+        const TachyonData*      m_data      = nullptr;
         const TachyonSnap*      m_snap      = nullptr;
     };
 }

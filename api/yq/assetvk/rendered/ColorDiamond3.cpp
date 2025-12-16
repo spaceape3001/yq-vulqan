@@ -20,8 +20,8 @@ namespace yq::tachyon {
         w.description("Simple 3D Color Diamond");
         
         auto& p = w.pipeline();
-        p.shader("resources/shape3/color.vert");
-        p.shader("resources/shape3/color.frag");
+        p.shader("yq/shape3/color.vert");
+        p.shader("yq/shape3/color.frag");
 
         p.vertex(&ColorDiamond³::m_vbo, {.activity=DYNAMIC})
             .attribute(&VertexS::position)

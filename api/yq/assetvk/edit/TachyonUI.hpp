@@ -26,5 +26,7 @@ namespace yq::tachyon {
         void    name();
         void    thread();
         void    parent();
+        void    revision();
+        void    cycle_time();
     };
 }

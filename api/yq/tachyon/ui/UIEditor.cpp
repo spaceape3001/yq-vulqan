@@ -68,11 +68,18 @@ namespace yq::tachyon {
         const Frame*    frame   = Frame::current();
         if(!frame)
             return;
+        m_data          = frame->data(m_bind);
+        if(!m_data)
+            return ;
+            
         m_snap          = frame->snap(m_bind);
         if(!m_snap)
             return ;
         
         UIForm::render();
+        
+        m_data  = nullptr;
+        m_snap  = nullptr;
     }
 
     ////////////////////////////

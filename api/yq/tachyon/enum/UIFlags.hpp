@@ -49,6 +49,7 @@ namespace yq::tachyon {
         Horizontal,
         HorizontalScrollBar,
         IgnoreSourceAspectRatio,    //!< Ignore the source image's aspect ratio
+        Inspector,                  //!< TRUE for inspectors
         Invisible,
         IsButton,                   //!< TRUE to set to a button
         IsChild,                    //!< TRUE to use begin/end child instead of raw begin/end

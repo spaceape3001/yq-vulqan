@@ -16,6 +16,7 @@ namespace yq::tachyon {
 
     struct UIFormMeta::Field {
         std::string             label;
+        UIForm::CFlags          flags;
         FieldExecutor*          executor    = nullptr;
     };
     
@@ -61,11 +62,19 @@ namespace yq::tachyon {
         Writer& field(std::string_view label, void (C::*fn)())
         {
             if(m_meta && Meta::thread_safe_write()){
-                m_meta -> m_fields.push_back({ std::string(label), new BoundFieldExecutor<C>(fn) });
+                m_meta -> m_fields.push_back({ std::string(label), {}, new BoundFieldExecutor<C>(fn) });
             }
             return *this;
         }
         
+        Writer& field(std::string_view label, UIForm::CFlags flags, void (C::*fn)())
+        {
+            if(m_meta && Meta::thread_safe_write()){
+                m_meta -> m_fields.push_back({ std::string(label), flags, new BoundFieldExecutor<C>(fn) });
+            }
+            return *this;
+        }
+
         // TODO...
         Writer& field(std::string_view labelFormat, 
             uint64_t (C::*countFN)() const,

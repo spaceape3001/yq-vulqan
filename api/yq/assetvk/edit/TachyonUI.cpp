@@ -27,9 +27,11 @@ namespace yq::tachyon {
         w.field("Name", &TachyonUI::name);
         w.field("Type", &TachyonUI::type);
         w.field("ID", &TachyonUI::id);
-        w.field("Parent", &TachyonUI::parent);
-        w.field("Thread", &TachyonUI::thread);
+        w.field("Cycle Time", C::Inspector, &TachyonUI::cycle_time);
         w.field("Edit Mode", &TachyonUI::edit_mode);
+        w.field("Parent", &TachyonUI::parent);
+        w.field("Revision", C::Inspector, &TachyonUI::revision);
+        w.field("Thread", &TachyonUI::thread);
         w.edits<Tachyon>();
     }
 
@@ -50,12 +52,23 @@ namespace yq::tachyon {
         return new TachyonUI(*this);
     }
 
+    void    TachyonUI::cycle_time()
+    {
+        const TachyonData*  dt  = data();
+        if(dt->cycleTime < 1_µs){
+            ImGui::Text("%lf ns", dt->cycleTime.value);
+        } else if(dt->cycleTime < 1_ms){
+            ImGui::Text("%lf µs", unit::Microsecond(dt->cycleTime).value);
+        } else if(dt->cycleTime < 1_s){
+            ImGui::Text("%lf ms", unit::Millisecond(dt->cycleTime).value);
+        } else {
+            ImGui::Text("%lf s",  unit::Second(dt->cycleTime).value);
+        }
+    }
+
     void    TachyonUI::edit_mode()
     {
         const TachyonSnap*  sn    = snap();
-        if(!sn)
-            return;
-            
         Tristate    v   = sn->edit_mode;
         if(ImGui::Checkbox("##EditMode", v))
             send(new SetEditModeCommand({.target=sn->self}, v));
@@ -100,15 +113,18 @@ namespace yq::tachyon {
             }
         }
     }
+
+    void    TachyonUI::revision()
+    {
+        ImGui::Text("%ld", snap()->revision);
+    }
     
     void    TachyonUI::thread()
     {
         const Frame*    frame = Frame::current();
         if(!frame)
             return;
-        const TachyonData*  tach    = frame->data(bound());
-        if(!tach)
-            return;
+        const TachyonData*  tach    = data();
         
         std::string     text;    
         if(const ThreadSnap*   th = frame->snap(tach->owner)){

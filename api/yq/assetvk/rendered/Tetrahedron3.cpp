@@ -54,9 +54,11 @@ namespace yq::tachyon {
         auto w = writer<Tetrahedron³>();
         w.description("Tetrahedron in 3D");
         w.category("Shape");
-        w.abstract();
+        //w.abstract();
 
         AVertices³<4>::init_meta(w);
+        
+        w.alias("tachyon::GradTetrahedron³");
 
         w.property("vertex1", &Tetrahedron³::vertex1).setter(&Tetrahedron³::set_vertex1);
         w.property("vertex2", &Tetrahedron³::vertex2).setter(&Tetrahedron³::set_vertex2);
@@ -83,7 +85,6 @@ namespace yq::tachyon {
         w.property("z3", &Tetrahedron³::z3);
         w.property("z4", &Tetrahedron³::z4);
 
-#if 0
         w.property("color1", &Tetrahedron³::color1).setter(&Tetrahedron³::set_color1).tag({kTag_Save, kTag_Log, kTag_Print});
         w.property("color2", &Tetrahedron³::color2).setter(&Tetrahedron³::set_color2).tag({kTag_Save, kTag_Log, kTag_Print});
         w.property("color3", &Tetrahedron³::color3).setter(&Tetrahedron³::set_color3).tag({kTag_Save, kTag_Log, kTag_Print});
@@ -123,14 +124,12 @@ namespace yq::tachyon {
         w.property("v2", &Tetrahedron³::v2);
         w.property("v3", &Tetrahedron³::v3);
         w.property("v4", &Tetrahedron³::v4);
-#endif
 
-#if 0
         {
             auto& p = w.pipeline(Pipeline::Role::SolidColor);
             
-            p.shader("resources/shape3/color.vert");
-            p.shader("resources/shape3/color.frag");
+            p.shader("yq/shape3/color.vert");
+            p.shader("yq/shape3/color.frag");
 
             p.vertex(&Tetrahedron³::m_vertexS, {.activity=DYNAMIC})
                 .attribute(&VertexS::position)
@@ -144,8 +143,8 @@ namespace yq::tachyon {
         {
             auto& p = w.pipeline(Pipeline::Role::ColorCorner);
             
-            p.shader("resources/shape3/gradient.vert");
-            p.shader("resources/shape3/gradient.frag");
+            p.shader("yq/shape3/gradient.vert");
+            p.shader("yq/shape3/gradient.frag");
 
             p.vertex(&Tetrahedron³::m_vertexC, {.activity=DYNAMIC})
                 .attribute(&VertexC::position)
@@ -156,7 +155,6 @@ namespace yq::tachyon {
             p.index(Tetrahedron³::s_indices);
             p.push_full();
         }
-#endif
     }
 
     Tetrahedron³::Tetrahedron³(const Vertex³&a, const Vertex³&b, const Vertex³&c, const Vertex³&d, const Param&p) : 
@@ -180,22 +178,17 @@ namespace yq::tachyon {
     Tetrahedron³::~Tetrahedron³()
     {
     }
-
-#if 0
-    DrawMode Tetrahedron³::draw_mode(use_k) const 
+    
+    DrawMode    Tetrahedron³::draw_mode(use_k) const
     {
-        //  get smarter.... (later)
-        DrawMode    dm  = draw_mode();
-        switch(dm){
+        switch(m_drawMode){
         case DrawMode::Auto:
-            return DrawMode::Gradient;
-        default:
-            return dm;
+            return DrawMode::Color;
+        default:    
+            return m_drawMode;
         }
     }
-#endif
 
-#if 0
     void Tetrahedron³::set_color1(const RGBA4F&v)
     {
         vertex1().color = v;
@@ -219,7 +212,6 @@ namespace yq::tachyon {
         vertex4().color = v;
         mark();
     }
-#endif
 
     void Tetrahedron³::set_point1(const Vector3D& v)
     {
@@ -245,7 +237,6 @@ namespace yq::tachyon {
         mark();
     }
 
-#if 0
     void    Tetrahedron³::set_uv1(const UV2F&v)
     {
         vertex1().uv = v;
@@ -269,7 +260,6 @@ namespace yq::tachyon {
         vertex4().uv = v;
         mark();
     }
-#endif
 
     void    Tetrahedron³::set_vertex1(const Vertex³&v)
     {
@@ -295,41 +285,34 @@ namespace yq::tachyon {
         mark();
     }
 
-#if 0
     void    Tetrahedron³::rebuild() 
     {
         switch(draw_mode(USE)){
         case DrawMode::Color:
-            rebuild_color();
+            m_good      = true;
+            set_pipeline(Pipeline::Role::SolidColor);
+            m_vertexS   = {
+                vs(vertex1()), vs(vertex2()), vs(vertex3()), vs(vertex4())
+            };
+            m_uniformS  = {
+                .color  = m_color
+            };
             break;
         case DrawMode::Gradient:
-            rebuild_gradient();
+            m_good      = true;
+            set_pipeline(Pipeline::Role::ColorCorner);
+            m_vertexC = {
+                vc(vertex1()), vc(vertex2()), vc(vertex3()), vc(vertex4())
+            };
             break;
         default:
+            m_good      = false;
             // shouldn't happen...
             break;
         }
     }
 
-    void    Tetrahedron³::rebuild_color()
-    {
-        set_pipeline(Pipeline::Role::SolidColor);
-        m_vertexS   = {
-            vs(vertex1()), vs(vertex2()), vs(vertex3()), vs(vertex4())
-        };
-        m_uniformS  = {
-            .color  = m_color
-        };
-    }
-    
-    void    Tetrahedron³::rebuild_gradient()
-    {
-        set_pipeline(Pipeline::Role::ColorCorner);
-        m_vertexC = {
-            vc(vertex1()), vc(vertex2()), vc(vertex3()), vc(vertex4())
-        };
-    }
-    
+#if 0
     void    Tetrahedron³::rebuild_textured()
     {
         set_pipeline(Pipeline::Role::Textured);
@@ -338,17 +321,16 @@ namespace yq::tachyon {
         };
     }
 #endif
-#if 0
+
     bool    Tetrahedron³::vertices(color_k) const
     {
         switch(draw_mode(USE)){
-        case DrawMode::Color:
+        case DrawMode::Gradient:
             return true;
         default:    
             return false;
         }
     }
-#endif
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Tetrahedron³)

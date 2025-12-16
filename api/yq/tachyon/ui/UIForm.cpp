@@ -63,6 +63,9 @@ namespace yq::tachyon {
             ImGui::TableSetupColumn("Value" /*, ImGuiTableColumnFlags_WidthFixed, vw */);
             
             for(auto& f : metaInfo().m_fields){
+                if(f.flags(C::Inspector) && !m_flags(UIFlag::Inspector))
+                    continue;
+            
                 ImGui::TableNextRow();
                 if(ImGui::TableNextColumn())
                     ImGui::TextUnformatted(f.label);

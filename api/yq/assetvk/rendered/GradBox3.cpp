@@ -27,8 +27,8 @@ namespace yq::tachyon {
         w.property("tne", &GradBox³::color_tne).setter(&GradBox³::set_color_tne).tag(kTag_Save);
         
         auto& p = w.pipeline();
-        p.shader("resources/shape3/gradient.vert");
-        p.shader("resources/shape3/gradient.frag");
+        p.shader("yq/shape3/gradient.vert");
+        p.shader("yq/shape3/gradient.frag");
 
         p.vertex(&GradBox³::m_vbo, {.activity=DYNAMIC})
             .attribute(&VertexC::position)

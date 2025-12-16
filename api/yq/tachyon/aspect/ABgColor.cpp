@@ -10,7 +10,14 @@
 #include <yq/tachyon/event/color/BgColorChangeEvent.hpp>
 
 namespace yq::tachyon {
-    ABgColor::ABgColor() = default;
+    ABgColor::ABgColor(const Param& p) : m_bgcolor(p.bgcolor)
+    {
+    }
+
+    ABgColor::ABgColor(const RGBA4F& bgColor) : m_bgcolor(bgColor)
+    {
+    }
+    
     ABgColor::~ABgColor() = default;
 
     void    ABgColor::bgcolor(emit_k)

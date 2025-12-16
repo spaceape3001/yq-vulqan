@@ -16,23 +16,29 @@ namespace yq::tachyon {
     class ABgColor : public IBgColor, public virtual Tachyon::Helper {
     public:
         
+        static constexpr const RGBA4F kDefBgColor = {0., 0., 0., 1.};
+        
+        struct Param {
+            RGBA4F      bgcolor = kDefBgColor;
+        };
+
         RGBA4F  bgcolor() const override { return m_bgcolor; }
 
         virtual bool    bgcolor(disabled_k) const override { return false; }
-        virtual bool    bgcolor(settable_k) const override { return false; }
+        virtual bool    bgcolor(settable_k) const override { return true; }
         
         // override to accept/reject
         virtual void    bgcolor(set_k, const RGBA4F&);
         
     protected:
     
-        static constexpr const RGBA4F kDefBgColor = {0., 0., 0., 1.};
-        RGBA4F    m_bgcolor     = kDefBgColor;
+        RGBA4F    m_bgcolor;
 
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        ABgColor();
+        ABgColor(const Param&);
+        ABgColor(const RGBA4F& bgColor = kDefBgColor);
         virtual ~ABgColor();
         
         virtual void    bgcolor(emit_k);

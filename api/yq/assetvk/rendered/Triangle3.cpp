@@ -84,8 +84,8 @@ namespace yq::tachyon {
 
         {
             auto& p = w.pipeline(Pipeline::Role::SolidColor);
-            p.shader("resources/shape3/color.vert");
-            p.shader("resources/shape3/color.frag");
+            p.shader("yq/shape3/color.vert");
+            p.shader("yq/shape3/color.frag");
 
             p.vertex(&Triangle³::m_vertexS, DataActivity::DYNAMIC)
                 .attribute(&VertexS::position)
@@ -98,8 +98,8 @@ namespace yq::tachyon {
 
         {
             auto& p = w.pipeline(Pipeline::Role::ColorCorner);
-            p.shader("resources/shape3/gradient.vert");
-            p.shader("resources/shape3/gradient.frag");
+            p.shader("yq/shape3/gradient.vert");
+            p.shader("yq/shape3/gradient.frag");
 
             p.vertex(&Triangle³::m_vertexC, DataActivity::DYNAMIC)
                 .attribute(&VertexC::position)

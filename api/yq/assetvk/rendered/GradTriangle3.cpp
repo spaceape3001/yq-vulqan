@@ -42,8 +42,8 @@ namespace yq::tachyon {
         w.property("alpha3", &GradTriangle³::alpha3);
 
         auto& p = w.pipeline();
-        p.shader("resources/shape3/gradient.vert");
-        p.shader("resources/shape3/gradient.frag");
+        p.shader("yq/shape3/gradient.vert");
+        p.shader("yq/shape3/gradient.frag");
 
         p.vertex(&GradTriangle³::m_vbo, {.activity=DYNAMIC})
             .attribute(&VertexC::position)

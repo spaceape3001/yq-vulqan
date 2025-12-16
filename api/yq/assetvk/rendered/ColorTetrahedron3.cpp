@@ -19,8 +19,8 @@ namespace yq::tachyon {
 
         auto& p = w.pipeline();
         
-        p.shader("resources/shape3/color.vert");
-        p.shader("resources/shape3/color.frag");
+        p.shader("yq/shape3/color.vert");
+        p.shader("yq/shape3/color.frag");
 
         p.vertex(&ColorTetrahedron³::m_vbo, {.activity=DYNAMIC})
             .attribute(&VertexS::position)

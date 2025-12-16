@@ -23,7 +23,7 @@ namespace yq::tachyon {
         DrawMode  draw_mode() const override { return m_drawMode; }
 
         virtual bool    draw_mode(disabled_k) const override { return false; }
-        virtual bool    draw_mode(settable_k) const override { return false; }
+        virtual bool    draw_mode(settable_k) const override { return true; }
         
         // override to accept/reject
         virtual void    draw_mode(set_k, DrawMode);

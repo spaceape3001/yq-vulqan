@@ -22,8 +22,8 @@ namespace yq::tachyon {
         AColor::init_meta(w);
         
         auto& p = w.pipeline();
-        p.shader("resources/shape3/color.vert");
-        p.shader("resources/shape3/color.frag");
+        p.shader("yq/shape3/color.vert");
+        p.shader("yq/shape3/color.frag");
 
         p.vertex(&ColorBox³::m_vbo, {.activity=DYNAMIC})
             .attribute(&VertexS::position)

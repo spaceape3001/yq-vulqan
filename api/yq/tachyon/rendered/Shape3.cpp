@@ -182,11 +182,8 @@ namespace yq::tachyon {
         AMaterial::init_meta(w);
     }
 
-    Shape³::Shape³(const Param& p) : Rendered³(p)
+    Shape³::Shape³(const Param& p) : Rendered³(p), ABgColor(p), AColor(p), ADrawMode(p)
     {
-        m_color     = p.color;
-        m_bgcolor   = p.bgcolor;
-        m_drawMode  = p.draw_mode;
         mark();
     }
     

@@ -62,10 +62,11 @@ namespace yq::tachyon {
         //  2) Bilevel colors (primary/alternate for when that's an issue)
         //  3) Material/Textures
 
-        struct Param : public Rendered³::Param {
-            RGBA4F      bgcolor     = kDefBgColor;
-            RGBA4F      color       = kDefColor;
-            DrawMode    draw_mode   = kDefDrawMode;
+        struct Param : public Rendered³::Param, 
+            public ABgColor::Param, 
+            public AColor::Param, 
+            public ADrawMode::Param 
+        {
         };
         
         static void init_meta();

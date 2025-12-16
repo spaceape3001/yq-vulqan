@@ -131,8 +131,8 @@ namespace yq::tachyon {
         {
             auto& p  = w.pipeline(Pipeline::Role::SolidColor);
             
-            p.shader("shape3/solid.vert");
-            p.shader("shape3/solid.frag");
+            p.shader("yq/shape3/solid.vert");
+            p.shader("yq/shape3/solid.frag");
 
             p.vertex(&Mesh³::m_vboS, {.activity=DYNAMIC})
                 .attribute(&VertexS::position)
@@ -147,8 +147,8 @@ namespace yq::tachyon {
         {
             auto& p  = w.pipeline(Pipeline::Role::Textured);
 
-            p.shader("shape3/textured.vert");
-            p.shader("shape3/textured.frag");
+            p.shader("yq/shape3/textured.vert");
+            p.shader("yq/shape3/textured.frag");
 
             p.vertex(&Mesh³::m_vboT, {.activity=DYNAMIC})
                 .attribute(&VertexT::position)

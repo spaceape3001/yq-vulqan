@@ -25,8 +25,8 @@ namespace yq::tachyon {
         w.property("bottom", &GradDiamond³::color_bottom).setter(&GradDiamond³::set_color_bottom).tag(kTag_Save);
         
         auto& p = w.pipeline();
-        p.shader("resources/shape3/gradient.vert");
-        p.shader("resources/shape3/gradient.frag");
+        p.shader("yq/shape3/gradient.vert");
+        p.shader("yq/shape3/gradient.frag");
 
         p.vertex(&GradDiamond³::m_vbo, {.activity=DYNAMIC})
             .attribute(&VertexC::position)

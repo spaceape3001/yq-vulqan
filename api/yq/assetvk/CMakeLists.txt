@@ -91,7 +91,7 @@ add_library(yq_assetvk SHARED
     rendered/Diamond3.cpp
     rendered/GradBox3.cpp
     rendered/GradDiamond3.cpp
-    rendered/GradTetrahedron3.cpp
+    #rendered/GradTetrahedron3.cpp
     rendered/GradTriangle3.cpp
     rendered/HeightField3.cpp
     rendered/ImageQuad3.cpp

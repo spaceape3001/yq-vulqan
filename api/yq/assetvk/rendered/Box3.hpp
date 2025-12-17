@@ -13,7 +13,7 @@
 #include <yq/tachyon/rendered/Shape3.hpp>
 
 namespace yq::tachyon {
-    class Box³ : public Shape³, public AVertices³<8>, public ASize³ {
+    class Box³ : public Shape³, public AVertices³<8> {
         YQ_TACHYON_DECLARE(Box³, Shape³)
     public:
     
@@ -22,14 +22,16 @@ namespace yq::tachyon {
         using MyVertices  = AVertices³<8>;
 
         using MyVertices::vertices;
-    
-        virtual bool    vertices(point_k) const override { return true; }
-        virtual bool    vertices(settable_k, point_k) const override { return false; }
+        virtual bool        vertices(settable_k) const override { return true; }
+        virtual bool        vertices(color_k) const override;
+
+        virtual bool        vertices(point_k) const override { return true; }
+        virtual bool        vertices(settable_k, point_k) const override { return false; }
         //virtual bool    vertices(color_k) const override { return true; }
         
-        using ASize³::size;
-        virtual bool    size(settable_k) const override { return true; }
-    
+        using Shape³::draw_mode;
+        virtual DrawMode    draw_mode(use_k) const override;
+
         const Vertex³&      vertex_bsw() const { return m_vertices[0]; }
         const Vertex³&      vertex_bse() const { return m_vertices[1]; }
         const Vertex³&      vertex_bne() const { return m_vertices[2]; }
@@ -75,13 +77,70 @@ namespace yq::tachyon {
         double              z_tnw() const { return point_tnw().z; }
         double              z_tne() const { return point_tne().z; }
 
-        Box³(const Size3D& sz=kDefSize, const Param& p = Param());
+        Box³();
+        Box³(const Param&);
         
         static void init_meta();
 
-    protected:
+
+        const RGBA4F& color_bsw() const { return vertex_bsw().color; }
+        const RGBA4F& color_bse() const { return vertex_bse().color; }
+        const RGBA4F& color_bnw() const { return vertex_bnw().color; }
+        const RGBA4F& color_bne() const { return vertex_bne().color; }
+        const RGBA4F& color_tsw() const { return vertex_tsw().color; }
+        const RGBA4F& color_tse() const { return vertex_tse().color; }
+        const RGBA4F& color_tnw() const { return vertex_tnw().color; }
+        const RGBA4F& color_tne() const { return vertex_tne().color; }
+
+        float   red_bsw() const { return color_bsw().red; }
+        float   red_bse() const { return color_bse().red; }
+        float   red_bnw() const { return color_bnw().red; }
+        float   red_bne() const { return color_bne().red; }
+        float   red_tsw() const { return color_tsw().red; }
+        float   red_tse() const { return color_tse().red; }
+        float   red_tnw() const { return color_tnw().red; }
+        float   red_tne() const { return color_tne().red; }
+        
+        float   green_bsw() const { return color_bsw().green; }
+        float   green_bse() const { return color_bse().green; }
+        float   green_bnw() const { return color_bnw().green; }
+        float   green_bne() const { return color_bne().green; }
+        float   green_tsw() const { return color_tsw().green; }
+        float   green_tse() const { return color_tse().green; }
+        float   green_tnw() const { return color_tnw().green; }
+        float   green_tne() const { return color_tne().green; }
+
+        float   blue_bsw() const { return color_bsw().blue; }
+        float   blue_bse() const { return color_bse().blue; }
+        float   blue_bnw() const { return color_bnw().blue; }
+        float   blue_bne() const { return color_bne().blue; }
+        float   blue_tsw() const { return color_tsw().blue; }
+        float   blue_tse() const { return color_tse().blue; }
+        float   blue_tnw() const { return color_tnw().blue; }
+        float   blue_tne() const { return color_tne().blue; }
+
+        float   alpha_bsw() const { return color_bsw().alpha; }
+        float   alpha_bse() const { return color_bse().alpha; }
+        float   alpha_bnw() const { return color_bnw().alpha; }
+        float   alpha_bne() const { return color_bne().alpha; }
+        float   alpha_tsw() const { return color_tsw().alpha; }
+        float   alpha_tse() const { return color_tse().alpha; }
+        float   alpha_tnw() const { return color_tnw().alpha; }
+        float   alpha_tne() const { return color_tne().alpha; }
+        
+        void    set_color_bsw(const RGBA4F&);
+        void    set_color_bse(const RGBA4F&);
+        void    set_color_bnw(const RGBA4F&);
+        void    set_color_bne(const RGBA4F&);
+        void    set_color_tsw(const RGBA4F&);
+        void    set_color_tse(const RGBA4F&);
+        void    set_color_tnw(const RGBA4F&);
+        void    set_color_tne(const RGBA4F&);
 
         virtual ~Box³();
+        
+    protected:
+
     
         Vertex³&            vertex_bsw()  { return m_vertices[0]; }
         Vertex³&            vertex_bse()  { return m_vertices[1]; }
@@ -94,8 +153,17 @@ namespace yq::tachyon {
 
         //  This will rebuild the vertex positions....
         virtual void    rebuild() override;
+        void            reshape();
 
         static const uint16_t   s_kIndices[];
         static IBO<uint16_t>    s_indices;
+
+        VB1<VertexC>    m_vertexC;
+        VB1<VertexCT>   m_vertexCT;
+        VB1<VertexT>    m_vertexT;
+        VB1<VertexS>    m_vertexS;
+
+        UB1<UBS>        m_uniformS;
+        //TextureCPtr     m_texture;
     };
 }

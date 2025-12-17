@@ -189,6 +189,44 @@ namespace yq::tachyon {
         }
     }
 
+    void    Tetrahedron³::rebuild() 
+    {
+        Shape³::rebuild();
+        switch(draw_mode(USE)){
+        case DrawMode::Color:
+            m_good      = true;
+            set_pipeline(Pipeline::Role::SolidColor);
+            m_vertexS   = {
+                vs(vertex1()), vs(vertex2()), vs(vertex3()), vs(vertex4())
+            };
+            m_uniformS  = {
+                .color  = m_color
+            };
+            break;
+        case DrawMode::Gradient:
+            m_good      = true;
+            set_pipeline(Pipeline::Role::ColorCorner);
+            m_vertexC = {
+                vc(vertex1()), vc(vertex2()), vc(vertex3()), vc(vertex4())
+            };
+            break;
+        default:
+            m_good      = false;
+            // shouldn't happen...
+            break;
+        }
+    }
+
+#if 0
+    void    Tetrahedron³::rebuild_textured()
+    {
+        set_pipeline(Pipeline::Role::Textured);
+        m_vertexT = {
+            vt(vertex1()), vt(vertex2()), vt(vertex3()), vt(vertex4())
+        };
+    }
+#endif
+
     void Tetrahedron³::set_color1(const RGBA4F&v)
     {
         vertex1().color = v;
@@ -285,42 +323,6 @@ namespace yq::tachyon {
         mark();
     }
 
-    void    Tetrahedron³::rebuild() 
-    {
-        switch(draw_mode(USE)){
-        case DrawMode::Color:
-            m_good      = true;
-            set_pipeline(Pipeline::Role::SolidColor);
-            m_vertexS   = {
-                vs(vertex1()), vs(vertex2()), vs(vertex3()), vs(vertex4())
-            };
-            m_uniformS  = {
-                .color  = m_color
-            };
-            break;
-        case DrawMode::Gradient:
-            m_good      = true;
-            set_pipeline(Pipeline::Role::ColorCorner);
-            m_vertexC = {
-                vc(vertex1()), vc(vertex2()), vc(vertex3()), vc(vertex4())
-            };
-            break;
-        default:
-            m_good      = false;
-            // shouldn't happen...
-            break;
-        }
-    }
-
-#if 0
-    void    Tetrahedron³::rebuild_textured()
-    {
-        set_pipeline(Pipeline::Role::Textured);
-        m_vertexT = {
-            vt(vertex1()), vt(vertex2()), vt(vertex3()), vt(vertex4())
-        };
-    }
-#endif
 
     bool    Tetrahedron³::vertices(color_k) const
     {

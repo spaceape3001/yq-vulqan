@@ -105,7 +105,7 @@ namespace yq::tachyon {
         pipeline    = p;
         p -> dynamic_states({DynamicState::Viewport, DynamicState::Scissor });
         p -> line_width(1.0);
-        p -> shaders({"imgui/vigui.vert", "imgui/vigui.frag" });
+        p -> shaders({"yq/imgui/vigui.vert", "yq/imgui/vigui.frag" });
         p -> culling(CullMode::None);
         p -> polygons(PolygonMode::Fill);
         p -> front(FrontFace::CounterClockwise);

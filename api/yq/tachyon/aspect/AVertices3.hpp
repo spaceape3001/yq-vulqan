@@ -101,8 +101,8 @@ namespace yq::tachyon {
         virtual void        vertex(size_t, erase_k);
 
     protected:
-        AVertices³(){}
-        ~AVertices³(){}
+        AVertices³();
+        ~AVertices³();
         vertex_array_t   m_vertices;
         
         virtual void vertices(emit_k) {}

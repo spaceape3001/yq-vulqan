@@ -18,6 +18,22 @@
 
 namespace yq::tachyon {
     template <size_t N>
+    AVertices³<N>::AVertices³()
+    {
+        for(auto& v : m_vertices){
+            v.point     = {};
+            v.uv        = {};
+            v.normal    = {};
+            v.color     = { 1., 1., 1., 1. };
+        }
+    }
+
+    template <size_t N>
+    AVertices³<N>::~AVertices³()
+    {
+    }
+
+    template <size_t N>
     Vertex³     AVertices³<N>::vertex(size_t n) const
     {
         if(n && (n<=m_vertices.size()))

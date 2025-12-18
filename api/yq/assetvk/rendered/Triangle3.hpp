@@ -24,10 +24,15 @@ namespace yq::tachyon {
     class Triangle³ : public Shape³, public AVertices³<3> {
         YQ_TACHYON_DECLARE(Triangle³, Shape³)
     public:
+
+        //  For legacy reasons, Tetrahedron & Triangle do not respect Size (yet)
     
         using MyVertices  = AVertices³<3>;
 
         using MyVertices::vertices;
+
+        using Shape³::draw_mode;
+        virtual DrawMode    draw_mode(use_k) const override;
 
         const Vertex³&      vertex1() const { return m_vertices[0]; }
         const Vertex³&      vertex2() const { return m_vertices[1]; }
@@ -57,7 +62,6 @@ namespace yq::tachyon {
         double              z2() const { return point2().z; }
         double              z3() const { return point3().z; }
 
-#if 0
         const RGBA4F&       color1() const { return vertex1().color; }
         const RGBA4F&       color2() const { return vertex2().color; }
         const RGBA4F&       color3() const { return vertex3().color; }
@@ -99,7 +103,6 @@ namespace yq::tachyon {
         void                set_uv1(const UV2F&);
         void                set_uv2(const UV2F&);
         void                set_uv3(const UV2F&);
-#endif
 
         static void         init_meta();
         
@@ -119,12 +122,14 @@ namespace yq::tachyon {
         static const Vertex³ kDefVertex2;
         static const Vertex³ kDefVertex3;
 
+        virtual void    rebuild() override;
+
 #if 0
-        virtual void    rebuild();
 
         void    rebuild_color();
         void    rebuild_gradient();
         void    rebuild_textured();
+#endif
 
         VB1<VertexC>    m_vertexC;
         VB1<VertexCT>   m_vertexCT;
@@ -133,7 +138,6 @@ namespace yq::tachyon {
 
         UB1<UBS>        m_uniformS;
         TextureCPtr     m_texture;
-#endif
     };
 }
 

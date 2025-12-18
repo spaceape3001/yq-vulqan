@@ -5,16 +5,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Shape3.hpp"
+#include "Shape3Data.hpp"
 #include <yq/math/UV.hpp>
 #include <yq/math/UVW.hpp>
+#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/tags.hpp>
 #include <yq/tachyon/api/Rendered3MetaWriter.hpp>
 #include <yq/tachyon/aspect/ABgColorWriter.hxx>
 #include <yq/tachyon/aspect/AColorWriter.hxx>
 #include <yq/tachyon/aspect/ADrawModeWriter.hxx>
 #include <yq/tachyon/aspect/AMaterialWriter.hxx>
 #include <yq/tachyon/asset/Texture.hpp>
+#include <yq/tachyon/command/shape/SetAutoCenterCommand.hpp>
+#include <yq/tachyon/command/shape/SetNormalizeCommand.hpp>
 #include <yq/tachyon/data/Vertex3.hpp>
-#include <yq/tachyon/logging.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hpp>
 #include <yq/vector/Vector4.hpp>
@@ -22,6 +26,14 @@
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Shape³)
 
 namespace yq::tachyon {
+
+    Shape³Data::Shape³Data() = default;
+    Shape³Data::~Shape³Data() = default;
+
+    Shape³Snap::Shape³Snap() = default;
+    Shape³Snap::~Shape³Snap() = default;
+
+////////////////////////////////////////////////////////////////////////////////
 
     glm::vec3    Shape³::gfx(const RGB3F&v)
     {
@@ -180,9 +192,16 @@ namespace yq::tachyon {
         AColor::init_meta(w);
         ADrawMode::init_meta(w);
         AMaterial::init_meta(w);
+
+        w.property("auto_center", &Shape³::m_autoCenter).def_value(Tristate::Inherit).tag(kTag_Save);
+        w.property("normalize", &Shape³::m_normalize).def_value(Tristate::Inherit).tag(kTag_Save);
+        w.slot(&Shape³::on_set_auto_center_command);
+        w.slot(&Shape³::on_set_normalize_command);
     }
 
-    Shape³::Shape³(const Param& p) : Rendered³(p), ABgColor(p), AColor(p), ADrawMode(p)
+    Shape³::Shape³(const Param& p) : 
+        Rendered³(p), ABgColor(p), AColor(p), ADrawMode(p), 
+        m_autoCenter(p.auto_center), m_normalize(p.normalize)
     {
         mark();
     }
@@ -191,6 +210,10 @@ namespace yq::tachyon {
     {
     }
 
+    bool             Shape³::auto_center() const
+    {
+        return m_autoCenter != Tristate::No;
+    }
 
     std::error_code     Shape³::load(const StateSave&ss) 
     {
@@ -199,12 +222,46 @@ namespace yq::tachyon {
         return ec;
     }
 
+    bool        Shape³::normalize() const
+    {
+        return m_normalize != Tristate::No;
+    }
+
+    void Shape³::on_set_auto_center_command(const SetAutoCenterCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_autoCenter = cmd.auto_center();
+        mark();
+    }
+    
+    void Shape³::on_set_normalize_command(const SetNormalizeCommand&cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_normalize = cmd.normalize();
+        mark();
+    }
+
     Execution   Shape³::setup(const Context& ctx) 
     {
         rebuild();
         return Rendered³::setup(ctx);
     }
     
+    void Shape³::snap(Shape³Snap&sn) const
+    {
+        Rendered³::snap(sn);
+        
+        //  offset & rotation will go here too... (likely have to do a formal "calculate")
+        
+        sn.model.xx     = m_size.x;
+        sn.model.yy     = m_size.y;
+        sn.model.zz     = m_size.z;
+        sn.normalize    = m_normalize;
+        sn.auto_center  = m_autoCenter;
+    }
+
     Execution   Shape³::tick(const Context&ctx) 
     {
         if(dirty())

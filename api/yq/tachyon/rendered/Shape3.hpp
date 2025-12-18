@@ -11,6 +11,7 @@
 #include <yq/tachyon/aspect/AColor.hpp>
 #include <yq/tachyon/aspect/ADrawMode.hpp>
 #include <yq/tachyon/aspect/AMaterial.hpp>
+#include <yq/tachyon/aspect/ASize3.hpp>
 #include <yq/tachyon/aspect/ATexture.hpp>
 
 #include <yq/typedef/uv.hpp>
@@ -22,19 +23,31 @@
 namespace yq::tachyon {
     struct Vertex³;
 
+    struct Shape³Snap;
+    struct Shape³Data;
+    
+    class SetAutoCenterCommand;
+    class SetNormalizeCommand;
+
+    
     /*! \brief Abstract shape
     
         This class will remain in the API library as it's intended to be abstract.
         
         \note Updated the name...
+        
+        \note Derived classes should *ALWAYS* be normalized in size
     */
     class Shape³ : public Rendered³, 
         public ABgColor,
         public AColor,
         public ADrawMode,
         public AMaterial,
+        public ASize³,
         public ATexture
     {
+        YQ_TACHYON_SNAP(Shape³Snap)
+        YQ_TACHYON_DATA(Shape³Data)
         YQ_TACHYON_DECLARE(Shape³, Rendered³)
     public:
     
@@ -65,8 +78,11 @@ namespace yq::tachyon {
         struct Param : public Rendered³::Param, 
             public ABgColor::Param, 
             public AColor::Param, 
-            public ADrawMode::Param 
+            public ADrawMode::Param,
+            public ASize³::Param
         {
+            Tristate    auto_center = Tristate::Inherit;
+            Tristate    normalize   = Tristate::Inherit;
         };
         
         static void init_meta();
@@ -74,14 +90,17 @@ namespace yq::tachyon {
         Execution           setup(const Context&) override;
         Execution           tick(const Context&) override;
 
-        //using ADrawMode::draw_mode;
-        //virtual bool    draw_mode(settable_k) const override { return true; }
+        using ADrawMode::draw_mode;
+        virtual bool        draw_mode(settable_k) const override { return true; }
         
-        //using AColor::color;
-        //virtual bool    color(settable_k) const override { return true; }
+        using AColor::color;
+        virtual bool        color(settable_k) const override { return true; }
         
         //using ABgColor::bgcolor;
         //virtual bool    bgcolor(settable_k) const override { return true; }
+
+        bool             normalize() const;
+        bool             auto_center() const;
 
     protected:
     
@@ -153,6 +172,9 @@ namespace yq::tachyon {
         static VertexS          vtx(const Vector3D&);
         static VertexS          vtx(const Vector3F&);
 
+        Tristate        m_autoCenter    = Tristate::Inherit;
+        Tristate        m_normalize     = Tristate::Inherit;
+
         #if 0
         //  We're going to add variations as necessary, but try to reuse them... 
         
@@ -168,6 +190,8 @@ namespace yq::tachyon {
 
         std::error_code     load(const StateSave&) override;
         
+        void snap(Shape³Snap&) const;
+        
         
         //template <typename C>
         //requires std::is_base_of<C,Shape³>
@@ -175,6 +199,10 @@ namespace yq::tachyon {
 
         // Called whenever we've been marked "dirty" and need to rebuild the render buffers
         virtual void    rebuild(){}
+        
+    private:
+        void on_set_auto_center_command(const SetAutoCenterCommand&);
+        void on_set_normalize_command(const SetNormalizeCommand&);
     };
 }
 

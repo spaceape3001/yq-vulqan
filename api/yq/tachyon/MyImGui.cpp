@@ -111,7 +111,8 @@ namespace ImGui {
         if(!BeginCombo(label, key.c_str(), flags))
             return false;
         for(auto& itr : edef.name2val()){
-            std::string la(itr.first);
+            std::string_view    disp    = edef.display_of(itr.second);
+            std::string la = std::format("{}##{}", disp, itr.first);
             PushID(la.c_str());
             bool    item_selected   = v == itr.second;
             if(Selectable(la.c_str(), item_selected)){

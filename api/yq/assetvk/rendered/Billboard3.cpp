@@ -20,7 +20,7 @@ namespace yq::tachyon {
         auto w = writer<Billboard³>();
         {
             auto& p = w.pipeline();
-            p.shaders({ "yq/billboard3/Billboard3.vert", "yq/billboard3/Billboard3.frag" });
+            p.shaders({ "yq/billboard3.vert", "yq/billboard3.frag" });
             p.vertex(&Billboard³::m_vertex, {.activity=FIXED})
                 .attribute<glm::vec2>(&VData::position)
                 .attribute<glm::vec2>(&VData::uv)

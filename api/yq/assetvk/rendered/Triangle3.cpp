@@ -13,11 +13,11 @@
 
 #include <yq/tachyon/api/Rendered3MetaWriter.hpp>
 #include <yq/tachyon/asset/Shader.hpp>
-
-#include <yq/vector/Vector3.hxx>
+#include <yq/tachyon/rendered/Shape3MetaWriter.hpp>
 
 #include <yq/tachyon/aspect/AVertices3.hxx>
 #include <yq/tachyon/aspect/AVertices3Writer.hxx>
+#include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
     void Triangle³::init_meta()
@@ -49,7 +49,6 @@ namespace yq::tachyon {
         w.property("z2", &Triangle³::z2);
         w.property("z3", &Triangle³::z3);
 
-#if 0
         w.property("color1", &Triangle³::color1).setter(&Triangle³::set_color1).tag({kTag_Save, kTag_Log, kTag_Print});
         w.property("color2", &Triangle³::color2).setter(&Triangle³::set_color2).tag({kTag_Save, kTag_Log, kTag_Print});
         w.property("color3", &Triangle³::color3).setter(&Triangle³::set_color3).tag({kTag_Save, kTag_Log, kTag_Print});
@@ -87,10 +86,10 @@ namespace yq::tachyon {
             p.shader("yq/shape3/color.vert");
             p.shader("yq/shape3/color.frag");
 
-            p.vertex(&Triangle³::m_vertexS, DataActivity::DYNAMIC)
+            p.vertex(&Triangle³::m_vertexS, {.activity=DataActivity::DYNAMIC})
                 .attribute(&VertexS::position)
             ;
-            p.uniform(&Triangle³::m_uniformS, DataActivity::DYNAMIC);
+            p.uniform(&Triangle³::m_uniformS, {.activity=DataActivity::DYNAMIC});
             
             p.push_full();
         }
@@ -101,14 +100,13 @@ namespace yq::tachyon {
             p.shader("yq/shape3/gradient.vert");
             p.shader("yq/shape3/gradient.frag");
 
-            p.vertex(&Triangle³::m_vertexC, DataActivity::DYNAMIC)
+            p.vertex(&Triangle³::m_vertexC, {.activity=DataActivity::DYNAMIC})
                 .attribute(&VertexC::position)
                 .attribute(&VertexC::color)
             ;
             
             p.push_full();
         }
-#endif
     }
     
     const Vertex³ Triangle³::kDefVertex1{
@@ -158,7 +156,45 @@ namespace yq::tachyon {
     {
     }
 
-#if 0
+
+    DrawMode    Triangle³::draw_mode(use_k) const
+    {
+        switch(m_drawMode){
+        case DrawMode::Auto:
+            return DrawMode::Color;
+        default:    
+            return m_drawMode;
+        }
+    }
+    
+    void    Triangle³::rebuild() 
+    {
+        Shape³::rebuild();
+        switch(draw_mode(USE)){
+        case DrawMode::Color:
+            m_good      = true;
+            set_pipeline(Pipeline::Role::SolidColor);
+            m_vertexS   = {
+                vs(vertex1()), vs(vertex2()), vs(vertex3())
+            };
+            m_uniformS  = {
+                .color  = m_color
+            };
+            break;
+        case DrawMode::Gradient:
+            m_good      = true;
+            set_pipeline(Pipeline::Role::ColorCorner);
+            m_vertexC = {
+                vc(vertex1()), vc(vertex2()), vc(vertex3())
+            };
+            break;
+        default:
+            m_good      = false;
+            // shouldn't happen...
+            break;
+        }
+    }
+
     void Triangle³::set_color1(const RGBA4F&v)
     {
         vertex1().color = v;
@@ -176,7 +212,6 @@ namespace yq::tachyon {
         vertex3().color = v;
         mark();
     }
-#endif
 
     void Triangle³::set_point1(const Vector3D& v)
     {
@@ -196,7 +231,6 @@ namespace yq::tachyon {
         mark();
     }
 
-#if 0
     void    Triangle³::set_uv1(const UV2F&v)
     {
         vertex1().uv = v;
@@ -214,7 +248,6 @@ namespace yq::tachyon {
         vertex3().uv = v;
         mark();
     }
-#endif
 
     void    Triangle³::set_vertex1(const Vertex³&v)
     {
@@ -233,53 +266,6 @@ namespace yq::tachyon {
         vertex3() = v;
         mark();
     }
-    
-#if 0    
-
-    void    Triangle³::rebuild() 
-    {
-        switch(draw_mode()){
-        case DrawMode::Color:
-            rebuild_color();
-            break;
-        case DrawMode::Gradient:
-            rebuild_gradient();
-            break;
-        case DrawMode::Auto:
-        default:
-            rebuild_gradient(); // texture will auto-switch....
-            break;
-        }
-    }
-
-    void    Triangle³::rebuild_color()
-    {
-        set_pipeline(Pipeline::Role::SolidColor);
-        m_vertexS   = {
-            vs(vertex1()), vs(vertex2()), vs(vertex3())
-        };
-        m_uniformS  = {
-            .color  = m_color
-        };
-    }
-    
-    void    Triangle³::rebuild_gradient()
-    {
-        set_pipeline(Pipeline::Role::ColorCorner);
-        m_vertexC = {
-            vc(vertex1()), vc(vertex2()), vc(vertex3())
-        };
-    }
-    
-    void    Triangle³::rebuild_textured()
-    {
-        set_pipeline(Pipeline::Role::Textured);
-        m_vertexT = {
-            vt(vertex1()), vt(vertex2()), vt(vertex3())
-        };
-    }
-#endif
-
 }
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Triangle³)

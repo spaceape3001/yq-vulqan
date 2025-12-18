@@ -22,7 +22,7 @@ namespace yq::tachyon {
     void ASize¹::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<ISize¹>();
-        w.property(UNSAFE, "size", &ASize¹::m_size).tag(kTag_Save);
+        w.property(UNSAFE, "size", &ASize¹::m_size).def_value(kDefSize).tag(kTag_Save);
         
         w.slot(UNSAFE, &ASize¹::on_set_size1);
         w.slot(UNSAFE, &ASize¹::on_set_sizeX);

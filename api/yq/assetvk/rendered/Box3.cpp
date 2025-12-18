@@ -7,8 +7,8 @@
 #include "Box3.hpp"
 
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/api/Rendered3MetaWriter.hpp>
 #include <yq/tachyon/asset/Shader.hpp>
+#include <yq/tachyon/rendered/Shape3MetaWriter.hpp>
 
 #include <yq/tachyon/aspect/AVertices3.hxx>
 #include <yq/tachyon/aspect/AVertices3Writer.hxx>
@@ -166,14 +166,14 @@ namespace yq::tachyon {
 
     void    Box³::reshape()
     {
-        vertex_bsw().point  = { -1.0, -1.0, -1.0 };
-        vertex_bse().point  = {  1.0, -1.0, -1.0 };
-        vertex_bnw().point  = { -1.0,  1.0, -1.0 };
-        vertex_bne().point  = {  1.0,  1.0, -1.0 };
-        vertex_tsw().point  = { -1.0, -1.0,  1.0 };
-        vertex_tse().point  = {  1.0, -1.0,  1.0 };
-        vertex_tnw().point  = { -1.0,  1.0,  1.0 };
-        vertex_tne().point  = {  1.0,  1.0,  1.0 };
+        vertex_bsw().point  = { -0.5, -0.5, -0.5 };
+        vertex_bse().point  = {  0.5, -0.5, -0.5 };
+        vertex_bnw().point  = { -0.5,  0.5, -0.5 };
+        vertex_bne().point  = {  0.5,  0.5, -0.5 };
+        vertex_tsw().point  = { -0.5, -0.5,  0.5 };
+        vertex_tse().point  = {  0.5, -0.5,  0.5 };
+        vertex_tnw().point  = { -0.5,  0.5,  0.5 };
+        vertex_tne().point  = {  0.5,  0.5,  0.5 };
     }
 
 

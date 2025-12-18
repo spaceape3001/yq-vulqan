@@ -99,4 +99,5 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::SystemAllocationScopeFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Topology)
 YQ_TYPE_IMPLEMENT(yq::tachyon::VertexInputRate)
 
+#include "enum/AxisRemap.ipp"
 

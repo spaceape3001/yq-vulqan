@@ -46,6 +46,7 @@ add_library(${PROJECT_NAME} SHARED
     command_range.cpp
     command_rendered.cpp
     command_scale.cpp
+    command_shape.cpp
     command_sim.cpp
     command_size.cpp
     command_spatial.cpp
@@ -212,7 +213,6 @@ add_library(${PROJECT_NAME} SHARED
     command/JoystickCommand.cpp
     command/MouseCommand.cpp
     command/SceneCommand.cpp
-    command/ShapeCommand.cpp
     command/WidgetCommand.cpp
     command/WindowCommand.cpp
     
@@ -227,8 +227,6 @@ add_library(${PROJECT_NAME} SHARED
     
     command/io/SaveCommand.cpp
     command/joystick/JoystickZeroCommand.cpp
-    
-    command/shape/SetDrawModeCommand.cpp
     
     command/widget/SetViewer.cpp
 

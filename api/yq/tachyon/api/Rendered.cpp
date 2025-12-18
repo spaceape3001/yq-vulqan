@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/tags.hpp>
 #include <yq/tachyon/api/Post.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
 #include <yq/tachyon/api/RenderedData.hpp>
@@ -272,6 +273,8 @@ namespace yq::tachyon {
         w.icon(48, "openicon/icons/png/48x48/actions/format-stroke-color.png");
         w.abstract();
         w.slot(&Rendered::on_set_wireframe_command);
+        w.property("good", READ_ONLY, &Rendered::m_good);
+        w.property("wireframe", &Rendered::m_wireframe).def_value(Tristate::Inherit).tag(kTag_Save);
 
         auto wt = writer<RenderedID>();
         wt.description("Rendered Identifier");

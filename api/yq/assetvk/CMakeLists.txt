@@ -36,6 +36,7 @@ add_library(yq_assetvk SHARED
     edit/InnerTessellation2UI.cpp
     edit/LightUI.cpp
     edit/MaterialUI.cpp
+    edit/Mesh3UI.cpp
     edit/MeshUI.cpp
     edit/NearPlaneUI.cpp
     edit/Orientation3UI.cpp
@@ -84,9 +85,9 @@ add_library(yq_assetvk SHARED
 
     rendered/Billboard3.cpp
     rendered/Box3.cpp
-    rendered/ColorTriangle3.cpp
+    #rendered/ColorTriangle3.cpp
     rendered/Diamond3.cpp
-    rendered/GradTriangle3.cpp
+    #rendered/GradTriangle3.cpp
     rendered/HeightField3.cpp
     rendered/ImageQuad3.cpp
     rendered/Mesh3.cpp

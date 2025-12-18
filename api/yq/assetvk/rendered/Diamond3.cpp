@@ -7,12 +7,10 @@
 #include "Diamond3.hpp"
 
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/api/Rendered3MetaWriter.hpp>
-#include <yq/tachyon/asset/Shader.hpp>
+#include <yq/tachyon/rendered/Shape3MetaWriter.hpp>
 
 #include <yq/tachyon/aspect/AVertices3.hxx>
 #include <yq/tachyon/aspect/AVertices3Writer.hxx>
-#include <yq/tachyon/aspect/ASize3Writer.hxx>
 
 #include <yq/shape/AxBox3.hxx>
 #include <yq/shape/Size3.hxx>
@@ -213,12 +211,12 @@ namespace yq::tachyon {
 
     void    Diamond³::reshape()
     {
-        vertex_east().point     = { -1.,  0.,  0. };
-        vertex_west().point     = {  1.,  0.,  0. };
-        vertex_north().point    = {  0.,  1.,  0. };
-        vertex_south().point    = {  0., -1.,  0. };
-        vertex_top().point      = {  0.,  0.,  1. };
-        vertex_bottom().point   = {  0.,  0., -1. };
+        vertex_east().point     = { -0.5,  0.0,  0.0 };
+        vertex_west().point     = {  0.5,  0.0,  0.0 };
+        vertex_north().point    = {  0.0,  0.5,  0.0 };
+        vertex_south().point    = {  0.0, -0.5,  0.0 };
+        vertex_top().point      = {  0.0,  0.0,  0.5 };
+        vertex_bottom().point   = {  0.0,  0.0, -0.5 };
     }
 
     void Diamond³::set_color_east(const RGBA4F&v)

@@ -5,8 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Mesh3.hpp"
+#include "Mesh3Data.hpp"
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/api/Rendered3MetaWriter.hpp>
+#include <yq/tachyon/tags.hpp>
 #include <yq/tachyon/aspect/AColorWriter.hxx>
 #include <yq/tachyon/aspect/AMaterialWriter.hxx>
 #include <yq/tachyon/aspect/AMeshWriter.hxx>
@@ -14,6 +15,8 @@
 #include <yq/tachyon/asset/Mesh.hpp>
 #include <yq/tachyon/asset/Shader.hpp>
 #include <yq/tachyon/asset/material/BasicMaterial.hpp>
+#include <yq/tachyon/command/shape/SetAxisRemapCommand.hpp>
+#include <yq/tachyon/rendered/Shape3MetaWriter.hpp>
 #include <yq/color/colors.hpp>
 #include <yq/vector/Vector3.hxx>
 
@@ -22,12 +25,17 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::Mesh³)
 //#define NOISY_LOG   1
 
 namespace yq::tachyon {
+    Mesh³Snap::Mesh³Snap() = default;
+    Mesh³Snap::~Mesh³Snap() = default;
+
     void Mesh³::init_meta()
     {
         auto w = writer<Mesh³>();
         w.interface<ITopology>();
         w.interface<IVertices³>();
         AMesh::init_meta(w);
+        w.property("axis", &Mesh³::m_axis).def_value(AxisRemap::X_Y_Z_).tag({kTag_Save});
+        w.slot(&Mesh³::on_set_axis_remap_command);
         
         {
             auto& p     = w.pipeline(Pipeline::Role::DbgBlack);
@@ -185,9 +193,8 @@ namespace yq::tachyon {
         size_t N = m_mesh->normal.size();
         m_vnormal.data.clear();
         m_vnormal.data.reserve(N);
-        Vector3F    sgn = copysign(Vector3F(1., 1., 1.), m_meshScale);
         for(auto& v : m_mesh->normal)
-            m_vnormal.data.push_back(gfx(remap(m_meshAxis, sgn.emul(v))));
+            m_vnormal.data.push_back(gfx(remap(m_axis, v)));
         if(m_vnormal.data.size() < m_vxyz.data.size())
             m_vnormal.data.resize(m_vxyz.data.size(), { 0., 0., 0. });
         m_vnormal.update();
@@ -241,14 +248,60 @@ namespace yq::tachyon {
         m_vtex.update();
     }
 
-    void Mesh³::_import_xyz()
+    //void Mesh³::_import_xyz()
+    //{
+        //size_t  N   = m_mesh->xyz.size();
+        //m_vxyz.data.clear();
+        //m_vxyz.data.reserve(N);
+        //for(auto& v : m_mesh->xyz)
+            //m_vxyz.data.push_back(gfx(remap(m_meshAxis, m_meshScale.emul(v - m_meshOrigin))));
+        //m_vxyz.update();
+    //}
+
+    bool Mesh³::_import_xyz()
     {
-        size_t  N   = m_mesh->xyz.size();
+        if(m_mesh->xyz.empty())
+            return false;
+
+        Vector3F    lo, hi;
+        lo = hi = m_mesh->xyz[0];
+        for(size_t n=1;n<m_mesh->xyz.size();++n){
+            lo  = lo.emin(m_mesh->xyz[n]);
+            hi  = hi.emax(m_mesh->xyz[n]);
+        }
+        Vector3F    ctr = ZERO;
+        if(auto_center())
+            ctr = 0.5f*(hi - lo);
+
+        Vector3F    sz  = ONE;
+        if(normalize()){
+            sz = hi - lo;
+            
+            // catching "flat" meshes so we don't blow up on the auto-scaling
+            if(sz.x < 1e-7f)
+                sz.x     = 1.f;
+            if(sz.y < 1e-7f)
+                sz.y     = 1.f;
+            if(sz.z < 1e-7f)
+                sz.z    = 1.f;
+        } 
+        
         m_vxyz.data.clear();
-        m_vxyz.data.reserve(N);
-        for(auto& v : m_mesh->xyz)
-            m_vxyz.data.push_back(gfx(remap(m_meshAxis, m_meshScale.emul(v - m_meshOrigin))));
+        m_vxyz.data.reserve(m_mesh->xyz.size());
+        for(auto& v : m_mesh->xyz){
+            Vector3F    pt  = (v - ctr).ediv(sz);
+            m_vxyz.data.push_back(gfx(remap(m_axis, pt)));
+        }
         m_vxyz.update();
+        return true;
+    }
+
+    void Mesh³::on_set_axis_remap_command(const SetAxisRemapCommand& cmd)
+    {
+        if(cmd.target() != id())
+            return;
+        m_axis  = cmd.axis_remap();
+        mark();
     }
 
     void Mesh³::rebuild()
@@ -291,16 +344,18 @@ namespace yq::tachyon {
         if(m_mesh->uvw.size() && (m_mesh->uvw.size() != m_mesh->xyz.size()))
             tachyonFirstWarning(id(), m_mesh->id()) << ident() << "::rebuild(mesh=" << m_mesh->url() << "): Size mismatch, number of XYZ coordinates do not match the number of UVW texture coordinates in the mesh.";
 
-        //size_t  N   = m_mesh->xyz.size();
-        
 
-        _import_xyz();
+        //size_t  N   = m_mesh->xyz.size();
+        m_good  = _import_xyz();
+        //_import_uv();
+        //_import_rgb();
+        //_import_normal();
+                
         m_ibo       = m_mesh->index;
         
         //  if there's an error....
         
         set_pipeline(Pipeline::Role::DbgYellow);
-        m_good  = true;
         return ;
         
 
@@ -354,6 +409,12 @@ namespace yq::tachyon {
         return Shape³::setup(u);
     }
     
+    void    Mesh³::snap(Mesh³Snap& sn) const
+    {
+        Shape³::snap(sn);
+        sn.axis = m_axis;
+    }
+
     Execution   Mesh³::tick(const Context&u)
     {
         if(dirty())

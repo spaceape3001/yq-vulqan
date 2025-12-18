@@ -13,6 +13,7 @@
 
 #include <yq/tachyon/asset/Shader.hpp>
 #include <yq/tachyon/api/Rendered3MetaWriter.hpp>
+#include <yq/tachyon/rendered/Shape3MetaWriter.hpp>
 
 #include <yq/vector/Vector3.hxx>
 #include <yq/tachyon/aspect/AVertices3.hxx>

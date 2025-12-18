@@ -22,13 +22,16 @@
 #include <yq/vector/Vector3.hpp>
 
 namespace yq::tachyon {
+    struct Mesh³Snap;
+    class SetAxisRemapCommand;
+
     class Mesh³ : public Shape³, 
         public AMesh, 
         public ITopology,
         public IVertices, 
         public IVertices³ 
     {
-        
+        YQ_TACHYON_SNAP(Mesh³Snap)
         YQ_TACHYON_DECLARE(Mesh³, Shape³)
     public:
     
@@ -83,6 +86,9 @@ namespace yq::tachyon {
         
 
     protected:
+    
+        void    snap(Mesh³Snap&) const;
+    
         //virtual void    mesh(emit_k) override;
     private:
     
@@ -96,12 +102,14 @@ namespace yq::tachyon {
         VB1<glm::vec3>  m_vnormal;
         VB1<glm::vec2>  m_vtex;
 
-        void                _import_normal();
-        void                _import_rgb();
-        void                _import_rgba();
-        void                _import_uv();
-        void                _import_uvw();
-        void                _import_xyz();
+        void    _import_normal();
+        void    _import_rgb();
+        void    _import_rgba();
+        void    _import_uv();
+        void    _import_uvw();
+        bool    _import_xyz();
+        
+        void on_set_axis_remap_command(const SetAxisRemapCommand&);
         
         //! Vertex colors (for meshes w/o it specified)
         //std::vector<RGBA4F> m_colors;
@@ -114,10 +122,6 @@ namespace yq::tachyon {
         
         Flags<S>            m_flags;
 
-        AxisRemap           m_meshAxis          = AxisRemap::XYZ;
-        Vector3F            m_meshScale         = { 1., 1., 1. };
-        Vector3F            m_meshSign          = { 1., 1., 1. }; // each element needs to be +-1 (unless scale is zero)
-        Vector3F            m_meshOrigin        = { 0., 0., 0. };
-        //Quaternion3F        m_meshOrientation   = IDENTITY;
+        AxisRemap           m_axis              = AxisRemap::X_Y_Z_;
     };
 }

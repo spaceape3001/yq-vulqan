@@ -20,7 +20,7 @@
 
 #include "types.hpp"
 
-#include <yq/assetvk/rendered/GradTriangle3.hpp>
+#include <yq/assetvk/rendered/Triangle3.hpp>
 #include <yq/assetvk/scene/SimpleScene.hpp>
 
 #include <yq/core/DelayInit.hpp>
@@ -199,7 +199,10 @@ public:
         start           = std::chrono::steady_clock::now();
         triangle        = create_child<HelloTriangle>();
         
-        tri2            = create_child<GradTriangle³>(TriData);
+        Triangle³::Param    tpar;
+        tpar.draw_mode  = DrawMode::Gradient;
+        
+        tri2            = create_child<Triangle³>(TriData, tpar);
         tri2->create_spatial<SimpleSpatial³>(Vector3(0.,0.,0.1));
         
         triSpatialID    = tri2 -> spatial();

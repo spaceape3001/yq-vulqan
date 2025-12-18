@@ -28,6 +28,8 @@ namespace yq::tachyon {
     class Tetrahedron³ : public Shape³, public AVertices³<4> {
         YQ_TACHYON_DECLARE(Tetrahedron³, Shape³)
     public:
+    
+        //  For legacy reasons, Tetrahedron & Triangle do not respect Size (yet)
 
         using MyVertices  = AVertices³<4>;
         

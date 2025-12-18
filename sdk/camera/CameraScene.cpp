@@ -12,7 +12,7 @@
 #include <yq/assetvk/rendered/ImageQuad3.hpp>
 #include <yq/assetvk/rendered/Quadrilateral3.hpp>
 #include <yq/assetvk/rendered/SkyBox3.hpp>
-#include <yq/assetvk/rendered/GradTriangle3.hpp>
+#include <yq/assetvk/rendered/Triangle3.hpp>
 #include <yq/assetvk/spatial/SimpleSpatial3.hpp>
 
 #include <yq/color/colors.hpp>
@@ -197,7 +197,9 @@ Execution  CameraScene::setup(const Context&ctx)
         );
         bq->create_spatial<SimpleSpatial³>(Vector3D( 14., 14., 0. ));
 
-        Ref<Triangle³>   tri    = create_child<GradTriangle³>(TriData);
+        Triangle³::Param tpar;
+        tpar.draw_mode  = DrawMode::Gradient;
+        Ref<Triangle³>   tri    = create_child<Triangle³>(TriData, tpar);
         tri->create_spatial<SimpleSpatial³>(Vector3D(ZERO), Quaternion3D(IDENTITY), Vector3D(ALL, 0.5));
 
 

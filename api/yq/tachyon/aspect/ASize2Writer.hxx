@@ -25,7 +25,7 @@ namespace yq::tachyon {
     void ASize²::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<ISize²>();
-        w.property(UNSAFE, "size", &ASize²::m_size).tag(kTag_Save);
+        w.property(UNSAFE, "size", &ASize²::m_size).def_value(kDefSize).tag(kTag_Save);
 
         w.slot(UNSAFE, &ASize²::on_set_size2);
         w.slot(UNSAFE, &ASize²::on_set_sizeX);

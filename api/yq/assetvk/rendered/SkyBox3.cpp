@@ -56,7 +56,7 @@ namespace yq::tachyon {
         
         {
             auto& p = w.pipeline();
-            p.shaders({ "yq/skybox3/SkyBox3.vert", "yq/skybox3/SkyBox3.frag" });
+            p.shaders({ "yq/skybox3.vert", "yq/skybox3.frag" });
             p.vertex(SkyBox³::s_vertex);
             p.index(SkyBox³::s_index);
             p.topology(Topology::TriangleList);

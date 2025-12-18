@@ -17,7 +17,8 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Diamond³, Shape³)
     public:
     
-        using Param = Shape³::Param;
+        struct Param : public Shape³::Param {
+        };
     
         using MyVertices  = AVertices³<6>;
 

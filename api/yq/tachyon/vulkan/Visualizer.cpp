@@ -14,6 +14,18 @@
         
     While this is an independent creation, my own intepretation of the Vulkan,
     there may be similarities to the above.
+*//*
+    Refactor (Dec 2025)
+    
+    1.  Eliminate validation issues
+        a) Semaphore & Queue threading
+        b) Image transfer
+    2.  Support offscreen rendering
+    3.  Viewer should *NOT* stall on the waits... so visualization
+        requires a task-like object (but don't have to make it multithreaded)
+    4.  Widget may then get ticked() way faster than before
+    5.  Fix the R/B swapped colors on snapshot too
+    6.  Depth Buffers
 */
 
 #include "Visualizer.hxx"

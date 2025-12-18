@@ -25,8 +25,9 @@ namespace yq::tachyon {
         {
             auto& p = w.pipeline();
             
-            p.shader("resources/colored.vert");
-            p.shader("resources/colored.frag");
+                // when quad goes to full shader overhaul... change
+            p.shader("yq/quadrilateral3.vert");
+            p.shader("yq/quadrilateral3.frag");
 
             p.vertex(&Quadrilateral³::m_vertex, {.activity=FIXED})
                 .attribute(&ColorVertexData::position)

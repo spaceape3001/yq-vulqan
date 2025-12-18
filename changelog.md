@@ -39,6 +39,10 @@
 *  Draw calls can now be enumerated; default behavior is as before, if empty
    then the full range of the VBO/IBO is used.  (Note: the draw call vertex 
    used will depend on whether an IBO is defined for the pipeline.)
+*  Heightfield object with Z-coloring
+*  Cleaned up shaders
+*  Consolidated the Color & Grad shapes into the single, using a draw mode to select.
+*  ImGui has runtime enable/disable to it.  (Still need the ViewerCreateInfo to ask for ImGui; but the dynamic allows it to be reserved for things like debugging UIs)
 
 ## 2025.12.05
 

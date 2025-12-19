@@ -1,5 +1,8 @@
 # CHANGE LOG
 
+## UPCOMING
+* Task pool (for non-thread related tasking)
+
 ## 2025-12.19
 
 * Pipeline overhaul to accommodate meshes & lights & more

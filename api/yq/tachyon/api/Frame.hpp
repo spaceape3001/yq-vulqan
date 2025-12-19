@@ -59,6 +59,7 @@ namespace yq { class Stream; }
 namespace yq::tachyon {
     class Proxy;
     class InterfaceMeta;
+    class Tasker;
 
     /*
         Tachyons will *belong* to a thread... either directly or indirectly 
@@ -492,6 +493,7 @@ namespace yq::tachyon {
 
 
         friend class Thread;
+        friend class Tasker;
         friend FramePtr;
         friend FrameCPtr;
 

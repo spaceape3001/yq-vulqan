@@ -153,6 +153,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Spatial2.cpp
     api/Spatial3.cpp
     api/Tachyon.cpp
+    api/Tasker.cpp
     api/Thread.cpp
     #api/Tool.cpp
     api/Trigger.cpp

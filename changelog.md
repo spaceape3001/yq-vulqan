@@ -1,6 +1,6 @@
 # CHANGE LOG
 
-## Upcoming
+## 2025-12.19
 
 * Pipeline overhaul to accommodate meshes & lights & more
   - Buffers, textures now take in a configuration structure; this cleaned

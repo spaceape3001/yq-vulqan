@@ -14,6 +14,7 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/vulkan/VqStructs.hpp>
 #include <yq/tachyon/vulkan/VqUtils.hpp>
+#include <yq/tachyon/vulkan/ViDevice.hpp>
 #include <yq/tachyon/vulkan/ViLogging.hpp>
 #include <yq/tachyon/vulkan/ViPipelineLayout.hpp>
 #include <yq/tachyon/vulkan/ViRenderPass.hpp>
@@ -64,7 +65,7 @@ namespace yq::tachyon {
     
     std::error_code ViPipeline::_init(ViVisualizer&viz, const Pipeline* pipe, const ViPipelineOptions& opts)
     {
-        ViPipelineLayoutCPtr        pLay    = viz.pipeline_layout_create(pipe);
+        ViPipelineLayoutCPtr        pLay    = viz.device(REF).pipeline_layout_create(pipe);
         if(!pLay || !pLay->valid())
             return errors::pipeline_bad_layout();
         return _init(viz, pLay, opts);

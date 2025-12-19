@@ -22,6 +22,7 @@
 #include <yq/tachyon/proxy/PTopology.hpp>
 #include <yq/tachyon/vulkan/VqEnums.hpp>
 #include <yq/tachyon/vulkan/ViContext.hpp>
+#include <yq/tachyon/vulkan/ViDevice.hpp>
 #include <yq/tachyon/vulkan/ViLogging.hpp>
 #include <yq/tachyon/vulkan/ViManager.hpp>
 #include <yq/tachyon/vulkan/ViPipeline.hpp>
@@ -79,7 +80,7 @@ namespace yq::tachyon {
             return errors::rendered_null_pipeline();
         m_id            = ren.id();
         
-        m_layout        = viz.pipeline_layout_create(m_config);
+        m_layout        = viz.device(REF).pipeline_layout_create(m_config);
         if(!m_layout)
             return errors::rendered_bad_pipeline_layout();
         

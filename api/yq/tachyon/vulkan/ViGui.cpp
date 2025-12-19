@@ -39,6 +39,7 @@
 #include <yq/tachyon/vulkan/VqStructs.hpp>
 #include <yq/tachyon/vulkan/ViBuffer.hpp>
 #include <yq/tachyon/vulkan/ViContext.hpp>
+#include <yq/tachyon/vulkan/ViDevice.hpp>
 #include <yq/tachyon/vulkan/ViImage.hpp>
 #include <yq/tachyon/vulkan/ViLogging.hpp>
 #include <yq/tachyon/vulkan/ViManager.hpp>
@@ -188,7 +189,7 @@ namespace yq::tachyon {
 
         if((cnt > m_index.capacity.count) || !m_index.buffer){
             if(m_index.buffer){
-                m_viz -> cleanup([buf = std::move(m_index.buffer)](){
+                m_viz -> device(REF).cleanup([buf = std::move(m_index.buffer)](){
                     ViBuffer*   bp  = const_cast<ViBuffer*>(buf.ptr());
                     bp -> kill();
                 });
@@ -299,7 +300,7 @@ namespace yq::tachyon {
         
         if((cnt > m_vertex.capacity.count) || !m_vertex.buffer){
             if(m_vertex.buffer){
-                m_viz -> cleanup([buf = std::move(m_vertex.buffer)](){
+                m_viz -> device(REF).cleanup([buf = std::move(m_vertex.buffer)](){
                     ViBuffer*   bp  = const_cast<ViBuffer*>(buf.ptr());
                     bp -> kill();
                 });
@@ -463,7 +464,7 @@ namespace yq::tachyon {
 
     bool    ViGui::_update(T&t)
     {
-        ViTextureCPtr  vtex = m_viz -> texture_create(*t.texture);
+        ViTextureCPtr  vtex = m_viz -> device(REF).texture_create(*t.texture);
         if(!vtex)
             return false;
         
@@ -487,7 +488,7 @@ namespace yq::tachyon {
     bool    ViGui::_update(T&t, const TextureCPtr& tex)
     {
         if(t.texture)
-            m_viz -> texture_erase(t.texture->id());
+            m_viz -> device(REF).texture_erase(t.texture->id());
         return _update(t);
     }
 

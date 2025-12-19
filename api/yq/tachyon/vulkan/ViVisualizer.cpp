@@ -454,61 +454,6 @@ namespace yq::tachyon {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    VmaAllocator ViVisualizer::allocator() const 
-    { 
-        if(m_device)
-            return m_device->allocator();
-        return nullptr;
-    }
-
-    ViBufferCPtr ViVisualizer::buffer(uint64_t i) const
-    {
-        if(!m_device)
-            return {};
-        return m_device -> buffer(i);
-    }
-
-    ViBufferCPtr  ViVisualizer::buffer_create(const Buffer& buf)
-    {
-        if(!m_device)
-            return {};
-        return m_device -> buffer_create(buf);
-    }
-    
-    void  ViVisualizer::buffer_erase(uint64_t i)
-    {
-        if(m_device)
-            m_device -> buffer_erase(i);
-    }
-    
-    void  ViVisualizer::buffer_erase(const Buffer& buf)
-    {
-        if(m_device)
-            m_device -> buffer_erase(buf.id());
-    }
-
-    #if 0
-    ViBufferManager* ViVisualizer::buffer_manager() const 
-    { 
-        return m_buffers.get(); 
-    }
-    #endif
-
-    void              ViVisualizer::cleanup(cleanup_fn&& fn)
-    {
-        if(m_device){
-            m_device->cleanup(std::move(fn));
-        } else {
-            fn();
-        }
-    }
-
-    void   ViVisualizer::cleanup(sweep_k)
-    {
-        if(m_device)
-            m_device->cleanup(SWEEP);
-    }
-
     RGBA4F ViVisualizer::clear_color() const
     {
         VkClearValue    cv = m_clearValue;
@@ -579,20 +524,6 @@ namespace yq::tachyon {
         return errors::format_unsupported();
     }
 
-    std::string_view    ViVisualizer::gpu_name() const
-    {
-        if(m_device)
-            return m_device->gpu_name();
-        return {};
-    }
-
-    VkPhysicalDeviceType    ViVisualizer::gpu_type() const
-    {
-        if(m_device)
-            return m_device->gpu_type();
-        return {};
-    }
-
     VkQueue     ViVisualizer::graphic_queue() const
     {
         if(m_device)
@@ -614,46 +545,6 @@ namespace yq::tachyon {
         return m_device->queue_task(m_graphicsQueue, opts.timeout, std::move(fn));
     }
 
-    ViImageCPtr     ViVisualizer::image(uint64_t i) const
-    {
-        if(!m_device)
-            return {};
-        return m_device->image(i);
-    }
-    
-    ViImageCPtr     ViVisualizer::image_create(const Raster& img)
-    {
-        if(!m_device)
-            return {};
-        return m_device->image_create(img);
-    }
-    
-    void  ViVisualizer::image_erase(uint64_t i)
-    {
-        if(m_device)
-            m_device -> image_erase(i);
-    }
-    
-    void  ViVisualizer::image_erase(const Raster& img)
-    {
-        if(m_device)
-            m_device -> image_erase(img.id());
-    }
-
-    Expect<RasterPtr>       ViVisualizer::image_export(VkImage img, const VkExtent2D&size, VkFormat fmt)
-    {
-        if(!m_device)   
-            return {};
-        return m_device->image_export(img, size, fmt);
-    }
-    
-    Expect<RasterPtr>       ViVisualizer::image_export(VkImage img, const VkExtent3D&size, VkFormat fmt)
-    {
-        if(!m_device)   
-            return {};
-        return m_device->image_export(img, size, fmt);
-    }
-
     VkDevice    ViVisualizer::logical() const
     {
         if(m_device)
@@ -661,52 +552,6 @@ namespace yq::tachyon {
         return nullptr;
     }
 
-    uint32_t    ViVisualizer::max_memory_allocation_count() const  
-    { 
-        if(m_device)
-            return m_device->max_memory_allocation_count();
-        return 0;
-    }
-    
-    uint32_t    ViVisualizer::max_push_constants_size() const 
-    { 
-        if(m_device)
-            return m_device->max_push_constants_size();
-        return 0;
-    }
-
-    float       ViVisualizer::max_sampler_anisotropy() const
-    {
-        if(m_device)
-            return m_device->max_sampler_anisotropy();
-        return 0.f;
-    }
-    
-    uint32_t    ViVisualizer::max_viewports() const 
-    { 
-        if(m_device)
-            return m_device->max_viewports();
-        return 0;
-    }
-
-    bool         ViVisualizer::multiview_enabled() const
-    {
-        return m_device && m_device->multiview_enabled();
-    }
-    
-    uint32_t     ViVisualizer::multiview_max_instance_index() const
-    {
-        if(m_device)
-            return m_device->multiview_max_instance_index();
-        return {};
-    }
-
-    uint32_t     ViVisualizer::multiview_max_view_count() const
-    {
-        if(m_device)
-            return m_device->multiview_max_view_count();
-        return {};
-    }
 
     VkPhysicalDevice                ViVisualizer::physical() const 
     { 
@@ -749,31 +594,6 @@ namespace yq::tachyon {
         return m_pipelines.get();
     }
 
-    ViPipelineLayoutCPtr            ViVisualizer::pipeline_layout(uint64_t i) const
-    {
-        if(!m_device)
-            return {};
-        return m_device->pipeline_layout(i);
-    }
-    
-    ViPipelineLayoutCPtr            ViVisualizer::pipeline_layout_create(const Pipeline* pipe)
-    {
-        if(!m_device)
-            return {};
-        return m_device->pipeline_layout_create(pipe);
-    }
-    
-    void                            ViVisualizer::pipeline_layout_erase(uint64_t i)
-    {
-        if(m_device)
-            m_device -> pipeline_layout_erase(i);
-    }
-    
-    void                            ViVisualizer::pipeline_layout_erase(const Pipeline* pipe)
-    {
-        if(pipe && m_device)
-            m_device -> pipeline_layout_erase(pipe->id());
-    }
     
     PresentMode  ViVisualizer::present_mode() const
     {
@@ -836,32 +656,6 @@ namespace yq::tachyon {
         }
     }
 
-    ViSamplerCPtr     ViVisualizer::sampler(uint64_t i) const
-    {
-        if(!m_device)
-            return {};
-        return m_device->sampler(i);
-    }
-    
-    ViSamplerCPtr     ViVisualizer::sampler_create(const Sampler& sam)
-    {
-        if(!m_device)
-            return {};
-        return m_device->sampler_create(sam);
-    }
-    
-    void  ViVisualizer::sampler_erase(uint64_t i)
-    {
-        if(m_device)
-            m_device -> sampler_erase(i);
-    }
-    
-    void  ViVisualizer::sampler_erase(const Sampler& sam)
-    {
-        if(m_device)
-            m_device -> sampler_erase(sam.id());
-    }
-
     void        ViVisualizer::set_clear_color(const RGBA4F&i)
     {   
         m_clearValue    = vqClearValue(i);
@@ -881,32 +675,6 @@ namespace yq::tachyon {
             m_presentMode   = pm;
             m_rebuildSwap   = true;
         }
-    }
-
-    ViShaderCPtr ViVisualizer::shader(uint64_t i) const
-    {
-        if(!m_device)
-            return {};
-        return m_device->shader(i);
-    }
-
-    ViShaderCPtr    ViVisualizer::shader_create(const Shader&sha)
-    {
-        if(!m_device)
-            return {};
-        return m_device->shader_create(sha);
-    }
-
-    void  ViVisualizer::shader_erase(uint64_t i)
-    {
-        if(m_device)
-            m_device->shader_erase(i);
-    }
-    
-    void  ViVisualizer::shader_erase(const Shader& sha)
-    {
-        if(m_device)
-            m_device->shader_erase(sha.id());
     }
 
     bool        ViVisualizer::supports_surface(VkFormat fmt) const
@@ -1002,32 +770,6 @@ namespace yq::tachyon {
         if(!m_swapchain)
             return 0;
         return m_swapchain->width();
-    }
-            
-    ViTextureCPtr ViVisualizer::texture(uint64_t i) const
-    {
-        if(!m_device)
-            return {};
-        return m_device->texture(i);
-    }
-
-    ViTextureCPtr  ViVisualizer::texture_create(const Texture& tex)
-    {
-        if(!m_device)
-            return {};
-        return m_device->texture_create(tex);
-    }
-    
-    void  ViVisualizer::texture_erase(uint64_t i)
-    {
-        if(m_device)
-            m_device->texture_erase(i);
-    }
-    
-    void  ViVisualizer::texture_erase(const Texture& tex)
-    {
-        if(m_device)
-            m_device->texture_erase(tex.id());
     }
 
     VkQueue     ViVisualizer::transfer_queue() const

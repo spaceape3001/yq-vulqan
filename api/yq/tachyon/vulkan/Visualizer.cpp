@@ -20,12 +20,53 @@
     1.  Eliminate validation issues
         a) Semaphore & Queue threading
         b) Image transfer
-    2.  Support offscreen rendering
+    2.  Support offscreen rendering 
+        a) Likely become primary with swapchain blitting?
     3.  Viewer should *NOT* stall on the waits... so visualization
         requires a task-like object (but don't have to make it multithreaded)
     4.  Widget may then get ticked() way faster than before
     5.  Fix the R/B swapped colors on snapshot too
     6.  Depth Buffers
+    
+    
+    Current violations
+    1.  Semaphore, should be one per swapchain image
+    
+Validation Error: [ VUID-vkCmdDraw-None-09600 ] | MessageID = 0x46582f7b
+vkQueueSubmit(): pSubmits[0] command buffer VkCommandBuffer 0x7f98dc306090 expects VkImage 0x360000000036 (subresource: aspectMask = VK_IMAGE_ASPECT_COLOR_BIT, mipLevel = 0, arrayLayer = 0) to be in layout VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL--instead, current layout is VK_IMAGE_LAYOUT_UNDEFINED.
+The Vulkan spec states: If a descriptor with type equal to any of VK_DESCRIPTOR_TYPE_SAMPLE_WEIGHT_IMAGE_QCOM, VK_DESCRIPTOR_TYPE_BLOCK_MATCH_IMAGE_QCOM, VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, or VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT is accessed as a result of this command, all image subresources identified by that descriptor must be in the image layout identified when the descriptor was written (https://vulkan.lunarg.com/doc/view/1.4.328.1/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-09600)
+Objects: 2
+    [0] VkCommandBuffer 0x7f98dc306090
+    [1] VkImage 0x360000000036
+
+Validation Error: [ VUID-vkQueueSubmit-pSignalSemaphores-00067 ] | MessageID = 0x539277af
+vkQueueSubmit(): pSubmits[0].pSignalSemaphores[0] (VkSemaphore 0x140000000014) is being signaled by VkQueue 0x7f990423b950, but it may still be in use by VkSwapchainKHR 0x30000000003.
+Most recently acquired image indices: [0], 1, 2.
+(Brackets mark the last use of VkSemaphore 0x140000000014 in a presentation operation.)
+Swapchain image 0 was presented but was not re-acquired, so VkSemaphore 0x140000000014 may still be in use and cannot be safely reused with image index 2.
+Vulkan insight: See https://docs.vulkan.org/guide/latest/swapchain_semaphore_reuse.html for details on swapchain semaphore reuse. Examples of possible approaches:
+   a) Use a separate semaphore per swapchain image. Index these semaphores using the index of the acquired image.
+   b) Consider the VK_KHR_swapchain_maintenance1 extension. It allows using a VkFence with the presentation operation.
+The Vulkan spec states: Each binary semaphore element of the pSignalSemaphores member of any element of pSubmits must be unsignaled when the semaphore signal operation it defines is executed on the device (https://vulkan.lunarg.com/doc/view/1.4.328.1/linux/antora/spec/latest/chapters/cmdbuffers.html#VUID-vkQueueSubmit-pSignalSemaphores-00067)
+Objects: 2
+    [0] VkSemaphore 0x140000000014
+    [1] VkQueue 0x7f990423b950
+    
+    From rocks (different threads per viewer)
+    
+Validation Error: [ UNASSIGNED-Threading-MultipleThreads-Write ] | MessageID = 0xa05b236e
+vkQueueSubmit(): THREADING ERROR : object of type VkQueue is simultaneously used in current thread 140224977950400 and thread 140224747443904
+Objects: 1
+    [0] VkQueue 0x7f88c7112b50
+    
+    
+Validation Error: [ VUID-vkCmdDraw-None-09600 ] | MessageID = 0x46582f7b
+vkQueueSubmit(): pSubmits[0] command buffer VkCommandBuffer 0x7fe56bd740d0 expects VkImage 0x50000000005 (subresource: aspectMask = VK_IMAGE_ASPECT_COLOR_BIT, mipLevel = 0, arrayLayer = 0) to be in layout VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL--instead, current layout is VK_IMAGE_LAYOUT_PRESENT_SRC_KHR.
+The Vulkan spec states: If a descriptor with type equal to any of VK_DESCRIPTOR_TYPE_SAMPLE_WEIGHT_IMAGE_QCOM, VK_DESCRIPTOR_TYPE_BLOCK_MATCH_IMAGE_QCOM, VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, or VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT is accessed as a result of this command, all image subresources identified by that descriptor must be in the image layout identified when the descriptor was written (https://vulkan.lunarg.com/doc/view/1.4.328.1/linux/antora/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-None-09600)
+Objects: 2
+    [0] VkCommandBuffer 0x7fe56bd740d0
+    [1] VkImage 0x50000000005
+
 */
 
 #include "Visualizer.hxx"
@@ -505,7 +546,8 @@ namespace yq::tachyon {
     
     void                Visualizer::_kill()
     {
-        cleanup(SWEEP);
+        if(m_device)
+            m_device->cleanup(SWEEP);
         m_frames.clear();
         m_thread        = {};
     }

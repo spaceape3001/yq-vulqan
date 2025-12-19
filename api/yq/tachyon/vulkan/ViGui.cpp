@@ -70,8 +70,9 @@ namespace yq::tachyon {
         });
 
 
-    static constexpr const size_t kInitCapacity     = 8192;
-    static constexpr const size_t kBufferAlignment  = 256;
+    static constexpr const size_t   kInitCapacity     = 8192;
+    static constexpr const size_t   kBufferAlignment  = 256;
+    static constexpr const unsigned kAutoEraseTextures    = 10;
     
     struct ViGui::Push {
         glm::vec2   scale;
@@ -175,55 +176,6 @@ namespace yq::tachyon {
         return ret;
     }
 
-    bool    ViGui::_font_update()
-    {
-        G&  g   = global();
-        ImFontAtlas&     fonts = *ImGui::GetIO().Fonts;
-
-        int             width = 0,  height = 0;
-        unsigned char*  pixels  = nullptr;
-        fonts.GetTexDataAsRGBA32(&pixels, &width, &height);
-        size_t          count   = width * height;
-        if(count == 0)
-            return false;
-        count *= 4;
-        
-        RasterInfo  imgInfo;
-        imgInfo.size.x      = (unsigned) width;
-        imgInfo.size.y      = (unsigned) height;
-        imgInfo.format      = DataFormat::R8G8B8A8_UNORM;
-        
-        m_font.image        = new Raster(imgInfo, Memory(COPY, pixels, count));
-        
-        if(m_font.texture)
-            m_viz -> texture_erase(m_font.texture->id());
-
-
-        m_font.texture      = new Texture(m_font.image, g.font.sampler, g.font.texInfo);
-        
-        ViTextureCPtr       tex     = m_viz -> texture_create(*m_font.texture);
-        
-        VkDescriptorImageInfo   descImgInfo {
-            .sampler        = tex->sampler(),
-            .imageView      = tex->image_view(),
-            .imageLayout    = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL
-        };
-
-        VqWriteDescriptorSet    descWrite;
-        descWrite.dstSet            = m_font.descriptor;
-        descWrite.dstBinding        = 0;
-        descWrite.descriptorCount   = 1;
-        descWrite.descriptorType    = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-        descWrite.pImageInfo        = &descImgInfo;
-        
-        vkUpdateDescriptorSets(m_viz->device(), 1, &descWrite, 0, nullptr);
-        
-        fonts.SetTexID(m_font.descriptor);
-        
-        return true;
-    }
-
-
     bool    ViGui::_import_index(const ImDrawData&dd)
     {
         // No indices... which can be fine
@@ -288,7 +240,53 @@ namespace yq::tachyon {
         m_index.buffer ->unmap();
         return true;
     }
+
+    void    ViGui::_import_texture(ImTextureData* tex)
+    {
+        G&  g   = global();
+
+        int width   = tex->Width;
+        int height  = tex->Height;
+        int bpp     = tex->BytesPerPixel;
         
+        if(width <= 0)
+            return ;
+        if(height <= 0)
+            return ;
+        if(!tex->Pixels)
+            return;
+
+        RasterInfo      imgInfo;
+        imgInfo.size.x      = (unsigned) width;
+        imgInfo.size.y      = (unsigned) height;
+        
+        switch(bpp){
+        case 1:
+            imgInfo.format  = DataFormat::R8_UNORM;
+            break;
+        case 3:
+            imgInfo.format  = DataFormat::R8G8B8_UNORM;
+            break;
+        case 4:
+            imgInfo.format      = DataFormat::R8G8B8A8_UNORM;
+            break;
+        default:
+            return;
+        }
+
+        size_t      bytes   = (size_t) width * (size_t) height * (size_t) bpp;
+        RasterCPtr  img     = new Raster(imgInfo, Memory(COPY, tex->Pixels, bytes));
+        TextureCPtr texp    = new Texture(img, g.font.sampler, g.font.texInfo);
+        
+        auto& tt    = m_textures[texp->id()];
+        tt.image    = img;
+        tt.texture  = texp;
+        tex->TexID  = texp->id();
+        
+        _init(tt);
+        _update(tt);
+    }
+            
     bool    ViGui::_import_vertex(const ImDrawData&dd)
     {
         // No vertices... which can be fine
@@ -386,8 +384,6 @@ namespace yq::tachyon {
         //m_font.sampler          = m_viz -> sampler_create(*g.font.sampler);
         
         m_descriptorLayout          = m_pipelineLayout -> descriptor_set_layout();
-        if(!_init(m_font))
-            return false;
 
         // Current hack to upscale fonts (need to load it)
         io.FontGlobalScale = 1.25f;
@@ -398,7 +394,6 @@ namespace yq::tachyon {
             imguiWarning << "Fonts are NOT built, there's going to be problems.";
         }
 
-        _font_update();
         return true;
     }
 
@@ -427,20 +422,12 @@ namespace yq::tachyon {
     
     void    ViGui::_kill()
     {
-        for(auto& itr : m_textures)
-            _kill(itr.second);
-        m_textures.clear();
-        _kill(m_font);
-        
-        m_pipeline              = {};
-        m_pipelineLayout        = {};
-        m_viz                   = nullptr;
-
         if(m_context){
             {
                 CTX_PRESERVE
                 ImGui::SetCurrentContext(m_context);
                 //ImGui_ImplGlfw_Shutdown();
+
                 ImGuiIO& io = ImGui::GetIO();
                 io.BackendRendererName      = nullptr;
                 io.BackendRendererUserData  = nullptr;
@@ -452,6 +439,17 @@ namespace yq::tachyon {
             ImGui::DestroyContext(m_context);
             m_context           = nullptr;
         }
+
+        for(auto& itr : m_textures)
+            _kill(itr.second);
+        m_textures.clear();
+
+        //_kill(m_font);
+        
+        m_pipeline              = {};
+        m_pipelineLayout        = {};
+        m_viz                   = nullptr;
+
     }
     
     void    ViGui::_kill(T& t)
@@ -556,7 +554,6 @@ namespace yq::tachyon {
 
         update();
         
-        #if IMGUI_VERSION_NUM >= 19200
         CTX_PRESERVE
         ImGui::SetCurrentContext(m_context);
 
@@ -564,14 +561,39 @@ namespace yq::tachyon {
         if(!drawData)
             return ;
 
-        if (draw_data->Textures != nullptr){
-            for (ImTextureData* tex : *draw_data->Textures){
-                if (tex->Status != ImTextureStatus_OK){
-                    // UPDATE (later)
+        if (drawData->Textures != nullptr){
+            for (ImTextureData* tex : *drawData->Textures){
+                switch(tex->Status){
+                case ImTextureStatus_OK:
+                    break;
+                case ImTextureStatus_WantCreate:
+                    _import_texture(tex);
+                    break;
+                case ImTextureStatus_WantUpdates:
+                    _import_texture(tex);
+                    break;
+                case ImTextureStatus_WantDestroy:
+                case ImTextureStatus_Destroyed:
+                    tex -> TexID    = 0;
+                    break;
                 }
             }
         }
-        #endif
+        
+        for(auto itr = m_textures.begin(); itr != m_textures.end(); ){
+            if(!itr->first){        // it's the NULL, will be here unless all goes well
+                ++itr;
+            } else if(itr->second.seen){
+                itr->second.seen    = false;
+                ++(itr->second.stale);
+                ++itr;
+            } else if(++(itr->second.stale) < kAutoEraseTextures){ 
+                ++itr;
+            } else {
+                _kill(itr->second);
+                itr = m_textures.erase(itr);
+            }
+        }
     }
 
     void    ViGui::record(ViContext&u)
@@ -676,24 +698,21 @@ namespace yq::tachyon {
                 scissor.extent.height = (uint32_t)(clip_max.y - clip_min.y);
                 vkCmdSetScissor(u.command_buffer, 0, 1, &scissor);
 
-                VkDescriptorSet desc_set = m_font.descriptor;
+                uint64_t        texID   = 0UL;
+                if(cmd.TexRef._TexData)
+                    texID       = cmd.TexRef._TexData -> TexID;
+                else
+                    texID       = cmd.TexRef._TexID;
 
-                // Bind DescriptorSet with font or user texture
-                if constexpr (sizeof(ImTextureID) < sizeof(VkDescriptorSet)) {
-                    desc_set    = m_font.descriptor;
-                } else {
-        #if IMGUI_VERSION_NUM >= 19200
-                    desc_set    = (VkDescriptorSet) cmd.TexRef._TexID;
-        #else
-                    desc_set    = (VkDescriptorSet) cmd.TextureId;
-        #endif
+                auto& tex = m_textures[texID];
+                if(!tex.descriptor){
+                    vizFirstWarning(texID) << "Texture descriptor is NULL!";
+                    continue;
                 }
-                
-                if(!desc_set){
-                    vizWarning << "Texture descriptor is NULL!";
-                }
+                tex.seen    = true;
 
-                vkCmdBindDescriptorSets(u.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, u.pipeline_layout, 0, 1, &desc_set, 0, nullptr);
+
+                vkCmdBindDescriptorSets(u.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, u.pipeline_layout, 0, 1, &tex.descriptor, 0, nullptr);
 
                 // Draw
                 vkCmdDrawIndexed(u.command_buffer, cmd.ElemCount, 1, cmd.IdxOffset + global_idx_offset, cmd.VtxOffset + global_vtx_offset, 0);
@@ -707,18 +726,20 @@ namespace yq::tachyon {
         vkCmdSetScissor(u.command_buffer, 0, 1, &scissor);
     }
 
-    ImTextureID ViGui::texture(const TextureCPtr&tex)
+    TextureID ViGui::texture(const TextureCPtr&tex)
     {
         if(!tex)
-            return nullptr;
+            return {};
+
         auto itr = m_textures.find(tex->id());
         if(itr != m_textures.end())
-            return itr->second.descriptor;
+            return { tex->id() };
+            
         T   tmp;
         if(!_init(tmp, tex))
-            return nullptr;
+            return {};
         m_textures[tex->id()] = tmp;
-        return tmp.descriptor;
+        return { tex->id() };
     }
 
     void    ViGui::update(UpdateFlags flags)
@@ -727,13 +748,13 @@ namespace yq::tachyon {
         ImGui::SetCurrentContext(m_context);
 
         m_update |= flags;
-        if(m_update(U::Font)){
-            if(!_font_update()){
-                m_update |= U::Font;
-                return ;
-            }
-            m_update -= U::Font;
-        }
+        //if(m_update(U::Font)){
+            //if(!_font_update()){
+                //m_update |= U::Font;
+                //return ;
+            //}
+            //m_update -= U::Font;
+        //}
     }
 
     bool    ViGui::valid() const

@@ -59,9 +59,9 @@ private:
     
     void            changed_select();
 
-    ImTextureID         m_editing = nullptr;
-    ImTextureID         m_invisible    = nullptr;
-    ImTextureID         m_visible      = nullptr;
+    TextureID           m_editing;
+    TextureID           m_invisible;
+    TextureID           m_visible;
     SceneID             m_selected;
     std::vector<Row>    m_rows;
 };

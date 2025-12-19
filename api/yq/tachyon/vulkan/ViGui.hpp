@@ -33,6 +33,7 @@
 //struct ImDrawList;
 //struct ImDrawVert;
 //struct ImGuiContext;
+struct ImTextureData;
 
 namespace yq::tachyon {
     class ViVisualizer;
@@ -90,7 +91,7 @@ namespace yq::tachyon {
         
         void    tick(const ViewerState&);
         
-        ImTextureID texture(const TextureCPtr&);
+        TextureID texture(const TextureCPtr&);
         
         
     private:
@@ -124,9 +125,11 @@ namespace yq::tachyon {
             VkDescriptorSet     descriptor  = nullptr;
             RasterCPtr          image;
             TextureCPtr         texture;
+            unsigned            stale       = 0;
+            bool                seen        = false;
         };
         
-        T                       m_font;
+        //T                       m_font;
         
         bool    _init(T&);
         bool    _init(T&,const TextureCPtr&);
@@ -152,11 +155,10 @@ namespace yq::tachyon {
         }                   m_index;
         
         //! Other textures....
-        std::map<uint64_t, T>       m_textures;
+        std::map<uint64_t, T>       m_textures;     //!< External to ImGui
         
-        bool            _font_update();
+        //bool            _font_update();
         const ImFont*   _font_load(const std::filesystem::path&, float pixel_size=0);
-        void            _descriptor_write();
         
         bool            _import_vertex(const ImDrawData&);
         bool            _import_index(const ImDrawData&);
@@ -164,6 +166,8 @@ namespace yq::tachyon {
         void            _write_csv(const ImDrawData&, std::string_view pfx="imgui-");
         void            _write_csv_vertex(const ImDrawData&, std::string_view filename);
         void            _write_csv_index(const ImDrawData&, std::string_view filename);
+        
+        void            _import_texture(ImTextureData*);
 
         void    update_modifiers(ModifierKeys);
     public:

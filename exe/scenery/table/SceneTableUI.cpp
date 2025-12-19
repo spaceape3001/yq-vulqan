@@ -119,18 +119,18 @@ void    SceneTableUI::render()
             if(ImGui::TableNextColumn()){
                 if(isEdit){
                     if(m_editing){
-                        ImGui::ImageWithBg(m_editing, imgBtnSize);
+                        ImGui::ImageWithBg(m_editing.id, imgBtnSize);
                     } else {
                         ImGui::TextUnformatted("E");
                     }
                 } else {
                     if(e.visible){
-                        if(m_visible ? ImGui::ImageButton(e.visBtn.c_str(), m_visible, imgBtnSize) : ImGui::Button(e.visBtn2.c_str())){
+                        if(m_visible ? ImGui::ImageButton(e.visBtn.c_str(), m_visible.id, imgBtnSize) : ImGui::Button(e.visBtn2.c_str())){
                             e.visible   = true;
                             vChange     = true;
                         }
                     } else {
-                        if(m_invisible ? ImGui::ImageButton(e.invisBtn.c_str(), m_invisible, imgBtnSize) : ImGui::Button(e.invisBtn2.c_str())){
+                        if(m_invisible ? ImGui::ImageButton(e.invisBtn.c_str(), m_invisible.id, imgBtnSize) : ImGui::Button(e.invisBtn2.c_str())){
                             e.visible   = false;
                             vChange     = true;
                         }

@@ -41,7 +41,7 @@ private:
     
     void                changed_select();
 
-    ImTextureID         m_editing = nullptr;
+    TextureID           m_editing;
     RenderedID          m_selected;
     std::vector<Row>    m_rows;
 };

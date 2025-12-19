@@ -594,13 +594,13 @@ namespace yq::tachyon {
         case KeyCode::Menu:
             return ImGuiKey_Menu;
         case KeyCode::ModShift:
-            return ImGuiKey_ModShift;
+            return ImGuiMod_Shift;
         case KeyCode::ModControl:
-            return ImGuiKey_ModCtrl;
+            return ImGuiMod_Ctrl;
         case KeyCode::ModAlt:
-            return ImGuiKey_ModAlt;
+            return ImGuiMod_Alt;
         case KeyCode::ModSuper:
-            return ImGuiKey_ModSuper;
+            return ImGuiMod_Super;
         case KeyCode::GpStart:
             return ImGuiKey_GamepadStart;
         case KeyCode::GpBack:
@@ -1191,13 +1191,13 @@ namespace yq::tachyon {
             return KeyCode::GpRStickUp;
         case ImGuiKey_GamepadRStickDown:
             return KeyCode::GpRStickDown;
-        case ImGuiKey_ModCtrl:
+        case ImGuiMod_Ctrl:
             return KeyCode::ModControl;
-        case ImGuiKey_ModShift:
+        case ImGuiMod_Shift:
             return KeyCode::ModShift;
-        case ImGuiKey_ModAlt:
+        case ImGuiMod_Alt:
             return KeyCode::ModAlt;
-        case ImGuiKey_ModSuper:
+        case ImGuiMod_Super:
             return KeyCode::ModSuper;
         case ImGuiKey_MouseLeft:
             return KeyCode::MsBtnLeft;

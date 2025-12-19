@@ -35,7 +35,6 @@ target_compile_definitions(ImGui
         GLFW_INCLUDE_VULKAN=1
         IMGUI_USE_WCHAR32=1 
         IMGUI_ENABLE_FREETYPE=1
-        ImTextureID=void*
         IMGUI_USER_CONFIG="ImGuiTLS.hpp"
     PRIVATE 
         VK_ENABLE_BETA_EXTENSIONS=1

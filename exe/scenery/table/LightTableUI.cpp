@@ -73,7 +73,7 @@ void    LightTableUI::render()
             if(ImGui::TableNextColumn()){
                 if(isEdit){
                     if(m_editing){
-                        ImGui::ImageWithBg(m_editing, imgBtnSize);
+                        ImGui::ImageWithBg(m_editing.id, imgBtnSize);
                     } else {
                         ImGui::TextUnformatted("E");
                     }

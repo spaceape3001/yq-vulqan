@@ -108,12 +108,12 @@ namespace yq::tachyon {
         w.description("Basic UI Element");
     }
 
-    ImTextureID    UIElement::install(const TextureCPtr& tex)
+    TextureID    UIElement::install(const TextureCPtr& tex)
     {
         if(!s_viContext)
-            return nullptr;
+            return {};
         if(!s_viContext->imgui)
-            return nullptr;
+            return {};
         return s_viContext->imgui->texture(tex);
     }
 

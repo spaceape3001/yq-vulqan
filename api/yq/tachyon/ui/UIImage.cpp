@@ -128,13 +128,13 @@ namespace yq::tachyon {
             }
 
             //  IMAGE BUTTON
-            if(ImGui::ImageButton(m_imId.c_str(), m_image, m_size)){
+            if(ImGui::ImageButton(m_imId.c_str(), m_image.id, m_size)){
                 triggered();
             }
 
         } else {
             //  REGULAR IMAGE
-            ImGui::Image(m_image, m_size);
+            ImGui::Image(m_image.id, m_size);
         }
     }
 

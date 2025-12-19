@@ -13,11 +13,13 @@
 #include <yq/typedef/axbox2.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/core/Tristate.hpp>
+#include <yq/tachyon/api/ID.hpp>
 #include <yq/tachyon/enum/DlgButton.hpp>
 #include <yq/tachyon/typedef/action.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 #include <yq/tachyon/typedef/texture.hpp>
 #include <yq/tachyon/typedef/uielement.hpp>
+
 
 namespace yq::tachyon {
     struct ViContext;
@@ -254,7 +256,7 @@ namespace yq::tachyon {
         
         
         //! Installs the specified texture, returns its ImGui texture ID
-        static ImTextureID      install(const TextureCPtr&);
+        static TextureID      install(const TextureCPtr&);
         
         //! Used to load a texture
         static TextureCPtr      texture(std::string_view);

@@ -43,6 +43,8 @@
 *  Cleaned up shaders
 *  Consolidated the Color & Grad shapes into the single, using a draw mode to select.
 *  ImGui has runtime enable/disable to it.  (Still need the ViewerCreateInfo to ask for ImGui; but the dynamic allows it to be reserved for things like debugging UIs)
+*  ImGui upgrade to v1.92.5 (note, due to backend tweaks, we're incompatible with versions earlier than v1.92.0)
+   - Caveat: Any uses of ImGui::Image will require the texture ID (though the method can't handle our TextureID directly, must do a ".id").
 
 ## 2025.12.05
 

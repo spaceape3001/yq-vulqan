@@ -40,7 +40,7 @@ namespace yq::tachyon {
         
     protected:
     
-        ImTextureID     m_image     = nullptr;
+        TextureID       m_image;
 
         //! ImGui "ID" (if we're a button)
         std::string     m_imId;

@@ -6,6 +6,7 @@
 
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/api/Tasker.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
 
 #include <yq/tachyon/app/AppException.hpp>
@@ -103,14 +104,22 @@ namespace yq::tachyon {
                 lock_t  lock(m_mutex);
                 m_stage = Shutdown;
             }
+            
+            m_tasker -> shutdown();
+            
             for(Thread*t : m_threads)
                 t->shutdown();
             for(Thread*t : m_threads)
                 t->join();
             m_thread.app -> shutdown();
             m_threads.clear();
+
             m_thread    = {};
             m_vulkan    = {};
+
+            Tasker::s_instance  = nullptr;
+            m_tasker    = {};
+
             m_stage = Terminated;
         }
     }
@@ -265,6 +274,9 @@ namespace yq::tachyon {
         }
         
         Meta::freeze();
+        
+        m_tasker    = std::make_unique<Tasker>(Tasker::Param{.workers = m_cInfo.task_pool.workers});
+        Tasker::s_instance  = m_tasker.get();
         
         if(m_cInfo.thread.app){
             m_thread.app       = m_cInfo.thread.app(*this);

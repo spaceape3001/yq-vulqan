@@ -82,21 +82,106 @@ namespace yq::tachyon {
     };
 
     template <typename Pred>
-    auto    Tasker::simple_task(Pred&& pred, const std::source_location& sl)
+    auto    Tasker::async(Pred&& pred, Tasker* tasker, const std::source_location& sl)
     {
         if constexpr (std::is_invocable_v<Pred>){
             auto task   = std::make_shared<SimpleTask<Pred>>(std::move(pred));
-            schedule(task, sl);
+            if(tasker){
+                tasker->schedule(task, sl);
+            } else {
+                task->m_promise.set(ABORT);
+            }
             return task->m_promise.get_future();
         } 
         
-
         return Future<void>();
     }
 
     template <typename T, typename Pred> 
     struct Tasker::PromiseTask : public Task {
+        using result_t  = T;
+        using future_t  = Future<T>;
+        using promise_t = Promise<T>;
         
+        Promise<T>      m_promise;
+        Pred            m_pred;
+        
+        PromiseTask(Promise<T>&& promise, Pred&& pred) : m_promise(std::move(promise)), m_pred(std::move(pred))
+        {
+        }
+
+        void    cancel() override
+        {
+            m_promise.cancel();
+        }
+        
+        void    cancelled() override
+        {
+            m_promise.set(CANCEL);
+        }
+        
+        void    execute() override
+        {
+            if(m_promise.cancelled()){
+                m_promise.set(CANCEL);
+                return;
+            }
+
+            #ifdef NDEBUG
+            try {
+            #endif
+                
+                if constexpr (std::is_invocable_r_v<void, Pred, promise_t&>){
+                    m_pred(m_promise);
+                    if(!m_promise.finished())
+                        m_promise.set(DONE);
+                } else if constexpr (std::is_invocable_r_v<void, Pred>){
+                    m_pred();
+                    m_promise.set(DONE);
+                } else if constexpr (std::is_invocable_r_v<T, Pred>){
+                    m_promise.set(m_pred());
+                } else if constexpr (std::is_invocable_r_v<std::error_code, Pred, promise_t&>){
+                    std::error_code ec  = m_pred(m_promise);
+                    if(ec != std::error_code()){
+                        m_promise.set(ec);
+                    } else
+                        m_promise.set(DONE);
+                } else {
+                    m_promise.set(ABORT);
+                }
+            
+            
+            #ifdef NDEBUG
+            }
+            catch(std::exception& ex)
+            {
+                m_promise.set(std::current_exception());
+            }
+            catch(std::error_code ec)
+            {
+                m_promise.set(ec);
+            }
+            catch(...)
+            {
+                m_promise.set(std::make_exception_ptr(std::exception("Unexpected exception was thrown")));
+            }
+            #endif
+        }
     };
 
+    template <typename T, typename Pred> 
+    auto   Tasker::async(Promise<T>&&promise, Pred&&pred, Tasker* tasker, const std::source_location& sl)
+    {
+        if constexpr (std::is_invocable_v<Pred>){
+            auto task   = std::make_shared<SimpleTask<Pred>>(std::move(pred));
+            if(tasker){
+                tasker->schedule(task, sl);
+            } else {
+                task->m_promise.set(ABORT);
+            }
+            return task->m_promise.get_future();
+        } 
+        
+        return Future<T>();
+    }
 }

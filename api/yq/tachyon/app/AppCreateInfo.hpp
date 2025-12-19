@@ -96,9 +96,14 @@ namespace yq::tachyon {
             thread_spec_t<IOThread>             io          = DISABLED;
             thread_spec_t<NetworkThread>        network     = DISABLED;
             thread_spec_t<SimThread>            sim         = DISABLED;
-            thread_spec_t<TaskThread>           task        = DISABLED;
+            thread_spec_t<TaskThread>           task        = DISABLED; //< Likely deprecated.... see task pool
             thread_spec_t<ViewerThread>         viewer      = ENABLED;
         } thread;
+        
+        struct {
+            size_t      workers       = 2;
+        } task_pool;
+        
         
         //! Used for app-created viewers
         ViewerCreateInfo            view;

@@ -14,7 +14,12 @@
 #include <thread>
 #include <source_location>
 
+namespace yq {
+    template <typename> class Promise;
+}
+
 namespace yq::tachyon {
+    class Application;
 
     /*! This is a thread pool for asynchronous (& possibly long) tasks
     
@@ -30,6 +35,8 @@ namespace yq::tachyon {
     class Tasker {
     public:
 
+        static Tasker*  instance() { return s_instance; }
+
         static size_t  max_thread_recommended();
 
         struct Task;
@@ -38,7 +45,7 @@ namespace yq::tachyon {
         struct Param {
         
             //! Max threads, zero will default to semi-reasonable; note the keeper thread is separate
-            size_t              max_threads = 0;
+            size_t              workers = 0;
             
             //! Interval to check for new tasks
             unit::Nanosecond    check_interval  = 1000._µs;
@@ -59,7 +66,10 @@ namespace yq::tachyon {
         void    schedule(TaskSPtr&&, const std::source_location& sl=std::source_location::current());
 
         template <typename Pred>
-        auto    simple_task(Pred&&, const std::source_location& sl=std::source_location::current());
+        static auto    async(Pred&&, Tasker* tasker=instance(), const std::source_location& sl=std::source_location::current());
+
+        template <typename T, typename Pred> 
+        static auto    async(Promise<T>&&, Pred&&, Tasker* tasker=instance(), const std::source_location& sl=std::source_location::current());
         
         size_t  pending_count() const;
         
@@ -76,17 +86,22 @@ namespace yq::tachyon {
         };
 
         Stats   statistics() const;
+        
+        void    shutdown();
 
     private:
 
         template <typename Pred> struct SimpleTask;   
         template <typename T, typename Pred> struct PromiseTask;
         
+        friend class Application;
         
+        static Tasker*      s_instance;
         enum {
             Running = 0,
             Clearing,
-            Quitting
+            Quitting,
+            Shutdown
         };
         
         struct TData {

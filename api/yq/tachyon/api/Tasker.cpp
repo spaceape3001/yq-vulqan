@@ -12,6 +12,8 @@ namespace yq::tachyon {
     #define LOCK tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, false);
     #define WLOCK tbb::spin_rw_mutex::scoped_lock _lock(m_mutex, true);
     
+    Tasker* Tasker::s_instance = nullptr;
+    
     size_t  Tasker::max_thread_recommended()
     {
         //  Note... upper limit can be revisited, nothing special 
@@ -26,7 +28,7 @@ namespace yq::tachyon {
     Tasker::Tasker(const Param&p) : 
         m_checkInterval(p.check_interval), 
         m_idleKill(p.idle_kill),
-        m_maxThreads(p.max_threads ? p.max_threads : max_thread_recommended()),
+        m_maxThreads(p.workers ? p.workers : max_thread_recommended()),
         m_state{Running}
     {
     
@@ -37,11 +39,7 @@ namespace yq::tachyon {
 
     Tasker::~Tasker()
     {
-        {
-            WLOCK
-            m_state = Quitting;
-        }
-        m_keeper.join();
+        shutdown();
     }
 
     void Tasker::cancel_all()
@@ -157,7 +155,7 @@ namespace yq::tachyon {
     bool        Tasker::quitting() const
     {
         LOCK
-        return m_state == Quitting;
+        return m_state >= Quitting;
     }
     
     void Tasker::schedule(TaskSPtr&& task, const std::source_location& sl)
@@ -171,6 +169,21 @@ namespace yq::tachyon {
         task->m_location    = sl;
         WLOCK
         m_tasks.push_back(std::move(task));
+    }
+
+    void    Tasker::shutdown()
+    {
+        {
+            WLOCK
+            if(m_state == Shutdown)
+                return;
+            m_state = Quitting;
+        }
+        m_keeper.join();
+        {
+            WLOCK
+            m_state = Shutdown;
+        }
     }
 
     Tasker::Stats    Tasker::statistics() const

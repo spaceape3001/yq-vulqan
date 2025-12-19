@@ -44,6 +44,7 @@ namespace yq::tachyon {
     class VulqanManager;
     class Widget;
     class ViewerCreateCommand;
+    class Tasker;
 
     /*! \brief Engine/Vulkan application
     
@@ -186,6 +187,7 @@ namespace yq::tachyon {
         time_point_t                m_startTime;
         Stage                       m_stage     = Stage::Uninit;
         VulqanConfig                m_config;
+        std::unique_ptr<Tasker>     m_tasker;
     
         friend class Viewer;
         

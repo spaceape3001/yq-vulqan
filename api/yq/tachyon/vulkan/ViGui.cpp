@@ -576,6 +576,9 @@ namespace yq::tachyon {
                     _import_texture(tex);
                     break;
                 case ImTextureStatus_WantDestroy:
+                    tex->SetStatus(ImTextureStatus_Destroyed);
+                    tex -> TexID    = 0;
+                    break;
                 case ImTextureStatus_Destroyed:
                     tex -> TexID    = 0;
                     break;

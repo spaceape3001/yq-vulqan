@@ -285,6 +285,8 @@ namespace yq::tachyon {
         
         _init(tt);
         _update(tt);
+
+        tex->SetStatus(ImTextureStatus_OK);
     }
             
     bool    ViGui::_import_vertex(const ImDrawData&dd)

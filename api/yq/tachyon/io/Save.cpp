@@ -103,6 +103,7 @@ namespace yq::tachyon {
                 ResourceCPtr   res   = r->get(&tac);
                 if(!res)
                     continue;
+                    
                 sv.resources[std::string(r->name())] = res->url();
             }
             
@@ -209,7 +210,6 @@ namespace yq::tachyon {
         return 0; // TODO
     }
 
-
     const DelegateSave* Save::delegate(uint64_t i) const
     {
         auto x = delegates.byId.find(i);
@@ -218,6 +218,27 @@ namespace yq::tachyon {
         if(x->second >= delegates.data.size())
             return nullptr;
         return &delegates.data[x->second];
+    }
+
+    void Save::relativize(all_k)
+    {
+        for(auto& tac : tachyons.data)
+            for(auto& res : tac.resources)
+                relativize(res.second);
+        for(auto& th : threads.data)
+            for(auto& res : th.resources)
+                relativize(res.second);
+    }
+    
+    bool Save::relativize(Url& u) const
+    {
+        static const std::vector<std::filesystem::path>     defpaths    = Resource::all_paths();
+        static const std::vector<Url>                       deflibs     = Resource::all_libraries();
+        
+        //  TODO
+         
+        
+        return false;
     }
     
     const TachyonSave*  Save::tachyon(uint64_t i) const

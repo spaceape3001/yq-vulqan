@@ -6,8 +6,10 @@
 
 #include "SaveXML.hpp"
 #include <yq/errors.hpp>
+#include <yq/container/ByteArray.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/core/StreamOps.hpp>
+#include <yq/file/FileUtils.hpp>
 #include <yq/resource/ResourceDriverAPI.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/app/Application.hpp>
@@ -63,6 +65,8 @@ namespace yq::tachyon {
     static constexpr const char*    szParent        = "p";
     static constexpr const char*    szProperty      = "p";
     static constexpr const char*    szResource      = "r";
+    static constexpr const char*    szResourceLib   = "l";
+    static constexpr const char*    szResourcePath  = "rp";
     //static constexpr const char*    szResources     = "rs";
     static constexpr const char*    szRoot          = "tsx";
     static constexpr const char*    szState         = "s";
@@ -374,6 +378,20 @@ namespace yq::tachyon {
                 std::error_code ec = _load(ss->threads, *data);
                 if(ec != std::error_code())
                     return unexpected(ec);
+            } else if(data->name() == szUse){
+                auto us = x_string(*data);
+                auto ux = to_url_view(us);
+                if(!ux.good)
+                    return unexpected<"Url failed to parse">();
+                ss->uses.push_back(copy(ux.value));
+            } else if(data->name() == szResourcePath){
+                ss->paths.push_back(x_string(*data));
+            } else if(data->name() == szResourceLib){
+                auto us = x_string(*data);
+                auto ux = to_url_view(us);
+                if(!ux.good)
+                    return unexpected<"Url failed to parse">();
+                ss->paks.push_back(copy(ux.value));
             }
         }
     
@@ -466,6 +484,10 @@ namespace yq::tachyon {
             if(!u.empty())
                 write_child(root, szUse, to_string(u));
         }
+        for(auto& u : save.paks)
+            write_child(root, szResourceLib, to_string(u));
+        for(auto& fp : save.paths)
+            write_child(root, szResourcePath, fp.string());
         for(auto& d : save.delegates.data)
             _save(d, *root.create_element(szDelegate));
         for(auto& th : save.threads.data)
@@ -492,8 +514,11 @@ namespace yq::tachyon {
 
     save_ptr_x      loadTSX(const std::filesystem::path& fp)
     {
+        ByteArray   bytes   = file_bytes(fp);
+        if(bytes.empty())
+            return unexpected<"No XML data read">();
         XmlDocument doc;
-        std::error_code ec  = read_file(doc, fp);
+        std::error_code ec  = parse_xml(doc, bytes);
         if(ec != std::error_code())
             return unexpected(ec);
         return loadTSX(doc, to_url(fp));

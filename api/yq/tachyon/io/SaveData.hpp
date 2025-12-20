@@ -32,6 +32,7 @@ namespace yq::tachyon {
         uint64_t                id      = 0;
         
         // expect delegates to fill in (& read)
+        // may need resources here too... TBD...
     };
 
 

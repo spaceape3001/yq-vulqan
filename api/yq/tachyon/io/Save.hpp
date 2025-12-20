@@ -53,12 +53,15 @@ namespace yq::tachyon {
             std::map<uint64_t,size_t>   byId;
         };
         
-        SMap<DelegateSave>      delegates;
-        SaveFlags               flags;
-        SMap<TachyonSave>       tachyons;
-        SMap<ThreadSave>        threads;
-        SaveType                type = SaveType::General;
-        std::vector<Url>        uses;
+        SMap<DelegateSave>                  delegates;
+        SaveFlags                           flags;
+        SMap<TachyonSave>                   tachyons;
+        SMap<ThreadSave>                    threads;
+        SaveType                            type = SaveType::General;
+        std::vector<Url>                    uses;
+        
+        std::vector<Url>                    paks;  // resource library paks (in addition to any standard libraries)
+        std::vector<std::filesystem::path>  paths; // resource paths (in addition to any standard libraries)
         
         size_t                data_size() const override;
 
@@ -88,5 +91,9 @@ namespace yq::tachyon {
         std::error_code         execute(schedule_k, const ReincarnationConfig&cfg={}, TachyonIDSet* pIDs=nullptr) const;
         
         struct Reincarnator;
+        
+        bool                    relativize(Url&) const;
+        
+        void                    relativize(all_k);
     };
 }

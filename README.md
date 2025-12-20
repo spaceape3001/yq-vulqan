@@ -2,6 +2,8 @@
 
 Vulkan/Visual Engine for my Your Quill project
 
+***NOTICE*** (20 Dec 2025) The ImGui update contains a bug, it'll repeatedly import the textures, and this will eventually run out of VkImageViews and will thus fail.  It'll be fixed next tag.
+
 ***UPDATE*** (02 Feb 2025 B) Camera SDK example works again, tagging again
 
 ***UPDATE*** (02 Feb 2025) Tagging given the extensive changes

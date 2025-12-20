@@ -26,3 +26,7 @@ A scene editor!  (Still WIP)  Meant to be a way to add in objects, place them, a
 
 ![Alt text](images/SceneryApplication.png)
 
+Getting more fancy
+
+![Alt text2](images/SceneryApplication2.png)
+

@@ -39,3 +39,6 @@ target_link_libraries(shexpand yq_tachyon)
 
 add_executable(shcompile shcompile.cpp)
 target_link_libraries(shcompile yq_tachyon)
+
+add_executable(vx_structures vx_structures.cpp)
+target_link_libraries(vx_structures yq_text yq_core yq_xml)

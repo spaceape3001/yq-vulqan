@@ -13,7 +13,7 @@ import os, sys
 DONT    = ['KHR', 'NV', 'EXT', 'QCOM', 'MSFT', 'LUNARG', 'AMD', 'INTEL' ]
 
 OPT_STRUCTS = 'VqStructs'
-OPT_ENUMS   = None # 'VqEnumerations'
+OPT_ENUMS   = 'VqEnumerations'
 
 def underscoredToCapitalizedBits(this):
     c   = []
@@ -133,6 +133,7 @@ class Vulkan:
     mNone   = 0
     mStruct = 1
     mEnum   = 2
+    mSTypes = 3
 
 
 
@@ -148,26 +149,34 @@ with open('/usr/include/vulkan/vulkan_core.h') as f:
             continue
         if l.startswith('typedef struct '):
             b   = l.split(' ');
-            snames.append(Struct(b[2]))
+            snames.append(b[2])
         if l.startswith('typedef enum '):
             b   = l.split(' ');
             if b[2] != 'VkStructureType':
                 enums.append(Enum(b[2]))
                 mode    = Vulkan.mEnum
-                print("enumeration %s detected (%s)" % (enums[-1].name, enums[-1].lead))
+                #print("enumeration %s detected (%s)" % (enums[-1].name, enums[-1].lead))
+            else:
+                mode    = Vulkan.mSTypes
         if l[0] == '}':
             mode    = Vulkan.mNone
+        if (mode == Vulkan.mSTypes) and ('=' in l):
+            b   = l.split('=')
+            stypes.append(b[1])
         if (mode == Vulkan.mEnum) and ('=' in l):
             enums[-1].add(l)
-
+print(snames)
 structs = []
             
 for e in stypes:
     c   = underscoredToCapitalizedBits(e)
     k   = ''.join(c[3:])
+    if len(k) == 0:
+        continue
     vk  = 'Vk' + k
     vq  = 'Vq' + k
     if vk not in snames:
+        print("Flunked %s" % vk)
         continue
     
     st  = dict()
@@ -184,7 +193,7 @@ def ekey(e):
 structs.sort(key=skey)
 enums.sort(key=ekey)
 
-print(structs)
+# print(structs)
 
 written = []
 
@@ -207,6 +216,7 @@ namespace yq::tachyon {""")
 
 
         for s in structs:
+            print(s.name)
             if s['vk'] in written:
                 continue;
             written.append(s['vk'])

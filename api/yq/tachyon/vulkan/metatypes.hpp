@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <vulkan/vulkan_core.h>
+#include <yq/meta/MetaBinder.hpp>
+
+//  Need to decide on how to handle these via lua
+
+YQ_TYPE_DECLARE(VkDevice)
+YQ_TYPE_DECLARE(VkInstance)
+YQ_TYPE_DECLARE(VkPhysicalDevice)

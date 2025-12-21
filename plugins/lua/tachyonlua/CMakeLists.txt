@@ -12,6 +12,7 @@ add_library(tachyonlua SHARED
     reply.cpp
     request.cpp
     tachyon.cpp
+    vulkan.cpp
 )
 target_link_libraries(tachyonlua PUBLIC yq_lua yq_tachyon)
 LinkTest(tachyonlua)

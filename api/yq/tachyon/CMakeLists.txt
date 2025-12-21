@@ -438,6 +438,7 @@ add_library(${PROJECT_NAME} SHARED
     vulkan/ViQueueTasker.cpp
     vulkan/ViRendered.cpp
     vulkan/ViRenderPass.cpp
+    vulkan/ViRenderTarget.cpp
     vulkan/ViSampler.cpp
     vulkan/ViSwapchain.cpp
     vulkan/ViTexture.cpp
@@ -445,7 +446,7 @@ add_library(${PROJECT_NAME} SHARED
     vulkan/ViThread.cpp
     vulkan/ViVisualizer.cpp
     vulkan/Visualizer.cpp
-        
+    vulkan/metatypes.cpp
     
 )
 target_compile_definitions(${PROJECT_NAME} 

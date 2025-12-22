@@ -404,6 +404,13 @@ namespace yq::tachyon {
         th->start();
     }
 
+    void    Application::set_appname(std::string_view v)
+    {
+        if(Meta::thread_safe_write() && (m_stage == Stage::Uninit)){
+            m_cInfo.app_name    = std::string(v);
+        }
+    }
+
     void    Application::set_headless(bool v)
     {
         if(Meta::thread_safe_write() && (m_stage == Stage::Uninit)){

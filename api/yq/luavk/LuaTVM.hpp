@@ -31,6 +31,8 @@ namespace yq::tachyon {
         
         static void init_meta();
         
+        lua_State*      lua_state() const { return m_lua; }
+        
     protected:
         virtual Execution   setup(const Context&) override;
         virtual Execution   tick(const Context&) override;

@@ -30,8 +30,16 @@ using namespace yq::tachyon;
 namespace {
     static int lh_app_name(lua_State* l)
     {
-        lua::push(l, (std::string_view) Application::app_name());
-        return 1;
+        if(Application* a = Application::app()){
+            if(lua_gettop(l) > 0){
+                a->set_appname(lua_tostring(l,1));
+                return 0;
+            } else {
+                lua::push(l, (std::string_view) Application::app_name());
+                return 1;
+            }
+        } else
+            return 0;
     }
     
     static int lh_headless(lua_State*l)

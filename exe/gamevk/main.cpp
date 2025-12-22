@@ -5,12 +5,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
+#include <yq/lua/info/FunctionInfo.hpp>
+#include <yq/lua/info/ModuleInfo.hpp>
 #include <yq/luavk/LuaTVM.hpp>
 #include <yq/meta/Meta.hpp>
 #include <yq/tachyon/application.hpp>
 
-//  Helpers....
-ViewerCreateInfo        gVCI;
+#include <yq/lua/lualua.hxx>
+
+using namespace yq;
+using namespace yq::lua;
+using namespace yq::tachyon;
 
 bool    gStart  = false;
 bool    gRun    = false;
@@ -52,10 +57,31 @@ void reg_lua()
     
 */
 
+struct LuaScript {
+    std::string         data;
+    std::string_view    init;
+    std::string_view    start;
+    std::string_view    run;
+};
+
 int main(int argc, char* argv[])
 {
     if(argc < 2){
-        std::cout << "Usage: gamevk <lua>\n";
+        std::cout << R"VOGON(Usage: gamevk <lua>\n"
+        
+This runs the gamevk engine.  It's a lua script with the following caveats
+
+-- Do configuration stuff
+
+START
+
+-- Do setup
+
+RUN
+
+-- Anything at runtime (can be nothing too)
+
+)VOGON";
         return 0;
     }
     
@@ -64,6 +90,11 @@ int main(int argc, char* argv[])
     Application app(argc, argv, aci);
     Meta::init();
     reg_lua();
+
+
+    
+    Ref<LuaTVM>     tvm = new LuaTVM;
+    
 
     // Actual start is moved here...
     // this will be evil... if there's a startup failure, we'll THROW through the lua calls

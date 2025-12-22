@@ -24,6 +24,7 @@
 #include <yq/tachyon/api/Interface.hpp>
 #include <yq/tachyon/api/InterfaceMeta.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/text/match.hpp>
 #include <lua.hpp>
@@ -58,6 +59,43 @@ namespace {
         if(const Frame* f = Frame::current()){
             lua::push(l, f->meta(*tidx));
             return 1;
+        }
+        return 0;
+    }
+    
+    int lh_tid_name(lua_State*l)
+    {
+        if(lua_gettop(l) < 1)
+            return 0;
+        auto tidx   = tachyonID(l, 1);
+        if(!tidx)
+            return 0;
+        
+        if(const Frame* f = Frame::current()){
+            if(const TachyonSnap* sn = f->snap(*tidx)){
+                lua::push(l, sn->name);
+                return 1;
+            }
+        }
+        return 0;
+    }
+    
+    int  lh_tid_type(lua_State*l)
+    {
+        if(lua_gettop(l) < 1)
+            return 0;
+        auto tidx   = tachyonID(l, 1);
+        if(!tidx){
+        luaError << "Not a tachyon ID!";
+            return 0;
+        }
+        
+        if(const Frame* f = Frame::current()){
+            if(const Tachyon* obj = f->object(*tidx)){
+                lua::push(l, obj->metaInfo().name());
+                return 1;
+            }
+luaError << "No tachyon";
         }
         return 0;
     }
@@ -137,6 +175,8 @@ namespace {
             tti->pusher(lua_pushID<Tachyon>);
             tti->extractor(lua_extractID<Tachyon>);
             tti->add("meta", lh_tid_meta);
+            tti->add("name", lh_tid_name);
+            tti->add("type", lh_tid_type);
         }
     }
     

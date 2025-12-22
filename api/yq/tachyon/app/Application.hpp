@@ -140,6 +140,7 @@ namespace yq::tachyon {
         
         void    set_thread(StdThread, const thread_enabler_t&);
         void    set_headless(bool);
+        void    set_appname(std::string_view);
         
     protected:
         AppCreateInfo           m_cInfo;

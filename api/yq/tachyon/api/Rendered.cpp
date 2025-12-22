@@ -93,7 +93,7 @@ namespace yq::tachyon {
 
     //  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    Rendered::Rendered(const Param&p) : Tachyon(p), m_pipelines(nullptr)
+    Rendered::Rendered(const Param&p) : Tachyon(p), m_pipelines(nullptr), m_wireframe(p.wireframe)
     {
     }
     

@@ -52,6 +52,7 @@ namespace yq::tachyon {
     }
 
     CircularSpatial³::CircularSpatial³(const Param& p) : Spatial³(p), 
+        APosition³(p), AScale³(p), AOrientation³(p),
         m_angle0(p.angle0),
         m_locked(p.locked),
         m_period(p.period),

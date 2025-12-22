@@ -40,11 +40,12 @@ namespace yq::tachyon {
             NOTE:  Scale doesn't really belong in spatials... will move it (belongs in rendereds, for sure)
         */
     
-        struct Param : public Spatial³::Param {
+        struct Param : public Spatial³::Param, public ASpatial³::Param {
             Param(){}
         };
     
         SimpleSpatial³(const Vector3D& pos = NAN, const Quaternion3D& ori = NAN, const Vector3D& scale = NAN, const Param& p=Param());
+        SimpleSpatial³(const Param&);
         ~SimpleSpatial³();
         
         static void init_meta();

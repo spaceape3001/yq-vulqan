@@ -13,7 +13,10 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(SimpleScene, Scene)
     public:
     
+        using Param = Scene::Param;
+    
         SimpleScene();
+        SimpleScene(const Param&);
         ~SimpleScene();
         static void init_meta();
         

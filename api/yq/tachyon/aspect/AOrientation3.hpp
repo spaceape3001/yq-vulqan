@@ -23,6 +23,10 @@ namespace yq::tachyon {
     class AOrientation³ : public IOrientation³, public virtual Tachyon::Helper {
     public:
     
+        struct Param {
+            Quaternion3D    orientation = IDENTITY;
+        };
+    
         //!  Basic orientation in the 3D space
         Quaternion3D    orientation() const override { return m_orientation; }
 
@@ -59,6 +63,7 @@ namespace yq::tachyon {
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
+        AOrientation³(const Param&);
         AOrientation³(const Quaternion3D& ori=IDENTITY);
         virtual ~AOrientation³();
         

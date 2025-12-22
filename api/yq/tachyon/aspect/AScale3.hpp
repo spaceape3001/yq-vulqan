@@ -28,6 +28,10 @@ namespace yq::tachyon {
     class AScale³ : public IScale³, public virtual Tachyon::Helper {
     public:
     
+        struct Param {
+            Vector3D    scale   = ONE;
+        };
+    
         //!  Basic scale in the 3D space
         Vector3D        scale() const override { return m_scale; }
 
@@ -68,6 +72,7 @@ namespace yq::tachyon {
         static void init_meta(TachyonMeta::Writer<C>&);
         
         AScale³(const Vector3D& sca=ONE);
+        AScale³(const Param&);
         virtual ~AScale³();
 
         void            scale(emit_k);

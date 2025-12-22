@@ -25,6 +25,10 @@ namespace yq::tachyon {
         if(!is_nan(ori))
             m_orientation   = ori;
     }
+
+    AOrientation³::AOrientation³(const Param& p) : AOrientation³(p.orientation)
+    {
+    }
     
     AOrientation³::~AOrientation³()
     {

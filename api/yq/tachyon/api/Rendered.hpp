@@ -77,6 +77,10 @@ namespace yq::tachyon {
             it's not going to get covered.
         */
     
+        struct Param : public Tachyon::Param {
+            Tristate        wireframe   = Tristate::Inherit;
+        };
+    
         
         //! Helper for draw counts
         //struct Draw {

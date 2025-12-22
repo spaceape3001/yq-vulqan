@@ -33,7 +33,7 @@ namespace yq::tachyon {
         // note, revision, position is now the origin....
         // and orientation covers the rotor
     
-        struct Param : public Spatial³::Param {
+        struct Param : public Spatial³::Param, public APosition³::Param, public AScale³::Param, public AOrientation³::Param {
             Radian          angle0      = 0._rad;   //!< Starting angle
             bool            locked      = false;
             Second          period      = 10._s;

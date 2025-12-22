@@ -30,6 +30,10 @@ namespace yq::tachyon {
         if(!is_nan(pos))
             m_position  = pos;
     }
+
+    APosition³::APosition³(const Param&p) : APosition³(p.position)
+    {
+    }
     
     APosition³::~APosition³()
     {

@@ -28,6 +28,10 @@ namespace yq::tachyon {
             m_scale = sca;
     }
     
+    AScale³::AScale³(const Param& p) : AScale³(p.scale)
+    {
+    }
+
     AScale³::~AScale³()
     {
     }

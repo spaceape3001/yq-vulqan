@@ -16,6 +16,11 @@ namespace yq::tachyon {
     {
     }
 
+    SimpleSpatial³::SimpleSpatial³(const Param& p) : Spatial³(p), ASpatial³(p)
+    {
+    }
+    
+
     SimpleSpatial³::~SimpleSpatial³()
     {
     }    

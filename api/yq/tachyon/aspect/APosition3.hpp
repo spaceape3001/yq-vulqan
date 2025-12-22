@@ -28,6 +28,10 @@ namespace yq::tachyon {
     class APosition³ : public IPosition³, public virtual Tachyon::Helper {
     public:
     
+        struct Param {
+            Vector3D    position    = ZERO;
+        };
+    
         //!  Basic position in the 3D space
         Vector3D        position() const override { return m_position; }
 
@@ -67,6 +71,7 @@ namespace yq::tachyon {
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
+        APosition³(const Param&);
         APosition³(const Vector3D& pos=ZERO);
         virtual ~APosition³();
         

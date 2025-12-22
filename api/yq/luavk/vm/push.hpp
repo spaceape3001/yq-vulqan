@@ -11,5 +11,5 @@
 struct lua_State;
 
 namespace yq::lua {
-    std::error_code push(lua_State*, const tachyon::TachyonID&);
+    std::error_code _push(lua_State*, uint64_t, const TypeMeta&);
 }

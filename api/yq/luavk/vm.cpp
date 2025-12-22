@@ -9,4 +9,6 @@
 
 //  and the sources....
 
+#include "vm/extract.ipp"
+#include "vm/handlers.ipp"
 #include "vm/push.ipp"

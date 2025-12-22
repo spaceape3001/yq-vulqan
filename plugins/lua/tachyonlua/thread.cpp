@@ -23,6 +23,7 @@ using namespace yq;
 using namespace yq::tachyon;
 
 namespace {
+
     void reg_thread()
     {
         if(auto* tti = lua::reg<ThreadID>()){

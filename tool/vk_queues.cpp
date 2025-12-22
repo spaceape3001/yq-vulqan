@@ -15,7 +15,7 @@ using namespace yq::tachyon;
 int main(int argc, char* argv[])
 {
     AppCreateInfo aci;
-    aci.headless        = true;
+    aci.vulkan.headless = true;
     aci.platform        = NONE;
     aci.thread.viewer   = DISABLED;
     Application vi(argc, argv, aci);

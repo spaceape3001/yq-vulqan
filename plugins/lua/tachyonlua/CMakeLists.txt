@@ -8,6 +8,7 @@ add_library(tachyonlua SHARED
     camera.cpp
     command.cpp
     event.cpp
+    frame.cpp
     interface.cpp
     light.cpp
     post.cpp
@@ -22,5 +23,5 @@ add_library(tachyonlua SHARED
     vulkan.cpp
     widget.cpp
 )
-target_link_libraries(tachyonlua PUBLIC yq_lua yq_tachyon)
+target_link_libraries(tachyonlua PUBLIC yq_lua yq_luavk yq_tachyon)
 LinkTest(tachyonlua)

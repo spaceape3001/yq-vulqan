@@ -97,6 +97,9 @@ namespace yq::tachyon {
         //! \return Viewer ID if not running, null otherwise
         ViewerID                    create(viewer_k, const ViewerCreateInfo&, WidgetPtr);
 
+        
+        bool    is_headless() const;
+
         /*! \brief Exec loop for a bunch of windows
 
             \param[in] timeout      If positive, throttles the loop to the rate of user input, where timeout 
@@ -136,6 +139,7 @@ namespace yq::tachyon {
         //  setters go here....
         
         void    set_thread(StdThread, const thread_enabler_t&);
+        void    set_headless(bool);
         
     protected:
         AppCreateInfo           m_cInfo;

@@ -25,9 +25,10 @@ using namespace yq::tachyon;
 namespace {
     void reg_camera()
     {
-        if(auto* tti = lua::reg<CameraID>()){
-            tti->pusher(lua_pushID<Camera>);
-            tti->extractor(lua_extractID<Camera>);
+        if(auto* mi = lua::reg<CameraID>()){
+            mi->pusher(lua_pushID<Camera>);
+            mi->extractor(lua_extractID<Camera>);
+            mi->attach<TachyonID>();
         }
     }
 

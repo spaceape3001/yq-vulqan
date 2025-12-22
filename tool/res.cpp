@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
     log_to_std_error(LogPriority::Info);
 
     AppCreateInfo   aci;
-    aci.headless    = true;
+    aci.vulkan.headless    = true;
     Application app(argc, argv, aci);
     Meta::init();
     app.vulqan_libraries(LOAD);

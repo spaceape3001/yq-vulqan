@@ -13,10 +13,12 @@
 #include <yq/lua/info/FunctionInfo.hpp>
 #include <yq/lua/info/ModuleInfo.hpp>
 #include <yq/luavk/vm/id.hxx>
+#include <yq/luavk/vm/extract.hpp>
 #include <yq/meta/ObjectMeta.hpp>
 #include <yq/meta/TypeMeta.hpp>
 #include <yq/tachyon/api/Command.hpp>
 #include <yq/tachyon/api/Event.hpp>
+#include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/Reply.hpp>
 #include <yq/tachyon/api/Request.hpp>
 #include <yq/tachyon/api/Interface.hpp>
@@ -44,6 +46,20 @@ namespace {
             lua_settable(l, ti);
         }
         return 1;
+    }
+    
+    int lh_tid_meta(lua_State* l)
+    {
+        if(lua_gettop(l) < 1)
+            return 0;
+        auto tidx   = tachyonID(l, 1);
+        if(!tidx)
+            return 0;
+        if(const Frame* f = Frame::current()){
+            lua::push(l, f->meta(*tidx));
+            return 1;
+        }
+        return 0;
     }
 
     int lh_tm_interfaces(lua_State* l)
@@ -120,6 +136,7 @@ namespace {
         if(auto* tti = reg<TachyonID>()){
             tti->pusher(lua_pushID<Tachyon>);
             tti->extractor(lua_extractID<Tachyon>);
+            tti->add("meta", lh_tid_meta);
         }
     }
     

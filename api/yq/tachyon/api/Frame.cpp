@@ -4,9 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "Frame.hpp"
+
 #include <yq/tachyon/api/Controller.hpp>
 #include <yq/tachyon/api/ControllerData.hpp>
-#include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/FrameBuilder.hpp>
 #include <yq/tachyon/api/Interface.hpp>
 #include <yq/tachyon/api/Manager.hpp>
@@ -79,8 +80,18 @@
 
 #include <yq/core/StreamOps.hpp>
 #include <yq/tachyon/logging.hpp>
+#include <yq/meta/ObjectMetaWriter.hpp>
+
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Frame)
 
 namespace yq::tachyon {
+    void Frame::init_meta()
+    {
+        auto w = writer<Frame>();
+        w.description("Tachyon Frame");
+        w.abstract();
+    }
+
 
     template <typename T, typename D, typename S>
     size_t   Frame::Container<T,D,S>::count() const

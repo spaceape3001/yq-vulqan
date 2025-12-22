@@ -5,3 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+
+struct lua_State;
+
+namespace yq::tachyon {
+    struct TypedID;
+    
+    bool    lh_typedid_push(lua_State*, const TypedID&);
+    bool    lh_typedid_extract(lua_State*, int, TypedID&);
+}

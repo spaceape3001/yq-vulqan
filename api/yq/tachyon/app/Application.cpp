@@ -185,6 +185,11 @@ namespace yq::tachyon {
         }
     }
 
+    bool    Application::is_headless() const
+    {
+        return m_cInfo.vulkan.headless;
+    }
+
     void                        Application::run(const RunConfig& r)
     {
         if(!start())
@@ -306,7 +311,7 @@ namespace yq::tachyon {
             
             break;
         case Platform::None:
-            if(!m_cInfo.headless){
+            if(!m_cInfo.vulkan.headless){
                 tachyonWarning << "No platform in a GUI application... are you sure about this?";
             }
             break;
@@ -397,6 +402,13 @@ namespace yq::tachyon {
         m_thread.others.push_back(th);
         m_threads.push_back(th.ptr());
         th->start();
+    }
+
+    void    Application::set_headless(bool v)
+    {
+        if(Meta::thread_safe_write() && (m_stage == Stage::Uninit)){
+            m_cInfo.vulkan.headless    = v;
+        }
     }
     
     void    Application::set_thread(StdThread st, const thread_enabler_t&v)

@@ -57,7 +57,6 @@ namespace yq::tachyon {
     
     struct controller_k {};
     struct controllers_k {};
-    struct cursor_k {};
     struct d2l_k    {};
     struct delegate_k {};
     struct desktop_k {};
@@ -251,7 +250,6 @@ namespace yq::tachyon {
     static constexpr const content_k            CONTENT;
     static constexpr const controller_k         CONTROLLER;
     static constexpr const controllers_k        CONTROLLERS;
-    static constexpr const cursor_k             CURSOR;
     static constexpr const d2l_k                D2L;
     static constexpr const delegate_k           DELEGATE;
     static constexpr const delete_k             DELETE;

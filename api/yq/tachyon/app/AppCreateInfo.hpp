@@ -69,7 +69,7 @@ namespace yq::tachyon {
         //! Application version number
         uint32_t                    app_version             = 0;
         
-        bool                        headless                = false;
+        //bool                        headless                = false;
         
         /*! Primary Platform
             

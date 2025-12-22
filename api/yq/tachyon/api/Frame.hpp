@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/units.hpp>
+#include <yq/core/Object.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/ID.hpp>
@@ -70,7 +71,8 @@ namespace yq::tachyon {
     
     struct TachyonFrame;
 
-    class Frame : public RefCount {
+    class Frame : public Object, public RefCount {
+        YQ_OBJECT_DECLARE(Frame, Object)        // to access the meta capabilities
     public:
     
         using KeyToIDMap    = std::multimap<std::string,uint64_t,IgCase>;
@@ -423,6 +425,8 @@ namespace yq::tachyon {
         
         void            report(Stream&) const;
 
+        static void init_meta();
+
     private:
 
         static std::atomic<uint64_t>    s_lastId;
@@ -508,6 +512,7 @@ namespace yq::tachyon {
         Frame(Frame&&) = delete;
         Frame& operator=(const Frame&) = delete;
         Frame& operator=(Frame&&) = delete;
+        
     };
 
     template <typename Pred>

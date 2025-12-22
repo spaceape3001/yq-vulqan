@@ -10,7 +10,8 @@
 
 namespace yq::lua {
     template <typename T>
-    std::error_code push(lua_State*, const tachyon::ID<T>&);
-    
-    
+    std::error_code push(lua_State* l, const tachyon::ID<T>& id)
+    {
+        return _push(l, id.id, ::yq::meta<tachyon::ID<T>>());
+    }
 }

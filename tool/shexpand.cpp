@@ -31,9 +31,9 @@ This will expand each shader and direct it to standard output.
     
     AppCreateInfo   aci;
     
-    aci.headless    = true;
-    aci.log_cerr    = LogPriority::Info;
-    aci.log_cout    = {};
+    aci.vulkan.headless = true;
+    aci.log_cerr        = LogPriority::Info;
+    aci.log_cout        = {};
     Application app(argc, argv, aci);
     Meta::freeze();
 

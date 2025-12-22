@@ -11,7 +11,7 @@
 #include <yq/lua/keys.hpp>
 #include <yq/lua/info/FunctionInfo.hpp>
 #include <yq/lua/info/ModuleInfo.hpp>
-#include <yq/luavk/LuaID.hxx>
+#include <yq/luavk/vm/id.hxx>
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/app/Application.hpp>
 
@@ -67,7 +67,8 @@ namespace {
   
     void reg_sys()
     {
-        if(ModuleInfo* mi = lua::reg(MODULE, "sys")){
+        using namespace yq::lua;
+        if(ModuleInfo* mi = reg(MODULE, "sys")){
         }
     }
 

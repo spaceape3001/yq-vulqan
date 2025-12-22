@@ -11,7 +11,7 @@
 #include <yq/lua/keys.hpp>
 #include <yq/lua/info/FunctionInfo.hpp>
 #include <yq/lua/info/ModuleInfo.hpp>
-#include <yq/luavk/LuaID.hxx>
+#include <yq/luavk/vm/id.hxx>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/app/Viewer.hpp>
 #include <yq/tachyon/app/ViewerData.hpp>

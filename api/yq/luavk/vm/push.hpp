@@ -8,6 +8,8 @@
 
 #include <yq/tachyon/typedef/tachyon.hpp>
 
+struct lua_State;
+
 namespace yq::lua {
     std::error_code push(lua_State*, const tachyon::TachyonID&);
 }

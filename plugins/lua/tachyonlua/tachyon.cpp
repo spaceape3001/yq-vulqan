@@ -12,7 +12,7 @@
 #include <yq/lua/keys.hpp>
 #include <yq/lua/info/FunctionInfo.hpp>
 #include <yq/lua/info/ModuleInfo.hpp>
-#include <yq/luavk/LuaID.hxx>
+#include <yq/luavk/vm/id.hxx>
 #include <yq/meta/ObjectMeta.hpp>
 #include <yq/meta/TypeMeta.hpp>
 #include <yq/tachyon/api/Command.hpp>

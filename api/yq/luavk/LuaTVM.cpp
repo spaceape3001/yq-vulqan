@@ -9,9 +9,9 @@
 #include <yq/lua/logging.hpp>
 #include <yq/lua/lualua.hxx>
 #include <yq/lua/keys.hpp>
-#include <yq/luavk/LuaExecuteReply.hpp>
-#include <yq/luavk/LuaExecuteFileRequest.hpp>
-#include <yq/luavk/LuaExecuteStringRequest.hpp>
+#include <yq/luavk/reply/LuaExecuteReply.hpp>
+#include <yq/luavk/request/LuaExecuteFileRequest.hpp>
+#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 
 #include <iostream>

@@ -48,11 +48,11 @@
 
 #include <yq/date/dateutils.hpp>
 
-#include <yq/luavk/LuaExecuteReply.hpp>
-#include <yq/luavk/LuaExecuteFileRequest.hpp>
-#include <yq/luavk/LuaExecuteStringRequest.hpp>
 #include <yq/luavk/LuaTVM.hpp>
-#include <yq/luavk/LuaWindowUI.hpp>
+#include <yq/luavk/reply/LuaExecuteReply.hpp>
+#include <yq/luavk/request/LuaExecuteFileRequest.hpp>
+#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
+#include <yq/luavk/ui/LuaWindowUI.hpp>
 
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/parameters.hpp>

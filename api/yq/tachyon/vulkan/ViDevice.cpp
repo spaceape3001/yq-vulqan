@@ -37,6 +37,9 @@ namespace yq::tachyon {
         "VK_KHR_swapchain"
     };
     
+    static const char* kDevicePre13Extensions[] = {
+        "VK_KHR_dynamic_rendering"
+    };
 
     namespace errors {
         using device_existing                   = error_db::entry<"Device already created">;
@@ -402,9 +405,18 @@ namespace yq::tachyon {
         deviceCreateInfo.pQueueCreateInfos        = queueCreateInfos.data();
         deviceCreateInfo.queueCreateInfoCount     = (uint32_t) queueCreateInfos.size();
         deviceCreateInfo.pEnabledFeatures         = &v10features;
+        
+        std::vector<const char*>    extensions;
+        for(const char* sz : kDeviceExtensions)
+            extensions.push_back(sz);
 
-        deviceCreateInfo.enabledExtensionCount      = sizeof(kDeviceExtensions)/sizeof(kDeviceExtensions[0]);
-        deviceCreateInfo.ppEnabledExtensionNames    = kDeviceExtensions;
+        if(VulqanManager::vulkan_api() < VK_MAKE_VERSION(1,3,0)){
+            for(const char* sz : kDevicePre13Extensions)
+                extensions.push_back(sz);
+        }
+
+        deviceCreateInfo.enabledExtensionCount      = extensions.size();
+        deviceCreateInfo.ppEnabledExtensionNames    = extensions.data();
 
         VkResult        res = vkCreateDevice(m_physical, &deviceCreateInfo, nullptr, &m_device);
         if(res != VK_SUCCESS){

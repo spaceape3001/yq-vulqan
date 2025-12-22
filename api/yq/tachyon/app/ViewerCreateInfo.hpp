@@ -11,6 +11,7 @@
 #include <yq/vector/Vector2.hpp>
 
 #include <yq/tachyon/api/ID.hpp>
+#include <yq/tachyon/pipeline/DataFormat.hpp>
 #include <yq/tachyon/pipeline/PresentMode.hpp>
 #include <yq/tachyon/os/WindowMode.hpp>
 #include <yq/tachyon/typedef/monitor.hpp>
@@ -25,6 +26,7 @@ struct VkPhysicalDevice_T;
 namespace yq::tachyon {
 
     struct ViewerCreateInfo {
+    
         VkPhysicalDevice_T*         device   = nullptr;
     
         std::string                 title    = "(untitled)";
@@ -39,6 +41,10 @@ namespace yq::tachyon {
             //!  This is the background color
         RGBA4F                      clear   = { 0., 0., 0., 1. };
         
+        using depth_spec_t  = std::variant<std::monostate, enable_k, DataFormat>;
+        depth_spec_t                depth_buffer;
+
+
             //!  Set to make always-on-top
         bool                        floating        = false;
         
@@ -62,9 +68,6 @@ namespace yq::tachyon {
 
             //!  Set to start "hidden"
         bool                        hidden      = false;
-        
-        // Some of these following will likely be moved to floating....
-        
         
             //!  Set to enable fill of non-solid features
         bool                        fill_non_solid  = true;

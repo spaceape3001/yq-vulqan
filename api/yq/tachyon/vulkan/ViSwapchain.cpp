@@ -171,6 +171,25 @@ namespace yq::tachyon {
         }
         return {};
     }
+
+    std::error_code ViSwapchain::_init(Frame& frame, VkImage img, VkRenderPass vr)
+    {   
+        VkImageViewCreateInfo   imageViewInfo;
+        imageViewInfo.viewType  = VK_IMAGE_VIEW_TYPE_2D;
+        imageViewInfo.format    = m_viz->surface_format();
+        frame.image = img;
+
+        int res = vkCreateImageView(m_viz->device(), &imageViewInfo, nullptr, &frame.view);
+        if(res != VK_SUCCESS){
+            vizWarning << "ViSwapchain(): Cannot create a swapchain image viewer.  VkResult " << (int32_t) res;
+            return errors::swapchain_cant_create();
+        }
+        
+        VqFramebufferCreateInfo   frameBufferInfo;
+        
+        
+        return {};
+    }
     
     void            ViSwapchain::_kill()
     {
@@ -201,6 +220,7 @@ namespace yq::tachyon {
         m_capabilities  = {};
     }
     
+    //void            _kill(Frame&);
 
     bool            ViSwapchain::consistent() const
     {

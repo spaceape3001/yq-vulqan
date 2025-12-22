@@ -49,11 +49,18 @@ namespace yq::tachyon {
 
         const VkSurfaceCapabilitiesKHR&     capabilities() const { return m_capabilities; }
         const VkExtent2D&                   extents() const { return m_extents; }
-        const std::vector<VkFramebuffer>&   framebuffers() const { return m_frameBuffers; }
-        const std::vector<VkImage>&         images() const { return m_images; }
-        const std::vector<VkImageView>&     image_views() const { return m_imageViews; }
+        //const std::vector<VkFramebuffer>&   framebuffers() const { return m_frameBuffers; }
+        //const std::vector<VkImage>&         images() const { return m_images; }
+        //const std::vector<VkImageView>&     image_views() const { return m_imageViews; }
         
         Expect<RasterPtr>   snapshot(uint32_t, VkFormat desired=VK_FORMAT_UNDEFINED) const;
+
+        struct Frame {
+            VkImage             image       = nullptr;
+            VkImageView         view        = nullptr;
+            VkFramebuffer       framebuffer = nullptr;
+            VkSemaphore         semaphore   = nullptr;
+        };
 
     private:
         ViVisualizer*               m_viz               = nullptr;
@@ -65,8 +72,16 @@ namespace yq::tachyon {
         std::vector<VkImageView>    m_imageViews;
         std::vector<VkFramebuffer>  m_frameBuffers;
         VkSurfaceCapabilitiesKHR    m_capabilities;
+        std::vector<Frame>          m_frames;
+        struct {
+            VkImage                 image       = nullptr;
+            VkImage                 imageView   = nullptr;
+        }   m_depth;
 
         std::error_code _init(ViVisualizer&, const ViSwapchainConfig& cfg=ViSwapchainConfig{});
         void            _kill();
+        
+        std::error_code _init(Frame&, VkImage, VkRenderPass);
+        void            _kill(Frame&);
     };
 }

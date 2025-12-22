@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/luavk/LuaRequest.hpp>
+#include <yq/luavk/request/LuaRequest.hpp>
 
 namespace yq::tachyon {
     class LuaExecuteStringRequest : public LuaRequest {

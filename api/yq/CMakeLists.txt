@@ -28,3 +28,6 @@ add_subdirectory(luavk)
 
 ##  Executive Graph
 add_subdirectory(xgvk)
+
+##  Game stuff
+add_subdirectory(gamevk)

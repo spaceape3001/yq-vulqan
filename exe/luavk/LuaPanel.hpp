@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/luavk/LuaWindowUI.hpp>
+#include <yq/luavk/ui/LuaWindowUI.hpp>
 
 using namespace yq::tachyon;
 

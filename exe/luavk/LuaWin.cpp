@@ -10,9 +10,9 @@
 //#include <yq/assetvk/ui/UIPanel.hpp>
 #include <yq/date/dateutils.hpp>
 #include <yq/lua/logging.hpp>
-#include <yq/luavk/LuaExecuteReply.hpp>
-#include <yq/luavk/LuaExecuteFileRequest.hpp>
-#include <yq/luavk/LuaExecuteStringRequest.hpp>
+#include <yq/luavk/reply/LuaExecuteReply.hpp>
+#include <yq/luavk/request/LuaExecuteFileRequest.hpp>
+#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/Payload.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>

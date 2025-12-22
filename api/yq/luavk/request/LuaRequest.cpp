@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/luavk/LuaRequest.hpp>
+#include "LuaRequest.hpp"
 #include <yq/tachyon/api/RequestMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaRequest)

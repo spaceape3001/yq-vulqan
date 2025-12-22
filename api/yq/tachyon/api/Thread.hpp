@@ -54,6 +54,8 @@ namespace yq::tachyon {
         //  Might be NULL...
         static Thread*      current() { return s_current; }
         
+        static ThreadID     current_id();
+        
         static ThreadPtr    get(ThreadID);
         static bool         valid(ThreadID);
         static Thread*      main() { return s_main; }

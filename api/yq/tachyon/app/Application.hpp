@@ -131,7 +131,12 @@ namespace yq::tachyon {
 
         void                    tick(); // drives the app thread
         void                    vulqan_libraries(load_k);
-
+        
+        //  we'll allow modifications *UNTIL* starting, then it's fixed
+        //  setters go here....
+        
+        void    set_thread(StdThread, const thread_enabler_t&);
+        
     protected:
         AppCreateInfo           m_cInfo;
         

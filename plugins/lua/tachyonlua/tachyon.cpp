@@ -12,6 +12,7 @@
 #include <yq/lua/keys.hpp>
 #include <yq/lua/info/FunctionInfo.hpp>
 #include <yq/lua/info/ModuleInfo.hpp>
+#include <yq/luavk/LuaID.hxx>
 #include <yq/meta/ObjectMeta.hpp>
 #include <yq/meta/TypeMeta.hpp>
 #include <yq/tachyon/api/Command.hpp>
@@ -117,18 +118,8 @@ namespace {
         }
         
         if(auto* tti = reg<TachyonID>()){
-            tti->pusher([](lua_State*l, const TachyonID& tid) -> bool {
-                lua_newtable(l);
-                set(l, -1, TABLE, "id", (int) tid.id);     // eventually more
-                return true;
-            });
-            tti->extractor([](lua_State*l, int n, TachyonID& tid) -> bool {
-                auto x  = integer(l, n, TABLE, "id");
-                if(!x)
-                    return false;
-                tid.id  = *x;
-                return true;
-            });
+            tti->pusher(lua_pushID<Tachyon>);
+            tti->extractor(lua_extractID<Tachyon>);
         }
     }
     

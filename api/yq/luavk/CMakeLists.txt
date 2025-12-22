@@ -6,17 +6,23 @@
 
 add_library(yq_luavk SHARED
 
-    LuaCommand.cpp
-    LuaConsoleUI.cpp
-    LuaEvent.cpp
-    LuaExecuteReply.cpp
-    LuaExecuteFileRequest.cpp
-    LuaExecuteStringRequest.cpp
-    LuaInputBarUI.cpp
-    LuaReply.cpp
-    LuaRequest.cpp
     LuaTVM.cpp
-    LuaWindowUI.cpp
+    vm.cpp
+
+    command/LuaCommand.cpp
+
+    event/LuaEvent.cpp
+
+    reply/LuaReply.cpp
+    reply/LuaExecuteReply.cpp
+
+    request/LuaRequest.cpp
+    request/LuaExecuteFileRequest.cpp
+    request/LuaExecuteStringRequest.cpp
+
+    ui/LuaConsoleUI.cpp
+    ui/LuaInputBarUI.cpp
+    ui/LuaWindowUI.cpp
 )
 
 target_link_libraries(yq_luavk

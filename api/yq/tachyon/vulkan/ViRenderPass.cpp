@@ -114,11 +114,59 @@ namespace yq::tachyon {
         subpass.colorAttachmentCount = 1;
         subpass.pColorAttachments = &colorAttachmentRef;
         
+        
+        std::vector<VkSubpassDependency> dependencies;
+        std::vector<VkAttachmentDescription>    attachments{ colorAttachment };
+        
+        VkAttachmentDescription depthAttachment{};
+        VkAttachmentReference   depthAttachmentRef{};
+        
+        if(viz.depth_buffering_enabled()){
+            depthAttachment.format          = viz.depth_format();
+            depthAttachment.samples         = VK_SAMPLE_COUNT_1_BIT;
+            depthAttachment.loadOp          = VK_ATTACHMENT_LOAD_OP_CLEAR;
+            depthAttachment.storeOp         = VK_ATTACHMENT_STORE_OP_STORE;
+            depthAttachment.stencilLoadOp   = VK_ATTACHMENT_LOAD_OP_CLEAR;
+            depthAttachment.stencilStoreOp  = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+            depthAttachment.initialLayout   = VK_IMAGE_LAYOUT_UNDEFINED;
+            depthAttachment.finalLayout     = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+            
+            attachments.push_back(depthAttachment);
+            
+            depthAttachmentRef.attachment   = 1;
+            depthAttachmentRef.layout       = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+            subpass.pDepthStencilAttachment = &depthAttachmentRef;
+
+            VkSubpassDependency colorDependency;
+            colorDependency.srcSubpass      = VK_SUBPASS_EXTERNAL;
+            colorDependency.dstSubpass      = 0;
+            colorDependency.srcStageMask    = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+            colorDependency.srcAccessMask   = 0;
+            colorDependency.dstStageMask    = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+            colorDependency.dstAccessMask   = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+            dependencies.push_back(colorDependency);
+            
+            VkSubpassDependency depthDependency;
+            depthDependency.srcSubpass      = VK_SUBPASS_EXTERNAL;
+            depthDependency.dstSubpass      = 0;
+            depthDependency.srcStageMask    = VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
+            depthDependency.srcAccessMask   = 0;
+            depthDependency.dstStageMask    = VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
+            depthDependency.dstAccessMask   = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+            dependencies.push_back(depthDependency);
+
+        }
+        
         VqRenderPassCreateInfo renderPassInfo;
-        renderPassInfo.attachmentCount = 1;
-        renderPassInfo.pAttachments = &colorAttachment;
+        renderPassInfo.attachmentCount = (uint32_t) attachments.size();
+        renderPassInfo.pAttachments = attachments.data();
         renderPassInfo.subpassCount = 1;
         renderPassInfo.pSubpasses = &subpass;
+        
+        if(!dependencies.empty()){
+            renderPassInfo.dependencyCount  = (uint32_t) dependencies.size();
+            renderPassInfo.pDependencies    = dependencies.data();
+        }
 
         return _init(viz, renderPassInfo);
     }

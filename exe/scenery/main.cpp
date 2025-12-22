@@ -28,6 +28,7 @@ int main(int argc, char* argv[])
     aci.view.clear          = { 0.0f, 0.0f, 0.0f, 1.f };
     aci.view.imgui          = true;
     aci.view.resizable      = true;
+    //aci.view.depth_buffer   = ENABLE;
     
     Application app(argc, argv, aci);
     Meta::init();

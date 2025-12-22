@@ -85,6 +85,13 @@ namespace yq::tachyon {
             std::function<void(ViContext&)>     record;
         };
         
+        struct RenderTarget {
+            VkRenderPass        render_pass = nullptr;
+            VkFramebuffer       framebuffer = nullptr;
+            VkViewport          viewport{};
+            VkClearValue        clear{};
+        };
+        
         struct CreateData;
 
         RGBA4F                          clear_color() const;
@@ -94,6 +101,9 @@ namespace yq::tachyon {
         ViQueueID                       compute_queue_id() const { return m_computeQueue; }
         std::error_code                 compute_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            compute_queue_valid() const;
+
+        bool                            depth_buffering_enabled() const;
+        VkFormat                        depth_format() const { return m_depthFormat; }
 
         virtual VkDescriptorPool        descriptor_pool() const = 0;
 
@@ -209,7 +219,8 @@ namespace yq::tachyon {
             Compute,
             Transfer,
             VideoEnc,
-            VideoDec
+            VideoDec,
+            DepthBuffer
         };
 
         using mutex_t = tbb::spin_rw_mutex;
@@ -219,6 +230,7 @@ namespace yq::tachyon {
         Guarded<VkClearValue>               m_clearValue;
         ViQueueID                           m_computeQueue;
         ViDevicePtr                         m_device;
+        VkFormat                            m_depthFormat       = (VkFormat) 0;
         //VkPhysicalDeviceFeatures            m_deviceFeatures;
         //VkPhysicalDeviceProperties          m_deviceInfo;
         Flags<X>                            m_flags;

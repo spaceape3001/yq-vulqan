@@ -422,6 +422,16 @@ namespace yq::tachyon {
         if(m_device->is_queue_valid(m_videoEncQueue))
             m_flags |= X::VideoEnc;
             
+        if(auto p = std::get_if<enable_k>(&vcd.viewer.depth_buffer)){
+            m_flags |= X::DepthBuffer;
+            m_depthFormat   = VK_FORMAT_R32_SFLOAT;
+        } else if(auto p = std::get_if<DataFormat>(&vcd.viewer.depth_buffer)){
+            if(*p !=DataFormat::UNDEFINED){
+                m_flags        |= X::DepthBuffer;
+                m_depthFormat   = (VkFormat) p->value();
+            }
+        }
+            
         std::error_code     ec;
 
         ec = _7_render_pass_create();
@@ -479,6 +489,11 @@ namespace yq::tachyon {
     bool    ViVisualizer::compute_queue_valid() const
     {
         return m_device && m_device->is_queue_valid(m_computeQueue);
+    }
+
+    bool                ViVisualizer::depth_buffering_enabled() const
+    {
+        return m_flags(X::DepthBuffer);
     }
 
     VkDevice            ViVisualizer::device() const

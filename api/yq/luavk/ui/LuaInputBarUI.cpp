@@ -6,7 +6,7 @@
 
 #include "LuaInputBarUI.hpp"
 #include "LuaInputBarUIWriter.hpp"
-#include "LuaExecuteStringRequest.hpp"
+#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
 #include <yq/tachyon/api/Payload.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 

@@ -136,6 +136,13 @@ namespace yq::tachyon {
         return ret;
     }
 
+    ThreadID     Thread::current_id()
+    {
+        if(s_current)
+            return s_current -> id();
+        return {};
+    }
+
     ThreadPtr    Thread::get(ThreadID tid)
     {
         lock_t  _lock(s_mutex, false);

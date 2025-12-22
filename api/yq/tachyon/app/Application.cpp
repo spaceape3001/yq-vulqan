@@ -399,13 +399,47 @@ namespace yq::tachyon {
         th->start();
     }
     
+    void    Application::set_thread(StdThread st, const thread_enabler_t&v)
+    {
+        if(Meta::thread_safe_write() && (m_stage == Stage::Uninit)){
+            switch(st){
+            case StdThread::Audio:
+                m_cInfo.thread.audio        = v;
+                break;
+            case StdThread::Auxillary:
+                m_cInfo.thread.auxillary    = v;
+                break;
+            case StdThread::Edit:
+                m_cInfo.thread.edit         = v;
+                break;
+            case StdThread::Game:
+                m_cInfo.thread.game         = v;
+                break;
+            case StdThread::IO:
+                m_cInfo.thread.io           = v;
+                break;
+            case StdThread::Network:
+                m_cInfo.thread.network      = v;
+                break;
+            case StdThread::Sim:
+                m_cInfo.thread.sim          = v;
+                break;
+            case StdThread::Task:
+                m_cInfo.thread.task         = v;
+                break;
+            case StdThread::Viewer:
+                m_cInfo.thread.viewer       = v;
+                break;
+            default:
+                break;
+            }
+        }
+    }
         
     bool    Application::started() const
     {
         return (m_stage == Started) || (m_stage == Running);
     }
-    
-
 
     void    Application::tick()
     {

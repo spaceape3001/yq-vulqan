@@ -6,9 +6,9 @@
 
 #include "LuaConsoleUI.hpp"
 #include "LuaConsoleUIWriter.hpp"
-#include "LuaExecuteReply.hpp"
-#include "LuaExecuteFileRequest.hpp"
-#include "LuaExecuteStringRequest.hpp"
+#include <yq/luavk/reply/LuaExecuteReply.hpp>
+#include <yq/luavk/request/LuaExecuteFileRequest.hpp>
+#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
 
 #include <yq/color/colors.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>

@@ -68,7 +68,7 @@ namespace yq::tachyon {
         void            _kill();
         void            _wipe();
     
-        ViDevice*   m_viz        = nullptr;
+        ViDevice*       m_viz        = nullptr;
         VkBuffer        m_buffer     = nullptr;
         VmaAllocation   m_allocation = nullptr;
         void*           m_data       = nullptr;

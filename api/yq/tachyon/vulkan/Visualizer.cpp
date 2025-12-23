@@ -90,6 +90,7 @@ Objects: 2
 #include <yq/tachyon/vulkan/VqUtils.hpp>
 #include <yq/tachyon/vulkan/ViBuffer.hpp>
 #include <yq/tachyon/vulkan/ViContext.hpp>
+#include <yq/tachyon/vulkan/ViDescriptorPool.hpp>
 #include <yq/tachyon/vulkan/ViImage.hpp>
 #include <yq/tachyon/vulkan/ViManager.hpp>
 //#include <yq/tachyon/vulkan/ViQueueManager.hpp>
@@ -297,32 +298,7 @@ namespace yq::tachyon {
     
     void    ViThread0::_ctor()
     {
-        uint32_t      dcount  = m_viz.descriptor_count();
-        VkDescriptorPoolSize descriptorPoolSizes[] =
-        {
-            { VK_DESCRIPTOR_TYPE_SAMPLER, dcount },
-            { VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, dcount },
-            { VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, dcount },
-            { VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, dcount },
-            { VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, dcount },
-            { VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, dcount },
-            { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, dcount },
-            { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, dcount },
-            { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, dcount },
-            { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, dcount },
-            { VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, dcount }
-        };
-        
-        size_t  cntDPS  = sizeof(descriptorPoolSizes)/sizeof(VkDescriptorPoolSize);
-        
-        VqDescriptorPoolCreateInfo descriptorPoolInfo;
-        //descriptorPoolInfo.flags         = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT | VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT;
-        descriptorPoolInfo.flags         = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT | VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT;
-        descriptorPoolInfo.maxSets       = dcount * cntDPS;
-        descriptorPoolInfo.poolSizeCount = (uint32_t) cntDPS;
-        descriptorPoolInfo.pPoolSizes    = descriptorPoolSizes;
-        if(vkCreateDescriptorPool(m_viz.device(), &descriptorPoolInfo, nullptr, &m_descriptors) != VK_SUCCESS)
-            throw create_error<"Unable to allocate the descriptor pool">();
+        m_descriptors   = new ViDescriptorPool(m_viz.device(REF), m_viz.descriptor_count());
 
         VqCommandPoolCreateInfo poolInfo;
         poolInfo.flags                  = m_viz.command_pool_create_flags();
@@ -341,10 +317,7 @@ namespace yq::tachyon {
     
     void    ViThread0::_dtor()
     {
-        if(m_descriptors){
-            vkDestroyDescriptorPool(m_viz.device(), m_descriptors, nullptr);
-            m_descriptors = nullptr;
-        }
+        m_descriptors   = {};
         if(m_graphics){
             vkDestroyCommandPool(m_viz.device(), m_graphics, nullptr);
             m_graphics = nullptr;
@@ -353,6 +326,13 @@ namespace yq::tachyon {
             vkDestroyCommandPool(m_viz.device(), m_compute, nullptr);
             m_compute = nullptr;
         }
+    }
+
+    VkDescriptorPool     ViThread0::descriptors() const
+    {
+        if(m_descriptors)
+            return m_descriptors->descriptor_pool();
+        return nullptr;
     }
     
     ////////////////////////////////////////////////////////////////////////////////
@@ -374,158 +354,6 @@ namespace yq::tachyon {
     }
     
     
-#if 0
-    std::error_code             Visualizer::_ctor(const ViewerCreateInfo&vci, GLFWwindow*w)
-    {
-        std::error_code ec;
-    
-        InitData   iData(vci);
-    
-        ec  = _0_app_window_initialize(w);
-        if(ec != std::error_code())
-            return ec;
-        
-        ec  = _1_gpu_select_initialize(iData);
-        if(ec != std::error_code())
-            return ec;
-
-        ec = _2_surface_initialize(iData);
-        if(ec != std::error_code())
-            return ec;
-       
-        iData.extensions    = vci.extensions;
-        iData.extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
-
-            //  And we need to create them... so request
-        ec = _3_queues_create(iData);
-        if(ec != std::error_code())
-            return ec;
-                
-        ec = _4_device_init(iData);
-        if(ec != std::error_code())
-            return ec;
-
-        _3_queues_fetch();
-
-        ec = _5_allocator_init(iData);
-        if(ec != std::error_code())
-            return ec;
-
-        ec  = _6_manager_init();
-        if(ec != std::error_code())
-            return ec;
-
-        ec = _7_render_pass_create();
-        if(ec != std::error_code())
-            return ec;
-        
-        ec = _8_swapchain_create();
-        if(ec != std::error_code())
-            return ec;
-            
-        ec = _9_pipeline_manager_create();
-        if(ec != std::error_code())
-            return ec;
-
-        //  ================================
-        //  GETTING THE QUEUES
-
-
-        //  ================================
-        //  ALLOCATOR
-
-
-        //  ================================
-        //  DESCRIPTOR COUNTS
-
-        m_descriptorCount   = std::max(MIN_DESCRIPTOR_COUNT, vci.descriptors);
-
-        m_thread            = std::make_unique<ViThread0>(*this);
-
-        m_frames.reserve(vci.frames_in_flight);
-        for(size_t i=0;i<vci.frames_in_flight;++i)
-            m_frames.push_back(std::make_unique<ViFrame0>(*this));
-            
-        return std::error_code();
-    }
-    
-    void                        Visualizer::_dtor()
-    {
-        vizInfo << "Visualizer::Destructor";
-        
-        if(m_cleanup)
-            m_cleanup->sweep();
-        m_frames.clear();
-        
-        m_thread        = {};
-    
-        //  Generally in reverse order of initialization
-
-        if(m_cleanup)
-            m_cleanup->sweep();
-        if(device())
-            vkDeviceWaitIdle(device());
-
-        _9_pipeline_manager_kill();
-
-        if(m_cleanup)
-            m_cleanup->sweep();
-        if(device())
-            vkDeviceWaitIdle(device());
-
-        _8_swapchain_kill();
-
-        if(m_cleanup)
-            m_cleanup->sweep();
-        if(device())
-            vkDeviceWaitIdle(device());
-
-        _7_render_pass_kill();
-
-        if(m_cleanup)
-            m_cleanup->sweep();
-        if(device())
-            vkDeviceWaitIdle(device());
-
-        _6_manager_kill();
-
-        if(m_cleanup)
-            m_cleanup->sweep();
-        if(device())
-            vkDeviceWaitIdle(device());
-
-        _5_allocator_kill();
-        _4_device_kill();
-        _3_queues_kill();
-        _2_surface_kill();
-        _1_gpu_select_kill();
-        _0_app_window_kill();
-    }
-
-    std::error_code             Visualizer::init_visualizer(const ViewerCreateInfo& vci, GLFWwindow* w)
-    {
-        if(m_init)
-            return std::error_code();
-            
-        std::error_code ec  = _ctor(vci, w);
-        if(ec){
-            _dtor();
-            return ec;
-        }
-         
-        m_init      = true;
-        return std::error_code();
-
-    }
-    
-    void                        Visualizer::kill_visualizer()
-    {
-        if(!m_init)
-            return ;
-        _dtor();
-        m_init  = false;
-    }
-#endif
 
         ///////////////////////////
         
@@ -580,7 +408,7 @@ namespace yq::tachyon {
 
     VkDescriptorPool    Visualizer::descriptor_pool() const
     {
-        return m_thread->m_descriptors;
+        return m_thread->descriptors();
     }
 
     

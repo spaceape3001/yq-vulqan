@@ -13,6 +13,7 @@
 //#include <yq/tachyon/image/Image.hpp>
 #include <yq/tachyon/typedef/pipeline.hpp>
 #include <yq/tachyon/typedef/rendered.hpp>
+#include <yq/tachyon/typedef/vi_descriptor_pool.hpp>
 #include <yq/tachyon/typedef/vi_rendered.hpp>
 #include <yq/tachyon/typedef/vi_rendered_manager.hpp>
 #include <yq/tachyon/vulkan/ViQueueType.hpp>
@@ -61,9 +62,11 @@ namespace yq::tachyon {
         // eventually multithread...
     struct ViThread0 {
         Visualizer&             m_viz;
-        VkDescriptorPool        m_descriptors         = nullptr;
+        ViDescriptorPoolPtr     m_descriptors;
         VkCommandPool           m_graphics            = nullptr;
         VkCommandPool           m_compute             = nullptr;
+        
+        VkDescriptorPool        descriptors() const;
         
         ViThread0(Visualizer&);
         ~ViThread0();

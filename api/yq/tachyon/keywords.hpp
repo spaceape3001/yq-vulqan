@@ -60,6 +60,7 @@ namespace yq::tachyon {
     struct d2l_k    {};
     struct delegate_k {};
     struct desktop_k {};
+    struct device_k {};
     struct dialog_k {};
     struct direct_k{};
     struct dock_k {};
@@ -254,6 +255,7 @@ namespace yq::tachyon {
     static constexpr const delegate_k           DELEGATE;
     static constexpr const delete_k             DELETE;
     static constexpr const desktop_k            DESKTOP;
+    static constexpr const device_k             DEVICE;
     static constexpr const dialog_k             DIALOG;
     static constexpr const direct_k             DIRECT;
     static constexpr const dock_k               DOCK;

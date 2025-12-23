@@ -431,6 +431,7 @@ add_library(${PROJECT_NAME} SHARED
     vulkan/ViFence.cpp
     vulkan/ViFrame.cpp
     vulkan/ViGui.cpp
+    vulkan/ViHeadless.cpp
     vulkan/ViImage.cpp
     vulkan/ViPipeline.cpp
     vulkan/ViPipelineLayout.cpp
@@ -445,6 +446,7 @@ add_library(${PROJECT_NAME} SHARED
     vulkan/ViThread.cpp
     vulkan/ViVisualizer.cpp
     vulkan/Visualizer.cpp
+    vulkan/VizBase.cpp
     vulkan/metatypes.cpp
     
 )

@@ -19,5 +19,6 @@ namespace yq::tachyon {
     //! Minimum number of descriptors
     static constexpr const uint32_t MIN_DESCRIPTOR_COUNT    = 1024;
     
-    static constexpr const uint64_t DEFAULT_WAIT_TIMEOUT    = 999'999'999ULL;
+    //! Default wait timeout (ns)
+    static constexpr const uint64_t DEFAULT_WAIT_TIMEOUT    = 99'999'999ULL;
 }

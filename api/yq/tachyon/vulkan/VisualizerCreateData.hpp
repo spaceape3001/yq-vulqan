@@ -6,8 +6,7 @@
 
 #pragma once
 
-#include "ViVisualizer.hpp"
-
+#include <yq/tachyon/vulkan/ViVisualizer.hpp>
 #include <yq/tachyon/vulkan/ViDevice.hpp>
 #include <yq/tachyon/vulkan/ViSurface.hpp>
 #include <yq/tachyon/app/ViewerCreateInfo.hpp>

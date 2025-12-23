@@ -4,5 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViOffscreenRender.hpp"
+#pragma once
 
+#include <yq/tachyon/vulkan/VizBase.hpp>
+
+namespace yq::tachyon {
+    class ViHeadless : public VizBase {
+    public:
+    
+    };
+}

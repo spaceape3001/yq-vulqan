@@ -6,28 +6,21 @@
 
 #pragma once
 
-#include <yq/color/RGBA.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/vector/Vector2.hpp>
 
 #include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/pipeline/DataFormat.hpp>
+#include <yq/tachyon/app/GEnvCreateInfo.hpp>
 #include <yq/tachyon/pipeline/PresentMode.hpp>
 #include <yq/tachyon/os/WindowMode.hpp>
 #include <yq/tachyon/typedef/monitor.hpp>
-#include <yq/tachyon/typedef/queue_spec.hpp>
 
 //#include <vulkan/vulkan_core.h>
-#include <variant>
 #include <vector>
-
-struct VkPhysicalDevice_T;
 
 namespace yq::tachyon {
 
-    struct ViewerCreateInfo {
-    
-        VkPhysicalDevice_T*         device   = nullptr;
+    struct ViewerCreateInfo : public GEnvCreateInfo {
     
         std::string                 title    = "(untitled)";
         Size2I                      size     = { 1920, 1080 };
@@ -37,13 +30,6 @@ namespace yq::tachyon {
         PresentMode                 pmode   = PresentMode::Fifo;
         WindowMode                  wmode   = WindowMode::Normal;
         
-        
-            //!  This is the background color
-        RGBA4F                      clear   = { 0., 0., 0., 1. };
-        
-        using depth_spec_t  = std::variant<std::monostate, enable_k, DataFormat>;
-        depth_spec_t                depth_buffer;
-
 
             //!  Set to make always-on-top
         bool                        floating        = false;
@@ -69,14 +55,6 @@ namespace yq::tachyon {
             //!  Set to start "hidden"
         bool                        hidden      = false;
         
-            //!  Set to enable fill of non-solid features
-        bool                        fill_non_solid  = true;
-        
-            //!  Set if we want multiview capability (think STEREO/VR)
-        bool                        multiview   = false;
-            
-            //!     Set to get descriptors allocated
-        uint32_t                    descriptors = 0;
         
             //!  Number of frames in flight
         size_t                      frames_in_flight    = 2;

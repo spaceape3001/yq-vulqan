@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/tachyon/app/GEnvCreateInfo.hpp>
+
+namespace yq::tachyon {
+    struct HeadlessCreateInfo : public GEnvCreateInfo {
+        queue_spec      graphics;
+        queue_spec      present;
+    };
+}

@@ -121,8 +121,8 @@ namespace yq::tachyon {
         VkAttachmentDescription depthAttachment{};
         VkAttachmentReference   depthAttachmentRef{};
         
-        if(viz.depth_buffering_enabled()){
-            depthAttachment.format          = viz.depth_format();
+        if(viz.depth_buffer_enabled()){
+            depthAttachment.format          = viz.depth_buffer_format();
             depthAttachment.samples         = VK_SAMPLE_COUNT_1_BIT;
             depthAttachment.loadOp          = VK_ATTACHMENT_LOAD_OP_CLEAR;
             depthAttachment.storeOp         = VK_ATTACHMENT_STORE_OP_STORE;

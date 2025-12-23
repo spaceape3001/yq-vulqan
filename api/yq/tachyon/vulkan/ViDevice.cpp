@@ -555,6 +555,11 @@ namespace yq::tachyon {
         return m_gpuProperties.deviceType;
     }
 
+    bool    ViDevice::has_queue(ViQueueType qt) const
+    {   
+        return m_queueType2Family.contains(qt);
+    }
+
 
     ViImageCPtr     ViDevice::image(uint64_t i) const
     {

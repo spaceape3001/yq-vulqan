@@ -107,6 +107,8 @@ namespace yq::tachyon {
         void                            image_erase(uint64_t);
         void                            image_erase(const Raster&);
         //ViImageManager*                 image_manager() const;
+
+        bool                            has_queue(ViQueueType) const;
         
         bool                            is_queue_compute(ViQueueFamilyID) const;
         bool                            is_queue_graphic(ViQueueFamilyID) const;

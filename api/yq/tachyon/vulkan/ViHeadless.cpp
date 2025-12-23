@@ -4,11 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-
-#include "ViRenderTarget.hpp"
+#include "ViHeadless.hpp"
 
 namespace yq::tachyon {
-    struct ViOffscreenRender : public ViRenderTarget {
-    };
 }

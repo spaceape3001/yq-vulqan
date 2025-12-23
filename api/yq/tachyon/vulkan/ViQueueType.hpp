@@ -21,4 +21,6 @@ namespace yq::tachyon {
     };
 
     using ViQueueTypeFlags  = Flags<ViQueueType>;
+    
+    std::string_view    key_for(ViQueueType);
 }

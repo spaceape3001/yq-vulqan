@@ -60,9 +60,9 @@ namespace yq::tachyon {
             uint32_t        graphics_number     = 0;
             ViQueueID       graphics_queue;
             
-            //queue_spec      optical_flow;
-            //uint32_t        optical_flow_number;
-            //ViQueueID       optical_flow_queue;
+            queue_spec      optical_flow;
+            uint32_t        optical_flow_number = 0;
+            ViQueueID       optical_flow_queue;
             
             queue_spec      present;
             uint32_t        present_number      = 0;
@@ -80,6 +80,8 @@ namespace yq::tachyon {
         };
         
         RGBA4F                          clear_color() const;    // TBH... likely deprecated
+
+        bool                            compute_enabled() const { return m_computeQueue.enable; }
 
         VkQueue                         compute_queue() const;
         ViQueueFamilyID                 compute_queue_family() const { return m_computeQueue.id.family; }
@@ -104,24 +106,27 @@ namespace yq::tachyon {
 
         bool                            good_base() const { return m_goodBase; }
 
-        VkQueue                         graphic_queue() const;
-        ViQueueFamilyID                 graphic_queue_family() const { return m_graphicsQueue.id.family; }
-        ViQueueID                       graphic_queue_id() const { return m_graphicsQueue.id; }
-        std::error_code                 graphic_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
-        bool                            graphic_queue_valid() const;
+        bool                            graphics_enabled() const { return m_graphicsQueue.enable; }
+        VkQueue                         graphics_queue() const;
+        ViQueueFamilyID                 graphics_queue_family() const { return m_graphicsQueue.id.family; }
+        ViQueueID                       graphics_queue_id() const { return m_graphicsQueue.id; }
+        std::error_code                 graphics_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
+        bool                            graphics_queue_valid() const;
 
         //! Vulkan logical device
         VkDevice                        logical() const;
 
-        //VkQueue                         optical_flow_queue() const;
-        //ViQueueFamilyID                 optical_flow_queue_family() const { return m_opticalFlowQueue.id.family; }
-        //ViQueueID                       optical_flow_queue_id() const { return m_opticalFlowQueue.id; }
-        //std::error_code                 optical_flow_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
-        //bool                            optical_flow_queue_valid() const;
+        bool                            optical_flow_enabled() const { return m_opticalFlowQueue.enable; }
+        VkQueue                         optical_flow_queue() const;
+        ViQueueFamilyID                 optical_flow_queue_family() const { return m_opticalFlowQueue.id.family; }
+        ViQueueID                       optical_flow_queue_id() const { return m_opticalFlowQueue.id; }
+        std::error_code                 optical_flow_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
+        bool                            optical_flow_queue_valid() const;
 
         //! Vulkan physical device (gpu)
         VkPhysicalDevice                physical() const;
 
+        bool                            present_enabled() const { return m_presentQueue.enable; }
         VkQueue                         present_queue() const;
         ViQueueFamilyID                 present_queue_family() const { return m_presentQueue.id.family; }
         ViQueueID                       present_queue_id() const { return m_presentQueue.id; }
@@ -133,6 +138,7 @@ namespace yq::tachyon {
                     //! Sets the background color
         void                            set_clear_color(const RGBA4F&);
 
+        bool                            transfer_enabled() const { return m_transferQueue.enable; }
         VkQueue                         transfer_queue() const;
         uint32_t                        transfer_queue_count() const;
         ViQueueFamilyID                 transfer_queue_family() const { return m_transferQueue.id.family; }
@@ -142,12 +148,14 @@ namespace yq::tachyon {
         //! IF valid, means there's an asynchronous DMA transfer queue
         bool                            transfer_queue_valid() const;
 
+        bool                            video_decode_enabled() const { return m_videoDecQueue.enable; }
         VkQueue                         video_decode_queue() const;
         ViQueueFamilyID                 video_decode_queue_family() const { return m_videoDecQueue.id.family; }
         ViQueueID                       video_decode_queue_id() const { return m_videoDecQueue.id; }
         std::error_code                 video_decode_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            video_decode_queue_valid() const;
 
+        bool                            video_encode_enabled() const { return m_videoEncQueue.enable; }
         VkQueue                         video_encode_queue() const;
         ViQueueFamilyID                 video_encode_queue_family() const { return m_videoEncQueue.id.family; }
         ViQueueID                       video_encode_queue_id() const { return m_videoEncQueue.id; }
@@ -179,7 +187,7 @@ namespace yq::tachyon {
         ViDevicePtr             m_device;
         DepthBuffer             m_depthBuffer;
         Queue                   m_graphicsQueue;
-        //Queue                   m_opticalFlowQueue;
+        Queue                   m_opticalFlowQueue;
         Queue                   m_presentQueue;
         Queue                   m_transferQueue;
         Queue                   m_videoDecQueue;

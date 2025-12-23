@@ -46,18 +46,19 @@ namespace yq::tachyon {
 
     ViVisualizer::ViVisualizer(const CreateData& cfg) : 
         VizBase({
-            .clear_color        = cfg.viewer.clear,
-            .compute            = cfg.viewer.compute,
-            .depth_buffer       = cfg.viewer.depth_buffer,
-            .device             = cfg.device, 
-            .graphics           = REQUIRED,
-            .graphics_number    = cfg.number,
-            .present            = REQUIRED,
-            .present_queue      = cfg.present,
-            .surface            = cfg.surface->surface(),
-            .transfer           = cfg.viewer.transfer,
-            .video_decode       = cfg.viewer.video_decode,
-            .video_encode       = cfg.viewer.video_encode
+            .clear_color            = cfg.viewer.clear,
+            .compute                = cfg.viewer.compute,
+            .depth_buffer           = cfg.viewer.depth_buffer,
+            .device                 = cfg.device, 
+            .graphics               = REQUIRED,
+            .graphics_number        = cfg.number,
+            .optical_flow           = cfg.viewer.optical_flow,
+            .present                = REQUIRED,
+            .present_queue          = cfg.present,
+            .surface                = cfg.surface->surface(),
+            .transfer               = cfg.viewer.transfer,
+            .video_decode           = cfg.viewer.video_decode,
+            .video_encode           = cfg.viewer.video_encode
         }), 
         m_surface(cfg.surface)
     {

@@ -327,8 +327,8 @@ namespace yq::tachyon {
         VqCommandPoolCreateInfo poolInfo;
         poolInfo.flags                  = m_viz.command_pool_create_flags();
         
-        if(m_viz.graphic_queue_valid()){
-            poolInfo.queueFamilyIndex   = m_viz.graphic_queue_family().index;
+        if(m_viz.graphics_queue_valid()){
+            poolInfo.queueFamilyIndex   = m_viz.graphics_queue_family().index;
             if (vkCreateCommandPool(m_viz.device(), &poolInfo, nullptr, &m_graphics) != VK_SUCCESS) 
                 throw create_error<"Failed to create a graphic command pool">();
         }
@@ -743,7 +743,7 @@ namespace yq::tachyon {
         submitInfo.signalSemaphoreCount = 1;
         submitInfo.pSignalSemaphores    = signalSemaphores;
 
-        if (vkQueueSubmit(graphic_queue(), 1, &submitInfo, f.m_fence) != VK_SUCCESS) 
+        if (vkQueueSubmit(graphics_queue(), 1, &submitInfo, f.m_fence) != VK_SUCCESS) 
             return create_error<"Failed to submit draw command buffer">();
             
         VqPresentInfoKHR presentInfo;

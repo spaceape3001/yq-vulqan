@@ -137,8 +137,8 @@ namespace yq::tachyon {
             return false;
         if(!m_transferQueue.init(*m_device, ViQueueType::Transfer, p.transfer, p.transfer_queue, p.transfer_number))
             return false;
-        //if(!m_opticalFlowQueue.init(*m_device, ViQueueType::OpticalFlow, p.optical_flow, p.optical_flow_queue, p.optical_flow_number))
-            //return false;
+        if(!m_opticalFlowQueue.init(*m_device, ViQueueType::OpticalFlow, p.optical_flow, p.optical_flow_queue, p.optical_flow_number))
+            return false;
         if(!m_videoDecQueue.init(*m_device, ViQueueType::VideoDecode, p.video_decode, p.video_decode_queue, p.video_decode_number))
             return false;
         if(!m_videoEncQueue.init(*m_device, ViQueueType::VideoDecode, p.video_decode, p.video_encode_queue, p.video_encode_number))
@@ -221,19 +221,19 @@ namespace yq::tachyon {
     }
 
 
-    VkQueue     VizBase::graphic_queue() const
+    VkQueue     VizBase::graphics_queue() const
     {
         if(m_graphicsQueue.enable && m_device)
             return m_device->queue(m_graphicsQueue.id);
         return nullptr;
     }
     
-    bool        VizBase::graphic_queue_valid() const
+    bool        VizBase::graphics_queue_valid() const
     {
         return m_graphicsQueue.enable && m_device && m_device->is_queue_valid(m_graphicsQueue.id);
     }
 
-    std::error_code VizBase::graphic_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
+    std::error_code VizBase::graphics_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
         if(!fn)
             return errors::tasker_bad_function();
@@ -250,26 +250,26 @@ namespace yq::tachyon {
     }
 
 
-    //VkQueue      VizBase::optical_flow_queue() const
-    //{
-        //if(m_opticalFlowQueue.enable && m_device)
-            //return m_device -> queue(m_opticalFlowQueue.id);
-        //return nullptr;
-    //}
+    VkQueue      VizBase::optical_flow_queue() const
+    {
+        if(m_opticalFlowQueue.enable && m_device)
+            return m_device -> queue(m_opticalFlowQueue.id);
+        return nullptr;
+    }
 
-    //std::error_code VizBase::optical_flow_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
-    //{
-        //if(!fn)
-            //return errors::tasker_bad_function();
-        //if(!m_opticalFlowQueue.enable || !m_device || !m_device->valid())
-            //return errors::visualizer_uninitialized();
-        //return m_device->queue_task(m_opticalFlowQueue.id, opts.timeout, std::move(fn));
-    //}
+    std::error_code VizBase::optical_flow_queue_task(queue_tasker_fn&&fn, const VizTaskerOptions& opts)
+    {
+        if(!fn)
+            return errors::tasker_bad_function();
+        if(!m_opticalFlowQueue.enable || !m_device || !m_device->valid())
+            return errors::visualizer_uninitialized();
+        return m_device->queue_task(m_opticalFlowQueue.id, opts.timeout, std::move(fn));
+    }
 
-    //bool        VizBase::optical_flow_queue_valid() const
-    //{
-        //return m_opticalFlowQueue.enable && m_device && m_device->is_queue_valid( m_opticalFlowQueue.id );
-    //}
+    bool        VizBase::optical_flow_queue_valid() const
+    {
+        return m_opticalFlowQueue.enable && m_device && m_device->is_queue_valid( m_opticalFlowQueue.id );
+    }
 
 
     VkPhysicalDevice      VizBase::physical() const 
@@ -306,9 +306,9 @@ namespace yq::tachyon {
     {
         switch(qt){
         case ViQueueType::Auto:
-            return graphic_queue_task(std::move(fn), opts);
+            return graphics_queue_task(std::move(fn), opts);
         case ViQueueType::Graphic:
-            return graphic_queue_task(std::move(fn), opts);
+            return graphics_queue_task(std::move(fn), opts);
         case ViQueueType::Present:
             return present_queue_task(std::move(fn), opts);
         case ViQueueType::Compute:
@@ -319,11 +319,11 @@ namespace yq::tachyon {
             return video_decode_queue_task(std::move(fn), opts);
         case ViQueueType::Transfer:
             return transfer_queue_task(std::move(fn), opts);
-        //case ViQueueType::OpticalFlow:
-            //return optical_flow_queue_task(std::move(fn), opts);
+        case ViQueueType::OpticalFlow:
+            return optical_flow_queue_task(std::move(fn), opts);
         default:
             //  shrugs... how?
-            return graphic_queue_task(std::move(fn), opts);
+            return graphics_queue_task(std::move(fn), opts);
         }
     }
 

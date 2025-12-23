@@ -42,7 +42,7 @@ namespace yq::tachyon {
             //!  Set if we want multiview capability (think STEREO/VR)
         bool                        multiview       = false;
 
-        //queue_spec                  optical_flow;
+        queue_spec                  optical_flow;
 
             //!  Transfer queue
         queue_spec                  transfer;

@@ -93,8 +93,8 @@ namespace yq::tachyon {
         swapInfo.imageArrayLayers = 1;    // we're not steroscopic (YET)  <-- OCULUS HERE
         swapInfo.imageUsage       = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
         
-        uint32_t queueFamilyIndices[] = {viz.graphic_queue_family().index, viz.present_queue_family().index};
-        if (viz.graphic_queue_family() != viz.present_queue_family()) {
+        uint32_t queueFamilyIndices[] = {viz.graphics_queue_family().index, viz.present_queue_family().index};
+        if (viz.graphics_queue_family() != viz.present_queue_family()) {
             swapInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
             swapInfo.queueFamilyIndexCount = 2;
             swapInfo.pQueueFamilyIndices = queueFamilyIndices;

@@ -10,10 +10,12 @@
 #include <yq/keywords.hpp>
 #include <yq/core/Guarded.hpp>
 #include <yq/core/Ref.hpp>
+#include <yq/core/UniqueID.hpp>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/app/GEnvCreateInfo.hpp>
 #include <yq/tachyon/config/vulqan.hpp>
 #include <yq/tachyon/typedef/vi_device.hpp>
+#include <yq/tachyon/typedef/vi_processor.hpp>
 #include <yq/tachyon/typedef/vi_queue_id.hpp>
 #include <yq/tachyon/typedef/vi_queue_tasker.hpp>
 #include <yq/tachyon/vulkan/ViQueueType.hpp>
@@ -30,7 +32,7 @@ namespace yq::tachyon {
         uint32_t        queue   = 0;
     };
         
-    class VizBase {
+    class VizBase : public UniqueID {
     public:
         static Tristate mix(Tristate spec, Tristate def)
         {
@@ -56,6 +58,7 @@ namespace yq::tachyon {
             ViQueueID       compute_queue;
             depth_spec      depth_buffer;
             ViDevicePtr     device;
+
             queue_spec      graphics;
             uint32_t        graphics_number     = 0;
             ViQueueID       graphics_queue;
@@ -192,11 +195,23 @@ namespace yq::tachyon {
         Queue                   m_transferQueue;
         Queue                   m_videoDecQueue;
         Queue                   m_videoEncQueue;
+        ViProcessorUPtrVector   m_processors;
         
         bool    _init_depth(const Param&);
         bool    _init_queues(const Param&);
+        
+        struct ProcInit {
+            ViQueueType     queue_type  = ViQueueType::Graphic;
+            
+            uint32_t        processors  = 3;
+            uint32_t        workers     = 1;
+        };
+        
+        bool    _init_processors();
+        bool    _init_processors(const ProcInit&);
 
     private:
+        ProcInit                m_procInit;
         bool                    m_goodBase       = false;
     };
 }

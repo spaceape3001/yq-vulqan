@@ -10,6 +10,7 @@
 #include <vulkan/vulkan_core.h>
 #include <yq/core/Flags.hpp>
 #include <yq/tachyon/typedef/vi_queue_id.hpp>
+#include <yq/tachyon/vulkan/ViQueueType.hpp>
 
 namespace yq::tachyon {
     class ViDevice;
@@ -31,6 +32,7 @@ namespace yq::tachyon {
     class ViCommandPool {
     public:
     
+        ViCommandPool(ViDevice&, ViQueueType, VqCommandPoolCreateFlags={});
         ViCommandPool(ViDevice&, ViQueueFamilyID, VqCommandPoolCreateFlags={});
         ViCommandPool(ViDevice&, const VkCommandPoolCreateInfo&);
         ~ViCommandPool();

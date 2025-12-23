@@ -430,12 +430,12 @@ add_library(${PROJECT_NAME} SHARED
     vulkan/ViDescriptorPool.cpp
     vulkan/ViDevice.cpp
     vulkan/ViFence.cpp
-    vulkan/ViFrame.cpp
     vulkan/ViGui.cpp
     vulkan/ViHeadless.cpp
     vulkan/ViImage.cpp
     vulkan/ViPipeline.cpp
     vulkan/ViPipelineLayout.cpp
+    vulkan/ViProcessor.cpp
     #vulkan/ViQueueManager.cpp
     vulkan/ViQueueTasker.cpp
     vulkan/ViRendered.cpp
@@ -446,6 +446,7 @@ add_library(${PROJECT_NAME} SHARED
     vulkan/ViTasker.cpp
     vulkan/ViThread.cpp
     vulkan/ViVisualizer.cpp
+    vulkan/ViWorker.cpp
     vulkan/Visualizer.cpp
     vulkan/VizBase.cpp
     vulkan/metatypes.cpp

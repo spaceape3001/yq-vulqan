@@ -9,6 +9,7 @@
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/vulkan/ViDevice.hpp>
 #include <yq/tachyon/vulkan/ViLogging.hpp>
+#include <yq/tachyon/vulkan/ViProcessor.hpp>
 #include <yq/tachyon/vulkan/VqStructs.hpp>
 #include <yq/tachyon/vulkan/VqUtils.hpp>
 #include <yq/tachyon/vulkan/VulqanManager.hpp>
@@ -56,11 +57,15 @@ namespace yq::tachyon {
             return;
         if(!_init_depth(p))
             return;
+
+vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_number << ") to get queue " << hex(graphics_queue());
+            
         m_goodBase  = true;
     }
     
     VizBase::~VizBase()
     {
+        m_processors.clear();
     }
     
     bool VizBase::Queue::init(ViDevice& dev, ViQueueType type, queue_spec qs, const ViQueueID& _id, uint32_t num)
@@ -116,6 +121,27 @@ namespace yq::tachyon {
         }
         
         m_depthBuffer.enable    = true;
+        return true;
+    }
+
+    bool    VizBase::_init_processors()
+    {
+        return _init_processors(ProcInit());
+    }
+
+    bool    VizBase::_init_processors(const ProcInit& p)
+    {
+        if(!m_processors.empty())
+            return false;
+        m_procInit  = p;
+        m_processors.reserve(p.processors);
+        ViProcessor::Param vp;
+        vp.queue_type    = p.queue_type;
+        vp.workers  = std::max(p.workers,1U);
+        vp.command_pool_flags |= VqCommandPoolCreateBit::ResetCommandBuffer;
+        
+        for(uint32_t n=0;n<p.processors;++n)
+            m_processors.push_back(std::make_unique<ViProcessor>(*this, vp));
         return true;
     }
 

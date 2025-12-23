@@ -4,7 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViFrame.hpp"
+#include <memory>
+#include <vector>
 
 namespace yq::tachyon {
+    class ViWorker;
+    using ViWorkerUPtr = std::unique_ptr<ViWorker>;
+    using ViWorkerUPtrVector    = std::vector<ViWorkerUPtr>;
 }

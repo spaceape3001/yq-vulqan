@@ -23,6 +23,10 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////
     
+    ViCommandPool::ViCommandPool(ViDevice&dev, ViQueueType queueType, VqCommandPoolCreateFlags flags) : ViCommandPool(dev, dev.queue_family(queueType), flags)
+    {
+    }
+
     ViCommandPool::ViCommandPool(ViDevice& dev, ViQueueFamilyID queueFamilyIndex, VqCommandPoolCreateFlags flags) : 
         m_device(dev)
     {
@@ -36,7 +40,7 @@ namespace yq::tachyon {
         if(_init(cpci) != std::error_code())
             _wipe();
     }
-    
+
     ViCommandPool::~ViCommandPool()
     {
         kill();

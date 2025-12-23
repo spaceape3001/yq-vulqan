@@ -22,8 +22,13 @@ namespace yq::tachyon {
         A frame is intended to hit a target image (either swap or offscreen); 
         the swapchain will hold a vector of these.
     */
-    class ViFrame : public RefCount {
+    class ViFrame {
     public:
+    
+    
+    private:
+        ViDevice&       m_viz;
+        VkSemaphore     m_semaphore = nullptr;
     
         /*
             This'd be one image/frame target.... maybe the semaphore/fences are internal?

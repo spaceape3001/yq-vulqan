@@ -4,7 +4,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ViFrame.hpp"
+#include <memory>
+#include <vector>
 
 namespace yq::tachyon {
+    class ViProcessor;
+    using ViProcessorUPtr = std::unique_ptr<ViProcessor>;
+    using ViProcessorUPtrVector    = std::vector<ViProcessorUPtr>;
 }

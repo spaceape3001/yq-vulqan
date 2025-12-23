@@ -61,6 +61,7 @@ namespace yq::tachyon {
     class Proxy;
     class InterfaceMeta;
     class Tasker;
+    class ViProcessor;
 
     /*
         Tachyons will *belong* to a thread... either directly or indirectly 
@@ -500,6 +501,7 @@ namespace yq::tachyon {
         friend class Tasker;
         friend FramePtr;
         friend FrameCPtr;
+        friend class ViProcessor;
 
         Frame(ThreadID, uint64_t, unit::Second);
         ~Frame();

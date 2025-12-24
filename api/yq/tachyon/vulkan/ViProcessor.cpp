@@ -105,6 +105,7 @@ namespace yq::tachyon {
 
     void ViProcessor::reset()
     {
+        m_cmdPool.reset();
         for(auto&& w : m_workers){
             if(w)
                 w->reset();

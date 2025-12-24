@@ -446,7 +446,7 @@ namespace yq::tachyon {
             w -> m_flags |= Widget::F::HasSize;
             m_imgui -> draw(u, w);
         }
-        std::error_code ec = m_viz->draw(u, {
+        std::error_code ec = m_viz->draw2(u, {
             .prerecord = [&](ViContext& u){
                 if(w){
                     w -> prerecord(u);

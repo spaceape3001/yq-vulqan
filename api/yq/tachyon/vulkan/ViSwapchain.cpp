@@ -180,6 +180,7 @@ namespace yq::tachyon {
         depthViewInfo.subresourceRange.layerCount       = 1;
 
         VqFenceCreateInfo   cfi;
+        cfi.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
         for(size_t i=0;i<m_imageCount;++i){
             res = vkCreateFence(vk_device, &cfi, nullptr, &m_fences[i]);

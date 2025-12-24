@@ -69,7 +69,8 @@ namespace yq::tachyon {
             \note Nothing stops recursion... DON'T
         */
         std::error_code                 draw(ViContext&, const DrawFunctions& functions);
-        
+
+
         //! Draw a specific item, matrix assumed correct, with given pipeline
         //void                            draw_object(ViContext&, const Rendered&, const Pipeline&, Tristate wireframe=Tristate::INHERIT);
 

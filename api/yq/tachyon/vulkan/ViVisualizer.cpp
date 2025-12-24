@@ -26,6 +26,7 @@
 #include <yq/tachyon/vulkan/VqStructs.hpp>
 #include <yq/tachyon/vulkan/VqUtils.hpp>
 #include <yq/tachyon/vulkan/VulqanManager.hpp>
+#include <yq/tachyon/vulkan/ViContext.hpp>
 #include <yq/tachyon/vulkan/ViDevice.hpp>
 #include <yq/tachyon/vulkan/ViGraphicsProcessor.hpp>
 #include <yq/tachyon/vulkan/ViManager.hpp>
@@ -68,6 +69,13 @@ namespace yq::tachyon {
         }), 
         m_surface(cfg.surface)
     {
+    
+        // must be set before the swapchain is built
+        graphics_processor_factory(SET, [this]() -> ViProcessorUPtr {
+            return std::make_unique<ViGraphicsProcessor>(*this);
+        });
+
+
         m_presentMode   = PresentMode::Fifo;
         std::error_code ec  = _init(cfg);
         if(ec != std::error_code()){
@@ -75,9 +83,6 @@ namespace yq::tachyon {
             throw ec;
         }
         
-        graphics_processor_factory(SET, [this]() -> ViProcessorUPtr {
-            return std::make_unique<ViGraphicsProcessor>(*this);
-        });
     }
     
     ViVisualizer::~ViVisualizer()
@@ -94,8 +99,8 @@ namespace yq::tachyon {
             cfg.old_swapchain = m_swapchain -> vk_swapchain();
         device().wait_idle();
         m_swapchain     = new ViSwapchain(*this, cfg);
+        m_semaphoreIndex    = 0;
         graphics_processor_expand(m_swapchain->image_count());
-        vizDebug << "ViVisualizer: Rebuilt the swapchain";
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -115,9 +120,6 @@ namespace yq::tachyon {
         m_surfaceFormat         = VK_FORMAT_B8G8R8A8_SRGB;
         m_surfaceColorSpace     = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
 
-            
-        std::error_code     ec;
-
         m_renderPass = new ViRenderPass(*this, m_surfaceFormat);
         _rebuild_swapchain();
         return {};
@@ -133,7 +135,197 @@ namespace yq::tachyon {
 
 
     ///////////////////////////////////////////////////////////////////////////
+    std::error_code         ViVisualizer::draw2(ViContext& u, const DrawFunctions& fcn, uint64_t maxWait)
+    {
+        if(u.graphics_processor || u.command_buffer){
+            vizAlert << "ViVisualizer::draw2 -- recursion detected!";
+            return create_error<"ViVisualizer recursion detected">();
+        }
+        
+        
+        if(!m_swapchain){
+            vizCritical << "Visualizer::draw ... attempting to draw on a swapchain WITHOUT a swapchain";
+            return errors::swapchain_uninitialized();
+        }
 
+        VkSemaphore     imgAcquired    = m_swapchain->vk_semaphore(AVAILABLE, m_semaphoreIndex);
+        VkSemaphore     renderComplete = m_swapchain->vk_semaphore(RENDERED, m_semaphoreIndex);
+
+        VkResult        res = VK_SUCCESS;
+        struct {
+            VkFormat    format  = VK_FORMAT_UNDEFINED;
+            bool        enable  = false;
+        } snapshot;
+        if(auto p = std::get_if<bool>(&u.snapshot)){
+            snapshot.enable    = *p;
+        }
+        if(auto p = std::get_if<DataFormat>(&u.snapshot)){
+            snapshot.enable = true;
+            snapshot.format = (VkFormat) (p->value());
+        }
+        
+        if(snapshot.enable){
+            if(VkFence  fence   = m_swapchain->vk_fence(m_frameImageIndex)){
+                res = vkWaitForFences(vk_device(), 1, &fence, VK_TRUE, maxWait);   // 100ms is 10Hz
+                if(res == VK_TIMEOUT)
+                    return create_error<"Fence timeout">();
+            }
+            auto r = m_swapchain -> snapshot(m_frameImageIndex, snapshot.format);
+            if(r){
+                u.snapshot  = r.value();
+            } else {
+                u.snapshot  = r.error();
+            }
+        }
+
+        bool    rebuildFlag = m_rebuildSwap.exchange(false);
+        if(rebuildFlag){
+            _rebuild_swapchain();
+            return std::error_code();
+        }
+
+        res    = vkAcquireNextImageKHR(device(), m_swapchain->vk_swapchain(), maxWait, imgAcquired, VK_NULL_HANDLE, &m_frameImageIndex);
+
+        switch(res){
+        case VK_TIMEOUT:
+            return create_error<"Acquire image timeout">();
+        case VK_ERROR_OUT_OF_DATE_KHR:
+        case VK_SUBOPTIMAL_KHR:
+            _rebuild_swapchain();
+            return std::error_code();
+        case VK_SUCCESS:
+            break;
+        case VK_ERROR_OUT_OF_HOST_MEMORY:
+            return create_error<"Out of host memory">();
+        case VK_ERROR_OUT_OF_DEVICE_MEMORY:
+            return create_error<"Out of device memory">();
+        case VK_ERROR_DEVICE_LOST:
+            return create_error<"Device lost">();
+        case VK_ERROR_SURFACE_LOST_KHR:
+            return create_error<"Surface lost">();
+        case VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT:
+            return create_error<"Full screen exclusive mode lost">();
+        default:
+            return create_error<"Unexpected error">();
+        }
+
+        ViGraphicsProcessor*  gp  = graphics_processor(m_frameImageIndex);
+        if(!gp){
+            vizAlert << "ViVisualizer.draw(): No graphics processor on image index " << m_frameImageIndex;
+            return create_error<"ViVisualizer.draw(): Abnormal situation... no graphics processor">();
+        }
+
+        u.graphics_processor    = gp;
+        u.command_pool          = gp->vk_command_pool();
+        u.command_buffer        = gp->vk_command_buffer();
+        u.descriptor_pool       = vk_descriptor_pool();
+        
+        
+        VkFence fence = m_swapchain->vk_fence(m_frameImageIndex);
+        res = vkWaitForFences(vk_device(), 1, &fence, VK_TRUE, maxWait);   // 100ms is 10Hz
+        if(res == VK_TIMEOUT)
+            return create_error<"Fence timeout">();
+        vkResetFences(vk_device(), 1, &fence);
+        gp->reset();
+
+        std::vector<VkCommandBuffer>    cmdBuffers;
+        
+        std::error_code ret;
+        
+            // we may want to bring "prep" outside ... or parallelize...?
+        if(fcn.prerecord){
+            gp -> execute([&](ViProcessor&) -> void {
+                fcn.prerecord(u);
+            });
+        }
+        if(fcn.record){
+            gp -> execute([&](ViProcessor&){
+                cmdBuffers.push_back(u.command_buffer);
+
+                VqCommandBufferBeginInfo beginInfo;
+                beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT; // Optional
+                beginInfo.pInheritanceInfo = nullptr; // Optional
+
+                if (vkBeginCommandBuffer(u.command_buffer, &beginInfo) != VK_SUCCESS){
+                    ret = create_error<"Failed to begin recording command buffer">();
+                    return ;
+                }
+
+                VqRenderPassBeginInfo renderPassInfo;
+                renderPassInfo.renderPass       = vk_render_pass();
+                renderPassInfo.framebuffer      = m_swapchain->vk_framebuffer(m_frameImageIndex);
+                renderPassInfo.renderArea.offset = {0, 0};
+                renderPassInfo.renderArea.extent = m_swapchain->extents();
+
+                renderPassInfo.clearValueCount = 1;
+                VkClearValue                cv  = (u.clear.alpha >= 0) ? vqClearValue(u.clear) : color_clear_vk();
+                renderPassInfo.pClearValues = &cv;
+                vkCmdBeginRenderPass(u.command_buffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+                #ifdef NDEBUG
+                try {
+                #endif
+                
+                    fcn.record(u);
+                
+                #ifdef NDEBUG
+                } catch(std::error_code ec){
+                    ret = ec;
+                }
+                #endif
+
+                vkCmdEndRenderPass(u.command_buffer);
+                if (vkEndCommandBuffer(u.command_buffer) != VK_SUCCESS)
+                    ret = create_error<"Failed to record command buffer">();
+            });
+        }
+
+        u.command_buffer        = nullptr;
+        u.command_pool          = nullptr;
+        u.graphics_processor    = nullptr;
+        u.descriptor_pool       = nullptr;
+        
+        VqSubmitInfo submitInfo;
+
+        VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
+        submitInfo.waitSemaphoreCount   = 1;
+        submitInfo.pWaitSemaphores      = &imgAcquired;
+        submitInfo.pWaitDstStageMask    = waitStages;
+        submitInfo.commandBufferCount   = (uint32_t) cmdBuffers.size();;
+        submitInfo.pCommandBuffers      = cmdBuffers.data();
+
+        submitInfo.signalSemaphoreCount = 1;
+        submitInfo.pSignalSemaphores    = &renderComplete;
+
+        if (vkQueueSubmit(graphics_queue(), 1, &submitInfo, fence) != VK_SUCCESS) 
+            return create_error<"Failed to submit draw command buffer">();
+            
+        VqPresentInfoKHR presentInfo;
+
+        VkSwapchainKHR      swapchains[] = { m_swapchain -> vk_swapchain() };
+        presentInfo.waitSemaphoreCount = 1;
+        presentInfo.pWaitSemaphores = &renderComplete;
+        presentInfo.swapchainCount = 1;
+        presentInfo.pSwapchains = swapchains;
+        presentInfo.pImageIndices = &m_frameImageIndex;
+        presentInfo.pResults = nullptr; // Optional
+        res = vkQueuePresentKHR(present_queue(), &presentInfo);
+        if(res != VK_SUCCESS){
+            vizError << "VkQueuePreset returned " << (int) res;
+        }
+        
+        ++m_tick;
+        if(++m_semaphoreIndex > m_swapchain->image_count())
+            m_semaphoreIndex    = 0;
+        
+        
+        return ret;
+    }
+
+    ViGraphicsProcessor*    ViVisualizer::graphics_processor(uint32_t n) 
+    {
+        return dynamic_cast<ViGraphicsProcessor*>(VizBase::graphics_processor(n));
+    }
 
     
     PresentMode  ViVisualizer::present_mode() const

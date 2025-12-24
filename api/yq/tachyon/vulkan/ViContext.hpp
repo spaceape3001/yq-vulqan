@@ -61,6 +61,7 @@ namespace yq::tachyon {
         //! Current frame 
         ViFrame0*               frame0              = nullptr;
         
+        ViGraphicsProcessor*    graphics_processor  = nullptr;
         
         //! SET if we're in imgui mode
         ViGui*                  imgui               = nullptr;
@@ -79,7 +80,6 @@ namespace yq::tachyon {
         //! Current pipeline manager
         ViPipelineManager*      pipelines           = nullptr;
         
-        ViGraphicsProcessor*    processor       = nullptr;
         
         //! Grabs the previous frame's snapshot
         snapshot_t              snapshot;

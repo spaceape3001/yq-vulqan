@@ -50,6 +50,7 @@ namespace yq::tachyon {
     class Buffer;
     class Sampler;
     class Shader;
+    class ViGraphicsProcessor;
     
     using ViQueueManagerPtr             = Ref<ViQueueManager>;
     using VkSurfaceCapabilitiesKHR_x    = Expect<VkSurfaceCapabilitiesKHR>;
@@ -76,8 +77,14 @@ namespace yq::tachyon {
 
         struct CreateData;
 
+        
+        std::error_code                 draw2(ViContext&, const DrawFunctions& functions, uint64_t maxWait = 199'999'999ULL);
+
 
         Size2I                          framebuffer_size() const { return m_frameBufferSize; }
+        
+        using VizBase::graphics_processor;
+        ViGraphicsProcessor*            graphics_processor(uint32_t);
 
         PresentMode                     present_mode() const;
         const std::set<PresentMode>&    present_modes_available() const;
@@ -136,6 +143,7 @@ namespace yq::tachyon {
         VkFormat                            m_surfaceFormat;
         std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
         ViSwapchainPtr                      m_swapchain;
+        uint32_t                            m_semaphoreIndex    = 0;
         
 
         /*! Rebuilds the swapchain
@@ -145,5 +153,6 @@ namespace yq::tachyon {
     private:
         std::error_code     _init(const CreateData&);
         void                _kill();
+        
     };
 }

@@ -119,8 +119,8 @@ namespace yq::tachyon {
         void                            color_space(set_k, VkColorSpaceKHR);
 
         bool                            compute_enabled() const { return m_compute.enable; }
-
         ViProcessor*                    compute_processor(uint32_t);
+        uint32_t                        compute_processor(count_k) const;
         bool                            compute_processor_expand(uint32_t);
         VkQueue                         compute_queue() const;
         ViQueueFamilyID                 compute_queue_family() const { return m_compute.id.family; }
@@ -153,6 +153,7 @@ namespace yq::tachyon {
 
         bool                            graphics_enabled() const { return m_graphics.enable; }
         ViProcessor*                    graphics_processor(uint32_t);
+        uint32_t                        graphics_processor(count_k) const;
         bool                            graphics_processor_expand(uint32_t);
         VkQueue                         graphics_queue() const;
         ViQueueFamilyID                 graphics_queue_family() const { return m_graphics.id.family; }
@@ -163,8 +164,9 @@ namespace yq::tachyon {
         //! Vulkan logical device
         VkDevice                        logical() const { return vk_device(); }
 
-        ViProcessor*                    optical_flow_processor(uint32_t);
         bool                            optical_flow_enabled() const { return m_opticalFlow.enable; }
+        ViProcessor*                    optical_flow_processor(uint32_t);
+        uint32_t                        optical_flow_processor(count_k) const;
         VkQueue                         optical_flow_queue() const;
         ViQueueFamilyID                 optical_flow_queue_family() const { return m_opticalFlow.id.family; }
         ViQueueID                       optical_flow_queue_id() const { return m_opticalFlow.id; }
@@ -212,16 +214,18 @@ namespace yq::tachyon {
         VkPhysicalDevice                vk_physical_device() const;
         virtual VkRenderPass            vk_render_pass() const { return nullptr; }
 
-        ViProcessor*                    video_decode_processor(uint32_t);
         bool                            video_decode_enabled() const { return m_videoDec.enable; }
+        ViProcessor*                    video_decode_processor(uint32_t);
+        uint32_t                        video_decode_processor(count_k) const;
         VkQueue                         video_decode_queue() const;
         ViQueueFamilyID                 video_decode_queue_family() const { return m_videoDec.id.family; }
         ViQueueID                       video_decode_queue_id() const { return m_videoDec.id; }
         std::error_code                 video_decode_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            video_decode_queue_valid() const;
 
-        ViProcessor*                    video_encode_processor(uint32_t);
         bool                            video_encode_enabled() const { return m_videoEnc.enable; }
+        ViProcessor*                    video_encode_processor(uint32_t);
+        uint32_t                        video_encode_processor(count_k) const;
         VkQueue                         video_encode_queue() const;
         ViQueueFamilyID                 video_encode_queue_family() const { return m_videoEnc.id.family; }
         ViQueueID                       video_encode_queue_id() const { return m_videoEnc.id; }

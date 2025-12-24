@@ -8,6 +8,7 @@
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/vulkan/ViDevice.hpp>
 #include <yq/tachyon/vulkan/VizBase.hpp>
+#include <yq/tachyon/vulkan/VqStructs.hpp>
 #include <tbb/parallel_for.h>
 
 namespace yq::tachyon {
@@ -21,13 +22,18 @@ namespace yq::tachyon {
         m_workers.reserve(p.workers);
         while(m_workers.size() < p.workers)
             m_good = new_worker().good() && m_good;
+        VqSemaphoreCreateInfo   sci;
+        vkCreateSemaphore(m_device,  &sci, nullptr, &m_semaphore.finished);
     }
     
     ViProcessor::~ViProcessor()
     {
+        if(m_semaphore.finished){
+            vkDestroySemaphore(m_device, m_semaphore.finished, nullptr);
+        }
     }
     
-    void    ViProcessor::exec_multi(FNWorkTask&& fn)
+    void    ViProcessor::exec_multi(FNProcessorTask&& fn)
     {
         using range_t    = tbb::blocked_range<size_t>;
         
@@ -49,7 +55,7 @@ namespace yq::tachyon {
         tbb::parallel_for(range_t(0, m_workers.size()), multi, tbb::simple_partitioner());
     }
 
-    void      ViProcessor::execute(FNWorkTask&& fn)
+    void      ViProcessor::execute(FNProcessorTask&& fn)
     {
         if(!m_good)
             return;
@@ -72,7 +78,7 @@ namespace yq::tachyon {
     ViWorker& ViProcessor::new_worker()
     {
         ViWorker::Param p   = m_workerParam;
-        p.number    = (uint32_t) m_workers.size();
+        p.worker_id         = (uint32_t) m_workers.size();
         m_workers.push_back(std::make_unique<ViWorker>(*this, p));
         return *m_workers.back();
     }

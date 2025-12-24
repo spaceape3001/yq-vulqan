@@ -17,9 +17,9 @@ namespace yq::tachyon {
     
 
     enum class VqCommandPoolCreateBit : uint8_t {
-        Transient = 1,
-        ResetCommandBuffer = 2,
-        Protected = 3
+        Transient = 0,
+        ResetCommandBuffer = 1,
+        Protected = 2
     };
 
     enum class VqCommandPoolResetBit : uint8_t {

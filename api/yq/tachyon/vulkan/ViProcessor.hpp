@@ -8,6 +8,7 @@
 
 #include <functional>
 #include <yq/tachyon/vulkan/ViWorker.hpp>
+#include <yq/tachyon/typedef/vi_processor.hpp>
 #include <yq/tachyon/typedef/vi_worker.hpp>
 #include <vulkan/vulkan_core.h>
 
@@ -31,12 +32,10 @@ namespace yq::tachyon {
         ViDevice&               device() { return m_device; }
         const ViDevice&         device() const { return m_device; }
     
-        using FNWorkTask    = std::function<void(ViWorker&)>;
-    
         // executes *ALL* workers against the given task
-        void                    execute(FNWorkTask&&);    // TODO
+        void                    execute(FNProcessorTask&&);    // TODO
         bool                    good() const { return m_good; }
-        VkSemaphore             semaphore() const { return m_semaphore; }
+        VkSemaphore             semaphore_finished() const { return m_semaphore.finished; }
         
         void                    reset();
         
@@ -68,16 +67,18 @@ namespace yq::tachyon {
         auto crbegin() const { return m_workers.crbegin(); }
         auto crend() const { return m_workers.crend(); }
 
-
     private:
         VizBase&                m_viz;
         ViDevice&               m_device;
         ViWorkerUPtrVector      m_workers;
-        VkSemaphore             m_semaphore = nullptr;
+        
+        struct {
+            VkSemaphore         finished = nullptr;
+        } m_semaphore;
         ViWorker::Param         m_workerParam;
         bool                    m_good  = false;
         
-        void    exec_multi(FNWorkTask&&);
+        void    exec_multi(FNProcessorTask&&);
     };
 }
 

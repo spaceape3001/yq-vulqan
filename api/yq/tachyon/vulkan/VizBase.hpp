@@ -52,48 +52,77 @@ namespace yq::tachyon {
         using depth_spec    = GEnvCreateInfo::depth_spec;
         using queue_spec    = GEnvCreateInfo::queue_spec;
         struct Param {
-            RGBA4F          clear_color   = { 0., 0., 0., 1. };
-            queue_spec      compute;
-            uint32_t        compute_number      = 0;
-            ViQueueID       compute_queue;
-            depth_spec      depth_buffer;
-            ViDevicePtr     device;
+        
+            //! "Clear" color used in rendering (when nothing else is specified)
+            RGBA4F              color_clear             = { 0., 0., 0., 1. };  
+            VkFormat            color_format            = VK_FORMAT_B8G8R8A8_SRGB;
+            VkColorSpaceKHR     color_space             = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
+            
+            queue_spec          compute;
+            uint32_t            compute_processors      = 0;    //!< Number of desired compute processors on init
+            uint32_t            compute_qidx            = 0;
+            ViQueueID           compute_queue;
+            uint32_t            compute_workers         = 1;
+            
+            depth_spec          depth_buffer;
+            ViDevicePtr         device;
 
-            queue_spec      graphics;
-            uint32_t        graphics_number     = 0;
-            ViQueueID       graphics_queue;
+            queue_spec          graphics;
+            uint32_t            graphics_processors     = 0;    //!< Number of desired graphics processors on init
+            uint32_t            graphics_qidx           = 0;
+            uint32_t            graphics_workers        = 1;    //!< Number of workers per graphics processor on init
+            ViQueueID           graphics_queue;
             
-            queue_spec      optical_flow;
-            uint32_t        optical_flow_number = 0;
-            ViQueueID       optical_flow_queue;
+            queue_spec          optical_flow;
+            uint32_t            optical_flow_processors = 0;    //!< Number of desired optical flow processors on init
+            uint32_t            optical_flow_qidx       = 0;
+            ViQueueID           optical_flow_queue;
+            uint32_t            optical_flow_workers    = 1;    //!< Number of workers per optical flow processor on init
             
-            queue_spec      present;
-            uint32_t        present_number      = 0;
-            ViQueueID       present_queue;
-            VkSurfaceKHR    surface             = nullptr;
-            queue_spec      transfer;
-            uint32_t        transfer_number     = 0;
-            ViQueueID       transfer_queue;
-            queue_spec      video_decode;
-            uint32_t        video_decode_number = 0;
-            ViQueueID       video_decode_queue;
-            queue_spec      video_encode;
-            uint32_t        video_encode_number = 0;
-            ViQueueID       video_encode_queue;
+            queue_spec          present;
+            uint32_t            present_qidx            = 0;
+            ViQueueID           present_queue;
+            
+            VkSurfaceKHR        surface                 = nullptr;
+            
+            queue_spec          transfer;
+            uint32_t            transfer_qidx           = 0;
+            ViQueueID           transfer_queue;
+            
+            queue_spec          video_decode;
+            uint32_t            video_decode_processors = 0;
+            uint32_t            video_decode_qidx       = 0;
+            ViQueueID           video_decode_queue;
+            uint32_t            video_decode_workers    = 1;
+            
+            queue_spec          video_encode;
+            uint32_t            video_encode_processors = 0;
+            uint32_t            video_encode_qidx       = 0;
+            ViQueueID           video_encode_queue;
+            uint32_t            video_encode_workers    = 1;
         };
         
-        RGBA4F                          clear_color() const;    // TBH... likely deprecated
+        RGBA4F                          color_clear() const; 
+        void                            color_clear(set_k, const RGBA4F&);
+        
+        VkFormat                        color_format() const { return m_color.format; }
+        void                            color_format(set_k, DataFormat);
+        void                            color_format(set_k, VkFormat);
+
+        VkColorSpaceKHR                 color_space() const { return m_color.space; }
+        void                            color_space(set_k, VkColorSpaceKHR);
 
         bool                            compute_enabled() const { return m_computeQueue.enable; }
 
+        ViProcessor*                    compute_processor(uint32_t);
         VkQueue                         compute_queue() const;
         ViQueueFamilyID                 compute_queue_family() const { return m_computeQueue.id.family; }
         ViQueueID                       compute_queue_id() const { return m_computeQueue.id; }
         std::error_code                 compute_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            compute_queue_valid() const;
 
-        bool                            depth_buffer_enabled() const { return m_depthBuffer.enable; }
-        VkFormat                        depth_buffer_format() const { return m_depthBuffer.format; }
+        bool                            depth_enabled() const { return m_depth.enable; }
+        VkFormat                        depth_format() const { return m_depth.format; }
 
         virtual VkDescriptorPool        descriptor_pool() const = 0;
 
@@ -110,6 +139,7 @@ namespace yq::tachyon {
         bool                            good_base() const { return m_goodBase; }
 
         bool                            graphics_enabled() const { return m_graphicsQueue.enable; }
+        ViProcessor*                    graphics_processor(uint32_t);
         VkQueue                         graphics_queue() const;
         ViQueueFamilyID                 graphics_queue_family() const { return m_graphicsQueue.id.family; }
         ViQueueID                       graphics_queue_id() const { return m_graphicsQueue.id; }
@@ -119,6 +149,7 @@ namespace yq::tachyon {
         //! Vulkan logical device
         VkDevice                        logical() const;
 
+        ViProcessor*                    optical_flow_processor(uint32_t);
         bool                            optical_flow_enabled() const { return m_opticalFlowQueue.enable; }
         VkQueue                         optical_flow_queue() const;
         ViQueueFamilyID                 optical_flow_queue_family() const { return m_opticalFlowQueue.id.family; }
@@ -138,9 +169,6 @@ namespace yq::tachyon {
 
         std::error_code                 queue_task(ViQueueType, queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         
-                    //! Sets the background color
-        void                            set_clear_color(const RGBA4F&);
-
         bool                            transfer_enabled() const { return m_transferQueue.enable; }
         VkQueue                         transfer_queue() const;
         uint32_t                        transfer_queue_count() const;
@@ -151,6 +179,7 @@ namespace yq::tachyon {
         //! IF valid, means there's an asynchronous DMA transfer queue
         bool                            transfer_queue_valid() const;
 
+        ViProcessor*                    video_decode_processor(uint32_t);
         bool                            video_decode_enabled() const { return m_videoDecQueue.enable; }
         VkQueue                         video_decode_queue() const;
         ViQueueFamilyID                 video_decode_queue_family() const { return m_videoDecQueue.id.family; }
@@ -158,6 +187,7 @@ namespace yq::tachyon {
         std::error_code                 video_decode_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            video_decode_queue_valid() const;
 
+        ViProcessor*                    video_encode_processor(uint32_t);
         bool                            video_encode_enabled() const { return m_videoEncQueue.enable; }
         VkQueue                         video_encode_queue() const;
         ViQueueFamilyID                 video_encode_queue_family() const { return m_videoEncQueue.id.family; }
@@ -168,7 +198,7 @@ namespace yq::tachyon {
         std::error_code                 wait_idle();
 
     protected:
-        VizBase(const Param& p);
+        VizBase(const Param&);
         virtual ~VizBase();
         
         struct Queue {
@@ -180,38 +210,51 @@ namespace yq::tachyon {
             bool            init(ViDevice&, ViQueueType, queue_spec, const ViQueueID&, uint32_t);
         };
         
-        struct DepthBuffer {
+        struct ColorAttachment {
+            VkClearValue        clear{};
+            VkFormat            format;
+            VkColorSpaceKHR     space;
+        };
+        
+        struct DepthAttachment {
             bool            enable  = false;
             VkFormat        format  = VkFormat(0);
         };
         
-        Guarded<VkClearValue>   m_clearValue;
+        ColorAttachment         m_color;
+        ViProcessorUPtrVector   m_computeProcs;
         Queue                   m_computeQueue;
         ViDevicePtr             m_device;
-        DepthBuffer             m_depthBuffer;
+        DepthAttachment         m_depth;
+        ViProcessorUPtrVector   m_graphicsProcs;
         Queue                   m_graphicsQueue;
+        ViProcessorUPtrVector   m_opticalFlowProcs;
         Queue                   m_opticalFlowQueue;
         Queue                   m_presentQueue;
         Queue                   m_transferQueue;
+        ViProcessorUPtrVector   m_videoDecProcs;
         Queue                   m_videoDecQueue;
+        ViProcessorUPtrVector   m_videoEncProcs;
         Queue                   m_videoEncQueue;
-        ViProcessorUPtrVector   m_processors;
+        //ViProcessorUPtrVector   m_processors;
         
         bool    _init_depth(const Param&);
         bool    _init_queues(const Param&);
         
-        struct ProcInit {
-            ViQueueType     queue_type  = ViQueueType::Graphic;
-            
-            uint32_t        processors  = 3;
-            uint32_t        workers     = 1;
-        };
+        bool    _init_processors(ViProcessorUPtrVector&, ViQueueType, uint32_t nprocs, uint32_t nworkers);
         
-        bool    _init_processors();
-        bool    _init_processors(const ProcInit&);
+        //struct ProcInit {
+            //ViQueueType     queue_type  = ViQueueType::Graphic;
+            
+            //uint32_t        processors  = 3;
+            //uint32_t        workers     = 1;
+        //};
+        
+        //bool    _init_processors();
+        //bool    _init_processors(const ProcInit&);
 
     private:
-        ProcInit                m_procInit;
+        //ProcInit                m_procInit;
         bool                    m_goodBase       = false;
     };
 }

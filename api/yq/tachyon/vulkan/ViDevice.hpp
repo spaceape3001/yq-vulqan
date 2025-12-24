@@ -85,6 +85,7 @@ namespace yq::tachyon {
         void                            cleanup(cleanup_fn&&);
         void                            cleanup(sweep_k);
         
+        operator VkDevice() const { return m_device; }
         VkDevice                        device() const { return m_device; }
         void                            destroy();
 

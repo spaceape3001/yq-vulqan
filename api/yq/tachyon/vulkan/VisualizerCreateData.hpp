@@ -15,6 +15,7 @@
 namespace yq::tachyon {
     struct ViVisualizer::CreateData {
         const ViewerCreateInfo& viewer;
+        
         ViDevicePtr             device;
         ViSurfacePtr            surface;
         Size2I                  pixels;

@@ -54,23 +54,16 @@ namespace yq::tachyon {
         //const std::vector<VkImageView>&     image_views() const { return m_imageViews; }
         
         Expect<RasterPtr>   snapshot(uint32_t, VkFormat desired=VK_FORMAT_UNDEFINED) const;
-
-        struct Frame {
-            VkImage             image       = nullptr;
-            VkImageView         view        = nullptr;
-            VkFramebuffer       framebuffer = nullptr;
-            VkSemaphore         semaphore   = nullptr;
-        };
+        VkSemaphore         semaphore_available(uint32_t) const;
 
     private:
+        struct Frame;
+    
         ViVisualizer*               m_viz               = nullptr;
         VkSwapchainKHR              m_swapchain         = nullptr;
         VkExtent2D                  m_extents           = {};
         uint32_t                    m_minImageCount     = 0;
         uint32_t                    m_imageCount        = 0;
-        std::vector<VkImage>        m_images;
-        std::vector<VkImageView>    m_imageViews;
-        std::vector<VkFramebuffer>  m_frameBuffers;
         VkSurfaceCapabilitiesKHR    m_capabilities;
         std::vector<Frame>          m_frames;
         struct {

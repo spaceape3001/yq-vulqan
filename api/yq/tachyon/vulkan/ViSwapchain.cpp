@@ -26,6 +26,13 @@ namespace yq::tachyon {
         using swapchain_image_out_of_range      = error_db::entry<"Specified image index is out of range">;
     }
 
+    struct ViSwapchain::Frame {
+        VkImage             image       = nullptr;
+        VkImageView         imageview   = nullptr;
+        VkFramebuffer       framebuffer = nullptr;
+        VkSemaphore         available   = nullptr;
+    };
+
     ViSwapchain::ViSwapchain()
     {
     }
@@ -126,88 +133,81 @@ namespace yq::tachyon {
             vizWarning << "ViSwapchain(): Cannot get desired number of images, might be an issue.  " << imageCount << " vs " << m_imageCount;
         }
         m_imageCount    = imageCount;
-        m_images.resize(m_imageCount, nullptr);
         
-        res = vkGetSwapchainImagesKHR(viz.device(), m_swapchain, &m_imageCount, m_images.data());
+        std::vector<VkImage> images(m_imageCount, nullptr);
+        
+        res = vkGetSwapchainImagesKHR(viz.device(), m_swapchain, &m_imageCount, images.data());
         if(res != VK_SUCCESS){
             vizWarning << "ViSwapchain(): Cannot get images.  VkResult " << (int32_t) res;
             return errors::swapchain_cant_create();
         }
-
-        m_imageViews.resize(m_imageCount, nullptr);
-
-        VkImageViewCreateInfo       imageViewInfo = vqCreateInfo(ImageViewInfo());
-        imageViewInfo.format       = viz.surface_format();
-
-        for(size_t i=0; i<m_imageCount; ++i){
-            imageViewInfo.image        = m_images[i];
-            res = vkCreateImageView(viz.device(), &imageViewInfo, nullptr, &m_imageViews[i]);
-            if(res != VK_SUCCESS){
-                vizWarning << "ViSwapchain(): Cannot create a swapchain image viewer.  VkResult " << (int32_t) res;
-                return errors::swapchain_cant_create();
-            }
-        }                
-
-        m_frameBuffers.resize(m_imageCount, nullptr);
-        VqFramebufferCreateInfo   frameBufferInfo;
         
-        if(cfg.render_pass){
-            frameBufferInfo.renderPass  = cfg.render_pass;
-        } else {
-            frameBufferInfo.renderPass  = viz.render_pass();
-        }
-        frameBufferInfo.attachmentCount  = 1;
-        frameBufferInfo.width            = m_extents.width;
-        frameBufferInfo.height           = m_extents.height;
-        frameBufferInfo.layers           = 1;
-
+        VkRenderPass        rp  = cfg.render_pass ? cfg.render_pass : viz.render_pass();
+        m_frames.resize(m_imageCount);
         for(size_t i=0;i<m_imageCount;++i){
-            frameBufferInfo.pAttachments = &m_imageViews[i];
-            res = vkCreateFramebuffer(viz.device(), &frameBufferInfo, nullptr, &m_frameBuffers[i]);
-            if (res != VK_SUCCESS){
-                vizWarning << "ViSwapchain(): Cannot create a swapchain framebuffer.  VkResult " << (int32_t) res;
-                return errors::swapchain_cant_create();
-            }
+            std::error_code ec  = _init(m_frames[i], images[i], rp);
+            if(ec != std::error_code())
+                return ec;
         }
+        
         return {};
     }
 
-    std::error_code ViSwapchain::_init(Frame& frame, VkImage img, VkRenderPass vr)
+    std::error_code ViSwapchain::_init(Frame& f, VkImage img, VkRenderPass vr)
     {   
-        VkImageViewCreateInfo   imageViewInfo;
-        imageViewInfo.viewType  = VK_IMAGE_VIEW_TYPE_2D;
+        VkImageViewCreateInfo   imageViewInfo = vqCreateInfo(ImageViewInfo());
         imageViewInfo.format    = m_viz->surface_format();
-        frame.image = img;
+        imageViewInfo.image     = img;
+        f.image = img;
 
-        int res = vkCreateImageView(m_viz->device(), &imageViewInfo, nullptr, &frame.view);
+        int res = vkCreateImageView(m_viz->device(), &imageViewInfo, nullptr, &f.imageview);
         if(res != VK_SUCCESS){
             vizWarning << "ViSwapchain(): Cannot create a swapchain image viewer.  VkResult " << (int32_t) res;
             return errors::swapchain_cant_create();
         }
         
         VqFramebufferCreateInfo   frameBufferInfo;
+        frameBufferInfo.renderPass      = vr;
+        frameBufferInfo.attachmentCount = 1;
+        frameBufferInfo.width           = m_extents.width;
+        frameBufferInfo.height          = m_extents.height;
+        frameBufferInfo.layers          = 1;
+        frameBufferInfo.pAttachments    = &f.imageview;
+
+        res = vkCreateFramebuffer(m_viz->device(), &frameBufferInfo, nullptr, &f.framebuffer);
+        if (res != VK_SUCCESS){
+            vizWarning << "ViSwapchain(): Cannot create a swapchain framebuffer.  VkResult " << (int32_t) res;
+            return errors::swapchain_cant_create();
+        }
         
-        
+        VqSemaphoreCreateInfo   sci;
+        vkCreateSemaphore(m_viz->device(), &sci, nullptr, &f.available);
         return {};
+    }
+
+    void            ViSwapchain::_kill(Frame&f)
+    {
+        if(f.framebuffer){
+            vkDestroyFramebuffer(m_viz->device(), f.framebuffer, nullptr);
+            f.framebuffer   = nullptr;
+        }
+        if(f.imageview){
+            vkDestroyImageView(m_viz->device(), f.imageview, nullptr);
+            f.imageview     = nullptr;
+        }
+        if(f.available){
+            vkDestroySemaphore(m_viz->device(), f.available, nullptr);
+            f.available     = nullptr;
+        }
     }
     
     void            ViSwapchain::_kill()
     {
         if(m_viz && m_viz->device()){
-            for(VkFramebuffer b : m_frameBuffers){
-                if(!b)
-                    continue;
-                vkDestroyFramebuffer(m_viz->device(), b, nullptr);
-            }
-            for(VkImageView iv : m_imageViews){
-                if(!iv)
-                    continue;
-                vkDestroyImageView(m_viz->device(), iv, nullptr);
+            for(auto& f : m_frames){
+                _kill(f);
             }
         }
-        m_frameBuffers.clear();
-        m_imageViews.clear();
-        m_images.clear();
         if(m_swapchain && m_viz && m_viz->device()){
             vkDestroySwapchainKHR(m_viz->device(), m_swapchain, nullptr);
             m_swapchain  = nullptr;
@@ -220,7 +220,6 @@ namespace yq::tachyon {
         m_capabilities  = {};
     }
     
-    //void            _kill(Frame&);
 
     bool            ViSwapchain::consistent() const
     {
@@ -249,9 +248,9 @@ namespace yq::tachyon {
 
     VkFramebuffer   ViSwapchain::framebuffer(uint32_t i) const
     {
-        if(i>=m_frameBuffers.size())
+        if(i>=m_frames.size())
             return nullptr;
-        return m_frameBuffers[i];
+        return m_frames[i].framebuffer;
     }
     
     uint32_t  ViSwapchain::width() const 
@@ -261,16 +260,16 @@ namespace yq::tachyon {
 
     VkImage         ViSwapchain::image(uint32_t i) const
     {
-        if(i>=m_images.size())
+        if(i>=m_frames.size())
             return nullptr;
-        return m_images[i];
+        return m_frames[i].image;
     }
     
     VkImageView     ViSwapchain::image_view(uint32_t i) const
     {
-        if(i>=m_imageViews.size())
+        if(i>=m_frames.size())
             return nullptr;
-        return m_imageViews[i];
+        return m_frames[i].imageview;
     }
     
     std::error_code ViSwapchain::init(ViVisualizer&viz, const ViSwapchainConfig& cfg)
@@ -297,13 +296,20 @@ namespace yq::tachyon {
     {
         _kill();
     }
+
+    VkSemaphore         ViSwapchain::semaphore_available(uint32_t i) const
+    {
+        if(i >= m_frames.size())
+            return nullptr;
+        return m_frames[i].available;
+    }
     
     Expect<RasterPtr>   ViSwapchain::snapshot(uint32_t i, VkFormat desired) const
     {
-        if(i >= m_images.size())
+        if(i >= m_frames.size())
             return errors::swapchain_image_out_of_range();
         
-        return export_image(m_viz->device(REF), m_images[i], ViImageExport{
+        return export_image(m_viz->device(REF), m_frames[i].image, ViImageExport{
             .type       = VK_IMAGE_TYPE_2D,
             .src_layout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
             .format     = m_viz -> surface_format(),

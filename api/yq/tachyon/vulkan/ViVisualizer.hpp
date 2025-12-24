@@ -25,6 +25,7 @@
 #include <yq/tachyon/typedef/vi_pipeline.hpp>
 #include <yq/tachyon/typedef/vi_pipeline_layout.hpp>
 #include <yq/tachyon/typedef/vi_pipeline_manager.hpp>
+#include <yq/tachyon/typedef/vi_processor.hpp>
 #include <yq/tachyon/typedef/vi_render_pass.hpp>
 #include <yq/tachyon/typedef/vi_sampler.hpp>
 #include <yq/tachyon/typedef/vi_shader.hpp>
@@ -147,6 +148,7 @@ namespace yq::tachyon {
         //VkPhysicalDeviceProperties          m_deviceInfo;
         Size2I                              m_frameBufferSize   = {}; // For when we divorce the visualizer from the main thread
         uint32_t                            m_frameImageIndex   = 0;
+        ViProcessorUPtrVector               m_graphics;
         ViPipelineManagerUPtr               m_pipelines;        // temporary until relocated
         Guarded<PresentMode>                m_presentMode;
         std::set<PresentMode>               m_presentModes;

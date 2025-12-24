@@ -52,20 +52,29 @@ namespace yq::tachyon {
         if(!m_device || !m_device->valid())
             return ;
             
-        set_clear_color(p.clear_color);
+        color_clear(SET, p.color_clear);
         if(!_init_queues(p))
             return;
         if(!_init_depth(p))
             return;
+        _init_processors(m_computeProcs, ViQueueType::Compute, p.compute_processors, p.compute_workers);
+        _init_processors(m_graphicsProcs, ViQueueType::Graphic, p.graphics_processors, p.graphics_workers);
+        _init_processors(m_opticalFlowProcs, ViQueueType::OpticalFlow, p.optical_flow_processors, p.optical_flow_workers);
+        _init_processors(m_videoDecProcs, ViQueueType::VideoDecode, p.video_decode_processors, p.video_decode_workers);
+        _init_processors(m_videoEncProcs, ViQueueType::VideoEncode, p.video_encode_processors, p.video_encode_workers);
 
-vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_number << ") to get queue " << hex(graphics_queue());
+vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get queue " << hex(graphics_queue());
             
         m_goodBase  = true;
     }
     
     VizBase::~VizBase()
     {
-        m_processors.clear();
+        m_computeProcs.clear();
+        m_graphicsProcs.clear();
+        m_opticalFlowProcs.clear();
+        m_videoDecProcs.clear();
+        m_videoEncProcs.clear();
     }
     
     bool VizBase::Queue::init(ViDevice& dev, ViQueueType type, queue_spec qs, const ViQueueID& _id, uint32_t num)
@@ -110,40 +119,40 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_number << ") to get 
             if(!x)
                 return false;
                 
-            m_depthBuffer.format    = *x;
+            m_depth.format    = *x;
         }
         
         if(auto* x = std::get_if<DataFormat>(&p.depth_buffer)){
             if(*x == DataFormat::UNDEFINED)
                 return true;
             
-            m_depthBuffer.format    = (VkFormat) x -> value();
+            m_depth.format    = (VkFormat) x -> value();
         }
         
-        m_depthBuffer.enable    = true;
+        m_depth.enable    = true;
         return true;
     }
 
-    bool    VizBase::_init_processors()
-    {
-        return _init_processors(ProcInit());
-    }
+    //bool    VizBase::_init_processors()
+    //{
+        //return _init_processors(ProcInit());
+    //}
 
-    bool    VizBase::_init_processors(const ProcInit& p)
-    {
-        if(!m_processors.empty())
-            return false;
-        m_procInit  = p;
-        m_processors.reserve(p.processors);
-        ViProcessor::Param vp;
-        vp.queue_type    = p.queue_type;
-        vp.workers  = std::max(p.workers,1U);
-        vp.command_pool_flags |= VqCommandPoolCreateBit::ResetCommandBuffer;
+    //bool    VizBase::_init_processors(const ProcInit& p)
+    //{
+        //if(!m_processors.empty())
+            //return false;
+        //m_procInit  = p;
+        //m_processors.reserve(p.processors);
+        //ViProcessor::Param vp;
+        //vp.queue_type    = p.queue_type;
+        //vp.workers  = std::max(p.workers,1U);
+        //vp.command_pool_flags |= VqCommandPoolCreateBit::ResetCommandBuffer;
         
-        for(uint32_t n=0;n<p.processors;++n)
-            m_processors.push_back(std::make_unique<ViProcessor>(*this, vp));
-        return true;
-    }
+        //for(uint32_t n=0;n<p.processors;++n)
+            //m_processors.push_back(std::make_unique<ViProcessor>(*this, vp));
+        //return true;
+    //}
 
     bool    VizBase::_init_queues(const Param&p)
     {
@@ -155,28 +164,73 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_number << ") to get 
             //  needs to have the relevant queue enabled *AND* it needs to be
             //  set on the create data structure.
             
-        if(!m_graphicsQueue.init(*m_device, ViQueueType::Graphic, p.graphics, p.graphics_queue, p.graphics_number))
+        if(!m_graphicsQueue.init(*m_device, ViQueueType::Graphic, p.graphics, p.graphics_queue, p.graphics_qidx))
             return false;
-        if(!m_presentQueue.init(*m_device, ViQueueType::Present, p.present, p.present_queue.valid() ? p.present_queue : m_graphicsQueue.id, p.present_number))
+        if(!m_presentQueue.init(*m_device, ViQueueType::Present, p.present, p.present_queue.valid() ? p.present_queue : m_graphicsQueue.id, p.present_qidx))
             return false;
-        if(!m_computeQueue.init(*m_device, ViQueueType::Compute, p.compute, p.compute_queue, p.compute_number))
+        if(!m_computeQueue.init(*m_device, ViQueueType::Compute, p.compute, p.compute_queue, p.compute_qidx))
             return false;
-        if(!m_transferQueue.init(*m_device, ViQueueType::Transfer, p.transfer, p.transfer_queue, p.transfer_number))
+        if(!m_transferQueue.init(*m_device, ViQueueType::Transfer, p.transfer, p.transfer_queue, p.transfer_qidx))
             return false;
-        if(!m_opticalFlowQueue.init(*m_device, ViQueueType::OpticalFlow, p.optical_flow, p.optical_flow_queue, p.optical_flow_number))
+        if(!m_opticalFlowQueue.init(*m_device, ViQueueType::OpticalFlow, p.optical_flow, p.optical_flow_queue, p.optical_flow_qidx))
             return false;
-        if(!m_videoDecQueue.init(*m_device, ViQueueType::VideoDecode, p.video_decode, p.video_decode_queue, p.video_decode_number))
+        if(!m_videoDecQueue.init(*m_device, ViQueueType::VideoDecode, p.video_decode, p.video_decode_queue, p.video_decode_qidx))
             return false;
-        if(!m_videoEncQueue.init(*m_device, ViQueueType::VideoDecode, p.video_decode, p.video_encode_queue, p.video_encode_number))
+        if(!m_videoEncQueue.init(*m_device, ViQueueType::VideoDecode, p.video_decode, p.video_encode_queue, p.video_encode_qidx))
             return false;
         return true;
     }
 
-
-    RGBA4F VizBase::clear_color() const
+    bool   VizBase::_init_processors(ViProcessorUPtrVector&procs, ViQueueType qType, uint32_t nprocs, uint32_t nworkers)
     {
-        VkClearValue    cv = m_clearValue;
-        return vqExtractRGBA4F(cv);
+        if(!procs.empty())
+            return false;
+        if(!nprocs)
+            return true;
+            
+        procs.reserve(nprocs);
+            
+        ViProcessor::Param p;
+        p.workers               = std::max(nworkers, 1U);
+        p.command_pool_flags   |= VqCommandPoolCreateBit::ResetCommandBuffer;
+        p.queue_type            = qType;
+        
+        for(uint32_t n=0;n<nprocs;++n)
+            procs.push_back(std::make_unique<ViProcessor>(*this, p));
+        return true;
+    }
+
+
+    RGBA4F VizBase::color_clear() const
+    {
+        return vqExtractRGBA4F(m_color.clear);
+    }
+
+    void        VizBase::color_clear(set_k, const RGBA4F&i)
+    {   
+        m_color.clear   = vqClearValue(i);
+    }
+
+    void     VizBase::color_format(set_k, DataFormat v)
+    {
+        m_color.format  = (VkFormat) v.value();
+    }
+    
+    void     VizBase::color_format(set_k, VkFormat v)
+    {
+        m_color.format  = v;
+    }
+
+    void     VizBase::color_space(set_k, VkColorSpaceKHR v)
+    {
+        m_color.space   = v;
+    }
+
+    ViProcessor*    VizBase::compute_processor(uint32_t n)
+    {
+        if(n >= m_computeProcs.size())
+            return nullptr;
+        return m_computeProcs[n].get();
     }
 
     VkQueue  VizBase::compute_queue() const
@@ -246,6 +300,13 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_number << ") to get 
         return errors::format_unsupported();
     }
 
+    ViProcessor*    VizBase::graphics_processor(uint32_t n)
+    {
+        if(n >= m_graphicsProcs.size())
+            return nullptr;
+        return m_graphicsProcs[n].get();
+    }
+
 
     VkQueue     VizBase::graphics_queue() const
     {
@@ -273,6 +334,13 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_number << ") to get 
         if(m_device)
             return m_device->device();
         return nullptr;
+    }
+
+    ViProcessor*    VizBase::optical_flow_processor(uint32_t n)
+    {
+        if(n >= m_opticalFlowProcs.size())
+            return nullptr;
+        return m_opticalFlowProcs[n].get();
     }
 
 
@@ -353,12 +421,6 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_number << ") to get 
         }
     }
 
-    void        VizBase::set_clear_color(const RGBA4F&i)
-    {   
-        m_clearValue    = vqClearValue(i);
-    }
-
-
     VkQueue     VizBase::transfer_queue() const
     {
         if(m_transferQueue.enable && m_device)
@@ -378,6 +440,13 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_number << ") to get 
     bool    VizBase::transfer_queue_valid() const
     {
         return m_transferQueue.enable && m_device && m_device->is_queue_valid(m_transferQueue.id);
+    }
+
+    ViProcessor*    VizBase::video_decode_processor(uint32_t n)
+    {
+        if(n >= m_videoDecProcs.size())
+            return nullptr;
+        return m_videoDecProcs[n].get();
     }
 
 
@@ -400,6 +469,13 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_number << ") to get 
     bool        VizBase::video_decode_queue_valid() const
     {
         return m_videoDecQueue.enable && m_device && m_device->is_queue_valid(m_videoDecQueue.id);
+    }
+
+    ViProcessor*    VizBase::video_encode_processor(uint32_t n)
+    {
+        if(n >= m_videoEncProcs.size())
+            return nullptr;
+        return m_videoEncProcs[n].get();
     }
 
     VkQueue   VizBase::video_encode_queue() const

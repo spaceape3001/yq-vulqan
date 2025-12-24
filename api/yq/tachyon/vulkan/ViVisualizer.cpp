@@ -20,6 +20,7 @@
 #include <yq/tachyon/asset/Sampler.hpp>
 #include <yq/tachyon/asset/Shader.hpp>
 #include <yq/tachyon/asset/Texture.hpp>
+#include <yq/tachyon/config/vulqan.hpp>
 //#include <yq/tachyon/v/VqEnumerations.hpp>
 #include <yq/tachyon/vulkan/VqEnums.hpp>
 #include <yq/tachyon/vulkan/VqStructs.hpp>
@@ -31,6 +32,7 @@
 #include <yq/tachyon/vulkan/ViImage.hpp>
 #include <yq/tachyon/vulkan/ViPipeline.hpp>
 #include <yq/tachyon/vulkan/ViPipelineLayout.hpp>
+#include <yq/tachyon/vulkan/ViProcessor.hpp>
 #include <yq/tachyon/vulkan/ViQueueTasker.hpp>
 #include <yq/tachyon/vulkan/ViRenderPass.hpp>
 #include <yq/tachyon/vulkan/ViSampler.hpp>
@@ -42,16 +44,19 @@
 
 #include <GLFW/glfw3.h>
 
+#include <algorithm>
+
 namespace yq::tachyon {
 
     ViVisualizer::ViVisualizer(const CreateData& cfg) : 
-        VizBase({
-            .clear_color            = cfg.viewer.clear,
+        VizBase(Param{
+            .color_clear            = cfg.viewer.clear,
             .compute                = cfg.viewer.compute,
             .depth_buffer           = cfg.viewer.depth_buffer,
             .device                 = cfg.device, 
             .graphics               = REQUIRED,
-            .graphics_number        = cfg.number,
+            .graphics_processors    = std::clamp(cfg.viewer.frames_in_flight, MIN_FRAMES_IN_FLIGHT, MAX_FRAMES_IN_FLIGHT),
+            .graphics_qidx          = cfg.number,
             .optical_flow           = cfg.viewer.optical_flow,
             .present                = REQUIRED,
             .present_queue          = cfg.present,

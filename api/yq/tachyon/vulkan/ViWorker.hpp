@@ -6,7 +6,8 @@
 
 #pragma once
 
-#include "ViCommandPool.hpp"
+#include <yq/tachyon/vulkan/ViCommandPool.hpp>
+#include <yq/tachyon/vulkan/ViCommandBuffer.hpp>
 
 namespace yq::tachyon {
     class VizBase;
@@ -20,7 +21,7 @@ namespace yq::tachyon {
         struct Param {
             VqCommandPoolCreateFlags    command_pool_flags;
             ViQueueType                 queue_type  = ViQueueType::Graphic;
-            uint32_t                    number      = 0;
+            uint32_t                    worker_id   = 0;
         };
     
         ViWorker(ViProcessor&);
@@ -28,16 +29,22 @@ namespace yq::tachyon {
         ~ViWorker();
         
         VkCommandPool       command_pool() const;
-        uint32_t            number() const { return m_number; }
+        VkCommandBuffer     command_buffer() const;
         void                reset();
         bool                good() const { return m_good; }
+        ViProcessor&        processor() { return m_proc; }
+        uint32_t            worker_id() const { return m_id; }
     
     private:
+    
+        // WARNING: Init order matters here...
         ViProcessor&        m_proc;
         VizBase&            m_viz;
         ViDevice&           m_dev;
         ViCommandPool       m_cmdPool;
-        const uint32_t      m_number;
+        ViCommandBuffer     m_cmdBuffer; 
+        
         bool                m_good  = false;
+        const uint32_t      m_id;
     };
 }

@@ -56,8 +56,8 @@ namespace yq::tachyon {
         bool                        hidden      = false;
         
         
-            //!  Number of frames in flight
-        size_t                      frames_in_flight    = 2;
+            //!  Number of frames in flight (2..3)
+        uint32_t                    frames_in_flight    = 2;
         
         ViewerCreateInfo(){}
     };

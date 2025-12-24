@@ -312,6 +312,13 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
         return m_compute.pExpand(n);
     }
 
+    void    VizBase::compute_processor_factory(set_k, processor_create_t&&fn)
+    {
+        if(!fn)
+            return;
+        m_compute.factory   = std::move(fn);
+    }
+
     VkQueue  VizBase::compute_queue() const
     {
         if(m_compute.enable && m_device)
@@ -383,6 +390,13 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
         return m_graphics.pExpand(n);
     }
 
+    void    VizBase::graphics_processor_factory(set_k, processor_create_t&&fn)
+    {
+        if(!fn)
+            return;
+        m_graphics.factory  = std::move(fn);
+    }
+
     VkQueue     VizBase::graphics_queue() const
     {
         if(m_graphics.enable && m_device)
@@ -410,6 +424,12 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
         return m_opticalFlow.proc(n);
     }
 
+    void    VizBase::optical_flow_processor_factory(set_k, processor_create_t&& fn)
+    {
+        if(!fn)
+            return;
+        m_opticalFlow.factory = std::move(fn);
+    }
 
     VkQueue      VizBase::optical_flow_queue() const
     {
@@ -540,6 +560,12 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
         return m_videoDec.proc(n);
     }
 
+    void    VizBase::video_decode_processor_factory(set_k, processor_create_t&& fn)
+    {
+        if(!fn)
+            return;
+        m_videoDec.factory = std::move(fn);
+    }
 
     VkQueue   VizBase::video_decode_queue() const
     {
@@ -565,6 +591,13 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     ViProcessor*    VizBase::video_encode_processor(uint32_t n)
     {
         return m_videoEnc.proc(n);
+    }
+
+    void    VizBase::video_encode_processor_factory(set_k, processor_create_t&& fn)
+    {
+        if(!fn)
+            return;
+        m_videoEnc.factory = std::move(fn);
     }
 
     VkQueue   VizBase::video_encode_queue() const

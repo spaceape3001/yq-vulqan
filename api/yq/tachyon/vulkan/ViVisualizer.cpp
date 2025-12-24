@@ -27,6 +27,7 @@
 #include <yq/tachyon/vulkan/VqUtils.hpp>
 #include <yq/tachyon/vulkan/VulqanManager.hpp>
 #include <yq/tachyon/vulkan/ViDevice.hpp>
+#include <yq/tachyon/vulkan/ViGraphicsProcessor.hpp>
 #include <yq/tachyon/vulkan/ViManager.hpp>
 #include <yq/tachyon/vulkan/ViBuffer.hpp>
 #include <yq/tachyon/vulkan/ViImage.hpp>
@@ -73,6 +74,10 @@ namespace yq::tachyon {
             _kill();
             throw ec;
         }
+        
+        graphics_processor_factory(SET, [this]() -> ViProcessorUPtr {
+            return std::make_unique<ViGraphicsProcessor>(*this);
+        });
     }
     
     ViVisualizer::~ViVisualizer()

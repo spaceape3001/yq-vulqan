@@ -214,66 +214,7 @@ namespace yq::tachyon {
     }
 
     
-    //ViRenderedCPtr      ViFrame0::create(const RenderedCPtr& obj, const Pipeline& pipe)
-    //{
-        //if(m_rendereds){
-            //m_rendereds -> create(obj, pipe);
-        //}
-    //}
     
-    #if 0
-    ViRendered0*         ViFrame0::create(const RenderedCPtr&obj, const PipelineCPtr& pipe)
-    {
-        {
-            LOCK
-            auto eq = m_rendereds.equal_range(obj.id());
-            for(auto i = eq.first; i != eq.second; ++i){
-                if(i->second->m_pipe.m_id == pipe.id())
-                    return i->second;
-            }
-        }
-
-        const ViPipeline0*   vp   = m_viz.create(pipe);
-        if(!vp)
-            return nullptr;
-        
-        ViRendered0* p   = new ViRendered0(m_viz, *vp, obj);
-        ViRendered0* ret = nullptr;
-        
-        {
-            WLOCK
-            auto eq = m_rendereds.equal_range(obj.id());
-            for(auto i = eq.first; i != eq.second; ++i){
-                if(i->second->m_pipe.m_id == pipe.id()){
-                    ret = i->second;
-                    break;
-                }
-            }
-            
-            if(!ret){
-                m_rendereds.insert({ obj.id(), p });
-                return p;
-            }
-        }
-        
-        delete p;
-        return ret;
-    }
-    
-    const ViRendered0*   ViFrame0::lookup(const Rendered&ren, const Pipeline& pipe) const
-    {
-        {
-            LOCK
-            auto eq = m_rendereds.equal_range(ren.id());
-            for(auto i = eq.first; i != eq.second; ++i){
-                if(i->second->m_pipe.m_id == pipe.id())
-                    return i->second;
-            }
-        }
-        return nullptr;
-    }
-    #endif
-
 
     ////////////////////////////////////////////////////////////////////////////////
     //  ViThread0
@@ -349,9 +290,6 @@ namespace yq::tachyon {
         
     std::error_code     Visualizer::_init(const CreateData& vcd)
     {
-        //  old hack....
-        //m_descriptorCount   = std::max(MIN_DESCRIPTOR_COUNT, vcd.viewer.descriptors);
-
         m_thread            = std::make_unique<ViThread0>(*this);
 
         m_frames.reserve(vcd.viewer.frames_in_flight);

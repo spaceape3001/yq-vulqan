@@ -235,6 +235,13 @@ namespace yq::tachyon {
         virtual ~VizBase();
         
         using processor_create_t    = std::function<ViProcessorUPtr()>;
+        
+        void    compute_processor_factory(set_k, processor_create_t&&);
+        void    graphics_processor_factory(set_k, processor_create_t&&);
+        void    optical_flow_processor_factory(set_k, processor_create_t&&);
+        void    video_decode_processor_factory(set_k, processor_create_t&&);
+        void    video_encode_processor_factory(set_k, processor_create_t&&);
+
 
         void    set_bad() { m_good = false; }
         void    set_good() { m_good = true; }

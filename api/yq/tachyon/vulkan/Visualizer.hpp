@@ -70,13 +70,6 @@ namespace yq::tachyon {
         */
         std::error_code                 draw(ViContext&, const DrawFunctions& functions);
         
-        #if 0
-        void                            draw_scene(ViContext&, const Scene0&, const Perspective0&);
-        
-        //! Draw a specific item, matrix assumed correct
-        void                            draw_object(ViContext&, const RenderedCPtr&, Tristate wireframe=Tristate::INHERIT);
-        #endif
-
         //! Draw a specific item, matrix assumed correct, with given pipeline
         //void                            draw_object(ViContext&, const Rendered&, const Pipeline&, Tristate wireframe=Tristate::INHERIT);
 
@@ -102,9 +95,6 @@ namespace yq::tachyon {
         const ViFrame0&                  next_frame0() const;
         
 
-
-        // used if no draw function is provided
-        //virtual void                    record(ViContext&){}
 
         #if 0
         void                            update(ViContext&, const Scene0&);

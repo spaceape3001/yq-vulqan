@@ -429,6 +429,7 @@ add_library(${PROJECT_NAME} SHARED
     vulkan/ViDevice.cpp
     vulkan/ViFence.cpp
     vulkan/ViGui.cpp
+    vulkan/ViGraphicsProcessor.cpp
     vulkan/ViHeadless.cpp
     vulkan/ViImage.cpp
     vulkan/ViPipeline.cpp

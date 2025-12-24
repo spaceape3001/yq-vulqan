@@ -26,9 +26,10 @@ namespace yq::tachyon {
     class Visualizer;
     class Viewer;
     //class Window;
+    class ViGraphicsProcessor;
     class ViFrame;
     class ViThread;
-    class ViFrameThread;
+    //class ViFrameThread;
     class ViGui;
 
     /*! \brief Mutable set of parameters that'll pass through
@@ -46,64 +47,64 @@ namespace yq::tachyon {
         
         //  If modified, restore before return (or...make copy, use copy)
         
-        RGBA4F              clear               = { 0., 0., 0., -1. };
+        RGBA4F                  clear               = { 0., 0., 0., -1. };
         
         //! Current command buffer
-        VkCommandBuffer     command_buffer      = nullptr;
+        VkCommandBuffer         command_buffer      = nullptr;
         
         //! Current command pool (if buffer needed)
-        VkCommandPool       command_pool        = nullptr;
+        VkCommandPool           command_pool        = nullptr;
         
         //! Current descriptor pool (if allocations are necessary)
-        VkDescriptorPool    descriptor_pool     = nullptr;
+        VkDescriptorPool        descriptor_pool     = nullptr;
         
         //! Current frame 
-        ViFrame0*           frame0              = nullptr;
+        ViFrame0*               frame0              = nullptr;
         
-        //! Current frame thread
-        ViFrameThread*      frame_thread        = nullptr;
         
         //! SET if we're in imgui mode
-        ViGui*              imgui               = nullptr;
+        ViGui*                  imgui               = nullptr;
 
         //! Current pipeline 
-        VkPipeline          pipeline            = nullptr;  // last pipeline set
+        VkPipeline              pipeline            = nullptr;  // last pipeline set
 
         //! Current pipeline layout
-        VkPipelineLayout    pipeline_layout     = nullptr;  // last layout set
+        VkPipelineLayout        pipeline_layout     = nullptr;  // last layout set
         
         //! TRUE if the pipelines need rebuilding (ie, swapchain rebuild occured)
-        bool                pipeline_rebuild    = false; 
+        bool                    pipeline_rebuild    = false; 
         
-        VkShaderStageFlags  pipeline_shaders    = 0;
+        VkShaderStageFlags      pipeline_shaders    = 0;
 
         //! Current pipeline manager
-        ViPipelineManager*  pipelines           = nullptr;
+        ViPipelineManager*      pipelines           = nullptr;
+        
+        ViGraphicsProcessor*    processor       = nullptr;
         
         //! Grabs the previous frame's snapshot
-        snapshot_t          snapshot;
+        snapshot_t              snapshot;
         
         //! Current thread
-        ViThread*           thread              = nullptr;
+        ViThread*               thread              = nullptr;
 
         //! Frame tick
-        uint64_t            tick                = 0;
+        uint64_t                tick                = 0;
 
         //! Current "time"
-        double              time                = 0.;
+        double                  time                = 0.;
         
         //! Current viewer
-        Viewer*             viewer              = nullptr;
+        Viewer*                 viewer              = nullptr;
         
-        VkViewport          viewport;
+        VkViewport              viewport;
         
         //! Current visualizer (may become deprecated TBD?)
-        Visualizer*         viz                 = nullptr; 
+        Visualizer*             viz                 = nullptr; 
 
         //! Current window
         //Window*             window              = nullptr;
         
         //! Set to override wireframe capability
-        Tristate            wireframe           = Tristate::INHERIT;
+        Tristate                wireframe           = Tristate::INHERIT;
     };
 }

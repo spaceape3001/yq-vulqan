@@ -22,7 +22,7 @@ namespace yq::tachyon {
     public:
     
         ViProcessor(VizBase&, ViQueueType);
-        ~ViProcessor();
+        virtual ~ViProcessor();
         
         ViDevice&               device() { return m_device; }
         const ViDevice&         device() const { return m_device; }
@@ -80,9 +80,9 @@ namespace yq::tachyon {
         
         worker_create_t         m_factory;
 
-    private:
         VizBase&                m_viz;
         ViDevice&               m_device;
+    private:
         ViCommandPool           m_cmdPool;
         ViCommandBuffer         m_cmdBuffer;
         ViWorkerUPtrVector      m_workers;

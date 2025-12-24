@@ -446,7 +446,6 @@ add_library(${PROJECT_NAME} SHARED
     vulkan/ViThread.cpp
     vulkan/ViVisualizer.cpp
     vulkan/ViWorker.cpp
-    vulkan/Visualizer.cpp
     vulkan/VizBase.cpp
     vulkan/metatypes.cpp
     

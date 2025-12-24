@@ -104,7 +104,7 @@
 #include <yq/tachyon/vulkan/ViContext.hpp>
 #include <yq/tachyon/vulkan/ViDevice.hpp>
 #include <yq/tachyon/vulkan/ViGui.hpp>
-#include <yq/tachyon/vulkan/Visualizer.hpp>
+#include <yq/tachyon/vulkan/ViVisualizer.hpp>
 #include <yq/tachyon/vulkan/VisualizerCreateData.hpp>
 
 //#include <yq/tachyon/reply/ViewerWidgetReply.hpp>
@@ -397,6 +397,7 @@ namespace yq::tachyon {
             .minDepth   = 0.,
             .maxDepth   = 1.
         };
+        u.viz           = m_viz.get();
         
         //  ENABLE to get the validation issue
         //  u.snapshot  = DataFormat(DataFormat::R8G8B8A8_SRGB);
@@ -701,7 +702,7 @@ namespace yq::tachyon {
             return;
         }
         
-        Visualizer::CreateData      vcd{ m_createInfo };
+        ViVisualizer::CreateData      vcd{ m_createInfo };
         vcd.surface     = win -> create_surface();
         if(!vcd.surface || !vcd.surface->valid()){
             viewerCritical << "Viewer: Unable to get a valid surface, aborting the viewer";
@@ -713,7 +714,7 @@ namespace yq::tachyon {
         vcd.number      = (uint32_t) m_number;
 
         try {
-            m_viz       = std::make_unique<Visualizer>(*dev, vcd);
+            m_viz       = std::make_unique<ViVisualizer>(*dev, vcd);
         } 
         catch(const std::exception& ex)
         {
@@ -1113,7 +1114,7 @@ namespace yq::tachyon {
         return m_state.window.title;
     }
 
-    Visualizer&         Viewer::visualizer() const
+    ViVisualizer&         Viewer::visualizer() const
     {
         assert(m_viz);
         return *m_viz;

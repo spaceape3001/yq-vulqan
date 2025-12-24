@@ -40,7 +40,9 @@ namespace yq::tachyon {
         const Frame*    frame   = Frame::current();
         if(!frame)
             return ;
-    
+        if(!u.graphics_processor)
+            return ;
+
         const SceneSnap*   scene   = frame -> snap(lay.scene);
         if(!scene)
             return ;

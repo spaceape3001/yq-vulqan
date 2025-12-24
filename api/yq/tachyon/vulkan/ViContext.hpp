@@ -23,7 +23,8 @@
 namespace yq::tachyon {
 
     struct ViFrame0;
-    class Visualizer;
+    class ViVisualizer;
+    class VizBase;
     class Viewer;
     //class Window;
     class ViGraphicsProcessor;
@@ -58,9 +59,6 @@ namespace yq::tachyon {
         //! Current descriptor pool (if allocations are necessary)
         VkDescriptorPool        descriptor_pool     = nullptr;
         
-        //! Current frame 
-        ViFrame0*               frame0              = nullptr;
-        
         ViGraphicsProcessor*    graphics_processor  = nullptr;
         
         //! SET if we're in imgui mode
@@ -78,8 +76,7 @@ namespace yq::tachyon {
         VkShaderStageFlags      pipeline_shaders    = 0;
 
         //! Current pipeline manager
-        ViPipelineManager*      pipelines           = nullptr;
-        
+        //ViPipelineManager*      pipelines           = nullptr;
         
         //! Grabs the previous frame's snapshot
         snapshot_t              snapshot;
@@ -99,7 +96,7 @@ namespace yq::tachyon {
         VkViewport              viewport;
         
         //! Current visualizer (may become deprecated TBD?)
-        Visualizer*             viz                 = nullptr; 
+        ViVisualizer*           viz                 = nullptr; 
 
         //! Current window
         //Window*             window              = nullptr;

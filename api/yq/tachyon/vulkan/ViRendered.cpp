@@ -249,11 +249,7 @@ namespace yq::tachyon {
             _update_data(&sn, dm);
         
         if(u.pipeline_rebuild){
-            if(u.pipelines){
-                m_pipeline      = u.pipelines->create(m_config);
-            } else {
-                m_pipeline      = m_viz.pipeline_create(m_config);
-            }
+            m_pipeline      = m_viz.pipeline_create(m_config);
         }
         
         if(sn.wireframe == Tristate::YES){

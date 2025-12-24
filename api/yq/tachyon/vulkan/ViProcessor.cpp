@@ -14,7 +14,7 @@
 namespace yq::tachyon {
     ViProcessor::ViProcessor(VizBase&vb, ViQueueType qt) : 
         m_viz(vb), m_device(vb.device()),
-        m_cmdPool(m_device, qt, VqCommandPoolCreateBit::ResetCommandBuffer), 
+        m_cmdPool(m_device, qt, { VqCommandPoolCreateBit::ResetCommandBuffer, VqCommandPoolCreateBit::Transient }), 
         m_cmdBuffer(m_device, m_cmdPool)
         
     {

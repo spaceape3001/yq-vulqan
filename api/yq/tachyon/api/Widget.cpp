@@ -55,8 +55,6 @@
 #include <yq/util/AutoReset.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
 #include <yq/tachyon/vulkan/ViGraphicsProcessor.hpp>
-#include <yq/tachyon/vulkan/Visualizer.hpp>
-#include <yq/tachyon/vulkan/Visualizer.hxx>
 #include <yq/tachyon/ui/UIElements.hpp>
 #include <yq/util/AutoReset.hpp>
 
@@ -651,8 +649,10 @@ namespace yq::tachyon {
             return;
         if(!sn->good)
             return;
+        if(!ctx.vi.graphics_processor)
+            return;
         
-        ViRenderedPtr  rr  = ctx.vi.graphics_processor ? ctx.vi.graphics_processor -> rendered(sn, rm) : ctx.vi.frame0 -> create(sn, rm);
+        ViRenderedPtr  rr  = ctx.vi.graphics_processor -> rendered(sn, rm);
         if(!rr)
             return;
 

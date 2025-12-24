@@ -19,7 +19,7 @@ namespace yq::tachyon {
     public:
     
         struct Param {
-            VqCommandPoolCreateFlags    command_pool_flags = VqCommandPoolCreateBit::ResetCommandBuffer;
+            VqCommandPoolCreateFlags    command_pool_flags = {VqCommandPoolCreateBit::ResetCommandBuffer, VqCommandPoolCreateBit::Transient};
             ViQueueType                 queue_type  = ViQueueType::Graphic;
         };
     

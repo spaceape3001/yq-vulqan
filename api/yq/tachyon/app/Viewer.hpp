@@ -50,6 +50,7 @@ namespace yq::tachyon {
     class Monitor;
     class Widget;
     class ViGui;
+    class ViVisualizer;
     class Visualizer;
     struct ViContext;
     class GLFWManager;
@@ -221,7 +222,7 @@ namespace yq::tachyon {
 
 
         //! \note Will throw exceptions if visualizer is not defined
-        Visualizer&                 visualizer() const;
+        ViVisualizer&               visualizer() const;
 
         //! Current widget (may be NULL at times)
         Widget*                     widget() const;
@@ -354,7 +355,7 @@ namespace yq::tachyon {
         ViewerState                                 m_state;
         Flags<X>                                    m_flags       = {};
         std::atomic<uint64_t>                       m_ticks{0};
-        std::unique_ptr<Visualizer>                 m_viz;
+        std::unique_ptr<ViVisualizer>               m_viz;
         TypedID                                     m_widget;
         Widget*                                     m_widgetPtr = nullptr;  // temporary cheat
         TypedID                                     m_window;

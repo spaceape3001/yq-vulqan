@@ -128,9 +128,10 @@ namespace yq::tachyon {
         VkSurfaceKHR                    vk_surface() const;
         VkSwapchainKHR                  vk_swapchain() const;
 
-    protected:
+        virtual ~ViVisualizer();
         ViVisualizer(ViDevice&, const CreateData&);
-        ~ViVisualizer();
+
+    protected:
 
         Size2I                              m_frameBufferSize   = {}; // For when we divorce the visualizer from the main thread
         uint32_t                            m_frameImageIndex   = 0;

@@ -62,25 +62,25 @@ namespace yq::tachyon {
             VkColorSpaceKHR     color_space             = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
             
             queue_spec          compute;
-            uint32_t            compute_processors      = 0;    //!< Number of desired compute processors on init
+            //uint32_t            compute_processors      = 0;    //!< Number of desired compute processors on init
             uint32_t            compute_qidx            = 0;
             ViQueueID           compute_queue;
-            uint32_t            compute_workers         = 1;
+            //uint32_t            compute_workers         = 1;
             
             depth_spec          depth_buffer;
             ViDevicePtr         device;
 
             queue_spec          graphics;
-            uint32_t            graphics_processors     = 0;    //!< Number of desired graphics processors on init
+            //uint32_t            graphics_processors     = 0;    //!< Number of desired graphics processors on init
             uint32_t            graphics_qidx           = 0;
-            uint32_t            graphics_workers        = 1;    //!< Number of workers per graphics processor on init
             ViQueueID           graphics_queue;
+            //uint32_t            graphics_workers        = 1;    //!< Number of workers per graphics processor on init
             
             queue_spec          optical_flow;
-            uint32_t            optical_flow_processors = 0;    //!< Number of desired optical flow processors on init
+            //uint32_t            optical_flow_processors = 0;    //!< Number of desired optical flow processors on init
             uint32_t            optical_flow_qidx       = 0;
             ViQueueID           optical_flow_queue;
-            uint32_t            optical_flow_workers    = 1;    //!< Number of workers per optical flow processor on init
+            //uint32_t            optical_flow_workers    = 1;    //!< Number of workers per optical flow processor on init
             
             queue_spec          present;
             uint32_t            present_qidx            = 0;
@@ -93,16 +93,16 @@ namespace yq::tachyon {
             ViQueueID           transfer_queue;
             
             queue_spec          video_decode;
-            uint32_t            video_decode_processors = 0;
+            //uint32_t            video_decode_processors = 0;
             uint32_t            video_decode_qidx       = 0;
             ViQueueID           video_decode_queue;
-            uint32_t            video_decode_workers    = 1;
+            //uint32_t            video_decode_workers    = 1;
             
             queue_spec          video_encode;
-            uint32_t            video_encode_processors = 0;
+            //uint32_t            video_encode_processors = 0;
             uint32_t            video_encode_qidx       = 0;
             ViQueueID           video_encode_queue;
-            uint32_t            video_encode_workers    = 1;
+            //uint32_t            video_encode_workers    = 1;
         };
         
         RGBA4F                          color_clear() const; 
@@ -115,12 +115,12 @@ namespace yq::tachyon {
         VkColorSpaceKHR                 color_space() const { return m_color.space; }
         void                            color_space(set_k, VkColorSpaceKHR);
 
-        bool                            compute_enabled() const { return m_computeQueue.enable; }
+        bool                            compute_enabled() const { return m_compute.enable; }
 
         ViProcessor*                    compute_processor(uint32_t);
         VkQueue                         compute_queue() const;
-        ViQueueFamilyID                 compute_queue_family() const { return m_computeQueue.id.family; }
-        ViQueueID                       compute_queue_id() const { return m_computeQueue.id; }
+        ViQueueFamilyID                 compute_queue_family() const { return m_compute.id.family; }
+        ViQueueID                       compute_queue_id() const { return m_compute.id; }
         std::error_code                 compute_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            compute_queue_valid() const;
 
@@ -144,11 +144,11 @@ namespace yq::tachyon {
 
         bool                            good_base() const { return m_goodBase; }
 
-        bool                            graphics_enabled() const { return m_graphicsQueue.enable; }
+        bool                            graphics_enabled() const { return m_graphics.enable; }
         ViProcessor*                    graphics_processor(uint32_t);
         VkQueue                         graphics_queue() const;
-        ViQueueFamilyID                 graphics_queue_family() const { return m_graphicsQueue.id.family; }
-        ViQueueID                       graphics_queue_id() const { return m_graphicsQueue.id; }
+        ViQueueFamilyID                 graphics_queue_family() const { return m_graphics.id.family; }
+        ViQueueID                       graphics_queue_id() const { return m_graphics.id; }
         std::error_code                 graphics_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            graphics_queue_valid() const;
 
@@ -156,10 +156,10 @@ namespace yq::tachyon {
         VkDevice                        logical() const;
 
         ViProcessor*                    optical_flow_processor(uint32_t);
-        bool                            optical_flow_enabled() const { return m_opticalFlowQueue.enable; }
+        bool                            optical_flow_enabled() const { return m_opticalFlow.enable; }
         VkQueue                         optical_flow_queue() const;
-        ViQueueFamilyID                 optical_flow_queue_family() const { return m_opticalFlowQueue.id.family; }
-        ViQueueID                       optical_flow_queue_id() const { return m_opticalFlowQueue.id; }
+        ViQueueFamilyID                 optical_flow_queue_family() const { return m_opticalFlow.id.family; }
+        ViQueueID                       optical_flow_queue_id() const { return m_opticalFlow.id; }
         std::error_code                 optical_flow_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            optical_flow_queue_valid() const;
 
@@ -173,10 +173,10 @@ namespace yq::tachyon {
         ViPipelineManager*              pipeline_manager() const;
      
 
-        bool                            present_enabled() const { return m_presentQueue.enable; }
+        bool                            present_enabled() const { return m_present.enable; }
         VkQueue                         present_queue() const;
-        ViQueueFamilyID                 present_queue_family() const { return m_presentQueue.id.family; }
-        ViQueueID                       present_queue_id() const { return m_presentQueue.id; }
+        ViQueueFamilyID                 present_queue_family() const { return m_present.id.family; }
+        ViQueueID                       present_queue_id() const { return m_present.id; }
         std::error_code                 present_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            present_queue_valid() const;
 
@@ -185,11 +185,11 @@ namespace yq::tachyon {
         
         uint64_t                        tick() const { return m_tick; }
 
-        bool                            transfer_enabled() const { return m_transferQueue.enable; }
+        bool                            transfer_enabled() const { return m_transfer.enable; }
         VkQueue                         transfer_queue() const;
         uint32_t                        transfer_queue_count() const;
-        ViQueueFamilyID                 transfer_queue_family() const { return m_transferQueue.id.family; }
-        ViQueueID                       transfer_queue_id() const { return m_transferQueue.id; }
+        ViQueueFamilyID                 transfer_queue_family() const { return m_transfer.id.family; }
+        ViQueueID                       transfer_queue_id() const { return m_transfer.id; }
         std::error_code                 transfer_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         
         //! IF valid, means there's an asynchronous DMA transfer queue
@@ -200,18 +200,18 @@ namespace yq::tachyon {
         virtual VkRenderPass            vk_render_pass() const { return nullptr; }
 
         ViProcessor*                    video_decode_processor(uint32_t);
-        bool                            video_decode_enabled() const { return m_videoDecQueue.enable; }
+        bool                            video_decode_enabled() const { return m_videoDec.enable; }
         VkQueue                         video_decode_queue() const;
-        ViQueueFamilyID                 video_decode_queue_family() const { return m_videoDecQueue.id.family; }
-        ViQueueID                       video_decode_queue_id() const { return m_videoDecQueue.id; }
+        ViQueueFamilyID                 video_decode_queue_family() const { return m_videoDec.id.family; }
+        ViQueueID                       video_decode_queue_id() const { return m_videoDec.id; }
         std::error_code                 video_decode_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            video_decode_queue_valid() const;
 
         ViProcessor*                    video_encode_processor(uint32_t);
-        bool                            video_encode_enabled() const { return m_videoEncQueue.enable; }
+        bool                            video_encode_enabled() const { return m_videoEnc.enable; }
         VkQueue                         video_encode_queue() const;
-        ViQueueFamilyID                 video_encode_queue_family() const { return m_videoEncQueue.id.family; }
-        ViQueueID                       video_encode_queue_id() const { return m_videoEncQueue.id; }
+        ViQueueFamilyID                 video_encode_queue_family() const { return m_videoEnc.id.family; }
+        ViQueueID                       video_encode_queue_id() const { return m_videoEnc.id; }
         std::error_code                 video_encode_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            video_encode_queue_valid() const;
 
@@ -221,49 +221,100 @@ namespace yq::tachyon {
         VizBase(const Param&);
         virtual ~VizBase();
         
-        struct Queue {
-            ViQueueID       id;
-            bool            enable  = false;
-            //VkQueue         queue   = nullptr;
-            
-            // true if success or optional or disabled
-            bool            init(ViDevice&, ViQueueType, queue_spec, const ViQueueID&, uint32_t);
+        using processor_create_t    = std::function<ViProcessorUPtr()>;
+
+        struct basic_t {
+            bool        enable  = false;
         };
         
-        struct ColorAttachment {
+        struct queue_t : public basic_t {
+            ViQueueID       id;
+            ViQueueType     type;
+            
+            queue_t(ViQueueType);
+
+            // true if success or optional or disabled
+            bool        qInit(ViDevice&, queue_spec, const ViQueueID&, uint32_t);
+        };
+        
+        struct processing_t : public queue_t {
+            processor_create_t          factory;
+            ViProcessorUPtrVector       procs;
+            
+            ViProcessor*    proc(uint32_t) const;
+            
+            processing_t(ViQueueType);
+            ~processing_t();
+            
+            void        pInit(VizBase*);
+            
+            void reset();
+        };
+        
+        
+        struct compute_t : public processing_t {
+            compute_t();
+        };
+        
+        struct graphics_t : public processing_t {
+            graphics_t();
+        };
+        
+        struct optical_flow_t : public processing_t {
+            optical_flow_t();
+        };
+        
+        struct present_t : public queue_t {
+            present_t();
+        };
+        
+        struct transfer_t : public queue_t {
+            transfer_t();
+        };
+        
+        struct video_t : public processing_t {
+            video_t(ViQueueType);
+        };
+        
+        struct video_decode_t : public video_t {
+            video_decode_t();
+        };
+        
+        struct video_encode_t : public video_t {
+            video_encode_t();
+        };
+        
+        struct color_t {
             VkClearValue        clear{};
             VkFormat            format;
             VkColorSpaceKHR     space;
         };
         
-        struct DepthAttachment {
-            bool            enable  = false;
-            VkFormat        format  = VkFormat(0);
+        struct depth_t : public basic_t {
+            bool                enable  = false;
+            VkFormat            format  = VkFormat(0);
         };
         
-        ColorAttachment             m_color;
-        ViProcessorUPtrVector       m_computeProcs;
-        Queue                       m_computeQueue;
         ViDevicePtr                 m_device;
-        DepthAttachment             m_depth;
-        ViProcessorUPtrVector       m_graphicsProcs;
-        Queue                       m_graphicsQueue;
-        ViProcessorUPtrVector       m_opticalFlowProcs;
-        Queue                       m_opticalFlowQueue;
+        color_t                     m_color;
+        compute_t                   m_compute;
+        depth_t                     m_depth;
+        graphics_t                  m_graphics;
+        optical_flow_t              m_opticalFlow;
         ViPipelineManagerUPtr       m_pipelines;
-        Queue                       m_presentQueue;
-        Queue                       m_transferQueue;
-        ViProcessorUPtrVector       m_videoDecProcs;
-        Queue                       m_videoDecQueue;
-        ViProcessorUPtrVector       m_videoEncProcs;
-        Queue                       m_videoEncQueue;
-
+        present_t                   m_present;
         std::atomic<uint64_t>       m_tick{0ULL};     // Always monotomically incrementing
+        transfer_t                  m_transfer;
+        video_decode_t              m_videoDec;
+        video_encode_t              m_videoEnc;
+        
+        
         
         bool    _init_depth(const Param&);
         bool    _init_queues(const Param&);
         
-        bool    _init_processors(ViProcessorUPtrVector&, ViQueueType, uint32_t nprocs, uint32_t nworkers);
+        // note, it'll be up to subclasses to create the processors
+        //bool    _init_processors(ViProcessorUPtrVector&, ViQueueType, uint32_t nprocs, uint32_t nworkers);
         
     private:
         bool                    m_goodBase       = false;

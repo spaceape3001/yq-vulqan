@@ -55,7 +55,7 @@ namespace yq::tachyon {
             .depth_buffer           = cfg.viewer.depth_buffer,
             .device                 = cfg.device, 
             .graphics               = REQUIRED,
-            .graphics_processors    = std::clamp(cfg.viewer.frames_in_flight, MIN_FRAMES_IN_FLIGHT, MAX_FRAMES_IN_FLIGHT),
+            //.graphics_processors    = std::clamp(cfg.viewer.frames_in_flight, MIN_FRAMES_IN_FLIGHT, MAX_FRAMES_IN_FLIGHT),
             .graphics_qidx          = cfg.number,
             .optical_flow           = cfg.viewer.optical_flow,
             .present                = REQUIRED,

@@ -17,8 +17,7 @@ namespace yq::tachyon {
     ViWorker::ViWorker(ViProcessor& vb, const Param&p) : 
         m_proc(vb), m_viz(vb.viz()), m_dev(vb.device()),
         m_cmdPool(m_dev, p.queue_type, p.command_pool_flags), 
-        m_cmdBuffer(m_dev, m_cmdPool.command_pool()),
-        m_id(p.worker_id)
+        m_cmdBuffer(m_dev, m_cmdPool.command_pool())
     {
         m_good  = m_cmdPool.valid();
     }

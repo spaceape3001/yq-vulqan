@@ -21,12 +21,7 @@ namespace yq::tachyon {
     class ViProcessor {
     public:
     
-        struct Param : public ViWorker::Param {
-            size_t  workers     = 1;
-        };
-    
-        ViProcessor(VizBase&);
-        ViProcessor(VizBase&, const Param&);
+        ViProcessor(VizBase&, ViQueueType);
         ~ViProcessor();
         
         ViDevice&               device() { return m_device; }
@@ -39,7 +34,10 @@ namespace yq::tachyon {
         
         void                    reset();
         
-        ViWorker&               new_worker();
+        bool                    add_worker();
+        
+        //! Expands the worker count until N is here or add worker fails
+        bool                    expand_workforce_to(uint32_t);
         
         size_t                  count() const { return m_workers.size(); }
         bool                    empty() const { return m_workers.empty(); }
@@ -66,11 +64,18 @@ namespace yq::tachyon {
     
         auto crbegin() const { return m_workers.crbegin(); }
         auto crend() const { return m_workers.crend(); }
+        
+    protected:
+        
+        using worker_create_t   = std::function<ViWorkerUPtr()>;
+        
+        worker_create_t         m_factory;
 
     private:
         VizBase&                m_viz;
         ViDevice&               m_device;
         ViWorkerUPtrVector      m_workers;
+        
         
         //struct {
             //VkSemaphore         finished = nullptr;

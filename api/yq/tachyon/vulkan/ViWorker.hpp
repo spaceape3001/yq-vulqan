@@ -19,14 +19,13 @@ namespace yq::tachyon {
     public:
     
         struct Param {
-            VqCommandPoolCreateFlags    command_pool_flags;
+            VqCommandPoolCreateFlags    command_pool_flags = VqCommandPoolCreateBit::ResetCommandBuffer;
             ViQueueType                 queue_type  = ViQueueType::Graphic;
-            uint32_t                    worker_id   = 0;
         };
     
         ViWorker(ViProcessor&);
         ViWorker(ViProcessor&, const Param&);
-        ~ViWorker();
+        virtual ~ViWorker();
         
         VkCommandPool       command_pool() const;
         VkCommandBuffer     command_buffer() const;
@@ -36,6 +35,7 @@ namespace yq::tachyon {
         uint32_t            worker_id() const { return m_id; }
     
     private:
+        friend class ViProcessor;
     
         // WARNING: Init order matters here...
         ViProcessor&        m_proc;
@@ -45,6 +45,6 @@ namespace yq::tachyon {
         ViCommandBuffer     m_cmdBuffer; 
         
         bool                m_good  = false;
-        const uint32_t      m_id;
+        uint32_t            m_id    = 0;
     };
 }

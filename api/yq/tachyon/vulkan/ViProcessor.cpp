@@ -12,26 +12,17 @@
 #include <tbb/parallel_for.h>
 
 namespace yq::tachyon {
-    ViProcessor::ViProcessor(VizBase& vb) : ViProcessor(vb, Param())
-    {
-    }
-    
-    ViProcessor::ViProcessor(VizBase&vb, const Param& p) : m_viz(vb), m_device(vb.device(REF)), m_workerParam(p)
+    ViProcessor::ViProcessor(VizBase&vb, ViQueueType qt) : m_viz(vb), m_device(vb.device(REF))
     {
         m_good  = true;
-        m_workers.reserve(p.workers);
-        while(m_workers.size() < p.workers)
-            m_good = new_worker().good() && m_good;
-        //VqSemaphoreCreateInfo   sci;
-        //vkCreateSemaphore(m_device,  &sci, nullptr, &m_semaphore.finished);
+        m_factory = [qt,this]() -> ViWorkerUPtr {
+            return std::make_unique<ViWorker>(*this, ViWorker::Param{.queue_type=qt});
+        };
     }
     
     ViProcessor::~ViProcessor()
     {
         m_workers.clear();
-        //if(m_semaphore.finished){
-            //vkDestroySemaphore(m_device, m_semaphore.finished, nullptr);
-        //}
     }
     
     void    ViProcessor::exec_multi(FNProcessorTask&& fn)
@@ -76,12 +67,26 @@ namespace yq::tachyon {
         
     }
 
-    ViWorker& ViProcessor::new_worker()
+    bool ViProcessor::add_worker()
     {
-        ViWorker::Param p   = m_workerParam;
-        p.worker_id         = (uint32_t) m_workers.size();
-        m_workers.push_back(std::make_unique<ViWorker>(*this, p));
-        return *m_workers.back();
+        if(!m_factory)
+            return false;
+        ViWorkerUPtr    wp  = m_factory();
+        if(!wp)
+            return false;
+        wp -> m_id  = (uint32_t) m_workers.size();
+        m_workers.push_back(std::move(wp));
+        return true;
+    }
+
+    bool ViProcessor::expand_workforce_to(uint32_t n)
+    {
+        m_workers.reserve(n);
+        while(m_workers.size() < n){
+            if(!add_worker())
+                return false;
+        }
+        return true;
     }
 
     void ViProcessor::reset()

@@ -30,7 +30,7 @@ namespace yq::tachyon {
         VkImage             image       = nullptr;
         VkImageView         imageview   = nullptr;
         VkFramebuffer       framebuffer = nullptr;
-        VkSemaphore         available   = nullptr;
+        //VkSemaphore         available   = nullptr;
     };
 
     ViSwapchain::ViSwapchain()
@@ -180,8 +180,8 @@ namespace yq::tachyon {
             return errors::swapchain_cant_create();
         }
         
-        VqSemaphoreCreateInfo   sci;
-        vkCreateSemaphore(m_viz->device(), &sci, nullptr, &f.available);
+        //VqSemaphoreCreateInfo   sci;
+        //vkCreateSemaphore(m_viz->device(), &sci, nullptr, &f.available);
         return {};
     }
 
@@ -195,10 +195,10 @@ namespace yq::tachyon {
             vkDestroyImageView(m_viz->device(), f.imageview, nullptr);
             f.imageview     = nullptr;
         }
-        if(f.available){
-            vkDestroySemaphore(m_viz->device(), f.available, nullptr);
-            f.available     = nullptr;
-        }
+        //if(f.available){
+            //vkDestroySemaphore(m_viz->device(), f.available, nullptr);
+            //f.available     = nullptr;
+        //}
     }
     
     void            ViSwapchain::_kill()
@@ -297,12 +297,12 @@ namespace yq::tachyon {
         _kill();
     }
 
-    VkSemaphore         ViSwapchain::semaphore_available(uint32_t i) const
-    {
-        if(i >= m_frames.size())
-            return nullptr;
-        return m_frames[i].available;
-    }
+    //VkSemaphore         ViSwapchain::semaphore_available(uint32_t i) const
+    //{
+        //if(i >= m_frames.size())
+            //return nullptr;
+        //return m_frames[i].available;
+    //}
     
     Expect<RasterPtr>   ViSwapchain::snapshot(uint32_t i, VkFormat desired) const
     {

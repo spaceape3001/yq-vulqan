@@ -54,7 +54,7 @@ namespace yq::tachyon {
         //const std::vector<VkImageView>&     image_views() const { return m_imageViews; }
         
         Expect<RasterPtr>   snapshot(uint32_t, VkFormat desired=VK_FORMAT_UNDEFINED) const;
-        VkSemaphore         semaphore_available(uint32_t) const;
+        //VkSemaphore         semaphore_available(uint32_t) const;
 
     private:
         struct Frame;

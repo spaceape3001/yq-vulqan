@@ -8,6 +8,7 @@
 
 #include <yq/core/Ref.hpp>
 #include <yq/core/Expect.hpp>
+#include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/typedef/raster.hpp>
 #include <yq/tachyon/typedef/vi_swapchain.hpp>
 #include <vulkan/vulkan_core.h>
@@ -32,18 +33,11 @@ namespace yq::tachyon {
         
         VkRect2D        def_scissor() const;
         VkViewport      def_viewport() const;
-        VkFramebuffer   framebuffer(uint32_t) const;
         uint32_t        height() const;
-        VkImage         image(uint32_t) const;
         uint32_t        image_count() const { return m_imageCount; }
-        VkImageView     image_view(uint32_t) const;
         uint32_t        min_image_count() const { return m_minImageCount; }
-        VkSwapchainKHR  swapchain() const { return m_swapchain; }
         bool            valid() const;
         uint32_t        width() const;
-        VkSemaphore     semaphore_available(uint32_t) const;
-        VkSemaphore     semaphore_rendered(uint32_t) const;
-
 
         const VkSurfaceCapabilitiesKHR&     capabilities() const { return m_capabilities; }
         const VkExtent2D&                   extents() const { return m_extents; }
@@ -53,6 +47,16 @@ namespace yq::tachyon {
         
         Expect<RasterPtr>   snapshot(uint32_t, VkFormat desired=VK_FORMAT_UNDEFINED) const;
         //VkSemaphore         semaphore_available(uint32_t) const;
+
+        VkFence         vk_fence(uint32_t) const;
+        VkFramebuffer   vk_framebuffer(uint32_t) const;
+        VkImage         vk_image(uint32_t) const;
+        VkImage         vk_image(depth_k, uint32_t) const;
+        VkImageView     vk_image_view(uint32_t) const;
+        VkImageView     vk_image_view(depth_k, uint32_t) const;
+        VkSemaphore     vk_semaphore(available_k, uint32_t) const;
+        VkSemaphore     vk_semaphore(rendered_k, uint32_t) const;
+        VkSwapchainKHR  vk_swapchain() const { return m_swapchain; }
 
     private:
     
@@ -69,9 +73,10 @@ namespace yq::tachyon {
         std::vector<VkImageView>    m_depthViews;
         std::vector<VkFramebuffer>  m_framebuffers;
 
-        std::vector<VkSemaphore>    m_imageAcquiredSemaphores;
+        std::vector<VkFence>        m_fences;
+        std::vector<VkSemaphore>    m_imageAvailableSemaphores;
         std::vector<VkSemaphore>    m_renderCompleteSemaphores;
-        
+        bool                        m_good          = false;
         
         std::error_code _init(const ViSwapchainConfig& cfg=ViSwapchainConfig{});
         void            _kill();

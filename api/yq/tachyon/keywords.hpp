@@ -38,6 +38,8 @@ namespace yq::tachyon {
     struct auxillary_k {
         consteval operator StdThread() const noexcept  { return StdThread::Auxillary; }
     };
+    
+    struct available_k {};
 
     struct bar_k {};
 
@@ -59,6 +61,7 @@ namespace yq::tachyon {
     struct controllers_k {};
     struct d2l_k    {};
     struct delegate_k {};
+    struct depth_k {};
     struct desktop_k {};
     struct device_k {};
     struct dialog_k {};
@@ -242,6 +245,7 @@ namespace yq::tachyon {
     static constexpr const app_k                APP;
     static constexpr const audio_k              AUDIO;
     static constexpr const auxillary_k          AUX, AUXILLARY;
+    static constexpr const available_k          AVAILABLE;
     static constexpr const bar_k                BAR;
     static constexpr const camera_k             CAMERA;
     static constexpr const camera³_k            CAMERA³;
@@ -254,6 +258,7 @@ namespace yq::tachyon {
     static constexpr const d2l_k                D2L;
     static constexpr const delegate_k           DELEGATE;
     static constexpr const delete_k             DELETE;
+    static constexpr const depth_k              DEPTH;
     static constexpr const desktop_k            DESKTOP;
     static constexpr const device_k             DEVICE;
     static constexpr const dialog_k             DIALOG;

@@ -60,7 +60,7 @@ namespace yq::tachyon {
             .optical_flow           = cfg.viewer.optical_flow,
             .present                = REQUIRED,
             .present_queue          = cfg.present,
-            .surface                = cfg.surface->surface(),
+            .surface                = cfg.surface->vk_surface(),
             .transfer               = cfg.viewer.transfer,
             .video_decode           = cfg.viewer.video_decode,
             .video_encode           = cfg.viewer.video_encode
@@ -86,7 +86,7 @@ namespace yq::tachyon {
     {
         ViSwapchainConfig   cfg;
         if(m_swapchain)
-            cfg.old_swapchain = m_swapchain -> swapchain();
+            cfg.old_swapchain = m_swapchain -> vk_swapchain();
         device().wait_idle();
         m_swapchain     = new ViSwapchain(*this, cfg);
         graphics_processor_expand(m_swapchain->image_count());
@@ -255,7 +255,7 @@ namespace yq::tachyon {
     VkSurfaceKHR      ViVisualizer::vk_surface() const 
     { 
         if(m_surface)
-            return m_surface -> surface();
+            return m_surface -> vk_surface();
         return nullptr;
     }
 
@@ -263,6 +263,6 @@ namespace yq::tachyon {
     {
         if(!m_swapchain)
             return nullptr;
-        return m_swapchain->swapchain();
+        return m_swapchain->vk_swapchain();
     }
 }

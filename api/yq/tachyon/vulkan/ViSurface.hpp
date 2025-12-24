@@ -23,7 +23,7 @@ namespace yq::tachyon {
         ViSurface(VkSurfaceKHR);
         ~ViSurface();
         
-        VkSurfaceKHR    surface() const { return m_surface; }
+        VkSurfaceKHR    vk_surface() const { return m_surface; }
         bool            valid() const;
     
     private:

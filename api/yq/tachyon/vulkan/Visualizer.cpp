@@ -431,7 +431,7 @@ namespace yq::tachyon {
 
         VqRenderPassBeginInfo renderPassInfo;
         renderPassInfo.renderPass = render_pass();
-        renderPassInfo.framebuffer = m_swapchain->framebuffer(imageIndex);
+        renderPassInfo.framebuffer = m_swapchain->vk_framebuffer(imageIndex);
         renderPassInfo.renderArea.offset = {0, 0};
         renderPassInfo.renderArea.extent = m_swapchain->extents();
 
@@ -504,7 +504,7 @@ namespace yq::tachyon {
             return std::error_code();
         }
 
-        res    = vkAcquireNextImageKHR(device(), m_swapchain->swapchain(), kMaxWait, f.m_imageAvailable, VK_NULL_HANDLE, &m_frameImageIndex);
+        res    = vkAcquireNextImageKHR(device(), m_swapchain->vk_swapchain(), kMaxWait, f.m_imageAvailable, VK_NULL_HANDLE, &m_frameImageIndex);
         
         switch(res){
         case VK_TIMEOUT:
@@ -559,7 +559,7 @@ namespace yq::tachyon {
             
         VqPresentInfoKHR presentInfo;
 
-        VkSwapchainKHR      swapchains[] = { m_swapchain -> swapchain() };
+        VkSwapchainKHR      swapchains[] = { m_swapchain -> vk_swapchain() };
 
         presentInfo.waitSemaphoreCount = 1;
         presentInfo.pWaitSemaphores = signalSemaphores;

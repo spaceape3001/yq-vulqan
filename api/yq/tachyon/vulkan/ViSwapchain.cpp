@@ -123,9 +123,10 @@ namespace yq::tachyon {
         m_imageCount    = imageCount;
         
         m_images.resize(m_imageCount, nullptr);
+        m_fences.resize(m_imageCount, nullptr);
         m_framebuffers.resize(m_imageCount, nullptr);
         m_imageViews.resize(m_imageCount, nullptr);
-        m_imageAcquiredSemaphores.resize(m_imageCount+1, nullptr);
+        m_imageAvailableSemaphores.resize(m_imageCount+1, nullptr);
         m_renderCompleteSemaphores.resize(m_imageCount+1, nullptr);
         if(m_viz.depth_enabled()){
             m_depthImages.resize(m_imageCount, nullptr);
@@ -178,8 +179,15 @@ namespace yq::tachyon {
         depthViewInfo.subresourceRange.baseArrayLayer   = 0;
         depthViewInfo.subresourceRange.layerCount       = 1;
 
+        VqFenceCreateInfo   cfi;
 
         for(size_t i=0;i<m_imageCount;++i){
+            res = vkCreateFence(vk_device, &cfi, nullptr, &m_fences[i]);
+            if(res != VK_SUCCESS){
+                vizWarning << "ViSwapchain(): Cannot create a swapchain fence.  VkResult " << (int32_t) res;
+                return errors::swapchain_cant_create();
+            }
+        
             imageViewInfo.image     = m_images[i];
             
             res = vkCreateImageView(vk_device, &imageViewInfo, nullptr, &m_imageViews[i]);
@@ -216,6 +224,23 @@ namespace yq::tachyon {
                 return errors::swapchain_cant_create();
             }
         }
+        
+        VqSemaphoreCreateInfo   sci;
+        for(size_t i=0;i<=m_imageCount;++i){
+            res = vkCreateSemaphore(vk_device, &sci, nullptr, &m_imageAvailableSemaphores[i]);
+            if(res != VK_SUCCESS){
+                vizWarning << "ViSwapchain(): Cannot create a swapchain semaphore.  VkResult " << (int32_t) res;
+                return errors::swapchain_cant_create();
+            }
+
+            res = vkCreateSemaphore(vk_device, &sci, nullptr, &m_renderCompleteSemaphores[i]);
+            if(res != VK_SUCCESS){
+                vizWarning << "ViSwapchain(): Cannot create a swapchain semaphore.  VkResult " << (int32_t) res;
+                return errors::swapchain_cant_create();
+            }
+        }
+        
+        m_good = true;
         return {};
     }
     
@@ -224,15 +249,17 @@ namespace yq::tachyon {
     {
         if(VkDevice vk_device = m_viz.vk_device()){
             for(uint32_t n=0;n<=m_imageCount;++n){
-                if(m_imageAcquiredSemaphores[n])
-                    vkDestroySemaphore(vk_device, m_imageAcquiredSemaphores[n], nullptr);
+                if(m_imageAvailableSemaphores[n])
+                    vkDestroySemaphore(vk_device, m_imageAvailableSemaphores[n], nullptr);
                 if(m_renderCompleteSemaphores[n])
                     vkDestroySemaphore(vk_device, m_renderCompleteSemaphores[n], nullptr);
             }
-            m_imageAcquiredSemaphores.clear();
+            m_imageAvailableSemaphores.clear();
             m_renderCompleteSemaphores.clear();
             
             for(uint32_t n=0;n<m_imageCount;++n){
+                if(m_fences[n])
+                    vkDestroyFence(vk_device, m_fences[n], nullptr);
                 if(m_framebuffers[n])
                     vkDestroyFramebuffer(vk_device, m_framebuffers[n], nullptr);
                 if(m_viz.depth_enabled()){
@@ -244,6 +271,7 @@ namespace yq::tachyon {
                 if(m_imageViews[n])
                     vkDestroyImageView(vk_device, m_imageViews[n], nullptr);
             }
+            m_fences.clear();
             m_framebuffers.clear();
             m_imageViews.clear();
             m_depthViews.clear();
@@ -282,32 +310,11 @@ namespace yq::tachyon {
         return ret;
     }
 
-    VkFramebuffer   ViSwapchain::framebuffer(uint32_t i) const
-    {
-        if(i>=m_framebuffers.size())
-            return nullptr;
-        return m_framebuffers[i];
-    }
-    
-    uint32_t  ViSwapchain::width() const 
-    { 
-        return m_extents.width; 
-    }
 
-    VkImage         ViSwapchain::image(uint32_t i) const
-    {
-        if(i>=m_images.size())
-            return nullptr;
-        return m_images[i];
+    uint32_t  ViSwapchain::height() const 
+    { 
+        return m_extents.height; 
     }
-    
-    VkImageView     ViSwapchain::image_view(uint32_t i) const
-    {
-        if(i>=m_imageViews.size())
-            return nullptr;
-        return m_imageViews[i];
-    }
-    
 
 
     //VkSemaphore         ViSwapchain::semaphore_available(uint32_t i) const
@@ -337,11 +344,70 @@ namespace yq::tachyon {
     
     bool            ViSwapchain::valid() const
     {
-        return m_swapchain && m_imageCount;
+        return m_good && m_swapchain && m_imageCount;
     }
 
-    uint32_t  ViSwapchain::height() const 
-    { 
-        return m_extents.height; 
+    VkFence         ViSwapchain::vk_fence(uint32_t i) const
+    {
+        if(i>=m_fences.size())
+            return nullptr;
+        return m_fences[i];
     }
+    
+    VkFramebuffer   ViSwapchain::vk_framebuffer(uint32_t i) const
+    {
+        if(i>=m_framebuffers.size())
+            return nullptr;
+        return m_framebuffers[i];
+    }
+    
+
+    VkImage         ViSwapchain::vk_image(uint32_t i) const
+    {
+        if(i>=m_images.size())
+            return nullptr;
+        return m_images[i];
+    }
+
+    VkImage         ViSwapchain::vk_image(depth_k, uint32_t i) const
+    {
+        if(i>=m_depthImages.size())
+            return nullptr;
+        return m_depthImages[i];
+    }
+    
+    VkImageView     ViSwapchain::vk_image_view(uint32_t i) const
+    {
+        if(i>=m_imageViews.size())
+            return nullptr;
+        return m_imageViews[i];
+    }
+
+    VkImageView     ViSwapchain::vk_image_view(depth_k, uint32_t i) const
+    {
+        if(i>=m_depthViews.size())
+            return nullptr;
+        return m_depthViews[i];
+    }
+    
+    VkSemaphore     ViSwapchain::vk_semaphore(available_k, uint32_t i) const
+    {
+        if(i>=m_imageAvailableSemaphores.size())
+            return nullptr;
+        return m_imageAvailableSemaphores[i];
+    }
+    
+    VkSemaphore     ViSwapchain::vk_semaphore(rendered_k, uint32_t i) const
+    {
+        if(i>=m_renderCompleteSemaphores.size())
+            return nullptr;
+        return m_renderCompleteSemaphores[i];
+    }
+
+    uint32_t  ViSwapchain::width() const 
+    { 
+        return m_extents.width; 
+    }
+
+    
 }

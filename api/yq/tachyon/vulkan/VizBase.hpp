@@ -19,6 +19,7 @@
 #include <yq/tachyon/typedef/vi_processor.hpp>
 #include <yq/tachyon/typedef/vi_queue_id.hpp>
 #include <yq/tachyon/typedef/vi_queue_tasker.hpp>
+#include <yq/tachyon/vulkan/ViDescriptorPool.hpp>
 #include <yq/tachyon/vulkan/ViQueueType.hpp>
 #include <vulkan/vulkan_core.h>
 #include <atomic>
@@ -68,6 +69,7 @@ namespace yq::tachyon {
             //uint32_t            compute_workers         = 1;
             
             depth_spec          depth_buffer;
+            uint32_t            descriptors             = 0;
 
             queue_spec          graphics;
             //uint32_t            graphics_processors     = 0;    //!< Number of desired graphics processors on init
@@ -119,6 +121,7 @@ namespace yq::tachyon {
         bool                            compute_enabled() const { return m_compute.enable; }
 
         ViProcessor*                    compute_processor(uint32_t);
+        bool                            compute_processor_expand(uint32_t);
         VkQueue                         compute_queue() const;
         ViQueueFamilyID                 compute_queue_family() const { return m_compute.id.family; }
         ViQueueID                       compute_queue_id() const { return m_compute.id; }
@@ -130,6 +133,8 @@ namespace yq::tachyon {
 
         bool                            depth_enabled() const { return m_depth.enable; }
         VkFormat                        depth_format() const { return m_depth.format; }
+        
+        uint32_t                        descriptor_count() const { return m_descriptorPool.count(); }
 
         ViDevice&                       device() { return *m_device; }
         const ViDevice&                 device() const { return *m_device; }
@@ -148,6 +153,7 @@ namespace yq::tachyon {
 
         bool                            graphics_enabled() const { return m_graphics.enable; }
         ViProcessor*                    graphics_processor(uint32_t);
+        bool                            graphics_processor_expand(uint32_t);
         VkQueue                         graphics_queue() const;
         ViQueueFamilyID                 graphics_queue_family() const { return m_graphics.id.family; }
         ViQueueID                       graphics_queue_id() const { return m_graphics.id; }
@@ -201,7 +207,7 @@ namespace yq::tachyon {
         const ViDevice*                 vi_device() const { return m_device.ptr(); }
         virtual ViSwapchain*            vi_swapchain() { return nullptr; }
 
-        virtual VkDescriptorPool        vk_descriptor_pool() const { return nullptr; }
+        VkDescriptorPool                vk_descriptor_pool() const { return m_descriptorPool.descriptor_pool(); }
         VkDevice                        vk_device() const;
         VkPhysicalDevice                vk_physical_device() const;
         virtual VkRenderPass            vk_render_pass() const { return nullptr; }
@@ -261,6 +267,7 @@ namespace yq::tachyon {
             ~processing_t();
             
             void        pInit(VizBase*);
+            bool        pExpand(uint32_t);
             
             void reset();
         };
@@ -310,9 +317,11 @@ namespace yq::tachyon {
         };
         
         ViDevicePtr                 m_device;
+        
         color_t                     m_color;
         compute_t                   m_compute;
         depth_t                     m_depth;
+        ViDescriptorPool            m_descriptorPool;
         graphics_t                  m_graphics;
         optical_flow_t              m_opticalFlow;
         ViPipelineManagerUPtr       m_pipelines;
@@ -328,6 +337,6 @@ namespace yq::tachyon {
         // note, it'll be up to subclasses to create the processors
         //bool    _init_processors(ViProcessorUPtrVector&, ViQueueType, uint32_t nprocs, uint32_t nworkers);
 
-        
+        static void set_id(ViProcessor&, uint32_t);
     };
 }

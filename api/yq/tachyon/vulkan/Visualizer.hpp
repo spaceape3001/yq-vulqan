@@ -61,8 +61,8 @@ namespace yq::tachyon {
         //! \note will return INVALID reference if construction failed!
         const ViFrame0&                 current_frame0() const;
 
-        uint32_t                        descriptor_count() const { return m_descriptorCount; }
-        VkDescriptorPool                vk_descriptor_pool() const override;
+        //uint32_t                        descriptor_count() const { return m_descriptorCount; }
+        //VkDescriptorPool                vk_descriptor_pool() const override;
 
         /*! \brief "Draws" 
         
@@ -146,7 +146,7 @@ namespace yq::tachyon {
         using FrameArray    = std::vector<std::unique_ptr<ViFrame0>>;
 
         VkCommandPoolCreateFlags            m_cmdPoolCreateFlags    = {};
-        uint32_t                            m_descriptorCount       = 0;
+        //uint32_t                            m_descriptorCount       = 0;
         FrameArray                          m_frames;
         
             // eventually this will get smarter....

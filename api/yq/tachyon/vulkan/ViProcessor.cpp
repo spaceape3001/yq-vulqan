@@ -12,7 +12,11 @@
 #include <tbb/parallel_for.h>
 
 namespace yq::tachyon {
-    ViProcessor::ViProcessor(VizBase&vb, ViQueueType qt) : m_viz(vb), m_device(vb.device())
+    ViProcessor::ViProcessor(VizBase&vb, ViQueueType qt) : 
+        m_viz(vb), m_device(vb.device()),
+        m_cmdPool(m_device, qt, VqCommandPoolCreateBit::ResetCommandBuffer), 
+        m_cmdBuffer(m_device, m_cmdPool)
+        
     {
         m_good  = true;
         m_factory = [qt,this]() -> ViWorkerUPtr {
@@ -25,7 +29,17 @@ namespace yq::tachyon {
         m_workers.clear();
     }
     
-    void    ViProcessor::exec_multi(FNProcessorTask&& fn)
+    void    ViProcessor::execute(FNProcessorTask&& fn)
+    {
+        if(!m_good)
+            return;
+        if(!fn)
+            return;
+            
+        fn(*this);
+    }
+
+    void    ViProcessor::exec_multi(FNWorkerTask&& fn)
     {
         using range_t    = tbb::blocked_range<size_t>;
         
@@ -47,7 +61,7 @@ namespace yq::tachyon {
         tbb::parallel_for(range_t(0, m_workers.size()), multi, tbb::simple_partitioner());
     }
 
-    void      ViProcessor::execute(FNProcessorTask&& fn)
+    void      ViProcessor::execute(FNWorkerTask&& fn)
     {
         if(!m_good)
             return;

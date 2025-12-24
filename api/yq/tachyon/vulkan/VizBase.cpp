@@ -77,6 +77,22 @@ namespace yq::tachyon {
     {
     }
 
+    bool        VizBase::processing_t::pExpand(uint32_t n)
+    {
+        if(!factory)
+            return false;
+        
+        procs.reserve(n);
+        while(procs.size() < n){
+            auto pp = factory();
+            if(!pp)
+                return false;
+            set_id(*pp, (uint32_t) procs.size());
+            procs.push_back(std::move(pp));
+        }
+        return true;
+    }
+
     void        VizBase::processing_t::pInit(VizBase* vb)
     {
         factory = [vb,this]() -> ViProcessorUPtr {
@@ -167,10 +183,16 @@ namespace yq::tachyon {
         return VulqanManager::instance(); 
     }
 
+    void VizBase::set_id(ViProcessor&vp, uint32_t i)
+    {
+        vp.m_id = i;
+    }
+
 
     ///////////////////////////////////////////////////////////////////////////
 
-    VizBase::VizBase(ViDevice& dev, const Param& p) : m_device(&dev)
+    VizBase::VizBase(ViDevice& dev, const Param& p) : m_device(&dev), 
+        m_descriptorPool(dev, std::clamp(p.descriptors, MIN_DESCRIPTOR_COUNT, MAX_DESCRIPTOR_COUNT))
     {
         if(!dev.valid())
             return ;
@@ -228,27 +250,6 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
         return true;
     }
 
-    //bool    VizBase::_init_processors()
-    //{
-        //return _init_processors(ProcInit());
-    //}
-
-    //bool    VizBase::_init_processors(const ProcInit& p)
-    //{
-        //if(!m_processors.empty())
-            //return false;
-        //m_procInit  = p;
-        //m_processors.reserve(p.processors);
-        //ViProcessor::Param vp;
-        //vp.queue_type    = p.queue_type;
-        //vp.workers  = std::max(p.workers,1U);
-        //vp.command_pool_flags |= VqCommandPoolCreateBit::ResetCommandBuffer;
-        
-        //for(uint32_t n=0;n<p.processors;++n)
-            //m_processors.push_back(std::make_unique<ViProcessor>(*this, vp));
-        //return true;
-    //}
-
     bool    VizBase::_init_queues(const Param&p)
     {
 
@@ -275,26 +276,6 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
             return false;
         return true;
     }
-
-    //bool   VizBase::_init_processors(ViProcessorUPtrVector&procs, ViQueueType qType, uint32_t nprocs, uint32_t nworkers)
-    //{
-        //if(!procs.empty())
-            //return false;
-        //if(!nprocs)
-            //return true;
-            
-        //procs.reserve(nprocs);
-            
-        //ViProcessor::Param p;
-        //p.workers               = std::max(nworkers, 1U);
-        //p.command_pool_flags   |= VqCommandPoolCreateBit::ResetCommandBuffer;
-        //p.queue_type            = qType;
-        
-        //for(uint32_t n=0;n<nprocs;++n)
-            //procs.push_back(std::make_unique<ViProcessor>(*this, p));
-        //return true;
-    //}
-
 
     RGBA4F VizBase::color_clear() const
     {
@@ -324,6 +305,11 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     ViProcessor*    VizBase::compute_processor(uint32_t n)
     {
         return m_compute.proc(n);
+    }
+
+    bool     VizBase::compute_processor_expand(uint32_t n)
+    {
+        return m_compute.pExpand(n);
     }
 
     VkQueue  VizBase::compute_queue() const
@@ -392,6 +378,10 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
         return m_graphics.proc(n);
     }
 
+    bool            VizBase::graphics_processor_expand(uint32_t n)
+    {
+        return m_graphics.pExpand(n);
+    }
 
     VkQueue     VizBase::graphics_queue() const
     {
@@ -441,8 +431,6 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     {
         return m_opticalFlow.enable && m_device && m_device->is_queue_valid( m_opticalFlow.id );
     }
-
-
     
     ViPipelineCPtr                  VizBase::pipeline(uint64_t i) const
     {

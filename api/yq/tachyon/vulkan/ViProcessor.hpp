@@ -27,10 +27,17 @@ namespace yq::tachyon {
         ViDevice&               device() { return m_device; }
         const ViDevice&         device() const { return m_device; }
     
+        // executes only THIS processor on current thread!
+        void                    execute(FNProcessorTask&&);
+        
         // executes *ALL* workers against the given task
-        void                    execute(FNProcessorTask&&);    // TODO
+        void                    execute(FNWorkerTask&&);
+
         bool                    good() const { return m_good; }
         //VkSemaphore             semaphore_finished() const { return m_semaphore.finished; }
+        
+        VkCommandBuffer         vk_command_buffer() const { return m_cmdBuffer.command_buffer(); }
+        VkCommandPool           vk_command_pool() const { return m_cmdPool.command_pool(); }
         
         void                    reset();
         
@@ -65,6 +72,8 @@ namespace yq::tachyon {
         auto crbegin() const { return m_workers.crbegin(); }
         auto crend() const { return m_workers.crend(); }
         
+        uint32_t processor_id() const { return m_id; }
+        
     protected:
         
         using worker_create_t   = std::function<ViWorkerUPtr()>;
@@ -74,8 +83,12 @@ namespace yq::tachyon {
     private:
         VizBase&                m_viz;
         ViDevice&               m_device;
+        ViCommandPool           m_cmdPool;
+        ViCommandBuffer         m_cmdBuffer;
         ViWorkerUPtrVector      m_workers;
+        uint32_t                m_id    = 0;
         
+        friend class VizBase;
         
         //struct {
             //VkSemaphore         finished = nullptr;
@@ -83,7 +96,7 @@ namespace yq::tachyon {
         ViWorker::Param         m_workerParam;
         bool                    m_good  = false;
         
-        void    exec_multi(FNProcessorTask&&);
+        void    exec_multi(FNWorkerTask&&);
     };
 }
 

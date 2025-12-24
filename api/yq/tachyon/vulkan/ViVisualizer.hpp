@@ -60,6 +60,9 @@ namespace yq::tachyon {
         This is about transferreing resources to/from the device, 
         making pipelines, etc.  It's expected to have ONE visualizer
         per viewer/logical vulkan device.
+        
+        \note This is about using SWAPCHAINS for rendering.  See ViHeadless
+        for non-swapchain based rendering.  Or ViCompute for compute-only
     *//*
         Note, if this needs to be shared, we'll make it ref-counted.
         Also, thread-safety is to be done *outside* this class (performance)

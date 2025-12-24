@@ -12,7 +12,7 @@ namespace yq::tachyon {
     class ViProcessor;
     class ViWorker;
     
-    using ViProcessorUPtr = std::unique_ptr<ViProcessor>;
-    using ViProcessorUPtrVector    = std::vector<ViProcessorUPtr>;
-    using FNProcessorTask   = std::function<void(ViWorker&)>;
+    using ViProcessorUPtr       = std::unique_ptr<ViProcessor>;
+    using ViProcessorUPtrVector = std::vector<ViProcessorUPtr>;
+    using FNProcessorTask       = std::function<void(ViProcessor&)>;
 }

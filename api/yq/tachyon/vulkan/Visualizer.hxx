@@ -62,11 +62,11 @@ namespace yq::tachyon {
         // eventually multithread...
     struct ViThread0 {
         Visualizer&             m_viz;
-        ViDescriptorPoolUPtr    m_descriptors;
+        //ViDescriptorPoolUPtr    m_descriptors;
         VkCommandPool           m_graphics            = nullptr;
         VkCommandPool           m_compute             = nullptr;
         
-        VkDescriptorPool        descriptors() const;
+        //VkDescriptorPool        descriptors() const;
         
         ViThread0(Visualizer&);
         ~ViThread0();

@@ -11,4 +11,5 @@ namespace yq::tachyon {
     class ViWorker;
     using ViWorkerUPtr = std::unique_ptr<ViWorker>;
     using ViWorkerUPtrVector    = std::vector<ViWorkerUPtr>;
+    using FNWorkerTask          = std::function<void(ViWorker&)>;
 }

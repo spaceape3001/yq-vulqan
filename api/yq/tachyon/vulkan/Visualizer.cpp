@@ -298,8 +298,6 @@ namespace yq::tachyon {
     
     void    ViThread0::_ctor()
     {
-        m_descriptors   = std::make_unique<ViDescriptorPool>(m_viz.device(), m_viz.descriptor_count());
-
         VqCommandPoolCreateInfo poolInfo;
         poolInfo.flags                  = m_viz.command_pool_create_flags();
         
@@ -317,7 +315,6 @@ namespace yq::tachyon {
     
     void    ViThread0::_dtor()
     {
-        m_descriptors   = {};
         if(m_graphics){
             vkDestroyCommandPool(m_viz.device(), m_graphics, nullptr);
             m_graphics = nullptr;
@@ -328,13 +325,6 @@ namespace yq::tachyon {
         }
     }
 
-    VkDescriptorPool     ViThread0::descriptors() const
-    {
-        if(m_descriptors)
-            return m_descriptors->descriptor_pool();
-        return nullptr;
-    }
-    
     ////////////////////////////////////////////////////////////////////////////////
     //  VISUALIZER
     ////////////////////////////////////////////////////////////////////////////////
@@ -360,7 +350,7 @@ namespace yq::tachyon {
     std::error_code     Visualizer::_init(const CreateData& vcd)
     {
         //  old hack....
-        m_descriptorCount   = std::max(MIN_DESCRIPTOR_COUNT, vcd.viewer.descriptors);
+        //m_descriptorCount   = std::max(MIN_DESCRIPTOR_COUNT, vcd.viewer.descriptors);
 
         m_thread            = std::make_unique<ViThread0>(*this);
 
@@ -404,12 +394,6 @@ namespace yq::tachyon {
     {
         return const_cast<Visualizer*>(this)->current_frame0();
     }
-
-    VkDescriptorPool    Visualizer::vk_descriptor_pool() const
-    {
-        return m_thread->descriptors();
-    }
-
     
     ViFrame0&            Visualizer::frame0(int32_t i)
     {

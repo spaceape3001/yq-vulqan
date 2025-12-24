@@ -53,6 +53,7 @@ namespace yq::tachyon {
             .color_clear            = cfg.viewer.clear,
             .compute                = cfg.viewer.compute,
             .depth_buffer           = cfg.viewer.depth_buffer,
+            .descriptors            = cfg.viewer.descriptors,
             .graphics               = REQUIRED,
             //.graphics_processors    = std::clamp(cfg.viewer.frames_in_flight, MIN_FRAMES_IN_FLIGHT, MAX_FRAMES_IN_FLIGHT),
             .graphics_qidx          = cfg.number,
@@ -88,6 +89,7 @@ namespace yq::tachyon {
             cfg.old_swapchain = m_swapchain -> swapchain();
         device().wait_idle();
         m_swapchain     = new ViSwapchain(*this, cfg);
+        graphics_processor_expand(m_swapchain->image_count());
         vizDebug << "ViVisualizer: Rebuilt the swapchain";
     }
 
@@ -112,7 +114,7 @@ namespace yq::tachyon {
         std::error_code     ec;
 
         m_renderPass = new ViRenderPass(*this, m_surfaceFormat);
-        m_swapchain = new ViSwapchain(*this);
+        _rebuild_swapchain();
         return {};
     }
     

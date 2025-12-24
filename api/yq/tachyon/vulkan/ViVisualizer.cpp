@@ -48,12 +48,11 @@
 
 namespace yq::tachyon {
 
-    ViVisualizer::ViVisualizer(const CreateData& cfg) : 
-        VizBase(Param{
+    ViVisualizer::ViVisualizer(ViDevice& dev, const CreateData& cfg) : 
+        VizBase(dev, Param{  // temporary
             .color_clear            = cfg.viewer.clear,
             .compute                = cfg.viewer.compute,
             .depth_buffer           = cfg.viewer.depth_buffer,
-            .device                 = cfg.device, 
             .graphics               = REQUIRED,
             //.graphics_processors    = std::clamp(cfg.viewer.frames_in_flight, MIN_FRAMES_IN_FLIGHT, MAX_FRAMES_IN_FLIGHT),
             .graphics_qidx          = cfg.number,
@@ -81,58 +80,13 @@ namespace yq::tachyon {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-
-    std::error_code     ViVisualizer::_7_render_pass_create()
-    {
-        ViRenderPassPtr     rp  = new ViRenderPass;
-        std::error_code ec  = rp -> init(*this, m_surfaceFormat);
-        if(ec != std::error_code())
-            return ec;
-        m_renderPass    = (ViRenderPassCPtr) rp;
-        vizDebug << "ViVisualizer: Created the render pass";
-        return {};
-    }
     
-    void               ViVisualizer::_7_render_pass_kill()
-    {
-        m_renderPass    = nullptr;
-        vizDebug << "ViVisualizer: Destroyed the render pass";
-    }
-
-    std::error_code    ViVisualizer:: _8_swapchain_create()
-    {
-        m_swapchain     = new ViSwapchain(*this);
-        return {};
-    }
-    
-    void                ViVisualizer::_8_swapchain_kill()
-    {
-        m_swapchain     = nullptr;
-        vizDebug << "ViVisualizer: Destroyed the swapchain";
-    }
-
-    //std::error_code     ViVisualizer::_9_pipeline_manager_create()
-    //{
-        //ViPipelineOptions   opts{
-            ////.swapchain  = m_swapchain
-        //};
-        ////m_pipelines     = std::make_unique<ViPipelineManager>(*this, opts);
-        //vizDebug << "ViVisualizer: Created the pipeline manager";
-        //return {};
-    //}
-    
-    //void                ViVisualizer::_9_pipeline_manager_kill()
-    //{
-        //m_pipelines     = {};
-        //vizDebug << "ViVisualizer: Destroyed the pipeline manager";
-    //}
-
     void                ViVisualizer::_rebuild_swapchain()
     {
         ViSwapchainConfig   cfg;
         if(m_swapchain)
             cfg.old_swapchain = m_swapchain -> swapchain();
-        m_device->wait_idle();
+        device().wait_idle();
         m_swapchain     = new ViSwapchain(*this, cfg);
         vizDebug << "ViVisualizer: Rebuilt the swapchain";
     }
@@ -141,12 +95,10 @@ namespace yq::tachyon {
 
     std::error_code     ViVisualizer::_init(const CreateData& vcd)
     {
-        if(!m_device || !m_device->valid())
-            return create_error<"null device">();
         if(!m_surface || !m_surface->valid())
             return create_error<"null surface">();
 
-        for(auto pm : vqGetPhysicalDeviceSurfacePresentModesKHR(physical(), surface()))
+        for(auto pm : vqGetPhysicalDeviceSurfacePresentModesKHR(vk_physical_device(), vk_surface()))
             m_presentModes.insert((PresentMode::enum_t) pm);
         m_presentMode           = m_presentModes.contains(vcd.viewer.pmode) ? vcd.viewer.pmode : PresentMode{ PresentMode::Fifo };
 
@@ -159,31 +111,17 @@ namespace yq::tachyon {
             
         std::error_code     ec;
 
-        ec = _7_render_pass_create();
-        if(ec != std::error_code())
-            return ec;
-            
-        ec = _8_swapchain_create();
-        if(ec != std::error_code())
-            return ec;
-            
-        //ec = _9_pipeline_manager_create();
-        //if(ec != std::error_code())
-            //return ec;
+        m_renderPass = new ViRenderPass(*this, m_surfaceFormat);
+        m_swapchain = new ViSwapchain(*this);
         return {};
     }
     
     void                ViVisualizer::_kill()
     {
-        if(!m_device->valid())
-            return ;
-            
-        //_9_pipeline_manager_kill();
-        //m_device->wait_idle();
-        _8_swapchain_kill();
-        m_device->wait_idle();
-        _7_render_pass_kill();
-        m_device->wait_idle();
+        m_swapchain     = {};
+        wait_idle();
+        m_renderPass    = {};
+        wait_idle();
     }
 
 
@@ -237,17 +175,11 @@ namespace yq::tachyon {
         return m_presentModes.contains(pm);
     }
 
-    VkSurfaceKHR      ViVisualizer::surface() const 
-    { 
-        if(m_surface)
-            return m_surface -> surface();
-        return nullptr;
-    }
 
     VkSurfaceCapabilitiesKHR_x  ViVisualizer::surface_capabilities() const
     {
         VkSurfaceCapabilitiesKHR    ret;
-        if(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physical(), surface(), &ret) != VK_SUCCESS)
+        if(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(vk_physical_device(), vk_surface(), &ret) != VK_SUCCESS)
             return unexpected<"Unable to get surface capabilities">();
         return ret;
     }
@@ -268,13 +200,6 @@ namespace yq::tachyon {
     VkFormat    ViVisualizer::surface_format() const 
     { 
         return m_surfaceFormat; 
-    }
-
-    VkSwapchainKHR  ViVisualizer::swapchain() const
-    {
-        if(!m_swapchain)
-            return nullptr;
-        return m_swapchain->swapchain();
     }
 
     VkRect2D    ViVisualizer::swapchain_def_scissor() const
@@ -325,4 +250,17 @@ namespace yq::tachyon {
     }
 
 
+    VkSurfaceKHR      ViVisualizer::vk_surface() const 
+    { 
+        if(m_surface)
+            return m_surface -> surface();
+        return nullptr;
+    }
+
+    VkSwapchainKHR  ViVisualizer::vk_swapchain() const
+    {
+        if(!m_swapchain)
+            return nullptr;
+        return m_swapchain->swapchain();
+    }
 }

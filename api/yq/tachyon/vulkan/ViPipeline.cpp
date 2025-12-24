@@ -61,7 +61,7 @@ namespace yq::tachyon {
     
     std::error_code ViPipeline::_init(const Pipeline* pipe, const ViPipelineOptions& opts)
     {
-        ViPipelineLayoutCPtr        pLay    = m_viz.device(REF).pipeline_layout_create(pipe);
+        ViPipelineLayoutCPtr        pLay    = m_viz.device().pipeline_layout_create(pipe);
         if(!pLay || !pLay->valid())
             return errors::pipeline_bad_layout();
         return _init( pLay, opts);

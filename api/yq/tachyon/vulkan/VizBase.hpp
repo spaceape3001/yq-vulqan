@@ -68,7 +68,6 @@ namespace yq::tachyon {
             //uint32_t            compute_workers         = 1;
             
             depth_spec          depth_buffer;
-            ViDevicePtr         device;
 
             queue_spec          graphics;
             //uint32_t            graphics_processors     = 0;    //!< Number of desired graphics processors on init
@@ -108,6 +107,8 @@ namespace yq::tachyon {
         RGBA4F                          color_clear() const; 
         void                            color_clear(set_k, const RGBA4F&);
         
+        VkClearValue                    color_clear_vk() const { return m_color.clear; }                    
+        
         VkFormat                        color_format() const { return m_color.format; }
         void                            color_format(set_k, DataFormat);
         void                            color_format(set_k, VkFormat);
@@ -130,19 +131,20 @@ namespace yq::tachyon {
         bool                            depth_enabled() const { return m_depth.enable; }
         VkFormat                        depth_format() const { return m_depth.format; }
 
-        virtual VkDescriptorPool        vk_descriptor_pool() const { return nullptr; }
+        ViDevice&                       device() { return *m_device; }
+        const ViDevice&                 device() const { return *m_device; }
+
 
         //! Vulkan (logical) device
-        VkDevice                        device() const;
-        
-        ViDevice&                       device(ref_k) { return *m_device; }  // temporary hack until we get everybody over....
-        ViDevice*                       device(ptr_k) { return m_device.ptr(); }  // temporary hack until we get everybody over....
+        //VkDevice                        device() const;
+        //ViDevice&                       device(ref_k) { return *m_device; }  // temporary hack until we get everybody over....
+        //ViDevice*                       device(ptr_k) { return m_device.ptr(); }  // temporary hack until we get everybody over....
 
         Expect<VkFormat>                find_depth_format() const;
         Expect<VkFormat>                find_supported_format(std::span<const VkFormat>, VkImageTiling, VkFormatFeatureFlags) const;
         Expect<VkFormat>                find_supported_format(std::initializer_list<VkFormat>, VkImageTiling, VkFormatFeatureFlags) const;
 
-        bool                            good_base() const { return m_goodBase; }
+        bool                            good() const { return m_good; }
 
         bool                            graphics_enabled() const { return m_graphics.enable; }
         ViProcessor*                    graphics_processor(uint32_t);
@@ -153,7 +155,7 @@ namespace yq::tachyon {
         bool                            graphics_queue_valid() const;
 
         //! Vulkan logical device
-        VkDevice                        logical() const;
+        VkDevice                        logical() const { return vk_device(); }
 
         ViProcessor*                    optical_flow_processor(uint32_t);
         bool                            optical_flow_enabled() const { return m_opticalFlow.enable; }
@@ -164,7 +166,7 @@ namespace yq::tachyon {
         bool                            optical_flow_queue_valid() const;
 
         //! Vulkan physical device (gpu)
-        VkPhysicalDevice                physical() const;
+        VkPhysicalDevice                physical() const { return vk_physical_device(); }
 
         ViPipelineCPtr                  pipeline(uint64_t) const;
         ViPipelineCPtr                  pipeline_create(const Pipeline*);
@@ -196,7 +198,12 @@ namespace yq::tachyon {
         bool                            transfer_queue_valid() const;
 
         ViDevice*                       vi_device() { return m_device.ptr(); }
+        const ViDevice*                 vi_device() const { return m_device.ptr(); }
         virtual ViSwapchain*            vi_swapchain() { return nullptr; }
+
+        virtual VkDescriptorPool        vk_descriptor_pool() const { return nullptr; }
+        VkDevice                        vk_device() const;
+        VkPhysicalDevice                vk_physical_device() const;
         virtual VkRenderPass            vk_render_pass() const { return nullptr; }
 
         ViProcessor*                    video_decode_processor(uint32_t);
@@ -218,10 +225,17 @@ namespace yq::tachyon {
         std::error_code                 wait_idle();
 
     protected:
-        VizBase(const Param&);
+        VizBase(ViDevice&, const Param&);
         virtual ~VizBase();
         
         using processor_create_t    = std::function<ViProcessorUPtr()>;
+
+        void    set_bad() { m_good = false; }
+        void    set_good() { m_good = true; }
+
+        std::atomic<uint64_t>       m_tick{0ULL};     // Always monotomically incrementing
+
+    private:
 
         struct basic_t {
             bool        enable  = false;
@@ -303,20 +317,17 @@ namespace yq::tachyon {
         optical_flow_t              m_opticalFlow;
         ViPipelineManagerUPtr       m_pipelines;
         present_t                   m_present;
-        std::atomic<uint64_t>       m_tick{0ULL};     // Always monotomically incrementing
         transfer_t                  m_transfer;
         video_decode_t              m_videoDec;
         video_encode_t              m_videoEnc;
-        
-        
+        bool                        m_good       = false;
         
         bool    _init_depth(const Param&);
         bool    _init_queues(const Param&);
         
         // note, it'll be up to subclasses to create the processors
         //bool    _init_processors(ViProcessorUPtrVector&, ViQueueType, uint32_t nprocs, uint32_t nworkers);
+
         
-    private:
-        bool                    m_goodBase       = false;
     };
 }

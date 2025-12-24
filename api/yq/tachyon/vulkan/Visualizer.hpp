@@ -88,7 +88,7 @@ namespace yq::tachyon {
         //! \note will return INVALID reference if construction failed!
         const ViFrame0&                 frame0(int32_t) const;
 
-        uint64_t                        frame_number() const { return m_tick; }
+        uint64_t                        frame_number() const { return tick(); }
         
         size_t                          frames_in_flight() const { return m_frames.size(); }
 
@@ -110,7 +110,7 @@ namespace yq::tachyon {
         void                            update(ViContext&, const Scene0&);
         #endif
         
-        Visualizer(const CreateData&);
+        Visualizer(ViDevice&, const CreateData&);
         Visualizer();
         ~Visualizer();
         

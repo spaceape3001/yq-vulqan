@@ -16,7 +16,6 @@ namespace yq::tachyon {
     struct ViVisualizer::CreateData {
         const ViewerCreateInfo& viewer;
         
-        ViDevicePtr             device;
         ViSurfacePtr            surface;
         Size2I                  pixels;
         ViQueueID               present;    //!< States which queue family to use for present support (default is graphic)

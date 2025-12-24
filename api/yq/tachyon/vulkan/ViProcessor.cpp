@@ -12,7 +12,7 @@
 #include <tbb/parallel_for.h>
 
 namespace yq::tachyon {
-    ViProcessor::ViProcessor(VizBase&vb, ViQueueType qt) : m_viz(vb), m_device(vb.device(REF))
+    ViProcessor::ViProcessor(VizBase&vb, ViQueueType qt) : m_viz(vb), m_device(vb.device())
     {
         m_good  = true;
         m_factory = [qt,this]() -> ViWorkerUPtr {

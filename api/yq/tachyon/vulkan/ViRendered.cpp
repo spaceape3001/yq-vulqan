@@ -27,7 +27,7 @@
 #include <yq/tachyon/vulkan/ViManager.hpp>
 #include <yq/tachyon/vulkan/ViPipeline.hpp>
 #include <yq/tachyon/vulkan/ViPipelineLayout.hpp>
-#include <yq/tachyon/vulkan/ViVisualizer.hpp>
+#include <yq/tachyon/vulkan/VizBase.hpp>
 
 
 namespace yq::tachyon {
@@ -45,26 +45,24 @@ namespace yq::tachyon {
     static constexpr bool       RENDERED_DEBUG_REPORT  = true;
     
     //////////////////////////////////
-
-    ViRendered::ViRendered()
-    {
-    }
     
-    ViRendered::ViRendered(VizBase&viz, const RenderedSnap* ren, const ViRenderedOptions& options, const Pipeline*p)
+    ViRendered::ViRendered(VizBase&viz, const RenderedSnap* ren, const ViRenderedOptions& options, const Pipeline*p) : 
+        m_viz(viz) 
     {
-        if(!viz.device())
+        if(!viz.good())
             return;
         if(!ren)
             return;
-        std::error_code ec  = _init(viz, *ren, options, p);
+        std::error_code ec  = _init(*ren, options, p);
         if(ec != std::error_code()){
+            _kill();
             vizWarning << "ViRendered -- unable to initialize: " << ec.message();
         }
     }
     
     ViRendered::~ViRendered()
     {
-        kill();
+        _kill();
     }
     
     void            ViRendered::_descriptors()
@@ -72,17 +70,14 @@ namespace yq::tachyon {
         _publish_data();
     }
     
-    std::error_code ViRendered::_init(VizBase& viz, const RenderedSnap& ren, const ViRenderedOptions& options, const Pipeline*p)
+    std::error_code ViRendered::_init(const RenderedSnap& ren, const ViRenderedOptions& options, const Pipeline*p)
     {
-        m_viz           = dynamic_cast<ViVisualizer*>(&viz);
-        if(!m_viz)
-            return errors::bad_argument();
         m_config        = p ? p : ren.pipeline_simple;
         if(!m_config)
             return errors::rendered_null_pipeline();
         m_id            = ren.id();
         
-        m_layout        = m_viz->device(REF).pipeline_layout_create(m_config);
+        m_layout        = m_viz.device().pipeline_layout_create(m_config);
         if(!m_layout)
             return errors::rendered_bad_pipeline_layout();
         
@@ -92,7 +87,7 @@ namespace yq::tachyon {
         if(options.pipelines){
             m_pipeline  = options.pipelines->create(m_config);
         } else {
-            m_pipeline  = m_viz->pipeline_create(m_config);
+            m_pipeline  = m_viz.pipeline_create(m_config);
         }
         if(!m_pipeline){
             return errors::rendered_bad_pipeline();
@@ -116,7 +111,7 @@ namespace yq::tachyon {
             if(options.descriptor_pool){
                 dataOptions.pool    = options.descriptor_pool;
             } else {
-                dataOptions.pool    = m_viz->vk_descriptor_pool();
+                dataOptions.pool    = m_viz.vk_descriptor_pool();
             }
             if(dataOptions.pool){
                 m_status    |= S::Descriptors;
@@ -159,7 +154,6 @@ namespace yq::tachyon {
         m_config        = {};
         m_layout        = {};
         m_config        = {};
-        m_viz           = nullptr;
     }
     
 
@@ -258,7 +252,7 @@ namespace yq::tachyon {
             if(u.pipelines){
                 m_pipeline      = u.pipelines->create(m_config);
             } else {
-                m_pipeline      = m_viz -> pipeline_create(m_config);
+                m_pipeline      = m_viz.pipeline_create(m_config);
             }
         }
         
@@ -278,11 +272,6 @@ namespace yq::tachyon {
         m_vertexDraws   = sn.vertex_draws;
     }
     
-    bool    ViRendered::consistent() const
-    {
-        return m_viz ? (m_pipeline && m_layout && m_viz->device()) : (!m_pipeline && !m_layout);
-    }
-
     void    ViRendered::debug_report() const
     {
         stream::Logger  logger(vizDebug);
@@ -295,31 +284,7 @@ namespace yq::tachyon {
             _descriptors();
         }
     }
-    
-    std::error_code ViRendered::init(VizBase&viz, const RenderedSnap& ren, const ViRenderedOptions& options, const Pipeline *p)
-    {
-        if(m_viz){
-            if(!consistent()){
-                return errors::rendered_bad_state();
-            }
-            return errors::rendered_existing();
-        }
-
-        if(!viz.device())
-            return errors::visualizer_uninitialized();
-            
-        std::error_code ec  = _init(viz, ren, options, p);
-        if(ec != std::error_code()){
-            _kill();
-        }
-        return ec;
-    }
-
-    void    ViRendered::kill()
-    {
-        _kill();
-    }
-    
+        
     ViPipelineCPtr          ViRendered::pipeline() const
     {
         return m_pipeline;
@@ -434,6 +399,6 @@ namespace yq::tachyon {
 
     bool    ViRendered::valid() const
     {
-        return (m_viz && m_viz->device() && m_layout);
+        return m_viz.good() && m_layout;
     }
 }

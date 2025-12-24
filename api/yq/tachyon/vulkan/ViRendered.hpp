@@ -21,7 +21,6 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class ViVisualizer;
     class VizBase;
     struct ViContext;
     class Rendered³;
@@ -42,19 +41,12 @@ namespace yq::tachyon {
     class ViRendered : public ViData, public RefCount {
     public:
     
-        ViRendered();
-        //ViRendered(const ViRendered&, const ViRenderedOptions& opts={});
-        //ViRendered(const ViRendered&, const PipelineCPtr pipe, const ViRenderedOptions& opts={});
         ViRendered(VizBase&, const RenderedSnap*, const ViRenderedOptions& options={}, const Pipeline*p = nullptr);
         ~ViRendered();
-        
-        std::error_code init(VizBase&, const RenderedSnap&, const ViRenderedOptions& options={}, const Pipeline*p = nullptr);
     
         //! Dumps out to the viz debug stream full information to this rendered.
         void    debug_report() const;
     
-        void    kill();
-        
         //! Updates us
         // NOTE, expect an extra helper once we get proper lighting support into the scene, maybe
         // some sort of "universal" buffer or simialr
@@ -64,7 +56,6 @@ namespace yq::tachyon {
         void    descriptors();
         void    record(ViContext&, const PushBuffer&, Pipeline::Variation v=Pipeline::Variation::Default) const;
         
-        bool    consistent() const;
         bool    valid() const;
     
         uint64_t    pipeline_id() const { return m_pipelineId; }
@@ -88,6 +79,8 @@ namespace yq::tachyon {
             Wireframe
         };
     
+        VizBase&                    m_viz;
+
         uint64_t                    m_id            = 0;
         ViPipelineLayoutCPtr        m_layout;
         VkPrimitiveTopology         m_topology      = VK_PRIMITIVE_TOPOLOGY_POINT_LIST; // *IF* dynamic
@@ -95,12 +88,11 @@ namespace yq::tachyon {
         uint64_t                    m_pipelineId    = 0;
         Flags<S>                    m_status = {};
         bool                        m_good          = false;
-        ViVisualizer*               m_viz = nullptr;
         std::vector<IndexDrawCall>  m_indexDraws;
         std::vector<VertexDrawCall> m_vertexDraws;
         
 
-        std::error_code _init(VizBase&, const RenderedSnap&, const ViRenderedOptions& opts, const Pipeline*p);
+        std::error_code _init(const RenderedSnap&, const ViRenderedOptions& opts, const Pipeline*p);
         void            _kill();
         void            _update(ViContext& u, const RenderedSnap&, const ViDataMap& dm);
         void            _descriptors();

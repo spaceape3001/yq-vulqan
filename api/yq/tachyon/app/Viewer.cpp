@@ -694,15 +694,14 @@ namespace yq::tachyon {
             return ;
         }
 
-        Visualizer::CreateData      vcd{ m_createInfo };
-        vcd.device      = rep.device();
-        
-        if(!vcd.device || !vcd.device->valid()){
+        auto dev    = rep.device();
+        if(!dev || !dev->valid()){
             viewerCritical << "Viewer: Unable to get a valid device, aborting the viewer";
             m_flags |= X::Failure;
             return;
         }
         
+        Visualizer::CreateData      vcd{ m_createInfo };
         vcd.surface     = win -> create_surface();
         if(!vcd.surface || !vcd.surface->valid()){
             viewerCritical << "Viewer: Unable to get a valid surface, aborting the viewer";
@@ -714,7 +713,7 @@ namespace yq::tachyon {
         vcd.number      = (uint32_t) m_number;
 
         try {
-            m_viz       = std::make_unique<Visualizer>(vcd);
+            m_viz       = std::make_unique<Visualizer>(*dev, vcd);
         } 
         catch(const std::exception& ex)
         {

@@ -17,45 +17,26 @@ namespace yq::tachyon {
     
     class ViRenderPass : public RefCount {
     public:
-        ViRenderPass();
-        
         #if 0
         ViRenderPass(ViVisualizer&, const RenderPass&);
         ViRenderPass(ViVisualizer&, const RenderPassInfo&);
         #endif
 
         ViRenderPass(ViVisualizer&, const VkRenderPassCreateInfo&);
-        
         ViRenderPass(ViVisualizer&, VkFormat);
         ~ViRenderPass();
 
-        bool                    consistent() const;
         VkRenderPass            render_pass() const { return m_renderPass; }
         bool                    valid() const;
-        ViVisualizer*           visualizer() const { return m_viz; }
+        ViVisualizer&           visualizer() { return m_viz; }
+        const ViVisualizer&     visualizer() const { return m_viz; }
         
-        #if 0
-        std::error_code         init(ViVisualizer&, const RenderPass&);
-        std::error_code         init(ViVisualizer&, const RenderPassInfo&);
-        #endif
-
-        std::error_code         init(ViVisualizer&, const VkRenderPassCreateInfo&);
-        
-        std::error_code         init(ViVisualizer&, VkFormat);
-
-        void                    kill();
     private:
-        ViVisualizer*       m_viz           = nullptr;
+        ViVisualizer&       m_viz;
         VkRenderPass        m_renderPass    = nullptr;
 
-        std::error_code         _init(ViVisualizer&, const VkRenderPassCreateInfo&);
-
-        #if 0
-        std::error_code         _init(ViVisualizer&, const RenderPass&);
-        std::error_code         _init(ViVisualizer&, const RenderPassInfo&);
-        #endif
-        
-        std::error_code         _init(ViVisualizer&, VkFormat);
+        std::error_code         _init(const VkRenderPassCreateInfo&);
+        std::error_code         _init(VkFormat);
         void                    _kill();
         void                    _wipe();
     };

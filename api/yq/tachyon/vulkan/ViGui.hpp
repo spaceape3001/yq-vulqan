@@ -107,7 +107,7 @@ namespace yq::tachyon {
         struct G;
         static G&           global();
     
-        ViVisualizer*           m_viz               = nullptr;
+        ViVisualizer&           m_viz;
         ImGuiContext*           m_context           = nullptr;
         ViPipelineCPtr          m_pipeline;
         ViPipelineLayoutCPtr    m_pipelineLayout;

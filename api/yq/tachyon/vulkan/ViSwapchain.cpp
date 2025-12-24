@@ -28,7 +28,7 @@ namespace yq::tachyon {
 
     ViSwapchain::ViSwapchain(ViVisualizer&viz, const ViSwapchainConfig& cfg) : m_viz(viz)
     {
-        if(viz.device() && viz.surface() && viz.physical() && (viz.render_pass() || cfg.render_pass)){
+        if(viz.render_pass() || cfg.render_pass){
             std::error_code ec  = _init(cfg);
             if(ec != std::error_code())
                 _kill();
@@ -44,7 +44,9 @@ namespace yq::tachyon {
     {
         VkResult    res;
         
-        res = vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_viz.physical(), m_viz.surface(), &m_capabilities);
+        VkDevice    vk_device   = m_viz.vk_device();
+        
+        res = vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_viz.vk_physical_device(), m_viz.vk_surface(), &m_capabilities);
         if(res != VK_SUCCESS){
             vizWarning << "ViSwapchain(): Cannot get capabilities.  VkResult " << (int32_t) res;
             return errors::swapchain_cant_create();
@@ -102,14 +104,14 @@ namespace yq::tachyon {
         swapInfo.clipped          = VK_TRUE;
         swapInfo.oldSwapchain     = cfg.old_swapchain;
         
-        res = vkCreateSwapchainKHR(m_viz.device(), &swapInfo, nullptr, &m_swapchain);
+        res = vkCreateSwapchainKHR(vk_device, &swapInfo, nullptr, &m_swapchain);
         if(res != VK_SUCCESS){
             vizWarning << "ViSwapchain(): Cannot create swapchain.  VkResult " << (int32_t) res;
             return errors::swapchain_cant_create();
         }
 
         uint32_t imageCount = m_imageCount;
-        res = vkGetSwapchainImagesKHR(m_viz.device(), m_swapchain, &m_imageCount, nullptr);
+        res = vkGetSwapchainImagesKHR(vk_device, m_swapchain, &m_imageCount, nullptr);
         if(res != VK_SUCCESS){
             vizWarning << "ViSwapchain(): Cannot get swapchain image count.  VkResult " << (int32_t) res;
             return errors::swapchain_cant_create();
@@ -130,7 +132,7 @@ namespace yq::tachyon {
             m_depthViews.resize(m_imageCount, nullptr);
         }
         
-        res = vkGetSwapchainImagesKHR(m_viz.device(), m_swapchain, &m_imageCount, m_images.data());
+        res = vkGetSwapchainImagesKHR(vk_device, m_swapchain, &m_imageCount, m_images.data());
         if(res != VK_SUCCESS){
             vizWarning << "ViSwapchain(): Cannot get images.  VkResult " << (int32_t) res;
             return errors::swapchain_cant_create();
@@ -180,7 +182,7 @@ namespace yq::tachyon {
         for(size_t i=0;i<m_imageCount;++i){
             imageViewInfo.image     = m_images[i];
             
-            res = vkCreateImageView(m_viz.device(), &imageViewInfo, nullptr, &m_imageViews[i]);
+            res = vkCreateImageView(vk_device, &imageViewInfo, nullptr, &m_imageViews[i]);
             if(res != VK_SUCCESS){
                 vizWarning << "ViSwapchain(): Cannot create a swapchain image viewer.  VkResult " << (int32_t) res;
                 return errors::swapchain_cant_create();
@@ -189,14 +191,14 @@ namespace yq::tachyon {
             std::vector<VkImageView>    attachments = {m_imageViews[i]};
 
             if(m_viz.depth_enabled()){
-                res = vkCreateImage(m_viz.device(), &depthInfo, nullptr, &m_depthImages[i]);
+                res = vkCreateImage(vk_device, &depthInfo, nullptr, &m_depthImages[i]);
                 if(res != VK_SUCCESS){
                     vizWarning << "ViSwapchain(): Cannot create a swapchain depth image.  VkResult " << (int32_t) res;
                     return errors::swapchain_cant_create();
                 }
                 
                 depthViewInfo.image = m_depthImages[i];
-                res = vkCreateImageView(m_viz.device(), &depthViewInfo, nullptr, &m_depthViews[i]);
+                res = vkCreateImageView(vk_device, &depthViewInfo, nullptr, &m_depthViews[i]);
                 if(res != VK_SUCCESS){
                     vizWarning << "ViSwapchain(): Cannot create a swapchain depth image view.  VkResult " << (int32_t) res;
                     return errors::swapchain_cant_create();
@@ -208,7 +210,7 @@ namespace yq::tachyon {
             frameBufferInfo.attachmentCount = (uint32_t) attachments.size();
             frameBufferInfo.pAttachments    = attachments.data();
 
-            res = vkCreateFramebuffer(m_viz.device(), &frameBufferInfo, nullptr, &m_framebuffers[i]);
+            res = vkCreateFramebuffer(vk_device, &frameBufferInfo, nullptr, &m_framebuffers[i]);
             if (res != VK_SUCCESS){
                 vizWarning << "ViSwapchain(): Cannot create a swapchain framebuffer.  VkResult " << (int32_t) res;
                 return errors::swapchain_cant_create();
@@ -220,39 +222,39 @@ namespace yq::tachyon {
     
     void            ViSwapchain::_kill()
     {
-        if(m_viz.device()){
+        if(VkDevice vk_device = m_viz.vk_device()){
             for(uint32_t n=0;n<=m_imageCount;++n){
                 if(m_imageAcquiredSemaphores[n])
-                    vkDestroySemaphore(m_viz.device(), m_imageAcquiredSemaphores[n], nullptr);
+                    vkDestroySemaphore(vk_device, m_imageAcquiredSemaphores[n], nullptr);
                 if(m_renderCompleteSemaphores[n])
-                    vkDestroySemaphore(m_viz.device(), m_renderCompleteSemaphores[n], nullptr);
+                    vkDestroySemaphore(vk_device, m_renderCompleteSemaphores[n], nullptr);
             }
             m_imageAcquiredSemaphores.clear();
             m_renderCompleteSemaphores.clear();
             
             for(uint32_t n=0;n<m_imageCount;++n){
                 if(m_framebuffers[n])
-                    vkDestroyFramebuffer(m_viz.device(), m_framebuffers[n], nullptr);
+                    vkDestroyFramebuffer(vk_device, m_framebuffers[n], nullptr);
                 if(m_viz.depth_enabled()){
                     if(m_depthViews[n])
-                        vkDestroyImageView(m_viz.device(), m_depthViews[n], nullptr);
+                        vkDestroyImageView(vk_device, m_depthViews[n], nullptr);
                     if(m_depthImages[n])
-                        vkDestroyImage(m_viz.device(), m_depthImages[n], nullptr);
+                        vkDestroyImage(vk_device, m_depthImages[n], nullptr);
                 }
                 if(m_imageViews[n])
-                    vkDestroyImageView(m_viz.device(), m_imageViews[n], nullptr);
+                    vkDestroyImageView(vk_device, m_imageViews[n], nullptr);
             }
             m_framebuffers.clear();
             m_imageViews.clear();
             m_depthViews.clear();
             m_depthImages.clear();
             m_images.clear();
-        }
-        if(m_swapchain && m_viz.device()){
-            vkDestroySwapchainKHR(m_viz.device(), m_swapchain, nullptr);
-            m_swapchain  = nullptr;
-        }
 
+            if(m_swapchain){
+                vkDestroySwapchainKHR(vk_device, m_swapchain, nullptr);
+                m_swapchain  = nullptr;
+            }
+        }
         m_extents       = {};
         m_minImageCount = 0;
         m_imageCount    = 0;
@@ -320,7 +322,7 @@ namespace yq::tachyon {
         if(i >= m_images.size())
             return errors::swapchain_image_out_of_range();
         
-        return export_image(m_viz.device(REF), m_images[i], ViImageExport{
+        return export_image(m_viz.device(), m_images[i], ViImageExport{
             .type       = VK_IMAGE_TYPE_2D,
             .src_layout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
             .format     = m_viz.surface_format(),

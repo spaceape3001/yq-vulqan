@@ -298,7 +298,7 @@ namespace yq::tachyon {
     
     void    ViThread0::_ctor()
     {
-        m_descriptors   = std::make_unique<ViDescriptorPool>(m_viz.device(REF), m_viz.descriptor_count());
+        m_descriptors   = std::make_unique<ViDescriptorPool>(m_viz.device(), m_viz.descriptor_count());
 
         VqCommandPoolCreateInfo poolInfo;
         poolInfo.flags                  = m_viz.command_pool_create_flags();
@@ -339,7 +339,7 @@ namespace yq::tachyon {
     //  VISUALIZER
     ////////////////////////////////////////////////////////////////////////////////
 
-    Visualizer::Visualizer(const CreateData& vcd) : ViVisualizer(vcd)
+    Visualizer::Visualizer(ViDevice& dev, const CreateData& vcd) : ViVisualizer(dev, vcd)
     {
         m_cmdPoolCreateFlags    = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT; //  | VK_COMMAND_POOL_CREATE_PROTECTED_BIT;
         
@@ -374,8 +374,7 @@ namespace yq::tachyon {
     
     void                Visualizer::_kill()
     {
-        if(m_device)
-            m_device->cleanup(SWEEP);
+        device().cleanup(SWEEP);
         m_frames.clear();
         m_thread        = {};
     }
@@ -398,7 +397,7 @@ namespace yq::tachyon {
 
     ViFrame0&            Visualizer::current_frame0()
     {
-        return *(m_frames[m_tick % m_frames.size()]);
+        return *(m_frames[tick() % m_frames.size()]);
     }
     
     const ViFrame0&      Visualizer::current_frame0() const
@@ -414,8 +413,8 @@ namespace yq::tachyon {
     
     ViFrame0&            Visualizer::frame0(int32_t i)
     {
-        uint64_t    tick    = (uint64_t)((int64_t) m_tick + i);
-        return *(m_frames[tick % m_frames.size() ]);
+        uint64_t    ti    = (uint64_t)((int64_t) tick() + i);
+        return *(m_frames[ti % m_frames.size() ]);
     }
     
     const ViFrame0&      Visualizer::frame0(int32_t i) const
@@ -425,7 +424,7 @@ namespace yq::tachyon {
 
     ViFrame0&            Visualizer::next_frame0()
     {
-        return *(m_frames[(m_tick+1) % m_frames.size()]);
+        return *(m_frames[(tick()+1) % m_frames.size()]);
     }
     
     const ViFrame0&      Visualizer::next_frame0() const
@@ -453,7 +452,7 @@ namespace yq::tachyon {
         renderPassInfo.renderArea.extent = m_swapchain->extents();
 
         renderPassInfo.clearValueCount = 1;
-        VkClearValue                cv  = (u.clear.alpha >= 0) ? vqClearValue(u.clear) : (VkClearValue) m_color.clear;
+        VkClearValue                cv  = (u.clear.alpha >= 0) ? vqClearValue(u.clear) : color_clear_vk();
         renderPassInfo.pClearValues = &cv;
         vkCmdBeginRenderPass(u.command_buffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 

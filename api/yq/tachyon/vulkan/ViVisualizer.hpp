@@ -90,7 +90,7 @@ namespace yq::tachyon {
         bool                            supports_present(PresentMode) const;
 
         //! Vulkan surface
-        VkSurfaceKHR                    surface() const;
+        VkSurfaceKHR                    surface() const { return vk_surface(); }
 
         VkSurfaceCapabilitiesKHR_x      surface_capabilities() const;
 
@@ -98,7 +98,7 @@ namespace yq::tachyon {
         VkColorSpaceKHR                 surface_color_space(VkFormat) const;
         VkFormat                        surface_format() const;
 
-        VkSwapchainKHR                  swapchain() const;
+        VkSwapchainKHR                  swapchain() const { return vk_swapchain(); }
         VkRect2D                        swapchain_def_scissor() const;
         VkViewport                      swapchain_def_viewport() const;
         uint32_t                        swapchain_height() const;
@@ -115,9 +115,11 @@ namespace yq::tachyon {
 
         ViSwapchain*                    vi_swapchain() override { return m_swapchain.ptr(); }
         virtual VkRenderPass            vk_render_pass() const override { return render_pass(); }
+        VkSurfaceKHR                    vk_surface() const;
+        VkSwapchainKHR                  vk_swapchain() const;
 
     protected:
-        ViVisualizer(const CreateData&);
+        ViVisualizer(ViDevice&, const CreateData&);
         ~ViVisualizer();
 
         Size2I                              m_frameBufferSize   = {}; // For when we divorce the visualizer from the main thread
@@ -132,22 +134,6 @@ namespace yq::tachyon {
         std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
         ViSwapchainPtr                      m_swapchain;
         
-
-            // Temporary until moved to the frames
-
-        //Flags<F>            m_flags           = {};
-        
-        std::error_code     _6_manager_init();
-        void                _6_manager_kill();
-        
-        std::error_code     _7_render_pass_create();
-        void                _7_render_pass_kill();
-        
-        std::error_code     _8_swapchain_create();
-        void                _8_swapchain_kill();
-
-        //std::error_code     _9_pipeline_manager_create();
-        //void                _9_pipeline_manager_kill();
 
         /*! Rebuilds the swapchain
         */

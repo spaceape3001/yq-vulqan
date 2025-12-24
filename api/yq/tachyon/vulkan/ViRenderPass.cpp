@@ -17,9 +17,6 @@ namespace yq::tachyon {
         using render_pass_existing              = error_db::entry<"Render pass already created">;
     }
 
-    ViRenderPass::ViRenderPass()
-    {
-    }
     
     #if 0
     ViRenderPass::ViRenderPass(ViVisualizer&viz, const RenderPass& rp)
@@ -43,39 +40,30 @@ namespace yq::tachyon {
     }
     #endif
 
-    ViRenderPass::ViRenderPass(ViVisualizer&viz, const VkRenderPassCreateInfo&rpci)
+    ViRenderPass::ViRenderPass(ViVisualizer&viz, const VkRenderPassCreateInfo&rpci) : m_viz(viz)
     {
-        if(viz.device()){
-            std::error_code ec  = _init(viz, rpci);
-            if(ec != std::error_code()){
-                _wipe();
-            }
-        }
+        if(_init(rpci) != std::error_code())
+            _wipe();
     }
 
-    ViRenderPass::ViRenderPass(ViVisualizer&viz, VkFormat fmt)
+    ViRenderPass::ViRenderPass(ViVisualizer&viz, VkFormat fmt) : m_viz(viz)
     {
-        if(viz.device()){
-            std::error_code ec  = _init(viz, fmt);
-            if(ec != std::error_code()){
-                _wipe();
-            }
-        }
+        if(_init(fmt) != std::error_code())
+            _wipe();
     }
     
     ViRenderPass::~ViRenderPass()
     {
-        kill();
+        _kill();
     }
 
-    std::error_code ViRenderPass::_init(ViVisualizer&viz, const VkRenderPassCreateInfo& rpci)
+    std::error_code ViRenderPass::_init(const VkRenderPassCreateInfo& rpci)
     {
-        VkResult    res = vkCreateRenderPass(viz.device(), &rpci, nullptr, &m_renderPass);
+        VkResult    res = vkCreateRenderPass(m_viz.vk_device(), &rpci, nullptr, &m_renderPass);
         if(res != VK_SUCCESS){
             vizWarning << "vkRenderPassCreate(): vkResult " << (int64_t) res;
             return errors::render_pass_cant_create();
         }
-        m_viz   = &viz;
         return {};
     }
     
@@ -92,7 +80,7 @@ namespace yq::tachyon {
     }
     #endif
     
-    std::error_code ViRenderPass::_init(ViVisualizer&viz, VkFormat fmt)
+    std::error_code ViRenderPass::_init(VkFormat fmt)
     {
         VkAttachmentDescription colorAttachment{};
         colorAttachment.format          = fmt;
@@ -121,8 +109,8 @@ namespace yq::tachyon {
         VkAttachmentDescription depthAttachment{};
         VkAttachmentReference   depthAttachmentRef{};
         
-        if(viz.depth_enabled()){
-            depthAttachment.format          = viz.depth_format();
+        if(m_viz.depth_enabled()){
+            depthAttachment.format          = m_viz.depth_format();
             depthAttachment.samples         = VK_SAMPLE_COUNT_1_BIT;
             depthAttachment.loadOp          = VK_ATTACHMENT_LOAD_OP_CLEAR;
             depthAttachment.storeOp         = VK_ATTACHMENT_STORE_OP_STORE;
@@ -168,73 +156,24 @@ namespace yq::tachyon {
             renderPassInfo.pDependencies    = dependencies.data();
         }
 
-        return _init(viz, renderPassInfo);
+        return _init(renderPassInfo);
     }
     
     void            ViRenderPass::_kill()
     {
         if(m_renderPass){
-            vkDestroyRenderPass(m_viz->device(), m_renderPass, nullptr);
+            vkDestroyRenderPass(m_viz.vk_device(), m_renderPass, nullptr);
             m_renderPass    = nullptr;
         }
     }
     
     void            ViRenderPass::_wipe()
     {
-        m_viz           = nullptr;
         m_renderPass    = nullptr;
-    }
-
-    bool            ViRenderPass::consistent() const
-    {
-        return m_viz ? (m_renderPass && m_viz->device()) : !m_renderPass;
-    }
-
-    std::error_code         ViRenderPass::init(ViVisualizer& viz, const VkRenderPassCreateInfo&rpci)
-    {
-        if(m_viz){
-            if(!consistent()){
-                return errors::render_pass_bad_state();
-            }
-            return errors::render_pass_existing();
-        }
-        if(!viz.device()){
-            return errors::visualizer_uninitialized();
-        }
-        
-        std::error_code ec = _init(viz, rpci);
-        if(ec != std::error_code()){
-            _wipe();
-        }
-        return ec;
-    }
-    
-    std::error_code         ViRenderPass::init(ViVisualizer& viz, VkFormat fmt)
-    {
-        if(m_viz){
-            if(!consistent()){
-                return errors::render_pass_bad_state();
-            }
-            return errors::render_pass_existing();
-        }
-        
-        std::error_code ec = _init(viz, fmt);
-        if(ec != std::error_code()){
-            _wipe();
-        }
-        return ec;
-    }
-
-    void                    ViRenderPass::kill()
-    {
-        if(valid()){
-            _kill();
-        }
-        _wipe();
     }
 
     bool            ViRenderPass::valid() const
     {
-        return m_viz && m_renderPass && m_viz->device();
+        return static_cast<bool>(m_renderPass);
     }
 }

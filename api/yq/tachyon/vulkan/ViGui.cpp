@@ -155,7 +155,7 @@ namespace yq::tachyon {
     
     ////////////////////////////////////////////////////////////////////////////
 
-    ViGui::ViGui(ViVisualizer& viz, const Options& options) : m_viz(&viz)
+    ViGui::ViGui(ViVisualizer& viz, const Options& options) : m_viz(viz)
     {
         if(!_init(options)){
             _kill();
@@ -189,7 +189,7 @@ namespace yq::tachyon {
 
         if((cnt > m_index.capacity.count) || !m_index.buffer){
             if(m_index.buffer){
-                m_viz -> device(REF).cleanup([buf = std::move(m_index.buffer)](){
+                m_viz.device().cleanup([buf = std::move(m_index.buffer)](){
                     ViBuffer*   bp  = const_cast<ViBuffer*>(buf.ptr());
                     bp -> kill();
                 });
@@ -202,7 +202,7 @@ namespace yq::tachyon {
             m_index.capacity.bytes     = cb;
             m_index.capacity.count     = cb / sizeof(ImDrawIdx);
             
-            m_index.buffer     = new ViBuffer(m_viz->device(REF), cb, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VMA_MEMORY_USAGE_CPU_TO_GPU);
+            m_index.buffer     = new ViBuffer(m_viz.device(), cb, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VMA_MEMORY_USAGE_CPU_TO_GPU);
             if(!m_index.buffer -> valid()){
                 vizWarning << "ViGui is unable to allocate index buffer!  (size demanded " << cb << ")";
                 return false;
@@ -302,7 +302,7 @@ namespace yq::tachyon {
         
         if((cnt > m_vertex.capacity.count) || !m_vertex.buffer){
             if(m_vertex.buffer){
-                m_viz -> device(REF).cleanup([buf = std::move(m_vertex.buffer)](){
+                m_viz.device().cleanup([buf = std::move(m_vertex.buffer)](){
                     ViBuffer*   bp  = const_cast<ViBuffer*>(buf.ptr());
                     bp -> kill();
                 });
@@ -317,7 +317,7 @@ namespace yq::tachyon {
             m_vertex.capacity.bytes     = cb;
             m_vertex.capacity.count     = cb / sizeof(ImDrawVert);
         
-            m_vertex.buffer     = new ViBuffer(m_viz->device(REF), cb, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VMA_MEMORY_USAGE_CPU_TO_GPU);
+            m_vertex.buffer     = new ViBuffer(m_viz.device(), cb, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VMA_MEMORY_USAGE_CPU_TO_GPU);
             if(!m_vertex.buffer -> valid()){
                 vizWarning << "ViGui is unable to allocate vertex buffer! (size demanded " << cb << ")";
                 return false;
@@ -375,14 +375,14 @@ namespace yq::tachyon {
         io.BackendPlatformUserData  = this;
         io.BackendPlatformName      = "yq::tachyon::ViGui";
 
-        m_pipeline                  = m_viz -> pipeline_create(g.pipeline);
+        m_pipeline                  = m_viz.pipeline_create(g.pipeline);
         if(!m_pipeline){
             imguiWarning << "Unable to create pipeline!";
             return false;
         }
         
         m_pipelineLayout            = m_pipeline -> layout();
-        m_descriptorPool            = m_viz->vk_descriptor_pool();;
+        m_descriptorPool            = m_viz.vk_descriptor_pool();;
         
         //m_font.sampler          = m_viz -> sampler_create(*g.font.sampler);
         
@@ -407,7 +407,7 @@ namespace yq::tachyon {
         allocInfo.descriptorSetCount    = 1;
         allocInfo.pSetLayouts           = &m_descriptorLayout;
         
-        VkResult    res = vkAllocateDescriptorSets(m_viz->device(), &allocInfo, &t.descriptor);
+        VkResult    res = vkAllocateDescriptorSets(m_viz.vk_device(), &allocInfo, &t.descriptor);
         if(res != VK_SUCCESS){
             imguiWarning << "Unable to allocate descriptor sets.  VkResult " << (int32_t) res;
             return false;
@@ -451,14 +451,12 @@ namespace yq::tachyon {
         
         m_pipeline              = {};
         m_pipelineLayout        = {};
-        m_viz                   = nullptr;
-
     }
     
     void    ViGui::_kill(T& t)
     {
         if(t.descriptor){
-            vkFreeDescriptorSets(m_viz->device(), m_descriptorPool, 1, &t.descriptor);
+            vkFreeDescriptorSets(m_viz.device(), m_descriptorPool, 1, &t.descriptor);
             t.descriptor        = nullptr;
         }
         t = {};
@@ -466,7 +464,7 @@ namespace yq::tachyon {
 
     bool    ViGui::_update(T&t)
     {
-        ViTextureCPtr  vtex = m_viz -> device(REF).texture_create(*t.texture);
+        ViTextureCPtr  vtex = m_viz.device().texture_create(*t.texture);
         if(!vtex)
             return false;
         
@@ -483,14 +481,14 @@ namespace yq::tachyon {
         descWrite.descriptorType    = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
         descWrite.pImageInfo        = &descImgInfo;
         
-        vkUpdateDescriptorSets(m_viz->device(), 1, &descWrite, 0, nullptr);
+        vkUpdateDescriptorSets(m_viz.device(), 1, &descWrite, 0, nullptr);
         return true;
     }
 
     bool    ViGui::_update(T&t, const TextureCPtr& tex)
     {
         if(t.texture)
-            m_viz -> device(REF).texture_erase(t.texture->id());
+            m_viz.device().texture_erase(t.texture->id());
         return _update(t);
     }
 
@@ -617,7 +615,7 @@ namespace yq::tachyon {
             return;
 
         if(m_update(U::Pipeline) || u.pipeline_rebuild || !m_pipeline){
-            m_pipeline  = m_viz -> pipeline_create(global().pipeline);
+            m_pipeline  = m_viz.pipeline_create(global().pipeline);
             m_update   -= U::Pipeline;
         }
         
@@ -765,7 +763,7 @@ namespace yq::tachyon {
 
     bool    ViGui::valid() const
     {
-        return m_viz && m_viz -> device() && m_context;
+        return m_viz.good() && m_context;
     }
 
     ///////////////////////////////////

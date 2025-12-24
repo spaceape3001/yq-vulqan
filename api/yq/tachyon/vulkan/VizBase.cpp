@@ -170,9 +170,9 @@ namespace yq::tachyon {
 
     ///////////////////////////////////////////////////////////////////////////
 
-    VizBase::VizBase(const Param& p) : m_device(p.device)
+    VizBase::VizBase(ViDevice& dev, const Param& p) : m_device(&dev)
     {
-        if(!m_device || !m_device->valid())
+        if(!dev.valid())
             return ;
             
         color_clear(SET, p.color_clear);
@@ -190,7 +190,7 @@ namespace yq::tachyon {
 
 vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get queue " << hex(graphics_queue());
             
-        m_goodBase  = true;
+        m_good  = true;
     }
     
     VizBase::~VizBase()
@@ -346,12 +346,6 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     {
         return m_compute.enable && m_device && m_device->is_queue_valid(m_compute.id);
     }
-    
-    VkDevice            VizBase::device() const
-    {
-        return logical();
-    }
-
 
     Expect<VkFormat>    VizBase::find_depth_format() const
     {
@@ -369,7 +363,7 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     
     Expect<VkFormat>    VizBase::find_supported_format(std::span<const VkFormat> candidates, VkImageTiling tiling, VkFormatFeatureFlags features) const
     {
-        if(!m_goodBase)
+        if(!m_good)
             return errors::visualizer_uninitialized();
 
         for(VkFormat format : candidates){
@@ -421,13 +415,6 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     }
 
     
-    VkDevice    VizBase::logical() const
-    {
-        if(m_device)
-            return m_device->device();
-        return nullptr;
-    }
-
     ViProcessor*    VizBase::optical_flow_processor(uint32_t n)
     {
         return m_opticalFlow.proc(n);
@@ -453,14 +440,6 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     bool        VizBase::optical_flow_queue_valid() const
     {
         return m_opticalFlow.enable && m_device && m_device->is_queue_valid( m_opticalFlow.id );
-    }
-
-
-    VkPhysicalDevice      VizBase::physical() const 
-    { 
-        if(m_device)
-            return m_device->physical();
-        return nullptr;
     }
 
 
@@ -620,6 +599,22 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     {
         return m_videoEnc.enable && m_device && m_device->is_queue_valid(m_videoEnc.id);
     }
+
+    VkDevice    VizBase::vk_device() const
+    {
+        if(m_device)
+            return m_device->device();
+        return nullptr;
+    }
+
+
+    VkPhysicalDevice      VizBase::vk_physical_device() const 
+    { 
+        if(m_device)
+            return m_device->physical();
+        return nullptr;
+    }
+
 
     std::error_code                 VizBase::wait_idle()
     {

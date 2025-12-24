@@ -26,14 +26,10 @@ namespace yq::tachyon {
 
     class ViSwapchain : public RefCount {
     public:
-        ViSwapchain();
+        //ViSwapchain();
         ViSwapchain(ViVisualizer&, const ViSwapchainConfig& cfg=ViSwapchainConfig{});
         ~ViSwapchain();
         
-        std::error_code init(ViVisualizer&, const ViSwapchainConfig& cfg=ViSwapchainConfig{});
-        void            kill();
-        
-        bool            consistent() const;
         VkRect2D        def_scissor() const;
         VkViewport      def_viewport() const;
         VkFramebuffer   framebuffer(uint32_t) const;
@@ -45,6 +41,8 @@ namespace yq::tachyon {
         VkSwapchainKHR  swapchain() const { return m_swapchain; }
         bool            valid() const;
         uint32_t        width() const;
+        VkSemaphore     semaphore_available(uint32_t) const;
+        VkSemaphore     semaphore_rendered(uint32_t) const;
 
 
         const VkSurfaceCapabilitiesKHR&     capabilities() const { return m_capabilities; }
@@ -57,24 +55,25 @@ namespace yq::tachyon {
         //VkSemaphore         semaphore_available(uint32_t) const;
 
     private:
-        struct Frame;
     
-        ViVisualizer*               m_viz               = nullptr;
+        ViVisualizer&               m_viz;
         VkSwapchainKHR              m_swapchain         = nullptr;
         VkExtent2D                  m_extents           = {};
         uint32_t                    m_minImageCount     = 0;
         uint32_t                    m_imageCount        = 0;
         VkSurfaceCapabilitiesKHR    m_capabilities;
-        std::vector<Frame>          m_frames;
-        struct {
-            VkImage                 image       = nullptr;
-            VkImage                 imageView   = nullptr;
-        }   m_depth;
-
-        std::error_code _init(ViVisualizer&, const ViSwapchainConfig& cfg=ViSwapchainConfig{});
-        void            _kill();
         
-        std::error_code _init(Frame&, VkImage, VkRenderPass);
-        void            _kill(Frame&);
+        std::vector<VkImage>        m_images;
+        std::vector<VkImageView>    m_imageViews;
+        std::vector<VkImage>        m_depthImages;
+        std::vector<VkImageView>    m_depthViews;
+        std::vector<VkFramebuffer>  m_framebuffers;
+
+        std::vector<VkSemaphore>    m_imageAcquiredSemaphores;
+        std::vector<VkSemaphore>    m_renderCompleteSemaphores;
+        
+        
+        std::error_code _init(const ViSwapchainConfig& cfg=ViSwapchainConfig{});
+        void            _kill();
     };
 }

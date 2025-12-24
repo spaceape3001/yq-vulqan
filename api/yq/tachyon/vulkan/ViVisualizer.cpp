@@ -101,12 +101,7 @@ namespace yq::tachyon {
 
     std::error_code    ViVisualizer:: _8_swapchain_create()
     {
-        ViSwapchainPtr      sp = new ViSwapchain;
-        std::error_code ec = sp->init(*this);
-        if(ec != std::error_code())
-            return ec;
-        m_swapchain     = sp;
-        vizDebug << "ViVisualizer: Created the swapchain";
+        m_swapchain     = new ViSwapchain(*this);
         return {};
     }
     
@@ -137,16 +132,8 @@ namespace yq::tachyon {
         ViSwapchainConfig   cfg;
         if(m_swapchain)
             cfg.old_swapchain = m_swapchain -> swapchain();
-        ViSwapchainPtr  p   = new ViSwapchain;
-
         m_device->wait_idle();
-        
-        std::error_code ec  = p -> init(*this, cfg);
-        if(ec != std::error_code()){
-            vizWarning << "ViVisualizer unable to initialize new swapchain!  " << ec.message();
-            return ;
-        }
-        m_swapchain     = p;
+        m_swapchain     = new ViSwapchain(*this, cfg);
         vizDebug << "ViVisualizer: Rebuilt the swapchain";
     }
 

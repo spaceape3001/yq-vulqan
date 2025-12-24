@@ -116,7 +116,7 @@ namespace yq::tachyon {
             if(options.descriptor_pool){
                 dataOptions.pool    = options.descriptor_pool;
             } else {
-                dataOptions.pool    = m_viz->descriptor_pool();
+                dataOptions.pool    = m_viz->vk_descriptor_pool();
             }
             if(dataOptions.pool){
                 m_status    |= S::Descriptors;

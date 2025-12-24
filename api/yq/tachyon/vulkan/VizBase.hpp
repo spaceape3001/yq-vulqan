@@ -130,7 +130,7 @@ namespace yq::tachyon {
         bool                            depth_enabled() const { return m_depth.enable; }
         VkFormat                        depth_format() const { return m_depth.format; }
 
-        virtual VkDescriptorPool        descriptor_pool() const = 0;
+        virtual VkDescriptorPool        vk_descriptor_pool() const { return nullptr; }
 
         //! Vulkan (logical) device
         VkDevice                        device() const;

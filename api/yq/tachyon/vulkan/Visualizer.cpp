@@ -298,7 +298,7 @@ namespace yq::tachyon {
     
     void    ViThread0::_ctor()
     {
-        m_descriptors   = new ViDescriptorPool(m_viz.device(REF), m_viz.descriptor_count());
+        m_descriptors   = std::make_unique<ViDescriptorPool>(m_viz.device(REF), m_viz.descriptor_count());
 
         VqCommandPoolCreateInfo poolInfo;
         poolInfo.flags                  = m_viz.command_pool_create_flags();
@@ -406,7 +406,7 @@ namespace yq::tachyon {
         return const_cast<Visualizer*>(this)->current_frame0();
     }
 
-    VkDescriptorPool    Visualizer::descriptor_pool() const
+    VkDescriptorPool    Visualizer::vk_descriptor_pool() const
     {
         return m_thread->descriptors();
     }

@@ -22,15 +22,16 @@ namespace yq::tachyon {
         m_workers.reserve(p.workers);
         while(m_workers.size() < p.workers)
             m_good = new_worker().good() && m_good;
-        VqSemaphoreCreateInfo   sci;
-        vkCreateSemaphore(m_device,  &sci, nullptr, &m_semaphore.finished);
+        //VqSemaphoreCreateInfo   sci;
+        //vkCreateSemaphore(m_device,  &sci, nullptr, &m_semaphore.finished);
     }
     
     ViProcessor::~ViProcessor()
     {
-        if(m_semaphore.finished){
-            vkDestroySemaphore(m_device, m_semaphore.finished, nullptr);
-        }
+        m_workers.clear();
+        //if(m_semaphore.finished){
+            //vkDestroySemaphore(m_device, m_semaphore.finished, nullptr);
+        //}
     }
     
     void    ViProcessor::exec_multi(FNProcessorTask&& fn)

@@ -35,7 +35,7 @@ namespace yq::tachyon {
         // executes *ALL* workers against the given task
         void                    execute(FNProcessorTask&&);    // TODO
         bool                    good() const { return m_good; }
-        VkSemaphore             semaphore_finished() const { return m_semaphore.finished; }
+        //VkSemaphore             semaphore_finished() const { return m_semaphore.finished; }
         
         void                    reset();
         
@@ -72,9 +72,9 @@ namespace yq::tachyon {
         ViDevice&               m_device;
         ViWorkerUPtrVector      m_workers;
         
-        struct {
-            VkSemaphore         finished = nullptr;
-        } m_semaphore;
+        //struct {
+            //VkSemaphore         finished = nullptr;
+        //} m_semaphore;
         ViWorker::Param         m_workerParam;
         bool                    m_good  = false;
         

@@ -12,7 +12,7 @@
 namespace yq::tachyon {
     class ViDevice;
 
-    class ViDescriptorPool : public RefCount {
+    class ViDescriptorPool {
     public:
     
         ViDescriptorPool(ViDevice&, uint32_t);

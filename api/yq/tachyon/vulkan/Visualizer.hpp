@@ -62,7 +62,7 @@ namespace yq::tachyon {
         const ViFrame0&                 current_frame0() const;
 
         uint32_t                        descriptor_count() const { return m_descriptorCount; }
-        VkDescriptorPool                descriptor_pool() const override;
+        VkDescriptorPool                vk_descriptor_pool() const override;
 
         /*! \brief "Draws" 
         

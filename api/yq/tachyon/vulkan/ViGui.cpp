@@ -382,7 +382,7 @@ namespace yq::tachyon {
         }
         
         m_pipelineLayout            = m_pipeline -> layout();
-        m_descriptorPool            = m_viz->descriptor_pool();;
+        m_descriptorPool            = m_viz->vk_descriptor_pool();;
         
         //m_font.sampler          = m_viz -> sampler_create(*g.font.sampler);
         

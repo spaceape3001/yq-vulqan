@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "vulkan/ViBuffer.ipp"
+#include "vulkan/ViCommandBuffer.ipp"
+#include "vulkan/ViCommandPool.ipp"
 #include "vulkan/ViContext.ipp"
 #include "vulkan/ViShader.ipp"
 #include "vulkan/ViSurface.ipp"

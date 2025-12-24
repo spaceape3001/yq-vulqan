@@ -14,7 +14,7 @@
 #include <unordered_map>
 
 namespace yq::tachyon {
-    struct ViVisualizer;
+    struct VizBase;
     class ViDevice;
 
     template <typename V, typename A, typename ... Args>
@@ -39,7 +39,7 @@ namespace yq::tachyon {
             }
         }
         
-        ViManager(ViVisualizer& viz, Args...args) : m_viz(viz), m_data(args...)
+        ViManager(VizBase& viz, Args...args) : m_viz(viz), m_data(args...)
         {
         }
 
@@ -188,7 +188,7 @@ namespace yq::tachyon {
         ViManager& operator=(const ViManager&) = delete;
         ViManager& operator=(ViManager&&) = delete;
         
-        ViVisualizer&       m_viz;
+        VizBase&            m_viz;
         map_t               m_hash;
         mutable mutex_t     m_mutex;
         data_k              m_data;
@@ -335,7 +335,7 @@ namespace yq::tachyon {
         ViManager2& operator=(const ViManager2&) = delete;
         ViManager2& operator=(ViManager2&&) = delete;
         
-        ViDevice&       m_viz;
+        ViDevice&           m_viz;
         map_t               m_hash;
         mutable mutex_t     m_mutex;
         data_k              m_data;

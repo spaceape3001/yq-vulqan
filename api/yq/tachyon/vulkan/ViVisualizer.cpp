@@ -105,7 +105,7 @@ namespace yq::tachyon {
         std::error_code ec = sp->init(*this);
         if(ec != std::error_code())
             return ec;
-        m_swapchain     = (ViSwapchainCPtr) sp;
+        m_swapchain     = sp;
         vizDebug << "ViVisualizer: Created the swapchain";
         return {};
     }
@@ -116,21 +116,21 @@ namespace yq::tachyon {
         vizDebug << "ViVisualizer: Destroyed the swapchain";
     }
 
-    std::error_code     ViVisualizer::_9_pipeline_manager_create()
-    {
-        ViPipelineOptions   opts{
-            .swapchain  = m_swapchain
-        };
-        m_pipelines     = std::make_unique<ViPipelineManager>(*this, opts);
-        vizDebug << "ViVisualizer: Created the pipeline manager";
-        return {};
-    }
+    //std::error_code     ViVisualizer::_9_pipeline_manager_create()
+    //{
+        //ViPipelineOptions   opts{
+            ////.swapchain  = m_swapchain
+        //};
+        ////m_pipelines     = std::make_unique<ViPipelineManager>(*this, opts);
+        //vizDebug << "ViVisualizer: Created the pipeline manager";
+        //return {};
+    //}
     
-    void                ViVisualizer::_9_pipeline_manager_kill()
-    {
-        m_pipelines     = {};
-        vizDebug << "ViVisualizer: Destroyed the pipeline manager";
-    }
+    //void                ViVisualizer::_9_pipeline_manager_kill()
+    //{
+        //m_pipelines     = {};
+        //vizDebug << "ViVisualizer: Destroyed the pipeline manager";
+    //}
 
     void                ViVisualizer::_rebuild_swapchain()
     {
@@ -146,7 +146,7 @@ namespace yq::tachyon {
             vizWarning << "ViVisualizer unable to initialize new swapchain!  " << ec.message();
             return ;
         }
-        m_swapchain     = ViSwapchainCPtr(p);
+        m_swapchain     = p;
         vizDebug << "ViVisualizer: Rebuilt the swapchain";
     }
 
@@ -180,9 +180,9 @@ namespace yq::tachyon {
         if(ec != std::error_code())
             return ec;
             
-        ec = _9_pipeline_manager_create();
-        if(ec != std::error_code())
-            return ec;
+        //ec = _9_pipeline_manager_create();
+        //if(ec != std::error_code())
+            //return ec;
         return {};
     }
     
@@ -191,8 +191,8 @@ namespace yq::tachyon {
         if(!m_device->valid())
             return ;
             
-        _9_pipeline_manager_kill();
-        m_device->wait_idle();
+        //_9_pipeline_manager_kill();
+        //m_device->wait_idle();
         _8_swapchain_kill();
         m_device->wait_idle();
         _7_render_pass_kill();
@@ -202,41 +202,6 @@ namespace yq::tachyon {
 
     ///////////////////////////////////////////////////////////////////////////
 
-
-    
-    ViPipelineCPtr                  ViVisualizer::pipeline(uint64_t i) const
-    {
-        if(!m_pipelines)
-            return {};
-        return m_pipelines -> get(i);
-    }
-    
-    ViPipelineCPtr                  ViVisualizer::pipeline_create(const Pipeline* pipe)
-    {
-        if(!m_pipelines)
-            return {};
-        if(!pipe)
-            return {};
-        return m_pipelines -> create(pipe);
-    }
-    
-    void                            ViVisualizer::pipeline_erase(uint64_t i)
-    {
-        if(m_pipelines)
-            m_pipelines -> erase(i);
-    }
-    
-    void                            ViVisualizer::pipeline_erase(const Pipeline* p)
-    {
-        if(p){
-            pipeline_erase(p->id());
-        }
-    }
-    
-    ViPipelineManager*              ViVisualizer::pipeline_manager() const
-    {
-        return m_pipelines.get();
-    }
 
     
     PresentMode  ViVisualizer::present_mode() const

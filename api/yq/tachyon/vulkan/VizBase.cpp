@@ -9,6 +9,8 @@
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/vulkan/ViDevice.hpp>
 #include <yq/tachyon/vulkan/ViLogging.hpp>
+#include <yq/tachyon/vulkan/ViManager.hpp>
+#include <yq/tachyon/vulkan/ViPipeline.hpp>
 #include <yq/tachyon/vulkan/ViProcessor.hpp>
 #include <yq/tachyon/vulkan/VqStructs.hpp>
 #include <yq/tachyon/vulkan/VqUtils.hpp>
@@ -62,6 +64,7 @@ namespace yq::tachyon {
         _init_processors(m_opticalFlowProcs, ViQueueType::OpticalFlow, p.optical_flow_processors, p.optical_flow_workers);
         _init_processors(m_videoDecProcs, ViQueueType::VideoDecode, p.video_decode_processors, p.video_decode_workers);
         _init_processors(m_videoEncProcs, ViQueueType::VideoEncode, p.video_encode_processors, p.video_encode_workers);
+        m_pipelines     = std::make_unique<ViPipelineManager>(*this, ViPipelineOptions());
 
 vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get queue " << hex(graphics_queue());
             
@@ -75,6 +78,7 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
         m_opticalFlowProcs.clear();
         m_videoDecProcs.clear();
         m_videoEncProcs.clear();
+        m_pipelines = {};
     }
     
     bool VizBase::Queue::init(ViDevice& dev, ViQueueType type, queue_spec qs, const ViQueueID& _id, uint32_t num)
@@ -371,6 +375,42 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
         if(m_device)
             return m_device->physical();
         return nullptr;
+    }
+
+
+    
+    ViPipelineCPtr                  VizBase::pipeline(uint64_t i) const
+    {
+        if(!m_pipelines)
+            return {};
+        return m_pipelines -> get(i);
+    }
+    
+    ViPipelineCPtr                  VizBase::pipeline_create(const Pipeline* pipe)
+    {
+        if(!m_pipelines)
+            return {};
+        if(!pipe)
+            return {};
+        return m_pipelines -> create(pipe);
+    }
+    
+    void                            VizBase::pipeline_erase(uint64_t i)
+    {
+        if(m_pipelines)
+            m_pipelines -> erase(i);
+    }
+    
+    void                            VizBase::pipeline_erase(const Pipeline* p)
+    {
+        if(p){
+            pipeline_erase(p->id());
+        }
+    }
+    
+    ViPipelineManager*              VizBase::pipeline_manager() const
+    {
+        return m_pipelines.get();
     }
 
 

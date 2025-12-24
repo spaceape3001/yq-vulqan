@@ -17,21 +17,16 @@
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/pipeline/PresentMode.hpp>
 #include <yq/tachyon/typedef/raster.hpp>
-#include <yq/tachyon/typedef/vi_buffer.hpp>
 #include <yq/tachyon/typedef/vi_device.hpp>
-#include <yq/tachyon/typedef/vi_image.hpp>
 #include <yq/tachyon/typedef/vi_queue_id.hpp>
 #include <yq/tachyon/typedef/vi_queue_tasker.hpp>
 #include <yq/tachyon/typedef/vi_pipeline.hpp>
-#include <yq/tachyon/typedef/vi_pipeline_layout.hpp>
 #include <yq/tachyon/typedef/vi_pipeline_manager.hpp>
 #include <yq/tachyon/typedef/vi_processor.hpp>
 #include <yq/tachyon/typedef/vi_render_pass.hpp>
 #include <yq/tachyon/typedef/vi_sampler.hpp>
-#include <yq/tachyon/typedef/vi_shader.hpp>
 #include <yq/tachyon/typedef/vi_surface.hpp>
 #include <yq/tachyon/typedef/vi_swapchain.hpp>
-#include <yq/tachyon/typedef/vi_texture.hpp>
 #include <yq/tachyon/vulkan/ViQueueType.hpp>
 #include <yq/tachyon/vulkan/VizBase.hpp>
 #include <yq/tachyon/vulkan/vulqan.hpp>
@@ -76,29 +71,11 @@ namespace yq::tachyon {
         //enum class F : uint8_t {
         //};
 
-        struct RenderTarget {
-            VkRenderPass        render_pass = nullptr;
-            VkFramebuffer       framebuffer = nullptr;
-            VkViewport          viewport{};
-            VkClearValue        clear{};
-        };
-        
         struct CreateData;
 
 
-
-        
-
         Size2I                          framebuffer_size() const { return m_frameBufferSize; }
 
-
-        
-        ViPipelineCPtr                  pipeline(uint64_t) const;
-        ViPipelineCPtr                  pipeline_create(const Pipeline*);
-        void                            pipeline_erase(uint64_t);
-        void                            pipeline_erase(const Pipeline*);
-        ViPipelineManager*              pipeline_manager() const;
-     
         PresentMode                     present_mode() const;
         const std::set<PresentMode>&    present_modes_available() const;
 
@@ -129,27 +106,22 @@ namespace yq::tachyon {
         uint32_t                        swapchain_min_image_count() const;
         uint32_t                        swapchain_width() const;
         
-        uint64_t                        tick() const { return m_tick; }
+        virtual VkRect2D                def_scissor() const override { return swapchain_def_scissor(); }
+        virtual VkViewport              def_viewport() const override { return swapchain_def_viewport(); }
+       
 
         void                            trigger_rebuild();
 
-        
+
+        ViSwapchain*                    vi_swapchain() override { return m_swapchain.ptr(); }
+        virtual VkRenderPass            vk_render_pass() const override { return render_pass(); }
 
     protected:
         ViVisualizer(const CreateData&);
         ~ViVisualizer();
 
-        using mutex_t = tbb::spin_rw_mutex;
-
-        mutable tbb::spin_rw_mutex          m_mutex;
-        
-        //ViDevicePtr                         m_device;
-        //VkPhysicalDeviceFeatures            m_deviceFeatures;
-        //VkPhysicalDeviceProperties          m_deviceInfo;
         Size2I                              m_frameBufferSize   = {}; // For when we divorce the visualizer from the main thread
         uint32_t                            m_frameImageIndex   = 0;
-        ViProcessorUPtrVector               m_graphics;
-        ViPipelineManagerUPtr               m_pipelines;        // temporary until relocated
         Guarded<PresentMode>                m_presentMode;
         std::set<PresentMode>               m_presentModes;
         std::atomic<bool>                   m_rebuildSwap       = { false };
@@ -158,9 +130,8 @@ namespace yq::tachyon {
         VkColorSpaceKHR                     m_surfaceColorSpace;
         VkFormat                            m_surfaceFormat;
         std::vector<VkSurfaceFormatKHR>     m_surfaceFormats;
-        ViSwapchainCPtr                     m_swapchain;
+        ViSwapchainPtr                      m_swapchain;
         
-        std::atomic<uint64_t>               m_tick{0ULL};     // Always monotomically incrementing
 
             // Temporary until moved to the frames
 
@@ -175,8 +146,8 @@ namespace yq::tachyon {
         std::error_code     _8_swapchain_create();
         void                _8_swapchain_kill();
 
-        std::error_code     _9_pipeline_manager_create();
-        void                _9_pipeline_manager_kill();
+        //std::error_code     _9_pipeline_manager_create();
+        //void                _9_pipeline_manager_kill();
 
         /*! Rebuilds the swapchain
         */

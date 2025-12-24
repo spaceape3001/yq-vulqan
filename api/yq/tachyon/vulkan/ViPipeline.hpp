@@ -28,7 +28,7 @@ namespace yq {
 }
 
 namespace yq::tachyon {
-    class ViVisualizer;
+    class VizBase;
 
     struct ViPipelineOptions {
         //! Culling mode
@@ -47,7 +47,7 @@ namespace yq::tachyon {
         std::span<const VkRect2D>   scissors            = {};
         
         //! The swapchain in use
-        ViSwapchainCPtr             swapchain;
+        //ViSwapchainCPtr             swapchain;
         
         //! Restart the primitives?  See VkPipelineInputAssemblyStateCreateInfo documentation for details
         Tristate                    primitive_restart   = Tristate::Inherit;
@@ -78,19 +78,13 @@ namespace yq::tachyon {
     class ViPipeline : public RefCount {
     public:
     
-        ViPipeline();
-        ViPipeline(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& options={});
-        ViPipeline(ViVisualizer&, const Pipeline*, const ViPipelineOptions& options={});
+        ViPipeline(VizBase&, ViPipelineLayoutCPtr, const ViPipelineOptions& options={});
+        ViPipeline(VizBase&, const Pipeline*, const ViPipelineOptions& options={});
         ~ViPipeline();
-        
-        std::error_code     init(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& options={});
-        std::error_code     init(ViVisualizer&, const Pipeline*, const ViPipelineOptions& options={});
-        void                kill();
         
         uint64_t            id() const { return m_id; }
 
         VkPipelineBindPoint bind_point() const { return m_binding; }
-        bool                consistent() const;
         VkPipeline          pipeline() const { return m_pipeline; }
         bool                valid() const;
         VkPipeline          wireframe() const { return m_wireframe; }
@@ -107,8 +101,8 @@ namespace yq::tachyon {
         const Pipeline* config () const { return m_config; }
     
     private:
-        std::error_code _init(ViVisualizer&, ViPipelineLayoutCPtr, const ViPipelineOptions& options);
-        std::error_code _init(ViVisualizer&, const Pipeline*, const ViPipelineOptions& options);
+        std::error_code _init(ViPipelineLayoutCPtr, const ViPipelineOptions& options);
+        std::error_code _init(const Pipeline*, const ViPipelineOptions& options);
         void            _kill();
         
         enum class S : uint8_t {
@@ -122,8 +116,8 @@ namespace yq::tachyon {
         
         using VMap  = std::map<Pipeline::Variation, V>;
         
+        VizBase&                m_viz;
         VMap                    m_variations;
-        ViVisualizer*           m_viz           = nullptr;
         ViPipelineLayoutCPtr    m_layout;
         VkPipeline              m_pipeline      = nullptr;
         VkPipeline              m_wireframe     = nullptr;

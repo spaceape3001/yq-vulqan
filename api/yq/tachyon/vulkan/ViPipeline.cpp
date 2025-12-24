@@ -19,7 +19,7 @@
 #include <yq/tachyon/vulkan/ViPipelineLayout.hpp>
 #include <yq/tachyon/vulkan/ViRenderPass.hpp>
 #include <yq/tachyon/vulkan/ViSwapchain.hpp>
-#include <yq/tachyon/vulkan/ViVisualizer.hpp>
+#include <yq/tachyon/vulkan/VizBase.hpp>
 
 namespace yq::tachyon {
     namespace errors {
@@ -32,14 +32,10 @@ namespace yq::tachyon {
         using pipeline_null_pipeline    = error_db::entry<"Pipeline provided is NULL">;
     }
     
-    ViPipeline::ViPipeline()
-    {
-    }
-    
-    ViPipeline::ViPipeline(ViVisualizer&viz, ViPipelineLayoutCPtr pLay, const ViPipelineOptions& opts)
+    ViPipeline::ViPipeline(VizBase&viz, ViPipelineLayoutCPtr pLay, const ViPipelineOptions& opts) : m_viz(viz)
     {
         if(viz.device() && pLay && pLay->valid()){
-            std::error_code ec = _init(viz, pLay, opts);
+            std::error_code ec = _init(pLay, opts);
             if(ec != std::error_code()){
                 vizWarning << "ViPipeline(): Unable to initialize.  " << ec.message();
                 _kill();
@@ -47,10 +43,10 @@ namespace yq::tachyon {
         }
     }
 
-    ViPipeline::ViPipeline(ViVisualizer&viz, const Pipeline*pipe, const ViPipelineOptions& opts)
+    ViPipeline::ViPipeline(VizBase&viz, const Pipeline*pipe, const ViPipelineOptions& opts) : m_viz(viz)
     {
         if(viz.device() && pipe){
-            std::error_code ec = _init(viz, pipe, opts);
+            std::error_code ec = _init(pipe, opts);
             if(ec != std::error_code()){
                 vizWarning << "ViPipeline(): Unable to initialize.  " << ec.message();
                 _kill();
@@ -63,22 +59,21 @@ namespace yq::tachyon {
         _kill();
     }
     
-    std::error_code ViPipeline::_init(ViVisualizer&viz, const Pipeline* pipe, const ViPipelineOptions& opts)
+    std::error_code ViPipeline::_init(const Pipeline* pipe, const ViPipelineOptions& opts)
     {
-        ViPipelineLayoutCPtr        pLay    = viz.device(REF).pipeline_layout_create(pipe);
+        ViPipelineLayoutCPtr        pLay    = m_viz.device(REF).pipeline_layout_create(pipe);
         if(!pLay || !pLay->valid())
             return errors::pipeline_bad_layout();
-        return _init(viz, pLay, opts);
+        return _init( pLay, opts);
     }
 
-    std::error_code ViPipeline::_init(ViVisualizer&viz, ViPipelineLayoutCPtr pLay, const ViPipelineOptions& opts)
+    std::error_code ViPipeline::_init(ViPipelineLayoutCPtr pLay, const ViPipelineOptions& opts)
     {
         m_config = pLay->pipeline_config();
         if(!m_config)
             return errors::pipeline_bad_config();
         
         
-        m_viz       = &viz;
         m_layout    = pLay;
         m_binding   = (VkPipelineBindPoint) m_config->binding().value();
         m_status    = {};
@@ -145,10 +140,7 @@ namespace yq::tachyon {
             viewportState.viewportCount = 1;
             viewportState.pViewports    = &opts.viewport;
         } else {
-            if(!opts.swapchain){
-                return errors::pipeline_bad_swapchain();
-            }
-            defViewport = opts.swapchain->def_viewport();
+            defViewport = m_viz.def_viewport();
             viewportState.viewportCount = 1;
             viewportState.pViewports    = &defViewport;
         }
@@ -160,14 +152,8 @@ namespace yq::tachyon {
         } else if(opts.scissor != VkRect2D{}){
             viewportState.scissorCount  = 1;
             viewportState.pScissors     = &opts.scissor;
-        } else if(opts.swapchain){
-            if(!opts.swapchain->valid())
-                return errors::pipeline_bad_swapchain();
-            defScissors = opts.swapchain -> def_scissor();
-            viewportState.scissorCount  = 1;
-            viewportState.pScissors     = &defScissors;
         } else {
-            defScissors = m_viz -> swapchain_def_scissor();
+            defScissors = m_viz.def_scissor();
             viewportState.scissorCount  = 1;
             viewportState.pScissors     = &defScissors;
         }
@@ -303,7 +289,7 @@ namespace yq::tachyon {
         if(opts.render_pass){
             pipelineInfo.renderPass         = opts.render_pass;
         } else {
-            pipelineInfo.renderPass         = viz.render_pass();
+            pipelineInfo.renderPass         = m_viz.vk_render_pass();
         }
         pipelineInfo.subpass                = 0;
         pipelineInfo.basePipelineHandle     = VK_NULL_HANDLE; // Optional
@@ -313,7 +299,7 @@ namespace yq::tachyon {
             pipelineInfo.flags  = VK_PIPELINE_CREATE_ALLOW_DERIVATIVES_BIT;
         }
         
-        VkResult res  = vkCreateGraphicsPipelines(viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_pipeline);
+        VkResult res  = vkCreateGraphicsPipelines(m_viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_pipeline);
         if(res != VK_SUCCESS){
             vizWarning << "ViPipeline: Pipeline create failed.  VkResult " << (int32_t) res;
             return errors::pipeline_cant_create();
@@ -326,7 +312,7 @@ namespace yq::tachyon {
             pipelineInfo.basePipelineIndex  = -1;
             rasterizer.polygonMode  = VK_POLYGON_MODE_LINE;
             
-            res  = vkCreateGraphicsPipelines(viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_wireframe);
+            res  = vkCreateGraphicsPipelines(m_viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_wireframe);
             if(res != VK_SUCCESS){
                 vizWarning << "ViPipeline: Pipeline create (for wireframe) failed.  VkResult " << (int32_t) res;
                 return errors::pipeline_cant_create();
@@ -388,7 +374,7 @@ namespace yq::tachyon {
 
     
 
-            VkResult res  = vkCreateGraphicsPipelines(viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &me.pipeline);
+            VkResult res  = vkCreateGraphicsPipelines(m_viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &me.pipeline);
             if(res != VK_SUCCESS){
                 vizWarning << "ViPipeline: Pipeline create failed.  VkResult " << (int32_t) res;
                 return errors::pipeline_cant_create();
@@ -396,7 +382,7 @@ namespace yq::tachyon {
             
             if(rasterizer.polygonMode == VK_POLYGON_MODE_FILL){
                rasterizer.polygonMode =  VK_POLYGON_MODE_LINE;
-               res  = vkCreateGraphicsPipelines(viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &me.wireframe);
+               res  = vkCreateGraphicsPipelines(m_viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &me.wireframe);
                 if(res != VK_SUCCESS){
                     vizWarning << "ViPipeline: Pipeline create failed.  VkResult " << (int32_t) res;
                     return errors::pipeline_cant_create();
@@ -410,76 +396,27 @@ namespace yq::tachyon {
     
     void            ViPipeline::_kill()
     {
-        if(m_viz && m_viz->device()){
+        if(m_viz.device()){
             for(auto& i : m_variations){
                 if(i.second.wireframe)
-                    vkDestroyPipeline(m_viz->device(), i.second.wireframe, nullptr);
+                    vkDestroyPipeline(m_viz.device(), i.second.wireframe, nullptr);
                 if(i.second.pipeline)
-                    vkDestroyPipeline(m_viz->device(), i.second.pipeline, nullptr);
+                    vkDestroyPipeline(m_viz.device(), i.second.pipeline, nullptr);
             }
             m_variations.clear();
         }
     
-        if(m_viz && m_viz->device() && m_wireframe){
-            vkDestroyPipeline(m_viz->device(), m_wireframe, nullptr);
+        if(m_viz.device() && m_wireframe){
+            vkDestroyPipeline(m_viz.device(), m_wireframe, nullptr);
         }
-        if(m_viz && m_viz->device() && m_pipeline){
-            vkDestroyPipeline(m_viz->device(), m_pipeline, nullptr);
+        if(m_viz.device() && m_pipeline){
+            vkDestroyPipeline(m_viz.device(), m_pipeline, nullptr);
         }
         
         m_status    = {};
         m_pipeline  = nullptr;
         m_wireframe = nullptr;
         m_layout    = {};
-        m_viz       = nullptr;
-    }
-
-    bool            ViPipeline::consistent() const
-    {
-        return m_viz ? (m_viz->device() && m_layout && m_pipeline && (m_wireframe || !m_status(S::Wireframe))) :
-            (!m_layout && !m_pipeline && !m_wireframe);
-    }
-    
-    std::error_code ViPipeline::init(ViVisualizer&viz, ViPipelineLayoutCPtr pLay, const ViPipelineOptions& opts)
-    {
-        if(m_viz){
-            if(!consistent()){
-                return errors::pipeline_bad_state();
-            }
-            
-            return errors::pipeline_existing();
-        }
-        
-        std::error_code ec  = _init(viz, pLay, opts);
-        if(ec != std::error_code()){
-            _kill();
-        }
-        return ec;
-    }
-
-    std::error_code     ViPipeline::init(ViVisualizer&viz, const Pipeline*pipe, const ViPipelineOptions& opts)
-    {
-        if(m_viz){
-            if(!consistent()){
-                return errors::pipeline_bad_state();
-            }
-            
-            return errors::pipeline_existing();
-        }
-        if(!pipe){
-            return errors::pipeline_null_pipeline();
-        }
-        
-        std::error_code ec  = _init(viz, pipe, opts);
-        if(ec != std::error_code()){
-            _kill();
-        }
-        return ec;
-    }
-    
-    void            ViPipeline::kill()
-    {
-        _kill();
     }
 
     ViPipelineLayoutCPtr    ViPipeline::layout() const
@@ -537,7 +474,7 @@ namespace yq::tachyon {
 
     bool            ViPipeline::valid() const
     {
-        return m_viz && m_viz->device() && m_layout && m_pipeline && (m_wireframe || !m_status(S::Wireframe));
+        return m_viz.device() && m_layout && m_pipeline && (m_wireframe || !m_status(S::Wireframe));
     }
 
     VkPipeline          ViPipeline::wireframe(Pipeline::Variation v) const

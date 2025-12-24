@@ -22,6 +22,7 @@ namespace yq {
 
 namespace yq::tachyon {
     class ViVisualizer;
+    class VizBase;
     struct ViContext;
     class Rendered³;
     struct IndexDrawCall;
@@ -44,10 +45,10 @@ namespace yq::tachyon {
         ViRendered();
         //ViRendered(const ViRendered&, const ViRenderedOptions& opts={});
         //ViRendered(const ViRendered&, const PipelineCPtr pipe, const ViRenderedOptions& opts={});
-        ViRendered(ViVisualizer&, const RenderedSnap*, const ViRenderedOptions& options={}, const Pipeline*p = nullptr);
+        ViRendered(VizBase&, const RenderedSnap*, const ViRenderedOptions& options={}, const Pipeline*p = nullptr);
         ~ViRendered();
         
-        std::error_code init(ViVisualizer&, const RenderedSnap&, const ViRenderedOptions& options={}, const Pipeline*p = nullptr);
+        std::error_code init(VizBase&, const RenderedSnap&, const ViRenderedOptions& options={}, const Pipeline*p = nullptr);
     
         //! Dumps out to the viz debug stream full information to this rendered.
         void    debug_report() const;
@@ -99,7 +100,7 @@ namespace yq::tachyon {
         std::vector<VertexDrawCall> m_vertexDraws;
         
 
-        std::error_code _init(ViVisualizer&, const RenderedSnap&, const ViRenderedOptions& opts, const Pipeline*p);
+        std::error_code _init(VizBase&, const RenderedSnap&, const ViRenderedOptions& opts, const Pipeline*p);
         void            _kill();
         void            _update(ViContext& u, const RenderedSnap&, const ViDataMap& dm);
         void            _descriptors();

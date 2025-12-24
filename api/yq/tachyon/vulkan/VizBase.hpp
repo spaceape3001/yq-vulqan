@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <functional>
 #include <yq/keywords.hpp>
 #include <yq/core/Guarded.hpp>
 #include <yq/core/Ref.hpp>
@@ -15,16 +14,20 @@
 #include <yq/tachyon/app/GEnvCreateInfo.hpp>
 #include <yq/tachyon/config/vulqan.hpp>
 #include <yq/tachyon/typedef/vi_device.hpp>
+#include <yq/tachyon/typedef/vi_pipeline.hpp>
+#include <yq/tachyon/typedef/vi_pipeline_manager.hpp>
 #include <yq/tachyon/typedef/vi_processor.hpp>
 #include <yq/tachyon/typedef/vi_queue_id.hpp>
 #include <yq/tachyon/typedef/vi_queue_tasker.hpp>
 #include <yq/tachyon/vulkan/ViQueueType.hpp>
 #include <vulkan/vulkan_core.h>
+#include <atomic>
 
 namespace yq::tachyon {
     struct ViContext;
     struct GEnvCreateInfo;
     struct VizBaseCreateInfo;
+    class ViSwapchain;
 
 
     struct VizTaskerOptions {
@@ -121,6 +124,9 @@ namespace yq::tachyon {
         std::error_code                 compute_queue_task(queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         bool                            compute_queue_valid() const;
 
+        virtual VkRect2D                def_scissor() const { return {}; }
+        virtual VkViewport              def_viewport() const { return {}; }
+
         bool                            depth_enabled() const { return m_depth.enable; }
         VkFormat                        depth_format() const { return m_depth.format; }
 
@@ -160,6 +166,13 @@ namespace yq::tachyon {
         //! Vulkan physical device (gpu)
         VkPhysicalDevice                physical() const;
 
+        ViPipelineCPtr                  pipeline(uint64_t) const;
+        ViPipelineCPtr                  pipeline_create(const Pipeline*);
+        void                            pipeline_erase(uint64_t);
+        void                            pipeline_erase(const Pipeline*);
+        ViPipelineManager*              pipeline_manager() const;
+     
+
         bool                            present_enabled() const { return m_presentQueue.enable; }
         VkQueue                         present_queue() const;
         ViQueueFamilyID                 present_queue_family() const { return m_presentQueue.id.family; }
@@ -169,6 +182,9 @@ namespace yq::tachyon {
 
         std::error_code                 queue_task(ViQueueType, queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         
+        
+        uint64_t                        tick() const { return m_tick; }
+
         bool                            transfer_enabled() const { return m_transferQueue.enable; }
         VkQueue                         transfer_queue() const;
         uint32_t                        transfer_queue_count() const;
@@ -178,6 +194,10 @@ namespace yq::tachyon {
         
         //! IF valid, means there's an asynchronous DMA transfer queue
         bool                            transfer_queue_valid() const;
+
+        ViDevice*                       vi_device() { return m_device.ptr(); }
+        virtual ViSwapchain*            vi_swapchain() { return nullptr; }
+        virtual VkRenderPass            vk_render_pass() const { return nullptr; }
 
         ViProcessor*                    video_decode_processor(uint32_t);
         bool                            video_decode_enabled() const { return m_videoDecQueue.enable; }
@@ -221,40 +241,31 @@ namespace yq::tachyon {
             VkFormat        format  = VkFormat(0);
         };
         
-        ColorAttachment         m_color;
-        ViProcessorUPtrVector   m_computeProcs;
-        Queue                   m_computeQueue;
-        ViDevicePtr             m_device;
-        DepthAttachment         m_depth;
-        ViProcessorUPtrVector   m_graphicsProcs;
-        Queue                   m_graphicsQueue;
-        ViProcessorUPtrVector   m_opticalFlowProcs;
-        Queue                   m_opticalFlowQueue;
-        Queue                   m_presentQueue;
-        Queue                   m_transferQueue;
-        ViProcessorUPtrVector   m_videoDecProcs;
-        Queue                   m_videoDecQueue;
-        ViProcessorUPtrVector   m_videoEncProcs;
-        Queue                   m_videoEncQueue;
-        //ViProcessorUPtrVector   m_processors;
+        ColorAttachment             m_color;
+        ViProcessorUPtrVector       m_computeProcs;
+        Queue                       m_computeQueue;
+        ViDevicePtr                 m_device;
+        DepthAttachment             m_depth;
+        ViProcessorUPtrVector       m_graphicsProcs;
+        Queue                       m_graphicsQueue;
+        ViProcessorUPtrVector       m_opticalFlowProcs;
+        Queue                       m_opticalFlowQueue;
+        ViPipelineManagerUPtr       m_pipelines;
+        Queue                       m_presentQueue;
+        Queue                       m_transferQueue;
+        ViProcessorUPtrVector       m_videoDecProcs;
+        Queue                       m_videoDecQueue;
+        ViProcessorUPtrVector       m_videoEncProcs;
+        Queue                       m_videoEncQueue;
+
+        std::atomic<uint64_t>       m_tick{0ULL};     // Always monotomically incrementing
         
         bool    _init_depth(const Param&);
         bool    _init_queues(const Param&);
         
         bool    _init_processors(ViProcessorUPtrVector&, ViQueueType, uint32_t nprocs, uint32_t nworkers);
         
-        //struct ProcInit {
-            //ViQueueType     queue_type  = ViQueueType::Graphic;
-            
-            //uint32_t        processors  = 3;
-            //uint32_t        workers     = 1;
-        //};
-        
-        //bool    _init_processors();
-        //bool    _init_processors(const ProcInit&);
-
     private:
-        //ProcInit                m_procInit;
         bool                    m_goodBase       = false;
     };
 }

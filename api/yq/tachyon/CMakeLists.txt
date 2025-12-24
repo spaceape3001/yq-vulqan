@@ -423,9 +423,7 @@ add_library(${PROJECT_NAME} SHARED
     vulkan/VqEnums.cpp
     vulkan/VqUtils.cpp
 
-    vulkan/ViCommandBuffer.cpp
     #vulkan/ViCommandBufferVector.cpp
-    vulkan/ViCommandPool.cpp
     vulkan/ViData.cpp
     vulkan/ViDescriptorPool.cpp
     vulkan/ViDevice.cpp

@@ -314,6 +314,9 @@ namespace yq::tachyon {
         bool                    wireframe_permitted() const { return m_wireframePermitted; }
         uint32_t                patch_control_points() const { return m_patchControlPoints; }
         
+        Tristate                depth_buffer() const { return m_depthBuffer; }
+        Tristate                stenciling() const { return m_stenciling; }
+        
         constexpr uint64_t      id() const { return m_id; }
 
         //  Building out the pipeline
@@ -330,6 +333,8 @@ namespace yq::tachyon {
         //! Set culling mode
         //! \note Variation supported
         void  culling(CullMode);
+        
+        void  depth_buffer(Tristate);
         
         //! Set dynamic states
         //! \note This can NOT be altered by a variation
@@ -366,6 +371,8 @@ namespace yq::tachyon {
         //! Set/change the shaders
         //! \note Variation supported
         void  shaders(std::initializer_list<ShaderSpec>);
+        
+        void   stenciling(Tristate);
         
         //! Sets the pipeline's topology
         //! \note This can NOT be altered by a variation
@@ -506,6 +513,8 @@ namespace yq::tachyon {
             std::optional<PolygonMode>  polygonMode;
             std::optional<ColorBlend>   colorBlend;
             std::optional<uint32_t>     patchControlPoints;
+            Tristate                    depthBuffer = Tristate::INHERIT;
+            Tristate                    stenciling  = Tristate::INHERIT;
             Tristate                    wireframePermitted  = Tristate::INHERIT;
         };
 
@@ -573,6 +582,8 @@ namespace yq::tachyon {
         bool                            m_wireframePermitted    = true;
         ColorBlend                      m_colorBlend            = ColorBlend::Disabled;
         uint32_t                        m_patchControlPoints    = 0;
+        Tristate                        m_depthBuffer           = Tristate::Inherit;
+        Tristate                        m_stenciling            = Tristate::Inherit;
 
         push_t                          m_push                  = {};
         std::optional<index_buffer_t>   m_indexBuffer;

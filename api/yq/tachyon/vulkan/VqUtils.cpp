@@ -247,16 +247,28 @@ namespace yq::tachyon {
         return ret;
     }
     
+
+    VkClearValue            vqClearValue(float v)
+    {
+        return VkClearValue({{ v, 0., 0., 0. }});
+    }
+
     VkClearValue            vqClearValue(const RGBA4F& in)
     {
         return VkClearValue{{{ in.red, in.green, in.blue, in.alpha }}};
     }
+
+    float                   vqExtractRed(const VkClearValue&in)
+    {
+        return in.color.float32[0];
+    }
     
-    RGBA4F                   vqExtractRGBA4F(const VkClearValue& in)
+    RGBA4F                  vqExtractRGBA4F(const VkClearValue& in)
     {
         return RGBA4F( 
             in.color.float32[0], in.color.float32[1], 
             in.color.float32[2], in.color.float32[3] 
         );
     }
+
 }

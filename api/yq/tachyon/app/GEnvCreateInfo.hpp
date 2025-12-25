@@ -43,6 +43,9 @@ namespace yq::tachyon {
         bool                        multiview       = false;
 
         queue_spec                  optical_flow;
+        
+        using stencil_spec  = depth_spec;
+        stencil_spec                stenciling;
 
             //!  Transfer queue
         queue_spec                  transfer;

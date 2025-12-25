@@ -36,7 +36,6 @@
 #include <yq/tachyon/vulkan/ViPipelineLayout.hpp>
 #include <yq/tachyon/vulkan/ViProcessor.hpp>
 #include <yq/tachyon/vulkan/ViQueueTasker.hpp>
-#include <yq/tachyon/vulkan/ViRenderPass.hpp>
 #include <yq/tachyon/vulkan/ViSampler.hpp>
 #include <yq/tachyon/vulkan/ViShader.hpp>
 #include <yq/tachyon/vulkan/ViSurface.hpp>
@@ -120,7 +119,6 @@ namespace yq::tachyon {
         m_surfaceFormat         = VK_FORMAT_B8G8R8A8_SRGB;
         m_surfaceColorSpace     = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
 
-        m_renderPass = new ViRenderPass(*this, m_surfaceFormat);
         _rebuild_swapchain();
         return {};
     }
@@ -128,8 +126,6 @@ namespace yq::tachyon {
     void                ViVisualizer::_kill()
     {
         m_swapchain     = {};
-        wait_idle();
-        m_renderPass    = {};
         wait_idle();
     }
 
@@ -250,17 +246,49 @@ namespace yq::tachyon {
                     ret = create_error<"Failed to begin recording command buffer">();
                     return ;
                 }
+                
+                VqRenderingInfo             renderingInfo;
+                VqRenderingAttachmentInfo  colorAttachment;
+                VqRenderingAttachmentInfo  depthAttachment;
+                VqRenderingAttachmentInfo  stencilAttachment;
 
-                VqRenderPassBeginInfo renderPassInfo;
-                renderPassInfo.renderPass       = vk_render_pass();
-                renderPassInfo.framebuffer      = m_swapchain->vk_framebuffer(m_frameImageIndex);
-                renderPassInfo.renderArea.offset = {0, 0};
-                renderPassInfo.renderArea.extent = m_swapchain->extents();
+                renderingInfo.renderArea.offset = {0, 0};
+                renderingInfo.renderArea.extent = m_swapchain->extents();
+                renderingInfo.layerCount    = 1;
+                
+                {
+                    colorAttachment.imageView       = m_swapchain->vk_image_view(m_frameImageIndex);
+                    colorAttachment.imageLayout     = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
-                renderPassInfo.clearValueCount = 1;
-                VkClearValue                cv  = (u.clear.alpha >= 0) ? vqClearValue(u.clear) : color_clear_vk();
-                renderPassInfo.pClearValues = &cv;
-                vkCmdBeginRenderPass(u.command_buffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+                    // for multisampling 
+                    //colorAttachment.resolveMode           = VK_RESOLVE_MODE_AVERAGE_BIT;
+                    //colorAttachment.resolveImageView      = 
+                    //colorAttachment.resolveImageLayout    = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL; ???
+                    
+                    colorAttachment.loadOp      = VK_ATTACHMENT_LOAD_OP_CLEAR;
+                    colorAttachment.storeOp     = VK_ATTACHMENT_STORE_OP_STORE;
+                    colorAttachment.clearValue  = (u.clear.alpha >= 0) ? vqClearValue(u.clear) : color_clear_vk();
+                }
+                
+                renderingInfo.colorAttachmentCount  = 1;
+                renderingInfo.pColorAttachments     = &colorAttachment;
+                
+                
+                if(depth_enabled()){
+                    depthAttachment.imageView       = m_swapchain->vk_image_view(DEPTH, m_frameImageIndex);
+                    depthAttachment.imageLayout     = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL;
+                    depthAttachment.loadOp          = VK_ATTACHMENT_LOAD_OP_CLEAR;
+                    depthAttachment.storeOp         = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+                    depthAttachment.clearValue      = depth_clear_vk();
+                    
+                    renderingInfo.pDepthAttachment  = &depthAttachment;
+                }
+                
+                if(false){
+                    // something stencil related....
+                }
+
+                vkCmdBeginRendering(u.command_buffer, &renderingInfo);
 
                 #ifdef NDEBUG
                 try {
@@ -274,7 +302,25 @@ namespace yq::tachyon {
                 }
                 #endif
 
-                vkCmdEndRenderPass(u.command_buffer);
+                vkCmdEndRendering(u.command_buffer);
+                
+                //  AND.... moving to a new image layout
+                VqImageMemoryBarrier imb;
+                imb.oldLayout           = VK_IMAGE_LAYOUT_UNDEFINED;
+                imb.newLayout           = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+                imb.image               = m_swapchain->vk_image(m_frameImageIndex);
+                imb.subresourceRange    = VkImageSubresourceRange{ 
+                    .aspectMask     = VK_IMAGE_ASPECT_COLOR_BIT,
+                    .baseMipLevel   = 0,
+                    .levelCount     = 1,
+                    .baseArrayLayer = 0,
+                    .layerCount     = 1
+                };
+                imb.srcAccessMask       = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+                imb.dstAccessMask       = VK_ACCESS_NONE;
+            
+                vkCmdPipelineBarrier(u.command_buffer, VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
+                
                 if (vkEndCommandBuffer(u.command_buffer) != VK_SUCCESS)
                     ret = create_error<"Failed to record command buffer">();
             });
@@ -336,13 +382,6 @@ namespace yq::tachyon {
     const std::set<PresentMode>&    ViVisualizer::present_modes_available() const
     {
         return m_presentModes;
-    }
-
-    VkRenderPass        ViVisualizer::render_pass() const
-    {
-        if(m_renderPass)
-            return m_renderPass -> render_pass();
-        return nullptr;
     }
     
     void        ViVisualizer::set_framebuffer_size(const Size2I&sz)

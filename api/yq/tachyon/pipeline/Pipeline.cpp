@@ -77,6 +77,15 @@ namespace yq::tachyon {
         }
     }
 
+    void  Pipeline::depth_buffer(Tristate v)
+    {
+        if(m_variation){
+            m_variation -> depthBuffer = v;
+        } else {
+            m_depthBuffer   = v;
+        }
+    }
+
     void  Pipeline::dynamic_state(DynamicState ds)
     {
         m_dynamicStates.insert(ds);
@@ -214,6 +223,14 @@ namespace yq::tachyon {
             for(ShaderSpec ss : sss)
                 m_shaders.push_back(ss);
         }
+    }
+    
+    void   Pipeline::stenciling(Tristate v)
+    {
+        if(m_variation){
+            m_variation -> stenciling   = v;
+        } else 
+            m_stenciling    = v;
     }
     
     uint32_t        Pipeline::filter_binding(uint32_t b) const

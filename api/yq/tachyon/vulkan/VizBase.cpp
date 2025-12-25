@@ -202,6 +202,7 @@ namespace yq::tachyon {
             return;
         if(!_init_depth(p))
             return;
+        _init_color(p);
             
         m_compute.pInit(this);
         m_graphics.pInit(this);
@@ -209,7 +210,7 @@ namespace yq::tachyon {
         m_videoDec.pInit(this);
         m_videoEnc.pInit(this);
         m_pipelines     = std::make_unique<ViPipelineManager>(*this, ViPipelineOptions());
-
+        
 vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get queue " << hex(graphics_queue());
             
         m_good  = true;
@@ -225,6 +226,15 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
         m_pipelines = {};
     }
     
+    void    VizBase::_init_color(const Param& p)
+    {
+        m_color.format  = p.color_format;
+        m_color.formats = p.color_formats;
+        m_color.formats.push_back(p.color_format);
+        m_color.space   = p.color_space;
+        m_color.clear   = vqClearValue(p.color_clear);
+
+    }
 
     bool    VizBase::_init_depth(const Param& p)
     {
@@ -246,7 +256,8 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
             m_depth.format    = (VkFormat) x -> value();
         }
         
-        m_depth.enable    = true;
+        m_depth.clear       = vqClearValue(p.depth_clear);
+        m_depth.enable      = true;
         return true;
     }
 
@@ -343,6 +354,16 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     bool    VizBase::compute_queue_valid() const
     {
         return m_compute.enable && m_device && m_device->is_queue_valid(m_compute.id);
+    }
+
+    float  VizBase::depth_clear() const
+    {
+        return vqExtractRed(m_depth.clear);
+    }
+    
+    void   VizBase::depth_clear(set_k, float v)
+    {
+        m_depth.clear   = vqClearValue(v);
     }
 
     Expect<VkFormat>    VizBase::find_depth_format() const

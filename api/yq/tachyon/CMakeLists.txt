@@ -438,7 +438,6 @@ add_library(${PROJECT_NAME} SHARED
     #vulkan/ViQueueManager.cpp
     vulkan/ViQueueTasker.cpp
     vulkan/ViRendered.cpp
-    vulkan/ViRenderPass.cpp
     vulkan/ViSampler.cpp
     vulkan/ViSwapchain.cpp
     vulkan/ViTexture.cpp

@@ -35,6 +35,7 @@ namespace yq::tachyon {
     
     static const char* kDeviceExtensions[] = {
         "VK_KHR_swapchain"
+        //"VK_KHR_swapchain_maintenance1"
     };
     
     static const char* kDevicePre13Extensions[] = {

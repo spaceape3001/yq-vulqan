@@ -55,55 +55,54 @@ namespace yq::tachyon {
         
         using depth_spec    = GEnvCreateInfo::depth_spec;
         using queue_spec    = GEnvCreateInfo::queue_spec;
+        using stencil_spec    = GEnvCreateInfo::stencil_spec;
+
         struct Param {
         
             //! "Clear" color used in rendering (when nothing else is specified)
-            RGBA4F              color_clear             = { 0., 0., 0., 1. };  
-            VkFormat            color_format            = VK_FORMAT_B8G8R8A8_SRGB;
-            VkColorSpaceKHR     color_space             = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
+            RGBA4F                  color_clear             = { 0., 0., 0., 1. };  
+            VkFormat                color_format            = VK_FORMAT_B8G8R8A8_SRGB;
             
-            queue_spec          compute;
-            //uint32_t            compute_processors      = 0;    //!< Number of desired compute processors on init
-            uint32_t            compute_qidx            = 0;
-            ViQueueID           compute_queue;
-            //uint32_t            compute_workers         = 1;
+            //! All formats (note, color format is auto-added)
+            std::vector<VkFormat>   color_formats;
+            VkColorSpaceKHR         color_space             = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
             
-            depth_spec          depth_buffer;
-            uint32_t            descriptors             = 0;
+            queue_spec              compute;
+            uint32_t                compute_qidx            = 0;
+            ViQueueID               compute_queue;
+            
+            depth_spec              depth_buffer;
+            float                   depth_clear             = 1.1;    //!< Depth of "clear"
+            uint32_t                descriptors             = 0;
 
-            queue_spec          graphics;
-            //uint32_t            graphics_processors     = 0;    //!< Number of desired graphics processors on init
-            uint32_t            graphics_qidx           = 0;
-            ViQueueID           graphics_queue;
-            //uint32_t            graphics_workers        = 1;    //!< Number of workers per graphics processor on init
+            queue_spec              graphics;
+            uint32_t                graphics_qidx           = 0;
+            ViQueueID               graphics_queue;
             
-            queue_spec          optical_flow;
-            //uint32_t            optical_flow_processors = 0;    //!< Number of desired optical flow processors on init
-            uint32_t            optical_flow_qidx       = 0;
-            ViQueueID           optical_flow_queue;
-            //uint32_t            optical_flow_workers    = 1;    //!< Number of workers per optical flow processor on init
+            queue_spec              optical_flow;
+            uint32_t                optical_flow_qidx       = 0;
+            ViQueueID               optical_flow_queue;
             
-            queue_spec          present;
-            uint32_t            present_qidx            = 0;
-            ViQueueID           present_queue;
+            queue_spec              present;
+            uint32_t                present_qidx            = 0;
+            ViQueueID               present_queue;
             
-            VkSurfaceKHR        surface                 = nullptr;
+            stencil_spec            stenciling; //!< TODO, stenciling support
             
-            queue_spec          transfer;
-            uint32_t            transfer_qidx           = 0;
-            ViQueueID           transfer_queue;
+            // advisory
+            VkSurfaceKHR            surface                 = nullptr;
             
-            queue_spec          video_decode;
-            //uint32_t            video_decode_processors = 0;
-            uint32_t            video_decode_qidx       = 0;
-            ViQueueID           video_decode_queue;
-            //uint32_t            video_decode_workers    = 1;
+            queue_spec              transfer;
+            uint32_t                transfer_qidx           = 0;
+            ViQueueID               transfer_queue;
             
-            queue_spec          video_encode;
-            //uint32_t            video_encode_processors = 0;
-            uint32_t            video_encode_qidx       = 0;
-            ViQueueID           video_encode_queue;
-            //uint32_t            video_encode_workers    = 1;
+            queue_spec              video_decode;
+            uint32_t                video_decode_qidx       = 0;
+            ViQueueID               video_decode_queue;
+            
+            queue_spec              video_encode;
+            uint32_t                video_encode_qidx       = 0;
+            ViQueueID               video_encode_queue;
         };
         
         RGBA4F                          color_clear() const; 
@@ -112,6 +111,7 @@ namespace yq::tachyon {
         VkClearValue                    color_clear_vk() const { return m_color.clear; }                    
         
         VkFormat                        color_format() const { return m_color.format; }
+        const auto&                     color_formats() const { return m_color.formats; }
         void                            color_format(set_k, DataFormat);
         void                            color_format(set_k, VkFormat);
 
@@ -131,6 +131,9 @@ namespace yq::tachyon {
         virtual VkRect2D                def_scissor() const { return {}; }
         virtual VkViewport              def_viewport() const { return {}; }
 
+        float                           depth_clear() const;
+        void                            depth_clear(set_k, float);
+        VkClearValue                    depth_clear_vk() const { return m_depth.clear; }
         bool                            depth_enabled() const { return m_depth.enable; }
         VkFormat                        depth_format() const { return m_depth.format; }
         
@@ -192,6 +195,8 @@ namespace yq::tachyon {
 
         std::error_code                 queue_task(ViQueueType, queue_tasker_fn&&, const VizTaskerOptions& opts=VizTaskerOptions());
         
+        // TODO, but setting up pipeline creation to consider it
+        VkFormat                        stencil_format() const { return VK_FORMAT_UNDEFINED; }
         
         uint64_t                        tick() const { return m_tick; }
 
@@ -212,7 +217,6 @@ namespace yq::tachyon {
         VkDescriptorPool                vk_descriptor_pool() const { return m_descriptorPool.descriptor_pool(); }
         VkDevice                        vk_device() const;
         VkPhysicalDevice                vk_physical_device() const;
-        virtual VkRenderPass            vk_render_pass() const { return nullptr; }
 
         bool                            video_decode_enabled() const { return m_videoDec.enable; }
         ViProcessor*                    video_decode_processor(uint32_t);
@@ -317,12 +321,14 @@ namespace yq::tachyon {
         };
         
         struct color_t {
-            VkClearValue        clear{};
-            VkFormat            format;
-            VkColorSpaceKHR     space;
+            VkClearValue            clear{};
+            std::vector<VkFormat>   formats;    //!< All color formats
+            VkFormat                format;     //!< Primary color format
+            VkColorSpaceKHR         space;
         };
         
         struct depth_t : public basic_t {
+            VkClearValue        clear{};
             bool                enable  = false;
             VkFormat            format  = VkFormat(0);
         };
@@ -342,6 +348,7 @@ namespace yq::tachyon {
         video_encode_t              m_videoEnc;
         bool                        m_good       = false;
         
+        void    _init_color(const Param&);
         bool    _init_depth(const Param&);
         bool    _init_queues(const Param&);
         

@@ -23,7 +23,6 @@
 #include <yq/tachyon/typedef/vi_pipeline.hpp>
 #include <yq/tachyon/typedef/vi_pipeline_manager.hpp>
 #include <yq/tachyon/typedef/vi_processor.hpp>
-#include <yq/tachyon/typedef/vi_render_pass.hpp>
 #include <yq/tachyon/typedef/vi_sampler.hpp>
 #include <yq/tachyon/typedef/vi_surface.hpp>
 #include <yq/tachyon/typedef/vi_swapchain.hpp>
@@ -89,9 +88,6 @@ namespace yq::tachyon {
         PresentMode                     present_mode() const;
         const std::set<PresentMode>&    present_modes_available() const;
 
-
-        VkRenderPass                    render_pass() const;
-
         void                            set_framebuffer_size(const Size2I&);
 
         void                            set_present_mode(PresentMode);
@@ -122,9 +118,7 @@ namespace yq::tachyon {
 
         void                            trigger_rebuild();
 
-
         ViSwapchain*                    vi_swapchain() override { return m_swapchain.ptr(); }
-        virtual VkRenderPass            vk_render_pass() const override { return render_pass(); }
         VkSurfaceKHR                    vk_surface() const;
         VkSwapchainKHR                  vk_swapchain() const;
 
@@ -138,7 +132,6 @@ namespace yq::tachyon {
         Guarded<PresentMode>                m_presentMode;
         std::set<PresentMode>               m_presentModes;
         std::atomic<bool>                   m_rebuildSwap       = { false };
-        ViRenderPassCPtr                    m_renderPass;
         ViSurfacePtr                        m_surface;
         VkColorSpaceKHR                     m_surfaceColorSpace;
         VkFormat                            m_surfaceFormat;

@@ -17,7 +17,6 @@
 #include <yq/tachyon/vulkan/ViDevice.hpp>
 #include <yq/tachyon/vulkan/ViLogging.hpp>
 #include <yq/tachyon/vulkan/ViPipelineLayout.hpp>
-#include <yq/tachyon/vulkan/ViRenderPass.hpp>
 #include <yq/tachyon/vulkan/ViSwapchain.hpp>
 #include <yq/tachyon/vulkan/VizBase.hpp>
 
@@ -80,6 +79,20 @@ namespace yq::tachyon {
         m_id        = pLay -> id();
         
         VqGraphicsPipelineCreateInfo pipelineInfo;
+        
+        VqPipelineRenderingCreateInfo dynRender;
+        pipelineInfo.pNext  = &dynRender;
+        dynRender.viewMask  = 0;      // CHANGE FOR MULTIVIEW
+        
+        const auto& colorFormats  = m_viz.color_formats();
+        dynRender.colorAttachmentCount      = (uint32_t) colorFormats.size();
+        dynRender.pColorAttachmentFormats   = colorFormats.data();
+        if(m_config->depth_buffer() != Tristate::NO){
+            dynRender.depthAttachmentFormat = m_viz.depth_format();
+        }
+        if(m_config->stenciling() != Tristate::NO){
+            dynRender.stencilAttachmentFormat   = m_viz.stencil_format();
+        }
         
         //  TODO... subpass support
 
@@ -286,11 +299,6 @@ namespace yq::tachyon {
         pipelineInfo.pMultisampleState      = &multisampling;
         pipelineInfo.pDepthStencilState     = nullptr; // Optional
         pipelineInfo.layout                 = pLay->pipeline_layout();
-        if(opts.render_pass){
-            pipelineInfo.renderPass         = opts.render_pass;
-        } else {
-            pipelineInfo.renderPass         = m_viz.vk_render_pass();
-        }
         pipelineInfo.subpass                = 0;
         pipelineInfo.basePipelineHandle     = VK_NULL_HANDLE; // Optional
         pipelineInfo.basePipelineIndex      = -1; // Optional        

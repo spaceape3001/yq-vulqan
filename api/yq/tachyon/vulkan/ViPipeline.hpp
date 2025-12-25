@@ -15,7 +15,6 @@
 #include <yq/tachyon/pipeline/Pipeline.hpp>
 #include <yq/tachyon/typedef/vi_pipeline.hpp>
 #include <yq/tachyon/typedef/vi_pipeline_layout.hpp>
-#include <yq/tachyon/typedef/vi_render_pass.hpp>
 #include <yq/tachyon/typedef/vi_swapchain.hpp>
 #include <yq/trait/numbers.hpp>
 
@@ -51,9 +50,6 @@ namespace yq::tachyon {
         
         //! Restart the primitives?  See VkPipelineInputAssemblyStateCreateInfo documentation for details
         Tristate                    primitive_restart   = Tristate::Inherit;
-
-        //! The renderpass to use
-        VkRenderPass                render_pass         = nullptr;
 
         //! Our viewport.  If specified, overrides the swapchain's default
         VkViewport                  viewport            = {};

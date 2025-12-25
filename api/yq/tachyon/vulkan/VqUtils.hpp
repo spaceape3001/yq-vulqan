@@ -76,8 +76,13 @@ namespace yq::tachyon {
     //! Converts our color into vulkan clear value
     VkClearValue            vqClearValue(const RGBA4F&);
     
+    //! Converts our float into vulkan clear value
+    VkClearValue            vqClearValue(float);
+
     //! Extracts vulkan clear value into our color
     RGBA4F                  vqExtractRGBA4F(const VkClearValue&);
+
+    float                   vqExtractRed(const VkClearValue&);
 }
 
 bool operator==(const VkOffset2D&, const VkOffset2D&);

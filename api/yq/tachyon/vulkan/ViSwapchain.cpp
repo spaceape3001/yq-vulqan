@@ -28,11 +28,9 @@ namespace yq::tachyon {
 
     ViSwapchain::ViSwapchain(ViVisualizer&viz, const ViSwapchainConfig& cfg) : m_viz(viz)
     {
-        if(viz.render_pass() || cfg.render_pass){
-            std::error_code ec  = _init(cfg);
-            if(ec != std::error_code())
-                _kill();
-        }
+        std::error_code ec  = _init(cfg);
+        if(ec != std::error_code())
+            _kill();
     }
     
     ViSwapchain::~ViSwapchain()
@@ -88,6 +86,8 @@ namespace yq::tachyon {
         swapInfo.imageArrayLayers = 1;    // we're not steroscopic (YET)  <-- OCULUS HERE
         swapInfo.imageUsage       = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
         
+        VkPresentModeKHR            presentMode = (VkPresentModeKHR) m_viz.present_mode().value();
+        
         uint32_t queueFamilyIndices[] = {m_viz.graphics_queue_family().index, m_viz.present_queue_family().index};
         if (m_viz.graphics_queue_family() != m_viz.present_queue_family()) {
             swapInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
@@ -100,9 +100,14 @@ namespace yq::tachyon {
         }        
         swapInfo.preTransform     = m_capabilities.currentTransform;
         swapInfo.compositeAlpha   = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
-        swapInfo.presentMode      = (VkPresentModeKHR) m_viz.present_mode().value();
+        swapInfo.presentMode      = presentMode;
         swapInfo.clipped          = VK_TRUE;
         swapInfo.oldSwapchain     = cfg.old_swapchain;
+        
+        VqSwapchainPresentModesCreateInfoEXT    presentModesCreateInfo;
+        presentModesCreateInfo.presentModeCount   = 1;
+        presentModesCreateInfo.pPresentModes      = &presentMode;
+        swapInfo.pNext                  = &presentModesCreateInfo;
         
         res = vkCreateSwapchainKHR(vk_device, &swapInfo, nullptr, &m_swapchain);
         if(res != VK_SUCCESS){
@@ -124,7 +129,6 @@ namespace yq::tachyon {
         
         m_images.resize(m_imageCount, nullptr);
         m_fences.resize(m_imageCount, nullptr);
-        m_framebuffers.resize(m_imageCount, nullptr);
         m_imageViews.resize(m_imageCount, nullptr);
         m_imageAvailableSemaphores.resize(m_imageCount+1, nullptr);
         m_renderCompleteSemaphores.resize(m_imageCount+1, nullptr);
@@ -139,19 +143,8 @@ namespace yq::tachyon {
             return errors::swapchain_cant_create();
         }
         
-        VkRenderPass        rp  = cfg.render_pass ? cfg.render_pass : m_viz.render_pass();
-        
-
         VkImageViewCreateInfo   imageViewInfo = vqCreateInfo(ImageViewInfo());
         imageViewInfo.format    = m_viz.surface_format();
-        
-
-        VqFramebufferCreateInfo   frameBufferInfo;
-        frameBufferInfo.renderPass      = rp;
-        frameBufferInfo.attachmentCount = 1;
-        frameBufferInfo.width           = m_extents.width;
-        frameBufferInfo.height          = m_extents.height;
-        frameBufferInfo.layers          = 1;
 
         VqImageCreateInfo   depthInfo;
         depthInfo.format            = m_viz.depth_format();
@@ -215,15 +208,6 @@ namespace yq::tachyon {
                 
                 attachments.push_back(m_depthViews[i]);
             }
-
-            frameBufferInfo.attachmentCount = (uint32_t) attachments.size();
-            frameBufferInfo.pAttachments    = attachments.data();
-
-            res = vkCreateFramebuffer(vk_device, &frameBufferInfo, nullptr, &m_framebuffers[i]);
-            if (res != VK_SUCCESS){
-                vizWarning << "ViSwapchain(): Cannot create a swapchain framebuffer.  VkResult " << (int32_t) res;
-                return errors::swapchain_cant_create();
-            }
         }
         
         VqSemaphoreCreateInfo   sci;
@@ -261,8 +245,6 @@ namespace yq::tachyon {
             for(uint32_t n=0;n<m_imageCount;++n){
                 if(m_fences[n])
                     vkDestroyFence(vk_device, m_fences[n], nullptr);
-                if(m_framebuffers[n])
-                    vkDestroyFramebuffer(vk_device, m_framebuffers[n], nullptr);
                 if(m_viz.depth_enabled()){
                     if(m_depthViews[n])
                         vkDestroyImageView(vk_device, m_depthViews[n], nullptr);
@@ -273,7 +255,7 @@ namespace yq::tachyon {
                     vkDestroyImageView(vk_device, m_imageViews[n], nullptr);
             }
             m_fences.clear();
-            m_framebuffers.clear();
+            //m_framebuffers.clear();
             m_imageViews.clear();
             m_depthViews.clear();
             m_depthImages.clear();
@@ -317,14 +299,6 @@ namespace yq::tachyon {
         return m_extents.height; 
     }
 
-
-    //VkSemaphore         ViSwapchain::semaphore_available(uint32_t i) const
-    //{
-        //if(i >= m_frames.size())
-            //return nullptr;
-        //return m_frames[i].available;
-    //}
-    
     Expect<RasterPtr>   ViSwapchain::snapshot(uint32_t i, VkFormat desired) const
     {
         if(i >= m_images.size())
@@ -354,14 +328,6 @@ namespace yq::tachyon {
             return nullptr;
         return m_fences[i];
     }
-    
-    VkFramebuffer   ViSwapchain::vk_framebuffer(uint32_t i) const
-    {
-        if(i>=m_framebuffers.size())
-            return nullptr;
-        return m_framebuffers[i];
-    }
-    
 
     VkImage         ViSwapchain::vk_image(uint32_t i) const
     {
@@ -409,6 +375,5 @@ namespace yq::tachyon {
     { 
         return m_extents.width; 
     }
-
-    
+   
 }

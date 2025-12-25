@@ -496,6 +496,8 @@ namespace yq::tachyon {
         
         VmaAllocationCreateInfo diai  = {};
         diai.usage              = p.memory;
+        if(diai.usage == VMA_MEMORY_USAGE_GPU_ONLY)
+            diai.requiredFlags |= VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
         
         if(vmaCreateImage(m_device.allocator(), &imgInfo, &diai, &m_image, &m_allocation, nullptr) != VK_SUCCESS)
             return errors::insufficient_gpu_memory();
@@ -513,6 +515,11 @@ namespace yq::tachyon {
     }
 
     void  ViImage::barrier(VkCommandBuffer cmd, VkPipelineStageFlags srcStages, const Respec&spec)
+    {
+        barrier(cmd, srcStages, spec.stages ? spec.stages : srcStages, spec);
+    }
+
+    void  ViImage::barrier(VkCommandBuffer cmd, VkPipelineStageFlags srcStages, VkPipelineStageFlags dstStages, const Respec&spec)
     {
         VqImageMemoryBarrier imb;
         imb.subresourceRange.aspectMask         = m_aspect;
@@ -544,9 +551,8 @@ namespace yq::tachyon {
         
         imb.image   = m_image;
         
-        VkPipelineStageFlags    newStages   = spec.stages ? spec.stages : srcStages;
-        vkCmdPipelineBarrier(cmd, srcStages, newStages, 0, 0, nullptr, 0, nullptr, 1, &imb);
-        m_stages    = newStages;
+        vkCmdPipelineBarrier(cmd, srcStages, dstStages, 0, 0, nullptr, 0, nullptr, 1, &imb);
+        m_stages    = dstStages;
     }
 
     std::error_code ViImage::_init(const Raster& img, const Param& p)

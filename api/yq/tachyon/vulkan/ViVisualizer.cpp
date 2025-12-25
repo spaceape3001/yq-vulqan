@@ -96,10 +96,48 @@ namespace yq::tachyon {
         ViSwapchainConfig   cfg;
         if(m_swapchain)
             cfg.old_swapchain = m_swapchain -> vk_swapchain();
-        device().wait_idle();
+        
+        wait_idle();
         m_swapchain     = new ViSwapchain(*this, cfg);
         m_semaphoreIndex    = 0;
         graphics_processor_expand(m_swapchain->image_count());
+        graphics_processor(0) -> execute([&](ViProcessor&p){
+            wait_idle();
+            VqCommandBufferBeginInfo beginInfo;
+            beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT; // Optional
+            beginInfo.pInheritanceInfo = nullptr; // Optional
+
+            if (vkBeginCommandBuffer(p.vk_command_buffer(), &beginInfo) != VK_SUCCESS){
+                vizWarning << "Failed to begin recording command buffer";
+                return ;
+            }
+            
+            for(uint32_t n=0;n<m_swapchain->image_count();++n){
+                ViImage* img = m_swapchain->vi_image(DEPTH, n);
+                if(img){
+                    img -> barrier(p.vk_command_buffer(), VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT, ViImage::Respec{
+                        .access     = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
+                        .layout     = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL,
+                        .queue      = graphics_queue_family().index
+                    });
+                }
+            }
+            
+            if (vkEndCommandBuffer(p.vk_command_buffer()) != VK_SUCCESS)
+                vizWarning << "Failed to record command buffer";
+            
+            VkCommandBuffer cmdbuf  = p.vk_command_buffer();
+                
+            VqSubmitInfo submitInfo;
+            submitInfo.commandBufferCount   = 1;
+            submitInfo.pCommandBuffers      = &cmdbuf;
+            
+
+            if (vkQueueSubmit(graphics_queue(), 1, &submitInfo, nullptr) != VK_SUCCESS) 
+                vizWarning << "Failed to submit command buffer";
+
+            wait_idle();
+        });
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -264,7 +302,7 @@ namespace yq::tachyon {
                 imb.srcAccessMask       = VK_ACCESS_NONE;
                 imb.dstAccessMask       = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
             
-                vkCmdPipelineBarrier(u.command_buffer, VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
+                vkCmdPipelineBarrier(u.command_buffer, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
                 
                 
                 VqRenderingInfo             renderingInfo;
@@ -280,8 +318,7 @@ namespace yq::tachyon {
                     colorAttachment.imageView       = m_swapchain->vk_image_view(m_frameImageIndex);
                     colorAttachment.imageLayout     = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
-                    // for multisampling 
-                    //colorAttachment.resolveMode           = VK_RESOLVE_MODE_AVERAGE_BIT;
+                    //colorAttachment.resolveMode           = VK_RESOLVE_MODE_NONE;
                     //colorAttachment.resolveImageView      = 
                     //colorAttachment.resolveImageLayout    = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL; ???
                     
@@ -293,35 +330,26 @@ namespace yq::tachyon {
                 renderingInfo.colorAttachmentCount  = 1;
                 renderingInfo.pColorAttachments     = &colorAttachment;
                 
-                
                 if(depth_enabled()){
+                    renderingInfo.pDepthAttachment  = &depthAttachment;
                     depthAttachment.imageView       = m_swapchain->vk_image_view(DEPTH, m_frameImageIndex);
                     depthAttachment.imageLayout     = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL;
                     depthAttachment.loadOp          = VK_ATTACHMENT_LOAD_OP_CLEAR;
                     depthAttachment.storeOp         = VK_ATTACHMENT_STORE_OP_DONT_CARE;
                     depthAttachment.clearValue      = depth_clear_vk();
-                    
-                    renderingInfo.pDepthAttachment  = &depthAttachment;
-                    ViImage*    img = m_swapchain->vi_image(DEPTH, m_frameImageIndex);
-                    if(img && (img->vk_image_layout() == VK_IMAGE_LAYOUT_UNDEFINED)){
-                        img -> barrier(u.command_buffer, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, ViImage::Respec{
-                            .access     = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
-                            .layout     = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL,
-                            .queue      = graphics_queue_family().index,
-                            .stages     = VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT
-                        });
-                    }
+                    depthAttachment.resolveMode     = VK_RESOLVE_MODE_NONE; 
                 }
                 
                 if(false){
                     // something stencil related....
                 }
 
+                VkViewport  viewport = m_swapchain->def_viewport();
+                
+                VkRect2D  scissors    = m_swapchain->def_scissor();
                 vkCmdBeginRendering(u.command_buffer, &renderingInfo);
-                //vkCmdSetDepthTestEnable(u.command_buffer, depth_enabled());
-                //vkCmdSetDepthCompareOp(u.command_buffer, VK_COMPARE_OP_ALWAYS); // VK_COMPARE_OP_LESS_OR_EQUAL
-                //vkCmdSetDepthWriteEnable(u.command_buffer, depth_enabled());
-                //vkCmdSetDepthBoundsTestEnable(u.command_buffer, depth_enabled());
+                vkCmdSetViewport(u.command_buffer, 0, 1, &viewport);
+                vkCmdSetScissor(u.command_buffer, 0, 1, &scissors);
                 
 
                 #ifdef NDEBUG
@@ -352,7 +380,7 @@ namespace yq::tachyon {
                 imb.srcAccessMask       = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
                 imb.dstAccessMask       = VK_ACCESS_NONE;
             
-                vkCmdPipelineBarrier(u.command_buffer, VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
+                vkCmdPipelineBarrier(u.command_buffer, VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
                 
                 if (vkEndCommandBuffer(u.command_buffer) != VK_SUCCESS)
                     ret = create_error<"Failed to record command buffer">();

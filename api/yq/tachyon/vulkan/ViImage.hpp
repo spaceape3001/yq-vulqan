@@ -64,6 +64,7 @@ namespace yq::tachyon {
         void  barrier(VkCommandBuffer, const Respec&);
         void  barrier(VkCommandBuffer, VkPipelineStageFlags, const Respec&);
         
+        void  barrier(VkCommandBuffer, VkPipelineStageFlags, VkPipelineStageFlags,  const Respec&);
     
     private:
         ViDevice&           m_device;

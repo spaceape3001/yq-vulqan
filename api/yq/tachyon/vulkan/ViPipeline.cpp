@@ -93,11 +93,9 @@ namespace yq::tachyon {
         dynRender.colorAttachmentCount      = (uint32_t) colorFormats.size();
         dynRender.pColorAttachmentFormats   = colorFormats.data();
         dynRender.depthAttachmentFormat     = m_viz.depth_format();
-        dynRender.stencilAttachmentFormat   = m_viz.stencil_format();
         
         VqPipelineDepthStencilStateCreateInfo depthStencil;
         if(m_viz.depth_enabled()){
-        vizInfo << "ViPipeline::depth_enabled";
             pipelineInfo.pDepthStencilState = &depthStencil;
             depthStencil.depthTestEnable        = VK_TRUE;
             depthStencil.depthWriteEnable       = VK_TRUE,

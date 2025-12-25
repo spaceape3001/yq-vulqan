@@ -149,16 +149,17 @@ namespace yq::tachyon {
             depthInfo.format        = m_viz.depth_format();
             depthInfo.size.x        = m_extents.width;
             depthInfo.size.y        = m_extents.height;
+            depthInfo.size.z        = 1;
+            depthInfo.size.w        = 1;
             depthParam.aspect       = VK_IMAGE_ASPECT_DEPTH_BIT;
             depthParam.layout       = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL;
-            //depthParam.tiling       = VK_IMAGE_TILING_OPTIMAL;
             depthParam.usage        = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
             depthViewInfo.viewType  = VK_IMAGE_VIEW_TYPE_2D;
             depthViewInfo.format    = m_viz.depth_format();
-            depthViewInfo.components.r                      = VK_COMPONENT_SWIZZLE_IDENTITY;
-            //depthViewInfo.components.g                      = VK_COMPONENT_SWIZZLE_IDENTITY;
-            //depthViewInfo.components.b                      = VK_COMPONENT_SWIZZLE_IDENTITY;
-            //depthViewInfo.components.a                      = VK_COMPONENT_SWIZZLE_IDENTITY;
+            depthViewInfo.components.r                      = VK_COMPONENT_SWIZZLE_R;
+            depthViewInfo.components.g                      = VK_COMPONENT_SWIZZLE_G;
+            depthViewInfo.components.b                      = VK_COMPONENT_SWIZZLE_B;
+            depthViewInfo.components.a                      = VK_COMPONENT_SWIZZLE_A;
             depthViewInfo.subresourceRange.aspectMask       = VK_IMAGE_ASPECT_DEPTH_BIT;
             depthViewInfo.subresourceRange.baseMipLevel     = 0;
             depthViewInfo.subresourceRange.levelCount       = 1;
@@ -166,17 +167,6 @@ namespace yq::tachyon {
             depthViewInfo.subresourceRange.layerCount       = 1;
         }
         
-        //VqImageCreateInfo   depthInfo;
-        //depthInfo.format            = m_viz.depth_format();
-        //depthInfo.extent            = { m_extents.width, m_extents.height, 1 };
-        //depthInfo.imageType         = VK_IMAGE_TYPE_2D;
-        //depthInfo.mipLevels         = 1;
-        //depthInfo.arrayLayers       = 1;
-        //depthInfo.samples           = VK_SAMPLE_COUNT_1_BIT;
-        //depthInfo.tiling            = VK_IMAGE_TILING_OPTIMAL;
-        //depthInfo.usage             = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
-        //depthInfo.sharingMode       = VK_SHARING_MODE_EXCLUSIVE;
-        //depthInfo.initialLayout     = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL;
 
         VqFenceCreateInfo   cfi;
         cfi.flags = VK_FENCE_CREATE_SIGNALED_BIT;
@@ -200,12 +190,6 @@ namespace yq::tachyon {
 
             if(m_viz.depth_enabled()){
                 m_depthImages[i]   = new ViImage(m_viz.device(), depthInfo, depthParam);
-            
-                //res = vkCreateImage(vk_device, &depthInfo, nullptr, &m_depthImages[i]);
-                //if(res != VK_SUCCESS){
-                    //vizWarning << "ViSwapchain(): Cannot create a swapchain depth image.  VkResult " << (int32_t) res;
-                    //return errors::swapchain_cant_create();
-                //}
                 
                 depthViewInfo.image = m_depthImages[i]->vk_image();
                 res = vkCreateImageView(vk_device, &depthViewInfo, nullptr, &m_depthViews[i]);
@@ -256,14 +240,11 @@ namespace yq::tachyon {
                 if(m_viz.depth_enabled()){
                     if(m_depthViews[n])
                         vkDestroyImageView(vk_device, m_depthViews[n], nullptr);
-                    //if(m_depthImages[n])
-                        //vkDestroyImage(vk_device, m_depthImages[n], nullptr);
                 }
                 if(m_imageViews[n])
                     vkDestroyImageView(vk_device, m_imageViews[n], nullptr);
             }
             m_fences.clear();
-            //m_framebuffers.clear();
             m_imageViews.clear();
             m_depthViews.clear();
             m_depthImages.clear();

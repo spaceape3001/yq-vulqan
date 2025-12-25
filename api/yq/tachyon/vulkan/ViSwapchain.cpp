@@ -141,31 +141,42 @@ namespace yq::tachyon {
         VkImageViewCreateInfo   imageViewInfo = vqCreateInfo(ImageViewInfo());
         imageViewInfo.format    = m_viz.surface_format();
 
-        VqImageCreateInfo   depthInfo;
-        depthInfo.format            = m_viz.depth_format();
-        depthInfo.extent            = { m_extents.width, m_extents.height, 1 };
-        depthInfo.imageType         = VK_IMAGE_TYPE_2D;
-        depthInfo.mipLevels         = 1;
-        depthInfo.arrayLayers       = 1;
-        depthInfo.samples           = VK_SAMPLE_COUNT_1_BIT;
-        depthInfo.tiling            = VK_IMAGE_TILING_OPTIMAL;
-        depthInfo.usage             = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
-        depthInfo.sharingMode       = VK_SHARING_MODE_EXCLUSIVE;
-        depthInfo.initialLayout     = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL;
-
+        RasterInfo          depthInfo;
+        ViImage::Param      depthParam;
         VqImageViewCreateInfo   depthViewInfo;
-        depthViewInfo.viewType                          = VK_IMAGE_VIEW_TYPE_2D;
-        depthViewInfo.format                            = m_viz.depth_format();
 
-        depthViewInfo.components.r                      = VK_COMPONENT_SWIZZLE_IDENTITY;
-        depthViewInfo.components.g                      = VK_COMPONENT_SWIZZLE_IDENTITY;
-        depthViewInfo.components.b                      = VK_COMPONENT_SWIZZLE_IDENTITY;
-        depthViewInfo.components.a                      = VK_COMPONENT_SWIZZLE_IDENTITY;
-        depthViewInfo.subresourceRange.aspectMask       = VK_IMAGE_ASPECT_DEPTH_BIT;
-        depthViewInfo.subresourceRange.baseMipLevel     = 0;
-        depthViewInfo.subresourceRange.levelCount       = 1;
-        depthViewInfo.subresourceRange.baseArrayLayer   = 0;
-        depthViewInfo.subresourceRange.layerCount       = 1;
+        if(m_viz.depth_enabled()){
+            depthInfo.format        = m_viz.depth_format();
+            depthInfo.size.x        = m_extents.width;
+            depthInfo.size.y        = m_extents.height;
+            depthParam.aspect       = VK_IMAGE_ASPECT_DEPTH_BIT;
+            depthParam.layout       = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL;
+            //depthParam.tiling       = VK_IMAGE_TILING_OPTIMAL;
+            depthParam.usage        = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
+            depthViewInfo.viewType  = VK_IMAGE_VIEW_TYPE_2D;
+            depthViewInfo.format    = m_viz.depth_format();
+            depthViewInfo.components.r                      = VK_COMPONENT_SWIZZLE_IDENTITY;
+            //depthViewInfo.components.g                      = VK_COMPONENT_SWIZZLE_IDENTITY;
+            //depthViewInfo.components.b                      = VK_COMPONENT_SWIZZLE_IDENTITY;
+            //depthViewInfo.components.a                      = VK_COMPONENT_SWIZZLE_IDENTITY;
+            depthViewInfo.subresourceRange.aspectMask       = VK_IMAGE_ASPECT_DEPTH_BIT;
+            depthViewInfo.subresourceRange.baseMipLevel     = 0;
+            depthViewInfo.subresourceRange.levelCount       = 1;
+            depthViewInfo.subresourceRange.baseArrayLayer   = 0;
+            depthViewInfo.subresourceRange.layerCount       = 1;
+        }
+        
+        //VqImageCreateInfo   depthInfo;
+        //depthInfo.format            = m_viz.depth_format();
+        //depthInfo.extent            = { m_extents.width, m_extents.height, 1 };
+        //depthInfo.imageType         = VK_IMAGE_TYPE_2D;
+        //depthInfo.mipLevels         = 1;
+        //depthInfo.arrayLayers       = 1;
+        //depthInfo.samples           = VK_SAMPLE_COUNT_1_BIT;
+        //depthInfo.tiling            = VK_IMAGE_TILING_OPTIMAL;
+        //depthInfo.usage             = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
+        //depthInfo.sharingMode       = VK_SHARING_MODE_EXCLUSIVE;
+        //depthInfo.initialLayout     = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL;
 
         VqFenceCreateInfo   cfi;
         cfi.flags = VK_FENCE_CREATE_SIGNALED_BIT;
@@ -188,13 +199,15 @@ namespace yq::tachyon {
             std::vector<VkImageView>    attachments = {m_imageViews[i]};
 
             if(m_viz.depth_enabled()){
-                res = vkCreateImage(vk_device, &depthInfo, nullptr, &m_depthImages[i]);
-                if(res != VK_SUCCESS){
-                    vizWarning << "ViSwapchain(): Cannot create a swapchain depth image.  VkResult " << (int32_t) res;
-                    return errors::swapchain_cant_create();
-                }
+                m_depthImages[i]   = new ViImage(m_viz.device(), depthInfo, depthParam);
+            
+                //res = vkCreateImage(vk_device, &depthInfo, nullptr, &m_depthImages[i]);
+                //if(res != VK_SUCCESS){
+                    //vizWarning << "ViSwapchain(): Cannot create a swapchain depth image.  VkResult " << (int32_t) res;
+                    //return errors::swapchain_cant_create();
+                //}
                 
-                depthViewInfo.image = m_depthImages[i];
+                depthViewInfo.image = m_depthImages[i]->vk_image();
                 res = vkCreateImageView(vk_device, &depthViewInfo, nullptr, &m_depthViews[i]);
                 if(res != VK_SUCCESS){
                     vizWarning << "ViSwapchain(): Cannot create a swapchain depth image view.  VkResult " << (int32_t) res;
@@ -243,8 +256,8 @@ namespace yq::tachyon {
                 if(m_viz.depth_enabled()){
                     if(m_depthViews[n])
                         vkDestroyImageView(vk_device, m_depthViews[n], nullptr);
-                    if(m_depthImages[n])
-                        vkDestroyImage(vk_device, m_depthImages[n], nullptr);
+                    //if(m_depthImages[n])
+                        //vkDestroyImage(vk_device, m_depthImages[n], nullptr);
                 }
                 if(m_imageViews[n])
                     vkDestroyImageView(vk_device, m_imageViews[n], nullptr);
@@ -317,6 +330,13 @@ namespace yq::tachyon {
         return m_good && m_swapchain && m_imageCount;
     }
 
+    ViImage*        ViSwapchain::vi_image(depth_k, uint32_t i) const
+    {
+        if(i>=m_depthImages.size())
+            return nullptr;
+        return const_cast<ViImage*>(m_depthImages[i].ptr());
+    }
+
     VkFence         ViSwapchain::vk_fence(uint32_t i) const
     {
         if(i>=m_fences.size())
@@ -335,7 +355,9 @@ namespace yq::tachyon {
     {
         if(i>=m_depthImages.size())
             return nullptr;
-        return m_depthImages[i];
+        if(!m_depthImages[i])
+            return nullptr;
+        return m_depthImages[i]->vk_image();
     }
     
     VkImageView     ViSwapchain::vk_image_view(uint32_t i) const

@@ -116,8 +116,6 @@ namespace yq::tachyon {
         sn.projection.wy =  0.;
         sn.projection.wz =  0.;
         sn.projection.ww =  0.;
-        
-        //sn.projection   = Tensor44D(projection_matrix(m_screen));
     }
 
     void SpaceCamera::init_meta()

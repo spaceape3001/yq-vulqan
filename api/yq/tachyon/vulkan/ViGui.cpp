@@ -126,7 +126,7 @@ namespace yq::tachyon {
         
         p -> color_blending(ColorBlend::AlphaBlend);
         
-        p -> depth_buffer(Tristate::No);
+        //p -> depth_buffer(Tristate::No);
         
         font.sampler = new Sampler({
             .flags  = {},

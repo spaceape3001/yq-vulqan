@@ -34,14 +34,11 @@ namespace yq::tachyon {
     static constexpr const uint32_t kMinGraphicsQueues = 2; // so we can push the image loading to separate queue
     
     static const char* kDeviceExtensions[] = {
-        "VK_KHR_swapchain"
+        "VK_KHR_swapchain",
+        "VK_EXT_extended_dynamic_state3"
         //"VK_KHR_swapchain_maintenance1"
     };
     
-    static const char* kDevicePre13Extensions[] = {
-        "VK_KHR_dynamic_rendering"
-    };
-
     namespace errors {
         using device_existing                   = error_db::entry<"Device already created">;
         using optical_flow_queue_not_found      = error_db::entry<"No optical flow queue found">;
@@ -402,6 +399,7 @@ namespace yq::tachyon {
         if(!v13features.dynamicRendering)
             vizWarning << "ViDevice(" << gpu_name() << "): GPU cannot handle dynamic rendering";
             
+        v10features.fragmentStoresAndAtomics    = VK_TRUE;
         
         deviceCreateInfo.pQueueCreateInfos        = queueCreateInfos.data();
         deviceCreateInfo.queueCreateInfoCount     = (uint32_t) queueCreateInfos.size();
@@ -410,11 +408,6 @@ namespace yq::tachyon {
         std::vector<const char*>    extensions;
         for(const char* sz : kDeviceExtensions)
             extensions.push_back(sz);
-
-        if(VulqanManager::vulkan_api() < VK_MAKE_VERSION(1,3,0)){
-            for(const char* sz : kDevicePre13Extensions)
-                extensions.push_back(sz);
-        }
 
         deviceCreateInfo.enabledExtensionCount      = extensions.size();
         deviceCreateInfo.ppEnabledExtensionNames    = extensions.data();

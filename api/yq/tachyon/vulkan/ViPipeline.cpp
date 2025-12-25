@@ -33,7 +33,9 @@ namespace yq::tachyon {
     
     ViPipeline::ViPipeline(VizBase&viz, ViPipelineLayoutCPtr pLay, const ViPipelineOptions& opts) : m_viz(viz)
     {
-        if(viz.device() && pLay && pLay->valid()){
+        assert(pLay && pLay->valid());
+        
+        if(pLay && pLay->valid()){
             std::error_code ec = _init(pLay, opts);
             if(ec != std::error_code()){
                 vizWarning << "ViPipeline(): Unable to initialize.  " << ec.message();
@@ -44,7 +46,7 @@ namespace yq::tachyon {
 
     ViPipeline::ViPipeline(VizBase&viz, const Pipeline*pipe, const ViPipelineOptions& opts) : m_viz(viz)
     {
-        if(viz.device() && pipe){
+        if(pipe){
             std::error_code ec = _init(pipe, opts);
             if(ec != std::error_code()){
                 vizWarning << "ViPipeline(): Unable to initialize.  " << ec.message();
@@ -69,8 +71,11 @@ namespace yq::tachyon {
     std::error_code ViPipeline::_init(ViPipelineLayoutCPtr pLay, const ViPipelineOptions& opts)
     {
         m_config = pLay->pipeline_config();
-        if(!m_config)
+        if(!m_config){
+            vizCritical << "ViPipeline encountered a NULL pipeline configuration!";
+            assert(m_config && "Null pipeline configuration should never happen");
             return errors::pipeline_bad_config();
+        }
         
         
         m_layout    = pLay;
@@ -87,13 +92,23 @@ namespace yq::tachyon {
         const auto& colorFormats  = m_viz.color_formats();
         dynRender.colorAttachmentCount      = (uint32_t) colorFormats.size();
         dynRender.pColorAttachmentFormats   = colorFormats.data();
-        if(m_config->depth_buffer() != Tristate::NO){
-            dynRender.depthAttachmentFormat = m_viz.depth_format();
-        }
-        if(m_config->stenciling() != Tristate::NO){
-            dynRender.stencilAttachmentFormat   = m_viz.stencil_format();
-        }
+        dynRender.depthAttachmentFormat     = m_viz.depth_format();
+        dynRender.stencilAttachmentFormat   = m_viz.stencil_format();
         
+        VqPipelineDepthStencilStateCreateInfo depthStencil;
+        if(m_viz.depth_enabled()){
+        vizInfo << "ViPipeline::depth_enabled";
+            pipelineInfo.pDepthStencilState = &depthStencil;
+            depthStencil.depthTestEnable        = VK_TRUE;
+            depthStencil.depthWriteEnable       = VK_TRUE,
+            depthStencil.depthCompareOp         = VK_COMPARE_OP_LESS;
+            depthStencil.depthBoundsTestEnable  = VK_FALSE;
+            depthStencil.stencilTestEnable      = VK_FALSE;
+            depthStencil.minDepthBounds         = 0.;
+            depthStencil.maxDepthBounds         = 1.;
+        }
+
+
         //  TODO... subpass support
 
         const auto&   shaders = pLay->shader_infos();
@@ -192,8 +207,8 @@ namespace yq::tachyon {
 
         VqPipelineRasterizationStateCreateInfo  rasterizer;
         rasterizer.polygonMode              = (VkPolygonMode) polyMode.value();
-        rasterizer.depthClampEnable         = opts.depth_clamp ? VK_TRUE : VK_FALSE;
-        rasterizer.rasterizerDiscardEnable  = opts.rasterizer_discard ? VK_TRUE : VK_FALSE;
+        rasterizer.depthClampEnable         = VK_FALSE; // opts.depth_clamp ? VK_TRUE : VK_FALSE;
+        rasterizer.rasterizerDiscardEnable  = VK_FALSE; // opts.rasterizer_discard ? VK_TRUE : VK_FALSE;
         rasterizer.lineWidth                = lineWidth;
         rasterizer.cullMode                 = (VkCullModeFlags) m_config->culling().value();
         rasterizer.frontFace                = (VkFrontFace) m_config->front().value();

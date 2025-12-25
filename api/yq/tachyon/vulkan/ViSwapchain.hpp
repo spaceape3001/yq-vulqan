@@ -10,6 +10,7 @@
 #include <yq/core/Expect.hpp>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/typedef/raster.hpp>
+#include <yq/tachyon/typedef/vi_image.hpp>
 #include <yq/tachyon/typedef/vi_swapchain.hpp>
 #include <vulkan/vulkan_core.h>
 #include <system_error>
@@ -42,6 +43,8 @@ namespace yq::tachyon {
         
         Expect<RasterPtr>   snapshot(uint32_t, VkFormat desired=VK_FORMAT_UNDEFINED) const;
 
+        ViImage*        vi_image(depth_k, uint32_t) const;
+
         VkFence         vk_fence(uint32_t) const;
         VkImage         vk_image(uint32_t) const;
         VkImage         vk_image(depth_k, uint32_t) const;
@@ -62,7 +65,7 @@ namespace yq::tachyon {
         
         std::vector<VkImage>        m_images;
         std::vector<VkImageView>    m_imageViews;
-        std::vector<VkImage>        m_depthImages;
+        std::vector<ViImagePtr>     m_depthImages;
         std::vector<VkImageView>    m_depthViews;
 
         std::vector<VkFence>        m_fences;

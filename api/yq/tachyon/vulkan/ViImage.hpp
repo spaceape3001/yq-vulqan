@@ -27,7 +27,7 @@ namespace yq::tachyon {
             VkImageLayout           layout  = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
             VkImageUsageFlags       usage   = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
             VmaMemoryUsage          memory  = VMA_MEMORY_USAGE_GPU_ONLY;
-            VkAccessFlags           access  = VK_ACCESS_SHADER_READ_BIT;
+            VkAccessFlags           access  = VK_ACCESS_SHADER_READ_BIT;    // only good on importing/uploading, not raw
             VkPipelineStageFlagBits stages  = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
             VkImageAspectFlags      aspect  = VK_IMAGE_ASPECT_COLOR_BIT;
             VkImageCreateFlags      flags   = 0;
@@ -38,7 +38,6 @@ namespace yq::tachyon {
     
         static size_t       format_bytes(VkFormat);
     
-        ViImage();
         ViImage(ViDevice&, const Raster&, const Param& p = Param());
         ViImage(ViDevice&, std::span<const RasterCPtr>, const Param& p = Param());
         
@@ -46,14 +45,12 @@ namespace yq::tachyon {
         ViImage(ViDevice&, const RasterInfo&, const Param& p = Param());
         ~ViImage();
         
-        std::error_code     init(ViDevice&, const Raster&, const Param& p = Param());
-        void                kill();
-        
-        bool                consistent() const;
         bool                valid() const;
         
         operator VkImage() const { return m_image; }
         VkImage             image() const { return m_image; }
+        VkImage             vk_image() const { return m_image; }
+        VkImageLayout       vk_image_layout() const { return m_layout; }
         VmaAllocation       allocation() const { return m_allocation; }
         const RasterInfo&   info() const { return m_info; }
         
@@ -65,9 +62,11 @@ namespace yq::tachyon {
         };
     
         void  barrier(VkCommandBuffer, const Respec&);
+        void  barrier(VkCommandBuffer, VkPipelineStageFlags, const Respec&);
+        
     
     private:
-        ViDevice*           m_device        = nullptr;
+        ViDevice&           m_device;
         VmaAllocation       m_allocation    = nullptr;
         VkImage             m_image         = nullptr;
         RasterInfo          m_info          = {};
@@ -87,9 +86,9 @@ namespace yq::tachyon {
         ViImage& operator=(const ViImage&) = delete;
         ViImage& operator=(ViImage&&) = delete;
         
-        std::error_code _init(ViDevice&, const Raster&, const Param&);
-        std::error_code _init(ViDevice&, const std::span<const RasterCPtr>&, const Param&);
-        std::error_code _init(ViDevice&, const RasterInfo&, const Param&);
+        std::error_code _init(const Raster&, const Param&);
+        std::error_code _init(const std::span<const RasterCPtr>&, const Param&);
+        std::error_code _init(const RasterInfo&, const Param&);
         void            _wipe();
         void            _kill();
     };

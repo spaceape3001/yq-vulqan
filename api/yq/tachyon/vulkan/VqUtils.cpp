@@ -250,7 +250,10 @@ namespace yq::tachyon {
 
     VkClearValue            vqClearValue(float v)
     {
-        return VkClearValue({{ v, 0., 0., 0. }});
+        VkClearValue    ret;
+        ret.depthStencil.depth      = v;
+        ret.depthStencil.stencil    = 0;
+        return ret;
     }
 
     VkClearValue            vqClearValue(const RGBA4F& in)

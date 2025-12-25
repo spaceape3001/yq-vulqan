@@ -242,11 +242,11 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
             return true;
 
         if(std::get_if<enable_k>(&p.depth_buffer)){
-            auto x = find_depth_format();
-            if(!x)
-                return false;
+            //auto x = find_depth_format();
+            //if(!x)
+                //return false;
                 
-            m_depth.format    = *x;
+            m_depth.format    = VK_FORMAT_D32_SFLOAT;   // hard code it...
         }
         
         if(auto* x = std::get_if<DataFormat>(&p.depth_buffer)){

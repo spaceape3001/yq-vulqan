@@ -17,6 +17,15 @@ namespace yq::tachyon {
         static std::atomic<uint64_t>    s_next(1);
         return s_next++;
     }
+    
+    static const DynamicState kStdDynamic[] = {
+        //DynamicState::DepthBoundsTestEnable,
+        //DynamicState::DepthCompareOp,
+        //DynamicState::DepthTestEnable,
+        //DynamicState::DepthWriteEnable,
+        DynamicState::Scissor,
+        DynamicState::Viewport
+    };
 
     ///////////////////////////////////////////////////
     
@@ -27,8 +36,8 @@ namespace yq::tachyon {
     Pipeline::Pipeline(const CompoundMeta* cinfo, Role r) : 
         m_compound(cinfo), m_id(_make_id()), m_role(r)
     {
-        m_dynamicStates.insert(DynamicState::Viewport);
-        m_dynamicStates.insert(DynamicState::Scissor);
+        for(DynamicState ds : kStdDynamic)
+            m_dynamicStates.insert(ds);
     }
     
     Pipeline::~Pipeline()

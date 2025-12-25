@@ -2,6 +2,8 @@
 
 ## UPCOMING
 * Task pool (for non-thread related tasking)
+* Vulkan visualizer overhaul, so use ViVisualizer in lieu of Visualizer
+* Vulkan Dynamic Rendering (So, VkRenderPass & related is gone, requires vulkan v1.3+)
 
 ## 2025-12.19
 

@@ -104,11 +104,6 @@ namespace yq::tachyon {
         swapInfo.clipped          = VK_TRUE;
         swapInfo.oldSwapchain     = cfg.old_swapchain;
         
-        VqSwapchainPresentModesCreateInfoEXT    presentModesCreateInfo;
-        presentModesCreateInfo.presentModeCount   = 1;
-        presentModesCreateInfo.pPresentModes      = &presentMode;
-        swapInfo.pNext                  = &presentModesCreateInfo;
-        
         res = vkCreateSwapchainKHR(vk_device, &swapInfo, nullptr, &m_swapchain);
         if(res != VK_SUCCESS){
             vizWarning << "ViSwapchain(): Cannot create swapchain.  VkResult " << (int32_t) res;

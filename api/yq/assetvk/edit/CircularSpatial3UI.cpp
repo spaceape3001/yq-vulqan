@@ -46,6 +46,7 @@ namespace yq::tachyon {
         if(!sn)
             return;
         Degree  d   = sn->angle;
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::Input("##Angle", d)){
             // change it
         }
@@ -58,6 +59,7 @@ namespace yq::tachyon {
             return;
             
         bool    v   = sn->locked;
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::Checkbox("##Locked", &v) && (v != sn->locked)){
             send(new Circular³LockCommand({.target=sn->self}, v));
         }
@@ -71,6 +73,7 @@ namespace yq::tachyon {
             return;
             
         unit::Second s    = sn->period;
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::Input("##Period", s)){
             send(new Circular³PeriodCommand({.target=sn->self}, { s }));
         }
@@ -83,6 +86,7 @@ namespace yq::tachyon {
             return;
         
         double r    = sn->radius;
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::InputDouble("##Radius", &r)){
             send(new Circular³RadiusCommand({.target=sn->self}, r));
         }

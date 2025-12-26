@@ -41,6 +41,7 @@ namespace yq::tachyon {
             return ;
             
         Vector3D    v   = p->outer_tessellation();
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::Input("##outer_tessellation", v))
             p -> outer_tessellation(SET, v);
     }

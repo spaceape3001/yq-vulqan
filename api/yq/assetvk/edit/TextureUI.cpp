@@ -46,6 +46,7 @@ namespace yq::tachyon {
             return ;
         
         std::string     v = to_string(p->texture(URL));
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::InputText("##texture", &v, ImGuiInputTextFlags_EnterReturnsTrue))
             send(new SetTextureSpecCommand({.target=snap()->self}, v));
     }

@@ -87,8 +87,10 @@ namespace yq::tachyon {
             ImGui::TableSetupColumn("Point");
             if(texs)
                 ImGui::TableSetupColumn("Tex");
-            if(texs)
+            if(normals)
                 ImGui::TableSetupColumn("Normal");
+            if(color)
+                ImGui::TableSetupColumn("RGBA");
             ImGui::TableHeadersRow();
             
             for(size_t n=1;n<=count;++n){
@@ -99,6 +101,7 @@ namespace yq::tachyon {
                 if(ImGui::TableNextColumn()){
                     std::string id = std::format("##Vertex{}.{}", bound().id, n);
                     Vector3D    v   = p->vertex(n, POINT);
+                    ImGui::SetNextItemWidth(-1);
                     if(ImGui::Input(id.c_str(), v, vertOpts)){
                         p->vertex(n, SET, POINT, v);
                     }
@@ -106,6 +109,7 @@ namespace yq::tachyon {
                 if(texs && ImGui::TableNextColumn()){
                     std::string id = std::format("##TexUV{}.{}", bound().id, n);
                     UV2F        v   = p->vertex(n, TEX);
+                    ImGui::SetNextItemWidth(-1);
                     if(ImGui::Input(id.c_str(), v, uvOpts)){
                         p->vertex(n, SET, TEX, v);
                     }
@@ -113,6 +117,7 @@ namespace yq::tachyon {
                 if(normals && ImGui::TableNextColumn()){
                     std::string id = std::format("##Normal{}.{}", bound().id, n);
                     Vector3F    v   = p->vertex(n, NORMAL);
+                    ImGui::SetNextItemWidth(-1);
                     if(ImGui::Input(id.c_str(), v, normalOpts)){
                         p->vertex(n, SET, NORMAL, v);
                     }
@@ -120,6 +125,7 @@ namespace yq::tachyon {
                 if(color && ImGui::TableNextColumn()){
                     std::string id = std::format("##Color{}.{}", bound().id, n);
                     RGBA4F  v   = p->vertex(n, COLOR);
+                    ImGui::SetNextItemWidth(-1);
                     if(ImGui::ColorEdit(id.c_str(), v, colorFlags)){
                         p->vertex(n, SET, COLOR, v);
                     }

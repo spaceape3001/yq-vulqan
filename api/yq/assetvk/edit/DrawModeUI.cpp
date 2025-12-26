@@ -41,6 +41,7 @@ namespace yq::tachyon {
             return ;
             
         DrawMode    v   = p->draw_mode();
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::Combo("##draw_mode", v))
             p -> draw_mode(SET, v);
     }

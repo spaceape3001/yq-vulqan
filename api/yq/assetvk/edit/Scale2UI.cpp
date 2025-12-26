@@ -41,6 +41,7 @@ namespace yq::tachyon {
             return ;
             
         Vector2D    v   = p->scale();
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::Input("##scale", v))
             p -> scale(SET, v);
     }

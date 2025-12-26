@@ -49,6 +49,7 @@ namespace yq::tachyon {
         if(!ss)
             return ;
         RGBA4F          v   = ss->bgcolor;
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::ColorEdit("##BgColor", v)){
             send(new SetBgColorCommand({.target=bound()}, v));
         }

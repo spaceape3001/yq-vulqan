@@ -41,6 +41,7 @@ namespace yq::tachyon {
             return ;
             
         Vector3U    v   = p->count();
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::Input("##count", v))
             p -> count(SET, v);
     }

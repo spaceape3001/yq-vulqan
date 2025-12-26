@@ -51,6 +51,7 @@ namespace yq::tachyon {
         if(!sn)
             return ;
         Tristate   ac  = sn->auto_center;
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::Checkbox("##AutoCenter", ac))
             send(new SetAutoCenterCommand({.target=sn->self}, ac));
     }

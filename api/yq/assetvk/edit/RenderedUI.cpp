@@ -48,6 +48,7 @@ namespace yq::tachyon {
         const RenderedSnap*  sn    = dynamic_cast<const RenderedSnap*>(snap());
         if(!sn)
             return ;
+        ImGui::SetNextItemWidth(-1);
         ImGui::TextUnformatted(sn->good?"GOOD":"BAD");
     }
     
@@ -60,6 +61,7 @@ namespace yq::tachyon {
         std::string     sid = std::format("##Wireframe{}", bound().id);
         Tristate        v  = sn->wireframe;
         
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::Checkbox(sid.c_str(), v)){
             send(new SetWireframeCommand({.target=sn->self}, v));
         }

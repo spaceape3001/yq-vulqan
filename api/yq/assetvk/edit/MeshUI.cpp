@@ -46,6 +46,7 @@ namespace yq::tachyon {
             return ;
         
         std::string     v = to_string(p->mesh(URL));
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::InputText("##mesh", &v, ImGuiInputTextFlags_EnterReturnsTrue))
             send(new SetMeshSpecCommand({.target=snap()->self}, v));
     }

@@ -70,6 +70,7 @@ namespace yq::tachyon {
     {
         const TachyonSnap*  sn    = snap();
         Tristate    v   = sn->edit_mode;
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::Checkbox("##EditMode", v))
             send(new SetEditModeCommand({.target=sn->self}, v));
     }
@@ -107,6 +108,7 @@ namespace yq::tachyon {
                 text[255] = '\0';
             } else
                 text[0] = '\0';
+            ImGui::SetNextItemWidth(-1);
             if(ImGui::InputText("##name", text, sizeof(text), ImGuiInputTextFlags_EnterReturnsTrue)){
                 text[255] = '\0';
                 send(new SetNameCommand({.target=sn->self}, std::string(text)));

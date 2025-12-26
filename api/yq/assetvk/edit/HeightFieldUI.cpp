@@ -47,6 +47,7 @@ namespace yq::tachyon {
             return ;
         
         std::string     v = to_string(p->height_field(URL));
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::InputText("##height_field", &v, ImGuiInputTextFlags_EnterReturnsTrue))
             send(new SetHeightFieldSpecCommand({.target=snap()->self}, v));
     }

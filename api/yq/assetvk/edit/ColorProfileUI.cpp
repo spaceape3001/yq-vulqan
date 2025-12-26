@@ -47,6 +47,7 @@ namespace yq::tachyon {
             return ;
         
         std::string     v = to_string(p->color_profile(URL));
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::InputText("##color_profile", &v, ImGuiInputTextFlags_EnterReturnsTrue))
             send(new SetColorProfileSpecCommand({.target=snap()->self}, v));
     }

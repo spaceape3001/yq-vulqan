@@ -46,6 +46,7 @@ namespace yq::tachyon {
             return ;
         
         std::string     v = to_string(p->material(URL));
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::InputText("##material", &v, ImGuiInputTextFlags_EnterReturnsTrue))
             send(new SetMaterialSpecCommand({.target=snap()->self}, v));
     }

@@ -41,6 +41,7 @@ namespace yq::tachyon {
             return ;
             
         Vector1D    v   = p->inner_tessellation();
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::Input("##inner_tessellation", v))
             p -> inner_tessellation(SET, v);
     }

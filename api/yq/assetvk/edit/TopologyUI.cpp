@@ -41,6 +41,7 @@ namespace yq::tachyon {
             return ;
             
         Topology    v   = p->topology();
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::Combo("##topology", v))
             p -> topology(SET, v);
     }

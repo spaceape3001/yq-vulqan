@@ -46,6 +46,7 @@ namespace yq::tachyon {
         if(!sn)
             return;
         RGB3F   v   = sn->color;
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::ColorEdit("##color", v))
             send(new LightColorCommand({.target=sn->self}, v));
     }
@@ -56,6 +57,7 @@ namespace yq::tachyon {
         if(!sn)
             return;
         float   v   = sn->intensity;
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::InputFloat("##intensity", &v))
             send(new LightIntensityCommand({.target=sn->self}, v));
     }

@@ -41,6 +41,7 @@ namespace yq::tachyon {
             return ;
             
         RangeD    v   = p->w_range();
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::Input("##w_range", v))
             p -> w_range(SET, v);
     }

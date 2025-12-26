@@ -48,6 +48,7 @@ namespace yq::tachyon {
         const Mesh³Snap* sn = dynamic_cast<const Mesh³Snap*>(snap());
         if(!sn)
             return ;
+        ImGui::SetNextItemWidth(-1);
         AxisRemap   ar  = sn->axis;
         if(ImGui::Combo("##Axis", ar))
             send(new SetAxisRemapCommand({.target=sn->self}, ar));

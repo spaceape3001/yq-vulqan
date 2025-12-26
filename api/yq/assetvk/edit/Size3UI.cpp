@@ -41,6 +41,7 @@ namespace yq::tachyon {
             return ;
             
         Size3D    v   = p->size();
+        ImGui::SetNextItemWidth(-1);
         if(ImGui::Input("##size", v))
             p -> size(SET, v);
     }

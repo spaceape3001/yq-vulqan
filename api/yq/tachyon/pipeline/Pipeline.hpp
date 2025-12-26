@@ -19,6 +19,7 @@
 #include <yq/tachyon/pipeline/FrontFace.hpp>
 #include <yq/tachyon/pipeline/IndexType.hpp>
 #include <yq/tachyon/pipeline/PipelineBinding.hpp>
+#include <yq/tachyon/pipeline/PipelineKey.hpp>
 #include <yq/tachyon/pipeline/PolygonMode.hpp>
 #include <yq/tachyon/pipeline/PushConfigType.hpp>
 #include <yq/tachyon/pipeline/Topology.hpp>
@@ -39,11 +40,6 @@ namespace yq {
     class TypeMeta;
 }
 
-/*! \brief Generates distinct pipeline roles WITHIN a source file
-    \note These may clobber outside, so do NOT share (header, otherwise).
-*/
-#define YQ_PIPELINE_ROLE    (::yq::tachyon::Pipeline::Role) ((uint16_t) ::yq::tachyon::Pipeline::Role::User + (uint16_t) __COUNTER__)
-
 namespace yq::tachyon {
     class ViData;
     class ViPipeline;
@@ -58,98 +54,8 @@ namespace yq::tachyon {
     class Pipeline {
     public:
 
-        using role_t        = uint16_t;
         using variation_t   = uint16_t;
 
-        /*! \brief Standard roles (can disobey below)
-            
-            The Role is a variation in layouts; so the attributes,
-            buffers, etc can vary on a single rendered object.
-            (ie...below has the solid as one option, corners
-            as a second option, or textures as a third.)
-        */
-        //! 
-        enum class Role : role_t {
-            //! Invalid role (shouldn't ever get back unless no pipeline is available for current rendered)
-            Invalid = (role_t) -1,
-            
-            //! Default pipeline
-            Default = 0,
-            
-            //  Debug pipelines... solid?  
-
-            //! Debug Black
-            DbgBlack, // 1
-
-            //! Debug Red
-            DbgRed, // 2
-
-            //! Debug Orange
-            DbgOrange, // 3
-
-            //! Debug Yellow
-            DbgYellow, // 4
-
-            //! Debug Green
-            DbgGreen, // 5
-
-            //! Debug Blue
-            DbgBlue, // 6
-
-            //! Debug Cyan
-            DbgCyan, // 7
-
-            //! Debug Magenta
-            DbgMagenta, // 8
-
-            //! Debug Gray
-            DbgGray, // 9
-
-            //! Debug White
-            DbgWhite, // 10
-
-
-
-            //! Single solid color 
-            SolidColor, // 11
-            
-            //! Solid color with lights
-            SolidColorLit, // 12
-            
-            //! Solid color with ray racing
-            SolidColorRay, // 13
-
-            //! Color corners
-            ColorCorner, // 14
-
-            //! Color corners with lights
-            ColorCornerLit, // 15
-
-            //! Corner color with ray tracing
-            ColorCornerRay, // 16
-            
-            //! Regular textured
-            Textured, // 17
-            
-            //! Regular textured with lights
-            TexturedLit, // 18
-
-            //! Regular texture with ray tracing
-            TexturedRay, // 19
-            
-            //! Using Material
-            Material, // 20
-            
-            //! Lit material
-            MaterialLit, // 21
-            
-            //! Lit ray tracing with material
-            MaterialRay, // 22
-
-            //! First user-based index (nice & large for future compatibility)
-            User = 1001
-        };
-    
         //! Variation is a tweak to a pipeline while using the same layout 
         //  (This will likely be remapped to subpasses... later)
         enum class Variation : variation_t {
@@ -297,27 +203,26 @@ namespace yq::tachyon {
         // Always good to call
         std::string_view        compound_name() const;
         // NULL is valid return result
-        constexpr const CompoundMeta*     compound_type() const { return m_compound; }
+        constexpr const CompoundMeta*     compound_type() const noexcept { return m_compound; }
         
-        ColorBlend              color_blending() const { return m_colorBlend; }
+        ColorBlend              color_blending() const noexcept { return m_colorBlend; }
         
-        CullMode                culling() const { return m_cullMode; }
-        FrontFace               front() const { return m_frontFace; }
-        bool                    is_dynamic() const;
-        bool                    is_static() const;
-        float                   line_width() const { return m_lineWidth; }
-        PolygonMode             polygons() const { return m_polygonMode; }
-        bool                    primitive_restart() const { return m_primitiveRestart; }
-        const push_t&           push() const { return m_push; }
-        constexpr Role          role() const { return m_role; }
-        Topology                topology() const { return m_topology; }
-        bool                    wireframe_permitted() const { return m_wireframePermitted; }
-        uint32_t                patch_control_points() const { return m_patchControlPoints; }
+        CullMode                culling() const noexcept { return m_cullMode; }
+        Tristate                depth_buffer() const noexcept { return m_depthBuffer; }
+        FrontFace               front() const noexcept { return m_frontFace; }
+        constexpr uint64_t      id() const noexcept { return m_id; }
+        bool                    is_dynamic() const noexcept ;
+        bool                    is_static() const noexcept ;
+        constexpr PipelineKey   key() const noexcept { return m_key; }
+        float                   line_width() const noexcept { return m_lineWidth; }
+        uint32_t                patch_control_points() const noexcept { return m_patchControlPoints; }
+        PolygonMode             polygons() const noexcept { return m_polygonMode; }
+        bool                    primitive_restart() const noexcept { return m_primitiveRestart; }
+        const push_t&           push() const noexcept { return m_push; }
+        Tristate                stenciling() const noexcept { return m_stenciling; }
+        Topology                topology() const noexcept { return m_topology; }
+        bool                    wireframe_permitted() const noexcept { return m_wireframePermitted; }
         
-        Tristate                depth_buffer() const { return m_depthBuffer; }
-        Tristate                stenciling() const { return m_stenciling; }
-        
-        constexpr uint64_t      id() const { return m_id; }
 
         //  Building out the pipeline
 
@@ -492,7 +397,7 @@ namespace yq::tachyon {
         const auto& vertex_buffers() const { return m_vertexBuffers; }
         const auto& dynamic_states() const { return m_dynamicStates; }
 
-        Pipeline(Role r = Role::Default);
+        Pipeline(PipelineKey r = pipekey::DEFAULT);
 
         struct VariationData {
             //  Unspecified values inherit from default
@@ -535,7 +440,7 @@ namespace yq::tachyon {
         friend class ViPipelineLayout;
         friend class ViRendered;
 
-        Pipeline(const CompoundMeta*, Role);
+        Pipeline(const CompoundMeta*, PipelineKey);
         
 
         template <typename V>
@@ -560,7 +465,7 @@ namespace yq::tachyon {
         
         const CompoundMeta* const       m_compound;
         const uint64_t                  m_id;
-        const Role                      m_role;
+        const PipelineKey               m_key;
         
         
         using VariationMap = std::map<Variation, VariationData>;

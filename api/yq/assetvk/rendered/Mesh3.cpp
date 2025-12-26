@@ -38,7 +38,7 @@ namespace yq::tachyon {
         w.slot(&Mesh³::on_set_axis_remap_command);
         
         {
-            auto& p     = w.pipeline(Pipeline::Role::DbgBlack);
+            auto& p     = w.pipeline(pipekey::DBG_BLACK);
             p.shader("yq/debug/position.vert");
             p.shader("yq/debug/color/black.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
@@ -49,7 +49,7 @@ namespace yq::tachyon {
         }
 
         {
-            auto& p     = w.pipeline(Pipeline::Role::DbgRed);
+            auto& p     = w.pipeline(pipekey::DBG_RED);
             p.shader("yq/debug/position.vert");
             p.shader("yq/debug/color/red.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
@@ -60,7 +60,7 @@ namespace yq::tachyon {
         }
 
         {
-            auto& p     = w.pipeline(Pipeline::Role::DbgOrange);
+            auto& p     = w.pipeline(pipekey::DBG_ORANGE);
             p.shader("yq/debug/position.vert");
             p.shader("yq/debug/color/orange.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
@@ -71,7 +71,7 @@ namespace yq::tachyon {
         }
         
         {
-            auto& p     = w.pipeline(Pipeline::Role::DbgYellow);
+            auto& p     = w.pipeline(pipekey::DBG_YELLOW);
             p.shader("yq/debug/position.vert");
             p.shader("yq/debug/color/yellow.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
@@ -82,7 +82,7 @@ namespace yq::tachyon {
         }
 
         {
-            auto& p     = w.pipeline(Pipeline::Role::DbgGreen);
+            auto& p     = w.pipeline(pipekey::DBG_GREEN);
             p.shader("yq/debug/position.vert");
             p.shader("yq/debug/color/green.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
@@ -93,7 +93,7 @@ namespace yq::tachyon {
         }
 
         {
-            auto& p     = w.pipeline(Pipeline::Role::DbgBlue);
+            auto& p     = w.pipeline(pipekey::DBG_BLUE);
             p.shader("yq/debug/position.vert");
             p.shader("yq/debug/color/blue.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
@@ -104,7 +104,7 @@ namespace yq::tachyon {
         }
 
         {
-            auto& p     = w.pipeline(Pipeline::Role::DbgMagenta);
+            auto& p     = w.pipeline(pipekey::DBG_MAGENTA);
             p.shader("yq/debug/position.vert");
             p.shader("yq/debug/color/magenta.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
@@ -115,7 +115,7 @@ namespace yq::tachyon {
         }
 
         {
-            auto& p     = w.pipeline(Pipeline::Role::DbgGray);
+            auto& p     = w.pipeline(pipekey::DBG_GRAY);
             p.shader("yq/debug/position.vert");
             p.shader("yq/debug/color/gray.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
@@ -126,7 +126,7 @@ namespace yq::tachyon {
         }
 
         {
-            auto& p     = w.pipeline(Pipeline::Role::DbgWhite);
+            auto& p     = w.pipeline(pipekey::DBG_WHITE);
             p.shader("yq/debug/position.vert");
             p.shader("yq/debug/color/white.frag");
             p.index(&Mesh³::m_ibo, {.activity=DYNAMIC});
@@ -137,7 +137,7 @@ namespace yq::tachyon {
         }
 
         {
-            auto& p  = w.pipeline(Pipeline::Role::SolidColor);
+            auto& p  = w.pipeline(pipekey::SOLID_COLOR);
             
             p.shader("yq/shape3/solid.vert");
             p.shader("yq/shape3/solid.frag");
@@ -153,7 +153,7 @@ namespace yq::tachyon {
         }
 
         {
-            auto& p  = w.pipeline(Pipeline::Role::Textured);
+            auto& p  = w.pipeline(pipekey::TEXTURED);
 
             p.shader("yq/shape3/textured.vert");
             p.shader("yq/shape3/textured.frag");
@@ -355,7 +355,7 @@ namespace yq::tachyon {
         
         //  if there's an error....
         
-        set_pipeline(Pipeline::Role::DbgYellow);
+        set_pipeline(pipekey::DBG_YELLOW);
         return ;
         
 
@@ -366,7 +366,7 @@ namespace yq::tachyon {
         // this detection will be moved to shape3 (after we see if it works...)
         bool    textured    = m_material && !dynamic_cast<const BasicMaterial*>(m_material.ptr());
         if(textured){
-            set_pipeline(Pipeline::Role::Textured);
+            set_pipeline(PipelineKey::Textured);
             m_vboT.data.clear();
             for(size_t n=0;n<N;++n)
                 m_vboT.data.push_back(vtx(m_mesh->vertex3(n), m_mesh->texc2(n)));
@@ -377,7 +377,7 @@ namespace yq::tachyon {
             #endif
 
         } else {
-            set_pipeline(Pipeline::Role::SolidColor);
+            set_pipeline(pipekey::SOLID_COLOR);
             m_vboS.data.clear();
             for(size_t n=0;n<N;++n)
                 m_vboS.data.push_back(vtx(m_mesh->vertex3(n)));

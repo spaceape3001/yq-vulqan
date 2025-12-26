@@ -27,7 +27,7 @@ namespace yq::tachyon {
         {
         }
         
-        bool    has_pipeline(Pipeline::Role r) const
+        bool    has_pipeline(PipelineKey r) const
         {
             if(m_meta)
                 return static_cast<bool>(m_meta->pipeline(r));
@@ -39,7 +39,7 @@ namespace yq::tachyon {
             This creates a new pipeline for the given meta, 
             returning the builder (moved out)
         */
-        Pipeline::Typed<C>&    pipeline(Pipeline::Role r=Pipeline::Role::Default) 
+        Pipeline::Typed<C>&    pipeline(PipelineKey r=pipekey::DEFAULT) 
         {
             assert(m_meta);
             return *static_cast<Pipeline::Typed<C>*>(m_meta->create_pipeline(r, create_pipeline));
@@ -49,7 +49,7 @@ namespace yq::tachyon {
         const RenderedMeta& meta() const { return *m_meta; }
 
     private:
-        static Pipeline*       create_pipeline(Pipeline::Role r)
+        static Pipeline*       create_pipeline(PipelineKey r)
         {
             return new Pipeline::Typed<C>(r);
         }

@@ -82,7 +82,7 @@ namespace yq::tachyon {
         w.property("v3", &Triangle³::v3);
 
         {
-            auto& p = w.pipeline(Pipeline::Role::SolidColor);
+            auto& p = w.pipeline(pipekey::SOLID_COLOR);
             p.shader("yq/shape3/color.vert");
             p.shader("yq/shape3/color.frag");
 
@@ -96,7 +96,7 @@ namespace yq::tachyon {
 
 
         {
-            auto& p = w.pipeline(Pipeline::Role::ColorCorner);
+            auto& p = w.pipeline(pipekey::CORNER_COLOR);
             p.shader("yq/shape3/gradient.vert");
             p.shader("yq/shape3/gradient.frag");
 
@@ -173,7 +173,7 @@ namespace yq::tachyon {
         switch(draw_mode(USE)){
         case DrawMode::Color:
             m_good      = true;
-            set_pipeline(Pipeline::Role::SolidColor);
+            set_pipeline(pipekey::SOLID_COLOR);
             m_vertexS   = {
                 vs(vertex1()), vs(vertex2()), vs(vertex3())
             };
@@ -183,7 +183,7 @@ namespace yq::tachyon {
             break;
         case DrawMode::Gradient:
             m_good      = true;
-            set_pipeline(Pipeline::Role::ColorCorner);
+            set_pipeline(pipekey::CORNER_COLOR);
             m_vertexC = {
                 vc(vertex1()), vc(vertex2()), vc(vertex3())
             };

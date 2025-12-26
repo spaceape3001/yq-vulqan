@@ -1,5 +1,9 @@
 # CHANGE LOG
 
+## Upcoming
+
+* Pipeline role rename
+
 ## 2025.12.26
 
 * Task pool (for non-thread related tasking)

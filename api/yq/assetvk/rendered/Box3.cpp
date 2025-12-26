@@ -83,7 +83,7 @@ namespace yq::tachyon {
         w.property("color_tne", &Box³::color_tne).setter(&Box³::set_color_tne).tag(kTag_Save);
      
         {
-            auto& p = w.pipeline(Pipeline::Role::SolidColor);
+            auto& p = w.pipeline(pipekey::SOLID_COLOR);
             p.shader("yq/shape3/color.vert");
             p.shader("yq/shape3/color.frag");
 
@@ -97,7 +97,7 @@ namespace yq::tachyon {
         }
      
         {
-            auto& p = w.pipeline(Pipeline::Role::ColorCorner);
+            auto& p = w.pipeline(pipekey::CORNER_COLOR);
             p.shader("yq/shape3/gradient.vert");
             p.shader("yq/shape3/gradient.frag");
 
@@ -140,7 +140,7 @@ namespace yq::tachyon {
         switch(draw_mode(USE)){
         case DrawMode::Color:
             m_good      = true;
-            set_pipeline(Pipeline::Role::SolidColor);
+            set_pipeline(pipekey::SOLID_COLOR);
             m_vertexS   = {
             vs(vertex_bsw()), vs(vertex_bse()), vs(vertex_bnw()), vs(vertex_bne()), 
             vs(vertex_tsw()), vs(vertex_tse()), vs(vertex_tnw()), vs(vertex_tne())
@@ -151,7 +151,7 @@ namespace yq::tachyon {
             break;
         case DrawMode::Gradient:
             m_good      = true;
-            set_pipeline(Pipeline::Role::ColorCorner);
+            set_pipeline(pipekey::CORNER_COLOR);
             m_vertexC = {
                 vc(vertex_bsw()), vc(vertex_bse()), vc(vertex_bnw()), vc(vertex_bne()), 
                 vc(vertex_tsw()), vc(vertex_tse()), vc(vertex_tnw()), vc(vertex_tne())

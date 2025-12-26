@@ -4,17 +4,19 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "Rendered.hpp"
+#include "RenderedData.hpp"
+#include "RenderedMetaWriter.hpp"
+
+#include <yq/meta/Init.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/tags.hpp>
 #include <yq/tachyon/api/Post.hpp>
-#include <yq/tachyon/api/Rendered.hpp>
-#include <yq/tachyon/api/RenderedData.hpp>
-#include <yq/tachyon/api/RenderedMetaWriter.hpp>
 #include <yq/tachyon/command/rendered/SetWireframeCommand.hpp>
 #include <yq/tachyon/pipeline/DrawCall.hpp>
 #include <yq/tachyon/vulkan/ViBuffer.hpp>
 #include <yq/tachyon/vulkan/ViTexture.hpp>
-#include <yq/meta/Init.hpp>
+#include <yq/text/format.hpp>
 
 namespace yq::tachyon {
 
@@ -62,7 +64,7 @@ namespace yq::tachyon {
         repo().all.push_back(this);
     }
 
-    const Pipeline*    RenderedMeta::pipeline(Pipeline::Role r) const
+    const Pipeline*    RenderedMeta::pipeline(PipelineKey r) const
     {
         auto i = m_pipelines.find(r);
         if(i != m_pipelines.end())
@@ -70,12 +72,12 @@ namespace yq::tachyon {
         return {};
     }
 
-    bool    RenderedMeta::has_pipeline(Pipeline::Role r) const
+    bool    RenderedMeta::has_pipeline(PipelineKey r) const
     {
         return m_pipelines.contains(r);
     }
 
-    Pipeline*       RenderedMeta::create_pipeline(Pipeline::Role r, std::function<Pipeline*(Pipeline::Role)> make)
+    Pipeline*       RenderedMeta::create_pipeline(PipelineKey r, std::function<Pipeline*(PipelineKey)> make)
     {
         assert(Meta::thread_safe_write());
         
@@ -85,8 +87,8 @@ namespace yq::tachyon {
         Pipeline*   p   = make(r);
         i->second       = p;
         if(!m_default){
-            m_default                               = p;
-            m_pipelines[Pipeline::Role::Default]    = p;
+            m_default                       = p;
+            m_pipelines[pipekey::DEFAULT]   = p;
         }
         return p;
     }
@@ -118,12 +120,12 @@ namespace yq::tachyon {
         return metaInfo().default_pipeline();
     }
 
-    Pipeline::Role  Rendered::role(RenderMode rm) const
+    PipelineKey  Rendered::pkey(RenderMode rm) const
     {
         const Pipeline* p   = m_pipelines[rm];
         if(!p)
-            return Pipeline::Role::Invalid;
-        return p->role();
+            return pipekey::INVALID;
+        return p->key();
     }
 
     void            Rendered::set_culled(Tristate v)
@@ -142,7 +144,7 @@ namespace yq::tachyon {
         set_pipeline(RenderMode::Simple, nullptr);
     }
     
-    void            Rendered::set_pipeline(Pipeline::Role r)
+    void            Rendered::set_pipeline(PipelineKey r)
     {
         set_pipeline(RenderMode::Simple, r);
     }
@@ -159,16 +161,16 @@ namespace yq::tachyon {
         mark();
     }
     
-    void            Rendered::set_pipeline(RenderMode rm, Pipeline::Role role)
+    void            Rendered::set_pipeline(RenderMode rm, PipelineKey pk)
     {
-        if(role == Pipeline::Role::Invalid){
+        if(pk == pipekey::INVALID){
             m_pipelines[rm]  = nullptr;
         } else {
-            const Pipeline*   p   = metaInfo().pipeline(role);
+            const Pipeline*   p   = metaInfo().pipeline(pk);
             if(p){
                 m_pipelines[rm]  = p;
             } else {
-                tachyonWarning << ident() << "::set_pipeline( " << (uint16_t) role << ") cannot find selected pipeline";
+                tachyonWarning << ident() << "::set_pipeline( " << fmt_hex(pk) << ") cannot find selected pipeline";
             }
         }
         mark();

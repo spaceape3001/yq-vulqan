@@ -31,24 +31,24 @@ namespace yq::tachyon {
         //! Standard constructor
         RenderedMeta(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
         
-        const Pipeline* pipeline(Pipeline::Role r=Pipeline::Role::Default) const;
+        const Pipeline* pipeline(PipelineKey r=pipekey::DEFAULT) const;
         
         //! Default is the FIRST pipeline defined
         const Pipeline* default_pipeline() const { return m_default; }
         
         static const std::vector<const RenderedMeta*>& all();
         
-        bool    has_pipeline(Pipeline::Role) const;
+        bool    has_pipeline(PipelineKey) const;
         
     private:
         struct Repo;
         static Repo& repo();
     
-        using PipelineHash  = std::unordered_map<Pipeline::Role, Pipeline*>;
+        using PipelineHash  = std::unordered_map<PipelineKey, Pipeline*>;
         PipelineHash    m_pipelines;
         const Pipeline* m_default   = nullptr;
         
-        Pipeline*       create_pipeline(Pipeline::Role, std::function<Pipeline*(Pipeline::Role)>);
+        Pipeline*       create_pipeline(PipelineKey, std::function<Pipeline*(PipelineKey)>);
     };
     
     /*! \brief Base object that's rendered
@@ -107,14 +107,14 @@ namespace yq::tachyon {
         
         void            set_pipeline(clear_k);
         void            set_pipeline(nullptr_t);
-        void            set_pipeline(Pipeline::Role);
+        void            set_pipeline(PipelineKey);
 
         void            set_pipeline(RenderMode, clear_k);
         void            set_pipeline(RenderMode, nullptr_t);
-        void            set_pipeline(RenderMode, Pipeline::Role);
+        void            set_pipeline(RenderMode, PipelineKey);
         
-        //! Returns the role of the current pipeline
-        Pipeline::Role  role(RenderMode rm=RenderMode::Simple) const;
+        //! Returns the pipekey of the current pipeline
+        PipelineKey     pkey(RenderMode rm=RenderMode::Simple) const;
         
         static void init_meta();
         

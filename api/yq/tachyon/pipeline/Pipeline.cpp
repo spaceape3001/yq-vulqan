@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/pipeline/Pipeline.hpp>
+#include "Pipeline.hpp"
 #include <yq/meta/CompoundMeta.hpp>
 #include <yq/tachyon/asset/Shader.hpp>
 #include <yq/tachyon/pipeline/PushData.hpp>
@@ -29,12 +29,12 @@ namespace yq::tachyon {
 
     ///////////////////////////////////////////////////
     
-    Pipeline::Pipeline(Role r) : Pipeline(nullptr, r)
+    Pipeline::Pipeline(PipelineKey r) : Pipeline(nullptr, r)
     {
     }
 
-    Pipeline::Pipeline(const CompoundMeta* cinfo, Role r) : 
-        m_compound(cinfo), m_id(_make_id()), m_role(r)
+    Pipeline::Pipeline(const CompoundMeta* cinfo, PipelineKey r) : 
+        m_compound(cinfo), m_id(_make_id()), m_key(r)
     {
         for(DynamicState ds : kStdDynamic)
             m_dynamicStates.insert(ds);
@@ -51,12 +51,12 @@ namespace yq::tachyon {
         return {};
     }
 
-    bool  Pipeline::is_dynamic() const
+    bool  Pipeline::is_dynamic() const noexcept
     {
         return static_cast<bool>(m_compound);
     }
 
-    bool  Pipeline::is_static() const
+    bool  Pipeline::is_static() const noexcept
     {
         return !m_compound;
     }

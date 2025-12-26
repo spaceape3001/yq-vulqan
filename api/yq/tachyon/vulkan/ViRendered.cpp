@@ -135,11 +135,11 @@ namespace yq::tachyon {
 
         #ifdef _DEBUG
         if(m_config != m_pipeline->config()){
-            vizAlert << "ViRendered::_init(): rendered=" << ren.id() << " pipeline=" << (int) m_config -> role() << ": PIPELINE MISMATCH DETECTED";
+            vizAlert << "ViRendered::_init(): rendered=" << ren.id() << " pipeline=" << fmt_hex(m_config -> key()) << ": PIPELINE MISMATCH DETECTED";
             return errors::rendered_mismatch_pipeline();
         }
         if(m_config != m_layout->config()){
-            vizAlert << "ViRendered::_init(): rendered=" << ren.id() << " pipeline=" << (int) m_config -> role() << ": PIPELINE MISMATCH DETECTED";        
+            vizAlert << "ViRendered::_init(): rendered=" << ren.id() << " pipeline=" << fmt_hex(m_config -> key()) << ": PIPELINE MISMATCH DETECTED";        
             return errors::rendered_mismatch_pipeline();
         }
         #endif

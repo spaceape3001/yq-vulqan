@@ -43,53 +43,10 @@ namespace yq::tachyon {
         static constexpr const uint32_t kT_colorZ           = 4;
         
 
-        //enum {
-            //kRoleUser           = (Pipeline::role_t) Pipeline::Role::User,
-
-            //kRoleDbgBlackHM,
-            //kRoleDbgRedHM,
-            //kRoleDbgOrangeHM,
-            //kRoleDbgYellowHM,
-            //kRoleDbgGreenHM,
-            //kRoleDbgCyanHM,
-            //kRoleDbgBlueHM,
-            //kRoleDbgMagentaHM,
-            //kRoleDbgGrayHM,
-            //kRoleDbgWhiteHM,
-
-            //kRoleSolid,   
-            //kRoleSolidLit,
-            //kRoleSolidRay,
-
-            //kRoleSolidHM,
-            //kRoleSolidHMLit,
-            //kRoleSolidHMRay,
-
-            //kRoleProfile,
-            //kRoleProfileLit,
-            //kRoleProfileRay,
-
-            //kRoleProfileHM,
-            //kRoleProfileHMLit,
-            //kRoleProfileHMRay,
             
-            //kRoleTexture,
-            //kRoleTextureLit,
-            //kRoleTextureRay,
-            
-            //kRoleTextureHM,
-            //kRoleTextureHMLit,
-            //kRoleTextureHMRay,
-            
-            //kRoleMaterialHM,
-            //kRoleMaterialHMLit,
-            //kRoleMaterialHMRay
-        //};
-            
-        static constexpr const Pipeline::Role   kDebug          = YQ_PIPELINE_ROLE;
-        static constexpr const Pipeline::Role   kSimple         = YQ_PIPELINE_ROLE;
-        static constexpr const Pipeline::Role   kGradient       = YQ_PIPELINE_ROLE;
-
+        static constexpr const PipelineKey   kDebug          = pipekey::DEBUG;
+        static constexpr const PipelineKey   kSimple         = pipekey::SIMPLE;
+        static constexpr const PipelineKey   kGradient       = pipekey::GRADIENT;
     }
 
     

@@ -549,7 +549,7 @@ namespace yq::tachyon {
         #ifdef _DEBUG
         for(auto& itr : m_dispatch){
             if(!itr.dstSet){
-                tachyonFirstCritical(this) << "Descriptor is NULL!  on pipeline role=" << (int) m_config -> role();
+                tachyonFirstCritical(this) << "Descriptor is NULL!  on pipeline role=" << fmt_hex(m_config -> key());
                 return ;
             }
         }

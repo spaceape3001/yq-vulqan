@@ -258,7 +258,7 @@ namespace yq::tachyon {
     
         //static_assert(is_type_v<C> || is_object_v<C>);
     
-        Typed(Role role) : Pipeline(&meta<C>(), role)
+        Typed(PipelineKey pkey) : Pipeline(&meta<C>(), pkey)
         {
         }
 

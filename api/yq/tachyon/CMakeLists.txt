@@ -126,6 +126,7 @@ add_library(${PROJECT_NAME} SHARED
     #api/Editor.cpp
     api/Event.cpp
     api/Frame.cpp
+    api/Gesture.cpp
     api/InterfaceMeta.cpp
     api/Layer.cpp
     api/Light.cpp    

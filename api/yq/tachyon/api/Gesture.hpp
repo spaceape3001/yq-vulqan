@@ -9,34 +9,32 @@
 #include <yq/tachyon/api/Delegate.hpp>
 
 namespace yq::tachyon {
-    class ToolMeta : public DelegateMeta {
+    class GestureMeta : public DelegateMeta {
     public:
         template <class> class Writer;
-        ToolMeta(std::string_view, ObjectMeta&, const std::source_location& sl = std::source_location::current());
+        GestureMeta(std::string_view, ObjectMeta&, const std::source_location& sl = std::source_location::current());
     
         //  const WidgetMeta*   widget() const;
     };
     
     
-    /*! \brief A tool (like paint brush, pan to target, etc)
+    /*! A gesture is a *specific* thing the user is doing
     
-        A tool is supposed to be hooked to gesture recognition/commands.
-        
-        
+        Whether it's move the current camera, etc
     */
-    class Tool : public Delegate {
-        YQ_OBJECT_META(ToolMeta)
-        YQ_OBJECT_DECLARE(Tool, Delegate)
+    class Gesture : public Delegate {
+        YQ_OBJECT_META(GestureMeta)
+        YQ_OBJECT_DECLARE(Gesture, Delegate)
     public:
     
         //  want
         
-        //  Tool TODO
+        //  Gesture TODO
         
         static void init_meta();
         
     protected:
-        Tool();
-        virtual ~Tool();
+        Gesture();
+        virtual ~Gesture();
     };
 }

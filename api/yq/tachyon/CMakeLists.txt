@@ -244,6 +244,7 @@ add_library(${PROJECT_NAME} SHARED
     event/AppEvent.cpp
     event/EditorEvent.cpp
     event/EmptyEvent.cpp
+    event/GestureEvent.cpp
     event/InputEvent.cpp
     event/IOEvent.cpp
     event/OSEvent.cpp

@@ -9,6 +9,7 @@
 #include <cassert>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/Action.hpp>
+#include <yq/tachyon/api/Gesture.hpp>
 #include <yq/tachyon/api/Payload.hpp>
 #include <yq/tachyon/ui/UIStyle.hpp>
 #include <yq/tachyon/api/Widget.hpp>
@@ -78,9 +79,10 @@ namespace yq::tachyon {
 
     ////////////////////////////
 
-    thread_local Widget*     UIElement::s_widget     = nullptr;
-    thread_local ViContext*  UIElement::s_viContext    = nullptr;
-    UIStyle                  UIElement::s_style;
+    thread_local Widget*            UIElement::s_widget     = nullptr;
+    thread_local ViContext*         UIElement::s_viContext  = nullptr;
+    thread_local const Context*     UIElement::s_context    = nullptr;
+    UIStyle                         UIElement::s_style;
 
     std::string      UIElement::alternative(std::string_view sv)
     {
@@ -100,6 +102,12 @@ namespace yq::tachyon {
         if(!s_widget)   
             return nullptr;
         return s_widget -> element(FIRST, uId);
+    }
+
+    void  UIElement::gesture(GestureUPtr&&g)
+    {
+        if(s_widget)
+            s_widget -> gesture(ADD, std::move(g));
     }
 
     void UIElement::init_meta()

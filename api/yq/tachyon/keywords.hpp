@@ -83,6 +83,8 @@ namespace yq::tachyon {
     
     struct emit_k {};
     
+    struct event_k{};
+    
     struct every_k : public ::yq::every_k {
         static constexpr EveryTime    operator()(unit::Second);
         static constexpr EveryCount   operator()(unsigned);
@@ -112,6 +114,8 @@ namespace yq::tachyon {
     struct group_k {};
     
     struct headless_k {};
+
+    struct imgui_k {};
 
     struct indent_k {};
     struct insert_k {};
@@ -158,6 +162,7 @@ namespace yq::tachyon {
     
     struct point_k {};
     struct popup_k {};
+    struct pre_k {};
     struct probe_k {};
     struct proxy_k {};
 
@@ -269,6 +274,7 @@ namespace yq::tachyon {
     static constexpr const east_k               EAST;
     static constexpr const edit_k               EDIT;
     static constexpr const emit_k               EMIT;
+    static constexpr const event_k              EVENT;
     static constexpr const every_k              EVERY;
     static constexpr const external_k           EXTERNAL;
     static constexpr const face_k               FACE;
@@ -279,6 +285,7 @@ namespace yq::tachyon {
     static constexpr const graphics_card_k      GRAPHICS_CARD;
     static constexpr const group_k              GROUP;
     static constexpr const headless_k           HEADLESS;
+    static constexpr const imgui_k              IMGUI;
     static constexpr const indent_k             INDENT;
     static constexpr const insert_k             INSERT;
     static constexpr const insertable_k         INSERTABLE;
@@ -308,6 +315,7 @@ namespace yq::tachyon {
     static constexpr const pivot_k              PIVOT;
     static constexpr const point_k              POINT;
     static constexpr const popup_k              POPUP;
+    static constexpr const pre_k                PRE;
     static constexpr const probe_k              PROBE;
     static constexpr const proxy_k              PROXY;
     static constexpr const refresh_k            REFRESH;

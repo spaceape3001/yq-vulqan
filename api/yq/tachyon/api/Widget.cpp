@@ -12,6 +12,7 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/CameraTweak.hpp>
 #include <yq/tachyon/api/Frame.hpp>
+#include <yq/tachyon/api/Gesture.hpp>
 #include <yq/tachyon/app/Viewer.hpp>
 #include <yq/tachyon/command/ViewerCommand.hpp>
 #include <yq/tachyon/command/tachyon/DestroyCommand.hpp>
@@ -274,6 +275,7 @@ namespace yq::tachyon {
 
     Widget::~Widget()
     {
+        m_gestures.clear();
         _kill();
     }
 
@@ -457,6 +459,14 @@ namespace yq::tachyon {
         return nullptr;
     }
 
+    void    Widget::gesture(add_k, GestureUPtr&& u)
+    {
+        if(m_flags(F::Gesture) && u){
+            // TODO ... to parent (if any)
+            m_newGestures.push_back(std::move(u));
+        }
+    }
+
     double  Widget::height() const
     {
         if(m_flags(F::HasSize))
@@ -490,6 +500,18 @@ namespace yq::tachyon {
         if(m_ui.root){
             auto wid        = auto_reset(UIElement::s_widget, this);
             auto ctx        = auto_reset(UIElement::s_viContext, &u);
+
+            auto widg       = auto_reset(Gesture::s_widget, this);
+            auto ctxg       = auto_reset(Gesture::s_viContext, &u);
+            
+            bool    anyModal    = false;
+            for(auto&& g : m_gestures){
+                g->imgui(PRE);
+                anyModal    = anyModal || g->is_modal();
+            }
+            
+            //  IF MODAL, we'll shade rest of the widget (eventually)
+            
             m_ui.root -> draw();
             for(UIElement* ue : m_ui.popups){
                 if(!ue) [[unlikely]]
@@ -500,6 +522,9 @@ namespace yq::tachyon {
             for(UIElement* ue : m_ui.erasing)
                 delete ue;
             m_ui.erasing.clear();
+
+            for(auto&& g : m_gestures)
+                g->imgui();
         }
     }
 
@@ -736,13 +761,29 @@ namespace yq::tachyon {
         sn.viewer   = m_viewer;
     }
 
-    Execution  Widget::tick(const Context&ctx)
+    Execution  Widget::tick(const Context&u)
     {
         if(m_ui.root){
             auto wid        = auto_reset(UIElement::s_widget, this);
-            //auto ctx        = auto_reset(UIElement::s_viContext, &u);
+            auto ctx        = auto_reset(UIElement::s_context, &u);
             m_ui.root -> tick();
         }
+
+        if(!m_gestures.empty()){
+            auto wid        = auto_reset(Gesture::s_widget, this);
+            auto ctx        = auto_reset(Gesture::s_context, &u);
+            for(auto gtr = m_gestures.begin(); gtr != m_gestures.end(); ){
+                (*gtr) -> tick();
+                if((*gtr) -> done()){
+                    gtr = m_gestures.erase(gtr);
+                } else {
+                    ++gtr;
+                }
+            }
+        }
+
+        for(auto& g : m_newGestures)
+            m_gestures.push_back(std::move(g));
 
         return {};
     }

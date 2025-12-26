@@ -1,0 +1,21 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/tachyon/api/Gesture.hpp>
+
+
+namespace yq::tachyon {
+
+    class OpenFileGesture : public Gesture {
+        YQ_OBJECT_DECLARE(OpenFileGesture, Gesture)
+    public:
+    
+    protected:
+    
+    };
+}

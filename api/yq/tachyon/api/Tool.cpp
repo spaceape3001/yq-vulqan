@@ -19,6 +19,10 @@ namespace yq::tachyon {
     Tool::Tool()
     {
     }
+
+    Tool::Tool(const Tool&)
+    {
+    }
     
     Tool::~Tool()
     {
@@ -27,6 +31,7 @@ namespace yq::tachyon {
     void Tool::init_meta()
     {
         auto w = writer<Tool>();
+        w.abstract();
         w.description("Tool base");
     }
 }

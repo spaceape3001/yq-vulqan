@@ -11,7 +11,6 @@
 
 using namespace yq;
 using namespace yq::tachyon;
-using namespace yq::xg;
 
 class XGWin : public Widget {
     YQ_TACHYON_DECLARE(XGWin, Widget)

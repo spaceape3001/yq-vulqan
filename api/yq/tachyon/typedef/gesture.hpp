@@ -1,0 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+#include <memory>
+
+namespace yq::tachyon {
+    class Gesture;
+    using GestureUPtr   = std::unique_ptr<Gesture>;
+    
+    //  And figure out some generic gesture handler... lookup table for elements, for instance
+}

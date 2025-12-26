@@ -36,6 +36,13 @@ int main(int argc, char* argv[])
     
     app.start();
     
+    /*
+        Input parameters to consider
+        
+        ... paths ...
+        ... templates ...
+    */
+    
     XGWin* w   = XGWin::create<XGWin>();
     app.run(w);
     return 0;

@@ -16,6 +16,7 @@
 #include <yq/tachyon/api/ID.hpp>
 #include <yq/tachyon/enum/DlgButton.hpp>
 #include <yq/tachyon/typedef/action.hpp>
+#include <yq/tachyon/typedef/gesture.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 #include <yq/tachyon/typedef/texture.hpp>
 #include <yq/tachyon/typedef/uielement.hpp>
@@ -32,6 +33,7 @@ namespace yq::tachyon {
     class UIWindow;
     class UIGenerator;
     struct Payload;
+    struct Context;
     
     class UIElementMeta : public ObjectMeta {
     public:
@@ -256,7 +258,7 @@ namespace yq::tachyon {
         
         
         //! Installs the specified texture, returns its ImGui texture ID
-        static TextureID      install(const TextureCPtr&);
+        static TextureID        install(const TextureCPtr&);
         
         //! Used to load a texture
         static TextureCPtr      texture(std::string_view);
@@ -269,6 +271,7 @@ namespace yq::tachyon {
         //! Sends to our widget
         static void             mail(const PostCPtr&);
         static void             send(const PostCPtr&);
+        static void             gesture(GestureUPtr&&);
         
         //! Payload generator
         Payload                 payload();
@@ -291,11 +294,18 @@ namespace yq::tachyon {
 
         static UIElement*       element(first_k, uint64_t);
         static UIElement*       element(first_k, const std::string&);
+
+        // valid during render
+        static ViContext*       vi_context() { return s_viContext; }
+        
+        // valid during tick
+        static const Context*         context() { return s_context; }
         
     private:
-        static thread_local Widget*     s_widget;
-        static thread_local ViContext*  s_viContext;
-        static UIStyle                  s_style;
+        static thread_local Widget*         s_widget;
+        static thread_local ViContext*      s_viContext;
+        static thread_local const Context*  s_context;
+        static UIStyle                      s_style;
     };
     
 }

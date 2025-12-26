@@ -9,7 +9,9 @@
 //#include "ViewPanel.hpp"
 
 #include <yq/xg/XGElement.hpp>
+#include <yq/assetvk/menu/CreateMenuUI.hpp>
 #include <yq/assetvk/ui/UIBuildableMetaList.hpp>
+
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
 #include <yq/tachyon/ui/UIPanel.hpp>
@@ -23,7 +25,6 @@ YQ_TACHYON_IMPLEMENT(XGWin)
 
 using namespace yq;
 using namespace yq::tachyon;
-using namespace yq::xg;
 
 void XGWin::init_meta()
 {
@@ -39,9 +40,12 @@ void XGWin::init_meta()
         //ppw.width(MINIMUM, PIVOT, 0.20);
         //ppw.width(MAXIMUM, PIVOT, 0.80);
         ppw.right(PIVOT, 0.20); //temporary
-        auto x = ppw.make<UIBuildableMetaList<xg::XGElement>>();
+        auto x = ppw.make<UIBuildableMetaList<XGElement>>();
         x.flag(SET, UIFlag::EmitSignal);
+        
+        // do something smart, like categories (including templates)
     }
+    
 
     auto ttb        = app.make<UIPanel>("##Tools");
     {
@@ -66,16 +70,20 @@ void XGWin::init_meta()
 
 
     
-    auto file       = mmb.menu("File");
-    auto edit       = mmb.menu("Edit");
-    auto view       = mmb.menu("View");
+    auto fileMenu       = mmb.menu("File");
+    auto editMenu       = mmb.menu("Edit");
+    auto viewMenu       = mmb.menu("View");
+    auto xgMenu         = mmb.menu("XG");
     
-    file.menuitem("Open").action(&XGWin::cmd_file_open);
-    file.menuitem("Save").action(&XGWin::cmd_file_save);
-    file.menuitem("Save As").action(&XGWin::cmd_file_saveas);
+    fileMenu.menuitem("Open").action(&XGWin::cmd_file_open);
+    fileMenu.menuitem("Save").action(&XGWin::cmd_file_save);
+    fileMenu.menuitem("Save As").action(&XGWin::cmd_file_saveas);
 
-    view.checkbox("Tools").action(VISIBLE, ttb);
-    view.checkbox("Palette").action(VISIBLE, ppw);
+    viewMenu.checkbox("Tools").action(VISIBLE, ttb);
+    viewMenu.checkbox("Palette").action(VISIBLE, ppw);
+
+    //(xgMenu << new CreateMenuUI("Add/Create##AddXGUI", meta<XGElement>())); // .action(&SceneEditor::action_create_light);
+
 }
 
 XGWin::XGWin(XGDocumentPtr dp) : m_document(dp)

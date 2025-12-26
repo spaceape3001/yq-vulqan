@@ -9,19 +9,20 @@
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/enum/RenderMode.hpp>
-#include <yq/tachyon/typedef/commands.hpp>
-#include <yq/tachyon/typedef/events.hpp>
-#include <yq/tachyon/typedef/layout.hpp>
-#include <yq/tachyon/typedef/replies.hpp>
-#include <yq/tachyon/typedef/requests.hpp>
-#include <yq/tachyon/typedef/viewer.hpp>
-#include <yq/tachyon/typedef/widget.hpp>
 #include <yq/tachyon/typedef/camera.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
+#include <yq/tachyon/typedef/commands.hpp>
+#include <yq/tachyon/typedef/events.hpp>
+#include <yq/tachyon/typedef/gesture.hpp>
+#include <yq/tachyon/typedef/layout.hpp>
 #include <yq/tachyon/typedef/push.hpp>
 #include <yq/tachyon/typedef/rendered.hpp>
 #include <yq/tachyon/typedef/rendered3.hpp>
+#include <yq/tachyon/typedef/replies.hpp>
+#include <yq/tachyon/typedef/requests.hpp>
 #include <yq/tachyon/typedef/uielement.hpp>
+#include <yq/tachyon/typedef/viewer.hpp>
+#include <yq/tachyon/typedef/widget.hpp>
 
 
 #include <yq/color/RGBA.hpp>
@@ -215,6 +216,9 @@ namespace yq::tachyon {
         template <typename Pred>
         auto    for_elements(const std::string&, Pred&&) const;
         
+        //! Adds a "gesture" to the widget to finish
+        virtual void    gesture(add_k, GestureUPtr&&);
+        
     protected:
         /*
             Idea... dialogs/popups... as temporary dynamic UI Elements?
@@ -229,6 +233,7 @@ namespace yq::tachyon {
         
         enum class F : uint8_t {
             //ClosePending,
+            Gesture,          // set to enable gesture processing (otherwise, they'll be dropped)
             Visible,
             AutoRender,
             HasSize,
@@ -330,25 +335,26 @@ namespace yq::tachyon {
         //template <typename Pred>
         //T           forall(ui_k, uint64_t, std::function<T(UIElement*)>);
 
+    private:
         //! Inserts into the popup vector, creates a clone of the element
-        uint64_t    popup(push_k, const UIElement&);
-        void        popup(pop_k);
-        void        popup(erase_k, uint64_t);
+        uint64_t    popup(push_k, const UIElement&);    // DEPRECATED (LIKELY)
+        void        popup(pop_k);                       // DEPRECATED (LIKELY)
+        void        popup(erase_k, uint64_t);           // DEPRECATED (LIKELY)
         
         //! Inserts into the popup vector, takes OWNERSHIP of the pointer
-        uint64_t    popup(push_k, UIElement*);
+        uint64_t    popup(push_k, UIElement*);          // DEPRECATED (LIKELY)
 
-    private:
     
         using BIDMap = std::multimap<uint64_t,UIElement*>;
         using UIDMap = std::multimap<std::string,UIElement*,IgCase>;
     
         struct R;
-        CloseRequestCPtr    m_closeRequest;
-        std::vector<R>      m_rendereds;
-        Tristate            m_wireframe     = Tristate::INHERIT;
-        Vector2D            m_position      = { 0., 0. };
-        Size2D              m_size          = { -1, -1 };   // unknown sizing
+        CloseRequestCPtr            m_closeRequest;
+        std::vector<R>              m_rendereds;
+        std::vector<GestureUPtr>    m_gestures, m_newGestures;
+        Tristate                    m_wireframe     = Tristate::INHERIT;
+        Vector2D                    m_position      = { 0., 0. };
+        Size2D                      m_size          = { -1, -1 };   // unknown sizing
         
         struct {
             UIElement*              root    = nullptr;

@@ -1,11 +1,13 @@
 # CHANGE LOG
 
-## UPCOMING
+## 2025.12.26
+
 * Task pool (for non-thread related tasking)
 * Vulkan visualizer overhaul, so use ViVisualizer in lieu of Visualizer
 * Vulkan Dynamic Rendering (So, VkRenderPass & related is gone, requires vulkan v1.3+)
+* Depth Buffer!  So, if enabled (set on viewer create data), it'll do depth based culling.
 
-## 2025-12.19
+## 2025.12.19
 
 * Pipeline overhaul to accommodate meshes & lights & more
   - Buffers, textures now take in a configuration structure; this cleaned

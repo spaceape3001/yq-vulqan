@@ -115,7 +115,7 @@ namespace yq::tachyon {
             for(uint32_t n=0;n<m_swapchain->image_count();++n){
                 ViImage* img = m_swapchain->vi_image(DEPTH, n);
                 if(img){
-                    img -> barrier(p.vk_command_buffer(), VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT, ViImage::Respec{
+                    img -> barrier(p.vk_command_buffer(), VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT | VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT, ViImage::Respec{
                         .access     = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
                         .layout     = VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL,
                         .queue      = graphics_queue_family().index

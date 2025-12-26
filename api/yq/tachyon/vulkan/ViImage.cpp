@@ -746,11 +746,10 @@ namespace yq::tachyon {
 
     void ViImage::_kill()
     {
-        if(m_image && m_allocation){
+        if(m_image && m_allocation)
             vmaDestroyImage(m_device.allocator(), m_image, m_allocation);
-            m_image         = nullptr;
-            m_allocation    = nullptr;
-        }
+        m_image         = nullptr;
+        m_allocation    = nullptr;
     }
     
     void ViImage::_wipe()

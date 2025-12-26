@@ -96,7 +96,7 @@ namespace yq::tachyon {
         
         VqPipelineDepthStencilStateCreateInfo depthStencil;
         if(m_viz.depth_enabled()){
-            pipelineInfo.pDepthStencilState = &depthStencil;
+            pipelineInfo.pDepthStencilState     = &depthStencil;
             depthStencil.depthTestEnable        = VK_TRUE;
             depthStencil.depthWriteEnable       = VK_TRUE,
             depthStencil.depthCompareOp         = VK_COMPARE_OP_LESS;
@@ -104,6 +104,8 @@ namespace yq::tachyon {
             depthStencil.stencilTestEnable      = VK_FALSE;
             depthStencil.minDepthBounds         = 0.;
             depthStencil.maxDepthBounds         = 1.;
+        } else {
+            pipelineInfo.pDepthStencilState     = nullptr;
         }
 
 
@@ -217,22 +219,22 @@ namespace yq::tachyon {
         pipelineInfo.pRasterizationState    = &rasterizer;
 
         VqPipelineMultisampleStateCreateInfo multisampling;
-        multisampling.sampleShadingEnable = VK_FALSE;
-        multisampling.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
-        multisampling.minSampleShading = 1.0f; // Optional
-        multisampling.pSampleMask = nullptr; // Optional
+        multisampling.sampleShadingEnable   = VK_FALSE;
+        multisampling.rasterizationSamples  = VK_SAMPLE_COUNT_1_BIT;
+        multisampling.minSampleShading      = 1.0f; // Optional
+        multisampling.pSampleMask           = nullptr; // Optional
         multisampling.alphaToCoverageEnable = VK_FALSE; // Optional
-        multisampling.alphaToOneEnable = VK_FALSE; // Optional
+        multisampling.alphaToOneEnable      = VK_FALSE; // Optional
 
         static const VkPipelineColorBlendAttachmentState    colorBlendAttachment_disabled = {
-            .blendEnable                = VK_FALSE,
-            .srcColorBlendFactor        = VK_BLEND_FACTOR_ONE,
-            .dstColorBlendFactor        = VK_BLEND_FACTOR_ZERO,
-            .colorBlendOp               = VK_BLEND_OP_ADD,
-            .srcAlphaBlendFactor        = VK_BLEND_FACTOR_ONE,
-            .dstAlphaBlendFactor        = VK_BLEND_FACTOR_ZERO,
-            .alphaBlendOp               = VK_BLEND_OP_ADD,
-            .colorWriteMask             = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT
+            .blendEnable                    = VK_FALSE,
+            .srcColorBlendFactor            = VK_BLEND_FACTOR_ONE,
+            .dstColorBlendFactor            = VK_BLEND_FACTOR_ZERO,
+            .colorBlendOp                   = VK_BLEND_OP_ADD,
+            .srcAlphaBlendFactor            = VK_BLEND_FACTOR_ONE,
+            .dstAlphaBlendFactor            = VK_BLEND_FACTOR_ZERO,
+            .alphaBlendOp                   = VK_BLEND_OP_ADD,
+            .colorWriteMask                 = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT
         };
 
         static const VkPipelineColorBlendStateCreateInfo    colorBlend_disabled = {
@@ -305,12 +307,11 @@ namespace yq::tachyon {
 
         VqPipelineDynamicStateCreateInfo pdynci;
         auto& ds    = m_layout->dynamic_states();
-        pdynci.dynamicStateCount    = (uint32_t) ds.size();
-        pdynci.pDynamicStates       = ds.data();
-        pipelineInfo.pDynamicState  = &pdynci;
+        pdynci.dynamicStateCount            = (uint32_t) ds.size();
+        pdynci.pDynamicStates               = ds.data();
+        pipelineInfo.pDynamicState          = &pdynci;
 
         pipelineInfo.pMultisampleState      = &multisampling;
-        pipelineInfo.pDepthStencilState     = nullptr; // Optional
         pipelineInfo.layout                 = pLay->pipeline_layout();
         pipelineInfo.subpass                = 0;
         pipelineInfo.basePipelineHandle     = VK_NULL_HANDLE; // Optional
@@ -392,8 +393,6 @@ namespace yq::tachyon {
             } else {
                 rasterizer.polygonMode              = (VkPolygonMode) polyMode.value();
             }
-
-    
 
             VkResult res  = vkCreateGraphicsPipelines(m_viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &me.pipeline);
             if(res != VK_SUCCESS){

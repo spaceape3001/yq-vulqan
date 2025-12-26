@@ -67,11 +67,11 @@ namespace yq::tachyon {
         void  barrier(VkCommandBuffer, VkPipelineStageFlags, VkPipelineStageFlags,  const Respec&);
     
     private:
-        ViDevice&           m_device;
-        VmaAllocation       m_allocation    = nullptr;
-        VkImage             m_image         = nullptr;
-        RasterInfo          m_info          = {};
-        uint64_t            m_id            = 0;
+        ViDevice&               m_device;
+        VmaAllocation           m_allocation    = nullptr;
+        VkImage                 m_image         = nullptr;
+        RasterInfo              m_info          = {};
+        uint64_t                m_id            = 0;
         
         //  ownership/state
         VkImageLayout           m_layout        = VK_IMAGE_LAYOUT_UNDEFINED;

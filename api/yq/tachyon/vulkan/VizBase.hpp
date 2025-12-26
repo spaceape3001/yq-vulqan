@@ -72,7 +72,7 @@ namespace yq::tachyon {
             ViQueueID               compute_queue;
             
             depth_spec              depth_buffer;
-            float                   depth_clear             = 2.0f;    //!< Depth of "clear" (1.0 should be far plane)
+            float                   depth_clear             = 1.1f;    //!< Depth of "clear" (1.0 should be far plane)
             uint32_t                descriptors             = 0;
 
             queue_spec              graphics;

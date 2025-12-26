@@ -123,10 +123,8 @@ namespace yq::tachyon {
         p -> topology(Topology::TriangleList);
         
         p -> push<Push>();
-        
         p -> color_blending(ColorBlend::AlphaBlend);
-        
-        //p -> depth_buffer(Tristate::No);
+        p -> depth_buffer(Tristate::No);
         
         font.sampler = new Sampler({
             .flags  = {},

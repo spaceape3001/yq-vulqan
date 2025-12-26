@@ -95,7 +95,7 @@ namespace yq::tachyon {
         dynRender.depthAttachmentFormat     = m_viz.depth_format();
         
         VqPipelineDepthStencilStateCreateInfo depthStencil;
-        if(m_viz.depth_enabled()){
+        if(m_viz.depth_enabled() && (m_config->depth_buffer() != Tristate::NO)){
             pipelineInfo.pDepthStencilState     = &depthStencil;
             depthStencil.depthTestEnable        = VK_TRUE;
             depthStencil.depthWriteEnable       = VK_TRUE,

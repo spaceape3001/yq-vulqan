@@ -7,6 +7,7 @@
 
 #include "gesture/file/ImportTSXFileGesture.ipp"
 #include "gesture/file/OpenTSXFileGesture.ipp"
+#include "gesture/file/PickColorProfileFileGesture.ipp"
 #include "gesture/file/PickHeightFieldFileGesture.ipp"
 #include "gesture/file/PickMeshFileGesture.ipp"
 #include "gesture/file/PickMaterialFileGesture.ipp"

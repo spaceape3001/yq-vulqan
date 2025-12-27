@@ -279,7 +279,7 @@ namespace yq::tachyon {
         //}
         
         static const TextureCPtr    sZeroHM    = new Texture(square_raster(0., 2), Sampler::simple());
-        static const TextureCPtr    sStdColor  = Texture::IO::load("pp:yq/heightfield3/gradient.cvp");
+        static const TextureCPtr    sStdColor  = Texture::IO::load("pp:yq/zcolor/colored.cvp");
         
         auto& cnt   = ACount²::m_count;
         m_good    = cnt.x && cnt.y;

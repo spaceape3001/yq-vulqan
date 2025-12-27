@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ColorProfileUI.hpp"
+#include <yq/assetvk/gesture/file/PickColorProfileFileGesture.hpp>
 #include <yq/core/Result.hpp>
 #include <yq/net/Url.hpp>
 #include <yq/resource/Resource.hpp>
@@ -45,10 +46,17 @@ namespace yq::tachyon {
         PColorProfile* p   = snap()->proxy<PColorProfile>();
         if(!p)
             return ;
-        
+
         std::string     v = to_string(p->color_profile(URL));
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::InputText("##color_profile", &v, ImGuiInputTextFlags_EnterReturnsTrue))
+        switch(ImGui::BrowsableText("##color_profile", v, ImGuiInputTextFlags_EnterReturnsTrue)){
+        case ImGui::BrowseResult::None:
+            break;
+        case ImGui::BrowseResult::Changed:
             send(new SetColorProfileSpecCommand({.target=snap()->self}, v));
+            break;
+        case ImGui::BrowseResult::Browse:
+            gesture(new PickColorProfileFileGesture(snap()->self));
+            break;
+        }
     }
 }

@@ -40,6 +40,7 @@
 #include "interface/IRangeX.ipp"
 #include "interface/IRangeY.ipp"
 #include "interface/IRangeZ.ipp"
+#include "interface/IRenderMode.ipp"
 #include "interface/IScale1.ipp"
 #include "interface/IScale2.ipp"
 #include "interface/IScale3.ipp"

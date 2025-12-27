@@ -15,6 +15,7 @@
 #include "event/RenderedSelectEvent.hpp"
 #include "event/SceneAddEvent.hpp"
 #include "event/SceneRemoveEvent.hpp"
+#include "event/SceneRenderModeEvent.hpp"
 #include "event/SceneSelectEvent.hpp"
 #include "event/SceneVisibilityEvent.hpp"
 
@@ -247,6 +248,7 @@ void SceneEditor::init_slots()
     w.slot(&SceneEditor::on_save_tsx_reply);
     w.slot(&SceneEditor::on_scene_add_event);
     w.slot(&SceneEditor::on_scene_remove_event);
+    w.slot(&SceneEditor::on_scene_render_mode_event);
     w.slot(&SceneEditor::on_scene_select_event);
     w.slot(&SceneEditor::on_scene_visibility_event);
     w.slot(&SceneEditor::on_viewer_screenshot_reply);
@@ -1276,6 +1278,14 @@ void    SceneEditor::on_scene_add_event(const SceneAddEvent&)
 void    SceneEditor::on_scene_remove_event(const SceneRemoveEvent&)
 {
     m_scene.rebuild = true;
+}
+
+void    SceneEditor::on_scene_render_mode_event(const SceneRenderModeEvent&evt)
+{
+    for(auto& sd : m_layers){
+        if(sd.scene == evt.scene())
+            sd.renderMode   = evt.render_mode();
+    }
 }
 
 void    SceneEditor::on_scene_select_event(const SceneSelectEvent&evt)

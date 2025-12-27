@@ -6,6 +6,7 @@
 
 #include "SceneTableUI.hpp"
 #include "event/SceneAddEvent.hpp"
+#include "event/SceneRenderModeEvent.hpp"
 #include "event/SceneRemoveEvent.hpp"
 #include "event/SceneSelectEvent.hpp"
 #include "event/SceneVisibilityEvent.hpp"
@@ -29,6 +30,7 @@ struct SceneTableUI::Row {
     std::string         stype;
     std::string         visBtn, visBtn2, invisBtn, invisBtn2;
     bool                visible     = true;
+    RenderMode          render;
 };
 
 namespace {
@@ -98,22 +100,27 @@ void    SceneTableUI::render()
     if(!m_visible)
         m_visible   = install(texture("exe/scenery/eyeball48.png"));
         
-    if(ImGui::BeginTable("Scenes", 5)){
+    if(ImGui::BeginTable("Scenes", 6)){
         ImGui::TableSetupColumn("Editing", ImGuiTableColumnFlags_WidthFixed|ImGuiTableColumnFlags_NoHeaderLabel, sz*1.2);
         ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthStretch, 0.1);
         ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthStretch, 0.3);
         ImGui::TableSetupColumn("Name", ImGuiTableColumnFlags_WidthStretch, 0.4);
+        ImGui::TableSetupColumn("Render", ImGuiTableColumnFlags_WidthStretch, 0.2);
         ImGui::TableSetupColumn("Camera", ImGuiTableColumnFlags_WidthStretch, 0.2);
         ImGui::TableHeadersRow();
 
         for(Row& e : m_rows){
+            std::string row_id    = std::format("Scene {}", e.scene.id);
+            ImGui::PushID(row_id.c_str());
+        
             bool    isEdit  = (e.scene == m_selected);
             bool    wantEdit    = false;
             const SceneSnap*    ss  = frame->snap(e.scene);
             if(!ss)
                 continue;
                 
-            bool    vChange = false;
+            bool    vChange     = false;
+            bool    rmChange    = false;
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
@@ -162,8 +169,16 @@ void    SceneTableUI::render()
             }
             
             if(ImGui::TableNextColumn()){
+                if(ImGui::Combo("##RenderMode", e.render)){
+                    mail(new SceneRenderModeEvent({}, e.scene, e.render));
+                }
+            }
+
+            if(ImGui::TableNextColumn()){
                 ImGui::TextUnformatted(e.cameraText);
             }
+            
+            ImGui::PopID();
             
             if(wantEdit)
                 set_selected(e.scene);

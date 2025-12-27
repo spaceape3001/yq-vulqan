@@ -181,6 +181,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect/ANearPlane.cpp
     aspect/AOrientation2.cpp
     aspect/AOrientation3.cpp
+    aspect/ARenderMode.cpp
     aspect/AScale1.cpp
     aspect/AScale2.cpp
     aspect/AScale3.cpp
@@ -233,6 +234,7 @@ add_library(${PROJECT_NAME} SHARED
     command/io/SaveCommand.cpp
     command/joystick/JoystickZeroCommand.cpp
     
+    command/widget/SetRenderModeCommand.cpp
     command/widget/SetViewer.cpp
 
     config/build.cpp
@@ -316,6 +318,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy/PNearPlane.cpp
     proxy/POrientation2.cpp
     proxy/POrientation3.cpp
+    proxy/PRenderMode.cpp
     proxy/PScale1.cpp
     proxy/PScale2.cpp
     proxy/PScale3.cpp

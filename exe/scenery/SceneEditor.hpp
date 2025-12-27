@@ -59,6 +59,7 @@ class RenderedTableUI;
 class RenderedSelectEvent;
 class SceneAddEvent;
 class SceneRemoveEvent;
+class SceneRenderModeEvent;
 class SceneSelectEvent;
 class SceneVisibilityEvent;
 class SceneTableUI;
@@ -280,6 +281,7 @@ private:
     void    on_save_tsx_reply(const SaveTSXReply&);
     void    on_save_as_tsx_file_command(const SaveAsTSXFileCommand&);
     void    on_scene_add_event(const SceneAddEvent&);
+    void    on_scene_render_mode_event(const SceneRenderModeEvent&);
     void    on_scene_remove_event(const SceneRemoveEvent&);
     void    on_scene_select_event(const SceneSelectEvent&);
     void    on_scene_visibility_event(const SceneVisibilityEvent&);

@@ -18,6 +18,7 @@ add_executable(${PROJECT_NAME}
     event/RenderedSelectEvent.cpp
     event/SceneAddEvent.cpp
     event/SceneRemoveEvent.cpp
+    event/SceneRenderModeEvent.cpp
     event/SceneSelectEvent.cpp
     event/SceneVisibilityEvent.cpp
 

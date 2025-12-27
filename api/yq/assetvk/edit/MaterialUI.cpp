@@ -54,7 +54,6 @@ namespace yq::tachyon {
             send(new SetMaterialSpecCommand({.target=snap()->self}, v));
             break;
         case ImGui::BrowseResult::Browse:
-        tachyonInfo << "MaterialURL browse requested... sending";
             gesture(new PickMaterialFileGesture(snap()->self));
             break;
         }

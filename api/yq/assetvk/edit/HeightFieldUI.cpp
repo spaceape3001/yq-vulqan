@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "HeightFieldUI.hpp"
+#include <yq/assetvk/gesture/file/PickHeightFieldFileGesture.hpp>
 #include <yq/core/Result.hpp>
 #include <yq/net/Url.hpp>
 #include <yq/resource/Resource.hpp>
@@ -47,8 +48,15 @@ namespace yq::tachyon {
             return ;
         
         std::string     v = to_string(p->height_field(URL));
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::InputText("##height_field", &v, ImGuiInputTextFlags_EnterReturnsTrue))
+        switch(ImGui::BrowsableText("##height_field", v, ImGuiInputTextFlags_EnterReturnsTrue)){
+        case ImGui::BrowseResult::None:
+            break;
+        case ImGui::BrowseResult::Changed:
             send(new SetHeightFieldSpecCommand({.target=snap()->self}, v));
+            break;
+        case ImGui::BrowseResult::Browse:
+            gesture(new PickHeightFieldFileGesture(snap()->self));
+            break;
+        }
     }
 }

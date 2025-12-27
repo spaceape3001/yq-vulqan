@@ -59,6 +59,8 @@ namespace yq::tachyon {
         {
         }
         
+        // TODO... need to alter this so a "drop" acceptor is viable
+        
         Writer& field(std::string_view label, void (C::*fn)())
         {
             if(m_meta && Meta::thread_safe_write()){

@@ -7,6 +7,8 @@
 #include "PickMaterialFileGesture.hpp"
 #include <yq/tachyon/api/GestureMetaWriter.hpp>
 #include <yq/tachyon/asset/Material.hpp>
+#include <yq/tachyon/asset/Raster.hpp>
+#include <yq/tachyon/asset/Texture.hpp>
 #include <yq/tachyon/command/material/SetMaterialSpecCommand.hpp>
 #include <yq/tachyon/io/ResourceFilters.hxx>
 
@@ -17,7 +19,7 @@ namespace yq::tachyon {
         OpenFileGesture("PickMaterialFile", {
             .filters = resource_load_filters<Material>(),
             .path    = path,
-            .title   = "Pick Material"
+            .title   = "Pick Material/Texture/Image File"
         }), m_target(tgt)
     {
     }

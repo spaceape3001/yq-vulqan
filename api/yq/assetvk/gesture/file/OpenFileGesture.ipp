@@ -18,7 +18,7 @@ namespace yq::tachyon {
     {
         IGFD::FileDialogConfig cfg;
         
-        cfg.flags |= ImGuiFileDialogFlags_Default | ImGuiFileDialogFlags_CaseInsensitiveExtentionFiltering;
+        cfg.flags |= ImGuiFileDialogFlags_Modal | ImGuiFileDialogFlags_HideColumnType | ImGuiFileDialogFlags_CaseInsensitiveExtentionFiltering;
         
         cfg.path = p.path;
         if(cfg.path.empty())

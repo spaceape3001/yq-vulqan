@@ -10,6 +10,7 @@
 
 namespace yq::tachyon {
     class ViewerScreenshotReply;
+    class LuaExecuteFileCommand;
     class LuaExecuteReply;
     //class LuaConsoleUI;
     //class LuaInputBar;
@@ -24,12 +25,6 @@ class LuaWin : public Widget {
     YQ_TACHYON_DECLARE(LuaWin, Widget)
 public:
 
-    enum class FileMode {
-        None,
-        Script
-    };
-    
-    
     LuaWin(TypedID luavm);
     
     ~LuaWin();
@@ -49,10 +44,11 @@ public:
     virtual Execution   setup(const Context&) override;
     
 private:
+
+    void    on_lua_exec_file_command(const LuaExecuteFileCommand&);
     void    on_lua_execute_reply(const LuaExecuteReply&);
     void    on_viewer_screenshot_reply(const ViewerScreenshotReply&);
 
-    FileMode        m_fileMode = FileMode::None;
     TypedID         m_tvm;
     LuaWindowUI*    m_window    = nullptr;
     //lua::LuaConsoleUI*          m_console   = nullptr;

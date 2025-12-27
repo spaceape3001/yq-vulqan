@@ -126,8 +126,6 @@
 #include <yq/text/format.hpp>
 #include <yq/text/transform.hpp>
 
-#include <ImGuiFileDialog.h>
-
 #include <iostream>
 
 #include <yq/tachyon/api/Tachyon.hxx>

@@ -17,6 +17,10 @@
 #include <yq/tachyon/ui/UIPanel.hpp>
 #include <yq/tachyon/ui/UIPanelWriter.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>
+#include <yq/xgvk/command/OpenXGFileCommand.hpp>
+#include <yq/xgvk/command/SaveXGFileCommand.hpp>
+#include <yq/xgvk/gesture/OpenXGFileGesture.hpp>
+#include <yq/xgvk/gesture/SaveXGFileGesture.hpp>
 #include <yq/xgvk/ui/XGView.hpp>
 #include <yq/xgvk/ui/XGViewWriter.hpp>
 #include <ImGuiFileDialog.h>
@@ -29,6 +33,8 @@ using namespace yq::tachyon;
 void XGWin::init_meta()
 {
     auto w = writer<XGWin>();
+    w.slot(&XGWin::on_open_xg_file_command);
+    w.slot(&XGWin::on_save_xg_file_command);
 
     auto app        = w.imgui(UI, APP);
     auto mmb        = app.menubar(MAIN);
@@ -112,10 +118,8 @@ void XGWin::_save(const std::filesystem::path&fp)
 
 void    XGWin::cmd_file_open()
 {
-    IGFD::FileDialogConfig config;
-    config.path = ".";
-    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to Open", ".xg", config);        
-    m_fileMode  = FileMode::Open;
+    gesture(new OpenXGFileGesture(*this));
+    //IGFD::FileDialogConfig config;
 }
 
 void    XGWin::cmd_file_save()
@@ -128,35 +132,26 @@ void    XGWin::cmd_file_save()
 
 void    XGWin::cmd_file_saveas()
 {
-    IGFD::FileDialogConfig config;
-    config.path = ".";
-    config.flags |= ImGuiFileDialogFlags_ConfirmOverwrite;
-    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to Save", ".xg", config);        
-    m_fileMode  = FileMode::Save;
+    gesture(new SaveXGFileGesture(*this));
 }
 
 void    XGWin::imgui(ViContext&u) 
 {
     Widget::imgui(UI,u);
-
-    if(m_fileMode != FileMode::None){
-        ImVec2  minSize = { (float)(0.5 * width()), (float)(0.5 * height()) };
-        if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey", ImGuiWindowFlags_NoCollapse, minSize)) {
-            if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
-                std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
-                switch(m_fileMode){
-                case FileMode::None:
-                    break;
-                case FileMode::Open:
-                    _open(filePathName);
-                    break;
-                case FileMode::Save:
-                    _save(filePathName);
-                    break;
-                }
-            }
-            m_fileMode      = FileMode::None;
-            ImGuiFileDialog::Instance()->Close();
-        }
-    }
+    Widget::imgui(u);
 }
+
+void XGWin::on_open_xg_file_command(const OpenXGFileCommand&cmd)
+{
+    if(cmd.target() != id())
+        return;
+    _open(cmd.file());
+}
+
+void XGWin::on_save_xg_file_command(const SaveXGFileCommand&cmd)
+{
+    if(cmd.target() != id())
+        return;
+    _save(cmd.file());
+}
+

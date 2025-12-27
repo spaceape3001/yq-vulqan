@@ -10,6 +10,8 @@
 //#include <yq/assetvk/ui/UIPanel.hpp>
 #include <yq/date/dateutils.hpp>
 #include <yq/lua/logging.hpp>
+#include <yq/luavk/command/LuaExecuteFileCommand.hpp>
+#include <yq/luavk/gesture/LuaExecuteFileGesture.hpp>
 #include <yq/luavk/reply/LuaExecuteReply.hpp>
 #include <yq/luavk/request/LuaExecuteFileRequest.hpp>
 #include <yq/luavk/request/LuaExecuteStringRequest.hpp>
@@ -34,6 +36,7 @@ YQ_TACHYON_IMPLEMENT(LuaWin)
 
 LuaWin::LuaWin(TypedID luavm) : m_tvm(luavm)
 {
+    m_flags |= F::Gesture;
 }
 
 LuaWin::~LuaWin()
@@ -49,32 +52,12 @@ void    LuaWin::_debug(std::string_view v)
 void    LuaWin::imgui(ViContext&u) 
 {
     Widget::imgui(UI,u);
-
-    if(m_fileMode != FileMode::None){
-        ImVec2  minSize = { (float)(0.5 * width()), (float)(0.5 * height()) };
-        if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey", ImGuiWindowFlags_NoCollapse, minSize)) {
-            if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
-                std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
-                switch(m_fileMode){
-                case FileMode::None:
-                    break;
-                case FileMode::Script:
-                    send(new LuaExecuteFileRequest({.target=m_tvm}, filePathName));
-                    break;
-                }
-            }
-            m_fileMode      = FileMode::None;
-            ImGuiFileDialog::Instance()->Close();
-        }
-    }
+    Widget::imgui(u);
 }
 
 void LuaWin::cmd_lua_file()
 {
-    IGFD::FileDialogConfig config;
-    config.path = ".";
-    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose Lua Script to Run", ".lua", config);        
-    m_fileMode  = FileMode::Script;
+    gesture(new LuaExecuteFileGesture(*this));
 }
 
 
@@ -85,23 +68,13 @@ void    LuaWin::cmd_screenshot()
     send(new ViewerScreenshotRequest({.target=view}));
 }
 
-#if 0
-void LuaWin::cmd_user_input(const Payload& pay)
-{
-    if(pay.arguments().empty())
-        return ;
-    
-    auto   line    = to_string(pay.arguments()[0]);
-    if(!line)
-        return ;
-        
-    auto l  = trimmed(*line);
-    if(l.empty())
-        return ;
 
-    send(new yq::lua::LuaExecuteStringRequest({}, l));
+void    LuaWin::on_lua_exec_file_command(const LuaExecuteFileCommand& cmd)
+{
+    if(cmd.target() != id())
+        return ;
+   send(new LuaExecuteFileRequest({.target=m_tvm}, cmd.file()));
 }
-#endif
 
 void    LuaWin::on_lua_execute_reply(const LuaExecuteReply&rep)
 {
@@ -141,6 +114,7 @@ void LuaWin::init_meta()
 {
     auto w = writer<LuaWin>();
     w.description("Lua Window");
+    w.slot(&LuaWin::on_lua_exec_file_command);
     w.slot(&LuaWin::on_lua_execute_reply);
     w.slot(&LuaWin::on_viewer_screenshot_reply);
     

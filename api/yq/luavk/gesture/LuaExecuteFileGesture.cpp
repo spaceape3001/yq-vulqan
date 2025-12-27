@@ -7,7 +7,6 @@
 #include "LuaExecuteFileGesture.hpp"
 #include <yq/luavk/command/LuaExecuteFileCommand.hpp>
 #include <yq/tachyon/api/GestureMetaWriter.hpp>
-#include <yq/tachyon/io/Save.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::LuaExecuteFileGesture)
 

@@ -9,6 +9,11 @@
 #include <yq/tachyon/api/Widget.hpp>
 #include <yq/xg/XGDocument.hpp>
 
+namespace yq::tachyon {
+    class OpenXGFileCommand;
+    class SaveXGFileCommand;
+}
+
 using namespace yq;
 using namespace yq::tachyon;
 
@@ -37,4 +42,7 @@ public:
     void    cmd_file_saveas();
     void    _open(const std::filesystem::path&);
     void    _save(const std::filesystem::path&);
+    
+    void on_open_xg_file_command(const OpenXGFileCommand&);
+    void on_save_xg_file_command(const SaveXGFileCommand&);
 };

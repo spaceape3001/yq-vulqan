@@ -88,6 +88,7 @@ void XGWin::init_meta()
 
 XGWin::XGWin(XGDocumentPtr dp) : m_document(dp)
 {
+    m_flags |= F::Gesture;
 }
 
 XGWin::~XGWin()

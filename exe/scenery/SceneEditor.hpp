@@ -23,12 +23,16 @@
 
 namespace yq::tachyon {
     class LuaExecuteReply;
+    class LuaExecuteFileCommand;
     class MetaSelectionChangedEvent;
+    class ImportTSXFileCommand;
     class LightMeta;
     class LoadTSXReply;
     class LuaWindowUI;
     class OpenFileRequest;
+    class SaveAsTSXFileCommand;
     class SaveFileRequest;
+    class OpenTSXFileCommand;
     class SaveTSXReply;
     class ViewerScreenshotReply;
     struct Payload;
@@ -70,14 +74,6 @@ public:
     static void     clear_edit_thread();
     static void     clear_aux_thread();
     static void     clear_thread(ThreadID);
-
-    enum class FileMode {
-        None,
-        Import,
-        Open,
-        Save,
-        Lua
-    };
     
     enum class E {
         Selected,
@@ -218,7 +214,6 @@ private:
         TypedID                 context;
     } m_spatial;
 
-    FileMode                m_fileMode  = FileMode::None;
     TypedID                 m_fileIO;
     std::filesystem::path   m_filepath;
     PostStartupFN           m_startup;
@@ -273,13 +268,17 @@ private:
     
     void    on_camera_select_event(const CameraSelectEvent&);
     void    on_controller_select_event(const ControllerSelectEvent&);
+    void    on_import_tsx_file_command(const ImportTSXFileCommand&);
     void    on_light_select_event(const LightSelectEvent&);
     void    on_load_tsx_reply(const LoadTSXReply&);
+    void    on_lua_exec_file_command(const LuaExecuteFileCommand&);
     void    on_lua_exec_reply(const LuaExecuteReply&);
     void    on_meta_selection_changed_event(const MetaSelectionChangedEvent&);
     void    on_model_select_event(const ModelSelectEvent&);
+    void    on_open_tsx_file_command(const OpenTSXFileCommand&);
     void    on_rendered_select_event(const RenderedSelectEvent&);
     void    on_save_tsx_reply(const SaveTSXReply&);
+    void    on_save_as_tsx_file_command(const SaveAsTSXFileCommand&);
     void    on_scene_add_event(const SceneAddEvent&);
     void    on_scene_remove_event(const SceneRemoveEvent&);
     void    on_scene_select_event(const SceneSelectEvent&);

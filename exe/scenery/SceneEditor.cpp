@@ -33,6 +33,9 @@
 #include <yq/assetvk/control/ThreadOverclockEditUIWriter.hpp>
 #include <yq/assetvk/control/ThreadTimeEditUIWriter.hpp>
 #include <yq/assetvk/controller/Space3Controller.hpp>
+#include <yq/assetvk/gesture/file/ImportTSXFileGesture.hpp>
+#include <yq/assetvk/gesture/file/OpenTSXFileGesture.hpp>
+#include <yq/assetvk/gesture/file/SaveTSXFileGesture.hpp>
 #include <yq/assetvk/menu/CreateMenuUI.hpp>
 #include <yq/assetvk/scene/HUDScene.hpp>
 #include <yq/assetvk/scene/BackgroundScene.hpp>
@@ -49,6 +52,8 @@
 #include <yq/date/dateutils.hpp>
 
 #include <yq/luavk/LuaTVM.hpp>
+#include <yq/luavk/command/LuaExecuteFileCommand.hpp>
+#include <yq/luavk/gesture/LuaExecuteFileGesture.hpp>
 #include <yq/luavk/reply/LuaExecuteReply.hpp>
 #include <yq/luavk/request/LuaExecuteFileRequest.hpp>
 #include <yq/luavk/request/LuaExecuteStringRequest.hpp>
@@ -73,8 +78,12 @@
 
 #include <yq/tachyon/asset/Raster.hpp>
 
+
 #include <yq/tachyon/camera/NullCamera.hpp>
 #include <yq/tachyon/command/controller/ListenCommand.hpp>
+#include <yq/tachyon/command/file/ImportTSXFileCommand.hpp>
+#include <yq/tachyon/command/file/OpenTSXFileCommand.hpp>
+#include <yq/tachyon/command/file/SaveAsTSXFileCommand.hpp>
 #include <yq/tachyon/command/generic/SetSpatialCommand.hpp>
 #include <yq/tachyon/command/sim/PauseCommand.hpp>
 #include <yq/tachyon/command/sim/ResumeCommand.hpp>
@@ -228,11 +237,15 @@ void SceneEditor::init_slots()
     auto w          = writer<SceneEditor>();
     w.slot(&SceneEditor::on_camera_select_event);
     w.slot(&SceneEditor::on_controller_select_event);
+    w.slot(&SceneEditor::on_import_tsx_file_command);
     w.slot(&SceneEditor::on_load_tsx_reply);
+    w.slot(&SceneEditor::on_lua_exec_file_command);
     w.slot(&SceneEditor::on_lua_exec_reply);
     w.slot(&SceneEditor::on_meta_selection_changed_event);
     w.slot(&SceneEditor::on_model_select_event);
+    w.slot(&SceneEditor::on_open_tsx_file_command);
     w.slot(&SceneEditor::on_rendered_select_event);
+    w.slot(&SceneEditor::on_save_as_tsx_file_command);
     w.slot(&SceneEditor::on_save_tsx_reply);
     w.slot(&SceneEditor::on_scene_add_event);
     w.slot(&SceneEditor::on_scene_remove_event);
@@ -1094,10 +1107,7 @@ static TypedID  threadTypedID(StdThread th)
 
 void    SceneEditor::cmd_file_import()
 {
-    IGFD::FileDialogConfig config;
-    config.path = ".";
-    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to Import", ".tsx", config);        
-    m_fileMode  = FileMode::Import;
+    gesture( new ImportTSXFileGesture(*this));
 }
 
 void    SceneEditor::cmd_file_new()
@@ -1109,10 +1119,7 @@ void    SceneEditor::cmd_file_new()
 
 void    SceneEditor::cmd_file_open()
 {
-    IGFD::FileDialogConfig config;
-    config.path = ".";
-    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to Open", ".tsx", config);        
-    m_fileMode  = FileMode::Open;
+    gesture( new OpenTSXFileGesture(*this));
 }
 
 void    SceneEditor::cmd_file_save()
@@ -1126,21 +1133,12 @@ void    SceneEditor::cmd_file_save()
 
 void    SceneEditor::cmd_file_save_as()
 {
-    IGFD::FileDialogConfig config;
-    config.path = ".";
-    config.flags |= ImGuiFileDialogFlags_ConfirmOverwrite;
-    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to Save", ".tsx", config);        
-    m_fileMode  = FileMode::Save;
+    gesture(new SaveTSXFileGesture(*this));
 }
 
 void    SceneEditor::cmd_file_lua_execute()
 {
-    #ifdef YQ_LUA_ENABLE
-    IGFD::FileDialogConfig config;
-    config.path = ".";
-    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose Lua File to LuaExecute", ".lua", config);        
-    m_fileMode  = FileMode::Lua;
-    #endif
+    gesture(new LuaExecuteFileGesture(*this));
 }
 
 void    SceneEditor::cmd_screenshot()
@@ -1166,35 +1164,6 @@ void    SceneEditor::SceneEditor::cmd_time_resume()
 void    SceneEditor::imgui(ViContext&u) 
 {
     Widget::imgui(UI,u);
-    
-    if(m_fileMode != FileMode::None){
-        ImVec2  minSize = { (float)(0.5 * width()), (float)(0.5 * height()) };
-        if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey", ImGuiWindowFlags_NoCollapse, minSize)) {
-            if (ImGuiFileDialog::Instance()->IsOk()) { // action if OK
-                std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
-                
-                switch(m_fileMode){
-                case FileMode::None:
-                    break;
-                case FileMode::Import:
-                    _import(filePathName);
-                    break;
-                case FileMode::Open:
-                    _open(filePathName);
-                    break;
-                case FileMode::Save:
-                    _save(filePathName);
-                    break;
-                case FileMode::Lua:
-                    _lua(filePathName);
-                    break;
-                }
-                m_fileMode  = FileMode::None;
-            }
-            ImGuiFileDialog::Instance()->Close();
-        }
-    }
-    
     Widget::imgui(u);
 }
 
@@ -1227,6 +1196,13 @@ void    SceneEditor::on_load_tsx_reply(const LoadTSXReply&rep)
     _title();
 }
 
+void    SceneEditor::on_lua_exec_file_command(const LuaExecuteFileCommand& cmd)
+{
+    if(cmd.target() != id())
+        return ;
+    _lua(cmd.file());
+}
+
 void    SceneEditor::on_lua_exec_reply(const LuaExecuteReply& evt)
 {
     #if YQ_LUA_ENABLE
@@ -1250,11 +1226,33 @@ void    SceneEditor::on_model_select_event(const ModelSelectEvent&evt)
     _activate(evt.model());
 }
 
+void    SceneEditor::on_import_tsx_file_command(const ImportTSXFileCommand&cmd)
+{
+    if(cmd.target() != id())
+        return;
+        
+    _import(cmd.filepath());
+}
+
+void    SceneEditor::on_open_tsx_file_command(const OpenTSXFileCommand& cmd)
+{
+    if(cmd.target() != id())
+        return;
+        
+    _open(cmd.filepath());
+}
 
 
 void    SceneEditor::on_rendered_select_event(const RenderedSelectEvent&evt)
 {
     _activate(evt.rendered());
+}
+
+void    SceneEditor::on_save_as_tsx_file_command(const SaveAsTSXFileCommand& cmd)
+{
+    if(cmd.target() != id())
+        return;
+    _save(cmd.filepath());
 }
 
 void    SceneEditor::on_save_tsx_reply(const SaveTSXReply&rep)

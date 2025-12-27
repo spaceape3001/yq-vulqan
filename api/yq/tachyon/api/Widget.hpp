@@ -217,7 +217,7 @@ namespace yq::tachyon {
         auto    for_elements(const std::string&, Pred&&) const;
         
         //! Adds a "gesture" to the widget to finish
-        virtual void    gesture(add_k, GesturePtr&&);
+        virtual void    gesture(GesturePtr&&);
         
     protected:
         /*

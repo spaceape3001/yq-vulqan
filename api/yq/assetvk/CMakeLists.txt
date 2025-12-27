@@ -135,8 +135,6 @@ PUBLIC
     yq_tachyon
     yq_userexpr
 
-PRIVATE
-    ImGuiFileDialog
 )
 
 vulqan_library(yq_assetvk)

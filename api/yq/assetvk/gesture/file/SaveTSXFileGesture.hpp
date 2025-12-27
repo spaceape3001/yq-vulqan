@@ -6,16 +6,16 @@
 
 #pragma once
 
-#include <yq/tachyon/gesture/file/OpenFileGesture.hpp>
+#include <yq/tachyon/gesture/file/SaveFileGesture.hpp>
 #include <yq/tachyon/api/TypedID.hpp>
 
 namespace yq::tachyon {
-    class PickMeshFileGesture : public OpenFileGesture {
-        YQ_OBJECT_DECLARE(PickMeshFileGesture, OpenFileGesture)
+    class SaveTSXFileGesture : public SaveFileGesture {
+        YQ_OBJECT_DECLARE(SaveTSXFileGesture, SaveFileGesture)
     public:
-        PickMeshFileGesture(TypedID, const std::string& path={});
-        ~PickMeshFileGesture();
-        virtual void open(const std::string&) override;
+        SaveTSXFileGesture(TypedID, const std::string& path={});
+        ~SaveTSXFileGesture();
+        virtual void save(const std::string&) override;
         
     private:
         TypedID     m_target;

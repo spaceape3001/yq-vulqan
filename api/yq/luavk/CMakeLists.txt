@@ -10,8 +10,10 @@ add_library(yq_luavk SHARED
     vm.cpp
 
     command/LuaCommand.cpp
+    command/LuaExecuteFileCommand.cpp
 
     event/LuaEvent.cpp
+    gesture/LuaExecuteFileGesture.cpp
 
     reply/LuaReply.cpp
     reply/LuaExecuteReply.cpp

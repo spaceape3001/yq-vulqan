@@ -24,7 +24,7 @@ namespace yq::tachyon {
     void            Gesture::gesture(GesturePtr&& g)
     {
         if(s_widget)
-            s_widget -> gesture(ADD, std::move(g));
+            s_widget -> gesture(std::move(g));
     }
 
     void           Gesture::mail(const PostCPtr& pp)

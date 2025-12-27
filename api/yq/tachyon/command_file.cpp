@@ -4,11 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
-#include "SaveFileGesture.hpp"
-#include <yq/tachyon/api/GestureMetaWriter.hpp>
+#include "command/FileCommand.ipp"
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SaveFileGesture);
-
-namespace yq::tachyon {
-}
+#include "command/file/ImportTSXFileCommand.ipp"
+#include "command/file/OpenTSXFileCommand.ipp"
+#include "command/file/SaveAsTSXFileCommand.ipp"

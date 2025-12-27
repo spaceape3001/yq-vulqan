@@ -3,6 +3,7 @@
 ## Upcoming
 
 * Pipeline role rename
+* Gestures (to allow UI actions to complete)
 
 ## 2025.12.26
 

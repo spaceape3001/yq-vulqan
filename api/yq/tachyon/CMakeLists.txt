@@ -36,6 +36,7 @@ add_library(${PROJECT_NAME} SHARED
     command_controller.cpp
     command_count.cpp
     command_cursor.cpp
+    command_file.cpp
     command_height_field.cpp
     command_light.cpp
     command_material.cpp
@@ -75,6 +76,8 @@ add_library(${PROJECT_NAME} SHARED
     event_tessellation.cpp
     event_ui.cpp
     event_window.cpp
+    
+    gesture_file.cpp
     
     interface.cpp
 
@@ -483,13 +486,17 @@ PUBLIC
     yq_xml
 
     ImGui
-    STBImage 
     TinyGLTF
     TinyOBJ
+    STBImage 
     VulkanMemoryAllocator
 
     ${Vulkan_LIBRARIES} 
     ${GLFW3_LIBRARY} 
+
+
+PRIVATE
+    ImGuiFileDialog
 )
 
 

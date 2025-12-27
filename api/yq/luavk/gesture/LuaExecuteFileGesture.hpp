@@ -10,11 +10,11 @@
 #include <yq/tachyon/api/TypedID.hpp>
 
 namespace yq::tachyon {
-    class PickHeightFieldFileGesture : public OpenFileGesture {
-        YQ_OBJECT_DECLARE(PickHeightFieldFileGesture, OpenFileGesture)
+    class LuaExecuteFileGesture : public OpenFileGesture {
+        YQ_OBJECT_DECLARE(LuaExecuteFileGesture, OpenFileGesture)
     public:
-        PickHeightFieldFileGesture(TypedID, const std::string& path={});
-        ~PickHeightFieldFileGesture();
+        LuaExecuteFileGesture(TypedID, const std::string& path={});
+        ~LuaExecuteFileGesture();
         virtual void open(const std::string&) override;
         
     private:

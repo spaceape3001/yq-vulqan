@@ -36,6 +36,11 @@ namespace yq::tachyon {
         {
             add_loading_resource_filter<R1>(exts);
         }
+
+        static void saveable(string_set_t& exts)
+        {
+            add_saving_resource_filter<R1>(exts);
+        }
     };
 
     template <typename R1, typename ... R>

@@ -104,7 +104,7 @@ namespace yq::tachyon {
         return s_widget -> element(FIRST, uId);
     }
 
-    void  UIElement::gesture(GestureUPtr&&g)
+    void  UIElement::gesture(GesturePtr&&g)
     {
         if(s_widget)
             s_widget -> gesture(ADD, std::move(g));

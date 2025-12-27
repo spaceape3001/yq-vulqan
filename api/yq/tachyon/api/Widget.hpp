@@ -217,7 +217,7 @@ namespace yq::tachyon {
         auto    for_elements(const std::string&, Pred&&) const;
         
         //! Adds a "gesture" to the widget to finish
-        virtual void    gesture(add_k, GestureUPtr&&);
+        virtual void    gesture(add_k, GesturePtr&&);
         
     protected:
         /*
@@ -351,7 +351,7 @@ namespace yq::tachyon {
         struct R;
         CloseRequestCPtr            m_closeRequest;
         std::vector<R>              m_rendereds;
-        std::vector<GestureUPtr>    m_gestures, m_newGestures;
+        std::vector<GesturePtr>    m_gestures, m_newGestures;
         Tristate                    m_wireframe     = Tristate::INHERIT;
         Vector2D                    m_position      = { 0., 0. };
         Size2D                      m_size          = { -1, -1 };   // unknown sizing

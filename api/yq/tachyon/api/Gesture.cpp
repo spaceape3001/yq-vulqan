@@ -21,7 +21,7 @@ namespace yq::tachyon {
     thread_local ViContext*     Gesture::s_viContext    = nullptr;
     thread_local const Context* Gesture::s_context      = nullptr;
 
-    void            Gesture::gesture(GestureUPtr&& g)
+    void            Gesture::gesture(GesturePtr&& g)
     {
         if(s_widget)
             s_widget -> gesture(ADD, std::move(g));

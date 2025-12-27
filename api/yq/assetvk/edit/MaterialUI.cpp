@@ -7,6 +7,7 @@
 #include "MaterialUI.hpp"
 #include <yq/core/Result.hpp>
 #include <yq/net/Url.hpp>
+#include <yq/assetvk/gesture/file/PickMaterialFileGesture.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
@@ -46,8 +47,16 @@ namespace yq::tachyon {
             return ;
         
         std::string     v = to_string(p->material(URL));
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::InputText("##material", &v, ImGuiInputTextFlags_EnterReturnsTrue))
+        switch(ImGui::BrowsableText("##material", v, ImGuiInputTextFlags_EnterReturnsTrue)){
+        case ImGui::BrowseResult::None:
+            break;
+        case ImGui::BrowseResult::Changed:
             send(new SetMaterialSpecCommand({.target=snap()->self}, v));
+            break;
+        case ImGui::BrowseResult::Browse:
+        tachyonInfo << "MaterialURL browse requested... sending";
+            gesture(new PickMaterialFileGesture(snap()->self));
+            break;
+        }
     }
 }

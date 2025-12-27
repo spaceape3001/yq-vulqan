@@ -459,7 +459,7 @@ namespace yq::tachyon {
         return nullptr;
     }
 
-    void    Widget::gesture(add_k, GestureUPtr&& u)
+    void    Widget::gesture(add_k, GesturePtr&& u)
     {
         if(m_flags(F::Gesture) && u){
             // TODO ... to parent (if any)
@@ -783,7 +783,7 @@ namespace yq::tachyon {
         }
 
         for(auto& g : m_newGestures)
-            m_gestures.push_back(std::move(g));
+            m_gestures.push_back(g);
 
         return {};
     }

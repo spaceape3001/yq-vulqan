@@ -547,10 +547,12 @@ void SceneEditor::init_ui()
 
 SceneEditor::SceneEditor(PostStartupFN&& mv) : m_startup(std::move(mv))
 {
+    m_flags |= F::Gesture;
 }
 
 SceneEditor::SceneEditor()
 {
+    m_flags |= F::Gesture;
 }
 
 SceneEditor::~SceneEditor()
@@ -1094,7 +1096,7 @@ void    SceneEditor::cmd_file_import()
 {
     IGFD::FileDialogConfig config;
     config.path = ".";
-    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to IMport", ".tsx", config);        
+    ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File to Import", ".tsx", config);        
     m_fileMode  = FileMode::Import;
 }
 

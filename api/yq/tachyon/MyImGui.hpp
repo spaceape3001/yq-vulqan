@@ -63,6 +63,8 @@ namespace yq::tachyon {
 /*
     This header file is covered by GPL-v3 (unless otherwise noted) and is used to 
     extend the ImGUI input controls to what we need.
+    
+    TODO: Push into our own namespace...
 */
 namespace ImGui {
     using yq::tachyon::UIFlag;
@@ -84,6 +86,19 @@ namespace ImGui {
     
     
     //  For multiple defaulted parameters, we'll try to lean toward the structs
+
+    ///////////////////////////
+    //  TEXT
+    ///////////////////////////
+
+    enum class BrowseResult {
+        None    = 0,
+        Changed,
+        Browse
+    };
+    
+    BrowseResult BrowsableText(const char* id, std::string&, ImGuiInputTextFlags flags=0);
+
 
     ///////////////////////////
     //  CHECKBOXES

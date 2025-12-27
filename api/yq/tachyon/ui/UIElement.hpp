@@ -271,7 +271,7 @@ namespace yq::tachyon {
         //! Sends to our widget
         static void             mail(const PostCPtr&);
         static void             send(const PostCPtr&);
-        static void             gesture(GestureUPtr&&);
+        static void             gesture(GesturePtr&&);
         
         //! Payload generator
         Payload                 payload();

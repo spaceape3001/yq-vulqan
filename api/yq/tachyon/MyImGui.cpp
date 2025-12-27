@@ -28,6 +28,23 @@ static_assert(sizeof(void*) == sizeof(uint64_t), "Breakage means ImGui textures 
 thread_local ImGuiContext* MyImGuiTLS   = nullptr;
 
 namespace ImGui {
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    BrowseResult BrowsableText(const char* id, std::string&v, ImGuiInputTextFlags flags)
+    {
+        BrowseResult    ret = BrowseResult::None;
+        PushID(id);
+        if(Button("..."))
+            ret = BrowseResult::Browse;
+        SameLine();
+        SetNextItemWidth(-1);
+        if(InputText("##text", &v, flags))
+            ret = BrowseResult::Changed;
+        PopID();
+        return ret;
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
     bool    Checkbox(const char*z, bool&v)

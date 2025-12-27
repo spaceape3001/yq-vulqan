@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/core/Object.hpp>
+#include <yq/core/Ref.hpp>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/typedef/gesture.hpp>
 #include <yq/tachyon/typedef/post.hpp>
@@ -32,12 +33,18 @@ namespace yq::tachyon {
         handle (might be preemptive)
         
         \note ImGui gestures are called in the widget's UI ImGui handler.
+        
+        \note Also, these are meant to be short lived... do the task, signal 
+        finality
     */
-    class Gesture : public Object {   // might make this a direct object... delegate might not be right
+    class Gesture : public Object, public RefCount { 
         YQ_OBJECT_META(GestureMeta)
         YQ_OBJECT_DECLARE(Gesture, Object)
     public:
     
+        //! TRUE if we're an imgui gesture (ie, dialog popup)
+        virtual bool                is_imgui() const { return false; }
+
         //! TRUE if we're an imgui modal style gesture (ie, dialog popup)
         virtual bool                is_modal() const { return false; }
         
@@ -71,7 +78,7 @@ namespace yq::tachyon {
         
         static void mail(const PostCPtr&);
         static void send(const PostCPtr&);
-        static void gesture(GestureUPtr&&);
+        static void gesture(GesturePtr&&);
         
         static const Context*   context() { return s_context; }
         static ViContext*       vi_context() { return s_viContext; }

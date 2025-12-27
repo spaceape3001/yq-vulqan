@@ -13,6 +13,8 @@ namespace yq::tachyon {
         YQ_OBJECT_DECLARE(SaveFileGesture, Gesture)
     public:
     
+        SaveFileGesture(const std::string&, const Param& p={});
+        
     protected:
     
     };

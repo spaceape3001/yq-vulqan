@@ -134,6 +134,9 @@ target_link_libraries(yq_assetvk
 PUBLIC
     yq_tachyon
     yq_userexpr
+
+PRIVATE
+    ImGuiFileDialog
 )
 
 vulqan_library(yq_assetvk)

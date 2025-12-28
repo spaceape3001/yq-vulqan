@@ -13,6 +13,7 @@
 #include <yq/tachyon/api/ThreadData.hpp>
 #include <yq/tachyon/command/tachyon/SetEditModeCommand.hpp>
 #include <yq/tachyon/command/tachyon/SetNameCommand.hpp>
+#include <yq/tachyon/im/checkbox.hpp>
 #include <yq/tachyon/im/lineedit.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/logging.hpp>
@@ -72,7 +73,7 @@ namespace yq::tachyon {
         const TachyonSnap*  sn    = snap();
         Tristate    v   = sn->edit_mode;
         ImGui::SetNextItemWidth(-1);
-        if(ImGui::Checkbox("##EditMode", v))
+        if(im::checkbox("##EditMode", v))
             send(new SetEditModeCommand({.target=sn->self}, v));
     }
 

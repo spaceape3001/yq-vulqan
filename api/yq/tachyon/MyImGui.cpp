@@ -29,40 +29,6 @@ thread_local ImGuiContext* MyImGuiTLS   = nullptr;
 
 namespace ImGui {
 
-
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    bool    Checkbox(const char*z, bool&v)
-    {
-        return Checkbox(z, &v);
-    }
-    
-    bool    Checkbox(const char*label, yq::Tristate&v)
-    {
-        using yq::Tristate;
-    
-        bool    checked   = v == Tristate::Yes;
-        
-        ImGui::PushItemFlag(ImGuiItemFlags_MixedValue, v == Tristate::Maybe);
-        bool    ret     = Checkbox(label, &checked);
-        ImGui::PopItemFlag();
-        if(ret){
-            switch(v){
-            case Tristate::Yes:
-                v = Tristate::No;
-                break;
-            case Tristate::No:
-                v   = Tristate::Maybe;
-                break;
-            case Tristate::Maybe:
-                v   = Tristate::Yes;
-                break;
-            }
-        }
-        return ret;
-    }
-
     ////////////////////////////////////////////////////////////////////////////
 
     ImU32 Color(const ImVec4& clr)
@@ -102,37 +68,6 @@ namespace ImGui {
     {
         return ColorEdit4(label, &v.red, flags);
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    //bool    Combo(const char* label, int&v, const yq::EnumDef& edef, ImGuiComboFlags flags)
-    //{
-        //ImGuiContext& g = *GImGui;
-
-        //bool    value_changed   = false;
-        //std::string key(edef.key_of(v));
-        //if(!BeginCombo(label, key.c_str(), flags))
-            //return false;
-        //for(auto& itr : edef.name2val()){
-            //std::string_view    disp    = edef.display_of(itr.second);
-            //std::string la = std::format("{}##{}", disp, itr.first);
-            //PushID(la.c_str());
-            //bool    item_selected   = v == itr.second;
-            //if(Selectable(la.c_str(), item_selected)){
-                //if(v != itr.second){
-                    //v       = itr.second;
-                    //value_changed   = true;
-                //}
-            //}
-            //if(item_selected)
-                //SetItemDefaultFocus();
-            //PopID();
-        //}
-        //EndCombo();
-        //if (value_changed)
-            //MarkItemEdited(g.LastItemData.ID);
-        //return value_changed;
-    //}
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -805,29 +740,6 @@ namespace ImGui {
         }
     }
     
-    ////////////////////////////////////////////////////////////////////////////
-
-    // Taken from https://github.com/ocornut/imgui/issues/1537
-    void ToggleSlider(const char* str_id, bool* v)
-    {
-        ImVec2 p = GetCursorScreenPos();
-        ImDrawList* draw_list = GetWindowDrawList();
-
-        float height = GetFrameHeight();
-        float width = height * 1.55f;
-        float radius = height * 0.50f;
-
-        if (InvisibleButton(str_id, ImVec2(width, height)))
-            *v = !*v;
-        ImU32 col_bg;
-        if (IsItemHovered())
-            col_bg = *v ? IM_COL32(145+20, 211, 68+20, 255) : IM_COL32(218-20, 218-20, 218-20, 255);
-        else
-            col_bg = *v ? IM_COL32(145, 211, 68, 255) : IM_COL32(218, 218, 218, 255);
-
-        draw_list->AddRectFilled(p, ImVec2(p.x + width, p.y + height), col_bg, height * 0.5f);
-        draw_list->AddCircleFilled(ImVec2(*v ? (p.x + width - radius) : (p.x + radius), p.y + radius), radius - 1.5f, IM_COL32(255, 255, 255, 255));
-    }
 
     ////////////////////////////////////////////////////////////////////////////
 

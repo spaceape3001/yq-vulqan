@@ -11,10 +11,11 @@
 
 #include <yq/text/format.hpp>
 
+#include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
 #include <yq/tachyon/api/Frame.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/im/toggle.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
 
 #include "imgui_internal.h"
@@ -126,7 +127,7 @@ namespace yq::tachyon {
         }
 
         if(ImGui::Begin("FrameInspector")){
-            ImGui::ToggleSlider("Track", &m_track);
+            im::toggle("Track", m_track);
             if(!m_frame){
                 ImGui::Text("Missing frame");
             } else if((m_table = ImGui::BeginTable(szTable, nTableCols, ImGuiTableFlags_NoClip))){

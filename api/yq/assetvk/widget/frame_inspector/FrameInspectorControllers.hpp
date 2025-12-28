@@ -11,6 +11,7 @@
 #include <yq/tachyon/api/ControllerData.hpp>
 #include <yq/tachyon/command/controller/DisableCommand.hpp>
 #include <yq/tachyon/command/controller/EnableCommand.hpp>
+#include <yq/tachyon/im/toggle.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorControllers : public FrameInspectorTachyons {
@@ -49,7 +50,7 @@ namespace yq::tachyon {
                 bool    f   = snap->enabled;
                 std::string id  = "Enable";
                 id += to_string_view(m_tachyon->id().id);
-                ImGui::ToggleSlider(id.c_str(), &f);
+                im::toggle(id.c_str(), f);
                 if(f != snap->enabled){
                     if(f){
                         send(new EnableCommand({.target=*m_tachyon}));

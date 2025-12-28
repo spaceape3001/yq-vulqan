@@ -88,19 +88,6 @@ namespace ImGui {
 
 
     ///////////////////////////
-    //  CHECKBOXES
-    ///////////////////////////
-
-    #if 0 // From ImGui.h
-    IMGUI_API bool          Checkbox(const char* label, bool* v);
-    #endif
-
-    bool    Checkbox(const char*, bool&);
-    
-    //! It'll cycle yes/no/maybe
-    bool    Checkbox(const char*, yq::Tristate&);
-
-    ///////////////////////////
     //  COLOR EDITS
     ///////////////////////////
     
@@ -111,30 +98,6 @@ namespace ImGui {
 
     bool    ColorEdit(const char* label, yq::RGB3F&, ImGuiColorEditFlags flags=0);
     bool    ColorEdit(const char* label, yq::RGBA4F&, ImGuiColorEditFlags flags=0);
-
-    ///////////////////////////
-    //  COMBO BOXES
-    ///////////////////////////
-
-    #if 0 // From ImGui.h
-    IMGUI_API bool          Combo(const char* label, int* current_item, const char* const items[], int items_count, int popup_max_height_in_items = -1);
-    IMGUI_API bool          Combo(const char* label, int* current_item, const char* items_separated_by_zeros, int popup_max_height_in_items = -1);      // Separate items with \0 within a string, end item-list with \0\0. e.g. "One\0Two\0Three\0"
-    IMGUI_API bool          Combo(const char* label, int* current_item, const char* (*getter)(void* user_data, int idx), void* user_data, int items_count, int popup_max_height_in_items = -1);
-    #endif
-
-    //bool    Combo(const char*, int&, const yq::EnumDef&, ImGuiComboFlags flags=0);
-    
-    //template <typename E>
-    //bool    Combo(const char* label, yq::EnumImpl<E>& e, ImGuiComboFlags flags=0)
-    //{
-        //int v   = e.value();
-        //bool f = Combo(label, v, *E::staticEnumInfo(), flags);
-        //if(f && v != e.value()){
-            //e   = (typename E::enum_t) v;
-            //return true;
-        //} else
-            //return false;
-    //}
 
     ///////////////////////////
     //  DRAG/SLIDERS
@@ -573,14 +536,6 @@ namespace ImGui {
 
     void    TextUnformatted(std::string_view);
 
-    ///////////////////////////
-    //  Toggle Slider
-    ///////////////////////////
-
-    //! Renders a toggle-slider switch
-    //! From https://github.com/ocornut/imgui/issues/1537
-    void    ToggleSlider(const char* str_id, bool* v);
-    
     
     ///////////////////////////
     //  Vertical Slider

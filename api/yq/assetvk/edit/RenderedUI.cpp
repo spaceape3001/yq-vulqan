@@ -10,6 +10,7 @@
 #include <yq/tachyon/api/Rendered.hpp>
 #include <yq/tachyon/api/RenderedData.hpp>
 #include <yq/tachyon/command/rendered/SetWireframeCommand.hpp>
+#include <yq/tachyon/im/checkbox.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <format>
@@ -62,7 +63,7 @@ namespace yq::tachyon {
         Tristate        v  = sn->wireframe;
         
         ImGui::SetNextItemWidth(-1);
-        if(ImGui::Checkbox(sid.c_str(), v)){
+        if(im::checkbox(sid.c_str(), v)){
             send(new SetWireframeCommand({.target=sn->self}, v));
         }
     }

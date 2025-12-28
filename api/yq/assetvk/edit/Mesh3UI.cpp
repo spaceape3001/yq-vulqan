@@ -11,6 +11,7 @@
 
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/command/shape/SetAxisRemapCommand.hpp>
+#include <yq/tachyon/im/enum.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <format>
@@ -48,9 +49,8 @@ namespace yq::tachyon {
         const Mesh³Snap* sn = dynamic_cast<const Mesh³Snap*>(snap());
         if(!sn)
             return ;
-        ImGui::SetNextItemWidth(-1);
         AxisRemap   ar  = sn->axis;
-        if(ImGui::Combo("##Axis", ar))
+        if(im::combo("##Axis", ar))
             send(new SetAxisRemapCommand({.target=sn->self}, ar));
     }
 }

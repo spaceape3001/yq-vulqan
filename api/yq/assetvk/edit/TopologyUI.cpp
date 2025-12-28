@@ -7,6 +7,7 @@
 #include "TopologyUI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/enum.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PTopology.hpp>
 
@@ -41,8 +42,7 @@ namespace yq::tachyon {
             return ;
             
         Topology    v   = p->topology();
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::Combo("##topology", v))
+        if(im::combo("##topology", v))
             p -> topology(SET, v);
     }
 }

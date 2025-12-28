@@ -6,6 +6,7 @@
 
 #include "im/button.ipp"
 #include "im/dragdrop.ipp"
+#include "im/enum.ipp"
 #include "im/KVTable.ipp"
 #include "im/lineedit.ipp"
 

@@ -86,18 +86,6 @@ namespace ImGui {
     
     //  For multiple defaulted parameters, we'll try to lean toward the structs
 
-    ///////////////////////////
-    //  TEXT
-    ///////////////////////////
-
-    enum class BrowseResult {
-        None    = 0,
-        Changed,
-        Browse
-    };
-    
-    BrowseResult BrowsableText(const char* id, std::string&, ImGuiInputTextFlags flags=0);
-
 
     ///////////////////////////
     //  CHECKBOXES
@@ -134,19 +122,19 @@ namespace ImGui {
     IMGUI_API bool          Combo(const char* label, int* current_item, const char* (*getter)(void* user_data, int idx), void* user_data, int items_count, int popup_max_height_in_items = -1);
     #endif
 
-    bool    Combo(const char*, int&, const yq::EnumDef&, ImGuiComboFlags flags=0);
+    //bool    Combo(const char*, int&, const yq::EnumDef&, ImGuiComboFlags flags=0);
     
-    template <typename E>
-    bool    Combo(const char* label, yq::EnumImpl<E>& e, ImGuiComboFlags flags=0)
-    {
-        int v   = e.value();
-        bool f = Combo(label, v, *E::staticEnumInfo(), flags);
-        if(f && v != e.value()){
-            e   = (typename E::enum_t) v;
-            return true;
-        } else
-            return false;
-    }
+    //template <typename E>
+    //bool    Combo(const char* label, yq::EnumImpl<E>& e, ImGuiComboFlags flags=0)
+    //{
+        //int v   = e.value();
+        //bool f = Combo(label, v, *E::staticEnumInfo(), flags);
+        //if(f && v != e.value()){
+            //e   = (typename E::enum_t) v;
+            //return true;
+        //} else
+            //return false;
+    //}
 
     ///////////////////////////
     //  DRAG/SLIDERS

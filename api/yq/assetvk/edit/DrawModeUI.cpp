@@ -7,6 +7,7 @@
 #include "DrawModeUI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/enum.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PDrawMode.hpp>
 
@@ -41,8 +42,7 @@ namespace yq::tachyon {
             return ;
             
         DrawMode    v   = p->draw_mode();
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::Combo("##draw_mode", v))
+        if(im::combo("##draw_mode", v))
             p -> draw_mode(SET, v);
     }
 }

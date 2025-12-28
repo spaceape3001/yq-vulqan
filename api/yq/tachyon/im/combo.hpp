@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/tachyon/MyImGui.hpp>
+
+namespace yq {
+    struct combo_options_t {    
+        ImGuiComboFlags     flags       = 0;
+        bool                labelless   = true;
+    };
+}

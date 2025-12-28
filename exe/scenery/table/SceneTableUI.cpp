@@ -18,6 +18,7 @@
 #include <yq/tachyon/api/Scene.hpp>
 #include <yq/tachyon/api/SceneData.hpp>
 #include <yq/tachyon/api/Frame.hpp>
+#include <yq/tachyon/im/enum.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 
 
@@ -120,7 +121,6 @@ void    SceneTableUI::render()
                 continue;
                 
             bool    vChange     = false;
-            bool    rmChange    = false;
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
@@ -169,7 +169,7 @@ void    SceneTableUI::render()
             }
             
             if(ImGui::TableNextColumn()){
-                if(ImGui::Combo("##RenderMode", e.render)){
+                if(im::combo("##RenderMode", e.render)){
                     mail(new SceneRenderModeEvent({}, e.scene, e.render));
                 }
             }

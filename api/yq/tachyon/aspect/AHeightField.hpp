@@ -46,6 +46,9 @@ namespace yq::tachyon {
         void        on_set_height_field_url(const SetHeightFieldUrlCommand&);
         void        on_set_height_field_spec(const SetHeightFieldSpecCommand&);
         
+        HeightFieldCPtr     height_field_get() const;
+        void                height_field_set(const HeightFieldCPtr&);
+        
     };
 
 }

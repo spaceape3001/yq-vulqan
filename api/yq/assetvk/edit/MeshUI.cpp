@@ -12,6 +12,7 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/command/mesh/SetMeshSpecCommand.hpp>
+#include <yq/tachyon/im/lineedit.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PMesh.hpp>
 #include <misc/cpp/imgui_stdlib.h>
@@ -47,13 +48,18 @@ namespace yq::tachyon {
             return ;
         
         std::string     v = to_string(p->mesh(URL));
-        switch(ImGui::BrowsableText("##mesh", v, ImGuiInputTextFlags_EnterReturnsTrue)){
-        case ImGui::BrowseResult::None:
+        switch(im::lineedit(BROWSE, "##mesh", v, {
+            .drag       = "mesh_url",
+            .drop       = { "mesh_url" },
+            .flags      = ImGuiInputTextFlags_EnterReturnsTrue,
+            .labelless  = true
+        })){
+        case im::BrowseResult::None:
             break;
-        case ImGui::BrowseResult::Changed:
+        case im::BrowseResult::Changed:
             send(new SetMeshSpecCommand({.target=snap()->self}, v));
             break;
-        case ImGui::BrowseResult::Browse:
+        case im::BrowseResult::Browse:
             gesture(new PickMeshFileGesture(snap()->self));
             break;
         }

@@ -29,6 +29,7 @@ thread_local ImGuiContext* MyImGuiTLS   = nullptr;
 
 namespace ImGui {
 
+
     ////////////////////////////////////////////////////////////////////////////
 
     BrowseResult BrowsableText(const char* id, std::string&v, ImGuiInputTextFlags flags)

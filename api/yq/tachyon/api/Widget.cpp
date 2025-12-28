@@ -705,6 +705,8 @@ namespace yq::tachyon {
             if(w->visible())
                 w->prerecord(u);
         });
+        for(auto& g : m_gestures)
+            g->prerecord(u);
     }
 
     WidgetID        Widget::root() const
@@ -832,17 +834,26 @@ namespace yq::tachyon {
         
         //  TODO set viewport (later...)
         
-        auto w  = auto_reset(u.wireframe, m_wireframe);
-        for(const R& r : m_rendereds){
-            r.vi->record(u, r.push);
-        }
-        m_rendereds.clear();
-            
-        frame->foreach<Widget>(PTR, children(), [&](Widget* w){
-            if(w->visible()){
-                w->vulkan(u);
+        for(auto& g : m_gestures)
+            g->vulkan(PRE, u);
+        
+        {
+            auto w  = auto_reset(u.wireframe, m_wireframe);
+            for(const R& r : m_rendereds){
+                r.vi->record(u, r.push);
             }
-        });
+            m_rendereds.clear();
+            
+            frame->foreach<Widget>(PTR, children(), [&](Widget* w){
+                if(w->visible()){
+                    w->vulkan(u);
+                }
+            });
+        }
+
+        for(auto& g : m_gestures)
+            g->vulkan(u);
+        
     }
     
     double  Widget::width() const

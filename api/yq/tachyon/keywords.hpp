@@ -43,6 +43,8 @@ namespace yq::tachyon {
 
     struct bar_k {};
 
+    struct browse_k {};
+
     struct camera_k {};
     struct camera³_k {};
     struct center_k {
@@ -252,6 +254,7 @@ namespace yq::tachyon {
     static constexpr const auxillary_k          AUX, AUXILLARY;
     static constexpr const available_k          AVAILABLE;
     static constexpr const bar_k                BAR;
+    static constexpr const browse_k             BROWSE;
     static constexpr const camera_k             CAMERA;
     static constexpr const camera³_k            CAMERA³;
     static constexpr const center_k             CENTER, CENTRE;

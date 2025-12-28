@@ -8,7 +8,7 @@
 #include <yq/tachyon/MyImGui.hpp>
 #include <filesystem>
 
-namespace yq::tachyon::imgui {
+namespace yq::tachyon::im {
     KVTable::KVTable(const char* zTable)
     {
         m_table = ImGui::BeginTable(zTable, 2, ImGuiTableFlags_SizingStretchProp);

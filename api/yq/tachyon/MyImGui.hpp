@@ -55,10 +55,10 @@
 #include "imgui.h"
 #include "misc/cpp/imgui_stdlib.h"
 
-namespace yq {
+namespace yq::tachyon::imgui {
+    using namespace ImGui;
 }
-namespace yq::tachyon {
-}
+
 
 /*
     This header file is covered by GPL-v3 (unless otherwise noted) and is used to 
@@ -83,7 +83,6 @@ namespace ImGui {
     ImGuiInputTextFlags     TextFlags(UIFlags);
     ImGuiWindowFlags_       WindowFlag(UIFlag);
     ImGuiWindowFlags        WindowFlags(UIFlags);
-    
     
     //  For multiple defaulted parameters, we'll try to lean toward the structs
 

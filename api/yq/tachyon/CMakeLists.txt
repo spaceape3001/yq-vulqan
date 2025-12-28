@@ -267,7 +267,7 @@ add_library(${PROJECT_NAME} SHARED
 
     event/thread/ThreadAddTachyonEvent.cpp
     
-    im/KVTable.cpp
+    im.cpp
     
     interface/IColorProfile.cpp
     interface/IHeightField.cpp

@@ -12,6 +12,7 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/command/material/SetMaterialSpecCommand.hpp>
+#include <yq/tachyon/im/lineedit.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PMaterial.hpp>
 #include <misc/cpp/imgui_stdlib.h>
@@ -47,13 +48,18 @@ namespace yq::tachyon {
             return ;
         
         std::string     v = to_string(p->material(URL));
-        switch(ImGui::BrowsableText("##material", v, ImGuiInputTextFlags_EnterReturnsTrue)){
-        case ImGui::BrowseResult::None:
+        switch(im::lineedit(BROWSE, "##material", v, {
+            .drag       = "material_src",
+            .drop       = { "material_src" },
+            .flags      = ImGuiInputTextFlags_EnterReturnsTrue,
+            .labelless  = true
+        })){
+        case im::BrowseResult::None:
             break;
-        case ImGui::BrowseResult::Changed:
+        case im::BrowseResult::Changed:
             send(new SetMaterialSpecCommand({.target=snap()->self}, v));
             break;
-        case ImGui::BrowseResult::Browse:
+        case im::BrowseResult::Browse:
             gesture(new PickMaterialFileGesture(snap()->self));
             break;
         }

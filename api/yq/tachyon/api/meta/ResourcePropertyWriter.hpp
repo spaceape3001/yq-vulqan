@@ -22,7 +22,7 @@ namespace yq::tachyon {
     public:
     
         template <typename C>
-        Writer<A>&  setter(void (C::*function)(const Ref<A>&), const std::source_location& sl = std::source_location::current())
+        Writer<A>&  setter(void (C::*function)(const Ref<const A>&), const std::source_location& sl = std::source_location::current())
         {
             assert(function);
             assert(Meta::Writer::m_meta);

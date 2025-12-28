@@ -55,7 +55,7 @@ void             ObjTree::model(set_k, ObjReaderSPtr m, const std::filesystem::p
 
 void    ObjTree::r_entry(const tinyobj::attrib_t&a)
 {
-    imgui::KVTable kv;
+    im::KVTable kv;
     kv("Colors") << a.colors.size();
     kv("Normals") << a.normals.size();
     kv("Tex Coords") << a.texcoords.size();
@@ -66,14 +66,14 @@ void    ObjTree::r_entry(const tinyobj::attrib_t&a)
 
 void    ObjTree::r_entry(const tinyobj::lines_t& l)
 {
-    imgui::KVTable kv;
+    im::KVTable kv;
     kv("Indices") << l.indices.size();
     kv("Lines") << l.num_line_vertices.size();
 }
 
 void    ObjTree::r_entry(const tinyobj::material_t&m)
 {
-    imgui::KVTable kv;
+    im::KVTable kv;
     kv("Name") << m.name;
     
     //  and there's a lot here... not required (for now), alter if needed
@@ -83,7 +83,7 @@ void    ObjTree::r_entry(const tinyobj::mesh_t& m)
 {
     using namespace ImGui;
 
-    imgui::KVTable kv;
+    im::KVTable kv;
     kv("Indices") << m.indices.size();
     
     kv("Materials") << !m.material_ids.empty();
@@ -120,7 +120,7 @@ void    ObjTree::r_entry(const tinyobj::shape_t&s)
 {
     using namespace ImGui;
     
-    imgui::KVTable kv;
+    im::KVTable kv;
     kv("Name") << s.name;
     kv("Points") << s.points.indices.size();
     kv.finish();
@@ -138,7 +138,7 @@ void    ObjTree::r_entry(const tinyobj::shape_t&s)
 
 void    ObjTree::r_entry(const tinyobj::tag_t& t)
 {
-    imgui::KVTable kv;
+    im::KVTable kv;
     kv("Name") << t.name;
     kv("Floats") << join(t.floatValues, ",");
     kv("Integers") << join(t.intValues, ",");
@@ -154,7 +154,7 @@ void    ObjTree::render()
         return ;
     }
     
-    imgui::KVTable  kv;
+    im::KVTable  kv;
     kv("Wavefront Obj File") << m_filepath;
     kv.finish();
     

@@ -13,6 +13,7 @@
 #include <yq/tachyon/api/ThreadData.hpp>
 #include <yq/tachyon/command/tachyon/SetEditModeCommand.hpp>
 #include <yq/tachyon/command/tachyon/SetNameCommand.hpp>
+#include <yq/tachyon/im/lineedit.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <format>
@@ -102,16 +103,9 @@ namespace yq::tachyon {
         if(readonly()){
             ImGui::TextUnformatted(sn->name);
         } else {
-            char            text[256] ;
-            if(!sn->name.empty()){
-                strncpy(text, sn->name.c_str(), sizeof(text));
-                text[255] = '\0';
-            } else
-                text[0] = '\0';
-            ImGui::SetNextItemWidth(-1);
-            if(ImGui::InputText("##name", text, sizeof(text), ImGuiInputTextFlags_EnterReturnsTrue)){
-                text[255] = '\0';
-                send(new SetNameCommand({.target=sn->self}, std::string(text)));
+            std::string     v   = sn->name;
+            if(im::lineedit("##name", v, { .flags = ImGuiInputTextFlags_EnterReturnsTrue })){
+                send(new SetNameCommand({.target=sn->self}, v));
             }
         }
     }

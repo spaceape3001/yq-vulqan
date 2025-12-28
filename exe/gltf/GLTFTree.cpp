@@ -176,7 +176,7 @@ tinygltf::ModelSCPtr    GLTFTree::model() const
 
 void GLTFTree::r_entry(tinygltf::Accessor&a)
 {
-    imgui::KVTable  kv("Accessor");
+    im::KVTable  kv("Accessor");
     kv("Name") << a.name;
     kv("Buffer View") << a.bufferView;
     kv("Byte Offset") << a.byteOffset;
@@ -189,14 +189,14 @@ void GLTFTree::r_entry(tinygltf::Accessor&a)
 
 void GLTFTree::r_entry(tinygltf::AnimationChannel&a)
 {
-    imgui::KVTable kv("Animation Channel");
+    im::KVTable kv("Animation Channel");
     kv("Sampler") << a.sampler;
     kv("Target Node") << a.target_node;
 }
 
 void GLTFTree::r_entry(tinygltf::AnimationSampler&a)
 {
-    imgui::KVTable kv("Animation Sampler");
+    im::KVTable kv("Animation Sampler");
     kv("Input") << a.input;
     kv("Interpolation") << a.interpolation;
     kv("Output") << a.output;
@@ -206,7 +206,7 @@ void GLTFTree::r_entry(tinygltf::Animation&a)
 {
     using namespace ImGui;
 
-    imgui::KVTable kv("Animation");
+    im::KVTable kv("Animation");
     kv("Name") << a.name;
     kv.finish();
     
@@ -272,7 +272,7 @@ void GLTFTree::r_entry(tinygltf::Animation&a)
 
 void GLTFTree::r_entry(tinygltf::AudioEmitter&a)
 {
-    imgui::KVTable kv("Audio Emitter");
+    im::KVTable kv("Audio Emitter");
     kv("Name") << a.name;
     kv("Type") << a.type;
     kv("Distance Model") << a.distanceModel;
@@ -284,7 +284,7 @@ void GLTFTree::r_entry(tinygltf::AudioEmitter&a)
 
 void GLTFTree::r_entry(tinygltf::AudioSource&a)
 {
-    imgui::KVTable kv("Audio Source");
+    im::KVTable kv("Audio Source");
     kv("Name") << a.name;
     kv("Buffer View") << a.bufferView;
     kv("Mime Type") << a.mimeType;
@@ -293,7 +293,7 @@ void GLTFTree::r_entry(tinygltf::AudioSource&a)
 
 void GLTFTree::r_entry(tinygltf::Buffer&b)
 {
-    imgui::KVTable kv("Buffer");
+    im::KVTable kv("Buffer");
     kv("Name") << b.name;
     kv("Data Size") << b.data.size();
     kv("URI") << b.uri;
@@ -301,7 +301,7 @@ void GLTFTree::r_entry(tinygltf::Buffer&b)
 
 void GLTFTree::r_entry(tinygltf::BufferView&b)
 {
-    imgui::KVTable kv("Buffer View");
+    im::KVTable kv("Buffer View");
     kv("Name") << b.name;
     kv("Buffer") << b.buffer;
     kv("Byte Offset") << b.byteOffset;
@@ -315,7 +315,7 @@ void GLTFTree::r_entry(tinygltf::Camera&c)
     bool    is_orthographic = is_similar(c.type, "orthographic");
     bool    is_perspective = is_similar(c.type, "persective");
 
-    imgui::KVTable kv("Camera");
+    im::KVTable kv("Camera");
     kv("Name") << c.name;
     kv("Type") << c.type;
 
@@ -346,7 +346,7 @@ void GLTFTree::r_entry(tinygltf::Camera&c)
 
 void GLTFTree::r_entry(tinygltf::Image&i)
 {
-    imgui::KVTable kv("Image");
+    im::KVTable kv("Image");
     kv("Name") << i.name;
     kv("Bits Per Channel") << i.bits;
     kv("Buffer View") << i.bufferView;
@@ -360,7 +360,7 @@ void GLTFTree::r_entry(tinygltf::Image&i)
 
 void GLTFTree::r_entry(tinygltf::Light&l)
 {
-    imgui::KVTable  kv("Light");
+    im::KVTable  kv("Light");
     kv("Name") << l.name;
     kv("Type") << l.type;
     kv("Color") << join(l.color, ",");
@@ -372,7 +372,7 @@ void GLTFTree::r_entry(tinygltf::Light&l)
 
 void GLTFTree::r_entry(tinygltf::Material&m)
 {
-    imgui::KVTable kv("Material");
+    im::KVTable kv("Material");
     kv("Name") << m.name;
     kv("Alpha Cutoff") << m.alphaCutoff;
     kv("Alpha Mode") << m.alphaMode;
@@ -385,7 +385,7 @@ void GLTFTree::r_entry(tinygltf::Mesh&m)
 {
     using namespace ImGui;
     
-    imgui::KVTable kv("Mesh");
+    im::KVTable kv("Mesh");
     kv("Name") << m.name;
     kv("Weights") << join(m.weights, ",");
     kv.finish();
@@ -407,7 +407,7 @@ void GLTFTree::r_entry(tinygltf::Mesh&m)
 
 void GLTFTree::r_entry(tinygltf::Model&m)
 {
-    imgui::KVTable kv("Model");
+    im::KVTable kv("Model");
     kv("File") << m_filepath;
     kv("Copyright") << m.asset.copyright;
     kv("Generator") << m.asset.generator;
@@ -417,7 +417,7 @@ void GLTFTree::r_entry(tinygltf::Model&m)
 
 void GLTFTree::r_entry(tinygltf::Node&n)
 {
-    imgui::KVTable kv("Node");
+    im::KVTable kv("Node");
     kv("Name") << n.name;
     kv("Camera") << n.camera;
     kv("Children") << join(n.children, ",");
@@ -437,7 +437,7 @@ void GLTFTree::r_entry(tinygltf::Primitive& p)
 {
     using namespace ImGui;
     
-    imgui::KVTable kv("Primitive");
+    im::KVTable kv("Primitive");
     kv("Indices (Accessor)") << p.indices;
     kv("Material") << p.material;
     kv("Mode") << gltf_mode(p.mode);
@@ -461,7 +461,7 @@ void GLTFTree::r_entry(tinygltf::Primitive& p)
 
 void GLTFTree::r_entry(tinygltf::Sampler&s)
 {
-    imgui::KVTable kv("Sampler");
+    im::KVTable kv("Sampler");
     kv("Name") << s.name;
     kv("Mag Filter") << gltf_texFilter(s.magFilter);
     kv("Min Filter") << gltf_texFilter(s.minFilter);
@@ -471,7 +471,7 @@ void GLTFTree::r_entry(tinygltf::Sampler&s)
 
 void GLTFTree::r_entry(tinygltf::Scene&s)
 {
-    imgui::KVTable kv("Scene");
+    im::KVTable kv("Scene");
     kv("Name") << s.name;
     kv("Audio (Emitters)") << join(s.audioEmitters, ",");
     kv("Nodes") << join(s.nodes, ",");
@@ -479,7 +479,7 @@ void GLTFTree::r_entry(tinygltf::Scene&s)
 
 void GLTFTree::r_entry(tinygltf::Skin&s)
 {
-    imgui::KVTable kv("Skin");
+    im::KVTable kv("Skin");
     kv("Name") << s.name;
     kv("Inverse Bind Matrices") << s.inverseBindMatrices;
     kv("Joints") << join(s.joints, ",");
@@ -488,7 +488,7 @@ void GLTFTree::r_entry(tinygltf::Skin&s)
 
 void GLTFTree::r_entry(tinygltf::Texture&t)
 {
-    imgui::KVTable kv("Texture");
+    im::KVTable kv("Texture");
     kv("Name") << t.name;
     kv("Sampler") << t.sampler;
     kv("Source (Image)") << t.source;

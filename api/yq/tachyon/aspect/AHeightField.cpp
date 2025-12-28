@@ -58,6 +58,16 @@ namespace yq::tachyon {
         mark();
         height_field(EMIT);
     }
+
+    HeightFieldCPtr AHeightField::height_field_get() const
+    {
+        return m_heightField;
+    }
+    
+    void            AHeightField::height_field_set(const HeightFieldCPtr& hf)
+    {
+        height_field(SET, hf);
+    }
     
     void        AHeightField::on_set_height_field(const SetHeightFieldCommand&cmd)
     {

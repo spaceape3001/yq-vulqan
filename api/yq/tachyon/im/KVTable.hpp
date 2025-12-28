@@ -15,7 +15,7 @@
 #include <yq/tachyon/keywords.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 
-namespace yq::tachyon::imgui {
+namespace yq::tachyon::im {
     class KVTable {
     public:
     

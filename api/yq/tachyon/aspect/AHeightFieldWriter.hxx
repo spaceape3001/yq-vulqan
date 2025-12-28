@@ -18,7 +18,7 @@ namespace yq::tachyon {
     void AHeightField::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IHeightField>();
-        w.resource("height_field", &AHeightField::m_heightField).tag(kTag_Save);
+        w.resource("height_field", &AHeightField::height_field_get).setter(&AHeightField::height_field_set).tag(kTag_Save);
 
         w.slot(UNSAFE, &AHeightField::on_set_height_field);
         w.slot(UNSAFE, &AHeightField::on_set_height_field_spec);

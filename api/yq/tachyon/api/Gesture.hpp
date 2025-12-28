@@ -55,7 +55,11 @@ namespace yq::tachyon {
         virtual void    imgui(){}
         
         //! Called with the widget's tick (ImGui will be invalid)
-        virtual void   tick(){}
+        virtual void    tick(){}
+        
+        virtual void    prerecord(ViContext&){}
+        virtual void    vulkan(pre_k, ViContext&){}
+        virtual void    vulkan(ViContext&){}
         
         //! Other inputs...
         bool        done() const { return m_done; }

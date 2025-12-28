@@ -7,6 +7,7 @@
 #include "UserSpatial3UI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/lineedit.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PPosition3.hpp>
 #include <yq/assetvk/command/user3/User3HCommand.hpp>
@@ -56,8 +57,9 @@ namespace yq::tachyon {
         
         //  Once we get an algebraic control, we'll use that
         std::string   v  = sn->h.algebra;
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::InputText("##HAlgebra", &v, ImGuiInputTextFlags_EnterReturnsTrue))
+        if(im::lineedit("##HAlgebra", v, {
+            .flags = ImGuiInputTextFlags_EnterReturnsTrue,
+        }))
             send(new User³HCommand({.target=sn->self}, { v }));
     }
     
@@ -69,8 +71,9 @@ namespace yq::tachyon {
 
         //  Once we get an algebraic control, we'll use that
         std::string   v  = sn->p.algebra;
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::InputText("##PAlgebra", &v, ImGuiInputTextFlags_EnterReturnsTrue))
+        if(im::lineedit("##PAlgebra", v, {
+            .flags = ImGuiInputTextFlags_EnterReturnsTrue,
+        }))
             send(new User³PCommand({.target=sn->self}, { v }));
     }
     
@@ -82,8 +85,9 @@ namespace yq::tachyon {
 
         //  Once we get an algebraic control, we'll use that
         std::string   v  = sn->r.algebra;
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::InputText("##RAlgebra", &v, ImGuiInputTextFlags_EnterReturnsTrue))
+        if(im::lineedit("##RAlgebra", v, {
+            .flags = ImGuiInputTextFlags_EnterReturnsTrue,
+        }))
             send(new User³RCommand({.target=sn->self}, { v }));
     }
     
@@ -95,8 +99,9 @@ namespace yq::tachyon {
 
         //  Once we get an algebraic control, we'll use that
         std::string   v  = sn->x.algebra;
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::InputText("##XAlgebra", &v, ImGuiInputTextFlags_EnterReturnsTrue))
+        if(im::lineedit("##XAlgebra", v, {
+            .flags = ImGuiInputTextFlags_EnterReturnsTrue,
+        }))
             send(new User³XCommand({.target=sn->self}, { v }));
     }
     
@@ -108,8 +113,9 @@ namespace yq::tachyon {
 
         //  Once we get an algebraic control, we'll use that
         std::string   v  = sn->y.algebra;
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::InputText("##YAlgebra", &v, ImGuiInputTextFlags_EnterReturnsTrue))
+        if(im::lineedit("##YAlgebra", v, {
+            .flags = ImGuiInputTextFlags_EnterReturnsTrue,
+        }))
             send(new User³YCommand({.target=sn->self}, { v }));
     }
     
@@ -121,8 +127,9 @@ namespace yq::tachyon {
 
         //  Once we get an algebraic control, we'll use that
         std::string   v  = sn->z.algebra;
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::InputText("##ZAlgebra", &v, ImGuiInputTextFlags_EnterReturnsTrue))
+        if(im::lineedit("##ZAlgebra", v, {
+            .flags = ImGuiInputTextFlags_EnterReturnsTrue,
+        }))
             send(new User³ZCommand({.target=sn->self}, { v }));
     }
     

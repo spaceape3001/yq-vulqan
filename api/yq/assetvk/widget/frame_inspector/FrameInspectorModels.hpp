@@ -8,6 +8,7 @@
 
 #include "FrameInspectorTachyons.hpp"
 #include <yq/tachyon/api/Model.hpp>
+#include <yq/tachyon/im/text.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorModels : public FrameInspectorTachyons {
@@ -31,10 +32,10 @@ namespace yq::tachyon {
         {
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> MODEL PROPERTIES <<<");
+                im::text(">>> MODEL PROPERTIES <<<");
             }
         }
 

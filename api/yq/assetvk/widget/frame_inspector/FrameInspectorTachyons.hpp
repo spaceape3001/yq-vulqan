@@ -11,6 +11,7 @@
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/api/InterfaceMeta.hpp>
+#include <yq/tachyon/im/text.hpp>
 #include <yq/unit/literals.hpp>
 #include <yq/text/join.hpp>
 
@@ -53,7 +54,7 @@ namespace yq::tachyon {
             });
 
             ImGui::TableNextColumn();
-            ImGui::TextUnformatted(m_tachyon->metaInfo().name());
+            im::text(m_tachyon->metaInfo().name());
             if(m_tree){
                 ImGui::Indent();
             }
@@ -77,7 +78,7 @@ namespace yq::tachyon {
             begin(TABLE);
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             ImGui::TableNextColumn();
             
@@ -91,7 +92,7 @@ namespace yq::tachyon {
         void    meta_id(TachyonID tid)
         {
             if(!tid){
-                ImGui::Text("(none) {0}");
+                im::text("(none) {0}");
                 return;
             }
         
@@ -119,18 +120,18 @@ namespace yq::tachyon {
         void    meta_name(TachyonID tid)
         {
             if(!tid){
-                ImGui::TextUnformatted("(none)");
+                im::text("(none)");
                 return;
             }
         
             if(!m_frame){
-                ImGui::TextUnformatted("(no-frame)");
+                im::text("(no-frame)");
                 return;
             }
             
             const Tachyon*  t   = m_frame->object(tid);
             if(!m_frame){
-                ImGui::TextUnformatted("(missing)");
+                im::text("(missing)");
                 return;
             }
             
@@ -145,17 +146,17 @@ namespace yq::tachyon {
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> TACHYON PROPERTIES <<<");
+                im::text(">>> TACHYON PROPERTIES <<<");
             }
             
             table(NESTED, "Children", m_snap->children);
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Cycle");
+                im::text("Cycle");
             }
             if(ImGui::TableNextColumn()){
                 if(m_data->cycleTime < 1_µs){
@@ -177,7 +178,7 @@ namespace yq::tachyon {
                 treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, "Inbound");
             });
             ImGui::TableNextColumn();
-            ImGui::Text("%ld", m_data->inbound.size());
+            im::text(m_data->inbound.size());
 
             if(treeOpen){
                 end(TABLE);
@@ -197,7 +198,7 @@ namespace yq::tachyon {
                 treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, "Outbound");
             });
             ImGui::TableNextColumn();
-            ImGui::Text("%ld", m_data->outbound.size());
+            im::text(m_data->outbound.size());
 
             if(treeOpen){
                 end(TABLE);
@@ -211,7 +212,7 @@ namespace yq::tachyon {
         
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Owner");
+                im::text("Owner");
             }
             if(ImGui::TableNextColumn()){
                 meta_id(m_data->owner);
@@ -219,7 +220,7 @@ namespace yq::tachyon {
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Parent");
+                im::text("Parent");
             }
             if(ImGui::TableNextColumn()){
                 meta_id(m_snap->parent);
@@ -231,7 +232,7 @@ namespace yq::tachyon {
             
             if(m_snap->proxies.empty()){
                 treeOpen = false;
-                ImGui::TextUnformatted("Proxies");
+                im::text("Proxies");
             } else {
                 guard([&](){
                     std::string tid    = "proxies";
@@ -240,7 +241,7 @@ namespace yq::tachyon {
                 });
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("%ld", m_snap->proxies.size());
+                im::text(m_snap->proxies.size());
             }
 
             if(treeOpen){
@@ -257,7 +258,7 @@ namespace yq::tachyon {
                     
                     if(!ii->properties(COUNT)){
                         treeOpen        = false;
-                        ImGui::TextUnformatted(pname);
+                        im::text(pname);
                     } else {
                         guard([&](){
                             std::string tid    = "proxy";
@@ -267,7 +268,7 @@ namespace yq::tachyon {
                         });
                     }
                     ImGui::TableNextColumn();
-                    ImGui::Text(ii->properties(COUNT));
+                    im::text(ii->properties(COUNT));
                     if(treeOpen && iff){
                         ImGui::Indent();
                         for(const PropertyMeta* pi : ii->properties()){
@@ -275,13 +276,13 @@ namespace yq::tachyon {
                         
                             ImGui::TableNextRow();
                             ImGui::TableNextColumn();
-                            ImGui::TextUnformatted(pi->name());
+                            im::text(pi->name());
                             ImGui::TableNextColumn();
                             
                             if(!val){
-                                ImGui::TextUnformatted("(unable to fetch)");
+                                im::text("(unable to fetch)");
                             } else {
-                                ImGui::Text(*val);
+                                im::text(*val);
                             }
                         }
                         ImGui::Unindent();
@@ -292,15 +293,15 @@ namespace yq::tachyon {
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Revision");
+                im::text("Revision");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("%ld", m_snap->revision);
+                im::text(m_snap->revision);
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Stage");
+                im::text("Stage");
             }
             if(ImGui::TableNextColumn()){
                 std::string msg;
@@ -316,7 +317,7 @@ namespace yq::tachyon {
                 if(m_snap->teardown){
                     msg += ", Teardown";
                 }
-                ImGui::TextUnformatted(msg.c_str());
+                im::text(msg.c_str());
             }
         }
         
@@ -352,7 +353,7 @@ namespace yq::tachyon {
             for(const TypedID& t : values){
                 ImGui::TableNextRow();
                 if(ImGui::TableNextColumn()){
-                    ImGui::Text("%ld", t.id);
+                    im::text(t.id);
                 }
                 if(ImGui::TableNextColumn()){
                     meta_name(t);
@@ -374,7 +375,7 @@ namespace yq::tachyon {
                 treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, str_id);
             });
             ImGui::TableNextColumn();
-            ImGui::Text("%ld", typed.size());
+            im::text(typed.size());
 
             if(treeOpen){
                 end(TABLE);
@@ -405,12 +406,12 @@ namespace yq::tachyon {
 
                 if(!ip.post){
                     ImGui::TableNextColumn();
-                    ImGui::TextUnformatted("(null)");
+                    im::text("(null)");
                     continue;
                 }
                     
                 if(ImGui::TableNextColumn()){
-                    ImGui::Text("%ld", ip.post->id().id);
+                    im::text(ip.post->id());
                 }
                 if(ImGui::TableNextColumn()){
                     meta_name(ip.post->metaInfo());
@@ -424,13 +425,13 @@ namespace yq::tachyon {
                 if(ImGui::TableNextColumn()){
                     switch(ip.state){
                     case InPost::State::Accepted:
-                        ImGui::TextUnformatted("Accepted");
+                        im::text("Accepted");
                         break;
                     case InPost::State::Rejected:
-                        ImGui::TextUnformatted("Rejected");
+                        im::text("Rejected");
                         break;
                     case InPost::State::Duplicate:
-                        ImGui::TextUnformatted("Duplicate");
+                        im::text("Duplicate");
                         break;
                     }
                 }
@@ -454,11 +455,11 @@ namespace yq::tachyon {
                 ImGui::TableNextRow();
                 if(!op.post){
                     ImGui::TableNextColumn();
-                    ImGui::TextUnformatted("(null)");
+                    im::text("(null)");
                     continue;
                 }
                 if(ImGui::TableNextColumn()){
-                    ImGui::Text("%ld", op.post->id().id);
+                    im::text(op.post->id().id);
                 }
                 if(ImGui::TableNextColumn()){
                     meta_name(op.post->metaInfo());

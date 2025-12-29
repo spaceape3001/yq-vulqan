@@ -9,6 +9,7 @@
 #include "FrameInspectorSpatials.hpp"
 #include <yq/tachyon/api/Spatial3.hpp>
 #include <yq/tachyon/api/Spatial3Data.hpp>
+#include <yq/tachyon/im/text.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorSpatial³s : public FrameInspectorSpatials {
@@ -34,26 +35,26 @@ namespace yq::tachyon {
             
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> SPATIAL³ PROPERTIES <<<");
-            }
-
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Domain to Local");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->domain2local);
+                im::text(">>> SPATIAL³ PROPERTIES <<<");
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Local to Domain");
+                im::text("Domain to Local");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->local2domain);
+                im::text(snap->domain2local);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("Local to Domain");
+            }
+            if(ImGui::TableNextColumn()){
+                im::text(snap->local2domain);
             }
         }
         

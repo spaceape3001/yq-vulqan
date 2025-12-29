@@ -9,6 +9,7 @@
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/api/ThreadData.hpp>
+#include <yq/tachyon/im/text.hpp>
 #include <yq/tachyon/ui/UIFormMetaWriter.hpp>
 
 namespace yq::tachyon {
@@ -40,7 +41,7 @@ namespace yq::tachyon {
         
     void    UIFrameMetrics::cameras()
     {
-        ImGui::Text(m_frame->count(CAMERA));
+        im::text(m_frame->count(CAMERA));
     }
 
     UIFrameMetrics* UIFrameMetrics::clone() const 
@@ -50,22 +51,22 @@ namespace yq::tachyon {
 
     void    UIFrameMetrics::cycle()
     {
-        ImGui::Text(unit::Millisecond(m_data->cycleTime).value);  ImGui::SameLine(); ImGui::TextUnformatted(" ms");
+        im::text(unit::Millisecond(m_data->cycleTime).value);  ImGui::SameLine(); im::text(" ms");
     }
 
     void    UIFrameMetrics::fps()
     {
-        ImGui::Text(1.0 / unit::Second(m_data->cycleTime).value);
+        im::text(1.0 / unit::Second(m_data->cycleTime));
     }
 
     void    UIFrameMetrics::lights()
     {
-        ImGui::Text(m_frame->count(LIGHT));
+        im::text(m_frame->count(LIGHT));
     }
 
     void    UIFrameMetrics::models()
     {
-        ImGui::Text(m_frame->count(MODEL));
+        im::text(m_frame->count(MODEL));
     }
 
     void    UIFrameMetrics::render()
@@ -87,17 +88,17 @@ namespace yq::tachyon {
 
     void    UIFrameMetrics::rendereds()
     {
-        ImGui::Text(m_frame->count(RENDERED));
+        im::text(m_frame->count(RENDERED));
     }
 
     void    UIFrameMetrics::scenes()
     {
-        ImGui::Text(m_frame->count(SCENE));
+        im::text(m_frame->count(SCENE));
     }
 
     void    UIFrameMetrics::threads()
     {
-        ImGui::Text(m_frame->count(THREAD));
+        im::text(m_frame->count(THREAD));
     }
 }
 

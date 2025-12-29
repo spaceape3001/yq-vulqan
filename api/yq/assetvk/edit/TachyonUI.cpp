@@ -15,6 +15,7 @@
 #include <yq/tachyon/command/tachyon/SetNameCommand.hpp>
 #include <yq/tachyon/im/checkbox.hpp>
 #include <yq/tachyon/im/lineedit.hpp>
+#include <yq/tachyon/im/text.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <format>
@@ -79,12 +80,12 @@ namespace yq::tachyon {
 
     void    TachyonUI::id()
     {
-        ImGui::Text(bound().id);
+        im::text(bound().id);
     }
     
     void    TachyonUI::parent()
     {
-        ImGui::Text(snap()->parent.id);
+        im::text(snap()->parent.id);
     }
 
     void    TachyonUI::type()
@@ -95,14 +96,14 @@ namespace yq::tachyon {
         const Tachyon*  tach   = frame->object(bound());
         if(!tach)
             return;
-        ImGui::TextUnformatted(tach->metaInfo().name());
+        im::text(tach->metaInfo().name());
     }
 
     void    TachyonUI::name()
     {
         const TachyonSnap*  sn    = snap();
         if(readonly()){
-            ImGui::TextUnformatted(sn->name);
+            im::text(sn->name);
         } else {
             std::string     v   = sn->name;
             if(im::lineedit("##name", v, { .flags = ImGuiInputTextFlags_EnterReturnsTrue })){
@@ -131,6 +132,6 @@ namespace yq::tachyon {
         
         if(text.empty())
             text    = std::format("[{}]", tach->owner.id);
-        ImGui::TextUnformatted(text);
+        im::text(text);
     }
 }

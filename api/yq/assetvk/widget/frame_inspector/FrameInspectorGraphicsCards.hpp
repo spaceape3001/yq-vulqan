@@ -7,6 +7,7 @@
 #pragma once
 
 #include "FrameInspectorTachyons.hpp"
+#include <yq/tachyon/im/text.hpp>
 #include <yq/tachyon/os/GraphicsCard.hpp>
 #include <yq/tachyon/os/GraphicsCardData.hpp>
 
@@ -34,26 +35,26 @@ namespace yq::tachyon {
         
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> GPU PROPERTIES <<<");
-            }
-
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Heap");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->heap);
+                im::text(">>> GPU PROPERTIES <<<");
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Name");
+                im::text("Heap");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(snap->name);
+                im::text(snap->heap);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("Name");
+            }
+            if(ImGui::TableNextColumn()){
+                im::text(snap->name);
             }
         }
 

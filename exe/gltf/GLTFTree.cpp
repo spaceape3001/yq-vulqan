@@ -217,21 +217,21 @@ void GLTFTree::r_entry(tinygltf::Animation&a)
             
             TableHeadersRow();
             TableNextColumn();
-            TextUnformatted("N");
+            im::text("N");
             TableNextColumn();
-            TextUnformatted("Sampler");
+            im::text("Sampler");
             TableNextColumn();
-            TextUnformatted("Target Node");
+            im::text("Target Node");
             
             size_t  cnt = 0;
             for(auto& c : a.channels){
                 TableNextRow();
                 if(TableNextColumn())
-                    Text(cnt++);
+                    im::text(cnt++);
                 if(TableNextColumn())
-                    Text(c.sampler);
+                    im::text(c.sampler);
                 if(TableNextColumn())
-                    Text(c.target_node);
+                    im::text(c.target_node);
             }
             EndTable();
         }
@@ -243,25 +243,25 @@ void GLTFTree::r_entry(tinygltf::Animation&a)
         if(BeginTable("Samplers", 4)){
             TableHeadersRow();
             TableNextColumn();
-            TextUnformatted("N");
+            im::text("N");
             TableNextColumn();
-            TextUnformatted("Input");
+            im::text("Input");
             TableNextColumn();
-            TextUnformatted("Output");
+            im::text("Output");
             TableNextColumn();
-            TextUnformatted("Interpolation");
+            im::text("Interpolation");
 
             size_t cnt = 0;
             for(auto& s: a.samplers){
                 TableNextRow();
                 if(TableNextColumn())
-                    Text(cnt++);
+                    im::text(cnt++);
                 if(TableNextColumn())
-                    Text(s.input);
+                    im::text(s.input);
                 if(TableNextColumn())
-                    Text(s.output);
+                    im::text(s.output);
                 if(TableNextColumn())
-                    TextUnformatted(s.interpolation);
+                    im::text(s.interpolation);
             }
 
             EndTable();
@@ -449,9 +449,9 @@ void GLTFTree::r_entry(tinygltf::Primitive& p)
             for(auto& kv : p.attributes){
                 TableNextRow();
                 if(TableNextColumn())
-                    TextUnformatted(kv.first);
+                    im::text(kv.first);
                 if(TableNextColumn())
-                    Text(kv.second);
+                    im::text(kv.second);
             }
             EndTable();
         }
@@ -498,7 +498,7 @@ void    GLTFTree::render()
 {
     using namespace ImGui;
     if(!m_model){
-        TextUnformatted("No Model Loaded");
+        im::text("No Model Loaded");
         return ;
     }
     

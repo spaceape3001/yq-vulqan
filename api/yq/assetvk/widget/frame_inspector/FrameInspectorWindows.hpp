@@ -9,6 +9,7 @@
 #include "FrameInspectorTachyons.hpp"
 #include <yq/tachyon/os/Window.hpp>
 #include <yq/tachyon/os/WindowData.hpp>
+#include <yq/tachyon/im/text.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorWindows : public FrameInspectorTachyons {
@@ -34,15 +35,15 @@ namespace yq::tachyon {
             
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> WINDOW PROPERTIES <<<");
+                im::text(">>> WINDOW PROPERTIES <<<");
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Aspect");
+                im::text("Aspect");
             }
             if(ImGui::TableNextColumn()){
                 ImGui::Text("%d:%d", snap->window.aspect.x, snap->window.aspect.y);
@@ -50,15 +51,15 @@ namespace yq::tachyon {
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Area");
+                im::text("Area");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->window.area);
+                im::text(snap->window.area);
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Flags");
+                im::text("Flags");
             }
             if(ImGui::TableNextColumn() && snap->window.flags){
                 std::string     create;
@@ -93,28 +94,28 @@ namespace yq::tachyon {
                 if(snap->window.flags(WindowFlag::Visible))
                     create += ", Visible";
                 std::string_view    f   = create;
-                ImGui::TextUnformatted(f.substr(2));
+                im::text(f.substr(2));
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Max");
+                im::text("Max");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->window.max);
-            }
-
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Min");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->window.min);
+                im::text(snap->window.max);
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Monitor");
+                im::text("Min");
+            }
+            if(ImGui::TableNextColumn()){
+                im::text(snap->window.min);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("Monitor");
             }
             if(ImGui::TableNextColumn()){
                 meta_id(snap->window.monitor);
@@ -122,42 +123,42 @@ namespace yq::tachyon {
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Opacity");
+                im::text("Opacity");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->window.opacity);
-            }
-
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Pixels");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->window.pixels);
+                im::text(snap->window.opacity);
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Position");
+                im::text("Pixels");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->window.position );
-            }
-
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Scale");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->window.scale);
+                im::text(snap->window.pixels);
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Title");
+                im::text("Position");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(snap->window.title.c_str());
+                im::text(snap->window.position );
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("Scale");
+            }
+            if(ImGui::TableNextColumn()){
+                im::text(snap->window.scale);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("Title");
+            }
+            if(ImGui::TableNextColumn()){
+                im::text(snap->window.title.c_str());
             }
         }
         

@@ -9,6 +9,7 @@
 #include "FrameInspectorTachyons.hpp"
 #include <yq/tachyon/api/Scene.hpp>
 #include <yq/tachyon/api/SceneData.hpp>
+#include <yq/tachyon/im/text.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorScenes : public FrameInspectorTachyons {
@@ -34,10 +35,10 @@ namespace yq::tachyon {
             
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> SCENE PROPERTIES <<<");
+                im::text(">>> SCENE PROPERTIES <<<");
             }
             
             table(NESTED, "Cameras", snap->cameras);

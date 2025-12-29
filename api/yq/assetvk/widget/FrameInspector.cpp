@@ -129,7 +129,7 @@ namespace yq::tachyon {
         if(ImGui::Begin("FrameInspector")){
             im::toggle("Track", m_track);
             if(!m_frame){
-                ImGui::Text("Missing frame");
+                im::text("Missing frame");
             } else if((m_table = ImGui::BeginTable(szTable, nTableCols, ImGuiTableFlags_NoClip))){
                 ImGui::TableSetupColumn("Key", 
                     ImGuiTableColumnFlags_IndentEnable | 
@@ -159,7 +159,7 @@ namespace yq::tachyon {
 
                     ImGui::TableNextColumn();
                     if(p->countable()){
-                        ImGui::Text("%ld", p->count());
+                        im::text(p->count());
                     }
                     
                     if(treeOpen){

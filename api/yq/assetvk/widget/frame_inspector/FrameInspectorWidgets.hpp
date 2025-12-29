@@ -9,6 +9,7 @@
 #include "FrameInspectorTachyons.hpp"
 #include <yq/tachyon/api/Widget.hpp>
 #include <yq/tachyon/api/WidgetData.hpp>
+#include <yq/tachyon/im/text.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorWidgets : public FrameInspectorTachyons {
@@ -34,15 +35,15 @@ namespace yq::tachyon {
             
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> WIDGET PROPERTIES <<<");
+                im::text(">>> WIDGET PROPERTIES <<<");
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Viewer");
+                im::text("Viewer");
             }
             if(ImGui::TableNextColumn()){
                 meta_id(snap->viewer);

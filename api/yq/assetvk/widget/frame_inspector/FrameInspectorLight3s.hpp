@@ -8,6 +8,7 @@
 
 #include "FrameInspectorLights.hpp"
 #include <yq/tachyon/api/Light3.hpp>
+#include <yq/tachyon/im/text.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorLight³s : public FrameInspectorLights  {
@@ -31,10 +32,10 @@ namespace yq::tachyon {
         {
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> LIGHT³ PROPERTIES <<<");
+                im::text(">>> LIGHT³ PROPERTIES <<<");
             }
         }
         

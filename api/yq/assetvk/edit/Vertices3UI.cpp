@@ -9,6 +9,7 @@
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/im/input_double.hpp>
 #include <yq/tachyon/im/input_float.hpp>
+#include <yq/tachyon/im/text.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/ui/UIStyle.hpp>
 #include <yq/tachyon/proxy/PVertices3.hpp>
@@ -98,7 +99,7 @@ namespace yq::tachyon {
             for(size_t n=1;n<=count;++n){
                 ImGui::TableNextRow();
                 if(ImGui::TableNextColumn()){
-                    ImGui::Text(n);
+                    im::text(n);
                 }
                 if(ImGui::TableNextColumn()){
                     std::string id = std::format("##Vertex{}.{}", bound().id, n);

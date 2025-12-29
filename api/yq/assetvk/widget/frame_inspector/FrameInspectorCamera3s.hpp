@@ -10,6 +10,7 @@
 #include <yq/tachyon/api/Camera3.hpp>
 #include <yq/tachyon/api/Camera3Data.hpp>
 #include <yq/tachyon/api/Spatial3.hpp>
+#include <yq/tachyon/im/text.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorCamera³s : public FrameInspectorCameras  {
@@ -36,31 +37,31 @@ namespace yq::tachyon {
             
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> CAMERA³ PROPERTIES <<<");
-            }
-
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Projection");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->projection);
+                im::text(">>> CAMERA³ PROPERTIES <<<");
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Screen");
+                im::text("Projection");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->screen);
+                im::text(snap->projection);
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Spatial");
+                im::text("Screen");
+            }
+            if(ImGui::TableNextColumn()){
+                im::text(snap->screen);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("Spatial");
             }
             if(ImGui::TableNextColumn()){
                 meta_id(snap->spatial);
@@ -68,10 +69,10 @@ namespace yq::tachyon {
 
             //ImGui::TableNextRow();
             //if(ImGui::TableNextColumn()){
-                //ImGui::TextUnformatted("View");
+                //im::text("View");
             //}
             //if(ImGui::TableNextColumn()){
-                //ImGui::Text(snap->view);
+                //im::text(snap->view);
             //}
         }
         

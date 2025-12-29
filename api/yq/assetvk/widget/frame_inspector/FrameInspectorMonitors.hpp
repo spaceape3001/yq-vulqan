@@ -9,6 +9,7 @@
 #include "FrameInspectorTachyons.hpp"
 #include <yq/tachyon/os/Monitor.hpp>
 #include <yq/tachyon/os/MonitorData.hpp>
+#include <yq/tachyon/im/text.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorMonitors : public FrameInspectorTachyons {
@@ -34,28 +35,28 @@ namespace yq::tachyon {
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> MONITOR PROPERTIES <<<");
+                im::text(">>> MONITOR PROPERTIES <<<");
             }
 
 #if 0
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Scale");
+                im::text("Scale");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->scale);
+                im::text(snap->scale);
             }
 #endif
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Size");
+                im::text("Size");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text(snap->size);
+                im::text(snap->size);
             }
 
         }

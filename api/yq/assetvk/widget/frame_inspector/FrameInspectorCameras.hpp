@@ -9,6 +9,7 @@
 #include "FrameInspectorTachyons.hpp"
 #include <yq/tachyon/api/Camera.hpp>
 #include <yq/tachyon/api/CameraData.hpp>
+#include <yq/tachyon/im/text.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorCameras : public FrameInspectorTachyons {
@@ -34,10 +35,10 @@ namespace yq::tachyon {
             
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> CAMERA PROPERTIES <<<");
+                im::text(">>> CAMERA PROPERTIES <<<");
             }
         }
 

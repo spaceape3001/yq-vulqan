@@ -19,6 +19,7 @@
 #include <yq/tachyon/api/SceneData.hpp>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/im/enum.hpp>
+#include <yq/tachyon/im/text.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 
 
@@ -175,7 +176,7 @@ void    SceneTableUI::render()
             }
 
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(e.cameraText);
+                im::text(e.cameraText);
             }
             
             ImGui::PopID();

@@ -9,6 +9,7 @@
 #include "FrameInspectorTachyons.hpp"
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/api/ThreadData.hpp>
+#include <yq/tachyon/im/text.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorThreads : public FrameInspectorTachyons {
@@ -36,18 +37,18 @@ namespace yq::tachyon {
         
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> THREAD PROPERTIES <<<");
+                im::text(">>> THREAD PROPERTIES <<<");
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("FPS");
+                im::text("FPS");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("%lf", 1.0 / unit::Second(data->cycleTime).value);
+                im::text(1.0 / unit::Second(data->cycleTime));
             }
 
             ImGui::TableNextRow();
@@ -59,7 +60,7 @@ namespace yq::tachyon {
                 treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, "Objects");
             });
             ImGui::TableNextColumn();
-            ImGui::Text("%ld", data->tachyons.size());
+            im::text(data->tachyons.size());
 
             if(treeOpen){
                 end(TABLE);
@@ -101,18 +102,18 @@ namespace yq::tachyon {
             for(const TachyonFrame& tf : data->tachyons){
                 ImGui::TableNextRow();
                 if(ImGui::TableNextColumn()){
-                    ImGui::Text("%ld", tf.object->id().id);
+                    im::text(tf.object->id());
                 }
                 if(ImGui::TableNextColumn()){
                     switch(tf.state){
                     case TachyonThreadState::Normal:
-                        ImGui::TextUnformatted("Normal");
+                        im::text("Normal");
                         break;
                     case TachyonThreadState::Pushed:
-                        ImGui::TextUnformatted("Pushed");
+                        im::text("Pushed");
                         break;
                     case TachyonThreadState::Delete:
-                        ImGui::TextUnformatted("Delete");
+                        im::text("Delete");
                         break;
                     }
                 }

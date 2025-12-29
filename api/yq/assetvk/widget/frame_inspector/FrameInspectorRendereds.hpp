@@ -9,6 +9,7 @@
 #include "FrameInspectorTachyons.hpp"
 #include <yq/tachyon/api/Rendered.hpp>
 #include <yq/tachyon/api/RenderedData.hpp>
+#include <yq/tachyon/im/text.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorRendereds : public FrameInspectorTachyons {
@@ -34,67 +35,67 @@ namespace yq::tachyon {
         
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> RENDERED PROPERTIES <<<");
-            }
-
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Culled");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(snap->culled.key());
+                im::text(">>> RENDERED PROPERTIES <<<");
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("IBO");
+                im::text("Culled");
+            }
+            if(ImGui::TableNextColumn()){
+                im::text(snap->culled.key());
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("IBO");
             }
             if(ImGui::TableNextColumn()){
                 bool    has = !std::get_if<std::monostate>(&snap->ibo);
-                ImGui::TextUnformatted( has ? "YES" : " NO");
+                im::text( has ? "YES" : " NO");
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("SBOs");
+                im::text("SBOs");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("%ld", snap->sbos.size());
-            }
-            
-            ImGui::TableNextRow();
-            if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Textures");
-            }
-            if(ImGui::TableNextColumn()){
-                ImGui::Text("%ld", snap->texs.size());
+                im::text(snap->sbos.size());
             }
             
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("UBOs");
+                im::text("Textures");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("%ld", snap->ubos.size());
+                im::text(snap->texs.size());
             }
             
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("VBOs");
+                im::text("UBOs");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::Text("%ld", snap->vbos.size());
+                im::text(snap->ubos.size());
+            }
+            
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("VBOs");
+            }
+            if(ImGui::TableNextColumn()){
+                im::text(snap->vbos.size());
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Wireframe");
+                im::text("Wireframe");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(snap->wireframe.key());
+                im::text(snap->wireframe.key());
             }
         }
 

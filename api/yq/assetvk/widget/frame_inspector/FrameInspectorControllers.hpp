@@ -11,6 +11,7 @@
 #include <yq/tachyon/api/ControllerData.hpp>
 #include <yq/tachyon/command/controller/DisableCommand.hpp>
 #include <yq/tachyon/command/controller/EnableCommand.hpp>
+#include <yq/tachyon/im/text.hpp>
 #include <yq/tachyon/im/toggle.hpp>
 
 namespace yq::tachyon {
@@ -36,15 +37,15 @@ namespace yq::tachyon {
             const ControllerSnap*   snap    = static_cast<const ControllerSnap*>(m_snap);
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> CONTROLLER PROPERTIES <<<");
+                im::text(">>> CONTROLLER PROPERTIES <<<");
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Enable");
+                im::text("Enable");
             }
             if(ImGui::TableNextColumn()){
                 bool    f   = snap->enabled;

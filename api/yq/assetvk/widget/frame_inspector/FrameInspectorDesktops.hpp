@@ -7,6 +7,7 @@
 #pragma once
 
 #include "FrameInspectorManagers.hpp"
+#include <yq/tachyon/im/text.hpp>
 #include <yq/tachyon/os/Desktop.hpp>
 
 namespace yq::tachyon {
@@ -31,10 +32,10 @@ namespace yq::tachyon {
         {
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> DESKTOP PROPERTIES <<<");
+                im::text(">>> DESKTOP PROPERTIES <<<");
             }
         }
         

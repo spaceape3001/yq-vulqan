@@ -10,6 +10,7 @@
 #include <yq/tachyon/os/Joystick.hpp>
 #include <yq/tachyon/os/JoystickData.hpp>
 #include <yq/stream/Text.hpp>
+#include <yq/tachyon/im/text.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorJoysticks : public FrameInspectorTachyons {
@@ -35,15 +36,15 @@ namespace yq::tachyon {
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> JOYSTICK PROPERTIES <<<");
+                im::text(">>> JOYSTICK PROPERTIES <<<");
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Axes");
+                im::text("Axes");
             }
             if(ImGui::TableNextColumn()){
                 std::string data;
@@ -56,12 +57,12 @@ namespace yq::tachyon {
                         out << snap->axes[n];
                     }
                 }
-                ImGui::TextUnformatted(data);
+                im::text(data);
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Buttons");
+                im::text("Buttons");
             }
             if(ImGui::TableNextColumn()){
                 std::string data;
@@ -74,23 +75,23 @@ namespace yq::tachyon {
                         out << snap->buttons[n];
                     }
                 }
-                ImGui::TextUnformatted(data);
+                im::text(data);
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("GUID");
+                im::text("GUID");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(snap->guid);
+                im::text(snap->guid);
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Name");
+                im::text("Name");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(snap->name);
+                im::text(snap->name);
             }
         }
 

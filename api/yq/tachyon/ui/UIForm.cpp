@@ -9,6 +9,7 @@
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Frame.hpp>
+#include <yq/tachyon/im/text.hpp>
 #include <yq/tachyon/ui/UIStyle.hpp>
 #include <yq/tachyon/ui/UIFormMetaWriter.hpp>
 
@@ -68,7 +69,7 @@ namespace yq::tachyon {
             
                 ImGui::TableNextRow();
                 if(ImGui::TableNextColumn())
-                    ImGui::TextUnformatted(f.label);
+                    im::text(f.label);
                 if(ImGui::TableNextColumn()){
                     ImGui::PushID(f.label.c_str());
                     f.executor->execute(this);

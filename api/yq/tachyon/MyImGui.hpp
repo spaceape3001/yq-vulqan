@@ -137,18 +137,6 @@ namespace ImGui {
     bool    Drag3(const char* label, double v[3], const DragDoubleOptions& options={});
     bool    Drag4(const char* label, double v[4], const DragDoubleOptions& options={});
 
-    ///////////////////////////
-    //  Spacing
-    ///////////////////////////
-
-    //! Adds dummy space to get horizontal spacing to x value, returns the size necessary, negative means it's already
-    //! Too far
-    IMGUI_API float HorzDummyTo(float z);
-    
-    //! Adds dummy space to get vertical spacing to y value, returns the size necessary, negative means it's already
-    //! Too far
-    IMGUI_API float VertDummyTo(float y);
-
     #if 0
     ///////////////////////////
     //  SPINNERS (DISABLED)
@@ -175,31 +163,7 @@ namespace ImGui {
     }
     #endif
 
-    ///////////////////////////
-    //  TEXT
-    ///////////////////////////
-
-    void    Text(bool);
-    void    Text(int);
-    void    Text(float);
-    void    Text(double);
-    void    Text(uint64_t);
-
-    void    Text(const yq::Any&);
-    void    Text(const yq::Rectangle2D&);
-    void    Text(const yq::Size2D&);
-    void    Text(const yq::Size2I&);
-    void    Text(const yq::Tensor44D&);
-    void    Text(const yq::Vector2D&);
-    void    Text(const yq::Vector2F&);
-    void    Text(const yq::Vector3D&);
-    void    Text(const yq::Vector4D&);
-    void    Text(const glm::mat4&);
-    void    Text(const glm::dmat4&);
-
-    void    TextUnformatted(std::string_view);
-
-    
+ 
     ///////////////////////////
     //  Vertical Slider
     ///////////////////////////

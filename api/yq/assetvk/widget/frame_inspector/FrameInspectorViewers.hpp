@@ -9,6 +9,7 @@
 #include "FrameInspectorTachyons.hpp"
 #include <yq/tachyon/app/Viewer.hpp>
 #include <yq/tachyon/app/ViewerData.hpp>
+#include <yq/tachyon/im/text.hpp>
 #include <yq/text/format.hpp>
 
 namespace yq::tachyon {
@@ -33,16 +34,16 @@ namespace yq::tachyon {
         {
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> VIEWER PROPERTIES <<<");
+                im::text(">>> VIEWER PROPERTIES <<<");
             }
 
             const ViewerSnap*   snap    = static_cast<const ViewerSnap*>(m_snap);
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Focus");
+                im::text("Focus");
             }
             if(ImGui::TableNextColumn()){
                 meta_id(snap->focus);
@@ -50,7 +51,7 @@ namespace yq::tachyon {
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Widget");
+                im::text("Widget");
             }
             if(ImGui::TableNextColumn()){
                 meta_id(snap->widget);
@@ -58,7 +59,7 @@ namespace yq::tachyon {
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Window");
+                im::text("Window");
             }
             if(ImGui::TableNextColumn()){
                 meta_id(snap->window);

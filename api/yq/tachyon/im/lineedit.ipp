@@ -7,6 +7,7 @@
 #include "lineedit.hpp"
 #include "button.hpp"
 #include "dragdrop.hpp"
+#include "text.hpp"
 #include <yq/tachyon/logging.hpp>
 #include "misc/cpp/imgui_stdlib.h"
 
@@ -20,7 +21,7 @@ namespace yq::tachyon::im {
         if(opts.drag && begin_drag_source(opts.drag_flags)){
             if(!v.empty()){
                 set_drag_payload(opts.drag, v.data(), v.size());
-                ImGui::TextUnformatted(v);
+                text(v);
             }
             end_drag_source();
         }

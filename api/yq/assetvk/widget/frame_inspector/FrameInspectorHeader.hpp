@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <yq/tachyon/im/text.hpp>
+
 namespace yq::tachyon {
     class FrameInspectorHeader : public Widget, public FrameInspector::Pane {
         YQ_TACHYON_DECLARE(FrameInspectorHeader, Widget)
@@ -31,27 +33,27 @@ namespace yq::tachyon {
         {
             ImGui::TableNextRow();
             ImGui::TableNextColumn();
-            ImGui::TextUnformatted("Number");
+            im::text("Number");
             ImGui::TableNextColumn();
-            ImGui::Text("%ld", m_frame->number());
+            im::text(m_frame->number());
         
             ImGui::TableNextRow();
             ImGui::TableNextColumn();
-            ImGui::TextUnformatted("Tick");
+            im::text("Tick");
             ImGui::TableNextColumn();
-            ImGui::Text("%ld", m_frame->tick());
+            im::text(m_frame->tick());
 
             ImGui::TableNextRow();
             ImGui::TableNextColumn();
-            ImGui::TextUnformatted("Origin");
+            im::text("Origin");
             ImGui::TableNextColumn();
-            ImGui::Text("%ld", m_frame->origin().id);
+            im::text(m_frame->origin().id);
 
             ImGui::TableNextRow();
             ImGui::TableNextColumn();
-            ImGui::TextUnformatted("Time");
+            im::text("Time");
             ImGui::TableNextColumn();
-            ImGui::Text("%lf", m_frame->time().value);
+            im::text(m_frame->time().value);
         }
         
     private:

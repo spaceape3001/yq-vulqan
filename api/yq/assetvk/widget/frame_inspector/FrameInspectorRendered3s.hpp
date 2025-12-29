@@ -10,6 +10,7 @@
 #include <yq/tachyon/api/Rendered3.hpp>
 #include <yq/tachyon/api/Rendered3Data.hpp>
 #include <yq/tachyon/api/Spatial.hpp>
+#include <yq/tachyon/im/text.hpp>
 
 namespace yq::tachyon {
     class FrameInspectorRendered³s : public FrameInspectorRendereds {
@@ -35,15 +36,15 @@ namespace yq::tachyon {
         
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("------");
+                im::text("------");
             }
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted(">>> RENDERED³ PROPERTIES <<<");
+                im::text(">>> RENDERED³ PROPERTIES <<<");
             }
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("Spatial");
+                im::text("Spatial");
             }
             if(ImGui::TableNextColumn()){
                 meta_id(snap->spatial);
@@ -51,13 +52,13 @@ namespace yq::tachyon {
 
             ImGui::TableNextRow();
             if(ImGui::TableNextColumn()){
-                ImGui::TextUnformatted("VM Override");
+                im::text("VM Override");
             }
             if(ImGui::TableNextColumn()){
                 if(!snap->vm_override){
-                    ImGui::TextUnformatted("(disabled)");
+                    im::text("(disabled)");
                 } else {
-                    ImGui::Text(snap->vm_tensor);
+                    im::text(snap->vm_tensor);
                 }
             }
         }

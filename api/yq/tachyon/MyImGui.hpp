@@ -9,11 +9,8 @@
 #include <yq/color/RGBA.hpp>
 #include <yq/color/RGB.hpp>
 #include <yq/shape/Size2.hpp>
-#include <yq/typedef/vector1.hpp>
 #include <yq/vector/Vector2.hpp>
-#include <yq/typedef/vector3.hpp>
 #include <yq/vector/Vector4.hpp>
-#include <yq/tachyon/enum/UIFlags.hpp>
 
 #define IM_VEC2_CLASS_EXTRA                                                                 \
         constexpr ImVec2(const yq::Vector2D& v) : x((float) v.x), y((float) v.y) {}         \
@@ -37,6 +34,10 @@
 
 #include "imgui.h"
 #include "misc/cpp/imgui_stdlib.h"
+
+#include <yq/typedef/vector1.hpp>
+#include <yq/typedef/vector3.hpp>
+#include <yq/tachyon/enum/UIFlags.hpp>
 
 namespace yq::tachyon::imgui {
     using namespace ImGui;
@@ -68,7 +69,7 @@ namespace ImGui {
     ImGuiWindowFlags        WindowFlags(UIFlags);
     
     //  For multiple defaulted parameters, we'll try to lean toward the structs
-
+#if 0
     ///////////////////////////
     //  DRAG/SLIDERS
     ///////////////////////////
@@ -106,7 +107,7 @@ namespace ImGui {
     bool    Drag2(const char* label, double v[2], const DragDoubleOptions& options={});
     bool    Drag3(const char* label, double v[3], const DragDoubleOptions& options={});
     bool    Drag4(const char* label, double v[4], const DragDoubleOptions& options={});
-
+#endif
     #if 0
     ///////////////////////////
     //  SPINNERS (DISABLED)
@@ -143,7 +144,7 @@ namespace ImGui {
     IMGUI_API bool          VSliderInt(const char* label, const ImVec2& size, int* v, int v_min, int v_max, const char* format = "%d", ImGuiSliderFlags flags = 0);
     IMGUI_API bool          VSliderScalar(const char* label, const ImVec2& size, ImGuiDataType data_type, void* p_data, const void* p_min, const void* p_max, const char* format = NULL, ImGuiSliderFlags flags = 0);
     #endif
-
+#if 0
     struct VSliderDoubleOptions {
         ImGuiSliderFlags    flags   = 0;
         const char*         format  = "%.3lf";
@@ -154,5 +155,5 @@ namespace ImGui {
 
     bool    VSliderDouble(const char* label, double* v, const VSliderDoubleOptions& options={});
     bool    VSliderDouble(const char* label, double& v, const VSliderDoubleOptions& options={});
-    
+#endif    
 }

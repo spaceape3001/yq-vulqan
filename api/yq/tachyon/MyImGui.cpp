@@ -46,7 +46,7 @@ namespace ImGui {
         return GetColorU32({ clr.red, clr.green, clr.blue, 1. });
     }
 
-
+#if 0
     ////////////////////////////////////////////////////////////////////////////
 
     bool    Drag(const char* label, double*v, const DragDoubleOptions& options)
@@ -91,7 +91,7 @@ namespace ImGui {
     }
 
 
-
+#endif
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -217,7 +217,7 @@ namespace ImGui {
 
 
     ////////////////////////////////////////////////////////////////////////////
-
+#if 0
     bool    VSliderDouble(const char* label, double* v, const VSliderDoubleOptions& options)
     {
         return VSliderScalar(label, options.size, ImGuiDataType_Double, v, &options.min, &options.max, options.format, options.flags);
@@ -227,4 +227,5 @@ namespace ImGui {
     {
         return VSliderScalar(label, options.size, ImGuiDataType_Double, &v, &options.min, &options.max, options.format, options.flags);
     }
+#endif
 }

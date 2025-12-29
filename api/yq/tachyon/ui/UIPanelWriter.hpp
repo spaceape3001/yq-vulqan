@@ -45,6 +45,10 @@ namespace yq::tachyon {
         UIPanelWriter&  height(minimum_k, float);
         UIPanelWriter&  height(minimum_k, pivot_k, float);
 
+        UIPanelWriter&  height(start_k, const UIPanel::CalcSCPtr&);
+        UIPanelWriter&  height(start_k, float);
+        UIPanelWriter&  height(start_k, pivot_k, float);
+
         UIPanelWriter&  left(const UIPanel::CalcSCPtr&);
         UIPanelWriter&  left(float);
         UIPanelWriter&  left(pivot_k, float);

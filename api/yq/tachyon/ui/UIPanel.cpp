@@ -106,11 +106,15 @@ namespace yq::tachyon {
             wx          = m_calc.widthMax -> compute(ctx);
         if(m_calc.widthMin)
             wn          = m_calc.widthMin -> compute(ctx);
+            
         if(m_calc.height){
             h           = m_calc.height -> compute(ctx);
         } else if((m_h.actual > 0) && !is_nan(m_h.actual)){
-            h           = m_h.calc;
+            h           = m_h.actual;
+        } else if(m_calc.heightStart){
+            h           = m_calc.heightStart -> compute(ctx);
         }
+        
         if(m_calc.heightMax)
             hx          = m_calc.heightMax -> compute(ctx);
         if(m_calc.heightMin)
@@ -168,7 +172,6 @@ namespace yq::tachyon {
         m_flags |= UIFlag::SetPositionOnce;
         m_flags |= UIFlag::SetSizeOnce;
         
-        
         UIWindow::render();
     }
     
@@ -197,6 +200,11 @@ namespace yq::tachyon {
     void    UIPanel::height(set_k, minimum_k, const CalcSCPtr&v)
     {
         m_calc.heightMin    = v;
+    }
+
+    void    UIPanel::height(set_k, start_k, const CalcSCPtr& v)
+    {
+        m_calc.heightStart   = v;
     }
     
     void    UIPanel::right(set_k, const CalcSCPtr& v)
@@ -328,6 +336,23 @@ namespace yq::tachyon {
     UIPanelWriter&  UIPanelWriter::height(minimum_k, pivot_k, float v)
     {
         return height(MINIMUM, std::make_shared<UIPanel::ScaledV>(v));
+    }
+
+    UIPanelWriter&  UIPanelWriter::height(start_k, const UIPanel::CalcSCPtr& v)
+    {
+        if(UIPanel*p = element())
+            p->height(SET, START, v);
+        return *this;
+    }
+    
+    UIPanelWriter&  UIPanelWriter::height(start_k, float v)
+    {
+        return height(START, std::make_shared<UIPanel::Fixed>(v));
+    }
+    
+    UIPanelWriter&  UIPanelWriter::height(start_k, pivot_k, float v)
+    {
+        return height(START, std::make_shared<UIPanel::ScaledV>(v));
     }
 
     UIPanelWriter&  UIPanelWriter::left(const UIPanel::CalcSCPtr& v)

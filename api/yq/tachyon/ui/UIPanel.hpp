@@ -43,6 +43,7 @@ namespace yq::tachyon {
         void    bottom(set_k, const CalcSCPtr&);
         void    left(set_k, const CalcSCPtr&);
         void    height(set_k, const CalcSCPtr&);
+        void    height(set_k, start_k, const CalcSCPtr&);
         void    height(set_k, maximum_k, const CalcSCPtr&);
         void    height(set_k, minimum_k, const CalcSCPtr&);
         void    right(set_k, const CalcSCPtr&);
@@ -79,6 +80,7 @@ namespace yq::tachyon {
             CalcSCPtr    height;
             CalcSCPtr    heightMin;
             CalcSCPtr    heightMax;
+            CalcSCPtr    heightStart;
             
             Pointers();
             ~Pointers();

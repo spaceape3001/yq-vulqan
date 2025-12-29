@@ -7,6 +7,7 @@
 #include "OuterTessellation4UI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/input_double.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/POuterTessellation4.hpp>
 
@@ -41,8 +42,7 @@ namespace yq::tachyon {
             return ;
             
         Vector4D    v   = p->outer_tessellation();
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::Input("##outer_tessellation", v))
+        if(im::input("##outer_tessellation", v))
             p -> outer_tessellation(SET, v);
     }
 }

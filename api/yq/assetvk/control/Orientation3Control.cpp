@@ -9,6 +9,8 @@
 #include <yq/tachyon/proxy/POrientation3.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/ControlMetaWriter.hpp>
+#include <yq/tachyon/im/input_scaled_double.hpp>
+
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/util/Safety.hpp>
 #include <yq/tachyon/logging.hpp>
@@ -83,17 +85,17 @@ namespace yq::tachyon {
             ImGui::TableNextRow();
             ImGui::TableNextColumn();
             //if(ImGui::SpinDouble("", &heading, m_step, m_stepFast, "%.2f")){
-            if(ImGui::Input("##heading", heading)){
+            if(im::input("##heading", heading)){
                 proxy->orientation(SET, HEADING, heading);
             }
             ImGui::TableNextColumn();
             //if(ImGui::SpinDouble("", &pitch, m_step, m_stepFast, "%.2f")){
-            if(ImGui::Input("##pitch", pitch)){
+            if(im::input("##pitch", pitch)){
                 proxy->orientation(SET, PITCH, pitch);
             }
             ImGui::TableNextColumn();
             //if(ImGui::SpinDouble("", &roll, m_step, m_stepFast, "%.2f")){
-            if(ImGui::Input("##roll", roll)){
+            if(im::input("##roll", roll)){
                 proxy->orientation(SET, ROLL, roll);
             }
 
@@ -116,7 +118,7 @@ namespace yq::tachyon {
             ImGui::EndTable();
         }
             
-        if(ImGui::Input("##orientation", orientation)){
+        if(im::input("##orientation", orientation)){
             if(orientation.length²() <= 1e-12){
                 orientation = IDENTITY;
             } else {

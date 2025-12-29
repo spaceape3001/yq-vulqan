@@ -10,6 +10,7 @@
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/api/ThreadData.hpp>
 #include <yq/tachyon/command/sim/SetOverclockCommand.hpp>
+#include <yq/tachyon/im/input_double.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ThreadOverclockEditUI)
@@ -59,12 +60,10 @@ namespace yq::tachyon {
         if(!snap)
             return;
         
-        static const ImGui::InputDoubleOptions kOptions = {
-            .format = "%.4lf"
-        };
-        
         double  v   = snap->overclock;
-        if(ImGui::Input("##Overclock", v, kOptions))
+        if(im::input("##Overclock", v, {
+            .format = "%.4lf"
+        }))
             send(new SetOverclockCommand({.target=m_sendTo}, v));
     }
 }

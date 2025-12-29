@@ -7,6 +7,7 @@
 #include "InnerTessellation1UI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/input_double.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PInnerTessellation1.hpp>
 
@@ -41,8 +42,7 @@ namespace yq::tachyon {
             return ;
             
         Vector1D    v   = p->inner_tessellation();
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::Input("##inner_tessellation", v))
+        if(im::input("##inner_tessellation", v))
             p -> inner_tessellation(SET, v);
     }
 }

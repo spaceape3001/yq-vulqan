@@ -7,6 +7,7 @@
 #include "Position4UI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/input_double.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PPosition4.hpp>
 
@@ -41,8 +42,7 @@ namespace yq::tachyon {
             return ;
             
         Vector4D    v   = p->position();
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::Input("##position", v))
+        if(im::input("##position", v))
             p -> position(SET, v);
     }
 }

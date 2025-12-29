@@ -11,7 +11,7 @@
 #include <yq/typedef/string_vectors.hpp>
 
 namespace yq::tachyon::im {
-    struct lineedit_options_t {
+    struct lineedit_t {
         const char*             drag            = nullptr;
         ImGuiDragDropFlags      drag_flags      = 0;
         string_view_vector_t    drop;
@@ -25,8 +25,10 @@ namespace yq::tachyon::im {
         Changed,
         Browse
     };
+    
+    bool            lineedit(const char* label, std::string&, const lineedit_t& opts={});
+    BrowseResult    lineedit(browse_k, const char* label, std::string&, const lineedit_t& opts={});
 
-    bool            lineedit(const char* label, std::string&, const lineedit_options_t& opts={});
-    BrowseResult    lineedit(browse_k, const char* label, std::string&, const lineedit_options_t& opts={});
+
 }
 

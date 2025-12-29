@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "enum.hpp"
+#include "combo_enum.hpp"
 #include "imgui_internal.h"
 
 namespace yq::tachyon::im {

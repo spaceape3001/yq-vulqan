@@ -49,8 +49,8 @@ namespace yq::tachyon {
         
         std::string     v = to_string(p->mesh(URL));
         switch(im::lineedit(BROWSE, "##mesh", v, {
-            .drag       = "mesh_url",
-            .drop       = { "mesh_url" },
+            .drag       = "url",
+            .drop       = { "url" },
             .flags      = ImGuiInputTextFlags_EnterReturnsTrue,
             .labelless  = true
         })){

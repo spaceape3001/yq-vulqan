@@ -7,6 +7,7 @@
 #include "Scale2UI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/input_double.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PScale2.hpp>
 
@@ -41,8 +42,7 @@ namespace yq::tachyon {
             return ;
             
         Vector2D    v   = p->scale();
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::Input("##scale", v))
+        if(im::input("##scale", v))
             p -> scale(SET, v);
     }
 }

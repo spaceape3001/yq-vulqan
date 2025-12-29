@@ -50,8 +50,8 @@ namespace yq::tachyon {
 
         std::string     v = to_string(p->color_profile(URL));
         switch(im::lineedit(BROWSE, "##color_profile", v, {
-            .drag       = "color_profile_url",
-            .drop       = { "color_profile_url" },
+            .drag       = "url",
+            .drop       = { "url" },
             .flags      = ImGuiInputTextFlags_EnterReturnsTrue,
             .labelless  = true
         })){

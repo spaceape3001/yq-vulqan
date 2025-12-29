@@ -6,14 +6,14 @@
 
 #include "SpaceCameraRemote.hpp"
 #include <yq/assetvk/control/Orientation3Control.hpp>
+#include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Camera3.hpp>
 #include <yq/tachyon/api/Camera3Data.hpp>
 #include <yq/tachyon/api/Spatial3.hpp>
 #include <yq/tachyon/api/Spatial3Data.hpp>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
-#include <yq/tachyon/MyImGui.hpp>
-#include <yq/tachyon/logging.hpp>
+#include <yq/tachyon/im/input_double.hpp>
 
 #include <yq/tachyon/proxy/POrientation3.hpp>
 #include <yq/tachyon/proxy/PPosition3.hpp>
@@ -148,7 +148,7 @@ namespace yq::tachyon {
             return ;
             
         Vector3D        position    = pos->position();
-        if(ImGui::Input("", position))
+        if(im::input("##position", position))
             pos->position(SET, position);
 
         if(m_orientation)

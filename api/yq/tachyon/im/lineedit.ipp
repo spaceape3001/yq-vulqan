@@ -11,7 +11,7 @@
 #include "misc/cpp/imgui_stdlib.h"
 
 namespace yq::tachyon::im {
-    bool            lineedit(const char* label, std::string&v, const lineedit_options_t& opts)
+    bool            lineedit(const char* label, std::string&v, const lineedit_t& opts)
     {
         if(opts.labelless)
             ImGui::SetNextItemWidth(-1);
@@ -36,7 +36,7 @@ namespace yq::tachyon::im {
         return ret;
     }
     
-    BrowseResult    lineedit(browse_k, const char* label, std::string&v, const lineedit_options_t& opts)
+    BrowseResult    lineedit(browse_k, const char* label, std::string&v, const lineedit_t& opts)
     {
         BrowseResult    ret = BrowseResult::None;
         ImGui::PushID(label);
@@ -48,4 +48,5 @@ namespace yq::tachyon::im {
         ImGui::PopID();
         return ret;
     }
+
 }

@@ -7,6 +7,7 @@
 #include "RangeWUI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/input_double.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PRangeW.hpp>
 
@@ -41,8 +42,7 @@ namespace yq::tachyon {
             return ;
             
         RangeD    v   = p->w_range();
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::Input("##w_range", v))
+        if(im::input("##w_range", v))
             p -> w_range(SET, v);
     }
 }

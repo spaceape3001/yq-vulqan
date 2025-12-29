@@ -10,6 +10,7 @@
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/tachyon/api/ThreadData.hpp>
 #include <yq/tachyon/command/sim/SetTimeCommand.hpp>
+#include <yq/tachyon/im/input_mks_double.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ThreadTimeEditUI)
@@ -59,12 +60,11 @@ namespace yq::tachyon {
         if(!data)
             return;
         
-        static const ImGui::InputDoubleOptions kOptions = {
-            .format = "%.4lf"
-        };
-        
-        double  v   = data->time.value;
-        if(ImGui::Input("##Time", v, kOptions))
+        unit::Second v   = data->time;
+        if(im::input("##Time", v, {
+            .format = "%.4lf",
+            .labelless = false
+        }))
             send(new SetTimeCommand({.target=m_sendTo}, v));
     }
 }

@@ -11,6 +11,8 @@
 #include <yq/assetvk/command/circular3/Circular3RadiusCommand.hpp>
 #include <yq/assetvk/spatial/CircularSpatial3.hpp>
 #include <yq/assetvk/spatial/CircularSpatial3Data.hpp>
+#include <yq/tachyon/im/input_mks_double.hpp>
+#include <yq/tachyon/im/input_scaled_double.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::CircularSpatial³UI)
@@ -46,8 +48,7 @@ namespace yq::tachyon {
         if(!sn)
             return;
         Degree  d   = sn->angle;
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::Input("##Angle", d)){
+        if(im::input("##Angle", d)){
             // change it
         }
     }
@@ -73,10 +74,8 @@ namespace yq::tachyon {
             return;
             
         unit::Second s    = sn->period;
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::Input("##Period", s)){
+        if(im::input("##Period", s))
             send(new Circular³PeriodCommand({.target=sn->self}, { s }));
-        }
     }
     
     void    CircularSpatial³UI::radius()
@@ -86,10 +85,8 @@ namespace yq::tachyon {
             return;
         
         double r    = sn->radius;
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::InputDouble("##Radius", &r)){
+        if(im::input("##Radius", r))
             send(new Circular³RadiusCommand({.target=sn->self}, r));
-        }
     }
 
     const CircularSpatial³Snap*   CircularSpatial³UI::snap() const

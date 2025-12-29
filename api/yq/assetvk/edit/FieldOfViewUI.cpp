@@ -8,6 +8,7 @@
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/input_scaled_double.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PFieldOfView.hpp>
 
@@ -42,8 +43,7 @@ namespace yq::tachyon {
             return ;
             
         unit::Degree    v   = p->field_of_view();
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::Input("##fov", v))
+        if(im::input("##fov", v))
             p -> field_of_view(SET, v);
     }
 }

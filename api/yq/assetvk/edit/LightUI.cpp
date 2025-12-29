@@ -9,6 +9,7 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Light.hpp>
 #include <yq/tachyon/api/LightData.hpp>
+#include <yq/tachyon/im/input_float.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/command/light/LightColorCommand.hpp>
 #include <yq/tachyon/command/light/LightIntensityCommand.hpp>
@@ -57,8 +58,7 @@ namespace yq::tachyon {
         if(!sn)
             return;
         float   v   = sn->intensity;
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::InputFloat("##intensity", &v))
+        if(im::input("##intensity", v))
             send(new LightIntensityCommand({.target=sn->self}, v));
     }
     

@@ -7,6 +7,8 @@
 #include "Vertices3UI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/input_double.hpp>
+#include <yq/tachyon/im/input_float.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/ui/UIStyle.hpp>
 #include <yq/tachyon/proxy/PVertices3.hpp>
@@ -63,9 +65,9 @@ namespace yq::tachyon {
         if(normals)
             ++numCols;
             
-        ImGui::InputDoubleOptions  vertOpts{.format="%.3lf"};
-        ImGui::InputFloatOptions   uvOpts;
-        ImGui::InputFloatOptions   normalOpts;
+        im::input_double_t  vertOpts{.format="%.3lf"};
+        im::input_float_t   uvOpts;
+        im::input_float_t   normalOpts;
         ImGuiColorEditFlags colorFlags  = 0;
         
         
@@ -101,26 +103,20 @@ namespace yq::tachyon {
                 if(ImGui::TableNextColumn()){
                     std::string id = std::format("##Vertex{}.{}", bound().id, n);
                     Vector3D    v   = p->vertex(n, POINT);
-                    ImGui::SetNextItemWidth(-1);
-                    if(ImGui::Input(id.c_str(), v, vertOpts)){
+                    if(im::input(id.c_str(), v, vertOpts))
                         p->vertex(n, SET, POINT, v);
-                    }
                 }
                 if(texs && ImGui::TableNextColumn()){
                     std::string id = std::format("##TexUV{}.{}", bound().id, n);
                     UV2F        v   = p->vertex(n, TEX);
-                    ImGui::SetNextItemWidth(-1);
-                    if(ImGui::Input(id.c_str(), v, uvOpts)){
+                    if(im::input(id.c_str(), v, uvOpts))
                         p->vertex(n, SET, TEX, v);
-                    }
                 }
                 if(normals && ImGui::TableNextColumn()){
                     std::string id = std::format("##Normal{}.{}", bound().id, n);
                     Vector3F    v   = p->vertex(n, NORMAL);
-                    ImGui::SetNextItemWidth(-1);
-                    if(ImGui::Input(id.c_str(), v, normalOpts)){
+                    if(im::input(id.c_str(), v, normalOpts))
                         p->vertex(n, SET, NORMAL, v);
-                    }
                 }
                 if(color && ImGui::TableNextColumn()){
                     std::string id = std::format("##Color{}.{}", bound().id, n);

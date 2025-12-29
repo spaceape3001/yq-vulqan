@@ -8,6 +8,7 @@
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/input_double.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PNearPlane.hpp>
 
@@ -42,8 +43,7 @@ namespace yq::tachyon {
             return ;
             
         double    v   = p->near_plane();
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::Input("##near", v))
+        if(im::input("##near", v))
             p -> near_plane(SET, v);
     }
 }

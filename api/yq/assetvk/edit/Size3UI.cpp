@@ -7,6 +7,7 @@
 #include "Size3UI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/input_double.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PSize3.hpp>
 
@@ -41,8 +42,7 @@ namespace yq::tachyon {
             return ;
             
         Size3D    v   = p->size();
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::Input("##size", v))
+        if(im::input("##size", v))
             p -> size(SET, v);
     }
 }

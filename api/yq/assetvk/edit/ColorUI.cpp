@@ -10,6 +10,7 @@
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PColor.hpp>
+#include <yq/tachyon/im/color.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ColorUI)
 
@@ -42,8 +43,7 @@ namespace yq::tachyon {
             return ;
             
         RGBA4F    v   = p->color();
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::ColorEdit("##color", v))
+        if(im::color("##color", v))
             p -> color(SET, v);
     }
 }

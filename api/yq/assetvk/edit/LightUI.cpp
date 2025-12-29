@@ -9,6 +9,7 @@
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Light.hpp>
 #include <yq/tachyon/api/LightData.hpp>
+#include <yq/tachyon/im/color.hpp>
 #include <yq/tachyon/im/input_float.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/command/light/LightColorCommand.hpp>
@@ -47,8 +48,7 @@ namespace yq::tachyon {
         if(!sn)
             return;
         RGB3F   v   = sn->color;
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::ColorEdit("##color", v))
+        if(im::color("##color", v))
             send(new LightColorCommand({.target=sn->self}, v));
     }
 

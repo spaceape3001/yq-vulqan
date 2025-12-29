@@ -6,6 +6,7 @@
 
 #include "im/button.ipp"
 #include "im/checkbox.ipp"
+#include "im/color.ipp"
 #include "im/dragdrop.ipp"
 #include "im/dummy.ipp"
 #include "im/combo_enum.ipp"

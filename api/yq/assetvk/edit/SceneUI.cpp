@@ -10,6 +10,7 @@
 #include <yq/tachyon/api/Scene.hpp>
 #include <yq/tachyon/api/SceneData.hpp>
 #include <yq/tachyon/command/color/SetBgColorCommand.hpp>
+#include <yq/tachyon/im/color.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/logging.hpp>
 
@@ -49,8 +50,7 @@ namespace yq::tachyon {
         if(!ss)
             return ;
         RGBA4F          v   = ss->bgcolor;
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::ColorEdit("##BgColor", v)){
+        if(im::color("##BgColor", v)){
             send(new SetBgColorCommand({.target=bound()}, v));
         }
     }

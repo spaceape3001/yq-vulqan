@@ -8,6 +8,7 @@
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/color.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PBgColor.hpp>
 
@@ -42,8 +43,7 @@ namespace yq::tachyon {
             return ;
             
         RGBA4F    v   = p->bgcolor();
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::ColorEdit("##bgcolor", v))
+        if(im::color("##color", v))
             p -> bgcolor(SET, v);
     }
 }

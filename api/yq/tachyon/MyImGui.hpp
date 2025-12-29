@@ -69,19 +69,6 @@ namespace ImGui {
     
     //  For multiple defaulted parameters, we'll try to lean toward the structs
 
-
-    ///////////////////////////
-    //  COLOR EDITS
-    ///////////////////////////
-    
-    #if 0 // From ImGui.h
-    IMGUI_API bool          ColorEdit3(const char* label, float col[3], ImGuiColorEditFlags flags = 0);
-    IMGUI_API bool          ColorEdit4(const char* label, float col[4], ImGuiColorEditFlags flags = 0);
-    #endif
-
-    bool    ColorEdit(const char* label, yq::RGB3F&, ImGuiColorEditFlags flags=0);
-    bool    ColorEdit(const char* label, yq::RGBA4F&, ImGuiColorEditFlags flags=0);
-
     ///////////////////////////
     //  DRAG/SLIDERS
     ///////////////////////////

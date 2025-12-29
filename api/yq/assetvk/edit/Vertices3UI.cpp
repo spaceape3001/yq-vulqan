@@ -9,6 +9,7 @@
 
 #include <yq/math/UV.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/color.hpp>
 #include <yq/tachyon/im/input_double.hpp>
 #include <yq/tachyon/im/input_float.hpp>
 #include <yq/tachyon/im/text.hpp>
@@ -124,8 +125,7 @@ namespace yq::tachyon {
                 if(color && ImGui::TableNextColumn()){
                     std::string id = std::format("##Color{}.{}", bound().id, n);
                     RGBA4F  v   = p->vertex(n, COLOR);
-                    ImGui::SetNextItemWidth(-1);
-                    if(ImGui::ColorEdit(id.c_str(), v, colorFlags)){
+                    if(im::color(id.c_str(), v, {.flags=colorFlags})){
                         p->vertex(n, SET, COLOR, v);
                     }
                 }

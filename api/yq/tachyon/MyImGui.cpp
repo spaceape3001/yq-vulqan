@@ -49,18 +49,6 @@ namespace ImGui {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    bool    ColorEdit(const char* label, yq::RGB3F&v, ImGuiColorEditFlags flags)
-    {
-        return ColorEdit3(label, &v.red, flags);
-    }
-    
-    bool    ColorEdit(const char* label, yq::RGBA4F&v, ImGuiColorEditFlags flags)
-    {
-        return ColorEdit4(label, &v.red, flags);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
     bool    Drag(const char* label, double*v, const DragDoubleOptions& options)
     {
         return DragScalar(label, ImGuiDataType_Double, v, options.speed, &options.min, &options.max, options.format, options.flags );

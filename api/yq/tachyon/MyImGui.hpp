@@ -8,29 +8,12 @@
 
 #include <yq/color/RGBA.hpp>
 #include <yq/color/RGB.hpp>
-#include <yq/core/Enum.hpp>
-#include <yq/core/Tristate.hpp>
-#include <yq/math/glm.hpp>
 #include <yq/shape/Size2.hpp>
-#include <yq/typedef/quaternion3.hpp>
-#include <yq/typedef/range.hpp>
-#include <yq/typedef/rectangle2.hpp>
-#include <yq/typedef/rgb.hpp>
-#include <yq/typedef/rgba.hpp>
-#include <yq/typedef/size2.hpp>
-#include <yq/typedef/size3.hpp>
-#include <yq/typedef/size4.hpp>
-#include <yq/typedef/tensor44.hpp>
-#include <yq/typedef/uv.hpp>
-#include <yq/typedef/uvw.hpp>
-#include <yq/units.hpp>
-#include <yq/vector/Vector1.hpp>
+#include <yq/typedef/vector1.hpp>
 #include <yq/vector/Vector2.hpp>
-#include <yq/vector/Vector3.hpp>
+#include <yq/typedef/vector3.hpp>
 #include <yq/vector/Vector4.hpp>
 #include <yq/tachyon/enum/UIFlags.hpp>
-#include <yq/tachyon/typedef/texture.hpp>
-#include <yq/tachyon/api/ID.hpp>
 
 #define IM_VEC2_CLASS_EXTRA                                                                 \
         constexpr ImVec2(const yq::Vector2D& v) : x((float) v.x), y((float) v.y) {}         \

@@ -6,6 +6,8 @@
 
 #include "Vertices3UI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
+
+#include <yq/math/UV.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/im/input_double.hpp>
 #include <yq/tachyon/im/input_float.hpp>
@@ -13,7 +15,7 @@
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/ui/UIStyle.hpp>
 #include <yq/tachyon/proxy/PVertices3.hpp>
-#include <yq/math/UV.hpp>
+#include <yq/vector/Vector3.hpp>
 #include <format>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Vertices³UI)

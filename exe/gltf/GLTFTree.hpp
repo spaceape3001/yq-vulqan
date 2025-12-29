@@ -9,6 +9,7 @@
 #include <yq/tachyon/ui/UIElement.hpp>
 #include <yq/tachyon/ui/UIWindow.hpp>
 #include <yq/tachyon/typedef/gltf.hpp>
+#include <filesystem>
 
 using namespace yq;
 using namespace yq::tachyon;

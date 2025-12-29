@@ -6,21 +6,11 @@
 
 #include <cstdint>
 
-static_assert(sizeof(void*) == sizeof(uint64_t), "Breakage means ImGui textures will break (and we want text, right?)");
+#include "MyImGui.hpp"
 
-#include <yq/tachyon/MyImGui.hpp>
 #include "imgui_internal.h"
 #include <yq/color/RGB.hpp>
 #include <yq/color/RGBA.hpp>
-#include <yq/core/Any.hpp>
-#include <yq/math/glm.hpp>
-#include <yq/math/UV.hpp>
-#include <yq/shape/Rectangle2.hpp>
-#include <yq/shape/Size2.hpp>
-#include <yq/shape/Size3.hpp>
-#include <yq/shape/Size4.hpp>
-#include <yq/tensor/Tensor44.hpp>
-#include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hpp>
 #include <yq/vector/Vector4.hpp>

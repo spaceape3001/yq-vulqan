@@ -137,29 +137,6 @@ namespace ImGui {
     bool    Drag3(const char* label, double v[3], const DragDoubleOptions& options={});
     bool    Drag4(const char* label, double v[4], const DragDoubleOptions& options={});
 
-
-    ///////////////////////////
-    //  INPUTS (UNSIGNED INTS)
-    ///////////////////////////
-
-    struct InputUnsignedOptions {
-        ImGuiInputTextFlags         flags       = 0;
-        const char*                 format      = "%d";
-        unsigned                    step        = 0;
-        unsigned                    step_fast   = 0;
-    };
-    
-    bool    Input(const char* label, unsigned&, const InputUnsignedOptions& options={});
-    bool    Input(const char* label, yq::Vector1U&, const InputUnsignedOptions& options={});
-    bool    Input(const char* label, yq::Vector2U&, const InputUnsignedOptions& options={});
-    bool    Input(const char* label, yq::Vector3U&, const InputUnsignedOptions& options={});
-    bool    Input(const char* label, yq::Vector4U&, const InputUnsignedOptions& options={});
-
-    bool    Input2(const char* label, unsigned[2], const InputUnsignedOptions& options);  
-    bool    Input3(const char* label, unsigned[3], const InputUnsignedOptions& options);  
-    bool    Input4(const char* label, unsigned[4], const InputUnsignedOptions& options);  
-
-
     ///////////////////////////
     //  Spacing
     ///////////////////////////

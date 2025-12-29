@@ -5,10 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "input_double.hpp"
+#include <yq/math/Range.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/shape/Size3.hpp>
 #include <yq/shape/Size4.hpp>
 #include <yq/vector/Quaternion3.hpp>
+#include <yq/vector/Vector1.hpp>
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hpp>
 #include <yq/vector/Vector4.hpp>

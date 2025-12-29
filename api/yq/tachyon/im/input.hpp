@@ -13,3 +13,4 @@
 #include <yq/tachyon/im/input_scaled_double.hpp>
 #include <yq/tachyon/im/input_scaled_float.hpp>
 #include <yq/tachyon/im/input_text.hpp>
+#include <yq/tachyon/im/input_uint32.hpp>

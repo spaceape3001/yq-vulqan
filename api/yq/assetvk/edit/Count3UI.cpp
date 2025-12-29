@@ -7,6 +7,7 @@
 #include "Count3UI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
+#include <yq/tachyon/im/input_uint32.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PCount3.hpp>
 
@@ -41,8 +42,7 @@ namespace yq::tachyon {
             return ;
             
         Vector3U    v   = p->count();
-        ImGui::SetNextItemWidth(-1);
-        if(ImGui::Input("##count", v))
+        if(im::input("##count", v))
             p -> count(SET, v);
     }
 }

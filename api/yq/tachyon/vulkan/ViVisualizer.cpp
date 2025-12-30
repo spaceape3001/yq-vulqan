@@ -100,7 +100,7 @@ namespace yq::tachyon {
         wait_idle();
         m_swapchain     = new ViSwapchain(*this, cfg);
         m_semaphoreIndex    = 0;
-        graphics_processor_expand(m_swapchain->image_count());
+        graphics_processor_expand(m_swapchain->image_count()+1);
         graphics_processor(0) -> execute([&](ViProcessor&p){
             wait_idle();
             VqCommandBufferBeginInfo beginInfo;
@@ -243,7 +243,7 @@ namespace yq::tachyon {
             return create_error<"Unexpected error">();
         }
 
-        ViGraphicsProcessor*  gp  = graphics_processor(m_frameImageIndex);
+        ViGraphicsProcessor*  gp  = graphics_processor(m_semaphoreIndex);
         if(!gp){
             vizAlert << "ViVisualizer.draw(): No graphics processor on image index " << m_frameImageIndex;
             return create_error<"ViVisualizer.draw(): Abnormal situation... no graphics processor">();

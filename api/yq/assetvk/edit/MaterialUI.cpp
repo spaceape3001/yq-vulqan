@@ -13,6 +13,7 @@
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/command/material/SetMaterialSpecCommand.hpp>
 #include <yq/tachyon/im/lineedit.hpp>
+#include <yq/tachyon/im/text.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/proxy/PMaterial.hpp>
 #include <misc/cpp/imgui_stdlib.h>

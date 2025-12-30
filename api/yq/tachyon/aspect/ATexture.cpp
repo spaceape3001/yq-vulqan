@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ATexture.hpp"
+#include <yq/tachyon/asset/Raster.hpp>
 #include <yq/tachyon/asset/Texture.hpp>
 #include <yq/tachyon/command/texture/SetTextureCommand.hpp>
 #include <yq/tachyon/command/texture/SetTextureSpecCommand.hpp>
@@ -30,6 +31,13 @@ namespace yq::tachyon {
         return m_textureUrl;
     }
 
+    TextureCPtr ATexture::texture(create_k, const RasterCPtr& ras)
+    {
+        if(!ras)
+            return {};
+        return new Texture(ras);
+    }
+
     void        ATexture::texture(emit_k)
     {
         send(new SetTextureEvent({.source=typed()}, m_texture, m_textureUrl));
@@ -49,7 +57,17 @@ namespace yq::tachyon {
         if(u.empty()){
             m_texture   = {};
         } else {
-            m_texture   = Texture::IO::load(u);
+        
+            auto res    = Resource::resource_load({&meta<Texture>(), &meta<Raster>()}, u);
+            if(res.valid()){
+                if(const Raster* ras = dynamic_cast<const Raster*>(res.ptr())){
+                    m_texture   = texture(CREATE, ras);
+                } else if(const Texture* tex = dynamic_cast<const Texture*>(res.ptr())){
+                    m_texture   = tex;
+                } else
+                    m_texture   = {};
+            } else
+                m_texture   = {};
         }
         mark();
         texture(EMIT);

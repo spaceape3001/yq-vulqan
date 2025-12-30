@@ -45,7 +45,7 @@
 #include <yq/assetvk/spatial/SimpleSpatial3.hpp>
 #include <yq/assetvk/tweak/OriginCameraTweak.hpp>
 #include <yq/assetvk/ui/UIFrameMetrics.hpp>
-#include <yq/assetvk/ui/UIBuildableMetaList.hpp>
+#include <yq/assetvk/ui/UIBuildableMetaListWriter.hpp>
 #include <yq/assetvk/ui/UISimpleTree.hpp>
 #include <yq/assetvk/ui/UITachyonEditor.hpp>
 #include <yq/assetvk/widget/FrameInspector.hpp>
@@ -75,6 +75,7 @@
 #include <yq/tachyon/api/Rendered3Data.hpp>
 #include <yq/tachyon/api/Scene.hpp>
 #include <yq/tachyon/api/SceneData.hpp>
+#include <yq/tachyon/app/Application.hpp>
 #include <yq/tachyon/app/Viewer.hpp>
 
 #include <yq/tachyon/asset/Raster.hpp>
@@ -254,6 +255,13 @@ void SceneEditor::init_slots()
     w.slot(&SceneEditor::on_viewer_screenshot_reply);
 }
 
+/*
+    Improvement ideas:
+    
+    1) docking pads (maybe even imgui's docking branch)
+    2) secondary windows (so one/two can be "editors" and the other a scene viewer)
+*/
+
 void SceneEditor::init_ui()
 {
     auto w          = writer<SceneEditor>();
@@ -264,19 +272,22 @@ void SceneEditor::init_ui()
     /////////////////////////////////
     //  CONTROL PANEL
 
-    auto controlPanel       = app.make<UIPanel>("Control Panel", UIFlags{ UIFlag::NoCollapse });
+    auto controlPanel       = app.make<UIPanel>("Control Panel", UIFlags{ UIFlag::NoCollapse /* , UIFlag::Debug */ });
     //auto controlPanel       = app.make<ControlPanelUI>();
     {
         controlPanel.uid("ControlPanel");
         controlPanel.width(MIN, PIVOT, 0.1);
         controlPanel.width(MAX, PIVOT, 0.8);
         controlPanel.width(START, PIVOT, 0.2);
+        controlPanel.height(MIN, PIVOT, 1.0);
         auto controlTree        = controlPanel.make<UISimpleTree>();
 
         {
             auto csMetrics          = controlTree.section("Metrics");
             csMetrics.make<UIFrameMetrics>();
         }
+        
+        //  Might look at docking pads, making these panels "dockable" type of thing, moving them around.
 
         {
             auto csCameras          = controlTree.section("Cameras").make<UISimpleTree>();
@@ -448,24 +459,31 @@ void SceneEditor::init_ui()
     /////////////////////////////////
     //  LUA
     
-    auto luaPanel  = app.make<LuaWindowUI>("Lua Panel", UIFlags({UIFlag::NoCollapse, UIFlag::NoResize, UIFlag::Invisible, UIFlag::NoBackground}));
+    auto luaPanel  = app.make<LuaWindowUI>("Lua Panel", UIFlags({ UIFlag::NoCollapse, UIFlag::NoResize, UIFlag::Invisible, UIFlag::NoBackground}));
     luaPanel.uid("LuaWindow");
-    luaPanel.top(PIVOT, 0.75);
+    luaPanel.top(PIVOT, 0.6);
+    //luaPanel.height(MIN, PIVOT, 0.1);
+    //luaPanel.height(MAX, PIVOT, 0.9);
+    //luaPanel.height(START, PIVOT, 0.2);
     luaPanel.left("ControlPanel", RIGHT);
     
 
     /////////////////////////////////
     //  FRAME
 
-    auto framePanel         = app.make<UIPanel>("Frame Inspector", UIFlags({UIFlag::NoCollapse, UIFlag::Invisible}));
-    framePanel.uid("FramePanel");
-    framePanel.bottom("LuaWindow", TOP);
-    framePanel.left(PIVOT, 0.75);
+    //auto framePanel         = app.make<UIPanel>("Frame Inspector", UIFlags({UIFlag::NoCollapse, UIFlag::Invisible}));
+    //framePanel.uid("FramePanel");
+    //framePanel.bottom("LuaWindow", TOP);
+    //framePanel.left(PIVOT, 0.75);
     
+    /////////////////////////////////
+    //  "ROCKET PANEL"
+    
+
     /////////////////////////////////
     //  TIMEBAR
 
-    auto timeBar        = app.toolbar(Cardinal::NNE, "TimeBar");
+    auto timeBar        = app.toolbar(Cardinal::SSE, "TimeBar");
     {
         timeBar.make<ThreadTimeEditUI>(EDIT);
         timeBar.image("openicon/icons/png/32x32/actions/media-playback-pause-8.png", {24, 24}).action(&SceneEditor::cmd_time_pause);
@@ -499,7 +517,7 @@ void SceneEditor::init_ui()
     {
         viewMenu.checkbox(VISIBLE, controlPanel);
         viewMenu.checkbox(VISIBLE, luaPanel);
-        viewMenu.checkbox(VISIBLE, framePanel);
+        //viewMenu.checkbox(VISIBLE, framePanel);
         viewMenu.checkbox(VISIBLE, timeBar);
     }
     
@@ -544,6 +562,8 @@ void SceneEditor::init_ui()
     
     auto windowMenu        = menuBar.menu("Window");
     {
+        windowMenu.menuitem("New Window").action(&SceneEditor::cmd_window_new);
+        windowMenu.menuitem("Save Layout (TODO)");
     }
     
     auto helpMenu          = menuBar.menu("Help");
@@ -558,12 +578,19 @@ void SceneEditor::init_ui()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SceneEditor::SceneEditor(PostStartupFN&& mv) : m_startup(std::move(mv))
+SceneEditor::SceneEditor() : SceneEditor({}, {})
 {
-    m_flags |= F::Gesture;
 }
 
-SceneEditor::SceneEditor()
+SceneEditor::SceneEditor(const Param& p) : SceneEditor(p, {})
+{
+}
+
+SceneEditor::SceneEditor(PostStartupFN&& fn) : SceneEditor(Param(), std::move(fn))
+{
+}
+
+SceneEditor::SceneEditor(const Param& p, PostStartupFN&& fn) : CompositeWidget(p), m_filepath(p.file), m_startup(std::move(fn))
 {
     m_flags |= F::Gesture;
 }
@@ -1160,6 +1187,16 @@ void    SceneEditor::SceneEditor::cmd_time_resume()
     send(new ResumeCommand({.target=sEdit}));
 }
 
+void    SceneEditor::cmd_window_new()
+{
+    Param   p;
+    p.file  = m_filepath;
+    
+    // crashes the app....
+    //Application::app()->create(VIEWER, create<SceneEditor>(p));
+    
+    yNotice() << "Requested function, 'cmd_window_new' has not yet been implemented, check back next Tuesday";
+}
 
 void    SceneEditor::imgui(ViContext&u) 
 {

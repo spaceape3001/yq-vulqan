@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/tachyon/api/Rendered3Data.hpp>
+
+namespace yq::tachyon {
+    struct HeightField³Snap : public Rendered³Snap {
+    
+        HeightField³Snap(){}
+        virtual ~HeightField³Snap(){}
+    };
+}

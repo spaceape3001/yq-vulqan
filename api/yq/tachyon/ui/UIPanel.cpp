@@ -122,16 +122,17 @@ namespace yq::tachyon {
 
         if(m_flags(UIFlag::Debug)){
             uiInfo << "UIPanel(" << title() << ")::render() calculations:\n"
+                   << "  viewport   : " << ctx.available << '\n'
                    << "  bottom     : " << b << '\n'
                    << "  height     : " << h << '\n'
-                   << "  height min : " << h << '\n'
-                   << "  height max : " << h << '\n'
+                   << "  height min : " << hn << '\n'
+                   << "  height max : " << hx << '\n'
                    << "  left       : " << l << '\n'
                    << "  right      : " << r << '\n'
                    << "  top        : " << t << '\n'
                    << "  width      : " << w << '\n'
-                   << "  width max  : " << wx << '\n'
                    << "  width min  : " << wn << '\n'
+                   << "  width max  : " << wx << '\n'
             ;
         }
 

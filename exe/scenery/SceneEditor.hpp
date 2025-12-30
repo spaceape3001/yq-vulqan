@@ -40,8 +40,6 @@ namespace yq::tachyon {
     class FrameInspector;
 }
 
-namespace IGFD { class FileDialog; }
-
 using namespace yq;
 using namespace yq::tachyon;
 
@@ -86,12 +84,16 @@ public:
     static void             init_meta();
 
     struct Param : public CompositeWidget::Param {
+        std::filesystem::path   file;   // might do a mini "project" or something... make this trackable
+    
         // Called end of setup() right *before* going live
-        PostStartupFN           startup;
+        //PostStartupFN           startup;
     };
 
     SceneEditor();
+    SceneEditor(const Param&);
     SceneEditor(PostStartupFN&& fn);
+    SceneEditor(const Param&, PostStartupFN&& fn);
     ~SceneEditor();
     
     //bool    menubar(enabled_k) const override { return true; }
@@ -131,6 +133,8 @@ public:
     void                cmd_time_pause();
     void                cmd_time_resume();
     
+    void                cmd_window_new();
+    //void                cmd_window_save_layout();
 
     CameraID            selected(camera_k) const { return m_camera.selected; }
     ControllerID        selected(controller_k) const { return m_controller.selected; }

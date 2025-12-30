@@ -5,11 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIMetaList.hpp"
+#include "UIMetaListWriter.hpp"
+
 #include <yq/assetvk/event/panel/MetaSelectionChangedEvent.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
 #include <yq/tachyon/api/Widget.hpp>
 #include <yq/tachyon/asset/Texture.hpp>
+#include <yq/tachyon/im/dragdrop.hpp>
 #include <yq/tachyon/im/text.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 #include <yq/tachyon/ui/UIStyle.hpp>
@@ -36,7 +39,7 @@ namespace yq::tachyon {
     {
     }
 
-    UIMetaList::UIMetaList(const UIMetaList& cp) : UIElement(cp), m_rows(cp.m_rows), m_title(cp.m_title)
+    UIMetaList::UIMetaList(const UIMetaList& cp) : UIElement(cp), m_rows(cp.m_rows), m_title(cp.m_title), m_drag(cp.m_drag)
     {
     }
 
@@ -91,9 +94,21 @@ namespace yq::tachyon {
                 ImGui::TableNextRow();
                 if(ImGui::TableNextColumn() && r.tex){
                     ImGui::Image(r.tex, iconSize);
+
+                    if(!m_drag.empty() && im::begin_drag_source(ImGuiDragDropFlags_SourceAllowNullID)){
+                        im::set_drag_payload(m_drag.c_str(), r.info->id());
+                        im::text(r.label);
+                        im::end_drag_source();
+                    }
                 }
                 if(ImGui::TableNextColumn()){
                     if(ImGui::Selectable(r.label.c_str(), r.info == m_selected)){
+                        if(!m_drag.empty() && im::begin_drag_source(ImGuiDragDropFlags_SourceAllowNullID)){
+                            im::set_drag_payload(m_drag.c_str(), r.info->id());
+                            im::text(r.label);
+                            im::end_drag_source();
+                        }
+                        
                         doSelect        = true;
                     }
                 }
@@ -144,6 +159,33 @@ namespace yq::tachyon {
                 return is_less(cmp);
             return is_less_igCase(a.label, b.label);
         });
+    }
+    
+    /////////////////////////////////
+    
+    
+    UIMetaListWriter::UIMetaListWriter() = default;
+    UIMetaListWriter::UIMetaListWriter(const UIMetaListWriter&) = default;
+    UIMetaListWriter::~UIMetaListWriter() = default;
+    
+    UIMetaList* UIMetaListWriter::element()
+    {
+        return static_cast<UIMetaList*>(m_ui);
+    }
+    
+    UIMetaListWriter::UIMetaListWriter(UIMetaList* ui) : UIElementWriter(ui)
+    {
+    }
+    
+    UIMetaListWriter  UIMetaListWriter::drag_type(std::string_view sv)
+    {
+        if(Meta::thread_safe_write()){
+            if(UIMetaList* p = element()){
+                p->m_drag   = std::string(sv);
+            }
+        }
+        return *this;
+        
     }
 }
 

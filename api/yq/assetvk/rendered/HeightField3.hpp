@@ -18,6 +18,7 @@
 #include <yq/tachyon/aspect/AOuterTessellation4.hpp>
 #include <yq/tachyon/aspect/ARangeZ.hpp>
 #include <yq/tachyon/aspect/ASize3.hpp>
+#include <yq/tachyon/aspect/ATexture.hpp>
 #include <yq/tachyon/asset/Texture.hpp>
 #include <yq/tachyon/pipeline/Pipeline.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
@@ -25,6 +26,8 @@
 #include <yq/vector/Vector4.hpp>
 
 namespace yq::tachyon {
+
+    struct HeightField³Snap;
 
     /*! Height Field (Render)
     
@@ -42,9 +45,10 @@ namespace yq::tachyon {
         public AMaterial, 
         public AOuterTessellation⁴,
         public ARangeᶻ, 
-        public ASize³ 
+        public ASize³,
+        public ATexture
     {
-        
+        YQ_TACHYON_SNAP(HeightField³Snap)
         YQ_TACHYON_DECLARE(HeightField³, Rendered³)
     public:
     
@@ -85,7 +89,7 @@ namespace yq::tachyon {
     
      
     
-        void    snap(Rendered³Snap&) const;
+        void    snap(HeightField³Snap&) const;
         void    rebuild();
         
         struct Gridder;

@@ -17,6 +17,8 @@ namespace yq::tachyon {
     class VizBase;
     struct RenderedSnap;
 
+    // *MIGHT* need to make these parallel the semaphores (in one more and use the semaphore index)
+
     class ViGraphicsProcessor : public ViProcessor {
     public:
     

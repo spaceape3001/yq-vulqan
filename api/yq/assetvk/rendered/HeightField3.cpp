@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "HeightField3.hpp"
+#include "HeightField3Data.hpp"
 
 #include <yq/color/colors.hpp>
 #include <yq/core/IntRange.hpp>
@@ -30,11 +31,10 @@
 #include <yq/tachyon/aspect/AOuterTessellation4Writer.hxx>
 #include <yq/tachyon/aspect/ARangeZWriter.hxx>
 #include <yq/tachyon/aspect/ASize3Writer.hxx>
+#include <yq/tachyon/aspect/ATextureWriter.hxx>
 #include <yq/vector/Vector4.hxx>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::HeightField³)
-
-
 
 namespace yq::tachyon {
     namespace {
@@ -42,8 +42,6 @@ namespace yq::tachyon {
         static constexpr const uint32_t kT_heightMap        = 3;
         static constexpr const uint32_t kT_colorZ           = 4;
         
-
-            
         static constexpr const PipelineKey   kDebug          = pipekey::DEBUG;
         static constexpr const PipelineKey   kSimple         = pipekey::SIMPLE;
         static constexpr const PipelineKey   kGradient       = pipekey::GRADIENT;
@@ -66,6 +64,7 @@ namespace yq::tachyon {
         AOuterTessellation⁴::init_meta(w);
         ARangeᶻ::init_meta(w);
         ASize³::init_meta(w);
+        ATexture::init_meta(w);
 
         {
             auto& p = w.pipeline(kDebug);
@@ -310,6 +309,9 @@ namespace yq::tachyon {
             m_ubo.data.rgba  = rgba4f(color::Orange);
             set_pipeline(kDebug);
             break;
+        case DrawMode::Material:
+        case DrawMode::Texture:
+            break;
         default:
             m_ubo.data.rgba  = rgba4f(color::Gray);
             set_pipeline(kDebug);
@@ -319,7 +321,7 @@ namespace yq::tachyon {
         m_ubo.update();
     }
 
-    void    HeightField³::snap(Rendered³Snap&sn) const
+    void    HeightField³::snap(HeightField³Snap&sn) const
     {
         Rendered³::snap(sn);
         sn.model.xx = m_size.x;

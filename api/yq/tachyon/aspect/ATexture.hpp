@@ -9,6 +9,7 @@
 #include <yq/net/Url.hpp>
 #include <yq/tachyon/interface/ITexture.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/typedef/raster.hpp>
 
 namespace yq::tachyon {
 
@@ -19,15 +20,15 @@ namespace yq::tachyon {
     class ATexture : public ITexture, public virtual Tachyon::Helper {
     public:
     
-        TextureCPtr         texture() const override;
-        Url                 texture(url_k) const override;
-        virtual void        texture(set_k, const TextureCPtr&) override;
-        virtual void        texture(set_k, const Url&) override;
+        TextureCPtr             texture() const override;
+        Url                     texture(url_k) const override;
+        virtual void            texture(set_k, const TextureCPtr&) override;
+        virtual void            texture(set_k, const Url&) override;
 
-        bool                texture(disabled_k) const { return false; }
-        bool                texture(settable_k) const { return true; }
+        bool                    texture(disabled_k) const { return false; }
+        bool                    texture(settable_k) const { return true; }
 
-        const TextureCPtr& texture(ref_k) const { return m_texture; }
+        const TextureCPtr&      texture(ref_k) const { return m_texture; }
 
     protected:
         TextureCPtr         m_texture;
@@ -38,6 +39,8 @@ namespace yq::tachyon {
         
         ATexture();
         virtual ~ATexture();
+
+        virtual TextureCPtr     texture(create_k, const RasterCPtr&);
 
         virtual void    texture(emit_k);
         

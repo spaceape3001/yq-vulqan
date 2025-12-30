@@ -10,11 +10,13 @@
 
 namespace yq::tachyon {
     class TachyonMeta;
+    class UIMetaListWriter;
 
     // UIShapes
     class UIMetaList : public UIElement {
         YQ_OBJECT_DECLARE(UIMetaList, UIElement)
     public:
+        using Writer = UIMetaListWriter;
 
         static void init_meta();
 
@@ -37,6 +39,8 @@ namespace yq::tachyon {
         void                define_rows();
         std::vector<Row>    m_rows;
         std::string         m_title;
+        std::string         m_drag;
         const Meta*         m_selected  = nullptr;
+        friend class UIMetaListWriter;
     };
 }

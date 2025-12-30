@@ -10,7 +10,7 @@
 
 #include <yq/xg/XGElement.hpp>
 #include <yq/assetvk/menu/CreateMenuUI.hpp>
-#include <yq/assetvk/ui/UIBuildableMetaList.hpp>
+#include <yq/assetvk/ui/UIBuildableMetaListWriter.hpp>
 
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
@@ -48,6 +48,7 @@ void XGWin::init_meta()
         ppw.right(PIVOT, 0.20); //temporary
         auto x = ppw.make<UIBuildableMetaList<XGElement>>();
         x.flag(SET, UIFlag::EmitSignal);
+        x.drag_type("meta");
         
         // do something smart, like categories (including templates)
     }

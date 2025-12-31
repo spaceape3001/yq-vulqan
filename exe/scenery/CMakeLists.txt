@@ -11,12 +11,6 @@ add_executable(${PROJECT_NAME}
     #LuaPanelUI.cpp
     SceneEditor.cpp
     
-    table/CameraTableUI.cpp
-    table/ControllerTableUI.cpp
-    table/LightTableUI.cpp
-    table/ModelTableUI.cpp
-    table/RenderedTableUI.cpp
-    table/SceneTableUI.cpp
 
     data.cpp
     main.cpp

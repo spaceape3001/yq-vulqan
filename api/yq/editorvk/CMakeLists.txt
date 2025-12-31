@@ -15,6 +15,13 @@ add_library(yq_editorvk SHARED
     event/SceneRenderModeEvent.cpp
     event/SceneSelectEvent.cpp
     event/SceneVisibilityEvent.cpp
+
+    table/CameraTableUI.cpp
+    table/ControllerTableUI.cpp
+    table/LightTableUI.cpp
+    table/ModelTableUI.cpp
+    table/RenderedTableUI.cpp
+    table/SceneTableUI.cpp
 )
 
 target_link_libraries(yq_editorvk

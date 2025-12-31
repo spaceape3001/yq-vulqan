@@ -7,13 +7,6 @@
 #include "SceneEditor.hpp"
 
 //#include "InspectorUI.hpp"
-#include "table/CameraTableUI.hpp"
-#include "table/ControllerTableUI.hpp"
-#include "table/LightTableUI.hpp"
-#include "table/ModelTableUI.hpp"
-#include "table/RenderedTableUI.hpp"
-#include "table/SceneTableUI.hpp"
-
 #include "data.hpp"
 
 #include <yq/errors.hpp>
@@ -40,13 +33,6 @@
 
 #include <yq/date/dateutils.hpp>
 
-#include <yq/luavk/LuaTVM.hpp>
-#include <yq/luavk/command/LuaExecuteFileCommand.hpp>
-#include <yq/luavk/gesture/LuaExecuteFileGesture.hpp>
-#include <yq/luavk/reply/LuaExecuteReply.hpp>
-#include <yq/luavk/request/LuaExecuteFileRequest.hpp>
-#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
-#include <yq/luavk/ui/LuaWindowUI.hpp>
 
 #include <yq/editorvk/event/CameraSelectEvent.hpp>
 #include <yq/editorvk/event/ControllerSelectEvent.hpp>
@@ -59,6 +45,21 @@
 #include <yq/editorvk/event/SceneSelectEvent.hpp>
 #include <yq/editorvk/event/SceneVisibilityEvent.hpp>
 
+#include <yq/editorvk/table/CameraTableUI.hpp>
+#include <yq/editorvk/table/ControllerTableUI.hpp>
+#include <yq/editorvk/table/LightTableUI.hpp>
+#include <yq/editorvk/table/ModelTableUI.hpp>
+#include <yq/editorvk/table/RenderedTableUI.hpp>
+#include <yq/editorvk/table/SceneTableUI.hpp>
+
+
+#include <yq/luavk/LuaTVM.hpp>
+#include <yq/luavk/command/LuaExecuteFileCommand.hpp>
+#include <yq/luavk/gesture/LuaExecuteFileGesture.hpp>
+#include <yq/luavk/reply/LuaExecuteReply.hpp>
+#include <yq/luavk/request/LuaExecuteFileRequest.hpp>
+#include <yq/luavk/request/LuaExecuteStringRequest.hpp>
+#include <yq/luavk/ui/LuaWindowUI.hpp>
 
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/parameters.hpp>

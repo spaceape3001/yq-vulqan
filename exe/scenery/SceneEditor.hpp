@@ -50,18 +50,19 @@ namespace yq::tachyon {
     class SceneRenderModeEvent;
     class SceneSelectEvent;
     class SceneVisibilityEvent;
+
+    class CameraTableUI;
+    class ControllerTableUI;
+    class LightTableUI;
+    class ModelTableUI;
+    class PhysicsTableUI;
+    class RenderedTableUI;
+    class SceneTableUI;
+
 }
 
 using namespace yq;
 using namespace yq::tachyon;
-
-class CameraTableUI;
-class ControllerTableUI;
-class LightTableUI;
-class ModelTableUI;
-class PhysicsTableUI;
-class RenderedTableUI;
-class SceneTableUI;
 
 
 

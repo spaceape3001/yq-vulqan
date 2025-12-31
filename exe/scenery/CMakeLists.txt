@@ -26,7 +26,7 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} 
     PUBLIC
         yq_tachyon
-        yq_scenevk 
+        yq_editorvk 
         yq_assetvk
         yq_luavk
         yq_date

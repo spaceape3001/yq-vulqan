@@ -6,7 +6,7 @@
 
 #include "ModelTableUI.hpp"
 
-#include <yq/scenevk/event/ModelSelectEvent.hpp>
+#include <yq/editorvk/event/ModelSelectEvent.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/texture.hpp>
 #include <yq/tachyon/api/Model.hpp>

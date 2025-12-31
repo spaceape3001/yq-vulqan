@@ -33,4 +33,4 @@ add_subdirectory(xgvk)
 add_subdirectory(gamevk)
 
 ## Scene Editor
-add_subdirectory(scenevk)
+add_subdirectory(editorvk)

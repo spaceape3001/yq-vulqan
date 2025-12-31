@@ -6,7 +6,7 @@
 
 #include "CameraTableUI.hpp"
 
-#include <yq/scenevk/event/CameraSelectEvent.hpp>
+#include <yq/editorvk/event/CameraSelectEvent.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/texture.hpp>
 #include <yq/tachyon/api/Camera.hpp>

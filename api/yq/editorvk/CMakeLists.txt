@@ -4,7 +4,7 @@
 ##
 ################################################################################
 
-add_library(yq_scenevk SHARED
+add_library(yq_editorvk SHARED
     event/CameraSelectEvent.cpp
     event/ControllerSelectEvent.cpp
     event/LightSelectEvent.cpp
@@ -17,7 +17,7 @@ add_library(yq_scenevk SHARED
     event/SceneVisibilityEvent.cpp
 )
 
-target_link_libraries(yq_scenevk
+target_link_libraries(yq_editorvk
     PUBLIC
         yq_lua
         yq_assetvk
@@ -25,5 +25,5 @@ target_link_libraries(yq_scenevk
         yq_consolevk
 )
 
-vulqan_library(yq_scenevk)
-LinkTest(yq_scenevk)
+vulqan_library(yq_editorvk)
+LinkTest(yq_editorvk)

@@ -48,16 +48,16 @@
 #include <yq/luavk/request/LuaExecuteStringRequest.hpp>
 #include <yq/luavk/ui/LuaWindowUI.hpp>
 
-#include <yq/scenevk/event/CameraSelectEvent.hpp>
-#include <yq/scenevk/event/ControllerSelectEvent.hpp>
-#include <yq/scenevk/event/LightSelectEvent.hpp>
-#include <yq/scenevk/event/ModelSelectEvent.hpp>
-#include <yq/scenevk/event/RenderedSelectEvent.hpp>
-#include <yq/scenevk/event/SceneAddEvent.hpp>
-#include <yq/scenevk/event/SceneRemoveEvent.hpp>
-#include <yq/scenevk/event/SceneRenderModeEvent.hpp>
-#include <yq/scenevk/event/SceneSelectEvent.hpp>
-#include <yq/scenevk/event/SceneVisibilityEvent.hpp>
+#include <yq/editorvk/event/CameraSelectEvent.hpp>
+#include <yq/editorvk/event/ControllerSelectEvent.hpp>
+#include <yq/editorvk/event/LightSelectEvent.hpp>
+#include <yq/editorvk/event/ModelSelectEvent.hpp>
+#include <yq/editorvk/event/RenderedSelectEvent.hpp>
+#include <yq/editorvk/event/SceneAddEvent.hpp>
+#include <yq/editorvk/event/SceneRemoveEvent.hpp>
+#include <yq/editorvk/event/SceneRenderModeEvent.hpp>
+#include <yq/editorvk/event/SceneSelectEvent.hpp>
+#include <yq/editorvk/event/SceneVisibilityEvent.hpp>
 
 
 #include <yq/tachyon/MyImGui.hpp>

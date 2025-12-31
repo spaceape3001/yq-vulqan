@@ -6,11 +6,11 @@
 
 #include "SceneTableUI.hpp"
 
-#include <yq/scenevk/event/SceneAddEvent.hpp>
-#include <yq/scenevk/event/SceneRenderModeEvent.hpp>
-#include <yq/scenevk/event/SceneRemoveEvent.hpp>
-#include <yq/scenevk/event/SceneSelectEvent.hpp>
-#include <yq/scenevk/event/SceneVisibilityEvent.hpp>
+#include <yq/editorvk/event/SceneAddEvent.hpp>
+#include <yq/editorvk/event/SceneRenderModeEvent.hpp>
+#include <yq/editorvk/event/SceneRemoveEvent.hpp>
+#include <yq/editorvk/event/SceneSelectEvent.hpp>
+#include <yq/editorvk/event/SceneVisibilityEvent.hpp>
 
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/texture.hpp>

@@ -84,7 +84,8 @@ namespace yq::tachyon {
         }
         s_app   = this;
         
-        configure_standand_resource_path();
+        if(aci.auto_res_configure)
+            configure_standand_resource_path();
     }
     
 

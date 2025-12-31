@@ -95,9 +95,9 @@ namespace yq::tachyon {
         VkPhysicalDeviceType            gpu_type() const;
         
         //! Recommended Graphics Queue for tasks that aren't direct-display-related
-        ViQueueID                       graphics_queue(headless_k) const { return m_headlessQueue; }
+        //ViQueueID                       graphics_queue(headless_k) const { return m_headlessQueue; }
         //! Recommended Graphics Queue for specified viewer
-        ViQueueID                       graphics_queue(uint32_t viewerId) const;
+        //ViQueueID                       graphics_queue(uint32_t viewerId) const;
 
         std::error_code                 init(VkPhysicalDevice, const VulqanCreateInfo&);
         
@@ -227,7 +227,6 @@ namespace yq::tachyon {
         VkPhysicalDeviceMemoryProperties        m_gpuMemory;
         std::string                             m_gpuName;
         VkPhysicalDeviceProperties              m_gpuProperties;
-        ViQueueID                               m_headlessQueue;
         ViImageManagerUPtr                      m_images;
         VkPhysicalDevice                        m_physical                  = nullptr;
         ViPipelineLayoutManagerUPtr             m_pipelineLayouts;

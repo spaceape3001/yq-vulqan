@@ -7,10 +7,8 @@
 project(scenery)
 
 add_executable(${PROJECT_NAME}
-    #ControlPanelUI.cpp
-    #LuaPanelUI.cpp
+    SceneApp.cpp
     SceneEditor.cpp
-    
 
     data.cpp
     main.cpp
@@ -24,8 +22,6 @@ target_link_libraries(${PROJECT_NAME}
         yq_assetvk
         yq_luavk
         yq_date
-    #PRIVATE
-        #ImGuiFileDialog
 )
 
 target_include_directories(${PROJECT_NAME}

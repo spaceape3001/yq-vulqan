@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SceneEditor.hpp"
+#include "SceneApp.hpp"
 
 //#include "InspectorUI.hpp"
 #include "data.hpp"
@@ -856,6 +857,7 @@ void                    SceneEditor::_clear()
 
 void    SceneEditor::_default()
 {
+/*
     auto                tachload    = _default_load();  // TODO ... overridable default
     bool                hasDef      = tachload.has_value();
     TachyonPtrVector    tachyons;
@@ -872,13 +874,12 @@ void    SceneEditor::_default()
             }
         }
     }
+*/
 
         // Editor's default cameras/controllers go onto the auxillary thread
     if(!m_scene.simple){
-        Scene*  scene   = create_on<SimpleScene>(AUX);
-        scene->set_name("SceneEditor Default Scene");
-        m_scene.simple  = *scene;
-        m_scene.selected    = scene -> id();
+        m_scene.simple      = SceneApp::app()->default_scene();
+        m_scene.selected    = { m_scene.simple.id };
     }
     
     if(!m_camera.space){
@@ -900,8 +901,10 @@ void    SceneEditor::_default()
         m_camera.hud    = *cam;
     }
 
+    #if 0
     if(hasDef)
         _schedule(AUX, std::move(tachyons));
+    #endif
 }
 
 Expect<TachyonPtrVector>     SceneEditor::_default_load(std::string_view pp)
@@ -1354,10 +1357,11 @@ void    SceneEditor::prerecord(ViContext&u)
 
 Execution   SceneEditor::setup(const Context&ctx) 
 {
-    const Frame*    curFrame    = Frame::current();
-    if(!curFrame)
+    if(!SceneApp::app()->startup(*this))
         return WAIT;
-        
+    
+
+    const Frame*    curFrame    = Frame::current();
 
     if(!m_defaultInit){
         _default();
@@ -1409,7 +1413,7 @@ Execution   SceneEditor::setup(const Context&ctx)
 
     // end of default....
 
-    Execution ret = Widget::setup(ctx);
+    Execution   ret = Widget::setup(ctx);
     
     if(!m_camera.properties)
         m_camera.properties     = static_cast<UITachyonEditor*>(element(FIRST, "CameraInspector"));
@@ -1458,7 +1462,9 @@ Execution   SceneEditor::setup(const Context&ctx)
     }
 #endif
 
-    if(m_number == 1){
+    static std::atomic_flag exist;
+    
+    if(!exist.test_and_set()){
         TypedID   editThread   = curFrame->typed(EDIT);
         TypedID   auxThread    = curFrame->typed(AUX);
         
@@ -1473,7 +1479,8 @@ Execution   SceneEditor::setup(const Context&ctx)
 
 Execution   SceneEditor::teardown(const Context&ctx) 
 {
-    _clear();       // eventually to have ref counting....
+    if(SceneApp::app()->teardown(viewer()))
+        _clear();       // eventually to have ref counting....
     return CompositeWidget::teardown(ctx);
 }
 

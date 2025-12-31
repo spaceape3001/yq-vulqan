@@ -118,6 +118,7 @@ namespace yq::tachyon {
     T*  Tachyon::create_child_on(ThreadID st, Args&&... args)
     {
         Ref<T>   tp  = new T(std::forward<decltype(args)>(args)...);
+        tp -> m_flags |= F::DifferentThread;
         retain(tp, st);
         tp->_set_parent(*this);
         _add_child(*tp);
@@ -128,6 +129,7 @@ namespace yq::tachyon {
     T*  Tachyon::create_child_on(StdThread st, Args&&... args)
     {
         Ref<T>   tp  = new T(std::forward<decltype(args)>(args)...);
+        tp -> m_flags |= F::DifferentThread;
         retain(tp, st);
         tp->_set_parent(*this);
         _add_child(*tp);
@@ -140,6 +142,7 @@ namespace yq::tachyon {
     {
         Ref<T> tp = static_cast<T*>(meta.create());
         if(tp){
+        tp -> m_flags |= F::DifferentThread;
             tp->_set_parent(*this);
             _add_child(*tp);
             retain(tp, st);
@@ -152,6 +155,7 @@ namespace yq::tachyon {
     {
         Ref<T> tp = static_cast<T*>(meta.create());
         if(tp){
+            tp -> m_flags |= F::DifferentThread;
             tp->_set_parent(*this);
             _add_child(*tp);
             retain(tp, st);

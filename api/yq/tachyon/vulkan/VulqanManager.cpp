@@ -22,6 +22,7 @@
 #include <yq/core/DelayInit.hpp>
 #include <yq/core/ThreadId.hpp>
 #include <yq/macro/make_version.hpp>
+#include <yq/text/match.hpp>
 #include <yq/typedef/string_sets.hpp>
 
 #include <yq/tachyon/api/Tachyon.hxx>
@@ -64,6 +65,9 @@ namespace yq::tachyon {
             [[maybe_unused]] void*                      pUserData
         )
         {
+                //assert(!contains(pMessage, "THREADING ERROR"));
+                //vulkanWarning << "Vulkan Warning";
+
             if constexpr(kFilterMessagesOnce) {   // a simple little filter
                 using key_t = std::pair<uint64_t, int32_t>;
                 static std::set<key_t>  seen;
@@ -80,7 +84,6 @@ namespace yq::tachyon {
                                              vulkanInfo);
             yell << "Object [" << to_string_view(objectType) << ": " << object << "] (layer " 
                 << pLayerPrefix << "): " << pMessage;
-        //assert(false && "Exiting");
             return VK_FALSE;
         }
     }
@@ -323,7 +326,7 @@ namespace yq::tachyon {
                 debug_report_ci.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
                 debug_report_ci.pfnCallback = vqDebuggingCallback;
                 debug_report_ci.pUserData = nullptr;
-                vkCreateDebugReportCallbackEXT(g.instance, &debug_report_ci, nullptr, &g.debug);
+                //vkCreateDebugReportCallbackEXT(g.instance, &debug_report_ci, nullptr, &g.debug);
             }
         }
     }

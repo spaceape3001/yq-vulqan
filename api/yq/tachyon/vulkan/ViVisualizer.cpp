@@ -253,6 +253,17 @@ namespace yq::tachyon {
         u.command_buffer        = gp->vk_command_buffer();
         u.descriptor_pool       = vk_descriptor_pool();
         
+        VkQueue     gQueue  = graphics_queue();
+        if(!gQueue){
+            vizCritical << "ViVisualizer.draw(): null graphics queue!";
+            return create_error<"Visualizer.draw(): null graphics queue">();
+        }
+        VkQueue     pQueue  = present_queue();
+        if(!pQueue){
+            vizCritical << "ViVisualizer.draw(): null present queue!";
+            return create_error<"Visualizer.draw(): null present queue">();
+        }
+        
         
         VkFence fence = m_swapchain->vk_fence(m_frameImageIndex);
         res = vkWaitForFences(vk_device(), 1, &fence, VK_TRUE, maxWait);   // 100ms is 10Hz

@@ -455,10 +455,6 @@ namespace yq::tachyon {
         m_textures          = std::make_unique<ViTextureManager>(*this);
         m_pipelineLayouts   = std::make_unique<ViPipelineLayoutManager>(*this);
 
-        // --------------
-        // EVENTUALLY DO MORE....
-        
-        m_headlessQueue     = ViQueueID(queue_family(ViQueueType::Graphic), 0);
         
         return {};
     }
@@ -534,15 +530,6 @@ namespace yq::tachyon {
     void            ViDevice::destroy()
     {
         _kill();
-    }
-
-    ViQueueID           ViDevice::graphics_queue(uint32_t viewerId) const
-    {
-        const QueueFamily*  qf  = _family(queue_family(ViQueueType::Graphic));
-        if(!qf)
-            return ViQueueID();
-        uint32_t    N   = qf->count - 1;
-        return ViQueueID( qf->family, 1+(viewerId%N));
     }
 
     std::string_view    ViDevice::gpu_name() const

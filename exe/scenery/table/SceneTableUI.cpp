@@ -5,11 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SceneTableUI.hpp"
-#include "event/SceneAddEvent.hpp"
-#include "event/SceneRenderModeEvent.hpp"
-#include "event/SceneRemoveEvent.hpp"
-#include "event/SceneSelectEvent.hpp"
-#include "event/SceneVisibilityEvent.hpp"
+
+#include <yq/scenevk/event/SceneAddEvent.hpp>
+#include <yq/scenevk/event/SceneRenderModeEvent.hpp>
+#include <yq/scenevk/event/SceneRemoveEvent.hpp>
+#include <yq/scenevk/event/SceneSelectEvent.hpp>
+#include <yq/scenevk/event/SceneVisibilityEvent.hpp>
 
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/texture.hpp>

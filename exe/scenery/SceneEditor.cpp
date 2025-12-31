@@ -7,18 +7,6 @@
 #include "SceneEditor.hpp"
 
 //#include "InspectorUI.hpp"
-
-#include "event/CameraSelectEvent.hpp"
-#include "event/ControllerSelectEvent.hpp"
-#include "event/LightSelectEvent.hpp"
-#include "event/ModelSelectEvent.hpp"
-#include "event/RenderedSelectEvent.hpp"
-#include "event/SceneAddEvent.hpp"
-#include "event/SceneRemoveEvent.hpp"
-#include "event/SceneRenderModeEvent.hpp"
-#include "event/SceneSelectEvent.hpp"
-#include "event/SceneVisibilityEvent.hpp"
-
 #include "table/CameraTableUI.hpp"
 #include "table/ControllerTableUI.hpp"
 #include "table/LightTableUI.hpp"
@@ -59,6 +47,18 @@
 #include <yq/luavk/request/LuaExecuteFileRequest.hpp>
 #include <yq/luavk/request/LuaExecuteStringRequest.hpp>
 #include <yq/luavk/ui/LuaWindowUI.hpp>
+
+#include <yq/scenevk/event/CameraSelectEvent.hpp>
+#include <yq/scenevk/event/ControllerSelectEvent.hpp>
+#include <yq/scenevk/event/LightSelectEvent.hpp>
+#include <yq/scenevk/event/ModelSelectEvent.hpp>
+#include <yq/scenevk/event/RenderedSelectEvent.hpp>
+#include <yq/scenevk/event/SceneAddEvent.hpp>
+#include <yq/scenevk/event/SceneRemoveEvent.hpp>
+#include <yq/scenevk/event/SceneRenderModeEvent.hpp>
+#include <yq/scenevk/event/SceneSelectEvent.hpp>
+#include <yq/scenevk/event/SceneVisibilityEvent.hpp>
+
 
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/parameters.hpp>

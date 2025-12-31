@@ -38,28 +38,29 @@ namespace yq::tachyon {
     struct Payload;
     class UITachyonEditor;
     class FrameInspector;
+
+    class CameraSelectEvent;
+    class ControllerSelectEvent;
+    class LightSelectEvent;
+    class ModelSelectEvent;
+    class PhysicsSelectEvent;
+    class RenderedSelectEvent;
+    class SceneAddEvent;
+    class SceneRemoveEvent;
+    class SceneRenderModeEvent;
+    class SceneSelectEvent;
+    class SceneVisibilityEvent;
 }
 
 using namespace yq;
 using namespace yq::tachyon;
 
 class CameraTableUI;
-class CameraSelectEvent;
 class ControllerTableUI;
-class ControllerSelectEvent;
 class LightTableUI;
-class LightSelectEvent;
 class ModelTableUI;
-class ModelSelectEvent;
 class PhysicsTableUI;
-class PhysicsSelectEvent;
 class RenderedTableUI;
-class RenderedSelectEvent;
-class SceneAddEvent;
-class SceneRemoveEvent;
-class SceneRenderModeEvent;
-class SceneSelectEvent;
-class SceneVisibilityEvent;
 class SceneTableUI;
 
 

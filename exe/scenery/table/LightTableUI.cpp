@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "LightTableUI.hpp"
-#include "event/LightSelectEvent.hpp"
 
+#include <yq/scenevk/event/LightSelectEvent.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/texture.hpp>
 #include <yq/tachyon/api/Light.hpp>

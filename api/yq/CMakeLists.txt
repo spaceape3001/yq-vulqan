@@ -31,3 +31,6 @@ add_subdirectory(xgvk)
 
 ##  Game stuff
 add_subdirectory(gamevk)
+
+## Scene Editor
+add_subdirectory(scenevk)

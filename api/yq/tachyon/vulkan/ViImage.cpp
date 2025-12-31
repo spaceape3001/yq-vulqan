@@ -126,7 +126,7 @@ namespace yq::tachyon {
             vkCmdCopyImageToBuffer(cmd, i2, lay, local->buffer(), 1, &creg);
         };
 
-        ec  = viz.queue_task(viz.graphics_queue(HEADLESS), downloadTask);
+        ec  = viz.queue_task(ViQueueType::Graphic, downloadTask);
 
         if(ec != std::error_code())
             return unexpected(ec);
@@ -591,7 +591,7 @@ namespace yq::tachyon {
         };
 
         // If we bring in mipping, we will most likely want to use the non-display graphics queue?
-        ec = m_device.queue_task(m_device.graphics_queue(HEADLESS), uploadTask);
+        ec = m_device.queue_task(ViQueueType::Graphic, uploadTask);
         if(ec != std::error_code())
             return ec;
             
@@ -738,7 +738,7 @@ namespace yq::tachyon {
             vkCmdPipelineBarrier(cmd, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, 0, 0, nullptr, 0, nullptr, 1, &imb);
         };
             
-        ec = m_device.queue_task(m_device.graphics_queue(HEADLESS), compositeTask);
+        ec = m_device.queue_task(ViQueueType::Graphic, compositeTask);
         if(ec != std::error_code())
             return ec;
         return {};

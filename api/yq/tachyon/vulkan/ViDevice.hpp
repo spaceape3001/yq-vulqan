@@ -154,6 +154,10 @@ namespace yq::tachyon {
 
         VkQueue                         queue(const ViQueueID&) const;
         VkQueue                         queue(ViQueueFamilyID familyIdx, uint32_t subIdx) const;
+        VkQueue                         queue(ViQueueType) const;
+        VkQueue                         queue(ViQueueType, ThreadID) const;
+        VkQueue                         queue(ViQueueFamilyID) const;
+        VkQueue                         queue(ViQueueFamilyID, ThreadID) const;
 
         uint32_t                        queue_count(ViQueueFamilyID familyIdx) const;
 
@@ -163,8 +167,17 @@ namespace yq::tachyon {
         //! Queue family for type (note, UINT32_MAX is invalid)
         ViQueueFamilyID                 queue_family(ViQueueType) const;
         
+        ViQueueID                       queue_id(ViQueueFamilyID) const;
+        ViQueueID                       queue_id(ViQueueFamilyID, ThreadID) const;
+        ViQueueID                       queue_id(ViQueueType) const;
+        ViQueueID                       queue_id(ViQueueType, ThreadID) const;
+        
         std::error_code                 queue_task(ViQueueID, queue_tasker_fn&&);
         std::error_code                 queue_task(ViQueueID, uint64_t timeout, queue_tasker_fn&&);
+        std::error_code                 queue_task(ViQueueFamilyID, queue_tasker_fn&&);
+        std::error_code                 queue_task(ViQueueFamilyID, uint64_t timeout, queue_tasker_fn&&);
+        std::error_code                 queue_task(ViQueueType, queue_tasker_fn&&);
+        std::error_code                 queue_task(ViQueueType, uint64_t timeout, queue_tasker_fn&&);
         ViQueueTaskerPtr                queue_tasker(ViQueueID);
         
         ViSamplerCPtr                   sampler(uint64_t) const;
@@ -219,6 +232,7 @@ namespace yq::tachyon {
         VkPhysicalDevice                        m_physical                  = nullptr;
         ViPipelineLayoutManagerUPtr             m_pipelineLayouts;
         std::vector<QueueFamily>                m_queueFamilies;
+        mutable mutex_t                         m_queueMutex;
         std::map<ViQueueType,ViQueueFamilyID>   m_queueType2Family;
         ViSamplerManagerUPtr                    m_samplers;
         ViShaderManagerUPtr                     m_shaders;

@@ -7,6 +7,8 @@
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
 
+#include <yq/tachyon/api/Thread.hpp>
+
 #include <yq/tachyon/vulkan/ViBuffer.hpp>
 #include <yq/tachyon/vulkan/ViDevice.hpp>
 #include <yq/tachyon/vulkan/ViImage.hpp>
@@ -93,11 +95,14 @@ namespace yq::tachyon {
     
     
     struct ViDevice::QueueFamily {
-        VkQueueFamilyProperties         props;
-        std::vector<float>              weights;
-        std::vector<VkQueue>            queues;
-        ViQueueFamilyID                 family;
-        uint32_t                        count   = 0;
+        VkQueueFamilyProperties             props;
+        std::vector<float>                  weights;
+        std::vector<VkQueue>                queues;
+        ViQueueFamilyID                     family;
+        uint32_t                            count   = 0;
+        mutable std::map<ThreadID,size_t>   byThread;
+        mutable BitArray<uint64_t,2>        queueAlloc;
+        //mutable mutex_t                     mutex;
 
         struct Extra {
             uint32_t    min;
@@ -133,6 +138,7 @@ namespace yq::tachyon {
             queues.resize(count, nullptr);
             //fences.resize(count, nullptr);
         }
+        
     };
 
     //ViDevice::ViDevice(VkDevice)
@@ -768,6 +774,28 @@ namespace yq::tachyon {
         return queue(qid.family, qid.sub);
     }
 
+    VkQueue         ViDevice::queue(ViQueueType qType) const
+    {
+        return queue(queue_id(qType));
+    }
+
+            
+    VkQueue ViDevice::ViDevice::queue(ViQueueType qType, ThreadID th) const
+    {
+        return queue(queue_id(qType, th));
+    }
+
+    VkQueue         ViDevice::queue(ViQueueFamilyID fam) const
+    {
+        return queue(queue_id(fam));
+    }
+
+    
+    VkQueue     ViDevice::queue(ViQueueFamilyID fam, ThreadID th) const
+    {
+        return queue(queue_id(fam, th));
+    }
+
     uint32_t        ViDevice::queue_count(ViQueueFamilyID family) const
     {
         const QueueFamily*  qf  = _family(family);
@@ -797,6 +825,53 @@ namespace yq::tachyon {
         return qf->props.queueFlags;
     }
 
+    ViQueueID   ViDevice::queue_id(ViQueueFamilyID fam) const
+    {
+        return queue_id(fam, Thread::current_id());
+    }
+    
+    ViQueueID   ViDevice::queue_id(ViQueueFamilyID fam, ThreadID th) const
+    {
+        if(!th)
+            return ViQueueID();
+        const QueueFamily*  qf  = _family(fam);
+        if(!qf)
+            return ViQueueID();
+            
+        lock_t  _lock(m_queueMutex, false);
+        if(auto i = qf->byThread.find(th); i != qf->byThread.end())
+            return { .family=fam, .sub = (uint32_t) i->second };
+    
+        size_t  n;  
+        for(n=qf->byThread.size();qf->queueAlloc[n];++n)
+            ;
+            
+        if(n >= qf->queues.size()){
+            vizFirstAlert(fam.index) << "ViDevice::Queue.  Limit exceeded, increase queue count for family " << fam.index;
+            return ViQueueID();
+        }
+        
+        if(!_lock.upgrade_to_writer()){
+            // lost the lock, so repeat the search
+            for(;qf->queueAlloc[n];++n)
+                ;
+        }
+        
+        qf->byThread[th]   = n;
+        qf->queueAlloc.set(n);
+        return { .family=fam, .sub = (uint32_t) n };
+    }
+    
+    ViQueueID   ViDevice::queue_id(ViQueueType qType) const
+    {
+        return queue_id(queue_family(qType), Thread::current_id());
+    }
+    
+    ViQueueID   ViDevice::queue_id(ViQueueType qType, ThreadID th) const
+    {
+        return queue_id(queue_family(qType), th);
+    }
+
     std::error_code     ViDevice::queue_task(ViQueueID qid, queue_tasker_fn&& fn)
     {
         return queue_task(qid, DEFAULT_WAIT_TIMEOUT, std::move(fn));
@@ -808,6 +883,26 @@ namespace yq::tachyon {
         if(!tasker)
             return create_error<"ViDevice::queue_task(): Invalid tasker queue">();
         return tasker->execute(timeout, std::move(fn));
+    }
+
+    std::error_code     ViDevice::queue_task(ViQueueFamilyID fam, queue_tasker_fn&& fn)
+    {
+        return queue_task(queue_id(fam), std::move(fn));
+    }
+
+    std::error_code     ViDevice::queue_task(ViQueueFamilyID fam, uint64_t timeout, queue_tasker_fn&& fn)
+    {
+        return queue_task(queue_id(fam), timeout, std::move(fn));
+    }
+
+    std::error_code     ViDevice::queue_task(ViQueueType qType, queue_tasker_fn&& fn)
+    {
+        return queue_task(queue_id(qType), std::move(fn));
+    }
+
+    std::error_code     ViDevice::queue_task(ViQueueType qType, uint64_t timeout, queue_tasker_fn&& fn)
+    {
+        return queue_task(queue_id(qType), timeout, std::move(fn));
     }
 
     ViQueueTaskerPtr    ViDevice::queue_tasker(ViQueueID qid)

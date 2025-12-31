@@ -119,18 +119,18 @@ namespace yq::tachyon {
     {
     }
 
-    bool VizBase::queue_t::qInit(ViDevice& dev, queue_spec qs, const ViQueueID& _id, uint32_t num)
+    bool VizBase::queue_t::qInit(ViDevice& dev, queue_spec qs, const ViQueueFamilyID& _fam)
     {
         if(std::get_if<std::monostate>(&qs))
             return true;
         
-        if(_id.valid()){
-            id  = _id;
+        if(_fam.valid()){
+            family  = _fam;
         } else {
-            id  = { dev.queue_family(type), num };
+            family  = dev.queue_family(type); 
         }
         
-        if(dev.is_queue_valid(id)){
+        if(family.valid()){
             enable  = true;
             return true;
         }
@@ -210,8 +210,6 @@ namespace yq::tachyon {
         m_videoDec.pInit(this);
         m_videoEnc.pInit(this);
         m_pipelines     = std::make_unique<ViPipelineManager>(*this, ViPipelineOptions());
-        
-vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get queue " << hex(graphics_queue());
             
         m_good  = true;
     }
@@ -271,19 +269,19 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
             //  needs to have the relevant queue enabled *AND* it needs to be
             //  set on the create data structure.
             
-        if(!m_graphics.qInit(*m_device, p.graphics, p.graphics_queue, p.graphics_qidx))
+        if(!m_graphics.qInit(*m_device, p.graphics, {}))
             return false;
-        if(!m_present.qInit(*m_device, p.present, p.present_queue.valid() ? p.present_queue : m_graphics.id, p.present_qidx))
+        if(!m_present.qInit(*m_device, p.present, p.present_queue.valid() ? p.present_family : m_graphics.family))
             return false;
-        if(!m_compute.qInit(*m_device, p.compute, p.compute_queue, p.compute_qidx))
+        if(!m_compute.qInit(*m_device, p.compute, {}))
             return false;
-        if(!m_transfer.qInit(*m_device, p.transfer, p.transfer_queue, p.transfer_qidx))
+        if(!m_transfer.qInit(*m_device, p.transfer, {}))
             return false;
-        if(!m_opticalFlow.qInit(*m_device, p.optical_flow, p.optical_flow_queue, p.optical_flow_qidx))
+        if(!m_opticalFlow.qInit(*m_device, p.optical_flow, {}))
             return false;
-        if(!m_videoDec.qInit(*m_device, p.video_decode, p.video_decode_queue, p.video_decode_qidx))
+        if(!m_videoDec.qInit(*m_device, p.video_decode, {}))
             return false;
-        if(!m_videoEnc.qInit(*m_device, p.video_decode, p.video_encode_queue, p.video_encode_qidx))
+        if(!m_videoEnc.qInit(*m_device, p.video_decode, {}))
             return false;
         return true;
     }
@@ -338,7 +336,7 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     VkQueue  VizBase::compute_queue() const
     {
         if(m_compute.enable && m_device)
-            return m_device -> queue(m_compute.id);
+            return m_device -> queue(m_compute.family);
         return nullptr;
     }
     
@@ -348,12 +346,7 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
             return errors::tasker_bad_function();
         if(!m_compute.enable || !m_device || !m_device->valid())
             return errors::visualizer_uninitialized();
-        return m_device->queue_task(m_compute.id, opts.timeout, std::move(fn));
-    }
-
-    bool    VizBase::compute_queue_valid() const
-    {
-        return m_compute.enable && m_device && m_device->is_queue_valid(m_compute.id);
+        return m_device->queue_task(m_compute.family, opts.timeout, std::move(fn));
     }
 
     float  VizBase::depth_clear() const
@@ -431,7 +424,7 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     VkQueue     VizBase::graphics_queue() const
     {
         if(m_graphics.enable && m_device)
-            return m_device->queue(m_graphics.id);
+            return m_device -> queue(m_graphics.family);
         return nullptr;
     }
     
@@ -441,15 +434,9 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
             return errors::tasker_bad_function();
         if(!m_graphics.enable || !m_device || !m_device->valid())
             return errors::visualizer_uninitialized();
-        return m_device->queue_task(m_graphics.id, opts.timeout, std::move(fn));
+        return m_device->queue_task(m_graphics.family, opts.timeout, std::move(fn));
     }
 
-    bool        VizBase::graphics_queue_valid() const
-    {
-        return m_graphics.enable && m_device && m_device->is_queue_valid(m_graphics.id);
-    }
-
-    
     ViProcessor*    VizBase::optical_flow_processor(uint32_t n)
     {
         return m_opticalFlow.proc(n);
@@ -470,7 +457,7 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     VkQueue      VizBase::optical_flow_queue() const
     {
         if(m_opticalFlow.enable && m_device)
-            return m_device -> queue(m_opticalFlow.id);
+            return m_device -> queue(m_opticalFlow.family);
         return nullptr;
     }
 
@@ -480,12 +467,7 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
             return errors::tasker_bad_function();
         if(!m_opticalFlow.enable || !m_device || !m_device->valid())
             return errors::visualizer_uninitialized();
-        return m_device->queue_task(m_opticalFlow.id, opts.timeout, std::move(fn));
-    }
-
-    bool        VizBase::optical_flow_queue_valid() const
-    {
-        return m_opticalFlow.enable && m_device && m_device->is_queue_valid( m_opticalFlow.id );
+        return m_device->queue_task(m_opticalFlow.family, opts.timeout, std::move(fn));
     }
     
     ViPipelineCPtr                  VizBase::pipeline(uint64_t i) const
@@ -526,7 +508,7 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     VkQueue      VizBase::present_queue() const
     {
         if(m_present.enable && m_device)
-            return m_device -> queue(m_present.id);
+            return m_device -> queue(m_present.family);
         return nullptr;
     }
 
@@ -536,14 +518,8 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
             return errors::tasker_bad_function();
         if(!m_present.enable || !m_device || !m_device->valid())
             return errors::visualizer_uninitialized();
-        return m_device->queue_task(m_present.id, opts.timeout, std::move(fn));
+        return m_device->queue_task(m_present.family, opts.timeout, std::move(fn));
     }
-
-    bool        VizBase::present_queue_valid() const
-    {
-        return m_present.enable && m_device && m_device->is_queue_valid( m_present.id );
-    }
-
 
     std::error_code     VizBase::queue_task(ViQueueType qt, queue_tasker_fn&&fn, const VizTaskerOptions& opts)
     {
@@ -573,7 +549,7 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     VkQueue     VizBase::transfer_queue() const
     {
         if(m_transfer.enable && m_device)
-            return m_device->queue(m_transfer.id);
+            return m_device -> queue(m_transfer.family);
         return nullptr;
     }
     
@@ -583,12 +559,7 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
             return errors::tasker_bad_function();
         if(!m_transfer.enable || !m_device || !m_device->valid())
             return errors::visualizer_uninitialized();
-        return m_device->queue_task(m_transfer.id, opts.timeout, std::move(fn));
-    }
-
-    bool    VizBase::transfer_queue_valid() const
-    {
-        return m_transfer.enable && m_device && m_device->is_queue_valid(m_transfer.id);
+        return m_device->queue_task(m_transfer.family, opts.timeout, std::move(fn));
     }
 
     ViProcessor*    VizBase::video_decode_processor(uint32_t n)
@@ -610,7 +581,7 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     VkQueue   VizBase::video_decode_queue() const
     {
         if(m_videoDec.enable && m_device)
-            return m_device -> queue(m_videoDec.id);
+            return m_device -> queue(m_videoDec.family);
         return nullptr;
     }
     
@@ -620,12 +591,7 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
             return errors::tasker_bad_function();
         if(!m_videoDec.enable || !m_device || !m_device->valid())
             return errors::visualizer_uninitialized();
-        return m_device->queue_task(m_videoDec.id, opts.timeout, std::move(fn));
-    }
-
-    bool        VizBase::video_decode_queue_valid() const
-    {
-        return m_videoDec.enable && m_device && m_device->is_queue_valid(m_videoDec.id);
+        return m_device->queue_task(m_videoDec.family, opts.timeout, std::move(fn));
     }
 
     ViProcessor*    VizBase::video_encode_processor(uint32_t n)
@@ -648,7 +614,7 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
     VkQueue   VizBase::video_encode_queue() const
     {
         if(m_videoEnc.enable && m_device)
-            return m_device->queue(m_videoEnc.id);
+            return m_device->queue(m_videoEnc.family);
         return nullptr;
     }
     
@@ -658,12 +624,7 @@ vizInfo << "VizBase(" << id() << ", graphic " << p.graphics_qidx << ") to get qu
             return errors::tasker_bad_function();
         if(!m_videoEnc.enable || !m_device || !m_device->valid())
             return errors::visualizer_uninitialized();
-        return m_device->queue_task(m_videoEnc.id, opts.timeout, std::move(fn));
-    }
-
-    bool        VizBase::video_encode_queue_valid() const
-    {
-        return m_videoEnc.enable && m_device && m_device->is_queue_valid(m_videoEnc.id);
+        return m_device->queue_task(m_videoEnc.family, opts.timeout, std::move(fn));
     }
 
     VkDevice    VizBase::vk_device() const

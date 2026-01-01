@@ -36,8 +36,8 @@ namespace yq::tachyon {
         if(m_float){
             if(ImGui::BeginChild("Orientation³")){
                 imgui_content();
-                ImGui::EndChild();
             }
+            ImGui::EndChild();
         } else {
             ImGui::Separator();
             ImGui::BeginGroup();

@@ -144,34 +144,33 @@ namespace yq::tachyon {
         if(!ori)
             return;
             
-        if(!ImGui::Begin("Space Camera Remote"))
-            return ;
-            
-        Vector3D        position    = pos->position();
-        if(im::input("##position", position))
-            pos->position(SET, position);
+        if(ImGui::Begin("Space Camera Remote")){
+                
+            Vector3D        position    = pos->position();
+            if(im::input("##position", position))
+                pos->position(SET, position);
 
-        if(m_orientation)
-            m_orientation->imgui(u);
-        
-        //Quaternion3D    orient      = ori->orientation();
-        //if(ImGui::InputDouble4("Orientation", &orient))
-            //ori->orientation(SET, orient);
-        
-        //if(ImGui::Button("+ roll"))
-            //ori->orientation(ROTATE, ROLL, 10._deg);
-        //if(ImGui::Button("- roll"))
-            //ori->orientation(ROTATE, ROLL, -10._deg);
-
-        //if(ImGui::Button("+ pitch"))
-            //ori->orientation(ROTATE, PITCH, 10._deg);
-        //if(ImGui::Button("- pitch"))
-            //ori->orientation(ROTATE, PITCH, -10._deg);
-        //if(ImGui::Button("+ yaw"))
-            //ori->orientation(ROTATE, YAW, 10._deg);
-        //if(ImGui::Button("- yaw"))
-            //ori->orientation(ROTATE, YAW, -10._deg);
+            if(m_orientation)
+                m_orientation->imgui(u);
             
+            //Quaternion3D    orient      = ori->orientation();
+            //if(ImGui::InputDouble4("Orientation", &orient))
+                //ori->orientation(SET, orient);
+            
+            //if(ImGui::Button("+ roll"))
+                //ori->orientation(ROTATE, ROLL, 10._deg);
+            //if(ImGui::Button("- roll"))
+                //ori->orientation(ROTATE, ROLL, -10._deg);
+
+            //if(ImGui::Button("+ pitch"))
+                //ori->orientation(ROTATE, PITCH, 10._deg);
+            //if(ImGui::Button("- pitch"))
+                //ori->orientation(ROTATE, PITCH, -10._deg);
+            //if(ImGui::Button("+ yaw"))
+                //ori->orientation(ROTATE, YAW, 10._deg);
+            //if(ImGui::Button("- yaw"))
+                //ori->orientation(ROTATE, YAW, -10._deg);
+        }
         ImGui::End();
     }
 

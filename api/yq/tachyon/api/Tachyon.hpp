@@ -535,6 +535,9 @@ namespace yq::tachyon {
         //void    set_attribute(std::string_view, const Any&);
 
         void    load_set_template(const template_t&);
+        
+        //! Current tachyon being processed (cycle)
+        static TachyonID        processing() { return s_processing; }
 
     protected:
 
@@ -790,6 +793,8 @@ namespace yq::tachyon {
         uint64_t                    m_cycle         = 0;
         Stage                       m_stage         = Stage::Preinit;
         bool                        m_dirty         = false;
+        
+        static thread_local TachyonID   s_processing;
 
         Flags<F>                    m_flags = {};
         

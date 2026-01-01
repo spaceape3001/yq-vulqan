@@ -601,6 +601,8 @@ namespace yq::tachyon {
         return *m_context;
     }
 
+    thread_local TachyonID   Tachyon::s_processing;
+
     Tachyon::Result      Tachyon::cycle(const Context&ctx)
     {
         //////////////////////////////////
@@ -614,6 +616,9 @@ namespace yq::tachyon {
         m_context       = &ctx;
         data->owner     = m_owner;
         data->tick      = ctx.tick;
+        
+        TachyonID       oldID   = s_processing;
+        s_processing            = id();
 
         //////////////////////////////////
         //  CHECK INBOUND MESSAGES
@@ -749,9 +754,10 @@ namespace yq::tachyon {
         //////////////////////////////////
         //  END THE CYCLE
 
-        m_thread    = kInvalidThread;
-        m_data      = nullptr;
-        m_context   = nullptr;
+        m_thread        = kInvalidThread;
+        m_data          = nullptr;
+        m_context       = nullptr;
+        s_processing    = oldID;
         
         //////////////////////////////////
         //  RETURN

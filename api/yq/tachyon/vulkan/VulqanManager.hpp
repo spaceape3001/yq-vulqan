@@ -45,8 +45,14 @@ namespace yq::tachyon {
         struct Common;
         static Common&  common();
         
-        static void  _init();
-        static void  _kill();
+        void  _init();
+        void  _kill();
+        
+        static VkBool32 debugging_callback(
+            VkDebugUtilsMessageSeverityFlagBitsEXT           messageSeverity,
+            VkDebugUtilsMessageTypeFlagsEXT                  messageTypes,
+            const VkDebugUtilsMessengerCallbackDataEXT*      pCallbackData,
+            VulqanManager*                                   pManager);
         
         enum class X {
             Init,

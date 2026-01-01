@@ -9,6 +9,11 @@
 #include <yq/tachyon/app/AppCreateInfo.hpp>
 #include <yq/tachyon/app/Application.hpp>
 #include <yq/tachyon/api/ManagerMetaWriter.hpp>
+#include <yq/tachyon/api/Frame.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/Thread.hpp>
+#include <yq/tachyon/event/vulqan/VulqanDebugEvent.hpp>
+#include <yq/tachyon/vulkan/vulqan.hpp>
 #include <yq/tachyon/vulkan/VulqanGPU.hpp>
 #include <yq/tachyon/vulkan/VulqanManager.hpp>
 
@@ -17,6 +22,7 @@
 #include <yq/tachyon/vulkan/VqUtils.hpp>
 #include <yq/tachyon/vulkan/VulqanException.hpp>
 #include <yq/tachyon/vulkan/ViLogging.hpp>
+#include <yq/tachyon/vulkan/ViDebugTrace.hpp>
 
 #include <yq/core/BasicApp.hpp>
 #include <yq/core/DelayInit.hpp>
@@ -28,6 +34,19 @@
 #include <yq/tachyon/api/Tachyon.hxx>
 
 #include <atomic>
+#include <stacktrace>
+
+/*
+    TBH, the default vulkan error message is slightly more detailed; so we'll let 
+    that slide through while debugging.  Other times, less desired, therefore..
+    
+    If vulkanGREP is defined OR vulkanLOG, then we'll call our routine.  
+    If VulkanGREP is defined, we ASSERT on match.
+*/
+
+// DEFINE FOR A MESSAGE TO THROW ON
+#define vulkanGREP      "THREADING ERROR"
+//#define vulkanLOG
 
 
 #define vulkanAlert         yAlert("vulkan")
@@ -41,7 +60,7 @@
 #define vulkanWarning       yWarning("vulkan")
 
 namespace yq::tachyon {
-    
+
     static constexpr bool   kFilterMessagesOnce = false;
     
     static constexpr std::initializer_list<NameRequired>    kStdExtensions = {
@@ -53,39 +72,6 @@ namespace yq::tachyon {
     namespace {
         static constexpr const uint32_t kEngineVersion      = YQ_MAKE_VERSION(0, 0, 2);
         static constexpr const char*    szEngineName        = "YQ Tachyon";
-
-        VkBool32 vqDebuggingCallback(
-            VkDebugReportFlagsEXT                       flags,
-            VkDebugReportObjectTypeEXT                  objectType,
-            uint64_t                                    object,
-            [[maybe_unused]] size_t                     location,
-            [[maybe_unused]] int32_t                    messageCode,
-            const char*                                 pLayerPrefix,
-            const char*                                 pMessage,
-            [[maybe_unused]] void*                      pUserData
-        )
-        {
-                //assert(!contains(pMessage, "THREADING ERROR"));
-                //vulkanWarning << "Vulkan Warning";
-
-            if constexpr(kFilterMessagesOnce) {   // a simple little filter
-                using key_t = std::pair<uint64_t, int32_t>;
-                static std::set<key_t>  seen;
-                static tbb::spin_mutex  mutex;
-                key_t k(object, messageCode);
-                tbb::spin_mutex::scoped_lock    _lock(mutex);
-                auto [i,f]  = seen.insert(k);
-                if(!f)
-                    return VK_FALSE;
-            }
-        
-            log4cpp::CategoryStream  yell  = (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT) ? vulkanError : 
-                                            ((flags & VK_DEBUG_REPORT_WARNING_BIT_EXT) ? vulkanWarning : 
-                                             vulkanInfo);
-            yell << "Object [" << to_string_view(objectType) << ": " << object << "] (layer " 
-                << pLayerPrefix << "): " << pMessage;
-            return VK_FALSE;
-        }
     }
 
 
@@ -115,7 +101,8 @@ namespace yq::tachyon {
             std::vector<const char*>            requested;
         } extensions;
 
-        VkDebugReportCallbackEXT                debug         = nullptr;
+        VkDebugReportCallbackEXT                debug           = nullptr;
+        VkDebugUtilsMessengerEXT                debug2          = nullptr;
 
         
         void    enumerate_extensions();
@@ -319,15 +306,16 @@ namespace yq::tachyon {
         } 
         
         if(want_debug){
-            // Get the function pointer (required for any extensions)
-            auto vkCreateDebugReportCallbackEXT = (PFN_vkCreateDebugReportCallbackEXT) vkGetInstanceProcAddr(g.instance, "vkCreateDebugReportCallbackEXT");
-            if(vkCreateDebugReportCallbackEXT){
-                VqDebugReportCallbackCreateInfoEXT debug_report_ci;
-                debug_report_ci.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
-                debug_report_ci.pfnCallback = vqDebuggingCallback;
-                debug_report_ci.pUserData = nullptr;
-                //vkCreateDebugReportCallbackEXT(g.instance, &debug_report_ci, nullptr, &g.debug);
-            }
+            VqDebugUtilsMessengerCreateInfoEXT dbg;
+
+            // bit annoyed validation *won't* let me do an ALL type of shortcut....
+            dbg.flags           = {};
+            dbg.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+            dbg.messageType     = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_DEVICE_ADDRESS_BINDING_BIT_EXT;
+            dbg.pfnUserCallback = (PFN_vkDebugUtilsMessengerCallbackEXT) &VulqanManager::debugging_callback;
+            dbg.pUserData       = this;
+            
+            vkCreateDebugUtilsMessenger(&dbg, nullptr, &g.debug2);
         }
     }
     
@@ -335,10 +323,14 @@ namespace yq::tachyon {
     {
         Common& g   = common();
         if(g.instance){
+        
+            if(g.debug2){
+                vkDestroyDebugUtilsMessenger(g.debug2);
+                g.debug2    = nullptr;
+            }
+        
             if(g.debug){
-                auto vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT) vkGetInstanceProcAddr(g.instance, "vkDestroyDebugReportCallbackEXT");
-                if(vkDestroyDebugReportCallbackEXT)
-                    vkDestroyDebugReportCallbackEXT(g.instance, g.debug, nullptr);
+                vkDestroyDebugReportCallback(g.debug);
                 g.debug = nullptr;
             }
             
@@ -349,6 +341,95 @@ namespace yq::tachyon {
     }
     
     // ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    static std::atomic<uint64_t>    gDebugID{1};
+    
+    ViDebugTrace::label_t::label_t(const VkDebugUtilsLabelEXT&dbg)
+    {
+        if(dbg.pLabelName)
+            name    = dbg.pLabelName;
+        color   = { dbg.color[0], dbg.color[1], dbg.color[2], dbg.color[3] };
+    }
+    
+    ViDebugTrace::object_t::object_t(const VkDebugUtilsObjectNameInfoEXT& dbg)
+    {
+        type    = dbg.objectType;
+        handle  = dbg.objectHandle;
+        if(dbg.pObjectName)
+            name    = dbg.pObjectName;
+    }
+
+    ViDebugTrace::ViDebugTrace(const VkDebugUtilsMessengerCallbackDataEXT&cd) : id(gDebugID++), time(clock_t::now())
+    {
+        flags               = cd.flags;
+        if(cd.pMessageIdName)
+            msgIdName       = cd.pMessageIdName;
+        msgIdNumber         = cd.messageIdNumber;
+
+        for(uint32_t i=0;i<cd.cmdBufLabelCount;++i)
+            cmdbufs.push_back(label_t(cd.pCmdBufLabels[i]));
+        for(uint32_t i=0;i<cd.queueLabelCount;++i)
+            queues.push_back(label_t(cd.pQueueLabels[i]));
+        for(uint32_t i=0;i<cd.objectCount;++i)
+            objects.push_back(object_t(cd.pObjects[i]));
+    }
+    ViDebugTrace::~ViDebugTrace() = default;
+    
+
+    VkBool32 VulqanManager::debugging_callback(
+            VkDebugUtilsMessageSeverityFlagBitsEXT           messageSeverity,
+            VkDebugUtilsMessageTypeFlagsEXT                  messageTypes,
+            const VkDebugUtilsMessengerCallbackDataEXT*      pCallbackData,
+            VulqanManager*                                   pManager)
+    {
+        if(pCallbackData){
+        
+            //  And... we'll shove into a nice package... todo...
+            ViDebugTracePtr    dbg = new ViDebugTrace(*pCallbackData);
+            
+            dbg -> frame    = Frame::current();
+            dbg -> severity = messageSeverity;
+            dbg -> tachyon  = Tachyon::processing();
+            dbg -> thread   = Thread::current_id();
+            for(auto& e : std::stacktrace::current())
+                dbg -> trace.push_back({e.source_file(), e.source_line()});
+            dbg -> types    = messageTypes;
+            pManager -> send(new VulqanDebugEvent({}, dbg));
+        }
+        
+
+        
+        log4cpp::CategoryStream  yell  = (messageSeverity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT) ? vulkanError : 
+                                        ((messageSeverity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT) ? vulkanWarning : 
+                                         vulkanInfo);
+
+        if(messageSeverity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT)
+            yell << "[VERBOSE] ";
+        if(messageSeverity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT)
+            yell << "[INFO] ";
+        if(messageSeverity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
+            yell << "[WARNING] ";
+        if(messageSeverity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)
+            yell << "[ERROR] ";
+        if(messageTypes & VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT)
+            yell << "[GENERAL] ";
+        if(messageTypes & VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT)
+            yell << "[VALIDATION] ";
+        if(messageTypes & VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT)
+            yell << "[PERFORMANCE] ";
+        if(messageTypes & VK_DEBUG_UTILS_MESSAGE_TYPE_DEVICE_ADDRESS_BINDING_BIT_EXT)
+            yell << "[BINDING] ";
+        //if(pCallbackData->pMessageIdName)
+            //yell << "[msg " << pCallbackData->pMessageIdName << "] ";
+        if(pCallbackData->messageIdNumber)
+            yell << "[msg " << hex((unsigned) pCallbackData->messageIdNumber) << "] ";
+        if(pCallbackData->pMessage)
+            yell << pCallbackData->pMessage;
+            
+        
+        return VK_FALSE;
+    }
+        
 
     std::span<const char*>   VulqanManager::extensions()
     {

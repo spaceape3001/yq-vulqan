@@ -131,6 +131,17 @@
 #define vqFirstNotice(...)              yLogFirstNotice("vq", __VA_ARGS__)
 #define vqFirstWarning(...)             yLogFirstWarning("vq", __VA_ARGS__)
 
+
+#define vqOnceAlert                     yLogOnceAlert("vq")             
+#define vqOnceCritical                  yLogOnceCritical("vq")          
+#define vqOnceDebug                     yLogOnceDebug("vq")             
+#define vqOnceError                     yLogOnceError("vq")             
+#define vqOnceEmergency                 yLogOnceEmergency("vq")         
+#define vqOnceFatal                     yLogOnceFatal("vq")             
+#define vqOnceInfo                      yLogOnceInfo("vq")              
+#define vqOnceNotice                    yLogOnceNotice("vq")            
+#define vqOnceWarning                   yLogOnceWarning("vq")           
+
 namespace yq::tachyon {
     template <typename T>
     constexpr std::string_view hex(T v) 

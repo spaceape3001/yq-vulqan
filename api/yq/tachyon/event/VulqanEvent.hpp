@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-//  YOUR QUILL
+//  YOUR QVulqanLL
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -9,23 +9,23 @@
 #include <yq/tachyon/api/Event.hpp>
 
 namespace yq::tachyon {
-    class VulqanEventMeta : public EventMeta {
-    public:
-        VulqanEventMeta(std::string_view zName, EventMeta& base, const std::source_location& sl=std::source_location::current());
-        
-    protected:
-    };
 
+    //! Instructs an object to set it's position
     class VulqanEvent : public Event {
-        YQ_OBJECT_META(VulqanEventMeta)
         YQ_OBJECT_DECLARE(VulqanEvent, Event)
     public:
     
-        struct Param : public Event::Param {
-        };
-    
-        VulqanEvent(const Param& p = {});
-        virtual ~VulqanEvent();
         static void init_meta();
+
+    protected:
+        VulqanEvent(const Header&);
+        VulqanEvent(const VulqanEvent&, const Header&);
+        ~VulqanEvent();
+    
+    private:
+        VulqanEvent(const VulqanEvent&) = delete;
+        VulqanEvent(VulqanEvent&&) = delete;
+        VulqanEvent& operator=(const VulqanEvent&) = delete;
+        VulqanEvent& operator=(VulqanEvent&&) = delete;
     };
 }

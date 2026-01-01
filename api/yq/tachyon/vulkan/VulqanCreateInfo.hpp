@@ -43,7 +43,7 @@ namespace yq::tachyon {
         bool                        enable          = true;
         
         //! Desired extensions (taking optional & yes)
-        std::vector<NameRequired>   extensions = { { "VK_EXT_debug_report", Required::YES } };
+        std::vector<NameRequired>   extensions = {};
         
             //!  Set to enable fill of non-solid features
         bool                        fill_non_solid  = true;

@@ -1,0 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq { template <typename> class Ref; }
+
+namespace yq::tachyon {
+    struct ViDebugTrace;
+    using ViDebugTracePtr   = Ref<ViDebugTrace>;
+    using ViDebugTraceCPtr  = Ref<const ViDebugTrace>;
+}

@@ -266,6 +266,7 @@ add_library(${PROJECT_NAME} SHARED
     event/WidgetEvent.cpp
 
     event/thread/ThreadAddTachyonEvent.cpp
+    event/vulqan/VulqanDebugEvent.cpp
     
     im.cpp
     
@@ -500,6 +501,7 @@ PUBLIC
 
 PRIVATE
     ImGuiFileDialog
+    stdc++exp
 )
 
 

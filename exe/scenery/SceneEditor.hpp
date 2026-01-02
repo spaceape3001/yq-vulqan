@@ -59,6 +59,8 @@ namespace yq::tachyon {
     class RenderedTableUI;
     class SceneTableUI;
 
+    class ValidationDebugTableUI;
+    class VulqanDebugEvent;
 }
 
 using namespace yq;
@@ -232,6 +234,8 @@ private:
         TypedID                 tvm;
     } m_lua;
 
+    ValidationDebugTableUI* m_validation    = nullptr;
+
 #if FRAME_INSPECTOR
     //! Used for debugging....
     Ref<FrameInspector>     m_inspector;
@@ -292,6 +296,7 @@ private:
     void    on_scene_select_event(const SceneSelectEvent&);
     void    on_scene_visibility_event(const SceneVisibilityEvent&);
     void    on_viewer_screenshot_reply(const ViewerScreenshotReply&);
+    void    on_vulqan_debug_event(const VulqanDebugEvent&);
     
     Future<void>        m_defaultLoad;
     

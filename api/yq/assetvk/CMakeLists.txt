@@ -21,6 +21,8 @@ add_library(yq_assetvk SHARED
 
     controller/Space3Controller.cpp
 
+    dock/VulqanMsgDock.cpp
+
     edit/BgColorUI.cpp
     edit/CircularSpatial3UI.cpp
     edit/ColorProfileUI.cpp
@@ -118,6 +120,7 @@ add_library(yq_assetvk SHARED
     ui/UISimpleTree.cpp
     ui/UIStacked.cpp
     ui/UITachyonEditor.cpp
+    ui/ValidationDebugTableUI.cpp
 
     widget/CompositeWidget.cpp
     widget/FrameInspector.cpp
@@ -127,6 +130,7 @@ add_library(yq_assetvk SHARED
     widget/SpaceCameraRemote.cpp
     widget/StackedWidget.cpp
     widget/TextArea.cpp
+    widget/WidgetUI.cpp
 
 )
 

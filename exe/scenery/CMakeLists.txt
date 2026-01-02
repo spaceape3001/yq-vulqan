@@ -9,10 +9,9 @@ project(scenery)
 add_executable(${PROJECT_NAME}
     SceneApp.cpp
     SceneEditor.cpp
-
+    
     data.cpp
     main.cpp
-    
 )
 
 target_link_libraries(${PROJECT_NAME} 

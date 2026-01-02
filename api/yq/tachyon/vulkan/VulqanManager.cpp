@@ -365,6 +365,8 @@ namespace yq::tachyon {
         if(cd.pMessageIdName)
             msgIdName       = cd.pMessageIdName;
         msgIdNumber         = cd.messageIdNumber;
+        if(cd.pMessage)
+            message         = cd.pMessage;
 
         for(uint32_t i=0;i<cd.cmdBufLabelCount;++i)
             cmdbufs.push_back(label_t(cd.pCmdBufLabels[i]));

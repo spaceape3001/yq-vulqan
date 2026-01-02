@@ -6,6 +6,7 @@
 
 #include "SceneEditor.hpp"
 #include "SceneApp.hpp"
+#include <yq/assetvk/ui/ValidationDebugTableUI.hpp>
 
 //#include "InspectorUI.hpp"
 #include "data.hpp"
@@ -97,6 +98,7 @@
 #include <yq/tachyon/command/ui/TitleCommand.hpp>
 
 #include <yq/assetvk/event/panel/MetaSelectionChangedEvent.hpp>
+#include <yq/tachyon/event/vulqan/VulqanDebugEvent.hpp>
 
 #include <yq/tachyon/io/Save.hpp>
 //#include <yq/tachyon/io/save/SaveXML.hpp>
@@ -126,6 +128,7 @@
 #include <yq/tachyon/ui/calc/SnapLeftToOtherRightUICalc.hpp>
 
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
+#include <yq/tachyon/vulkan/VulqanManager.hpp>  // yeah, we're getting heavy...
 
 #include <yq/text/format.hpp>
 #include <yq/text/transform.hpp>
@@ -255,6 +258,7 @@ void SceneEditor::init_slots()
     w.slot(&SceneEditor::on_scene_select_event);
     w.slot(&SceneEditor::on_scene_visibility_event);
     w.slot(&SceneEditor::on_viewer_screenshot_reply);
+    w.slot(&SceneEditor::on_vulqan_debug_event);
 }
 
 /*
@@ -482,6 +486,15 @@ void SceneEditor::init_ui()
     //  "ROCKET PANEL"
     
 
+    auto rocketPanel        = app.make<UIPanel>("Rocket Panel", UIFlags({ UIFlag::NoCollapse, UIFlag::NoResize, UIFlag::Invisible, UIFlag::NoBackground}));
+    rocketPanel.uid("RocketPanel");
+    rocketPanel.bottom("LuaWindow", TOP);
+    rocketPanel.left("ControlPanel", RIGHT);
+    
+    auto validTable         = rocketPanel.make<ValidationDebugTableUI>();
+    validTable.uid("Validation");
+    
+
     /////////////////////////////////
     //  TIMEBAR
 
@@ -521,6 +534,7 @@ void SceneEditor::init_ui()
         viewMenu.checkbox(VISIBLE, luaPanel);
         //viewMenu.checkbox(VISIBLE, framePanel);
         viewMenu.checkbox(VISIBLE, timeBar);
+        viewMenu.checkbox(VISIBLE, rocketPanel);
     }
     
     auto cameraMenu        = menuBar.menu("Camera");
@@ -1346,6 +1360,12 @@ void    SceneEditor::on_viewer_screenshot_reply(const ViewerScreenshotReply& rep
         rep.raster() -> save_to(filename);
 }
 
+void    SceneEditor::on_vulqan_debug_event(const VulqanDebugEvent&evt)
+{
+    if(m_validation)
+        m_validation->add(evt.trace());
+}
+
 
 void    SceneEditor::prerecord(ViContext&u) 
 {
@@ -1444,6 +1464,13 @@ Execution   SceneEditor::setup(const Context&ctx)
         m_lua.panel             = static_cast<LuaWindowUI*>(element(FIRST, "LuaWindow"));
         m_lua.panel -> tvm(SET, m_lua.tvm);
         m_lua.panel -> info("Scenery Editor's Lua Panel, try help() to get started");
+    }
+    
+    if(!m_validation){
+        m_validation            = static_cast<ValidationDebugTableUI*>(element(FIRST, "Validation"));
+        if(m_validation){
+            VulqanManager::manager()->subscribe(id()); // HACK....
+        }
     }
         
     _activate((CameraID) m_camera.space );

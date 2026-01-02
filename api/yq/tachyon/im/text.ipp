@@ -432,4 +432,11 @@ namespace yq::tachyon::im {
             ImGui::EndTable();
         }
     }
+    
+    void    text(const time_point_t&v)
+    {
+        auto v2 = duration_seconds_t(v.time_since_epoch()).count();
+        text(v2);
+    }
+    
 }

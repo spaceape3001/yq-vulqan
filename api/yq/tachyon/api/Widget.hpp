@@ -166,6 +166,8 @@ namespace yq::tachyon {
         
         //void            set_layout(LayoutPtr);
         
+        virtual std::string_view    title() const;
+        
         ViewerID        viewer() const;
         
         //! Our viewer
@@ -334,6 +336,9 @@ namespace yq::tachyon {
         //! Implementation in widget
         //template <typename Pred>
         //T           forall(ui_k, uint64_t, std::function<T(UIElement*)>);
+        
+        UIElement*          ui_root() { return m_ui.root; }
+        const UIElement*    ui_root() const { return m_ui.root; }
 
     private:
         //! Inserts into the popup vector, creates a clone of the element
@@ -351,7 +356,7 @@ namespace yq::tachyon {
         struct R;
         CloseRequestCPtr            m_closeRequest;
         std::vector<R>              m_rendereds;
-        std::vector<GesturePtr>    m_gestures, m_newGestures;
+        std::vector<GesturePtr>     m_gestures, m_newGestures;
         Tristate                    m_wireframe     = Tristate::INHERIT;
         Vector2D                    m_position      = { 0., 0. };
         Size2D                      m_size          = { -1, -1 };   // unknown sizing

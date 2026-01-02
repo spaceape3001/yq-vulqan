@@ -10,6 +10,7 @@
 
 #include <yq/math/glm.hpp>
 #include <yq/tachyon/api/ID.hpp>
+#include <yq/tachyon/typedef/clock.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 #include <yq/typedef/quaternion3.hpp>
 #include <yq/typedef/range.hpp>
@@ -29,6 +30,8 @@
 #include <yq/typedef/vector4.hpp>
 #include <yq/unit/MKS.hpp>
 #include <yq/unit/SCALED.hpp>
+
+#include <chrono>
 
 namespace yq {
     class Any;
@@ -115,4 +118,6 @@ namespace yq::tachyon::im {
     {
         text(v.value);
     }
+    
+    void    text(const time_point_t&);
 }

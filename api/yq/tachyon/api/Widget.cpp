@@ -790,6 +790,11 @@ namespace yq::tachyon {
         return {};
     }
 
+    std::string_view    Widget::title() const
+    {
+        return metaInfo().label();
+    }
+
     Viewer*         Widget::viewer(ptr_k)
     {
         const Frame*    f   = Frame::current();

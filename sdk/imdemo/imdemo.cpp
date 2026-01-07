@@ -33,6 +33,9 @@ int main(int argc, char* argv[])
     Application app(argc, argv, aci);
     load_plugin_dir("plugin");
     app.finalize();
-    app.run(Widget::create<ImGuiDemoWidget>());
+    app.start();
+    WidgetPtr   w   = Widget::create_on<ImGuiDemoWidget>(VIEWER);
+    app.tick();
+    app.run(w);
     return 0;
 }

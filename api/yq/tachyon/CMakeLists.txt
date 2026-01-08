@@ -14,7 +14,7 @@ find_package(GLFW3 REQUIRED)
 find_package(glm REQUIRED)
 
 set(VULKAN_DIR $ENV{VULKAN_SDK})
-find_package(Vulkan 1.3 REQUIRED)
+find_package(Vulkan 1.4 REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
     #   Keep these sections in ALPHABETICAL order!

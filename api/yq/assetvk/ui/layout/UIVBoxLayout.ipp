@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "UIHBoxLayout.hpp"
-#include "UIHBoxLayoutWriter.hpp"
+#include "UIVBoxLayout.hpp"
+#include "UIVBoxLayoutWriter.hpp"
 #include <yq/tachyon/ui/UIGenerator.hpp>
 #include <yq/tachyon/ui/UIWindow.hpp>
 #include <yq/shape/AxBox2.hpp>
@@ -18,45 +18,41 @@
 #include <yq/vector/Vector2.hxx>
 #include <yq/shape/Size2.hxx>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::UIHBoxLayout)
-
-namespace yq {
-    template Size2<float>::Size2(const Vector2F&);
-}
+YQ_OBJECT_IMPLEMENT(yq::tachyon::UIVBoxLayout)
 
 namespace yq::tachyon {
-    UIHBoxLayout::UIHBoxLayout(UIFlags flags) : UILayout(flags)
+    UIVBoxLayout::UIVBoxLayout(UIFlags flags) : UILayout(flags)
     {
     }
     
-    UIHBoxLayout::UIHBoxLayout(const UIHBoxLayout& cp) : UILayout(cp)
+    UIVBoxLayout::UIVBoxLayout(const UIVBoxLayout& cp) : UILayout(cp)
     {
     }
     
-    UIHBoxLayout::~UIHBoxLayout()
+    UIVBoxLayout::~UIVBoxLayout()
     {
     }
         
-    UIHBoxLayout* UIHBoxLayout::clone() const
+    UIVBoxLayout* UIVBoxLayout::clone() const
     {
-        return new UIHBoxLayout(*this);
+        return new UIVBoxLayout(*this);
     }
 
-    void    UIHBoxLayout::postadd(UIElement* elem) 
+    void    UIVBoxLayout::postadd(UIElement* elem) 
     {
         //elem->flag(SET, UIFlag::AutoResizeX);
         //elem->flag(SET, UIFlag::ResizeX);
         elem->flag(SET, UIFlag::NoDecoration);
     }
         
-    void    UIHBoxLayout::render() 
+    void    UIVBoxLayout::render() 
     {
         if(m_flags(UIFlag::Invisible))
             return ;
 
         AxBox2F box = parent() -> viewport(CONTENT);
 
-        float   excess  = box.hi.x - box.lo.x;
+        float   excess  = box.hi.y - box.lo.y;
         size_t  cnt     = 0;
         
         for(UIElement* e : m_items){
@@ -66,16 +62,16 @@ namespace yq::tachyon {
             if(win->flag(UIFlag::Invisible))
                 continue;
         
-            float   w   = win->width(SPEC);
-            if(is_nan(w) || (w <= 0.)){
+            float   h   = win->height(SPEC);
+            if(is_nan(h) || (h <= 0.)){
                 ++cnt;
             } else {
-                excess -= w;
+                excess -= h;
             }
         }
         
         float per = std::max(excess / (float) cnt, style().window.min_size());
-        float x   = box.lo.x;
+        float y   = box.lo.y;
 
         for(UIElement* e : m_items){
             UIWindow*win  = dynamic_cast<UIWindow*>(e);
@@ -84,47 +80,47 @@ namespace yq::tachyon {
             if(win->flag(UIFlag::Invisible))
                 continue;
 
-            float   w   = win->width(SPEC);
-            if(is_nan(w) || (w <= 0.)){
-                w   = per;
+            float   h   = win->width(SPEC);
+            if(is_nan(h) || (h <= 0.)){
+                h   = per;
             }
             
-            win -> position(SET, NEXT, { x, box.lo.y });
-            win -> size(SET, NEXT, { w, box.hi.y - box.lo.y });
+            win -> position(SET, NEXT, { box.lo.x, y });
+            win -> size(SET, NEXT, { box.hi.x - box.lo.x, h });
             
 
             win->draw();
-            x += w;
+            y += h;
         }
 
-        if(x > box.hi.x){
-            uiOnceWarning << "HBox layout exceeded viewport width";
+        if(y > box.hi.y){
+            uiOnceWarning << "VBox layout exceeded viewport height";
         }
     }
 
-    YesNo UIHBoxLayout::acceptable(UIElement* elem)
+    YesNo UIVBoxLayout::acceptable(UIElement* elem)
     {
         return dynamic_cast<UIWindow*>(elem) || dynamic_cast<UIGenerator*>(elem);
     }
     
-    void UIHBoxLayout::init_meta()
+    void UIVBoxLayout::init_meta()
     {
-        auto w = writer<UIHBoxLayout>();
-        w.description("Horizontal Box UI Layout");
+        auto w = writer<UIVBoxLayout>();
+        w.description("Vertical Box UI Layout");
     }
         
     ////////////////////////////
     
-    UIHBoxLayoutWriter::UIHBoxLayoutWriter() = default;
-    UIHBoxLayoutWriter::UIHBoxLayoutWriter(const UIHBoxLayoutWriter&) = default;
-    UIHBoxLayoutWriter::~UIHBoxLayoutWriter() = default;
+    UIVBoxLayoutWriter::UIVBoxLayoutWriter() = default;
+    UIVBoxLayoutWriter::UIVBoxLayoutWriter(const UIVBoxLayoutWriter&) = default;
+    UIVBoxLayoutWriter::~UIVBoxLayoutWriter() = default;
     
-    UIHBoxLayout* UIHBoxLayoutWriter::element()
+    UIVBoxLayout* UIVBoxLayoutWriter::element()
     {
-        return static_cast<UIHBoxLayout*>(m_ui);
+        return static_cast<UIVBoxLayout*>(m_ui);
     }
     
-    UIHBoxLayoutWriter::UIHBoxLayoutWriter(UIHBoxLayout* ui) : UILayoutWriter(ui)
+    UIVBoxLayoutWriter::UIVBoxLayoutWriter(UIVBoxLayout* ui) : UILayoutWriter(ui)
     {
     }
 

@@ -33,10 +33,10 @@
 #include <yq/tachyon/ui/align/UIRightAlign.hpp>
 #include <yq/tachyon/ui/align/UIRightAlignWriter.hpp>
 
-#include <yq/tachyon/ui/layout/UIHBoxLayout.hpp>
-#include <yq/tachyon/ui/layout/UIHBoxLayoutWriter.hpp>
-#include <yq/tachyon/ui/layout/UIVBoxLayout.hpp>
-#include <yq/tachyon/ui/layout/UIVBoxLayoutWriter.hpp>
+//#include <yq/tachyon/ui/layout/UIHBoxLayout.hpp>
+//#include <yq/tachyon/ui/layout/UIHBoxLayoutWriter.hpp>
+//#include <yq/tachyon/ui/layout/UIVBoxLayout.hpp>
+//#include <yq/tachyon/ui/layout/UIVBoxLayoutWriter.hpp>
 
 #include <yq/tachyon/api/Widget.hpp>
 
@@ -146,10 +146,10 @@ namespace yq::tachyon {
         return checkbox(VISIBLE, elem.element());
     }
 
-    UIHBoxLayoutWriter            UIElementsWriter::hbox()
-    {
-        return make<UIHBoxLayout>();
-    }
+    //UIHBoxLayoutWriter            UIElementsWriter::hbox()
+    //{
+        //return make<UIHBoxLayout>();
+    //}
     
     UIHLineWriter            UIElementsWriter::hline()
     {
@@ -196,8 +196,9 @@ namespace yq::tachyon {
         return make<UISpacer>(sz);
     }
 
-    UIVBoxLayoutWriter            UIElementsWriter::vbox()
-    {
-        return make<UIVBoxLayout>();
-    }
+    // moving to more declaration and less "all-inclusive"
+    //UIVBoxLayoutWriter            UIElementsWriter::vbox()
+    //{
+        //return make<UIVBoxLayout>();
+    //}
 }

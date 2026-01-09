@@ -419,10 +419,6 @@ add_library(${PROJECT_NAME} SHARED
     
     ui/calc/SnapLeftToOtherRightUICalc.cpp
 
-    ui/layout/UIHBoxLayout.cpp
-    ui/layout/UIVBoxLayout.cpp
-
-    
     utility/LoggerBox.cpp
 
     vulkan/VulqanGPU.cpp

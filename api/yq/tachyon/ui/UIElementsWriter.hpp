@@ -25,7 +25,7 @@ namespace yq::tachyon {
     class UIButtonWriter;
     class UICenterAlignWriter;
     class UICheckBoxWriter;
-    class UIHBoxLayoutWriter;
+    //class UIHBoxLayoutWriter;
     class UIHLineWriter;
     class UIImageWriter;
     class UILineInputWriter;
@@ -35,7 +35,7 @@ namespace yq::tachyon {
     class UISpacerWriter;
     class UITextLabelWriter;
     class UIToolBarWriter;
-    class UIVBoxLayoutWriter;
+    //class UIVBoxLayoutWriter;
     
     class UIElementsWriter : public UIElementWriter {
     public:
@@ -111,7 +111,7 @@ namespace yq::tachyon {
         template <SomeUIElement U, SomeWidget W>
         UIElementWriter         generate(std::function<U*(W&)>&&);
         
-        UIHBoxLayoutWriter            hbox();
+        //UIHBoxLayoutWriter            hbox();
         
         //! The contents within will all be placed same line
         UIHLineWriter           hline();
@@ -151,7 +151,7 @@ namespace yq::tachyon {
         
         UISpacerWriter          spacer(const Size2F&);
         
-        UIVBoxLayoutWriter            vbox();
+        //UIVBoxLayoutWriter            vbox();
 
     protected:
     

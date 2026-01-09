@@ -11,6 +11,7 @@ add_library(yq_assetvk SHARED
     event_user3.cpp
     gesture_file.cpp
     trigger.cpp
+    ui_layout.cpp
     
     camera/SpaceCamera.cpp
     

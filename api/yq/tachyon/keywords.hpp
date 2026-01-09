@@ -106,6 +106,7 @@ namespace yq::tachyon {
     };
     
     struct gamepad_k {};
+    struct gesture_k {};
     
     struct glfw_k {
         consteval operator Platform() const noexcept { return Platform::GLFW; }
@@ -284,6 +285,7 @@ namespace yq::tachyon {
     static constexpr const fixed_k              FIXED;
     static constexpr const game_k               GAME;
     static constexpr const gamepad_k            GAMEPAD;
+    static constexpr const gesture_k            GESTURE;
     static constexpr const glfw_k               GLFW;
     static constexpr const graphics_card_k      GRAPHICS_CARD;
     static constexpr const group_k              GROUP;

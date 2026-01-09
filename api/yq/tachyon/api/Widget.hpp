@@ -29,6 +29,7 @@
 #include <yq/core/Tristate.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/tensor/Tensor44.hpp>
+#include <yq/typedef/url.hpp>
 #include <yq/vector/Vector2.hpp>
 
 #include <functional>
@@ -120,6 +121,9 @@ namespace yq::tachyon {
 
         void        cmd_hide();
         void        cmd_show();
+        
+        // allows for configuration (based on URL), can reject with false.
+        virtual bool configure(const Url&) { return true; }
         
 
         //! Dimension count to the widget (ie...add dimensions to allow for layout resizing)

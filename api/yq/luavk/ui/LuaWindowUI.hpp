@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/TypedID.hpp>
-#include <yq/tachyon/ui/UIPanel.hpp>
+#include <yq/tachyon/ui/layout/UIPanel.hpp>
 
 namespace yq::tachyon {
     class LuaExecuteReply;

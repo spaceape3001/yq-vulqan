@@ -11,7 +11,6 @@ add_library(yq_assetvk SHARED
     event_user3.cpp
     gesture_file.cpp
     trigger.cpp
-    ui_layout.cpp
     
     camera/SpaceCamera.cpp
     
@@ -22,7 +21,9 @@ add_library(yq_assetvk SHARED
 
     controller/Space3Controller.cpp
 
-    dock/VulqanMsgDock.cpp
+    debug/UIFrameMetrics.cpp
+    debug/ValidationDebugTableUI.cpp
+    debug/VulqanMsgDock.cpp
 
     edit/BgColorUI.cpp
     edit/CircularSpatial3UI.cpp
@@ -116,12 +117,9 @@ add_library(yq_assetvk SHARED
     tweak/OriginCameraTweak.cpp
     
     ui/UIConcreteMetaList.cpp
-    ui/UIFrameMetrics.cpp
     ui/UIMetaList.cpp
-    ui/UISimpleTree.cpp
-    ui/UIStacked.cpp
     ui/UITachyonEditor.cpp
-    ui/ValidationDebugTableUI.cpp
+
 
     widget/CompositeWidget.cpp
     widget/FrameInspector.cpp

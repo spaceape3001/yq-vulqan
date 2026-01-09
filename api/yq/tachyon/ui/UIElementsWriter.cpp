@@ -5,38 +5,30 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIElementsWriter.hpp"
-#include <yq/tachyon/ui/UIButton.hpp>
-#include <yq/tachyon/ui/UIButtonWriter.hpp>
-#include <yq/tachyon/ui/UIToolBar.hpp>
-#include <yq/tachyon/ui/UIToolBarWriter.hpp>
-#include <yq/tachyon/ui/UICheckBox_Simple.hpp>
-#include <yq/tachyon/ui/UICheckBox_Visible.hpp>
-#include <yq/tachyon/ui/UICheckBoxWriter.hpp>
 #include <yq/tachyon/ui/UIElements.hpp>
-#include <yq/tachyon/ui/UIImage.hpp>
 #include <yq/tachyon/ui/UIImageWriter.hpp>
-#include <yq/tachyon/ui/UIMenu.hpp>
-#include <yq/tachyon/ui/UIMenuWriter.hpp>
-#include <yq/tachyon/ui/UIMenuBar.hpp>
-#include <yq/tachyon/ui/UIMenuBarWriter.hpp>
-#include <yq/tachyon/ui/UISection.hpp>
-#include <yq/tachyon/ui/UISeparator.hpp>
-#include <yq/tachyon/ui/UISpacer.hpp>
-#include <yq/tachyon/ui/UISpacerWriter.hpp>
-#include <yq/tachyon/ui/UITextLabel.hpp>
 #include <yq/tachyon/ui/UITextLabelWriter.hpp>
+#include <yq/tachyon/ui/UIToolBarWriter.hpp>
 
-#include <yq/tachyon/ui/align/UICenterAlign.hpp>
 #include <yq/tachyon/ui/align/UICenterAlignWriter.hpp>
-#include <yq/tachyon/ui/align/UIHLine.hpp>
 #include <yq/tachyon/ui/align/UIHLineWriter.hpp>
-#include <yq/tachyon/ui/align/UIRightAlign.hpp>
 #include <yq/tachyon/ui/align/UIRightAlignWriter.hpp>
 
-//#include <yq/tachyon/ui/layout/UIHBoxLayout.hpp>
-//#include <yq/tachyon/ui/layout/UIHBoxLayoutWriter.hpp>
-//#include <yq/tachyon/ui/layout/UIVBoxLayout.hpp>
-//#include <yq/tachyon/ui/layout/UIVBoxLayoutWriter.hpp>
+#include <yq/tachyon/ui/input/UIButtonWriter.hpp>
+#include <yq/tachyon/ui/input/UICheckBox_Simple.hpp>
+#include <yq/tachyon/ui/input/UICheckBox_Visible.hpp>
+#include <yq/tachyon/ui/input/UICheckBoxWriter.hpp>
+
+#include <yq/tachyon/ui/layout/UIHBoxLayoutWriter.hpp>
+#include <yq/tachyon/ui/layout/UISection.hpp>
+#include <yq/tachyon/ui/layout/UISeparator.hpp>
+#include <yq/tachyon/ui/layout/UITree.hpp>
+#include <yq/tachyon/ui/layout/UISpacerWriter.hpp>
+#include <yq/tachyon/ui/layout/UIVBoxLayoutWriter.hpp>
+
+#include <yq/tachyon/ui/menu/UIMenuWriter.hpp>
+#include <yq/tachyon/ui/menu/UIMenuBarWriter.hpp>
+#include <yq/tachyon/ui/menu/UIMenuItemWriter.hpp>
 
 #include <yq/tachyon/api/Widget.hpp>
 
@@ -98,7 +90,6 @@ namespace yq::tachyon {
         // Element Creation Helpers
         /////////////////////////////////////////////
 
-
     UIButtonWriter          UIElementsWriter::button(std::string_view text)
     {
         return make<UIButton>(text);
@@ -113,6 +104,7 @@ namespace yq::tachyon {
     {
         return make<UICenterAlign>();
     }
+
 
     UICheckBoxWriter        UIElementsWriter::checkbox(std::string_view text, bool value)
     {
@@ -146,15 +138,6 @@ namespace yq::tachyon {
         return checkbox(VISIBLE, elem.element());
     }
 
-    //UIHBoxLayoutWriter            UIElementsWriter::hbox()
-    //{
-        //return make<UIHBoxLayout>();
-    //}
-    
-    UIHLineWriter            UIElementsWriter::hline()
-    {
-        return make<UIHLine>();
-    }
 
     UIImageWriter           UIElementsWriter::image(std::string_view path)
     {
@@ -165,7 +148,7 @@ namespace yq::tachyon {
     {
         return make<UIImage>(path, sz);
     }
-    
+
     UITextLabelWriter       UIElementsWriter::label(std::string_view text)
     {
         return make<UITextLabel>(text);
@@ -174,6 +157,11 @@ namespace yq::tachyon {
     UIMenuWriter            UIElementsWriter::menu(std::string_view name)
     {
         return make<UIMenu>(name);
+    }
+
+    UIMenuItemWriter        UIElementsWriter::menuitem(std::string_view name, std::string_view scut)
+    {
+        return make<UIMenuItem>(name, scut);
     }
 
     UIRightAlignWriter      UIElementsWriter::right(align_k)
@@ -196,9 +184,13 @@ namespace yq::tachyon {
         return make<UISpacer>(sz);
     }
 
-    // moving to more declaration and less "all-inclusive"
-    //UIVBoxLayoutWriter            UIElementsWriter::vbox()
-    //{
-        //return make<UIVBoxLayout>();
-    //}
+    UIElementsWriter        UIElementsWriter::tree(UIFlags flags)
+    {
+        return make<UITree>(flags);
+    }
+
+    UIVBoxLayoutWriter            UIElementsWriter::vbox()
+    {
+        return make<UIVBoxLayout>();
+    }
 }

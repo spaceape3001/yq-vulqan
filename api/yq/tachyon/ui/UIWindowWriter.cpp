@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "UIWindowWriter.hpp"
-#include <yq/tachyon/ui/UIMenuBar.hpp>
-#include <yq/tachyon/ui/UIMenuBarWriter.hpp>
-#include <yq/tachyon/ui/UIToolBar.hpp>
-#include <yq/tachyon/ui/UIToolBarWriter.hpp>
+//#include <yq/tachyon/ui/UIMenuBar.hpp>
+//#include <yq/tachyon/ui/UIMenuBarWriter.hpp>
+//#include <yq/tachyon/ui/UIToolBar.hpp>
+//#include <yq/tachyon/ui/UIToolBarWriter.hpp>
 #include <yq/tachyon/ui/UIWindow.hpp>
 #include <yq/shape/Size2.hpp>
 #include <yq/vector/Vector2.hpp>
@@ -138,7 +138,7 @@ namespace yq::tachyon {
         /////////////////////////////////////////////
         // Element Creation Helpers
         /////////////////////////////////////////////
-
+#if 0
     UIToolBarWriter     UIWindowWriter::toolbar(Cardinal dir, std::string_view kName)
     {
         return make<UIToolBar>(dir, kName);
@@ -153,6 +153,6 @@ namespace yq::tachyon {
     {
         return make<UIMenuBar>();
     }
-
+#endif
 }
 

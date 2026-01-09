@@ -6,16 +6,13 @@
 
 #pragma once
 
+#include <yq/tachyon/ui/UIWindow.hpp>
 #include <yq/tachyon/ui/UIElementsWriter.hpp>
 #include <yq/typedef/axside2.hpp>
 #include <yq/typedef/size2.hpp>
 #include <yq/typedef/vector2.hpp>
 
 namespace yq::tachyon {
-    class UIWindow;
-    
-    class UIWindowWriter;
-    
     class UIWindowWriter : public UIElementsWriter {
     public:
 
@@ -48,9 +45,9 @@ namespace yq::tachyon {
         // Element Creation Helpers
         /////////////////////////////////////////////
 
-        UIMenuBarWriter     menubar();
-        UIToolBarWriter   toolbar(Cardinal, std::string_view kName);
-        UIToolBarWriter   toolbar(const Vector2F&, std::string_view kName);
+        //UIMenuBarWriter     menubar();
+        //UIToolBarWriter   toolbar(Cardinal, std::string_view kName);
+        //UIToolBarWriter   toolbar(const Vector2F&, std::string_view kName);
 
     };
 }

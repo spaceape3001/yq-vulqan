@@ -6,12 +6,13 @@
 
 #pragma once
 
+#include <yq/tachyon/ui/UIAppMain.hpp>
 #include <yq/tachyon/ui/UIElementsWriter.hpp>
 
 namespace yq::tachyon {
-    class UIAppMain;
     class Widget;
     class WidgetMeta;
+    class UIPanelWriter;
     class UIWindowWriter;
     
     /*! \brief Writer for the main application
@@ -33,6 +34,7 @@ namespace yq::tachyon {
 
         UIMenuBarWriter     menubar();
         UIMenuBarWriter     menubar(main_k);
+        UIPanelWriter       panel(std::string_view kName, UIFlags flags={});
         UIToolBarWriter     toolbar(Cardinal, std::string_view kName);
         UIToolBarWriter     toolbar(const Vector2F&, std::string_view kName);
         UIWindowWriter      window(std::string_view kName={});

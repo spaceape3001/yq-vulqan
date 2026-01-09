@@ -4,7 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "UITextLabel.hpp"
 #include "UITextLabelWriter.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>

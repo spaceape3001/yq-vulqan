@@ -4,10 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include <yq/tachyon/ui/UIElements.hpp>
 
 namespace yq::tachyon {
-    class UIToolBar;
+    //class UIToolBar;
     class UIAppMainWriter;
 
     /*! \brief Presents a "classic" application UI (toolbars, docks, etc)

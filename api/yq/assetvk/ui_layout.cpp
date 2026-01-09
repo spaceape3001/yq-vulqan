@@ -6,6 +6,9 @@
 
 //#include "ui/layout/UIBorderLayout.ipp"
 #include "ui/layout/UIHBoxLayout.ipp"
+#include "ui/layout/UISeparator.ipp"
+#include "ui/layout/UISpacer.ipp"
+#include "ui/layout/UIStacked.ipp"
 #include "ui/layout/UIVBoxLayout.ipp"
 
 namespace yq {

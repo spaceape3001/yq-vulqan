@@ -6,7 +6,6 @@
 
 #include "SceneEditor.hpp"
 #include "SceneApp.hpp"
-#include <yq/assetvk/ui/ValidationDebugTableUI.hpp>
 
 //#include "InspectorUI.hpp"
 #include "data.hpp"
@@ -17,6 +16,8 @@
 #include <yq/assetvk/control/ThreadOverclockEditUIWriter.hpp>
 #include <yq/assetvk/control/ThreadTimeEditUIWriter.hpp>
 #include <yq/assetvk/controller/Space3Controller.hpp>
+#include <yq/assetvk/debug/UIFrameMetrics.hpp>
+#include <yq/assetvk/debug/ValidationDebugTableUI.hpp>
 #include <yq/assetvk/gesture/file/ImportTSXFileGesture.hpp>
 #include <yq/assetvk/gesture/file/OpenTSXFileGesture.hpp>
 #include <yq/assetvk/gesture/file/SaveTSXFileGesture.hpp>
@@ -27,10 +28,8 @@
 #include <yq/assetvk/scene/SimpleScene.hpp>
 #include <yq/assetvk/spatial/SimpleSpatial3.hpp>
 #include <yq/assetvk/tweak/OriginCameraTweak.hpp>
-#include <yq/assetvk/ui/UIFrameMetrics.hpp>
 #include <yq/assetvk/ui/UIBuildableMetaListWriter.hpp>
-#include <yq/assetvk/ui/UISimpleTree.hpp>
-#include <yq/assetvk/ui/UITachyonEditor.hpp>
+#include <yq/assetvk/ui/UITachyonEditorWriter.hpp>
 #include <yq/assetvk/widget/FrameInspector.hpp>
 
 #include <yq/date/dateutils.hpp>
@@ -117,9 +116,6 @@
 
 
 
-#include <yq/tachyon/ui/UIMenuBar.hpp>
-#include <yq/tachyon/ui/UIPanelWriter.hpp>
-#include <yq/tachyon/ui/UISection.hpp>
 #include <yq/tachyon/ui/UIStyle.hpp>
 #include <yq/tachyon/ui/UIWindow.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>
@@ -278,7 +274,7 @@ void SceneEditor::init_ui()
     /////////////////////////////////
     //  CONTROL PANEL
 
-    auto controlPanel       = app.make<UIPanel>("Control Panel", UIFlags{ UIFlag::NoCollapse /* , UIFlag::Debug */ });
+    auto controlPanel       = app.panel("Control Panel", { UIFlag::NoCollapse /* , UIFlag::Debug */ });
     //auto controlPanel       = app.make<ControlPanelUI>();
     {
         controlPanel.uid("ControlPanel");
@@ -286,7 +282,7 @@ void SceneEditor::init_ui()
         controlPanel.width(MAX, PIVOT, 0.8);
         controlPanel.width(START, PIVOT, 0.2);
         controlPanel.height(MIN, PIVOT, 1.0);
-        auto controlTree        = controlPanel.make<UISimpleTree>();
+        auto controlTree        = controlPanel.tree();
 
         {
             auto csMetrics          = controlTree.section("Metrics");
@@ -296,7 +292,7 @@ void SceneEditor::init_ui()
         //  Might look at docking pads, making these panels "dockable" type of thing, moving them around.
 
         {
-            auto csCameras          = controlTree.section("Cameras").make<UISimpleTree>();
+            auto csCameras          = controlTree.section("Cameras").tree();
             auto blCameras          = csCameras.section("Available").make<UIBuildableMetaList<Camera>>();
             auto curCameras         = csCameras.section("Current").make<CameraTableUI>();
             auto propCameras        = csCameras.section("Properties");
@@ -315,7 +311,7 @@ void SceneEditor::init_ui()
         }
         
         {
-            auto csControllers      = controlTree.section("Controllers").make<UISimpleTree>();
+            auto csControllers      = controlTree.section("Controllers").tree();
             auto blControllers      = csControllers.section("Available").make<UIBuildableMetaList<Controller>>();
             auto curControllers     = csControllers.section("Current").make<ControllerTableUI>();
             auto propControllers    = csControllers.section("Properties");
@@ -334,7 +330,7 @@ void SceneEditor::init_ui()
         }
         
         {
-            //auto csCollisions       = controlTree.section("Collisions").make<UISimpleTree>();
+            //auto csCollisions       = controlTree.section("Collisions").tree();
             //auto blCollisions       = csControllers.section("Available").make<UIBuildableList<Controller>>();
             //auto curCollisions      = csControllers.section("Current").make<CollisionTableUI>();
             //auto propCollisions       = csCollisions.section("Properties");
@@ -353,7 +349,7 @@ void SceneEditor::init_ui()
         }
         
         {
-            auto csLights           = controlTree.section("Lights").make<UISimpleTree>();
+            auto csLights           = controlTree.section("Lights").tree();
             auto blLights           = csLights.section("Available").make<UIBuildableMetaList<Light>>();
             auto curLights          = csLights.section("Current").make<LightTableUI>();
             auto propLights         = csLights.section("Properties");
@@ -372,7 +368,7 @@ void SceneEditor::init_ui()
         }
         
         {
-            //auto csModels           = controlTree.section("Models").make<UISimpleTree>();
+            //auto csModels           = controlTree.section("Models").tree();
             //auto blModels           = csModels.section("Available").make<UIBuildableMetaList<Model>>();
             //auto curModels          = csModels.section("Current").make<ModelTableUI>();
             //auto propModels         = csModels.section("Properties");
@@ -391,7 +387,7 @@ void SceneEditor::init_ui()
         }
 
         {
-            //auto csPhysics          = controlTree.section("Physics").make<UISimpleTree>();
+            //auto csPhysics          = controlTree.section("Physics").tree();
             //auto blPhysics          = csPhysics.section("Available").make<UIBuildableMetaList<Physic>>();
             //auto curPhysics         = csPhysics.section("Current").make<PhysicsTableUI>();
             //auto propPhysics        = csPhysics.section("Properties");
@@ -409,7 +405,7 @@ void SceneEditor::init_ui()
         }
 
         {
-            auto csRendereds        = controlTree.section("Rendereds").make<UISimpleTree>();
+            auto csRendereds        = controlTree.section("Rendereds").tree();
             auto blRendereds        = csRendereds.section("Available").make<UIBuildableMetaList<Rendered>>();
             auto curRendereds       = csRendereds.section("Current").make<RenderedTableUI>();
             auto propRendereds      = csRendereds.section("Properties");
@@ -428,7 +424,7 @@ void SceneEditor::init_ui()
         }
 
         {
-            auto csScenes           = controlTree.section("Scenes").make<UISimpleTree>();
+            auto csScenes           = controlTree.section("Scenes").tree();
             auto blScenes           = csScenes.section("Available").make<UIBuildableMetaList<Scene>>();
             auto curScenes          = csScenes.section("Current").make<SceneTableUI>();
             auto propScenes         = csScenes.section("Properties");
@@ -444,7 +440,7 @@ void SceneEditor::init_ui()
         }
 
         {
-            auto csSpatials         = controlTree.section("Spatials").make<UISimpleTree>();
+            auto csSpatials         = controlTree.section("Spatials").tree();
             auto blSpatials         = csSpatials.section("Available").make<UIBuildableMetaList<Spatial>>();
             //auto curSpatials         = csSpatials.section("Current").make<SpatialTableUI>();
             //auto propSpatials        = csSpatials.section("Properties");
@@ -486,7 +482,7 @@ void SceneEditor::init_ui()
     //  "ROCKET PANEL"
     
 
-    auto rocketPanel        = app.make<UIPanel>("Rocket Panel", UIFlags({ UIFlag::NoCollapse, UIFlag::NoResize, UIFlag::Invisible, UIFlag::NoBackground}));
+    auto rocketPanel        = app.panel("Rocket Panel", UIFlags({ UIFlag::NoCollapse, UIFlag::NoResize, UIFlag::Invisible, UIFlag::NoBackground}));
     rocketPanel.uid("RocketPanel");
     rocketPanel.bottom("LuaWindow", TOP);
     rocketPanel.left("ControlPanel", RIGHT);
@@ -501,8 +497,8 @@ void SceneEditor::init_ui()
     auto timeBar        = app.toolbar(Cardinal::SSE, "TimeBar");
     {
         timeBar.make<ThreadTimeEditUI>(EDIT);
-        timeBar.image("openicon/icons/png/32x32/actions/media-playback-pause-8.png", {24, 24}).action(&SceneEditor::cmd_time_pause);
-        timeBar.image("openicon/icons/png/32x32/actions/media-playback-start-8.png", {24, 24}).action(&SceneEditor::cmd_time_resume);
+        timeBar.make<UIImage>("openicon/icons/png/32x32/actions/media-playback-pause-8.png", Size2F{24, 24}).action(&SceneEditor::cmd_time_pause);
+        timeBar.make<UIImage>("openicon/icons/png/32x32/actions/media-playback-start-8.png", Size2F{24, 24}).action(&SceneEditor::cmd_time_resume);
     }
     
 

@@ -98,6 +98,9 @@ add_library(${PROJECT_NAME} SHARED
     
     ui.cpp
     ui_align.cpp
+    ui_input.cpp
+    ui_layout.cpp
+    ui_menu.cpp
     
     vulkan.cpp
 
@@ -292,13 +295,6 @@ add_library(${PROJECT_NAME} SHARED
     #io/builder/ObjectBuilder.cpp
     
     #io/Wavefront.cpp
-
-    #io/save/SaveDelegate.cpp
-    #io/save/SaveObject.cpp
-    #io/save/SaveResource.cpp
-    #io/save/SaveTachyon.cpp
-    #io/save/SaveThread.cpp
-    #io/save/SaveXML.cpp
     
     message/EmptyMessage.cpp
 
@@ -393,7 +389,6 @@ add_library(${PROJECT_NAME} SHARED
     
 
     ui/UIAppMain.cpp
-    ui/UIAppMainWriter.cpp
     ui/UICalc.cpp
     ui/UIDock.cpp
     ui/UIDocker.cpp
@@ -402,22 +397,25 @@ add_library(${PROJECT_NAME} SHARED
     ui/UIElementWriter.cpp
     ui/UIElements.cpp
     ui/UIElementsWriter.cpp
-    ui/UIForm.cpp
     ui/UIGenerator.cpp
+    ui/UIForm.cpp
     ui/UIImage.cpp
-    ui/UIInputBar.cpp
     ui/UILayout.cpp
     ui/UILayoutWriter.cpp
-    ui/UILineInput.cpp
-    ui/UIPanel.cpp
     #ui/UIPositioner.cpp    # TBD
-    ui/UIToolBar.cpp
-    ui/UIToolBarWriter.cpp
     ui/UIUtils.cpp
     ui/UIWindow.cpp
     ui/UIWindowWriter.cpp
-    
+
+    ui/UIToolBar.cpp
+
     ui/calc/SnapLeftToOtherRightUICalc.cpp
+    
+    ui/input/UIInputBar.cpp
+    ui/input/UILineInput.cpp
+
+    ui/layout/UIPanel.cpp
+    ui/layout/UITree.cpp
 
     utility/LoggerBox.cpp
 

@@ -4,6 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
+
 #include "UIElementWriter.hpp"
 #include <yq/tachyon/action/PayloadCallbackAction.hpp>
 #include <yq/tachyon/action/StdCallbackAction.hpp>

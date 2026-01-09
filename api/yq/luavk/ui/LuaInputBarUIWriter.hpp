@@ -6,7 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/ui/UIInputBarWriter.hpp>
+#include <yq/luavk/ui/LuaInputBarUI.hpp>
+#include <yq/tachyon/ui/input/UIInputBarWriter.hpp>
 
 namespace yq::tachyon {
     class LuaInputBarUI;

@@ -31,6 +31,7 @@ target_link_libraries(yq_luavk
     PUBLIC
         yq_lua
         yq_tachyon
+        yq_assetvk
         yq_consolevk
 )
 

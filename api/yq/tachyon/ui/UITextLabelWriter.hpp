@@ -6,11 +6,10 @@
 
 #pragma once
 
+#include <yq/tachyon/ui/UITextLabel.hpp>
 #include <yq/tachyon/ui/UIElementWriter.hpp>
 
 namespace yq::tachyon {
-    class UITextLabel;
-    
     class UITextLabelWriter;
     
     class UITextLabelWriter : public UIElementWriter {

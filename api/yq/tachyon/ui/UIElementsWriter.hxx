@@ -9,8 +9,8 @@
 #include <yq/tachyon/ui/UIElementsWriter.hpp>
 #include <yq/tachyon/ui/UICallback.hxx>
 #include <yq/tachyon/ui/UIGenerator.hxx>
-#include <yq/tachyon/ui/UILineInput.hxx>
-#include <yq/tachyon/ui/UILineInputWriter.hpp>
+//#include <yq/tachyon/ui/UILineInput.hxx>
+//#include <yq/tachyon/ui/UILineInputWriter.hpp>
 
 namespace yq::tachyon {
     template <SomeWidget W>
@@ -29,6 +29,7 @@ namespace yq::tachyon {
         return make<UIGenerateByWidgetRef<U,W>>(std::move(fn));
     }
 
+#if 0
     template <SomeWidget W>
     UILineInputWriter       UIElementsWriter::line_input(std::string_view label, void (W::*fn)())
     {
@@ -52,4 +53,5 @@ namespace yq::tachyon {
             return {};
         return make<UILineInput_WidgetCallback<W>>(label, fn);
     }
+#endif
 }

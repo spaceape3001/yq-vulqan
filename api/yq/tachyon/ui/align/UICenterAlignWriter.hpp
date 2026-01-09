@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/ui/UIElementsWriter.hpp>
+#include <yq/tachyon/ui/align/UICenterAlign.hpp>
 
 namespace yq::tachyon {
     class UICenterAlign;

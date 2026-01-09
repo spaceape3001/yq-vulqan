@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/tachyon/ui/UIToolBar.hpp>
 #include <yq/tachyon/ui/UIWindowWriter.hpp>
 
 namespace yq::tachyon {

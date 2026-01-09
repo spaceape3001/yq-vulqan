@@ -6,11 +6,10 @@
 
 #pragma once
 
-#include <yq/tachyon/ui/UIElementWriter.hpp>
 #include <yq/assetvk/ui/UIMetaList.hpp>
+#include <yq/tachyon/ui/UIElementWriter.hpp>
 
 namespace yq::tachyon {
-    class UIMetaList;
     class UIMetaListWriter : public UIElementWriter {
     public:
         UIMetaListWriter();

@@ -14,9 +14,8 @@
 
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
-#include <yq/tachyon/ui/UIPanel.hpp>
-#include <yq/tachyon/ui/UIPanelWriter.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>
+
 #include <yq/xgvk/command/OpenXGFileCommand.hpp>
 #include <yq/xgvk/command/SaveXGFileCommand.hpp>
 #include <yq/xgvk/gesture/OpenXGFileGesture.hpp>
@@ -39,7 +38,7 @@ void XGWin::init_meta()
     auto app        = w.imgui(UI, APP);
     auto mmb        = app.menubar(MAIN);
     
-    auto ppw         = app.make<UIPanel>("##Pallette");
+    auto ppw         = app.panel("##Pallette");
     {
         ppw.uid("PalettePanel");
         ppw.flag(SET, UIFlag::NoDecoration);    // until min/max work
@@ -54,18 +53,18 @@ void XGWin::init_meta()
     }
     
 
-    auto ttb        = app.make<UIPanel>("##Tools");
+    auto ttb        = app.panel("##Tools");
     {
         ttb.flag(SET, UIFlag::NoDecoration);
         ttb.uid("ToolBar");
         ttb.left("PalettePanel", RIGHT);
         ttb.height(TOOLBAR);
         
-        auto h      = ttb.hline();
-        h.button("Tools");
+        auto h      = ttb.make<UIHLine>();
+        h.make<UIButton>("Tools");
     }
     
-    auto vp          = app.make<UIPanel>("##View");
+    auto vp          = app.panel("##View");
     {
         vp.flag(SET, UIFlag::NoDecoration);
         vp.left("PalettePanel", RIGHT);

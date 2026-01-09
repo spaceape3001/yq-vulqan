@@ -21,21 +21,21 @@ namespace yq::tachyon {
     class UIElements;
     class Widget;
     class WidgetMeta;
-    class UIResourceImageWriter;
     class UIButtonWriter;
     class UICenterAlignWriter;
     class UICheckBoxWriter;
-    //class UIHBoxLayoutWriter;
+    class UIHBoxLayoutWriter;
     class UIHLineWriter;
     class UIImageWriter;
     class UILineInputWriter;
     class UIMenuWriter;
     class UIMenuBarWriter;
+    class UIMenuItemWriter;
     class UIRightAlignWriter;
     class UISpacerWriter;
     class UITextLabelWriter;
     class UIToolBarWriter;
-    //class UIVBoxLayoutWriter;
+    class UIVBoxLayoutWriter;
     
     class UIElementsWriter : public UIElementWriter {
     public:
@@ -107,15 +107,14 @@ namespace yq::tachyon {
         template <SomeWidget W>
         UICheckBoxWriter        checkbox(std::string_view, bool W::*);
 
-        
         template <SomeUIElement U, SomeWidget W>
         UIElementWriter         generate(std::function<U*(W&)>&&);
-        
-        //UIHBoxLayoutWriter            hbox();
+
+        UIHBoxLayoutWriter            hbox();
         
         //! The contents within will all be placed same line
         UIHLineWriter           hline();
-        
+
         //! Will display the specified image/texture (using the resource-system)
         UIImageWriter           image(std::string_view);
         
@@ -137,6 +136,11 @@ namespace yq::tachyon {
 
         UIMenuWriter            menu(std::string_view);
 
+        UIMenuItemWriter        menuitem(std::string_view, std::string_view scut="");
+        //UIMenuItemWriter        menuitem(dialog_k, std::string_view, std::string_view scut=""); //< TBD
+        //UIMenuItemWriter        menuitem(dock_k, std::string_view, std::string_view scut=""); //< TBD
+        //UIMenuItemWriter        menuitem(open_k, std::string_view, std::string_view scut=""); //< TBD
+        //UIMenuItemWriter        menuitem(widget_k, std::string_view, std::string_view scut=""); //< TBD
 
         /*! \brief  Right align the contents
         
@@ -151,7 +155,9 @@ namespace yq::tachyon {
         
         UISpacerWriter          spacer(const Size2F&);
         
-        //UIVBoxLayoutWriter            vbox();
+        UIElementsWriter        tree(UIFlags flags={});
+        
+        UIVBoxLayoutWriter      vbox();
 
     protected:
     

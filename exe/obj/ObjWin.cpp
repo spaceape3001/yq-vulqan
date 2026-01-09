@@ -8,10 +8,13 @@
 #include "ObjTree.hpp"
 
 #include <yq/core/Logging.hpp>
-#include <yq/tachyon/ui/UIPanelWriter.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
 //#include <yq/tachyon/io/ObjLoader.hpp>
 #include <yq/tachyon/ui/UIWriters.hxx>
+#include <yq/tachyon/ui/layout/UIPanelWriter.hpp>
+#include <yq/tachyon/ui/menu/UIMenuWriter.hpp>
+#include <yq/tachyon/ui/menu/UIMenuBarWriter.hpp>
+#include <yq/tachyon/ui/menu/UIMenuItemWriter.hpp>
 #include <yq/tachyon/command/ui/TitleCommand.hpp>
 #include <ImGuiFileDialog.h>
 //#include <tiny_obj.h>
@@ -28,7 +31,7 @@ void ObjWin::init_meta()
     file.menuitem("Save").action(&ObjWin::cmd_file_save);
     file.menuitem("Save As").action(&ObjWin::cmd_file_saveas);
 
-    auto tp = app.make<UIPanel>("##TreePanel");
+    auto tp = app.panel("##TreePanel");
     tp.uid("TreePanel");
     tp.flag(SET, UIFlag::NoDecoration);
 

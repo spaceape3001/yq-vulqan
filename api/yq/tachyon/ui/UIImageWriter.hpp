@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/ui/UIElementWriter.hpp>
+#include <yq/tachyon/ui/UIImage.hpp>
 
 namespace yq::tachyon {
     class UIImage;

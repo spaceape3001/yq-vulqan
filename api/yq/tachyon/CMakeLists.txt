@@ -271,6 +271,8 @@ add_library(${PROJECT_NAME} SHARED
     event/thread/ThreadAddTachyonEvent.cpp
     event/vulqan/VulqanDebugEvent.cpp
     
+    gesture/DragGesture.cpp
+    
     im.cpp
     
     interface/IColorProfile.cpp
@@ -404,6 +406,7 @@ add_library(${PROJECT_NAME} SHARED
     ui/UILayoutWriter.cpp
     #ui/UIPositioner.cpp    # TBD
     ui/UIUtils.cpp
+    ui/UIWidget.cpp
     ui/UIWindow.cpp
     ui/UIWindowWriter.cpp
 

@@ -1207,9 +1207,9 @@ void    SceneEditor::cmd_window_new()
     p.file  = m_filepath;
     
     // crashes the app.... (in release... in debug, validation warnings)
-    Application::app()->create(VIEWER, create<SceneEditor>(p));
+    yAlert() << "WARNING: `cmd_window_new` has a tendency to crash the application, sometimes.  Lets see what fate says.";
     
-    //yNotice() << "Requested function, 'cmd_window_new' has not yet been implemented, check back next Tuesday";
+    Application::app()->create(VIEWER, create<SceneEditor>(p));
 }
 
 void    SceneEditor::imgui(ViContext&u) 

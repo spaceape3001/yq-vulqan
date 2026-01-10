@@ -11,6 +11,9 @@
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/typedef/gesture.hpp>
 #include <yq/tachyon/typedef/post.hpp>
+#include <yq/tachyon/typedef/viewer.hpp>
+#include <yq/tachyon/typedef/widget.hpp>
+#include <yq/tachyon/typedef/window.hpp>
 #include <variant>
 
 namespace yq::tachyon {
@@ -43,10 +46,10 @@ namespace yq::tachyon {
     public:
     
         //! TRUE if we're an imgui gesture (ie, dialog popup)
-        virtual bool                is_imgui() const { return false; }
+        virtual bool    is_imgui() const { return false; }
 
         //! TRUE if we're an imgui modal style gesture (ie, dialog popup)
-        virtual bool                is_modal() const { return false; }
+        virtual bool    is_modal() const { return false; }
         
         //! Imgui hook *BEFORE* any other imgui is called
         virtual void    imgui(pre_k){}
@@ -87,6 +90,14 @@ namespace yq::tachyon {
         static const Context*   context() { return s_context; }
         static ViContext*       vi_context() { return s_viContext; }
         static Widget*          widget() { return s_widget; }
+        
+        // Current window data... MAY BE NULL!
+        static const WindowSnap*    snap(window_k);
+        static const ViewerSnap*    snap(viewer_k);
+
+        static ViewerID     id(viewer_k);
+        static WidgetID     id(widget_k);
+        static WindowID     id(window_k);
 
     private:
         friend class Widget;

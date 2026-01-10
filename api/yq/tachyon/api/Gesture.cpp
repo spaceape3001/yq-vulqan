@@ -6,7 +6,12 @@
 
 #include "Gesture.hpp"
 #include "GestureMetaWriter.hpp"
+#include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/Widget.hpp>
+#include <yq/tachyon/app/Viewer.hpp>
+#include <yq/tachyon/app/ViewerData.hpp>
+#include <yq/tachyon/os/Window.hpp>
+#include <yq/tachyon/os/WindowData.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::Gesture)
 
@@ -27,6 +32,29 @@ namespace yq::tachyon {
             s_widget -> gesture(std::move(g));
     }
 
+    ViewerID       Gesture::id(viewer_k)
+    {
+        if(s_widget)
+            return s_widget -> viewer();
+        return {};
+    }
+    
+    WidgetID       Gesture::id(widget_k)
+    {
+        if(s_widget)
+            return s_widget->id();
+        return {};
+    }
+    
+    WindowID       Gesture::id(window_k)
+    {
+        const ViewerSnap*   vsnap   = snap(VIEWER);
+        if(!vsnap)
+            return {};
+        return { vsnap -> window.id };
+    }
+
+
     void           Gesture::mail(const PostCPtr& pp)
     {
         if(s_widget)
@@ -37,6 +65,25 @@ namespace yq::tachyon {
     {
         if(s_widget)
             s_widget -> send(pp, TARGET);
+    }
+
+    const ViewerSnap*    Gesture::snap(viewer_k)
+    {
+        ViewerID    vid = id(VIEWER);
+        if(!vid)
+            return nullptr;
+        const Frame*    frame   = Frame::current();
+        if(!frame)
+            return nullptr;
+        return frame->snap(vid);
+    }
+
+    const WindowSnap*    Gesture::snap(window_k)
+    {
+        WindowID    wid = id(WINDOW);
+        if(!wid)    
+            return nullptr;
+        return Frame::current()->snap(wid);
     }
 
     ///////////////

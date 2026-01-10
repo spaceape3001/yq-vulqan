@@ -29,8 +29,18 @@ add_subdirectory(luavk)
 ##  Executive Graph
 add_subdirectory(xgvk)
 
+if(Build_Qt6)
+endif()
+
 ##  Game stuff
 add_subdirectory(gamevk)
 
 ## Scene Editor
 add_subdirectory(editorvk)
+
+if(Build_Qt6)
+    add_subdirectory(vkqt)
+    add_subdirectory(assetqt)
+    add_subdirectory(xgqt)
+endif()
+

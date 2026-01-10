@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/core/Ref.hpp>
+#include <yq/core/Tristate.hpp>
 #include <yq/unit/MKS.hpp>
 #include <yq/unit/SCALED.hpp>
 #include <yq/tachyon/api/ID.hpp>

@@ -129,6 +129,9 @@ namespace yq::tachyon {
         //! Dimension count to the widget (ie...add dimensions to allow for layout resizing)
         virtual uint8_t dimensions(count_k) const { return 0; }
 
+        //! Allows to peek for active gestures
+        const auto&     gestures() const { return m_gestures; }
+
         double      height() const;
 
         /*! \brief Renders ImGui content

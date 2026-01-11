@@ -29,9 +29,6 @@ add_subdirectory(luavk)
 ##  Executive Graph
 add_subdirectory(xgvk)
 
-if(Build_Qt6)
-endif()
-
 ##  Game stuff
 add_subdirectory(gamevk)
 

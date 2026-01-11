@@ -7,6 +7,7 @@
 #pragma once
 
 #include <vector>
+#include <concepts>
 
 namespace yq {
     template <typename> class Ref;
@@ -31,4 +32,7 @@ namespace yq::tachyon {
     using ThreadDataCPtr    = Ref<const ThreadData>;
     
     class ThreadMeta;
+
+    template <class E>
+    concept SomeThread = std::derived_from<E,Thread>;
 }

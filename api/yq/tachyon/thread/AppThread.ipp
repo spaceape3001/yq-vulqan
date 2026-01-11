@@ -48,6 +48,11 @@ namespace yq::tachyon {
     {
         Thread::s_current       = nullptr;
     }
+
+    void AppThread::add(TachyonID t)
+    {
+        m_others.insert(t);
+    }
     
     void AppThread::create(viewer_k, const ViewerCreateInfo& vci, WidgetPtr wid)
     {
@@ -150,11 +155,13 @@ namespace yq::tachyon {
         TypedID     source  = evt.source();
         if(source(Type::Viewer)){
             m_viewers.erase((ViewerID) source);
-            if(m_viewers.empty()){
-                tachyonNotice << "AppThread: Viewers dropped to zero, shutting down";
-                m_app.shutting_down();
-                cmd_teardown();
-            }
+        } else {
+            m_others.erase({source.id});
+        }
+        if(m_viewers.empty() && m_others.empty()){
+            tachyonNotice << "AppThread: Viewers & likewise dropped to zero, shutting down";
+            m_app.shutting_down();
+            cmd_teardown();
         }
     }
 

@@ -76,10 +76,10 @@ namespace yq::tachyon {
         
         //! Quit demand (virtual to allow others to object)
         virtual void    quit();
-        void            start();
+        virtual void    start();
         
-        //! STALLS until thread is joined
-        void            join();
+        //! STALLS until thread is joined/terminated
+        virtual void    join();
 
         ThreadID        id() const { return ThreadID(Tachyon::id()); }
         
@@ -162,8 +162,9 @@ namespace yq::tachyon {
             ThreadID    destination;
         };
         
-        
+    protected:
         static thread_local Thread*     s_current;
+    private:
         static Thread*                  s_main;
         static Thread*                  s_sink;
         static mutex_t                  s_mutex;
@@ -172,8 +173,10 @@ namespace yq::tachyon {
         static inbox_map_t              s_inboxes;
         static StdThreadRevMap          s_rthreads;
         static std::vector<TachyonPtr>  s_misfits;
-        
+    
+    protected:
         bool                            m_quit{ false };
+    private:
         bool                            m_missing{false};
         unit::Second                    m_snooze    = 1_ms;
         std::map<TachyonID, Control>    m_objects;

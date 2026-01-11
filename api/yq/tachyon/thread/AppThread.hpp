@@ -33,6 +33,9 @@ namespace yq::tachyon {
         
         void        create(viewer_k, const ViewerCreateInfo&, WidgetPtr);
         
+    protected:
+        void        add(TachyonID);
+        
     private:
         void        on_viewer_create_command(const ViewerCreateCommand&);
         
@@ -45,6 +48,7 @@ namespace yq::tachyon {
         bool                    m_quitOnZero    = false;
         std::vector<WinStart>   m_winStarts;
         std::set<ViewerID>      m_viewers;
+        std::set<TachyonID>     m_others;
 
         ViewerID    create_viewer(const ViewerCreateInfo&, WidgetPtr);
         

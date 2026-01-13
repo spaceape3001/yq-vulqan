@@ -9,16 +9,16 @@
 #include <yq/canvasvk/UICanvasWriter.hpp>
 
 namespace yq::tachyon {
-    class XGView;
+    class XGViewUI;
 
-    class XGViewWriter : public UICanvasWriter {
+    class XGViewUIWriter : public UICanvasWriter {
     public:
     public:
-        XGViewWriter();
-        XGViewWriter(XGView*);
-        XGViewWriter(const XGViewWriter&);
-        ~XGViewWriter();
+        XGViewUIWriter();
+        XGViewUIWriter(XGViewUI*);
+        XGViewUIWriter(const XGViewUIWriter&);
+        ~XGViewUIWriter();
         
-        XGView*  element();
+        XGViewUI*  element();
     };
 }

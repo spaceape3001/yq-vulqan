@@ -23,6 +23,7 @@
 
 #include <yq/vkqt/XThread.hpp>
 
+
 namespace yq::tachyon {
     AppCreateInfo    YApp::_threads(int argc, char*argv[], const AppCreateInfo&aci)
     {
@@ -90,6 +91,14 @@ namespace yq::tachyon {
 
     YApp::~YApp()
     {
+    }
+
+    bool YApp::start() 
+    {
+        if(!Application::start())   
+            return false;
+        m_thread.app -> leak(); // m_appThread = m_thread.app;
+        return true;
     }
 }
 

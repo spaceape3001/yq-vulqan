@@ -9,18 +9,18 @@
 #include <yq/canvasvk/UICanvas.hpp>
 
 namespace yq::tachyon {
-    class XGViewWriter;
+    class XGViewUIWriter;
     
-    class XGView : public UICanvas {
-        YQ_OBJECT_DECLARE(XGView, UICanvas)
+    class XGViewUI : public UICanvas {
+        YQ_OBJECT_DECLARE(XGViewUI, UICanvas)
     public:
-        using Writer = XGViewWriter;
+        using Writer = XGViewUIWriter;
     
-        XGView(std::string_view k="##XGView", UIFlags flags={});
-        XGView(const XGView&);
-        virtual ~XGView();
+        XGViewUI(std::string_view k="##XGViewUI", UIFlags flags={});
+        XGViewUI(const XGViewUI&);
+        virtual ~XGViewUI();
         
-        XGView* clone() const override;
+        XGViewUI* clone() const override;
         
         static void init_info();
     private:

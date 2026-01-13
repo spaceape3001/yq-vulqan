@@ -34,8 +34,12 @@ namespace yq::tachyon {
         void run() override
         {
             Thread::s_current   = this;
-            while(!Thread::m_quit){
-                TH::tick();
+            if(QAbstractEventDispatcher* events = eventDispatcher()){
+                events -> startingUp();
+                while(!Thread::m_quit){
+                    TH::tick();
+                }
+                events -> closingDown();
             }
             Thread::s_current   = nullptr;
         }

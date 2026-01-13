@@ -366,7 +366,7 @@ namespace yq::tachyon {
                 
                 thread_t&   tt = m_threads[t.id];
                 tt.save     = &t;
-                tt.thread   = static_cast<Thread*>(tm -> create());
+                tt.thread   = dynamic_cast<Thread*>(tm -> create());
                 if(!tt.thread)
                     return errors::bad_thread();
                 m_remap[t.id]    = tt.thread->id();
@@ -383,7 +383,7 @@ namespace yq::tachyon {
                     return errors::bad_tachyon();
                 tachyon_t&  tt  = m_tachyons[t.id];
                 tt.save     = &t;
-                tt.tachyon  = static_cast<Tachyon*>(tm -> create());
+                tt.tachyon  = dynamic_cast<Tachyon*>(tm -> create());
                 if(!tt.tachyon)
                     return errors::bad_tachyon();
                 m_remap[t.id]    = tt.tachyon->id();

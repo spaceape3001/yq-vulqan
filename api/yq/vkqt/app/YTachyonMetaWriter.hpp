@@ -7,4 +7,4 @@
 #pragma once
 
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
-#include <yq/vkqt/app/YObject.hpp>
+#include <yq/vkqt/app/YTachyon.hpp>

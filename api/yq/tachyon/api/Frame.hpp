@@ -57,6 +57,10 @@
 
 namespace yq { class Stream; }
 
+#ifdef foreach
+    #undef foreach
+#endif
+
 namespace yq::tachyon {
     class Proxy;
     class InterfaceMeta;

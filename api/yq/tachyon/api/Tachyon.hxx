@@ -45,7 +45,7 @@ namespace yq::tachyon {
     template <SomeTachyon T>
     T*   Tachyon::create(const typename T::MyMeta& meta)
     {
-        Ref<T> tp = static_cast<T*>(meta.create());
+        Ref<T> tp = dynamic_cast<T*>(meta.create()); // should *NEVER* fail unless uncreatable
         if(tp){
             retain(tp);
         }
@@ -63,7 +63,7 @@ namespace yq::tachyon {
     template <SomeTachyon T>
     T*   Tachyon::create_on(StdThread st, const typename T::MyMeta& meta)
     {
-        Ref<T> tp = static_cast<T*>(meta.create());
+        Ref<T> tp = dynamic_cast<T*>(meta.create()); // should *NEVER* fail unless uncreatable
         if(tp){
             retain(tp, st);
         }
@@ -81,7 +81,7 @@ namespace yq::tachyon {
     template <SomeTachyon T>
     T*   Tachyon::create_on(ThreadID st, const typename T::MyMeta& meta)
     {
-        Ref<T> tp = static_cast<T*>(meta.create());
+        Ref<T> tp = dynamic_cast<T*>(meta.create()); // should *NEVER* fail unless uncreatable
         if(tp){
             retain(tp, st);
         }
@@ -105,7 +105,7 @@ namespace yq::tachyon {
     template <SomeTachyon T>
     T*   Tachyon::create_child(const typename T::MyMeta& meta)
     {
-        Ref<T> tp = static_cast<T*>(meta.create());
+        Ref<T> tp = dynamic_cast<T*>(meta.create()); // should *NEVER* fail unless uncreatable
         if(tp){
             retain(tp);
             tp->_set_parent(*this);
@@ -140,9 +140,9 @@ namespace yq::tachyon {
     template <SomeTachyon T>
     T*   Tachyon::create_child_on(ThreadID st, const typename T::MyMeta& meta)
     {
-        Ref<T> tp = static_cast<T*>(meta.create());
+        Ref<T> tp = dynamic_cast<T*>(meta.create()); // should *NEVER* fail unless uncreatable
         if(tp){
-        tp -> m_flags |= F::DifferentThread;
+            tp -> m_flags |= F::DifferentThread;
             tp->_set_parent(*this);
             _add_child(*tp);
             retain(tp, st);
@@ -153,7 +153,7 @@ namespace yq::tachyon {
     template <SomeTachyon T>
     T*   Tachyon::create_child_on(StdThread st, const typename T::MyMeta& meta)
     {
-        Ref<T> tp = static_cast<T*>(meta.create());
+        Ref<T> tp = dynamic_cast<T*>(meta.create()); // should *NEVER* fail unless uncreatable
         if(tp){
             tp -> m_flags |= F::DifferentThread;
             tp->_set_parent(*this);

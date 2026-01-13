@@ -20,8 +20,8 @@
 #include <yq/xgvk/command/SaveXGFileCommand.hpp>
 #include <yq/xgvk/gesture/OpenXGFileGesture.hpp>
 #include <yq/xgvk/gesture/SaveXGFileGesture.hpp>
-#include <yq/xgvk/ui/XGView.hpp>
-#include <yq/xgvk/ui/XGViewWriter.hpp>
+#include <yq/xgvk/ui/XGViewUI.hpp>
+#include <yq/xgvk/ui/XGViewUIWriter.hpp>
 #include <ImGuiFileDialog.h>
 
 YQ_TACHYON_IMPLEMENT(XGWin)
@@ -70,7 +70,7 @@ void XGWin::init_meta()
         vp.left("PalettePanel", RIGHT);
         vp.top("ToolBar", BOTTOM);
     
-        auto xgv = vp.make<XGView>();
+        auto xgv = vp.make<XGViewUI>();
         xgv.uid("View");
     }
 

@@ -13,13 +13,18 @@ using namespace yq::tachyon;
 
 int main(int argc, char* argv[])
 {
-    AppCreateInfo   aci;
-    YApp            app(argc, argv, aci);
-    
-    app.start();
-    
-    Ref<MainWindow> mw  = Tachyon::create<MainWindow>();
-    mw->show();
-    app.run();
+    {
+        AppCreateInfo   aci;
+        aci.thread.viewer   = false;
+        aci.vulkan.enable   = false;
+        aci.platform        = Platform::None;
+        YApp            app(argc, argv, aci);
+        
+        app.start();
+        auto mw   = Tachyon::create<MainWindow>();
+        mw -> cmdNewTab();
+        mw -> show();
+        app.run();
+    }
     return 0;
 }

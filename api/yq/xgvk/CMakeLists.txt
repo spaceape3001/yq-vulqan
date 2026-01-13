@@ -10,7 +10,7 @@ add_library(yq_xgvk SHARED
     command/SaveXGFileCommand.cpp
     gesture/OpenXGFileGesture.cpp
     gesture/SaveXGFileGesture.cpp
-    ui/XGView.cpp
+    ui/XGViewUI.cpp
 )
 target_link_libraries(yq_xgvk
     PUBLIC

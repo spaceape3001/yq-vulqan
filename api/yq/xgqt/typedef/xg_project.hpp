@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq {
+    template <typename> class Ref;
+}
+
+namespace yq::tachyon {
+    class XGProject;
+    using XGProjectPtr  = Ref<XGProject>;
+    using XGProjectCPtr = Ref<const XGProject>;
+}

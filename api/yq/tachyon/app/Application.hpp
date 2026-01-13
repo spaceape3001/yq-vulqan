@@ -166,6 +166,7 @@ namespace yq::tachyon {
         using ViewerThreadVec   = std::vector<Ref<ViewerThread>>;
         using ThreadRefPtrVec   = std::vector<Ref<Thread>>;
         
+    protected:
         struct {
             Ref<AppThread>          app;        //< valid while running
             Ref<AudioThread>        audio;      //< valid while running if "ENABLED" but not "PER"
@@ -180,6 +181,7 @@ namespace yq::tachyon {
             ViewerThreadVec         viewers;
             ThreadRefPtrVec         others;
         } m_thread;
+    private:
         
         template <typename T>
         bool    _start(StdThread, Ref<T>&, const thread_spec_t<T>&, std::string_view);

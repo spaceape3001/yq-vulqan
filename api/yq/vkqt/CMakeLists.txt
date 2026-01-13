@@ -17,6 +17,8 @@ add_library(${PROJECT_NAME} SHARED
     app/YAppThread.cpp
     app/YMain.hpp
     app/YMain.cpp
+    app/YTachyon.hpp
+    app/YTachyon.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC

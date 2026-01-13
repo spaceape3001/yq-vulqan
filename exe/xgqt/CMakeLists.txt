@@ -21,4 +21,5 @@ PUBLIC
     yq_vkqt
     yq_assetqt
     yq_xgqt
+    yq_xgxml
 )

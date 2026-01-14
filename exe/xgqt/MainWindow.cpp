@@ -8,6 +8,7 @@
 #include <yq/core/Logging.hpp>
 #include <yq/vkqt/app/YMainMetaWriter.hpp>
 #include <yq/xgqt/XGCanvasQt.hpp>
+#include <yq/xgqt/XGPaletteQt.hpp>
 #include <yq/xg/XGDocument.hpp>
 #include <yq/xg/XGXmlIO.hpp>
 #include <QFileDialog>
@@ -23,6 +24,8 @@ void MainWindow::init_meta()
 MainWindow::MainWindow()
 {
     activateTabs();
+    enableClosableTabs();
+    enableAutoEnableCmds();
 
 
     setWindowTitle("Executive Graph");
@@ -34,9 +37,13 @@ MainWindow::MainWindow()
     addAction("open", "Open").connect(this, &MainWindow::cmdFileOpen);
     addAction("save", "Save").connect(this, &MainWindow::cmdFileSave);
     addAction("saveas", "Save As").connect(this, &MainWindow::cmdFileSaveAs);
+    addAction("palette", "Palette").connect(this, &MainWindow::cmdViewPalette);
 
     makeMenu("file", "File", QStringList() << "new" << "open" << "save" << "saveas" );
     makeMenu("edit", "Edit");
+    makeMenu("view", "View", QStringList() << "palette");
+    
+    cmdViewPalette();
 }
 
 MainWindow::~MainWindow()
@@ -96,18 +103,29 @@ void    MainWindow::cmdFileSaveAs()
 
 void    MainWindow::cmdNewTab()
 {
-    newTab(new XGDocument);
+    XGCanvasQt* cvs = new XGCanvasQt;
+    cvs -> updateTitle();
+    addWindow(cvs);
 }
 
 void    MainWindow::cmdOpenTab(const QString& file)
 {
-    XGDocumentPtr   doc = loadXGXML(file.toStdString());
+    auto doc    = XGDocument::IO::load(std::filesystem::path(file.toStdString()));
     if(!doc){
         status(tr("Unable to load file %1").arg(file));
         return ;
     }
     
-    newTab(doc);
+    XGCanvasQt* cvs = new XGCanvasQt;
+    cvs -> set(*doc);
+    addWindow(cvs);
+}
+
+void    MainWindow::cmdViewPalette()
+{
+    XGPaletteQt*    pal = new XGPaletteQt;
+    //  we'll do stuff....
+    addDock(Qt::LeftDockWidgetArea, pal);
 }
 
 XGCanvasQt*     MainWindow::currentCanvas()
@@ -120,15 +138,12 @@ MainWindow*     MainWindow::newMain()
     return Tachyon::create<MainWindow>();
 }
 
-void    MainWindow::newTab(const XGDocumentPtr& doc)
-{
-    addWindow(new XGCanvasQt(doc));
-}
-
 bool    MainWindow::saveTab(XGCanvasQt& cvs, const QString& fp)
 {
-    if(!saveXGXML(cvs.document(), fp.toStdString())){
-        status(tr("Unable to save file %1").arg(fp));
+    XGDocumentCPtr  doc = cvs.get();
+    std::error_code ec = doc -> save_to(std::filesystem::path(fp.toStdString()));
+    if(ec != std::error_code()){
+        status(tr("Unable to save file '%1': %2").arg(fp).arg(ec.message()));
         return false;
     }
     cvs.updateTitle();

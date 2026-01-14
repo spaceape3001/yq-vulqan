@@ -11,6 +11,7 @@
 
 namespace yq::tachyon {
     class XGCanvasQt;
+    class XGPaletteQt;
 }
 
 using namespace yq;
@@ -40,8 +41,8 @@ public slots:
     void    cmdFileOpen();
     void    cmdFileSave();
     void    cmdFileSaveAs();
+    void    cmdViewPalette();
     
 private:
-    void    newTab(const XGDocumentPtr&);
     bool    saveTab(XGCanvasQt&, const QString&);
 };

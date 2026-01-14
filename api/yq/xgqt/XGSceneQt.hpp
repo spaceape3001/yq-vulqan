@@ -15,13 +15,15 @@ namespace yq::tachyon {
         Q_OBJECT
     public:
         XGSceneQt(QObject*parent=nullptr);
-        XGSceneQt(XGDocumentPtr, QObject*parent=nullptr);
         ~XGSceneQt();
         
-        auto&           document() { return m_doc; }
-        const auto&     document() const { return m_doc; }
+        bool            set(const XGDocument&);
+        XGDocumentPtr   get() const;
         
-    private:
-        XGDocumentPtr           m_doc;
+        /*
+            I *was* assuming retaining the document... better to 
+            push it into items and pull it back.  Load/Export sort 
+            of thing.
+        */
     };
 }

@@ -17,32 +17,39 @@
 namespace yq::tachyon {
     static std::atomic<unsigned>    gCanvasNum{1};
 
-    XGCanvasQt::XGCanvasQt(QWidget*parent) : XGCanvasQt({}, parent)
-    {
-    }
-    
-    XGCanvasQt::XGCanvasQt(XGDocumentPtr doc, QWidget*parent) : 
-        gluon::GraphicsCanvas(new XGViewQt(new XGSceneQt( doc )), parent), 
+    XGCanvasQt::XGCanvasQt(QWidget*parent) : 
+        gluon::GraphicsCanvas(new XGViewQt(new XGSceneQt), parent), 
         m_number(gCanvasNum++)
     {
         m_view      = (XGViewQt*) gluon::GraphicsCanvas::view();
         m_scene     = (XGSceneQt*) gluon::GraphicsCanvas::scene();
         m_scene -> setParent(this);
-        m_doc       = m_scene -> document();
-
-        updateTitle();
     }
     
     XGCanvasQt::~XGCanvasQt()
     {
     }
 
+    void        XGCanvasQt::clear()
+    {
+        m_scene -> clear();
+        m_url   = {};
+    }
+
+    XGDocumentPtr           XGCanvasQt::get() const
+    {
+        return m_scene -> get();
+    }
+    
+    void                    XGCanvasQt::set(const XGDocument& doc)
+    {
+        m_scene -> set(doc);
+        m_url       = doc.url();
+    }
+
     std::filesystem::path   XGCanvasQt::dirpath() const
     {
-        std::filesystem::path   fp  = filepath();
-        if(fp.empty())  
-            return {};
-        return fp.parent_path();
+        return filepath().parent_path();
     }
     
     QString                 XGCanvasQt::dirname() const
@@ -52,17 +59,13 @@ namespace yq::tachyon {
 
     std::filesystem::path XGCanvasQt::filepath() const
     {
-        if(!m_doc)  [[unlikely]]
+        if(!is_similar(m_url.scheme, "file"))
             return {};
-        
-        auto& u = m_doc->url();
-        if(!is_similar(u.scheme, "file"))
+        if(!m_url.fragment.empty())
             return {};
-        if(!u.fragment.empty())
+        if(!m_url.query.empty())
             return {};
-        if(!u.query.empty())
-            return {};
-        return u.path;
+        return m_url.path;
     }
 
     QString XGCanvasQt::filename() const
@@ -72,9 +75,9 @@ namespace yq::tachyon {
 
     void    XGCanvasQt::updateTitle()
     {
-        std::string s = to_string(m_doc->url());
+        std::string s = to_string(m_url);
         if(s.empty()){
-            setWindowTitle(tr("Unnamed:$1").arg(m_number));
+            setWindowTitle(tr("Unnamed:%1").arg(m_number));
         } else {
             setWindowTitle(QString::fromStdString(s));
         }

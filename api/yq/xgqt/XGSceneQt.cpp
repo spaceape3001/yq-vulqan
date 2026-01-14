@@ -9,20 +9,22 @@
 
 namespace yq::tachyon {
 
-    XGSceneQt::XGSceneQt(QObject*parent) : XGSceneQt({}, parent)
+    XGSceneQt::XGSceneQt(QObject*parent) : gluon::GraphicsScene(parent)
     {
     }
-    
-    XGSceneQt::XGSceneQt(XGDocumentPtr doc, QObject*parent) : gluon::GraphicsScene(parent)
-    {
-        if(doc){
-            m_doc   = doc;
-        } else
-            m_doc   = new XGDocument;
-    }
-    
+
     XGSceneQt::~XGSceneQt()
     {
+    }
+
+    bool            XGSceneQt::set(const XGDocument&doc)
+    {
+        return true;
+    }
+    
+    XGDocumentPtr   XGSceneQt::get() const
+    {
+        return new XGDocument;
     }
 }
 

@@ -1,0 +1,19 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include "XGNewMimeQt.hpp"
+
+namespace yq::tachyon {
+    XGNewMimeQt::XGNewMimeQt(const XGNodeMeta&nn) : m_node(nn)
+    {
+    }
+    
+    XGNewMimeQt::~XGNewMimeQt()
+    {
+    }
+}
+
+#include "moc_XGNewMimeQt.cpp"

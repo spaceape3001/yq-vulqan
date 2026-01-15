@@ -5,81 +5,75 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "XGPaletteQt.hpp"
+#include "XGNewMimeQt.hpp"
 #include <yq/gluon/core/Utilities.hpp>
 #include <yq/text/match.hpp>
 #include <yq/xg/XGElement.hpp>
+#include <yq/xg/XGManifest.hpp>
+#include <yq/xg/XGNodeMeta.hpp>
+#include <QMimeData>
 
 using namespace yq::gluon;
 
 namespace yq::tachyon {
-    // Doing it this way as templates will be coming, so need the flexibility
-    using palette_item_t = std::variant<const XGElementMeta*>;
+    struct XGPaletteQt::Item : public PaletteWidget::Item {
+        Item(const XGNodeMeta& v) : PaletteWidget::Item(qString(v.label)), m_node(v) 
+        {
+            setFlags(Qt::ItemIsDragEnabled | Qt::ItemIsEnabled);
+            
+            // icons, colors...?
+        }
+        
+        const XGNodeMeta  m_node;
+    };
 
-    std::string_view    get_category(const palette_item_t&v)
+    XGPaletteQt::XGPaletteQt(QWidget*parent) : XGPaletteQt(nullptr, parent)
     {
-        if(auto p = std::get_if<const XGElementMeta*>(&v))
-            return (*p) -> category();
-        return "";
     }
     
-    std::string_view    get_label(const palette_item_t&v)
+    XGPaletteQt::XGPaletteQt(const XGManifest& man, QWidget*parent) : XGPaletteQt(&man, parent)
     {
-        if(auto p = std::get_if<const XGElementMeta*>(&v))
-            return (*p) -> label();
-        return "";
     }
     
-    /*
-    std::string_view    get_icon(const palette_item_t&v)
-    {
-        if(auto p = std::get_if<const XGElementMeta*>(&v))
-            return (*p) -> icon();
-        return "";
-    }
-    */
-    
-    bool                get_decision(const palette_item_t&v)
-    {
-        if(auto p = std::get_if<const XGElementMeta*>(&v))
-            return (*p) -> decision();
-        return "";
-    }
-    
-
-    XGPaletteQt::XGPaletteQt(QWidget*parent) : PaletteWidget(parent)
+    XGPaletteQt::XGPaletteQt(const XGManifest*man, QWidget*parent) : PaletteWidget(parent)
     {
         setWindowTitle(tr("Palette"));
-        _populate();
+        if(man){
+            std::vector<XGNodeMeta> copy(man->m_nodes);
+            _populate(copy);
+        } else {
+            XGManifestPtr   copy    = XGElementMeta::create_manifest();
+            _populate(copy->m_nodes);
+        }
     }
-    
+
     XGPaletteQt::~XGPaletteQt()
     {
     }
 
-    void XGPaletteQt::_populate()
+    void XGPaletteQt::_populate(std::vector<XGNodeMeta>& nodes)
     {
-        std::vector<palette_item_t> items;
-        for(const XGElementMeta* xm : XGElementMeta::all()){
-            if(xm->is_abstract())
-                continue;
-            items.push_back(xm);
+        //static QIcon  s_node    = qIcon(
+        std::stable_sort(nodes.begin(), nodes.end(), 
+            [](const XGNodeMeta& a, const XGNodeMeta& b) -> bool{
+                return is_less_igCase(a.label, b.label);
+            }
+        );
+    
+        for(auto& xn : nodes)
+            category(qString(xn.category)).addItem(new Item(xn));
+    }
+
+    QMimeData*  XGPaletteQt::mimeData(const QList<QListWidgetItem*>&items) const
+    {
+        if(items.isEmpty()) 
+            return nullptr;
+        for(QListWidgetItem* lwi : items){
+            if(Item*i = dynamic_cast<Item*>(lwi))
+                return new XGNewMimeQt(i->m_node);
         }
         
-        //  templates go here
-        
-        std::stable_sort(items.begin(), items.end(), [](const palette_item_t& a, const palette_item_t& b) -> bool {
-            return is_less_igCase(get_label(a), get_label(b));
-        });
-        
-        for(auto& i : items){
-            QString   cat       = qString(get_category(i));
-            QString   label     = qString(get_label(i));
-            
-            
-            //  icon TBD
-            auto& it = category(cat).addItem(label); 
-            it.setFlags(Qt::ItemIsDragEnabled);
-        }
+        return nullptr;
     }
 
 }

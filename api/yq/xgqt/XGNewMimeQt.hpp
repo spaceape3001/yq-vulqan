@@ -6,19 +6,20 @@
 
 #pragma once
 
-#include <yq/gluon/graphics/GraphicsView.hpp>
+#include <QMimeData>
+#include <yq/xg/XGNodeMeta.hpp>
 
 namespace yq::tachyon {
-    class XGSceneQt;
-    class XGViewQt : public gluon::GraphicsView {
+    class XGNewMimeQt : public QMimeData {
         Q_OBJECT
     public:
-        XGViewQt(XGSceneQt*);
-        ~XGViewQt();
+    
+        XGNewMimeQt(const XGNodeMeta&);
+        ~XGNewMimeQt();
         
-    protected:
-        void    dragEnterEvent(QDragEnterEvent*) override;
+        const XGNodeMeta&    node_spec() const { return m_node; }
+        
     private:
-        XGSceneQt*  m_scene = nullptr;
+        const XGNodeMeta   m_node;
     };
 }

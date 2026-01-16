@@ -26,10 +26,11 @@ namespace yq::tachyon {
     {
     }
 
-    void    XGSceneQt::add(const XGNodeMeta&nn, const QPointF&pt)
+    QGraphicsItem*    XGSceneQt::add(const XGNodeMeta&nn, const QPointF&pt)
     {
         Node*n  = new Node(nn, pt);
         addItem(n);
+        return n;
     }
     
     //void    XGSceneQt::add(const XGDocNode&dn)
@@ -64,15 +65,9 @@ namespace yq::tachyon {
     
     XGSceneQt::Node::Node(const XGNodeMeta& xn, const QPointF& pt)
     {
-        m_data.bgcolor      = xn.bgcolor;
-        m_data.color        = xn.color;
+        m_data              = xn.spawn();
         m_data.position     = { (float) pt.x(), (float) pt.y() };
         m_data.size         = { 100.f, 50.f };  // hack
-        m_data.node_type    = xn.node_type;
-        m_data.spec_type    = xn.spec_type;
-        m_data.spec_data    = xn.spec_data;
-        m_data.label        = xn.label;
-        
         build();
     }
     

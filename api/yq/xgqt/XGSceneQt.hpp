@@ -20,6 +20,7 @@ namespace yq {
 }
 
 namespace yq::tachyon {
+    class XGViewQt;
     class XGSceneQt : public gluon::GraphicsScene {
         Q_OBJECT
     public:
@@ -29,7 +30,7 @@ namespace yq::tachyon {
         bool            set(const XGDocument&);
         XGDocumentPtr   get() const;
         
-        void            add(const XGNodeMeta&, const QPointF&);
+        QGraphicsItem*  add(const XGNodeMeta&, const QPointF&);
         //void    add(const XGDocNode&);
         
         /*
@@ -43,6 +44,10 @@ namespace yq::tachyon {
         struct Edge;
         struct Line;
         struct Text;
+        
+    private:
+    
+        friend class XGViewQt;
         
     };
     

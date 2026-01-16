@@ -24,6 +24,7 @@ namespace yq::tachyon {
         m_view      = (XGViewQt*) gluon::GraphicsCanvas::view();
         m_scene     = (XGSceneQt*) gluon::GraphicsCanvas::scene();
         m_scene -> setParent(this);
+        m_scene -> setSceneRect(QRectF(0,0,2048,2048));
     }
     
     XGCanvasQt::~XGCanvasQt()

@@ -11,6 +11,7 @@ find_package(Qt6 REQUIRED Core Gui Widgets )
 SET(CMAKE_AUTOMOC ON)
 
 add_library(${PROJECT_NAME} SHARED
+    utility.cpp
     app/YApp.hpp
     app/YApp.cpp
     app/YAppThread.hpp

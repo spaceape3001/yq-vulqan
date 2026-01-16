@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/canvasvk/UICanvas.hpp>
+#include <yq/assetvk/ui/UICanvas.hpp>
 
 namespace yq::tachyon {
     class XGViewUIWriter;

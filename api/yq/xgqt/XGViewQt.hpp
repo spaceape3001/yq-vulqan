@@ -18,7 +18,11 @@ namespace yq::tachyon {
         
     protected:
         void    dragEnterEvent(QDragEnterEvent*) override;
+        void    dragLeaveEvent(QDragLeaveEvent*) override;
+        void    dragMoveEvent(QDragMoveEvent*) override;
+        void    dropEvent(QDropEvent*) override;
     private:
-        XGSceneQt*  m_scene = nullptr;
+        XGSceneQt*          m_scene     = nullptr;
+        QGraphicsItem*      m_dragItem  = nullptr;
     };
 }

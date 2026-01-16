@@ -24,7 +24,7 @@ namespace yq::tachyon {
         struct Item;
         
     protected:
-        virtual QMimeData*  mimeData(const QList<QListWidgetItem*>&) const override;
+        virtual QMimeData*  mimeData(const gluon::PaletteWidget::Item*) const;
     private:
         XGPaletteQt(const XGManifest*, QWidget*parent);
         void _populate(std::vector<XGNodeMeta>&);

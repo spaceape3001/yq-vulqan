@@ -21,7 +21,7 @@ add_subdirectory(assetvk)
 add_subdirectory(consolevk)
 
 ##  A 2D canvas type of thing
-#add_subdirectory(canvasvk)
+add_subdirectory(canvasvk)
 
 ##  Graph
 add_subdirectory(graphvk)

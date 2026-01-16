@@ -116,7 +116,6 @@ add_library(yq_assetvk SHARED
 
     tweak/OriginCameraTweak.cpp
     
-    ui/UICanvas.cpp
     ui/UIConcreteMetaList.cpp
     ui/UIMetaList.cpp
     ui/UITachyonEditor.cpp

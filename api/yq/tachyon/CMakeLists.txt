@@ -245,8 +245,6 @@ add_library(${PROJECT_NAME} SHARED
     
     data/Vertex3.cpp
     
-
-    enum/Cardinal.cpp
     enum/UIFlags.cpp
 
     event/AppEvent.cpp

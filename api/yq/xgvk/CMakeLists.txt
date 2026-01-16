@@ -16,7 +16,7 @@ target_link_libraries(yq_xgvk
     PUBLIC
         yq_xg
         yq_xgxml
-        #yq_canvasvk
+        yq_canvasvk
         yq_tachyon
 )
 

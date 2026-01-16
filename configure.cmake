@@ -11,7 +11,7 @@ endif()
 if(NOT COMMAND vulkan_library)
     #   Append for all vulkan based libraries
     set(GLOBAL PROPERTY YQ_VULQAN_LIBRARIES)  
-    set(GLOBAL PROPERTY YQ_VULQAN_DATA)  
+    #set(GLOBAL PROPERTY YQ_VULQAN_DATA) 
     
     #   Use this macro for non-tachyon libraries
     macro(vulqan_library target)

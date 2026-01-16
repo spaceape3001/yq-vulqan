@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/ui/UIWindow.hpp>
 #include <yq/tachyon/typedef/uimisc.hpp>
-#include <yq/tachyon/enum/Cardinal.hpp>
+#include <yq/math/Cardinal.hpp>
 
 namespace yq::tachyon {
     class UIToolBarWriter;

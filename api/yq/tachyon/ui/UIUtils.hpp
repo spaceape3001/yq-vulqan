@@ -6,14 +6,12 @@
 
 #pragma once
 
+#include <yq/math/Cardinal.hpp>
 #include <yq/tachyon/typedef/uimisc.hpp>
-#include <yq/tachyon/enum/Cardinal.hpp>
 #include <yq/tachyon/enum/UIFlags.hpp>
 #include <yq/typedef/vector2.hpp>
 
 namespace yq::tachyon {
-    enum class Cardinal;
-
     constexpr bool    undefined(horzvert_t hv)
     {
         return static_cast<bool>(std::get_if<std::monostate>(&hv));

@@ -11,10 +11,10 @@
 #define YQ_KEYWORD_OMIT_NONE
 
 #include <yq/keywords.hpp>
+#include <yq/math/Cardinal.hpp>
 #include <yq/tachyon/api/StdThread.hpp>
 #include <yq/tachyon/pipeline/DataActivity.hpp>
 #include <yq/tachyon/os/Platform.hpp>
-#include <yq/tachyon/enum/Cardinal.hpp>
 #include <yq/tachyon/api/SizePolicy.hpp>
 #include <yq/unit/declare.hpp>
 

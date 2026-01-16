@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/canvasvk/UICanvas.hpp>
 #include <yq/tachyon/ui/UIElementWriter.hpp>
 #include <yq/typedef/size2.hpp>
 

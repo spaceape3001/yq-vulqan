@@ -6,8 +6,8 @@
 
 #pragma once
 
+#include <yq/math/Cardinal.hpp>
 #include <yq/tachyon/ui/UIElementWriter.hpp>
-#include <yq/tachyon/enum/Cardinal.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 #include <yq/tachyon/typedef/uielement.hpp>
 #include <yq/tachyon/typedef/widget.hpp>

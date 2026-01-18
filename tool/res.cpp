@@ -39,7 +39,7 @@ bool cmd_help(ExecAPI&)
     
     A simple reformatting can be done with (or even extraction with URL syntax)
     
-        recode MyImage.jpg save=MyImage.png
+        res MyImage.jpg save=MyImage.png
         
         
     Command syntax...
@@ -134,6 +134,11 @@ int main(int argc, char* argv[])
     
     if(argc <= 1){
         cmd_help(api);
+        
+        std::cout << "\nCommand List:\n";
+        for(auto& ci : kCommands)
+            std::cout << "    " <<  ci.name << "\n";
+        
         return 0;
     }
     

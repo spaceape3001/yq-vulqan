@@ -10,6 +10,7 @@
 #include <yq/xg/XGDocNode.hpp>
 #include <yq/xg/XGNodeMeta.hpp>
 #include <yq/gluon/core/Utilities.hpp>
+#include <yq/symbol/Symbol.hpp>
 
 #include <QGraphicsRectItem>
 #include <QGraphicsTextItem>
@@ -68,6 +69,7 @@ namespace yq::tachyon {
         m_data              = xn.spawn();
         m_data.position     = { (float) pt.x(), (float) pt.y() };
         m_data.size         = { 100.f, 50.f };  // hack
+
         build();
     }
     
@@ -76,13 +78,25 @@ namespace yq::tachyon {
     {
     }
 
-    void    XGSceneQt::Node::build()
+    void    XGSceneQt::Node::build(std::string_view symspec)
     {
+        if(symspec.empty())
+            symspec = "pp:yq/symbol/basic.sym#circle";
+        
+        SymbolCPtr  sym = Symbol::IO::load(symspec);
+        if(!sym)
+            return;
+
+        build(*sym);
+
+#if 0
         m_box   = new QGraphicsRectItem(-0.5*m_data.size.x, -0.5*m_data.size.y, m_data.size.x, m_data.size.y, this);
         m_text  = new QGraphicsTextItem(qString(m_data.label), this);
 
         addToGroup(m_box);
         addToGroup(m_text);
+#endif
+
         setPos({m_data.position.x, m_data.position.y});
     }
 

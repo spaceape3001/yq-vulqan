@@ -6,11 +6,13 @@
 
 #pragma once
 
+#include <yq/gluon/graphics/GraphicsSymbolItem.hpp>
 #include <yq/xg/XGDocEdge.hpp>
 #include <yq/xg/XGDocLine.hpp>
 #include <yq/xg/XGDocNode.hpp>
 #include <yq/xg/XGDocText.hpp>
 #include <yq/xgqt/XGSceneQt.hpp>
+
 #include <QGraphicsItemGroup>
 #include <QGraphicsPathItem>
 
@@ -31,7 +33,7 @@ namespace yq::tachyon {
         virtual const QGraphicsItem*    qItem() const = 0;
     };
     
-    struct XGSceneQt::Node : public QGraphicsItemGroup, public Item  {
+    struct XGSceneQt::Node : public gluon::GraphicsSymbolItem, public Item  {
         XGDocNode               m_data;
         QGraphicsRectItem*      m_box   = nullptr;
         QGraphicsTextItem*      m_text  = nullptr;
@@ -40,7 +42,9 @@ namespace yq::tachyon {
         Node(const XGDocNode&);
         Node(const XGNodeMeta&, const QPointF&);
         
-        void    build();
+        using gluon::GraphicsSymbolItem::build;
+        
+        void    build(std::string_view sym={});
         virtual ~Node();
 
         virtual QGraphicsItem*          qItem() override { return this; }

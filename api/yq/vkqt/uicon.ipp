@@ -16,31 +16,4 @@
 #include <QIcon>
 
 namespace yq::tachyon {
-    QIcon       qIcon(std::string_view sv)
-    {
-        if(!is_main_thread()){
-            tachyonOnceWarning << "qIcon(" << sv << "): not the main thread";
-            return QIcon();
-        }
-            
-        Url u2  = Resource::resolve(sv);
-        if(!is_similar(u2.scheme, "file")){
-            tachyonFirstWarning(u2) << "qIcon(" << sv << "): not a local file";
-            return QIcon();
-        }
-        if(!u2.fragment.empty()){
-            tachyonFirstWarning(u2) << "qIcon(" << sv << "): has a fragment";
-            return QIcon();
-        }
-        if(!u2.query.empty()){
-            tachyonFirstWarning(u2) << "qIcon(" << sv << "): has a query";
-            return QIcon();
-        }
-        if(!u2.host.empty()){
-            tachyonFirstWarning(u2) << "qIcon(" << sv << "): has a host";
-            return QIcon();
-        }
-        
-        return QIcon(qString(u2.path));
-    }
 }

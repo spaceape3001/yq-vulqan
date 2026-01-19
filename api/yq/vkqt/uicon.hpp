@@ -6,9 +6,4 @@
 
 #pragma once
 
-#include <string_view>
-class QIcon;
-
-namespace yq::tachyon {
-    QIcon       qIcon(std::string_view);
-}
+#include <yq/gluon/core/uicon.hpp>

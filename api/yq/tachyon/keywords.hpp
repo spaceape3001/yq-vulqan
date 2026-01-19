@@ -133,7 +133,7 @@ namespace yq::tachyon {
     struct l2d_k {};
     struct layer_k {};
     struct layout_k {};
-    struct light_k {};
+    //struct light_k {};    // moved to the toolbox
     struct light³_k {};
     struct manager_k {};
     struct maximum_k : public ::yq::maximum_k {
@@ -301,7 +301,6 @@ namespace yq::tachyon {
     static constexpr const l2d_k                L2D;
     static constexpr const layer_k              LAYER;
     static constexpr const layout_k             LAYOUT;
-    static constexpr const light_k              LIGHT;
     static constexpr const light³_k             LIGHT³;
     static constexpr const manager_k            MANAGER;
     static constexpr const maximum_k            MAX;

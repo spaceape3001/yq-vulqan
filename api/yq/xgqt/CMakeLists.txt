@@ -15,8 +15,8 @@ add_library(${PROJECT_NAME} SHARED
     XGCanvasQt.cpp
     XGNewMimeQt.hpp
     XGNewMimeQt.cpp
-    XGPaletteQt.hpp
-    XGPaletteQt.cpp
+    #XGPaletteQt.hpp
+    #XGPaletteQt.cpp
     XGSceneQt.hpp
     XGSceneQt.cpp
     XGViewQt.hpp

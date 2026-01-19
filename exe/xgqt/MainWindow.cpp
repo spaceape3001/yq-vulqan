@@ -6,10 +6,13 @@
 
 #include "MainWindow.hpp"
 #include <yq/core/Logging.hpp>
+#include <yq/gluon/graph/GNodePalette.hpp>
 #include <yq/vkqt/app/YMainMetaWriter.hpp>
 #include <yq/xgqt/XGCanvasQt.hpp>
-#include <yq/xgqt/XGPaletteQt.hpp>
+//#include <yq/xgqt/XGPaletteQt.hpp>
 #include <yq/xg/XGDocument.hpp>
+#include <yq/xg/XGElement.hpp>
+#include <yq/xg/XGManifest.hpp>
 #include <yq/xg/XGXmlIO.hpp>
 #include <QFileDialog>
 
@@ -123,7 +126,13 @@ void    MainWindow::cmdOpenTab(const QString& file)
 
 void    MainWindow::cmdViewPalette()
 {
-    XGPaletteQt*    pal = new XGPaletteQt;
+    auto manif  = XGElementMeta::create_manifest();
+    if(!manif)
+        return ;
+        
+    gluon::GNodePalette*    pal = new gluon::GNodePalette(manif->m_nodes);
+
+    //XGPaletteQt*    pal = new XGPaletteQt;
     //  we'll do stuff....
     addDock(Qt::LeftDockWidgetArea, pal);
 }

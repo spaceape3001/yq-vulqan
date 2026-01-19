@@ -66,7 +66,7 @@ namespace yq::tachyon {
     
     XGSceneQt::Node::Node(const XGNodeMeta& xn, const QPointF& pt)
     {
-        m_data              = xn.spawn();
+        //m_data              = xn.spawn();
         m_data.position     = { (float) pt.x(), (float) pt.y() };
         m_data.size         = { 100.f, 50.f };  // hack
 

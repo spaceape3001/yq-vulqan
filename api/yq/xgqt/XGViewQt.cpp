@@ -45,9 +45,9 @@ namespace yq::tachyon {
     
     void    XGViewQt::dropEvent(QDropEvent* evt) 
     {
-        if(const XGNewMimeQt* nm = dynamic_cast<const XGNewMimeQt*>(evt->mimeData())){
-            m_scene -> add(nm->node_spec(), mapToScene(evt->position().toPoint()));
-        }
+        //if(const XGNewMimeQt* nm = dynamic_cast<const XGNewMimeQt*>(evt->mimeData())){
+        //    m_scene -> add(nm->node_spec(), mapToScene(evt->position().toPoint()));
+        //}
     }
 }
 

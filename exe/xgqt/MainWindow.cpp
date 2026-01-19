@@ -7,6 +7,7 @@
 #include "MainWindow.hpp"
 #include <yq/core/Logging.hpp>
 #include <yq/gluon/graph/GNodePalette.hpp>
+#include <yq/gluon/graph/GraphScene.hpp>
 #include <yq/vkqt/app/YMainMetaWriter.hpp>
 #include <yq/xgqt/XGCanvasQt.hpp>
 //#include <yq/xgqt/XGPaletteQt.hpp>
@@ -15,6 +16,9 @@
 #include <yq/xg/XGManifest.hpp>
 #include <yq/xg/XGXmlIO.hpp>
 #include <QFileDialog>
+#include <QPainter>
+#include <QPrintDialog>
+#include <QPrintPreviewDialog>
 
 YQ_TACHYON_IMPLEMENT(MainWindow)
 
@@ -41,8 +45,9 @@ MainWindow::MainWindow()
     addAction("save", "Save").connect(this, &MainWindow::cmdFileSave);
     addAction("saveas", "Save As").connect(this, &MainWindow::cmdFileSaveAs);
     addAction("palette", "Palette").connect(this, &MainWindow::cmdViewPalette);
+    addAction("print", "Print").connect(this, &MainWindow::cmdFilePrint);
 
-    makeMenu("file", "File", QStringList() << "new" << "open" << "save" << "saveas" );
+    makeMenu("file", "File", QStringList() << "new" << "open" << "save" << "saveas" << "print" );
     makeMenu("edit", "Edit");
     makeMenu("view", "View", QStringList() << "palette");
     
@@ -74,6 +79,23 @@ void    MainWindow::cmdFileOpen()
     
     cmdOpenTab(file);
 }
+
+void    MainWindow::cmdFilePrint()
+{
+    XGCanvasQt*     cvs = currentCanvas();
+    if(!cvs)
+        return ;
+    
+     //QPrinter printer();
+    QPrintDialog dialog(&m_printer, this);
+    if(dialog.exec() != QDialog::Accepted)
+        return ;
+
+    QPainter    painter(&m_printer);
+    cvs->scene()->print(&painter);
+    //m_view->drawTo(painter);
+}
+
 
 void    MainWindow::cmdFileSave()
 {

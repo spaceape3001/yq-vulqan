@@ -8,6 +8,7 @@
 
 #include <yq/vkqt/app/YMain.hpp>
 #include <yq/typedef/xg_document.hpp>
+#include <QPrinter>
 
 namespace yq::tachyon {
     class XGCanvasQt;
@@ -41,8 +42,11 @@ public slots:
     void    cmdFileOpen();
     void    cmdFileSave();
     void    cmdFileSaveAs();
+    void    cmdFilePrint();
     void    cmdViewPalette();
     
 private:
     bool    saveTab(XGCanvasQt&, const QString&);
+
+    QPrinter    m_printer;
 };

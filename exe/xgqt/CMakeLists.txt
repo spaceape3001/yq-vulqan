@@ -6,7 +6,7 @@
 
 project(xgqt)
 
-find_package(Qt6 REQUIRED Core Gui Widgets )
+find_package(Qt6 REQUIRED Core Gui PrintSupport Widgets )
 
 SET(CMAKE_AUTOMOC ON)
 
@@ -22,4 +22,5 @@ PUBLIC
     yq_assetqt
     yq_xgqt
     yq_xgxml
+    Qt6::PrintSupport
 )

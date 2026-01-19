@@ -5,24 +5,23 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "XGCanvasQt.hpp"
-#include "XGSceneQt.hpp"
-#include "XGViewQt.hpp"
 #include <yq/text/match.hpp>
 #include <yq/xg/XGDocument.hpp>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-
+#include <yq/gluon/graph/GraphScene.hpp>
+#include <yq/gluon/graph/GraphView.hpp>
 
 
 namespace yq::tachyon {
     static std::atomic<unsigned>    gCanvasNum{1};
 
     XGCanvasQt::XGCanvasQt(QWidget*parent) : 
-        gluon::GraphicsCanvas(new XGViewQt(new XGSceneQt), parent), 
+        gluon::GraphicsCanvas(new gluon::GraphView(new gluon::GraphScene), parent), 
         m_number(gCanvasNum++)
     {
-        m_view      = (XGViewQt*) gluon::GraphicsCanvas::view();
-        m_scene     = (XGSceneQt*) gluon::GraphicsCanvas::scene();
+        m_view      = (gluon::GraphView*) gluon::GraphicsCanvas::view();
+        m_scene     = (gluon::GraphScene*) gluon::GraphicsCanvas::scene();
         m_scene -> setParent(this);
         m_scene -> setSceneRect(QRectF(0,0,2048,2048));
     }
@@ -39,13 +38,14 @@ namespace yq::tachyon {
 
     XGDocumentPtr           XGCanvasQt::get() const
     {
-        return m_scene -> get();
+        return {};
+        //return m_scene -> get();
     }
     
     void                    XGCanvasQt::set(const XGDocument& doc)
     {
-        m_scene -> set(doc);
-        m_url       = doc.url();
+        //m_scene -> set(doc);
+        //m_url       = doc.url();
     }
 
     std::filesystem::path   XGCanvasQt::dirpath() const

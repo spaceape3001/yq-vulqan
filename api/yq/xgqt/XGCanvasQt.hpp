@@ -12,6 +12,11 @@
 #include <yq/net/Url.hpp>
 #include <filesystem>
 
+namespace yq::gluon {
+    class GraphScene;
+    class GraphView;
+}
+
 namespace yq::tachyon {
     class XGSceneQt;
     class XGViewQt;
@@ -23,20 +28,20 @@ namespace yq::tachyon {
         XGCanvasQt(QWidget*parent=nullptr);
         ~XGCanvasQt();
         
-        XGSceneQt*              scene() { return m_scene; }
-        const XGSceneQt*        scene() const { return m_scene; }
+        gluon::GraphScene*          scene() { return m_scene; }
+        const gluon::GraphScene*    scene() const { return m_scene; }
         
-        XGViewQt*               view() { return m_view; }
-        const XGViewQt*         view() const { return m_view; }
+        gluon::GraphView*           view() { return m_view; }
+        const gluon::GraphView*     view() const { return m_view; }
         
-        std::filesystem::path   dirpath() const;
-        QString                 dirname() const;
+        std::filesystem::path       dirpath() const;
+        QString                     dirname() const;
         
-        std::filesystem::path   filepath() const;
-        QString                 filename() const;
+        std::filesystem::path       filepath() const;
+        QString                     filename() const;
         
-        XGDocumentPtr           get() const;
-        void                    set(const XGDocument&);
+        XGDocumentPtr               get() const;
+        void                        set(const XGDocument&);
         
         const Url& url() const { return m_url; }
         
@@ -48,7 +53,7 @@ namespace yq::tachyon {
     private:
         const unsigned          m_number;
         Url                     m_url;
-        XGSceneQt*              m_scene     = nullptr;
-        XGViewQt*               m_view      = nullptr;
+        gluon::GraphScene*      m_scene     = nullptr;
+        gluon::GraphView*       m_view      = nullptr;
     };
 }

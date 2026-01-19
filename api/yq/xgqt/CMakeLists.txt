@@ -13,14 +13,14 @@ SET(CMAKE_AUTOMOC ON)
 add_library(${PROJECT_NAME} SHARED
     XGCanvasQt.hpp
     XGCanvasQt.cpp
-    XGNewMimeQt.hpp
-    XGNewMimeQt.cpp
+    #XGNewMimeQt.hpp
+    #XGNewMimeQt.cpp
     #XGPaletteQt.hpp
     #XGPaletteQt.cpp
-    XGSceneQt.hpp
-    XGSceneQt.cpp
-    XGViewQt.hpp
-    XGViewQt.cpp
+    #XGSceneQt.hpp
+    #XGSceneQt.cpp
+    #XGViewQt.hpp
+    #XGViewQt.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC

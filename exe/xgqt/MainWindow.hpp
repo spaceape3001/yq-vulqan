@@ -7,15 +7,17 @@
 #pragma once
 
 #include <yq/vkqt/app/YMain.hpp>
-#include <yq/typedef/xg_document.hpp>
+#include <yq/typedef/g_document.hpp>
 #include <QPrinter>
 
-namespace yq::tachyon {
-    class XGCanvasQt;
-    class XGPaletteQt;
+namespace yq::gluon {
+    class GraphCanvas;
+    class GNodePalette;
 }
 
 using namespace yq;
+using yq::gluon::GraphCanvas;
+using yq::gluon::GNodePalette;
 using namespace yq::tachyon;
 
 class MainWindow : public YMain {
@@ -27,7 +29,7 @@ public:
     
     virtual MainWindow*     newMain() override;
     
-    XGCanvasQt*     currentCanvas();
+    GraphCanvas*     currentCanvas();
     
     
     // will need measures to prevent duplicate opens
@@ -46,7 +48,7 @@ public slots:
     void    cmdViewPalette();
     
 private:
-    bool    saveTab(XGCanvasQt&, const QString&);
+    bool    saveTab(GraphCanvas&, const QString&);
 
     QPrinter    m_printer;
 };

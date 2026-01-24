@@ -11,8 +11,9 @@ find_package(Qt6 REQUIRED Core Gui Widgets )
 SET(CMAKE_AUTOMOC ON)
 
 add_library(${PROJECT_NAME} SHARED
-    XGCanvasQt.hpp
-    XGCanvasQt.cpp
+    xgqt.cpp
+    #XGCanvasQt.hpp
+    #XGCanvasQt.cpp
     #XGNewMimeQt.hpp
     #XGNewMimeQt.cpp
     #XGPaletteQt.hpp

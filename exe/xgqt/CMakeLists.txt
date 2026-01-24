@@ -21,6 +21,6 @@ PUBLIC
     yq_vkqt
     yq_assetqt
     yq_xgqt
-    yq_xgxml
+    #yq_xgxml
     Qt6::PrintSupport
 )

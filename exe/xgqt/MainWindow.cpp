@@ -7,14 +7,14 @@
 #include "MainWindow.hpp"
 #include <yq/core/Logging.hpp>
 #include <yq/gluon/graph/GNodePalette.hpp>
+#include <yq/gluon/graph/GraphCanvas.hpp>
 #include <yq/gluon/graph/GraphScene.hpp>
+#include <yq/graph/GDocument.hpp>
+#include <yq/graph/GMetaGraph.hpp>
 #include <yq/vkqt/app/YMainMetaWriter.hpp>
-#include <yq/xgqt/XGCanvasQt.hpp>
-//#include <yq/xgqt/XGPaletteQt.hpp>
-#include <yq/xg/XGDocument.hpp>
 #include <yq/xg/XGElement.hpp>
-#include <yq/xg/XGManifest.hpp>
-#include <yq/xg/XGXmlIO.hpp>
+//#include <yq/xg/XGXmlIO.hpp>
+
 #include <QFileDialog>
 #include <QPainter>
 #include <QPrintDialog>
@@ -66,7 +66,7 @@ void    MainWindow::cmdFileNew()
 void    MainWindow::cmdFileOpen()
 {
     QString dir;
-    if(XGCanvasQt*     cvs = currentCanvas()){
+    if(GraphCanvas*     cvs = currentCanvas()){
         dir = cvs->dirname();
     }
 
@@ -82,7 +82,7 @@ void    MainWindow::cmdFileOpen()
 
 void    MainWindow::cmdFilePrint()
 {
-    XGCanvasQt*     cvs = currentCanvas();
+    GraphCanvas*     cvs = currentCanvas();
     if(!cvs)
         return ;
     
@@ -99,7 +99,7 @@ void    MainWindow::cmdFilePrint()
 
 void    MainWindow::cmdFileSave()
 {
-    XGCanvasQt*     cvs = currentCanvas();
+    GraphCanvas*     cvs = currentCanvas();
     if(!cvs)
         return ;
     
@@ -113,7 +113,7 @@ void    MainWindow::cmdFileSave()
 
 void    MainWindow::cmdFileSaveAs()
 {
-    XGCanvasQt*     cvs = currentCanvas();
+    GraphCanvas*     cvs = currentCanvas();
     if(!cvs)
         return ;
 
@@ -128,20 +128,20 @@ void    MainWindow::cmdFileSaveAs()
 
 void    MainWindow::cmdNewTab()
 {
-    XGCanvasQt* cvs = new XGCanvasQt;
+    GraphCanvas* cvs = new GraphCanvas;
     cvs -> updateTitle();
     addWindow(cvs);
 }
 
 void    MainWindow::cmdOpenTab(const QString& file)
 {
-    auto doc    = XGDocument::IO::load(std::filesystem::path(file.toStdString()));
+    auto doc    = GDocument::IO::load(std::filesystem::path(file.toStdString()));
     if(!doc){
         status(tr("Unable to load file %1").arg(file));
         return ;
     }
     
-    XGCanvasQt* cvs = new XGCanvasQt;
+    GraphCanvas* cvs = new GraphCanvas;
     cvs -> set(*doc);
     addWindow(cvs);
 }
@@ -152,16 +152,16 @@ void    MainWindow::cmdViewPalette()
     if(!manif)
         return ;
         
-    gluon::GNodePalette*    pal = new gluon::GNodePalette(manif->m_nodes);
+    GNodePalette*    pal = new GNodePalette(manif->nodes());
 
     //XGPaletteQt*    pal = new XGPaletteQt;
     //  we'll do stuff....
     addDock(Qt::LeftDockWidgetArea, pal);
 }
 
-XGCanvasQt*     MainWindow::currentCanvas()
+GraphCanvas*     MainWindow::currentCanvas()
 {
-    return dynamic_cast<XGCanvasQt*>(activeWindow());
+    return dynamic_cast<GraphCanvas*>(activeWindow());
 }
 
 MainWindow*     MainWindow::newMain() 
@@ -169,9 +169,9 @@ MainWindow*     MainWindow::newMain()
     return Tachyon::create<MainWindow>();
 }
 
-bool    MainWindow::saveTab(XGCanvasQt& cvs, const QString& fp)
+bool    MainWindow::saveTab(GraphCanvas& cvs, const QString& fp)
 {
-    XGDocumentCPtr  doc = cvs.get();
+    GDocumentCPtr  doc = cvs.get();
     std::error_code ec = doc -> save_to(std::filesystem::path(fp.toStdString()));
     if(ec != std::error_code()){
         status(tr("Unable to save file '%1': %2").arg(fp).arg(ec.message()));

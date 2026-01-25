@@ -6,11 +6,11 @@
 
 #include "MainWindow.hpp"
 #include <yq/core/Logging.hpp>
-#include <yq/gluon/graph/GNodePalette.hpp>
-#include <yq/gluon/graph/GraphCanvas.hpp>
-#include <yq/gluon/graph/GraphScene.hpp>
 #include <yq/graph/GDocument.hpp>
 #include <yq/graph/GMetaGraph.hpp>
+#include <yq/graphQt/GNodePalette.hpp>
+#include <yq/graphQt/GraphCanvas.hpp>
+#include <yq/graphQt/GraphScene.hpp>
 #include <yq/vkqt/app/YMainMetaWriter.hpp>
 #include <yq/xg/XGElement.hpp>
 //#include <yq/xg/XGXmlIO.hpp>

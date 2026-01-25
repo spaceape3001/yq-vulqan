@@ -20,7 +20,10 @@ target_link_libraries(${PROJECT_NAME}
 PUBLIC
     yq_vkqt
     yq_assetqt
-    yq_xgqt
-    #yq_xgxml
+    #yq_xgqt
+    yq_graph
+    yq_graphQt
+    yq_symbolQt
+    yq_xg
     Qt6::PrintSupport
 )

@@ -13,21 +13,21 @@
 namespace yq::gluon {
     class GraphCanvas;
     class GNodePalette;
+    class GraphicsToolBar;
 }
 
 using namespace yq;
-using yq::gluon::GraphCanvas;
-using yq::gluon::GNodePalette;
+using namespace yq::gluon;
 using namespace yq::tachyon;
 
-class MainWindow : public YMain {
-    YQ_TACHYON_DECLARE(MainWindow, YMain)
+class AppWindow : public YMain {
+    YQ_TACHYON_DECLARE(AppWindow, YMain)
     Q_OBJECT
 public:
-    MainWindow();
-    ~MainWindow();
+    AppWindow();
+    ~AppWindow();
     
-    virtual MainWindow*     newMain() override;
+    virtual AppWindow*     newMain() override;
     
     GraphCanvas*     currentCanvas();
     
@@ -47,8 +47,15 @@ public slots:
     void    cmdFilePrint();
     void    cmdViewPalette();
     
+protected: 
+    void            activeChanged() override;
+    
+private slots:
+    void    cmdToolChange(uint64_t);
+    
 private:
     bool    saveTab(GraphCanvas&, const QString&);
 
-    QPrinter    m_printer;
+    QPrinter            m_printer;
+    GraphicsToolBar*    m_toolbar   = nullptr;
 };

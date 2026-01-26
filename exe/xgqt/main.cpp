@@ -9,7 +9,7 @@
 #include <yq/vkqt/app/YApp.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/process/PluginLoader.hpp>
-#include "MainWindow.hpp"
+#include "AppWindow.hpp"
 
 using namespace yq;
 using namespace yq::tachyon;
@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
         yInfo() << "resource path> " << pth;
 
     app.start();
-    auto mw   = Tachyon::create<MainWindow>();
+    auto mw   = Tachyon::create<AppWindow>();
     mw -> cmdNewTab();
     mw -> show();
     app.run();

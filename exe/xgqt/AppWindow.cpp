@@ -4,13 +4,14 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "MainWindow.hpp"
+#include "AppWindow.hpp"
 #include <yq/core/Logging.hpp>
 #include <yq/graph/GDocument.hpp>
 #include <yq/graph/GMetaGraph.hpp>
 #include <yq/graphQt/GNodePalette.hpp>
 #include <yq/graphQt/GraphCanvas.hpp>
 #include <yq/graphQt/GraphScene.hpp>
+#include <yq/graphicsQt/GraphicsToolBar.hpp>
 #include <yq/vkqt/app/YMainMetaWriter.hpp>
 #include <yq/xg/XGElement.hpp>
 //#include <yq/xg/XGXmlIO.hpp>
@@ -20,15 +21,15 @@
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
 
-YQ_TACHYON_IMPLEMENT(MainWindow)
+YQ_TACHYON_IMPLEMENT(AppWindow)
 
-void MainWindow::init_meta()
+void AppWindow::init_meta()
 {
-    auto w = writer<MainWindow>();
+    auto w = writer<AppWindow>();
     w.description("Executive Flow Graph Main Window");
 }
 
-MainWindow::MainWindow()
+AppWindow::AppWindow()
 {
     activateTabs();
     enableClosableTabs();
@@ -40,30 +41,45 @@ MainWindow::MainWindow()
     
     status("Executive Graph");
     
-    addAction("new", "New").connect(this, &MainWindow::cmdFileNew);
-    addAction("open", "Open").connect(this, &MainWindow::cmdFileOpen);
-    addAction("save", "Save").connect(this, &MainWindow::cmdFileSave);
-    addAction("saveas", "Save As").connect(this, &MainWindow::cmdFileSaveAs);
-    addAction("palette", "Palette").connect(this, &MainWindow::cmdViewPalette);
-    addAction("print", "Print").connect(this, &MainWindow::cmdFilePrint);
+    addAction("new", "New").connect(this, &AppWindow::cmdFileNew);
+    addAction("open", "Open").connect(this, &AppWindow::cmdFileOpen);
+    addAction("save", "Save").connect(this, &AppWindow::cmdFileSave);
+    addAction("saveas", "Save As").connect(this, &AppWindow::cmdFileSaveAs);
+    addAction("palette", "Palette").connect(this, &AppWindow::cmdViewPalette);
+    addAction("print", "Print").connect(this, &AppWindow::cmdFilePrint);
 
     makeMenu("file", "File", QStringList() << "new" << "open" << "save" << "saveas" << "print" );
     makeMenu("edit", "Edit");
     makeMenu("view", "View", QStringList() << "palette");
     
+    m_toolbar   = new GraphicsToolBar;
+    connect(m_toolbar, &GraphicsToolBar::clicked, this, &AppWindow::cmdToolChange);
+    
+    // add...
+    
+    addToolBar(Qt::TopToolBarArea, m_toolbar);
+    
     cmdViewPalette();
 }
 
-MainWindow::~MainWindow()
+AppWindow::~AppWindow()
 {
 }
 
-void    MainWindow::cmdFileNew()
+void    AppWindow::activeChanged() 
+{
+    YMain::activeChanged();
+    if(GraphCanvas* cvs = currentCanvas()){
+        m_toolbar -> setActive( cvs -> currentTool() );
+    }
+}
+
+void    AppWindow::cmdFileNew()
 {
     cmdNewTab();
 }
 
-void    MainWindow::cmdFileOpen()
+void    AppWindow::cmdFileOpen()
 {
     QString dir;
     if(GraphCanvas*     cvs = currentCanvas()){
@@ -80,7 +96,7 @@ void    MainWindow::cmdFileOpen()
     cmdOpenTab(file);
 }
 
-void    MainWindow::cmdFilePrint()
+void    AppWindow::cmdFilePrint()
 {
     GraphCanvas*     cvs = currentCanvas();
     if(!cvs)
@@ -97,7 +113,7 @@ void    MainWindow::cmdFilePrint()
 }
 
 
-void    MainWindow::cmdFileSave()
+void    AppWindow::cmdFileSave()
 {
     GraphCanvas*     cvs = currentCanvas();
     if(!cvs)
@@ -111,7 +127,7 @@ void    MainWindow::cmdFileSave()
     }
 }
 
-void    MainWindow::cmdFileSaveAs()
+void    AppWindow::cmdFileSaveAs()
 {
     GraphCanvas*     cvs = currentCanvas();
     if(!cvs)
@@ -126,14 +142,14 @@ void    MainWindow::cmdFileSaveAs()
     saveTab(*cvs, file);
 }
 
-void    MainWindow::cmdNewTab()
+void    AppWindow::cmdNewTab()
 {
     GraphCanvas* cvs = new GraphCanvas;
     cvs -> updateTitle();
     addWindow(cvs);
 }
 
-void    MainWindow::cmdOpenTab(const QString& file)
+void    AppWindow::cmdOpenTab(const QString& file)
 {
     auto doc    = GDocument::IO::load(std::filesystem::path(file.toStdString()));
     if(!doc){
@@ -146,7 +162,16 @@ void    MainWindow::cmdOpenTab(const QString& file)
     addWindow(cvs);
 }
 
-void    MainWindow::cmdViewPalette()
+void    AppWindow::cmdToolChange(uint64_t i)
+{
+    GraphCanvas*     cvs = currentCanvas();
+    if(!cvs)
+        return ;
+    cvs -> setTool(i);
+    m_toolbar->setActive(cvs -> currentTool());
+}
+
+void    AppWindow::cmdViewPalette()
 {
     auto manif  = XGElementMeta::create_manifest();
     if(!manif)
@@ -159,17 +184,17 @@ void    MainWindow::cmdViewPalette()
     addDock(Qt::LeftDockWidgetArea, pal);
 }
 
-GraphCanvas*     MainWindow::currentCanvas()
+GraphCanvas*     AppWindow::currentCanvas()
 {
     return dynamic_cast<GraphCanvas*>(activeWindow());
 }
 
-MainWindow*     MainWindow::newMain() 
+AppWindow*     AppWindow::newMain() 
 {
-    return Tachyon::create<MainWindow>();
+    return Tachyon::create<AppWindow>();
 }
 
-bool    MainWindow::saveTab(GraphCanvas& cvs, const QString& fp)
+bool    AppWindow::saveTab(GraphCanvas& cvs, const QString& fp)
 {
     GDocumentCPtr  doc = cvs.get();
     std::error_code ec = doc -> save_to(std::filesystem::path(fp.toStdString()));
@@ -183,4 +208,4 @@ bool    MainWindow::saveTab(GraphCanvas& cvs, const QString& fp)
 
 
 
-#include "moc_MainWindow.cpp"
+#include "moc_AppWindow.cpp"

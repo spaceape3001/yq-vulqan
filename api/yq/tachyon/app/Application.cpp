@@ -35,6 +35,7 @@
 #include <yq/core/ThreadId.hpp>
 #include <yq/core/Cleanup.hpp>
 #include <yq/meta/Init.hpp>
+#include <yq/config/config.hpp>
 #include <yq/process/OSUtils.hpp>
 #include <yq/process/PluginLoader.hpp>
 //#include <yq/post/boxes/SimpleBox.hpp>
@@ -59,7 +60,7 @@ namespace yq::tachyon {
         if(s_done)
             return;
             
-        Resource::add_paths(default_data_directory());
+        Resource::add_paths(config::data_dir());
         s_done = true;
     }
 

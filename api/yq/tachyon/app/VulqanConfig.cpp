@@ -5,14 +5,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "VulqanConfig.hpp"
-#include <yq/process/Settings.hpp>
+#include <yq/config/config.hpp>
+//#include <yq/process/Settings.hpp>
 #include <yq/text/vsplit.hpp>
 #include <yq/text/transform.hpp>
 
 namespace yq::tachyon {
-    VulqanConfig::VulqanConfig(const std::filesystem::path& pth)
+    VulqanConfig::VulqanConfig(const std::filesystem::path&)
     {
-        m_settings    = std::make_shared<Settings>(pth);
     }
     
     VulqanConfig::~VulqanConfig() = default;
@@ -25,7 +25,7 @@ namespace yq::tachyon {
     string_view_vector_t    VulqanConfig::data_paths() const
     {
         string_view_vector_t   ret;
-        vsplit(m_settings->value("data"), ';', [&](std::string_view v){
+        vsplit(config::data_dir(), ';', [&](std::string_view v){
             ret.push_back(trimmed(v));
         });
         return ret;
@@ -34,7 +34,7 @@ namespace yq::tachyon {
     string_view_vector_t    VulqanConfig::vulqan_libraries() const
     {
         string_view_vector_t   ret;
-        vsplit(m_settings->value("libraries"), ';', [&](std::string_view v){
+        vsplit(config::vklibs(), ';', [&](std::string_view v){
             ret.push_back(trimmed(v));
         });
         return ret;

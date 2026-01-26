@@ -1,1 +1,1 @@
-#yq_vulkan(yq_gamevk)
+#yq_vklib(yq_gamevk)

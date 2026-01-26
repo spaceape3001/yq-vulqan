@@ -21,5 +21,5 @@ target_link_libraries(yq_xgvk
 )
 
 vulqan_library(yq_xgvk)
-yq_vulkan(yq_xgvk)
+yq_vklib(yq_xgvk)
 LinkTest(yq_xgvk)

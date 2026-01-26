@@ -33,5 +33,5 @@ target_link_libraries(yq_editorvk
 )
 
 vulqan_library(yq_editorvk)
-yq_vulkan(yq_editorvk)
+yq_vklib(yq_editorvk)
 LinkTest(yq_editorvk)

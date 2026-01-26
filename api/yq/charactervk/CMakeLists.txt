@@ -1,2 +1,2 @@
 
-#yq_vulkan(yq_charactervk)
+#yq_vklib(yq_charactervk)

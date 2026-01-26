@@ -1,1 +1,1 @@
-#yq_vulkan(yq_graphvk)
+#yq_vklib(yq_graphvk)

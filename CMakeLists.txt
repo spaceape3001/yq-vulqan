@@ -21,6 +21,7 @@ if(NOT DEFINED YOUR_QUILL_STANDARD_CMAKE)
     include(yq-toolbox/standard.cmake)
 endif()
 
+yq_data(data)
 vulqan_data(data)
 
 #   If this fails, means the toolbox wasn't included/used

@@ -141,5 +141,6 @@ PUBLIC
 )
 
 vulqan_library(yq_assetvk)
+yq_vulkan(yq_assetvk)
 LinkTest(yq_assetvk)
 

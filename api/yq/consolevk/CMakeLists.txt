@@ -15,4 +15,5 @@ PUBLIC
 )
 
 vulqan_library(yq_consolevk)
+yq_vulkan(yq_consolevk)
 LinkTest(yq_consolevk)

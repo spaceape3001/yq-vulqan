@@ -36,4 +36,5 @@ target_link_libraries(yq_luavk
 )
 
 vulqan_library(yq_luavk)
+yq_vulkan(yq_luavk)
 LinkTest(yq_luavk)

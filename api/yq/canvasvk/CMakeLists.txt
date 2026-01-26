@@ -15,4 +15,5 @@ PUBLIC
 )
 
 vulqan_library(yq_canvasvk)
+yq_vulkan(yq_canvasvk)
 LinkTest(yq_canvasvk)

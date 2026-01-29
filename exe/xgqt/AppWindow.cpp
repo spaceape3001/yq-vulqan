@@ -55,6 +55,10 @@ AppWindow::AppWindow()
     m_toolbar   = new GraphicsToolBar;
     connect(m_toolbar, &GraphicsToolBar::clicked, this, &AppWindow::cmdToolChange);
     
+    // TODO... text file configurable
+    m_toolbar -> add(TOOL, "gluon::SelectTool");
+    m_toolbar -> add(TOOL, "gluon::PanTool");
+    
     // add...
     
     addToolBar(Qt::TopToolBarArea, m_toolbar);
@@ -87,8 +91,8 @@ void    AppWindow::cmdFileOpen()
     }
 
     QString file    = QFileDialog::getOpenFileName(
-        this, tr("Open Executive Graph File"), dir,
-        "Executive Graph Files (*.xg)"
+        this, tr("Open Graph File"), dir,
+        "Graph Files (*.g)"
     );
     if(file.isEmpty())
         return;
@@ -134,8 +138,8 @@ void    AppWindow::cmdFileSaveAs()
         return ;
 
     QString file    = QFileDialog::getSaveFileName(
-        this, tr("Save Exective Graph File"), cvs->dirname(),
-        "Executive Graph Files (*.xg)"
+        this, tr("Save Graph File"), cvs->dirname(),
+        "Graph Files (*.g)"
     );
     if(file.isEmpty())
         return;
@@ -144,7 +148,11 @@ void    AppWindow::cmdFileSaveAs()
 
 void    AppWindow::cmdNewTab()
 {
+    GGraph      graph(CREATE);
+    graph.document()->kind(SET, "executive");
+    
     GraphCanvas* cvs = new GraphCanvas;
+    cvs -> set(graph);
     cvs -> updateTitle();
     addWindow(cvs);
 }
@@ -158,12 +166,13 @@ void    AppWindow::cmdOpenTab(const QString& file)
     }
     
     GraphCanvas* cvs = new GraphCanvas;
-    cvs -> set(*doc);
+    cvs -> set(doc->clone(), doc->url());
     addWindow(cvs);
 }
 
 void    AppWindow::cmdToolChange(uint64_t i)
 {
+yInfo() << "cmdToolChange(" << i << ")";
     GraphCanvas*     cvs = currentCanvas();
     if(!cvs)
         return ;
@@ -196,8 +205,15 @@ AppWindow*     AppWindow::newMain()
 
 bool    AppWindow::saveTab(GraphCanvas& cvs, const QString& fp)
 {
-    GDocumentCPtr  doc = cvs.get();
-    std::error_code ec = doc -> save_to(std::filesystem::path(fp.toStdString()));
+    GDocumentCPtr  doc = cvs.document();
+    if(!doc){
+        status(tr("Unable to save file '%1': NO DOCUMENT").arg(fp));
+        return false;
+    }
+    
+    std::error_code ec = doc -> save_to(std::filesystem::path(fp.toStdString()),
+        { .collision = FileCollisionStrategy::Backup }
+    );
     if(ec != std::error_code()){
         status(tr("Unable to save file '%1': %2").arg(fp).arg(ec.message()));
         return false;

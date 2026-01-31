@@ -46,6 +46,8 @@ public slots:
     void    cmdFileSaveAs();
     void    cmdFilePrint();
     void    cmdViewPalette();
+    void    cmdSelectAll();
+    void    cmdSelectNone();
     
 protected: 
     void            activeChanged() override;

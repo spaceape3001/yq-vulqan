@@ -43,21 +43,23 @@ AppWindow::AppWindow()
     
     addAction("new", "New").connect(this, &AppWindow::cmdFileNew);
     addAction("open", "Open").connect(this, &AppWindow::cmdFileOpen);
-    addAction("save", "Save").connect(this, &AppWindow::cmdFileSave);
+    addAction("save", "Save").shortcut("Ctrl+S").connect(this, &AppWindow::cmdFileSave);
     addAction("saveas", "Save As").connect(this, &AppWindow::cmdFileSaveAs);
+    addAction("selectAll", "Select All").shortcut("Ctrl+A").connect(this, &AppWindow::cmdSelectAll);
+    addAction("selectNone", "Clear Selection").shortcut("Shift+Ctrl+A").connect(this, &AppWindow::cmdSelectNone);
     addAction("palette", "Palette").connect(this, &AppWindow::cmdViewPalette);
-    addAction("print", "Print").connect(this, &AppWindow::cmdFilePrint);
+    addAction("print", "Print").shortcut("Ctrl+P").connect(this, &AppWindow::cmdFilePrint);
 
     makeMenu("file", "File", QStringList() << "new" << "open" << "save" << "saveas" << "print" );
-    makeMenu("edit", "Edit");
+    makeMenu("edit", "Edit", QStringList() << "selectAll" << "selectNone");
     makeMenu("view", "View", QStringList() << "palette");
     
     m_toolbar   = new GraphicsToolBar;
     connect(m_toolbar, &GraphicsToolBar::clicked, this, &AppWindow::cmdToolChange);
     
     // TODO... text file configurable
-    m_toolbar -> add(TOOL, "gluon::SelectTool");
-    m_toolbar -> add(TOOL, "gluon::PanTool");
+    m_toolbar -> add(TOOL, "gluon::GeneralTool");
+    //m_toolbar -> add(TOOL, "gluon::PanTool");
     
     // add...
     
@@ -169,6 +171,23 @@ void    AppWindow::cmdOpenTab(const QString& file)
     cvs -> set(doc->clone(), doc->url());
     addWindow(cvs);
 }
+
+void    AppWindow::cmdSelectAll()
+{
+    GraphCanvas*     cvs = currentCanvas();
+    if(!cvs)
+        return ;
+    cvs -> selectAll();
+}
+
+void    AppWindow::cmdSelectNone()
+{
+    GraphCanvas*     cvs = currentCanvas();
+    if(!cvs)
+        return ;
+    cvs -> selectNone();
+}
+
 
 void    AppWindow::cmdToolChange(uint64_t i)
 {

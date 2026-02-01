@@ -58,8 +58,9 @@ AppWindow::AppWindow()
     connect(m_toolbar, &GraphicsToolBar::clicked, this, &AppWindow::cmdToolChange);
     
     // TODO... text file configurable
-    m_toolbar -> add(TOOL, "gluon::GeneralTool");
-    //m_toolbar -> add(TOOL, "gluon::PanTool");
+    //m_toolbar -> add(TOOL, "gluon::GeneralTool");
+    m_toolbar -> add(TOOL, "gluon::SelectTool");
+    m_toolbar -> add(TOOL, "gluon::PanTool");
     
     // add...
     

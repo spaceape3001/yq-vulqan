@@ -31,6 +31,8 @@ int main(int argc, char* argv[])
     Meta::init();
     load_plugin_dir("plugin/xgvk");
     Meta::init();
+    load_plugin_dir("plugin/gtools");
+    Meta::init();
     
     
     Meta::freeze();
@@ -39,7 +41,12 @@ int main(int argc, char* argv[])
 
     app.start();
     auto mw   = Tachyon::create<AppWindow>();
-    mw -> cmdNewTab();
+    if(argc>1){
+        for(int n=1;n<argc;++n)
+            mw -> cmdOpenTab(argv[n]);
+    } else {
+        mw -> cmdNewTab();
+    }
     mw -> show();
     app.run();
     return 0;

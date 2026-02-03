@@ -63,6 +63,8 @@ AppWindow::AppWindow()
     m_toolbar -> add(TOOL, "gluon::PanTool");
     m_toolbar -> add(TOOL, "gluon::MoveTool");
     m_toolbar -> add(TOOL, "gluon::EdgeConnectorTool");
+    m_toolbar -> add(TOOL, "gluon::GraphLineTool");
+    m_toolbar -> add(TOOL, "gluon::GraphTextTool");
     
     // add...
     

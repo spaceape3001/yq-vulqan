@@ -16,7 +16,7 @@ namespace yq {
 namespace yq::tachyon {
     class VulqanConfig {
     public:
-        VulqanConfig(const std::filesystem::path&);
+        VulqanConfig();
         ~VulqanConfig();
         
         VulqanConfig(const VulqanConfig&);
@@ -28,7 +28,7 @@ namespace yq::tachyon {
         string_view_vector_t    data_paths() const;
 
     private:
-        std::shared_ptr<Settings>   m_settings;
+        //std::shared_ptr<Settings>   m_settings;
     };
 }
 

@@ -75,7 +75,7 @@ namespace yq::tachyon {
     }
 
     Application::Application(int argc, char* argv[], const AppCreateInfo& aci) : 
-        BasicApp(argc, argv, aci), m_cInfo(_update(aci)), m_config("vulqan.cfg")
+        BasicApp(argc, argv, aci), m_cInfo(_update(aci))
     {
         if(!is_main_thread()){
             throw AppException("Applications must only be used on the main thread!");

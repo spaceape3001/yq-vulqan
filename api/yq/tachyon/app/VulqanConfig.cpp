@@ -11,7 +11,7 @@
 #include <yq/text/transform.hpp>
 
 namespace yq::tachyon {
-    VulqanConfig::VulqanConfig(const std::filesystem::path&)
+    VulqanConfig::VulqanConfig()
     {
     }
     

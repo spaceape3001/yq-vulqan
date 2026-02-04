@@ -6,6 +6,7 @@
 
 #include <boost/ut.hpp>
 #include <yq/file/FileResolver.hpp>
+#include <yq/core/BasicApp.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/tachyon/application.hpp>
 #include <yq/tachyon/shader.hpp>
@@ -32,6 +33,7 @@ ut::suite tests = []{
         if(s){
             expect(s->type == ShaderType::FRAG);
         }
+
     };
 };
 
@@ -40,14 +42,14 @@ int main()
     log_to_std_output();
     Meta::init();
     configure_standand_resource_path();
+    Meta::init();
 
     #if 0
-    const auto& resolver    = tachyon::Resource::resolver();
-    const auto& paths   = resolver.paths();
-    std::cout << "Resolver has " << paths.size() << " path(s)\n";
+    const auto paths   = Resource::all_paths();
+    yInfo() << "Resolver has " << paths.size() << " path(s)\n";
     size_t n=1;
     for(const auto& f : paths)
-        std::cout << (n++) << ") " << f.string() << "\n";
+        yInfo() << (n++) << ") " << f.string() << "\n";
     #endif
     
     return ut::cfg<>.run();

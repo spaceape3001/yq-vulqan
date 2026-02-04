@@ -22,6 +22,8 @@ namespace yq::tachyon {
         
     private:
         static AppCreateInfo    _threads(int, char*[], const AppCreateInfo&);
+        static int              s_argCnt;
+        static char**           s_argPtr;
         //Ref<AppThread>          m_appThread;
     };
 

@@ -25,14 +25,19 @@
 
 
 namespace yq::tachyon {
+    int              YApp::s_argCnt = 0;
+    char**           YApp::s_argPtr = nullptr;
+
     AppCreateInfo    YApp::_threads(int argc, char*argv[], const AppCreateInfo&aci)
     {
+        s_argCnt    = argc;
+        s_argPtr    = argv;
+        
         AppCreateInfo   ret = aci;
         
         if(!ret.thread.app){
-            ret.thread.app      = [argc, argv](Application& app) -> Ref<AppThread> {
-                int n   = argc;
-                return new YAppThread(n, argv, app);
+            ret.thread.app      = [](Application& app) -> Ref<AppThread> {
+                return new YAppThread(s_argCnt, s_argPtr, app);
             };
         }
 

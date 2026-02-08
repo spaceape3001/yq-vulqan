@@ -230,7 +230,6 @@ namespace yq::tachyon {
     struct west_k {
         consteval operator Cardinal() const noexcept { return Cardinal::West; }
     };
-    struct widget_k {};
     struct window_k {};
     
     // any problematic macros....
@@ -352,6 +351,5 @@ namespace yq::tachyon {
     static constexpr const viewer_k             VIEWER;
     static constexpr const vulqan_k             VULQAN;
     static constexpr const west_k               WEST;
-    static constexpr const widget_k             WIDGET;
     static constexpr const window_k             WINDOW;
 }

@@ -60,7 +60,7 @@ AppWindow::AppWindow()
     // TODO... text file configurable
     m_toolbar -> add(TOOL, "gluon::SuperGraphTool");
     m_toolbar -> add(TOOL, "gluon::SelectTool");
-    m_toolbar -> add(TOOL, "gluon::PanTool");
+    //m_toolbar -> add(TOOL, "gluon::PanTool");
     m_toolbar -> add(TOOL, "gluon::MoveTool");
     m_toolbar -> add(TOOL, "gluon::EdgeConnectorTool");
     m_toolbar -> add(TOOL, "gluon::GraphLineTool");
@@ -157,11 +157,8 @@ void    AppWindow::cmdNewTab()
 {
     GGraph      graph(CREATE);
     graph.document()->kind(SET, "executive");
+    createTab(graph, {});
     
-    GraphCanvas* cvs = new GraphCanvas;
-    cvs -> set(graph);
-    cvs -> updateTitle();
-    addWindow(cvs);
 }
 
 void    AppWindow::cmdOpenTab(const QString& file)
@@ -172,9 +169,7 @@ void    AppWindow::cmdOpenTab(const QString& file)
         return ;
     }
     
-    GraphCanvas* cvs = new GraphCanvas;
-    cvs -> set(doc->clone(), doc->url());
-    addWindow(cvs);
+    createTab(doc->clone(), doc->url());
 }
 
 void    AppWindow::cmdSelectAll()
@@ -215,6 +210,15 @@ void    AppWindow::cmdViewPalette()
     //XGPaletteQt*    pal = new XGPaletteQt;
     //  we'll do stuff....
     addDock(Qt::LeftDockWidgetArea, pal);
+}
+
+void    AppWindow::createTab(GGraph g, const Url&u)
+{
+    GraphCanvas* cvs = new GraphCanvas;
+    cvs -> set(g,u);
+    cvs -> updateTitle();
+    cvs -> setTool( m_toolbar->tools().front() );
+    addWindow(cvs);
 }
 
 GraphCanvas*     AppWindow::currentCanvas()

@@ -8,7 +8,12 @@
 
 #include <yq/vkqt/app/YMain.hpp>
 #include <yq/typedef/g_document.hpp>
+#include <yq/typedef/url.hpp>
 #include <QPrinter>
+
+namespace yq {
+    class GGraph;
+}
 
 namespace yq::gluon {
     class GraphCanvas;
@@ -57,6 +62,8 @@ private slots:
     
 private:
     bool    saveTab(GraphCanvas&, const QString&);
+
+    void    createTab(GGraph, const Url& u);
 
     QPrinter            m_printer;
     GraphicsToolBar*    m_toolbar   = nullptr;

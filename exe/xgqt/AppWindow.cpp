@@ -6,6 +6,7 @@
 
 #include "AppWindow.hpp"
 #include <yq/core/Logging.hpp>
+#include <yq/graph/GBaseData.hpp>
 #include <yq/graph/GDocument.hpp>
 #include <yq/graph/GMetaGraph.hpp>
 #include <yq/graphQt/GNodePalette.hpp>
@@ -16,7 +17,10 @@
 #include <yq/xg/XGElement.hpp>
 //#include <yq/xg/XGXmlIO.hpp>
 
+#include <QAction>
+#include <QCursor>
 #include <QFileDialog>
+#include <QMenu>
 #include <QPainter>
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
@@ -49,19 +53,65 @@ AppWindow::AppWindow()
     addAction("selectNone", "Clear Selection").shortcut("Shift+Ctrl+A").connect(this, &AppWindow::cmdSelectNone);
     addAction("palette", "Palette").connect(this, &AppWindow::cmdViewPalette);
     addAction("print", "Print").shortcut("Ctrl+P").connect(this, &AppWindow::cmdFilePrint);
+    addAction("properties", "Properties...").connect(this, &AppWindow::cmdEditProperties);
 
     makeMenu("file", "File", QStringList() << "new" << "open" << "save" << "saveas" << "print" );
-    makeMenu("edit", "Edit", QStringList() << "selectAll" << "selectNone");
+    makeMenu("edit", "Edit", QStringList() << "undo" << "redo" << "selectAll" << "selectNone");
     makeMenu("view", "View", QStringList() << "palette");
+    
+    m_docPopup      = new QMenu(this);
+    m_basePopup     = new QMenu(this);
+    m_edgePopup     = new QMenu(this);
+    m_graphPopup    = new QMenu(this);
+    m_linePopup     = new QMenu(this);
+    m_nodePopup     = new QMenu(this);
+    m_portPopup     = new QMenu(this);
+    m_textPopup     = new QMenu(this);
+    m_shapePopup    = new QMenu(this);
+    
+    //  debugging...
+    m_docPopup->addAction(new QAction("Document"));
+    m_docPopup->addSeparator();
+    
+    m_basePopup->addAction(new QAction("Base"));
+    m_basePopup->addSeparator();
+
+    m_edgePopup->addAction(new QAction("Edge"));
+    m_edgePopup->addSeparator();
+
+    m_graphPopup->addAction(new QAction("Graph"));
+    m_graphPopup->addSeparator();
+
+    m_nodePopup->addAction(new QAction("Node"));
+    m_nodePopup->addSeparator();
+
+    m_portPopup->addAction(new QAction("Port"));
+    m_portPopup->addSeparator();
+
+    m_shapePopup->addAction(new QAction("Shape"));
+    m_shapePopup->addSeparator();
+
+    m_textPopup->addAction(new QAction("Text"));
+    m_textPopup->addSeparator();
+    
+    addToMenu(m_basePopup, { "properties" });
+    addToMenu(m_docPopup, { "properties" });
+    addToMenu(m_edgePopup, { "properties" });
+    addToMenu(m_graphPopup, { "properties" });
+    addToMenu(m_linePopup, { "properties" });
+    addToMenu(m_nodePopup, { "properties" });
+    addToMenu(m_portPopup, { "properties" });
+    addToMenu(m_shapePopup, { "properties" });
+    addToMenu(m_textPopup, { "properties" });
     
     m_toolbar   = new GraphicsToolBar;
     connect(m_toolbar, &GraphicsToolBar::clicked, this, &AppWindow::cmdToolChange);
     
     // TODO... text file configurable
     m_toolbar -> add(TOOL, "gluon::SuperGraphTool");
-    m_toolbar -> add(TOOL, "gluon::SelectTool");
+    //m_toolbar -> add(TOOL, "gluon::SelectTool");
     //m_toolbar -> add(TOOL, "gluon::PanTool");
-    m_toolbar -> add(TOOL, "gluon::MoveTool");
+    //m_toolbar -> add(TOOL, "gluon::MoveTool");
     m_toolbar -> add(TOOL, "gluon::EdgeConnectorTool");
     m_toolbar -> add(TOOL, "gluon::GraphLineTool");
     m_toolbar -> add(TOOL, "gluon::GraphTextTool");
@@ -83,6 +133,11 @@ void    AppWindow::activeChanged()
     if(GraphCanvas* cvs = currentCanvas()){
         m_toolbar -> setActive( cvs -> currentTool() );
     }
+}
+
+void    AppWindow::cmdEditProperties()
+{
+    
 }
 
 void    AppWindow::cmdFileNew()
@@ -218,12 +273,50 @@ void    AppWindow::createTab(GGraph g, const Url&u)
     cvs -> set(g,u);
     cvs -> updateTitle();
     cvs -> setTool( m_toolbar->tools().front() );
+    connect(cvs, &GraphCanvas::contextRequest, this, &AppWindow::ctxCanvas);
     addWindow(cvs);
+}
+
+void    AppWindow::ctxCanvas(uint64_t id)
+{
+    m_dataId    = id;
+
+    QMenu*      pMenu   = m_docPopup;
+    
+    GraphCanvas* cvs = currentCanvas(); 
+    if(id && cvs && cvs->document()){
+        if(const GBaseData* gb = cvs->document()->data(m_dataId)){
+            if(gb->is_edge()){
+                pMenu   = m_edgePopup;
+            } else if(gb->is_graph()){
+                pMenu   = m_graphPopup;
+            } else if(gb->is_line()){
+                pMenu   = m_linePopup;
+            } else if(gb->is_node()){
+                pMenu   = m_nodePopup;
+            } else if(gb->is_port()){
+                pMenu   = m_portPopup;
+            } else if(gb->is_shape()){
+                pMenu   = m_shapePopup;
+            } else if(gb->is_text()){
+                pMenu   = m_textPopup;
+            }
+        }
+    }
+
+    pMenu -> exec(QCursor::pos());
+    if(cvs)
+        cvs -> focusMe();
 }
 
 GraphCanvas*     AppWindow::currentCanvas()
 {
     return dynamic_cast<GraphCanvas*>(activeWindow());
+}
+
+void    AppWindow::dblClick(uint64_t id)
+{
+    m_dataId    = id;
 }
 
 AppWindow*     AppWindow::newMain() 

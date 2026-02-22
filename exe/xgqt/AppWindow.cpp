@@ -54,10 +54,11 @@ AppWindow::AppWindow()
     addAction("palette", "Palette").connect(this, &AppWindow::cmdViewPalette);
     addAction("print", "Print").shortcut("Ctrl+P").connect(this, &AppWindow::cmdFilePrint);
     addAction("properties", "Properties...").connect(this, &AppWindow::cmdEditProperties);
+    addAction("refresh", "Refresh").shortcut("F5").connect(this, &AppWindow::cmdViewRefresh);
 
     makeMenu("file", "File", QStringList() << "new" << "open" << "save" << "saveas" << "print" );
     makeMenu("edit", "Edit", QStringList() << "undo" << "redo" << "selectAll" << "selectNone");
-    makeMenu("view", "View", QStringList() << "palette");
+    makeMenu("view", "View", QStringList() << "palette" << "refresh");
     
     m_docPopup      = new QMenu(this);
     m_basePopup     = new QMenu(this);
@@ -266,6 +267,13 @@ void    AppWindow::cmdViewPalette()
     //  we'll do stuff....
     addDock(Qt::LeftDockWidgetArea, pal);
 }
+
+void    AppWindow::cmdViewRefresh()
+{
+    if(GraphCanvas* cvs = currentCanvas())
+        cvs -> refresh();
+}
+
 
 void    AppWindow::createTab(GGraph g, const Url&u)
 {

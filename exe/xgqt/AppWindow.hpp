@@ -51,6 +51,7 @@ public slots:
     void    cmdFileSaveAs();
     void    cmdFilePrint();
     void    cmdViewPalette();
+    void    cmdViewRefresh();
     void    cmdSelectAll();
     void    cmdSelectNone();
     

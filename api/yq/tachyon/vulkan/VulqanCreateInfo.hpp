@@ -21,6 +21,9 @@ namespace yq::tachyon {
         Required        req     = Required::NO;
     };
 
+    //  TODO... default the queues to MAX device support?  
+    //  Or at least make that an option (w/o flunking)
+
     struct VulqanCreateInfo {
             //  TODO... To share a queue, state the other queue to leverage, if possible
 

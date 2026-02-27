@@ -4,27 +4,27 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "XGVkCommand.hpp"
+#include "XGCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::XGVkCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::XGCommand)
 
 namespace yq::tachyon {
-    XGVkCommand::XGVkCommand(const Header& h) : Command(h)
+    XGCommand::XGCommand(const Header& h) : Command(h)
     {
     }
     
-    XGVkCommand::XGVkCommand(const XGVkCommand&cp, const Header&h) : Command(cp, h)
+    XGCommand::XGCommand(const XGCommand&cp, const Header&h) : Command(cp, h)
     {
     }
 
-    XGVkCommand::~XGVkCommand()
+    XGCommand::~XGCommand()
     {
     }
     
-    void XGVkCommand::init_meta()
+    void XGCommand::init_meta()
     {
-        auto w = writer<XGVkCommand>();
+        auto w = writer<XGCommand>();
         w.abstract();
         w.description("XGVk Command");
     }

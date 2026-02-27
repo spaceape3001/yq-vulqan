@@ -11,12 +11,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::OpenXGFileCommand)
 
 namespace yq::tachyon {
 
-    OpenXGFileCommand::OpenXGFileCommand(const Header&h, const std::filesystem::path& v) : XGVkCommand(h), m_file(v)
+    OpenXGFileCommand::OpenXGFileCommand(const Header&h, const std::filesystem::path& v) : XGCommand(h), m_file(v)
     {
     }
 
     OpenXGFileCommand::OpenXGFileCommand(const OpenXGFileCommand& cp, const Header& h) : 
-        XGVkCommand(cp, h), m_file(cp.m_file)
+        XGCommand(cp, h), m_file(cp.m_file)
     {
     }
     

@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <yq/xgvk/command/XGVkCommand.hpp>
+#include <yq/xgvk/command/XGCommand.hpp>
 #include <filesystem>
 
 namespace yq::tachyon {
-    class OpenXGFileCommand : public XGVkCommand {
-        YQ_OBJECT_DECLARE(OpenXGFileCommand, XGVkCommand)
+    class OpenXGFileCommand : public XGCommand {
+        YQ_OBJECT_DECLARE(OpenXGFileCommand, XGCommand)
     public:
         OpenXGFileCommand(const Header&, const std::filesystem::path&);
         virtual tachyon::PostCPtr    clone(rebind_k, const Header&) const override;

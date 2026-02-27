@@ -11,12 +11,12 @@ YQ_OBJECT_IMPLEMENT(yq::tachyon::SaveXGFileCommand)
 
 namespace yq::tachyon {
 
-    SaveXGFileCommand::SaveXGFileCommand(const Header&h, const std::filesystem::path& v) : XGVkCommand(h), m_file(v)
+    SaveXGFileCommand::SaveXGFileCommand(const Header&h, const std::filesystem::path& v) : XGCommand(h), m_file(v)
     {
     }
 
     SaveXGFileCommand::SaveXGFileCommand(const SaveXGFileCommand& cp, const Header& h) : 
-        XGVkCommand(cp, h), m_file(cp.m_file)
+        XGCommand(cp, h), m_file(cp.m_file)
     {
     }
     

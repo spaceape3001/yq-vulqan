@@ -55,6 +55,7 @@ public slots:
     void    cmdSelectAll();
     void    cmdSelectNone();
     
+    void    cmdEditDeleteSelection();
     void    cmdEditProperties();
     
 protected: 

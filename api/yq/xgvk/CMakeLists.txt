@@ -5,6 +5,7 @@
 ################################################################################
 
 add_library(yq_xgvk SHARED
+    api/XGNodeVk.cpp
     command/XGCommand.cpp
     command/OpenXGFileCommand.cpp
     command/SaveXGFileCommand.cpp

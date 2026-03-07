@@ -45,6 +45,7 @@ AppWindow::AppWindow()
     
     status("Executive Graph");
     
+    addAction("delete", "Delete Selection").shortcut("DEL").connect(this, &AppWindow::cmdEditDeleteSelection);
     addAction("new", "New").connect(this, &AppWindow::cmdFileNew);
     addAction("open", "Open").connect(this, &AppWindow::cmdFileOpen);
     addAction("save", "Save").shortcut("Ctrl+S").connect(this, &AppWindow::cmdFileSave);
@@ -57,7 +58,7 @@ AppWindow::AppWindow()
     addAction("refresh", "Refresh").shortcut("F5").connect(this, &AppWindow::cmdViewRefresh);
 
     makeMenu("file", "File", QStringList() << "new" << "open" << "save" << "saveas" << "print" );
-    makeMenu("edit", "Edit", QStringList() << "undo" << "redo" << "selectAll" << "selectNone");
+    makeMenu("edit", "Edit", QStringList() << "undo" << "redo" << "selectAll" << "selectNone" << "delete");
     makeMenu("view", "View", QStringList() << "palette" << "refresh");
     
     m_docPopup      = new QMenu(this);
@@ -134,6 +135,12 @@ void    AppWindow::activeChanged()
     if(GraphCanvas* cvs = currentCanvas()){
         m_toolbar -> setActive( cvs -> currentTool() );
     }
+}
+
+void    AppWindow::cmdEditDeleteSelection()
+{
+    if(GraphCanvas* cvs = currentCanvas())
+        cvs -> deleteSelection();
 }
 
 void    AppWindow::cmdEditProperties()

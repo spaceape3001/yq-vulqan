@@ -18,6 +18,7 @@
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/meta/DelegateProperty.hpp>
 #include <yq/tachyon/api/meta/ResourceProperty.hpp>
+#include <yq/tachyon/api/meta/ResourceVectorProperty.hpp>
 #include <yq/tachyon/app/Application.hpp>
 #include <yq/tachyon/command/tachyon/SetParentCommand.hpp>
 #include <yq/tachyon/command/thread/ScheduleCommand.hpp>
@@ -106,6 +107,19 @@ namespace yq::tachyon {
                     
                 sv.resources[std::string(r->name())] = res->url();
             }
+            
+            
+            for(const ResourceVectorProperty* r : tac.metaInfo().resource_vectors(ALL).all){
+                ResourceCPtrVector   resv  = r->get(&tac);
+                if(resv.empty())
+                    continue;
+                for(auto& rr : resv){
+                    if(!rr)
+                        continue;
+                    sv.resourcevs.insert({std::string(r->name()), rr->url()});
+                }
+            }
+            
             
             for(const DelegateProperty* d : tac.metaInfo().delegates(ALL).all){
                 DelegateCPtr    delegate = d->get(&tac);
@@ -527,6 +541,22 @@ namespace yq::tachyon {
                 if(!res)
                     return errors::bad_resource();
                 r->set(&t, res);
+            }
+            
+            for(const ResourceVectorProperty* r : t.metaInfo().resource_vectors(ALL).all){
+                auto rr = sv.resourcevs.equal_range(std::string(r->name()));
+                if(rr.first == rr.second)
+                    continue;
+                
+                std::vector<ResourceCPtr>    resv;
+                for(auto i = rr.first; i != rr.second; ++i){
+                    ResourceCPtr        res = Resource::resource_load({ &r->resource() }, i->second);
+                    if(!res)
+                        return errors::bad_resource();
+                    resv.push_back(res);
+                }
+                
+                r->set(&t, resv);
             }
 
             for(const DelegateProperty* d : t.metaInfo().delegates(ALL).all){

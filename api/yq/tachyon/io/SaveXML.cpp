@@ -65,6 +65,7 @@ namespace yq::tachyon {
     static constexpr const char*    szParent        = "p";
     static constexpr const char*    szProperty      = "p";
     static constexpr const char*    szResource      = "r";
+    static constexpr const char*    szResourceV     = "rv";
     static constexpr const char*    szResourceLib   = "l";
     static constexpr const char*    szResourcePath  = "rp";
     //static constexpr const char*    szResources     = "rs";
@@ -323,6 +324,17 @@ namespace yq::tachyon {
                 if(!ux.good)
                     return errors::bad_url();
                 sv.resources[k] = copy(ux.value);
+            } else if(d->name() == szResourceV){
+                std::string k   = read_attribute(*d, szKey, x_string);
+                if(k.empty())
+                    return errors::missing_key_attribute();
+                std::string u   = x_string(*d);
+                if(u.empty())
+                    return errors::missing_resource_url();
+                auto ux = to_url_view(u);
+                if(!ux.good)
+                    return errors::bad_url();
+                sv.resourcevs.insert({u, copy(ux.value)});
             }
         }
         return _load((StateSave&) sv, xn);

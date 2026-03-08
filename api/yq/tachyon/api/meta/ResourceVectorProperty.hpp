@@ -107,6 +107,8 @@ namespace yq::tachyon {
         const ResourceVectorInsert* inserter() const { return m_insert; }
         const ResourceVectorESet* setter() const { return m_eset; }
         const ResourceVectorSetter* setter(all_k) const { return m_setter; }
+        
+        const ResourceMeta&         resource() const { return m_resource; }
 
 
         /*! \brief Master Constructor 

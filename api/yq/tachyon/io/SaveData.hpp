@@ -42,6 +42,7 @@ namespace yq::tachyon {
         owner_spec_t            owner;
         string_u64_xmap_t       delegates;
         string_url_xmap_t       resources;
+        string_url_xmmap_t      resourcevs;
         std::vector<uint64_t>   children;
         string_any_map_t        uattrs;     // user defined attributes
         uint32_any_map_t        pattrs;     // programmatically defined attributes (note, integer must be FIXED, forever)

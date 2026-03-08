@@ -1,0 +1,53 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/meta/Meta.hpp>
+#include <yq/typedef/resource.hpp>
+
+namespace yq {
+    class Resource;
+    class Object;
+    class ObjectMeta;
+}
+
+namespace yq::tachyon {
+    class ResourceVectorProperty;
+
+    /*! \brief Abstract PropGetter
+        
+        This is an abstract "setter" that may or may not have an object associated with it.
+    */
+    class ResourceVectorSetter : public Meta {
+    public:
+    
+        /*! \brief "Sets" a property
+        
+            \param[out] obj     Pointer to object to set, can be null on a static object
+            \param[in] value    Pointer to value to use on set, assumed to match data()
+        */
+        virtual std::error_code set(Object*obj, ResourceCPtrCSpan) const = 0;
+        
+        //! Data type for the setter
+        virtual const ResourceMeta&         resource() const = 0;
+        
+        //! Object type for the setter
+        virtual const ObjectMeta&           object() const = 0;
+        
+        //! Property info this belongs to
+        const ResourceVectorProperty*       property() const;
+        
+    protected:
+    
+        /*! \brief Constructor
+        
+            \param[in] delInfo  Property to attach this setter to
+            \param[in] sl       Source location it's defined
+        */
+        ResourceVectorSetter(ResourceVectorProperty* resourceProp, const std::source_location& sl);
+    };
+}

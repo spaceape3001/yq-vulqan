@@ -67,6 +67,7 @@ namespace yq::tachyon {
     /// TACHYON INFO
 
     class ResourceProperty;
+    class ResourceVectorProperty;
     struct TachyonData;
     struct TachyonSnap;
     class DelegateProperty;
@@ -77,10 +78,11 @@ namespace yq::tachyon {
     class TachyonMeta : public ObjectMeta {
     public:
     
-        using InterfaceLUC  = MetaLookup<InterfaceMeta>;
-        using DispatchMM    = std::unordered_multimap<const PostMeta*, const PBXDispatch*>;
-        using DelegateLUC   = MetaLookup<DelegateProperty>;
-        using ResourceLUC      = MetaLookup<ResourceProperty>;
+        using InterfaceLUC          = MetaLookup<InterfaceMeta>;
+        using DispatchMM            = std::unordered_multimap<const PostMeta*, const PBXDispatch*>;
+        using DelegateLUC           = MetaLookup<DelegateProperty>;
+        using ResourceLUC           = MetaLookup<ResourceProperty>;
+        using ResourceVectorLUC     = MetaLookup<ResourceVectorProperty>;
         
         template <typename C> class Writer;
 
@@ -100,6 +102,12 @@ namespace yq::tachyon {
         
         const MetaLookup<ResourceProperty>&    resources(local_k) const { return m_resources.local; }
         
+        const MetaLookup<ResourceVectorProperty>&    resource_vectors(bool all=false) const;
+
+        const MetaLookup<ResourceVectorProperty>&    resource_vectors(all_k) const { return m_resourceVectors.all; }
+        
+        const MetaLookup<ResourceVectorProperty>&    resource_vectors(local_k) const { return m_resourceVectors.local; }
+
         //! Finds the resource property (ALL is assumed)
         const ResourceProperty*                resource(std::string_view) const;
 
@@ -138,6 +146,7 @@ namespace yq::tachyon {
         friend class Tachyon;
         friend class Thread;
         friend class ResourceProperty;
+        friend class ResourceVectorProperty;
         friend class DelegateProperty;
         
         struct Repo;
@@ -156,6 +165,9 @@ namespace yq::tachyon {
         struct {
             ResourceLUC        all, local;
         }   m_resources;
+        struct {
+            ResourceVectorLUC        all, local;
+        }   m_resourceVectors;
         struct {
             dispatch_vec_t  defined, ranked;
         }                       m_dispatches;

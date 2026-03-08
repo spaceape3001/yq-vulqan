@@ -40,8 +40,8 @@ namespace yq::tachyon {
 
         const ResourceMeta&    resource() const { return m_resource; }
         
-        ResourceCPtr           get(const Object*) const;
-        std::error_code     set(Object*, const ResourceCPtr&) const;
+        ResourceCPtr            get(const Object*) const;
+        std::error_code         set(Object*, const ResourceCPtr&) const;
         
         //! Our getter
         const ResourceGetter*   getter() const { return m_getter; }
@@ -60,8 +60,8 @@ namespace yq::tachyon {
         ResourceProperty(std::string_view zName, const std::source_location& sl, const ResourceMeta& type, ObjectMeta* parent);
 
     private:
+        const ResourceMeta&        m_resource;
         const ResourceSetter*      m_setter    = nullptr;
         const ResourceGetter*      m_getter    = nullptr;
-        const ResourceMeta&        m_resource;
     };
 }

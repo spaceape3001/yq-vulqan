@@ -40,6 +40,8 @@
 #include <yq/tachyon/event/tachyon/NameChangeEvent.hpp>
 #include <yq/tachyon/event/tachyon/ParentChangeEvent.hpp>
 
+#include <yq/tachyon/api/meta/ResourceVectorProperty.hpp>
+
 #include <yq/core/Any.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/core/ThreadId.hpp>
@@ -121,16 +123,6 @@ namespace yq::tachyon {
         }
     }
 
-    const ResourceProperty*                TachyonMeta::resource(std::string_view sv) const
-    {
-        return m_resources.all.find(sv);
-    }
-
-    const MetaLookup<ResourceProperty>&    TachyonMeta::resources(bool all) const
-    {
-        return all ? m_resources.all : m_resources.local;
-    }
-
     const DelegateProperty*             TachyonMeta::delegate(std::string_view sv) const
     {
         return m_delegates.all.find(sv);
@@ -164,6 +156,27 @@ namespace yq::tachyon {
         }
     };
     
+    const MetaLookup<InterfaceMeta>&    TachyonMeta::interfaces(bool all) const
+    {
+        return all ? m_interfaces.all : m_interfaces.local;
+    }
+
+
+    const ResourceProperty*                TachyonMeta::resource(std::string_view sv) const
+    {
+        return m_resources.all.find(sv);
+    }
+
+    const MetaLookup<ResourceProperty>&    TachyonMeta::resources(bool all) const
+    {
+        return all ? m_resources.all : m_resources.local;
+    }
+
+    const MetaLookup<ResourceVectorProperty>&    TachyonMeta::resource_vectors(bool all) const
+    {
+        return all ? m_resourceVectors.all : m_resourceVectors.local;
+    }
+
     static void     _add(std::vector<PBXEntry>&ranked, const PBXDispatch* fn, unsigned int depth)
     {
         const PostMeta* ppi = fn->post();
@@ -175,11 +188,6 @@ namespace yq::tachyon {
                 ranked.push_back({depth, ppd, fn});
             //}
         }
-    }
-
-    const MetaLookup<InterfaceMeta>&    TachyonMeta::interfaces(bool all) const
-    {
-        return all ? m_interfaces.all : m_interfaces.local;
     }
 
     void    TachyonMeta::sweep_impl() 
@@ -194,6 +202,7 @@ namespace yq::tachyon {
         m_interfaces.all.clear();
         m_delegates.all.clear();
         m_resources.all.clear();
+        m_resourceVectors.all.clear();
         
         std::vector<PBXEntry>   ranked;
         
@@ -204,12 +213,14 @@ namespace yq::tachyon {
         m_interfaces.all += m_interfaces.local;
         m_resources.all += m_resources.local;
         m_delegates.all += m_delegates.local;
+        m_resourceVectors.all += m_resourceVectors.local;
         
         const TachyonMeta*  tibase = dynamic_cast<const TachyonMeta*>(base());
         if(tibase){
             m_interfaces.all   += tibase->m_interfaces.all;
             m_resources.all += tibase->m_resources.all;
             m_delegates.all += tibase->m_delegates.all;
+            m_resourceVectors.all += tibase->m_resourceVectors.all;
             
             unsigned int depth  = 1;
             
@@ -281,6 +292,16 @@ namespace yq::tachyon {
 
         out << "  PROPERTIES\n";
         for(const PropertyMeta* prop : properties(ALL).all){
+            out << "    " << prop->name() << "\n";
+        }
+
+        out << "  RESOURCES\n";
+        for(const ResourceProperty* prop : resources(ALL).all){
+            out << "    " << prop->name() << "\n";
+        }
+
+        out << "  RESOURCE VECTORS (TODO)\n";
+        for(const ResourceVectorProperty* prop : resource_vectors(ALL).all){
             out << "    " << prop->name() << "\n";
         }
     }

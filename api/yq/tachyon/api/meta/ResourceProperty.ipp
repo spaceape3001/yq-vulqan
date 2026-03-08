@@ -7,6 +7,7 @@
 #include "ResourceProperty.hpp"
 #include <yq/resource/Resource.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/meta/ResourceVectorProperty.hpp>
 #include <yq/tachyon/api/meta/ResourceGetter.hpp>
 #include <yq/tachyon/api/meta/ResourceSetter.hpp>
 #include <yq/tachyon/logging.hpp>
@@ -20,6 +21,8 @@ namespace yq::tachyon {
         
         if(TachyonMeta* ti = dynamic_cast<TachyonMeta*>(parent)){
             if(ti->m_resources.local.keys.has(zName))
+                tachyonCritical << "ResourceProperty::ResourceProperty(" << parent->name() << "." << zName << ") -- duplicate detected!";
+            if(ti->m_resourceVectors.local.keys.has(zName))
                 tachyonCritical << "ResourceProperty::ResourceProperty(" << parent->name() << "." << zName << ") -- duplicate detected!";
             ti->m_resources.local << this;
         }

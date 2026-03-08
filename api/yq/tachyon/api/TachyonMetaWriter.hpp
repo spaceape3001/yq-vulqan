@@ -12,12 +12,24 @@
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/api/Interface.hpp>
 #include <yq/tachyon/api/Post.hpp>
-#include <yq/tachyon/api/meta/ResourcePropertyWriter.hpp>
 #include <yq/tachyon/api/meta/DelegatePropertyWriter.hpp>
-#include <yq/tachyon/api/meta/DynamicResourceGetter.hpp>
-#include <yq/tachyon/api/meta/DynamicResourceSetter.hpp>
 #include <yq/tachyon/api/meta/DynamicDelegateGetter.hpp>
 #include <yq/tachyon/api/meta/DynamicDelegateSetter.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceGetter.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceSetter.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceVectorAppend.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceVectorClear.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceVectorCount.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceVectorEAdd.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceVectorEGet.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceVectorEmpty.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceVectorErase.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceVectorESet.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceVectorGetter.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceVectorInsert.hpp>
+#include <yq/tachyon/api/meta/DynamicResourceVectorSetter.hpp>
+#include <yq/tachyon/api/meta/ResourcePropertyWriter.hpp>
+#include <yq/tachyon/api/meta/ResourceVectorPropertyWriter.hpp>
 
 namespace yq::tachyon {
 
@@ -264,6 +276,34 @@ namespace yq::tachyon {
             new IFR_ResourceGetter<C,C2,A>(ret, sl, function);
             return ResourceProperty::PropW<C,A>(ret);
         }
+        
+        template <SomeResource A, typename C2=C>
+        ResourceVectorProperty::PropW<C,A> resources(std::string_view szName, std::vector<Ref<const A>> (C2::*pointer), bool isReadOnly=false, const std::source_location& sl=std::source_location::current())
+        {
+            assert(pointer);
+            ResourceVectorProperty*ret   = new ResourceVectorProperty(szName, sl, meta<A>(), m_meta);
+            new IPM_ResourceVectorCount<C,C2,A>(ret, sl, pointer);
+            new IPM_ResourceVectorEGet<C,C2,A>(ret, sl, pointer);
+            new IPM_ResourceVectorEmpty<C,C2,A>(ret, sl, pointer);
+            new IPM_ResourceVectorGetter<C,C2,A>(ret, sl, pointer);
+            if(!isReadOnly){
+                new IPM_ResourceVectorAppend<C,C2,A>(ret, sl, pointer);
+                new IPM_ResourceVectorClear<C,C2,A>(ret, sl, pointer);
+                new IPM_ResourceVectorEAdd<C,C2,A>(ret, sl, pointer);
+                new IPM_ResourceVectorErase<C,C2,A>(ret, sl, pointer);
+                new IPM_ResourceVectorESet<C,C2,A>(ret, sl, pointer);
+                new IPM_ResourceVectorInsert<C,C2,A>(ret, sl, pointer);
+                new IPM_ResourceVectorSetter<C,C2,A>(ret, sl, pointer);
+            }
+            return ResourceVectorProperty::PropW<C,A>(ret);
+        }
+        
+        template <SomeResource A, typename C2=C>
+        ResourceVectorProperty::Writer<A> resources(std::string_view szName, std::vector<Ref<const A>> (C2::*pointer), read_only_k, const std::source_location& sl=std::source_location::current())
+        {
+            return resources(szName, pointer, true, sl);
+        }
+
 
             //////////////////////////////////////////
             ///     DELEGATES

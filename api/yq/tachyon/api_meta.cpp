@@ -4,9 +4,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "api/meta/DynamicResourceVectorErase.hpp"
-
-
 #include "api/meta/DelegateGetter.ipp"
 #include "api/meta/DelegateProperty.ipp"
 #include "api/meta/DelegateSetter.ipp"

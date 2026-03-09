@@ -45,6 +45,9 @@ public slots:
     void    cmdNewTab();
     void    cmdOpenTab(const QString&);
     
+    void    cmdEditUndo();
+    void    cmdEditRedo();
+    
     void    cmdFileNew();
     void    cmdFileOpen();
     void    cmdFileSave();

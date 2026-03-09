@@ -56,6 +56,8 @@ AppWindow::AppWindow()
     addAction("print", "Print").shortcut("Ctrl+P").connect(this, &AppWindow::cmdFilePrint);
     addAction("properties", "Properties...").connect(this, &AppWindow::cmdEditProperties);
     addAction("refresh", "Refresh").shortcut("F5").connect(this, &AppWindow::cmdViewRefresh);
+    addAction("redo", "Redo").shortcut("Ctrl+Shift+Z").connect(this, &AppWindow::cmdEditRedo);
+    addAction("undo", "Undo").shortcut("Ctrl+Z").connect(this, &AppWindow::cmdEditUndo);
 
     makeMenu("file", "File", QStringList() << "new" << "open" << "save" << "saveas" << "print" );
     makeMenu("edit", "Edit", QStringList() << "undo" << "redo" << "selectAll" << "selectNone" << "delete");
@@ -146,6 +148,18 @@ void    AppWindow::cmdEditDeleteSelection()
 void    AppWindow::cmdEditProperties()
 {
     
+}
+
+void    AppWindow::cmdEditRedo()
+{
+    if(GraphCanvas* cvs = currentCanvas())
+        cvs -> redo();
+}
+
+void    AppWindow::cmdEditUndo()
+{
+    if(GraphCanvas* cvs = currentCanvas())
+        cvs -> undo();
 }
 
 void    AppWindow::cmdFileNew()

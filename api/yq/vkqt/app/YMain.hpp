@@ -16,7 +16,7 @@ namespace yq::tachyon {
         Due to Qt'isms, the main window is restricted to the main thread (as is 
         all Qt-GUI stuff)
     */
-    class YMain : public XWidget<gluon::UndoMainWindow, Tachyon> {
+    class YMain : public XWidget<gluon::MainWindow, Tachyon> {
         YQ_TACHYON_DECLARE(YMain, Tachyon)
         Q_OBJECT
     public:

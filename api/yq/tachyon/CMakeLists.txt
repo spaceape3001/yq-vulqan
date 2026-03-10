@@ -179,6 +179,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect/AFarPlane.cpp
     aspect/AFieldOfView.cpp
     aspect/AHeightField.cpp
+    aspect/AMassKG.cpp
     aspect/AMaterial.cpp
     aspect/AMesh.cpp
     aspect/ANearPlane.cpp

@@ -18,14 +18,14 @@ namespace yq::tachyon {
     public:
     
         struct Param {
-            unit::Kilogram  mass = 1._kg;
+            Kilogram  mass = 1._kg;
         };
         
-        virtual unit::Kilogram  mass() const override { return m_mass; }
+        virtual Kilogram  mass() const override { return m_mass; }
         
-        virtual void    mass(add_k, unit::Kilogram) override;
+        virtual void    mass(add_k, Kilogram) override;
         virtual void    mass(multiply_k, double) override;
-        virtual void    mass(set_k, unit::Kilogram) override;
+        virtual void    mass(set_k, Kilogram) override;
         
     
         virtual bool    mass(disabled_k) const override { return false; }
@@ -34,13 +34,13 @@ namespace yq::tachyon {
         virtual bool    mass(multipliable_k) const override { return true; }
 
     protected:
-        unit::Kilogram  m_mass;
+        Kilogram  m_mass;
         
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
         AMassKG(const Param&);
-        AMassKG(unit::Kilogram kg=1._kg);
+        AMassKG(Kilogram kg=1._kg);
         virtual ~AMassKG();
 
         void            mass(emit_k);

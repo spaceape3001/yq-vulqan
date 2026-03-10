@@ -15,7 +15,7 @@ namespace yq::tachyon {
     {
     }
     
-    AMassKG::AMassKG(unit::Kilogram kg) : m_mass(kg)
+    AMassKG::AMassKG(Kilogram kg) : m_mass(kg)
     {
     }
     
@@ -28,7 +28,7 @@ namespace yq::tachyon {
         send(new MassKGEvent({.source=typed()}, m_mass));
     }
 
-    void    AMassKG::mass(add_k, unit::Kilogram kg)
+    void    AMassKG::mass(add_k, Kilogram kg)
     {
         m_mass += kg;
         mass(EMIT);
@@ -40,7 +40,7 @@ namespace yq::tachyon {
         mass(EMIT);
     }
     
-    void    AMassKG::mass(set_k, unit::Kilogram kg)
+    void    AMassKG::mass(set_k, Kilogram kg)
     {
         m_mass = kg;
         mass(EMIT);

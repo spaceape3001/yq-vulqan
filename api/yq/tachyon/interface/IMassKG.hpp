@@ -17,10 +17,10 @@ namespace yq::tachyon {
     public:
         YQ_INTERFACE_DECLARE(IMassKG, PMassKG)
         
-        virtual unit::Kilogram  mass() const = 0;
-        virtual void    mass(add_k, unit::Kilogram){}
+        virtual Kilogram  mass() const = 0;
+        virtual void    mass(add_k, Kilogram){}
         virtual void    mass(multiply_k, double){}
-        virtual void    mass(set_k, unit::Kilogram){}
+        virtual void    mass(set_k, Kilogram){}
 
         virtual bool    mass(disabled_k) const { return false; }
         virtual bool    mass(settable_k) const { return false; }

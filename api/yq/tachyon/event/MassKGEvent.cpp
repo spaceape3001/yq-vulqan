@@ -10,7 +10,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MassKGEvent)
 
 namespace yq::tachyon {
-    MassKGEvent::MassKGEvent(const Header& h, unit::Kilogram kg) : MassEvent(h), m_mass(kg)
+    MassKGEvent::MassKGEvent(const Header& h, Kilogram kg) : MassEvent(h), m_mass(kg)
     {
     }
     

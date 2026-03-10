@@ -15,11 +15,11 @@ namespace yq::tachyon {
     class SetMassKGCommand : public MassCommand {
         YQ_OBJECT_DECLARE(SetMassKGCommand, MassCommand)
     public:
-        SetMassKGCommand(const Header&, unit::Kilogram);
+        SetMassKGCommand(const Header&, Kilogram);
         
         static void init_meta();
         
-        unit::Kilogram mass() const { return m_mass; }
+        Kilogram mass() const { return m_mass; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
@@ -29,7 +29,7 @@ namespace yq::tachyon {
         SetMassKGCommand(const Header&);
 
     private:
-        unit::Kilogram  m_mass;
+        Kilogram  m_mass;
         
         SetMassKGCommand(const SetMassKGCommand&) = delete;
         SetMassKGCommand(SetMassKGCommand&&) = delete;

@@ -44,7 +44,7 @@ namespace yq::tachyon {
         return m_flags(F::Addable);
     }
 
-    void    PMassKG::mass(add_k, unit::Kilogram Δkg) 
+    void    PMassKG::mass(add_k, Kilogram Δkg) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
             mail(new AddMassKGCommand({.target=object()}, Δkg));
@@ -58,7 +58,7 @@ namespace yq::tachyon {
         }
     }
     
-    void    PMassKG::mass(set_k, unit::Kilogram kg) 
+    void    PMassKG::mass(set_k, Kilogram kg) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
             mail(new SetMassKGCommand({.target=object()}, kg));

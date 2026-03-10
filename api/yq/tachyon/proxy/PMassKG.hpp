@@ -13,10 +13,10 @@ namespace yq::tachyon {
     class PMassKG : public Proxy, public IMassKG {
     public:
     
-        unit::Kilogram  mass() const override { return m_mass; }
-        void    mass(add_k, unit::Kilogram) override;
+        Kilogram  mass() const override { return m_mass; }
+        void    mass(add_k, Kilogram) override;
         void    mass(multiply_k, double) override;
-        void    mass(set_k, unit::Kilogram) override;
+        void    mass(set_k, Kilogram) override;
 
         bool    mass(disabled_k) const override;
         bool    mass(settable_k) const override;
@@ -26,6 +26,6 @@ namespace yq::tachyon {
         PMassKG(const IMassKG&);
         ~PMassKG();
     private:
-        const unit::Kilogram    m_mass;
+        const Kilogram    m_mass;
     };
 }

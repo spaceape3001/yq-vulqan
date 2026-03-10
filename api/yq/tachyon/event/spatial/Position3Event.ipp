@@ -4,43 +4,43 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/event/spatial/Position3Event.hpp>
+#include "Position3Event.hpp"
 #include <yq/tachyon/api/EventMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Position³Event)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Position3Event)
 
 namespace yq::tachyon {
-    Position³Event::Position³Event(const Header&h) : 
+    Position3Event::Position3Event(const Header&h) : 
         SpatialEvent(h)
     {
     }
     
-    Position³Event::Position³Event(const Header&h, const Vector3D& v) : 
+    Position3Event::Position3Event(const Header&h, const Vector3D& v) : 
         SpatialEvent(h), m_position(v)
     {
     }
 
-    Position³Event::Position³Event(const Position³Event&cp, const Header&h) : 
+    Position3Event::Position3Event(const Position3Event&cp, const Header&h) : 
         SpatialEvent(cp, h), m_position(cp.m_position)
     {
     }
 
-    Position³Event::~Position³Event()
+    Position3Event::~Position3Event()
     {
     }
 
-    PostCPtr    Position³Event::clone(rebind_k, const Header& h) const 
+    PostCPtr    Position3Event::clone(rebind_k, const Header& h) const 
     {
-        return new Position³Event(*this, h);
+        return new Position3Event(*this, h);
     }
    
-    void Position³Event::init_meta()
+    void Position3Event::init_meta()
     {
-        auto w = writer<Position³Event>();
-        w.description("Position Positiond Event in 3D");
-        w.property("x", &Position³Event::x).tag(kTag_Log);
-        w.property("y", &Position³Event::y).tag(kTag_Log);
-        w.property("z", &Position³Event::z).tag(kTag_Log);
-        w.property("position", &Position³Event::m_position).tag(kTag_Save);
+        auto w = writer<Position3Event>();
+        w.description("Position Event in 3D");
+        w.property("x", &Position3Event::x).tag(kTag_Log);
+        w.property("y", &Position3Event::y).tag(kTag_Log);
+        w.property("z", &Position3Event::z).tag(kTag_Log);
+        w.property("position", &Position3Event::m_position).tag(kTag_Save);
     }
 }

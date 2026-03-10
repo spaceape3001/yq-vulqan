@@ -41,7 +41,7 @@ namespace yq::tachyon {
 
     void        APosition³::position(emit_k)
     {
-        send(new Position³Event({.source=typed()}, m_position));
+        send(new Position3Event({.source=typed()}, m_position));
     }
 
     void        APosition³::position(set_k, const Vector3D& sz) 

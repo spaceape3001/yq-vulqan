@@ -10,7 +10,7 @@
 YQ_OBJECT_IMPLEMENT(yq::tachyon::AddMassKGCommand)
 
 namespace yq::tachyon {
-    AddMassKGCommand::AddMassKGCommand(const Header&h, unit::Kilogram kg) : 
+    AddMassKGCommand::AddMassKGCommand(const Header&h, Kilogram kg) : 
         MassCommand(h), m_Δmass(kg)
     {
     }

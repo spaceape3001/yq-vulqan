@@ -18,10 +18,10 @@ namespace yq::tachyon {
     
         static void init_meta();
 
-        MassKGEvent(const Header&, unit::Kilogram);
+        MassKGEvent(const Header&, Kilogram);
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
         
-        unit::Kilogram      mass() const { return m_mass; }
+        Kilogram      mass() const { return m_mass; }
 
     protected:
         MassKGEvent(const MassKGEvent&, const Header&);
@@ -29,7 +29,7 @@ namespace yq::tachyon {
     
     private:
     
-        unit::Kilogram      m_mass;
+        Kilogram      m_mass;
     
         MassKGEvent(const MassKGEvent&) = delete;
         MassKGEvent(MassKGEvent&&) = delete;

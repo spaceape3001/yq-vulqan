@@ -11,10 +11,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to adjust (self-increment) their position by given amount
-    class AddPositionYMCommand : public PositionCommand {
-        YQ_OBJECT_DECLARE(AddPositionYMCommand, PositionCommand)
+    class AddPositionʸMCommand : public PositionCommand {
+        YQ_OBJECT_DECLARE(AddPositionʸMCommand, PositionCommand)
     public:
-        AddPositionYMCommand(const Header&, Meter Δy);
+        AddPositionʸMCommand(const Header&, Meter Δy);
     
         static void init_meta();
         
@@ -23,16 +23,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        AddPositionYMCommand(const AddPositionYMCommand&, const Header&);
-        AddPositionYMCommand(const Header&);
-        ~AddPositionYMCommand();
+        AddPositionʸMCommand(const AddPositionʸMCommand&, const Header&);
+        AddPositionʸMCommand(const Header&);
+        ~AddPositionʸMCommand();
         
     private:
         Meter  m_Δy = 0.0;
 
-        AddPositionYMCommand(const AddPositionYMCommand&) = delete;
-        AddPositionYMCommand(AddPositionYMCommand&&) = delete;
-        AddPositionYMCommand& operator=(const AddPositionYMCommand&) = delete;
-        AddPositionYMCommand& operator=(AddPositionYMCommand&&) = delete;
+        AddPositionʸMCommand(const AddPositionʸMCommand&) = delete;
+        AddPositionʸMCommand(AddPositionʸMCommand&&) = delete;
+        AddPositionʸMCommand& operator=(const AddPositionʸMCommand&) = delete;
+        AddPositionʸMCommand& operator=(AddPositionʸMCommand&&) = delete;
     };
 }

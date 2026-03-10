@@ -7,37 +7,37 @@
 #include "AddPositionYMCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::AddPositionYMCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddPositionʸMCommand)
 
 namespace yq::tachyon {
-    AddPositionYMCommand::AddPositionYMCommand(const Header&h) : 
+    AddPositionʸMCommand::AddPositionʸMCommand(const Header&h) : 
         PositionCommand(h)
     {
     }
 
-    AddPositionYMCommand::AddPositionYMCommand(const Header&h, Meter Δy) : 
+    AddPositionʸMCommand::AddPositionʸMCommand(const Header&h, Meter Δy) : 
         PositionCommand(h), m_Δy(Δy)
     {
     }
 
-    AddPositionYMCommand::AddPositionYMCommand(const AddPositionYMCommand& cp, const Header&h) : 
+    AddPositionʸMCommand::AddPositionʸMCommand(const AddPositionʸMCommand& cp, const Header&h) : 
         PositionCommand(cp, h), m_Δy(cp.m_Δy)
     {
     }
     
-    AddPositionYMCommand::~AddPositionYMCommand()
+    AddPositionʸMCommand::~AddPositionʸMCommand()
     {
     }
     
-    PostCPtr    AddPositionYMCommand::clone(rebind_k, const Header& h) const 
+    PostCPtr    AddPositionʸMCommand::clone(rebind_k, const Header& h) const 
     {
-        return new AddPositionYMCommand(*this, h);
+        return new AddPositionʸMCommand(*this, h);
     }
 
-    void AddPositionYMCommand::init_meta()
+    void AddPositionʸMCommand::init_meta()
     {
-        auto w = writer<AddPositionYMCommand>();
+        auto w = writer<AddPositionʸMCommand>();
         w.description("Add Position Command in Y (meters)");
-        w.property("Δy", &AddPositionYMCommand::Δy).tag(kTag_Log).tag(kTag_Save);
+        w.property("Δy", &AddPositionʸMCommand::Δy).tag(kTag_Log).tag(kTag_Save);
     }
 }

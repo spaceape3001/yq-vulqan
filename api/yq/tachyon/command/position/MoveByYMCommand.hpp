@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to adjust (self-increment) their position by given amount in body coordinates
-    class MoveByYMCommand : public PositionCommand {
-        YQ_OBJECT_DECLARE(MoveByYMCommand, PositionCommand)
+    class MoveByʸMCommand : public PositionCommand {
+        YQ_OBJECT_DECLARE(MoveByʸMCommand, PositionCommand)
     public:
-        MoveByYMCommand(const Header&, Meter Δy);
+        MoveByʸMCommand(const Header&, Meter Δy);
     
         static void init_meta();
         
@@ -24,16 +24,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        MoveByYMCommand(const MoveByYMCommand&, const Header&);
-        MoveByYMCommand(const Header&);
-        ~MoveByYMCommand();
+        MoveByʸMCommand(const MoveByʸMCommand&, const Header&);
+        MoveByʸMCommand(const Header&);
+        ~MoveByʸMCommand();
         
     private:
         Meter  m_Δy = 0.0;
 
-        MoveByYMCommand(const MoveByYMCommand&) = delete;
-        MoveByYMCommand(MoveByYMCommand&&) = delete;
-        MoveByYMCommand& operator=(const MoveByYMCommand&) = delete;
-        MoveByYMCommand& operator=(MoveByYMCommand&&) = delete;
+        MoveByʸMCommand(const MoveByʸMCommand&) = delete;
+        MoveByʸMCommand(MoveByʸMCommand&&) = delete;
+        MoveByʸMCommand& operator=(const MoveByʸMCommand&) = delete;
+        MoveByʸMCommand& operator=(MoveByʸMCommand&&) = delete;
     };
 }

@@ -7,38 +7,38 @@
 #include "MoveByYMCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveByYMCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveByʸMCommand)
 
 namespace yq::tachyon {
-    MoveByYMCommand::MoveByYMCommand(const Header&h) : 
+    MoveByʸMCommand::MoveByʸMCommand(const Header&h) : 
         PositionCommand(h)
     {
     }
 
-    MoveByYMCommand::MoveByYMCommand(const Header&h, Meter Δy) : 
+    MoveByʸMCommand::MoveByʸMCommand(const Header&h, Meter Δy) : 
         PositionCommand(h), m_Δy(Δy)
     {
     }
 
-    MoveByYMCommand::MoveByYMCommand(const MoveByYMCommand& cp, const Header&h) : 
+    MoveByʸMCommand::MoveByʸMCommand(const MoveByʸMCommand& cp, const Header&h) : 
         PositionCommand(cp, h), m_Δy(cp.m_Δy)
     {
     }
     
-    MoveByYMCommand::~MoveByYMCommand()
+    MoveByʸMCommand::~MoveByʸMCommand()
     {
     }
     
-    PostCPtr    MoveByYMCommand::clone(rebind_k, const Header& h) const 
+    PostCPtr    MoveByʸMCommand::clone(rebind_k, const Header& h) const 
     {
-        return new MoveByYMCommand(*this, h);
+        return new MoveByʸMCommand(*this, h);
     }
 
-    void MoveByYMCommand::init_meta()
+    void MoveByʸMCommand::init_meta()
     {
-        auto w = writer<MoveByYMCommand>();
+        auto w = writer<MoveByʸMCommand>();
         w.description("Position MoveBy Command in Y");
-        w.property("Δy", &MoveByYMCommand::Δy).tag(kTag_Log).tag(kTag_Save);
+        w.property("Δy", &MoveByʸMCommand::Δy).tag(kTag_Log).tag(kTag_Save);
         w.alias("MoveByY");
     }
 }

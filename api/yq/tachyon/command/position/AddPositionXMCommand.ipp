@@ -7,37 +7,37 @@
 #include "AddPositionXMCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::AddPositionXMCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddPositionˣMCommand)
 
 namespace yq::tachyon {
-    AddPositionXMCommand::AddPositionXMCommand(const Header&h) : 
+    AddPositionˣMCommand::AddPositionˣMCommand(const Header&h) : 
         PositionCommand(h)
     {
     }
 
-    AddPositionXMCommand::AddPositionXMCommand(const Header&h, Meter Δx) : 
+    AddPositionˣMCommand::AddPositionˣMCommand(const Header&h, Meter Δx) : 
         PositionCommand(h), m_Δx(Δx)
     {
     }
     
-    AddPositionXMCommand::AddPositionXMCommand(const AddPositionXMCommand& cp, const Header&h) : 
+    AddPositionˣMCommand::AddPositionˣMCommand(const AddPositionˣMCommand& cp, const Header&h) : 
         PositionCommand(cp, h), m_Δx(cp.m_Δx)
     {
     }
 
-    AddPositionXMCommand::~AddPositionXMCommand()
+    AddPositionˣMCommand::~AddPositionˣMCommand()
     {
     }
     
-    PostCPtr    AddPositionXMCommand::clone(rebind_k, const Header&h) const 
+    PostCPtr    AddPositionˣMCommand::clone(rebind_k, const Header&h) const 
     {
-        return new AddPositionXMCommand(*this, h);
+        return new AddPositionˣMCommand(*this, h);
     }
 
-    void AddPositionXMCommand::init_meta()
+    void AddPositionˣMCommand::init_meta()
     {
-        auto w = writer<AddPositionXMCommand>();
+        auto w = writer<AddPositionˣMCommand>();
         w.description("Add Position Command in X (meters)");
-        w.property("Δx", &AddPositionXMCommand::Δx).tag(kTag_Log).tag(kTag_Save);
+        w.property("Δx", &AddPositionˣMCommand::Δx).tag(kTag_Log).tag(kTag_Save);
     }
 }

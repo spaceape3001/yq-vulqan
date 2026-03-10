@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to adjust (self-increment) their position by given amount
-    class AddPositionZMCommand : public PositionCommand {
-        YQ_OBJECT_DECLARE(AddPositionZMCommand, PositionCommand)
+    class AddPositionᶻMCommand : public PositionCommand {
+        YQ_OBJECT_DECLARE(AddPositionᶻMCommand, PositionCommand)
     public:
-        AddPositionZMCommand(const Header&, Meter Δz);
+        AddPositionᶻMCommand(const Header&, Meter Δz);
     
         static void init_meta();
         
@@ -23,16 +23,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
         
     protected:
-        AddPositionZMCommand(const AddPositionZMCommand&, const Header&);
-        AddPositionZMCommand(const Header&);
-        ~AddPositionZMCommand();
+        AddPositionᶻMCommand(const AddPositionᶻMCommand&, const Header&);
+        AddPositionᶻMCommand(const Header&);
+        ~AddPositionᶻMCommand();
         
     private:
         Meter  m_Δz = 0.0;
         
-        AddPositionZMCommand(const AddPositionZMCommand&) = delete;
-        AddPositionZMCommand(AddPositionZMCommand&&) = delete;
-        AddPositionZMCommand& operator=(const AddPositionZMCommand&) = delete;
-        AddPositionZMCommand& operator=(AddPositionZMCommand&&) = delete;
+        AddPositionᶻMCommand(const AddPositionᶻMCommand&) = delete;
+        AddPositionᶻMCommand(AddPositionᶻMCommand&&) = delete;
+        AddPositionᶻMCommand& operator=(const AddPositionᶻMCommand&) = delete;
+        AddPositionᶻMCommand& operator=(AddPositionᶻMCommand&&) = delete;
     };
 }

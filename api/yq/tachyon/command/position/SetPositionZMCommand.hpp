@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's z-position
-    class SetPositionZMCommand : public PositionCommand {
-        YQ_OBJECT_DECLARE(SetPositionZMCommand, PositionCommand)
+    class SetPositionᶻMCommand : public PositionCommand {
+        YQ_OBJECT_DECLARE(SetPositionᶻMCommand, PositionCommand)
     public:
-        SetPositionZMCommand(const Header&, Meter);
+        SetPositionᶻMCommand(const Header&, Meter);
         
         static void init_meta();
         
@@ -24,15 +24,15 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        SetPositionZMCommand(const SetPositionZMCommand&, const Header&);
-        ~SetPositionZMCommand();
+        SetPositionᶻMCommand(const SetPositionᶻMCommand&, const Header&);
+        ~SetPositionᶻMCommand();
         
     private:
         Meter  m_z = 0.0;
         
-        SetPositionZMCommand(const SetPositionZMCommand&) = delete;
-        SetPositionZMCommand(SetPositionZMCommand&&) = delete;
-        SetPositionZMCommand& operator=(const SetPositionZMCommand&) = delete;
-        SetPositionZMCommand& operator=(SetPositionZMCommand&&) = delete;
+        SetPositionᶻMCommand(const SetPositionᶻMCommand&) = delete;
+        SetPositionᶻMCommand(SetPositionᶻMCommand&&) = delete;
+        SetPositionᶻMCommand& operator=(const SetPositionᶻMCommand&) = delete;
+        SetPositionᶻMCommand& operator=(SetPositionᶻMCommand&&) = delete;
     };
 }

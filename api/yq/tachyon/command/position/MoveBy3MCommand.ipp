@@ -7,40 +7,40 @@
 #include "MoveBy3MCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveBy3MCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MoveBy³MCommand)
 
 namespace yq::tachyon {
-    MoveBy3MCommand::MoveBy3MCommand(const Header&h) : 
+    MoveBy³MCommand::MoveBy³MCommand(const Header&h) : 
         PositionCommand(h)
     {
     }
 
-    MoveBy3MCommand::MoveBy3MCommand(const Header&h, const Meter3D& Δ) : 
+    MoveBy³MCommand::MoveBy³MCommand(const Header&h, const Meter3D& Δ) : 
         PositionCommand(h), m_Δ(Δ)
     {
     }
     
-    MoveBy3MCommand::MoveBy3MCommand(const MoveBy3MCommand&cp, const Header&h) : 
+    MoveBy³MCommand::MoveBy³MCommand(const MoveBy³MCommand&cp, const Header&h) : 
         PositionCommand(cp, h), m_Δ(cp.m_Δ)
     {
     }
 
-    MoveBy3MCommand::~MoveBy3MCommand()
+    MoveBy³MCommand::~MoveBy³MCommand()
     {
     }
 
-    PostCPtr    MoveBy3MCommand::clone(rebind_k, const Header& h) const 
+    PostCPtr    MoveBy³MCommand::clone(rebind_k, const Header& h) const 
     {
-        return new MoveBy3MCommand(*this, h);
+        return new MoveBy³MCommand(*this, h);
     }
    
-    void MoveBy3MCommand::init_meta()
+    void MoveBy³MCommand::init_meta()
     {
-        auto w = writer<MoveBy3MCommand>();
+        auto w = writer<MoveBy³MCommand>();
         w.description("Position MoveBy Command in 3D (meters)");
-        w.property("Δx", &MoveBy3MCommand::Δx).tag(kTag_Log);
-        w.property("Δy", &MoveBy3MCommand::Δy).tag(kTag_Log);
-        w.property("Δz", &MoveBy3MCommand::Δz).tag(kTag_Log);
-        w.property("Δ", &MoveBy3MCommand::m_Δ).tag(kTag_Save);
+        w.property("Δx", &MoveBy³MCommand::Δx).tag(kTag_Log);
+        w.property("Δy", &MoveBy³MCommand::Δy).tag(kTag_Log);
+        w.property("Δz", &MoveBy³MCommand::Δz).tag(kTag_Log);
+        w.property("Δ", &MoveBy³MCommand::m_Δ).tag(kTag_Save);
     }
 }

@@ -13,10 +13,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's position
-    class SetPosition2MCommand : public PositionCommand {
-        YQ_OBJECT_DECLARE(SetPosition2MCommand, PositionCommand)
+    class SetPosition²MCommand : public PositionCommand {
+        YQ_OBJECT_DECLARE(SetPosition²MCommand, PositionCommand)
     public:
-        SetPosition2MCommand(const Header&, const Meter2D&);
+        SetPosition²MCommand(const Header&, const Meter2D&);
     
         const Meter2D&   position() const  { return m_position; }
         
@@ -28,14 +28,14 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        ~SetPosition2MCommand();
-        SetPosition2MCommand(const SetPosition2MCommand&, const Header&);
+        ~SetPosition²MCommand();
+        SetPosition²MCommand(const SetPosition²MCommand&, const Header&);
         
     private:
         Meter2D  m_position;
-        SetPosition2MCommand(const SetPosition2MCommand&) = delete;
-        SetPosition2MCommand(SetPosition2MCommand&&) = delete;
-        SetPosition2MCommand& operator=(const SetPosition2MCommand&) = delete;
-        SetPosition2MCommand& operator=(SetPosition2MCommand&&) = delete;
+        SetPosition²MCommand(const SetPosition²MCommand&) = delete;
+        SetPosition²MCommand(SetPosition²MCommand&&) = delete;
+        SetPosition²MCommand& operator=(const SetPosition²MCommand&) = delete;
+        SetPosition²MCommand& operator=(SetPosition²MCommand&&) = delete;
     };
 }

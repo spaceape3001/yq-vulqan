@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's x-position
-    class SetPositionXMCommand : public PositionCommand {
-        YQ_OBJECT_DECLARE(SetPositionXMCommand, PositionCommand)
+    class SetPositionˣMCommand : public PositionCommand {
+        YQ_OBJECT_DECLARE(SetPositionˣMCommand, PositionCommand)
     public:
-        SetPositionXMCommand(const Header&, Meter);
+        SetPositionˣMCommand(const Header&, Meter);
         
         static void init_meta();
         
@@ -24,15 +24,15 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        SetPositionXMCommand(const SetPositionXMCommand&, const Header&);
-        ~SetPositionXMCommand();
+        SetPositionˣMCommand(const SetPositionˣMCommand&, const Header&);
+        ~SetPositionˣMCommand();
         
     private:
         Meter  m_x = 0.0;
         
-        SetPositionXMCommand(const SetPositionXMCommand&);
-        SetPositionXMCommand(SetPositionXMCommand&&);
-        SetPositionXMCommand& operator=(const SetPositionXMCommand&);
-        SetPositionXMCommand& operator=(SetPositionXMCommand&&);
+        SetPositionˣMCommand(const SetPositionˣMCommand&);
+        SetPositionˣMCommand(SetPositionˣMCommand&&);
+        SetPositionˣMCommand& operator=(const SetPositionˣMCommand&);
+        SetPositionˣMCommand& operator=(SetPositionˣMCommand&&);
     };
 }

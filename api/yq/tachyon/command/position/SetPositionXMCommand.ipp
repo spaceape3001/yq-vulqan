@@ -8,32 +8,32 @@
 #include <yq/tachyon/tags.hpp>
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetPositionXMCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetPositionˣMCommand)
 
 namespace yq::tachyon {
-    SetPositionXMCommand::SetPositionXMCommand(const Header&h, Meter x) : 
+    SetPositionˣMCommand::SetPositionˣMCommand(const Header&h, Meter x) : 
         PositionCommand(h), m_x(x)
     {
     }
     
-    SetPositionXMCommand::SetPositionXMCommand(const SetPositionXMCommand& cp, const Header&h) : 
+    SetPositionˣMCommand::SetPositionˣMCommand(const SetPositionˣMCommand& cp, const Header&h) : 
         PositionCommand(cp, h), m_x(cp.m_x)
     {
     }
 
-    SetPositionXMCommand::~SetPositionXMCommand()
+    SetPositionˣMCommand::~SetPositionˣMCommand()
     {
     }
 
-    PostCPtr    SetPositionXMCommand::clone(rebind_k, const Header& h) const
+    PostCPtr    SetPositionˣMCommand::clone(rebind_k, const Header& h) const
     {
-        return new SetPositionXMCommand(*this, h);
+        return new SetPositionˣMCommand(*this, h);
     }
     
-    void SetPositionXMCommand::init_meta()
+    void SetPositionˣMCommand::init_meta()
     {
-        auto w = writer<SetPositionXMCommand>();
+        auto w = writer<SetPositionˣMCommand>();
         w.description("Set Position Command");
-        w.property("x", &SetPositionXMCommand::x).tag(kTag_Log).tag(kTag_Save);
+        w.property("x", &SetPositionˣMCommand::x).tag(kTag_Log).tag(kTag_Save);
     }
 }

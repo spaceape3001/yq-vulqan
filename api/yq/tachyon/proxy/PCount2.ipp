@@ -29,6 +29,8 @@ namespace yq::tachyon {
             m_flags |= F::Multipliable;
     }
 
+    PCount²::~PCount²() = default;
+
     bool        PCount²::count(disabled_k) const 
     {
         return m_flags(F::Disabled);

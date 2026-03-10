@@ -220,6 +220,7 @@ add_library(${PROJECT_NAME} SHARED
     command/GLFWCommand.cpp
     command/IOCommand.cpp
     command/JoystickCommand.cpp
+    command/MassCommand.cpp
     command/MouseCommand.cpp
     command/SceneCommand.cpp
     command/WidgetCommand.cpp
@@ -237,6 +238,12 @@ add_library(${PROJECT_NAME} SHARED
     command/io/SaveCommand.cpp
     command/joystick/JoystickZeroCommand.cpp
     
+    command/mass/AddMassGramCommand.cpp
+    command/mass/AddMassKGCommand.cpp
+    command/mass/MultiplyMassCommand.cpp
+    command/mass/SetMassGramCommand.cpp
+    command/mass/SetMassKGCommand.cpp
+
     command/widget/SetRenderModeCommand.cpp
     command/widget/SetViewer.cpp
 
@@ -253,6 +260,9 @@ add_library(${PROJECT_NAME} SHARED
     event/GestureEvent.cpp
     event/InputEvent.cpp
     event/IOEvent.cpp
+    event/MassEvent.cpp
+    event/MassGramEvent.cpp
+    event/MassKGEvent.cpp
     event/OSEvent.cpp
     event/PanelEvent.cpp
     event/SetColorProfileEvent.cpp
@@ -275,6 +285,7 @@ add_library(${PROJECT_NAME} SHARED
     
     interface/IColorProfile.cpp
     interface/IHeightField.cpp
+    interface/IMassKG.cpp
     interface/IMaterial.cpp
     interface/IMesh.cpp
     interface/ITexture.cpp
@@ -310,6 +321,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy/PFarPlane.cpp
     proxy/PFieldOfView.cpp
     proxy/PHeightField.cpp
+    proxy/PMassKG.cpp
     proxy/PMaterial.cpp
     proxy/PMesh.cpp
     proxy/PNearPlane.cpp

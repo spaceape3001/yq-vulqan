@@ -38,6 +38,7 @@ namespace yq::tachyon {
         unsigned      y() const { return m_count.y; }
 
         PCount²(const ICount²& i);
+        ~PCount²();
 
     private:
         const Vector2U  m_count;

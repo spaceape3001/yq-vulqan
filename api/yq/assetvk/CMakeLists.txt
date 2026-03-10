@@ -4,7 +4,9 @@
 ##
 ################################################################################
 
-add_library(yq_assetvk SHARED
+project(yq_assetvk)
+
+add_library(${PROJECT_NAME} SHARED
     command_circular3.cpp
     command_user3.cpp
     event_circular3.cpp
@@ -133,14 +135,13 @@ add_library(yq_assetvk SHARED
 
 )
 
-target_link_libraries(yq_assetvk 
+target_link_libraries(${PROJECT_NAME} 
 PUBLIC
     yq_tachyon
     yq_userexpr
 
 )
 
-vulqan_library(yq_assetvk)
-yq_vklib(yq_assetvk)
-LinkTest(yq_assetvk)
+yq_vklib(${PROJECT_NAME})
+LinkTest(${PROJECT_NAME})
 

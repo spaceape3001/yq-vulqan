@@ -7,22 +7,22 @@
 #include "APosition4Writer.hxx"
 
 #include <yq/tachyon/aspect/APosition4.hpp>
-#include <yq/tachyon/command/position/AddPosition4Command.hpp>
-#include <yq/tachyon/command/position/AddPositionWCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionXCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionYCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionZCommand.hpp>
+#include <yq/tachyon/command/position/AddPosition4DCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionWDCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionXDCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionYDCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionZDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPosition4Command.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionWCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionXCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionYCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionZCommand.hpp>
-#include <yq/tachyon/command/position/SetPosition4Command.hpp>
-#include <yq/tachyon/command/position/SetPositionWCommand.hpp>
-#include <yq/tachyon/command/position/SetPositionXCommand.hpp>
-#include <yq/tachyon/command/position/SetPositionYCommand.hpp>
-#include <yq/tachyon/command/position/SetPositionZCommand.hpp>
+#include <yq/tachyon/command/position/SetPosition4DCommand.hpp>
+#include <yq/tachyon/command/position/SetPositionWDCommand.hpp>
+#include <yq/tachyon/command/position/SetPositionXDCommand.hpp>
+#include <yq/tachyon/command/position/SetPositionYDCommand.hpp>
+#include <yq/tachyon/command/position/SetPositionZDCommand.hpp>
 #include <yq/tachyon/event/spatial/Position4DEvent.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/vector/Vector4.hxx>
@@ -128,42 +128,42 @@ namespace yq::tachyon {
         position(SET, Vector4D( m_position.x, m_position.y, m_position.z, m_position.w*v ));
     }
 
-    void        APosition⁴::on_set_position4(const SetPosition⁴Command&cmd)
+    void        APosition⁴::on_set_position4(const SetPosition⁴DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(SET, cmd.position());
     }
     
-    void        APosition⁴::on_set_positionW(const SetPositionʷCommand&cmd)
+    void        APosition⁴::on_set_positionW(const SetPositionʷDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(SET, W, cmd.w());
     }
     
-    void        APosition⁴::on_set_positionX(const SetPositionˣCommand&cmd)
+    void        APosition⁴::on_set_positionX(const SetPositionˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(SET, X, cmd.x());
     }
 
-    void        APosition⁴::on_set_positionY(const SetPositionʸCommand&cmd)
+    void        APosition⁴::on_set_positionY(const SetPositionʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(SET, Y, cmd.y());
     }
     
-    void        APosition⁴::on_set_positionZ(const SetPositionᶻCommand&cmd)
+    void        APosition⁴::on_set_positionZ(const SetPositionᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(SET, Z, cmd.z());
     }
 
-    void        APosition⁴::on_add_position4(const AddPosition⁴Command&cmd)
+    void        APosition⁴::on_add_position4(const AddPosition⁴DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -177,21 +177,21 @@ namespace yq::tachyon {
         position(ADD, W, cmd.Δw());
     }
     
-    void        APosition⁴::on_add_positionX(const AddPositionˣCommand&cmd)
+    void        APosition⁴::on_add_positionX(const AddPositionˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(ADD, X, cmd.Δx());
     }
 
-    void        APosition⁴::on_add_positionY(const AddPositionʸCommand&cmd)
+    void        APosition⁴::on_add_positionY(const AddPositionʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(ADD, Y, cmd.Δy());
     }
     
-    void        APosition⁴::on_add_positionZ(const AddPositionᶻCommand&cmd)
+    void        APosition⁴::on_add_positionZ(const AddPositionᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -205,7 +205,7 @@ namespace yq::tachyon {
         position(MULTIPLY, cmd.δ());
     }
     
-    void        APosition⁴::on_multiply_position4(const MultiplyPosition⁴Command&cmd)
+    void        APosition⁴::on_multiply_position4(const MultiplyPosition⁴DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -219,21 +219,21 @@ namespace yq::tachyon {
         position(MULTIPLY, W, cmd.δw());
     }
     
-    void        APosition⁴::on_multiply_positionX(const MultiplyPositionˣCommand&cmd)
+    void        APosition⁴::on_multiply_positionX(const MultiplyPositionˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(MULTIPLY, X, cmd.δx());
     }
 
-    void        APosition⁴::on_multiply_positionY(const MultiplyPositionʸCommand&cmd)
+    void        APosition⁴::on_multiply_positionY(const MultiplyPositionʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(MULTIPLY, Y, cmd.δy());
     }
     
-    void        APosition⁴::on_multiply_positionZ(const MultiplyPositionᶻCommand&cmd)
+    void        APosition⁴::on_multiply_positionZ(const MultiplyPositionᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

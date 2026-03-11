@@ -12,30 +12,30 @@
 namespace yq::tachyon {
 
     //! Instructs an object to adjust (self-increment) their position by given amount in body coordinates
-    class MoveBy¹Command : public PositionCommand {
-        YQ_OBJECT_DECLARE(MoveBy¹Command, PositionCommand)
+    class MoveBy¹MCommand : public PositionCommand {
+        YQ_OBJECT_DECLARE(MoveBy¹MCommand, PositionCommand)
     public:
-        MoveBy¹Command(const Header&, const Vector1D&Δ);
+        MoveBy¹MCommand(const Header&, const Meter1D&Δ);
     
-        const Vector1D&   Δ() const  { return m_Δ; }
+        const Meter1D&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
-        double  Δx() const { return m_Δ.x; }
+        Meter  Δx() const { return m_Δ.x; }
 
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        ~MoveBy¹Command();
-        MoveBy¹Command(const MoveBy¹Command&, const Header&);
-        MoveBy¹Command(const Header&);
+        ~MoveBy¹MCommand();
+        MoveBy¹MCommand(const MoveBy¹MCommand&, const Header&);
+        MoveBy¹MCommand(const Header&);
         
     private:
-        Vector1D  m_Δ = ZERO;
+        Meter1D  m_Δ = ZERO;
         
-        MoveBy¹Command(const MoveBy¹Command&) = delete;
-        MoveBy¹Command(MoveBy¹Command&&) = delete;
-        MoveBy¹Command& operator=(const MoveBy¹Command&) = delete;
-        MoveBy¹Command& operator=(MoveBy¹Command&&) = delete;
+        MoveBy¹MCommand(const MoveBy¹MCommand&) = delete;
+        MoveBy¹MCommand(MoveBy¹MCommand&&) = delete;
+        MoveBy¹MCommand& operator=(const MoveBy¹MCommand&) = delete;
+        MoveBy¹MCommand& operator=(MoveBy¹MCommand&&) = delete;
     };
 }

@@ -7,41 +7,41 @@
 #include "MultiplyPosition4Command.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyPosition⁴Command)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyPosition⁴DCommand)
 
 namespace yq::tachyon {
-    MultiplyPosition⁴Command::MultiplyPosition⁴Command(const Header& h) : 
+    MultiplyPosition⁴DCommand::MultiplyPosition⁴DCommand(const Header& h) : 
         PositionCommand(h)
     {
     }
 
-    MultiplyPosition⁴Command::MultiplyPosition⁴Command(const Header& h, const Vector4D& v) : 
+    MultiplyPosition⁴DCommand::MultiplyPosition⁴DCommand(const Header& h, const Vector4D& v) : 
         PositionCommand(h), m_δ(v)
     {
     }
 
-    MultiplyPosition⁴Command::MultiplyPosition⁴Command(const MultiplyPosition⁴Command& cp, const Header& h) : 
+    MultiplyPosition⁴DCommand::MultiplyPosition⁴DCommand(const MultiplyPosition⁴DCommand& cp, const Header& h) : 
         PositionCommand(cp, h), m_δ(cp.m_δ)
     {
     }
     
-    MultiplyPosition⁴Command::~MultiplyPosition⁴Command()
+    MultiplyPosition⁴DCommand::~MultiplyPosition⁴DCommand()
     {
     }
 
-    PostCPtr    MultiplyPosition⁴Command::clone(rebind_k, const Header&h) const 
+    PostCPtr    MultiplyPosition⁴DCommand::clone(rebind_k, const Header&h) const 
     {
-        return new MultiplyPosition⁴Command(*this, h);
+        return new MultiplyPosition⁴DCommand(*this, h);
     }
     
-    void MultiplyPosition⁴Command::init_meta()
+    void MultiplyPosition⁴DCommand::init_meta()
     {
-        auto w = writer<MultiplyPosition⁴Command>();
+        auto w = writer<MultiplyPosition⁴DCommand>();
         w.description("Multiply Position Command");
-        w.property("δw", &MultiplyPosition⁴Command::δw).tag(kTag_Log);
-        w.property("δx", &MultiplyPosition⁴Command::δx).tag(kTag_Log);
-        w.property("δy", &MultiplyPosition⁴Command::δy).tag(kTag_Log);
-        w.property("δz", &MultiplyPosition⁴Command::δz).tag(kTag_Log);
-        w.property("δ", &MultiplyPosition⁴Command::m_δ).tag(kTag_Save);
+        w.property("δw", &MultiplyPosition⁴DCommand::δw).tag(kTag_Log);
+        w.property("δx", &MultiplyPosition⁴DCommand::δx).tag(kTag_Log);
+        w.property("δy", &MultiplyPosition⁴DCommand::δy).tag(kTag_Log);
+        w.property("δz", &MultiplyPosition⁴DCommand::δz).tag(kTag_Log);
+        w.property("δ", &MultiplyPosition⁴DCommand::m_δ).tag(kTag_Save);
     }
 }

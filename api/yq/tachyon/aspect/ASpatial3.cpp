@@ -44,7 +44,7 @@ namespace yq::tachyon {
         ASpatial³::scale(MULTIPLY, δZ);
     }
 
-    void    ASpatial³::on_move³(const MoveBy³Command& cmd)
+    void    ASpatial³::on_move³(const MoveBy³DCommand& cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -52,7 +52,7 @@ namespace yq::tachyon {
         position(ADD, orientation(REF) * scale(REF).emul(cmd.Δ()));
     }
     
-    void    ASpatial³::on_moveˣ(const MoveByˣCommand& cmd)
+    void    ASpatial³::on_moveˣ(const MoveByˣDCommand& cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -60,7 +60,7 @@ namespace yq::tachyon {
         position(ADD, orientation(REF) * Vector3D(X, scale(X) * cmd.Δx()));
     }
     
-    void    ASpatial³::on_moveʸ(const MoveByʸCommand& cmd)
+    void    ASpatial³::on_moveʸ(const MoveByʸDCommand& cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -68,7 +68,7 @@ namespace yq::tachyon {
         position(ADD, orientation(REF) * Vector3D(Y, scale(Y) * cmd.Δy()));
     }
     
-    void    ASpatial³::on_moveᶻ(const MoveByᶻCommand&cmd)
+    void    ASpatial³::on_moveᶻ(const MoveByᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

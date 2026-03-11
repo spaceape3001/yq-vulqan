@@ -7,38 +7,38 @@
 #include "MultiplyPosition1Command.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyPosition¹Command)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyPosition¹DCommand)
 
 namespace yq::tachyon {
-    MultiplyPosition¹Command::MultiplyPosition¹Command(const Header& h) : 
+    MultiplyPosition¹DCommand::MultiplyPosition¹DCommand(const Header& h) : 
         PositionCommand(h)
     {
     }
     
-    MultiplyPosition¹Command::MultiplyPosition¹Command(const Header& h, const Vector1D& v) : 
+    MultiplyPosition¹DCommand::MultiplyPosition¹DCommand(const Header& h, const Vector1D& v) : 
         PositionCommand(h), m_δ(v)
     {
     }
 
-    MultiplyPosition¹Command::MultiplyPosition¹Command(const MultiplyPosition¹Command& cp, const Header& h) : 
+    MultiplyPosition¹DCommand::MultiplyPosition¹DCommand(const MultiplyPosition¹DCommand& cp, const Header& h) : 
         PositionCommand(cp, h), m_δ(cp.m_δ)
     {
     }
 
-    MultiplyPosition¹Command::~MultiplyPosition¹Command()
+    MultiplyPosition¹DCommand::~MultiplyPosition¹DCommand()
     {
     }
     
-    PostCPtr    MultiplyPosition¹Command::clone(rebind_k, const Header&h) const 
+    PostCPtr    MultiplyPosition¹DCommand::clone(rebind_k, const Header&h) const 
     {
-        return new MultiplyPosition¹Command(*this, h);
+        return new MultiplyPosition¹DCommand(*this, h);
     }
 
-    void MultiplyPosition¹Command::init_meta()
+    void MultiplyPosition¹DCommand::init_meta()
     {
-        auto w = writer<MultiplyPosition¹Command>();
+        auto w = writer<MultiplyPosition¹DCommand>();
         w.description("Multiply Position Command");
-        w.property("δx", &MultiplyPosition¹Command::δx).tag(kTag_Log);
-        w.property("δ", &MultiplyPosition¹Command::m_δ).tag(kTag_Save);
+        w.property("δx", &MultiplyPosition¹DCommand::δx).tag(kTag_Log);
+        w.property("δ", &MultiplyPosition¹DCommand::m_δ).tag(kTag_Save);
     }
 }

@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's z-position
-    class MultiplyPositionᶻCommand : public PositionCommand {
-        YQ_OBJECT_DECLARE(MultiplyPositionᶻCommand, PositionCommand)
+    class MultiplyPositionᶻDCommand : public PositionCommand {
+        YQ_OBJECT_DECLARE(MultiplyPositionᶻDCommand, PositionCommand)
     public:
-        MultiplyPositionᶻCommand(const Header&, double);
+        MultiplyPositionᶻDCommand(const Header&, double);
         
         static void init_meta();
         
@@ -24,16 +24,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        MultiplyPositionᶻCommand(const MultiplyPositionᶻCommand&, const Header&);
-        MultiplyPositionᶻCommand(const Header&);
-        ~MultiplyPositionᶻCommand();
+        MultiplyPositionᶻDCommand(const MultiplyPositionᶻDCommand&, const Header&);
+        MultiplyPositionᶻDCommand(const Header&);
+        ~MultiplyPositionᶻDCommand();
 
     private:
         double  m_δz = 0.0;
         
-        MultiplyPositionᶻCommand(const MultiplyPositionᶻCommand&) = delete;
-        MultiplyPositionᶻCommand(MultiplyPositionᶻCommand&&) = delete;
-        MultiplyPositionᶻCommand& operator=(const MultiplyPositionᶻCommand&) = delete;
-        MultiplyPositionᶻCommand& operator=(MultiplyPositionᶻCommand&&) = delete;
+        MultiplyPositionᶻDCommand(const MultiplyPositionᶻDCommand&) = delete;
+        MultiplyPositionᶻDCommand(MultiplyPositionᶻDCommand&&) = delete;
+        MultiplyPositionᶻDCommand& operator=(const MultiplyPositionᶻDCommand&) = delete;
+        MultiplyPositionᶻDCommand& operator=(MultiplyPositionᶻDCommand&&) = delete;
     };
 }

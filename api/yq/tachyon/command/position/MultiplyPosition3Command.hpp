@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to multiply it's scale
-    class MultiplyPosition³Command : public PositionCommand {
-        YQ_OBJECT_DECLARE(MultiplyPosition³Command, PositionCommand)
+    class MultiplyPosition³DCommand : public PositionCommand {
+        YQ_OBJECT_DECLARE(MultiplyPosition³DCommand, PositionCommand)
     public:
-        MultiplyPosition³Command(const Header&, const Vector3D&);
+        MultiplyPosition³DCommand(const Header&, const Vector3D&);
     
         const Vector3D&   δ() const  { return m_δ; }
         
@@ -28,16 +28,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        MultiplyPosition³Command(const MultiplyPosition³Command&, const Header&);
-        MultiplyPosition³Command(const Header&);
-        ~MultiplyPosition³Command();
+        MultiplyPosition³DCommand(const MultiplyPosition³DCommand&, const Header&);
+        MultiplyPosition³DCommand(const Header&);
+        ~MultiplyPosition³DCommand();
 
     private:
         Vector3D  m_δ;
         
-        MultiplyPosition³Command(const MultiplyPosition³Command&) = delete;
-        MultiplyPosition³Command(MultiplyPosition³Command&&) = delete;
-        MultiplyPosition³Command& operator=(const MultiplyPosition³Command&) = delete;
-        MultiplyPosition³Command& operator=(MultiplyPosition³Command&&) = delete;
+        MultiplyPosition³DCommand(const MultiplyPosition³DCommand&) = delete;
+        MultiplyPosition³DCommand(MultiplyPosition³DCommand&&) = delete;
+        MultiplyPosition³DCommand& operator=(const MultiplyPosition³DCommand&) = delete;
+        MultiplyPosition³DCommand& operator=(MultiplyPosition³DCommand&&) = delete;
     };
 }

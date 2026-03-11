@@ -7,22 +7,22 @@
 #pragma once
 
 #include <yq/tachyon/aspect/APosition4.hpp>
-#include <yq/tachyon/command/position/AddPosition4Command.hpp>
-#include <yq/tachyon/command/position/AddPositionWCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionXCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionYCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionZCommand.hpp>
+#include <yq/tachyon/command/position/AddPosition4DCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionWDCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionXDCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionYDCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionZDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPosition4Command.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionWCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionXCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionYCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionZCommand.hpp>
-#include <yq/tachyon/command/position/SetPosition4Command.hpp>
-#include <yq/tachyon/command/position/SetPositionWCommand.hpp>
-#include <yq/tachyon/command/position/SetPositionXCommand.hpp>
-#include <yq/tachyon/command/position/SetPositionYCommand.hpp>
-#include <yq/tachyon/command/position/SetPositionZCommand.hpp>
+#include <yq/tachyon/command/position/SetPosition4DCommand.hpp>
+#include <yq/tachyon/command/position/SetPositionWDCommand.hpp>
+#include <yq/tachyon/command/position/SetPositionXDCommand.hpp>
+#include <yq/tachyon/command/position/SetPositionYDCommand.hpp>
+#include <yq/tachyon/command/position/SetPositionZDCommand.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/tags.hpp>
 

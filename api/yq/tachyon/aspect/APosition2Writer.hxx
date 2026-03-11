@@ -7,16 +7,16 @@
 #pragma once
 
 #include <yq/tachyon/aspect/APosition2.hpp>
-#include <yq/tachyon/command/position/AddPosition2Command.hpp>
-#include <yq/tachyon/command/position/AddPositionXCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionYCommand.hpp>
+#include <yq/tachyon/command/position/AddPosition2DCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionXDCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionYDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPosition2Command.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionXCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionYCommand.hpp>
-#include <yq/tachyon/command/position/SetPosition2Command.hpp>
-#include <yq/tachyon/command/position/SetPositionXCommand.hpp>
-#include <yq/tachyon/command/position/SetPositionYCommand.hpp>
+#include <yq/tachyon/command/position/SetPosition2DCommand.hpp>
+#include <yq/tachyon/command/position/SetPositionXDCommand.hpp>
+#include <yq/tachyon/command/position/SetPositionYDCommand.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/tags.hpp>
 

@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/aspect/APosition1.hpp>
-#include <yq/tachyon/command/position/AddPosition1Command.hpp>
-#include <yq/tachyon/command/position/AddPositionXCommand.hpp>
+#include <yq/tachyon/command/position/AddPosition1DCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionXDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPosition1Command.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionXCommand.hpp>
-#include <yq/tachyon/command/position/SetPosition1Command.hpp>
-#include <yq/tachyon/command/position/SetPositionXCommand.hpp>
+#include <yq/tachyon/command/position/SetPosition1DCommand.hpp>
+#include <yq/tachyon/command/position/SetPositionXDCommand.hpp>
 #include <yq/tachyon/event/spatial/Position1DEvent.hpp>
 
 namespace yq::tachyon {
@@ -66,28 +66,28 @@ namespace yq::tachyon {
         position(SET, Vector1D( m_position.x*v));
     }
     
-    void        APosition¹::on_set_position1(const SetPosition¹Command&cmd)
+    void        APosition¹::on_set_position1(const SetPosition¹DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(SET, cmd.position());
     }
     
-    void        APosition¹::on_set_positionX(const SetPositionˣCommand&cmd)
+    void        APosition¹::on_set_positionX(const SetPositionˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(SET, X, cmd.x());
     }
     
-    void        APosition¹::on_add_position1(const AddPosition¹Command&cmd)
+    void        APosition¹::on_add_position1(const AddPosition¹DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(ADD, cmd.Δ());
     }
     
-    void        APosition¹::on_add_positionX(const AddPositionˣCommand&cmd)
+    void        APosition¹::on_add_positionX(const AddPositionˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -101,14 +101,14 @@ namespace yq::tachyon {
         position(MULTIPLY, cmd.δ());
     }
     
-    void        APosition¹::on_multiply_position1(const MultiplyPosition¹Command&cmd)
+    void        APosition¹::on_multiply_position1(const MultiplyPosition¹DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(MULTIPLY, cmd.δ());
     }
     
-    void        APosition¹::on_multiply_positionX(const MultiplyPositionˣCommand&cmd)
+    void        APosition¹::on_multiply_positionX(const MultiplyPositionˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

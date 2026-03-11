@@ -11,10 +11,10 @@
 #include "APosition3Writer.hxx"
 #include "AScale3Writer.hxx"
 
-#include <yq/tachyon/command/position/MoveBy3Command.hpp>
-#include <yq/tachyon/command/position/MoveByXCommand.hpp>
-#include <yq/tachyon/command/position/MoveByYCommand.hpp>
-#include <yq/tachyon/command/position/MoveByZCommand.hpp>
+#include <yq/tachyon/command/position/MoveBy3DCommand.hpp>
+#include <yq/tachyon/command/position/MoveByXDCommand.hpp>
+#include <yq/tachyon/command/position/MoveByYDCommand.hpp>
+#include <yq/tachyon/command/position/MoveByZDCommand.hpp>
 
 namespace yq::tachyon {
     template <typename C>

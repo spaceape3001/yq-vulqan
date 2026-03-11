@@ -12,10 +12,10 @@
 
 namespace yq::tachyon {
 
-    class MoveBy³Command;
-    class MoveByˣCommand;
-    class MoveByʸCommand;
-    class MoveByᶻCommand;
+    class MoveBy³DCommand;
+    class MoveByˣDCommand;
+    class MoveByʸDCommand;
+    class MoveByᶻDCommand;
 
     /*! Moving *most* of simple spatial into here, for those objects that need a simple position/orientation.
     
@@ -55,9 +55,9 @@ namespace yq::tachyon {
         static void init_meta(TachyonMeta::Writer<C>&);
 
     private:
-        void    on_move³(const MoveBy³Command&);
-        void    on_moveˣ(const MoveByˣCommand&);
-        void    on_moveʸ(const MoveByʸCommand&);
-        void    on_moveᶻ(const MoveByᶻCommand&);
+        void    on_move³(const MoveBy³DCommand&);
+        void    on_moveˣ(const MoveByˣDCommand&);
+        void    on_moveʸ(const MoveByʸDCommand&);
+        void    on_moveᶻ(const MoveByᶻDCommand&);
     };
 }

@@ -9,12 +9,12 @@
 #include <yq/tachyon/api/ControllerMetaWriter.hpp>
 #include <yq/tachyon/command/controller/SetTargetCommand.hpp>
 #include <yq/tachyon/command/gamepad/GamepadZeroCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionXCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionYCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionZCommand.hpp>
-#include <yq/tachyon/command/position/MoveByXCommand.hpp>
-#include <yq/tachyon/command/position/MoveByYCommand.hpp>
-#include <yq/tachyon/command/position/MoveByZCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionXDCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionYDCommand.hpp>
+#include <yq/tachyon/command/position/AddPositionZDCommand.hpp>
+#include <yq/tachyon/command/position/MoveByXDCommand.hpp>
+#include <yq/tachyon/command/position/MoveByYDCommand.hpp>
+#include <yq/tachyon/command/position/MoveByZDCommand.hpp>
 #include <yq/tachyon/command/orientation/PitchByCommand.hpp>
 #include <yq/tachyon/command/orientation/RollByCommand.hpp>
 #include <yq/tachyon/command/orientation/YawByCommand.hpp>
@@ -254,40 +254,40 @@ namespace yq::tachyon {
         if(enabled() && m_keyboardEnable && m_target){
             switch(evt.key()){
             case KeyCode::A:
-                send(new MoveByʸCommand({.target=m_target}, m_vN.press ));
+                send(new MoveByʸDCommand({.target=m_target}, m_vN.press ));
                 break;
             case KeyCode::D:
-                send(new MoveByʸCommand({.target=m_target}, m_vP.press ));
+                send(new MoveByʸDCommand({.target=m_target}, m_vP.press ));
                 break;
             case KeyCode::W:
-                send(new MoveByˣCommand({.target=m_target}, m_uP.press ));
+                send(new MoveByˣDCommand({.target=m_target}, m_uP.press ));
                 break;
             case KeyCode::S:
-                send(new MoveByˣCommand({.target=m_target}, m_uN.press ));
+                send(new MoveByˣDCommand({.target=m_target}, m_uN.press ));
                 break;
             case KeyCode::Q:
-                send(new MoveByᶻCommand({.target=m_target}, m_wN.press ));
+                send(new MoveByᶻDCommand({.target=m_target}, m_wN.press ));
                 break;
             case KeyCode::E:
-                send(new MoveByᶻCommand({.target=m_target}, m_wP.press ));
+                send(new MoveByᶻDCommand({.target=m_target}, m_wP.press ));
                 break;
             case KeyCode::U:
-                send(new AddPositionᶻCommand({.target=m_target}, m_zN.press ));
+                send(new AddPositionᶻDCommand({.target=m_target}, m_zN.press ));
                 break;
             case KeyCode::O:
-                send(new AddPositionᶻCommand({.target=m_target}, m_zP.press ));
+                send(new AddPositionᶻDCommand({.target=m_target}, m_zP.press ));
                 break;
             case KeyCode::I:
-                send(new AddPositionˣCommand({.target=m_target}, m_xP.press ));
+                send(new AddPositionˣDCommand({.target=m_target}, m_xP.press ));
                 break;
             case KeyCode::K:
-                send(new AddPositionˣCommand({.target=m_target}, m_xN.press ));
+                send(new AddPositionˣDCommand({.target=m_target}, m_xN.press ));
                 break;
             case KeyCode::J:
-                send(new AddPositionʸCommand({.target=m_target}, m_yN.press ));
+                send(new AddPositionʸDCommand({.target=m_target}, m_yN.press ));
                 break;
             case KeyCode::L:
-                send(new AddPositionʸCommand({.target=m_target}, m_yP.press ));
+                send(new AddPositionʸDCommand({.target=m_target}, m_yP.press ));
                 break;
                 
             case KeyCode::Kp2:
@@ -321,40 +321,40 @@ namespace yq::tachyon {
         if(enabled() && m_keyboardEnable && m_target){
             switch(evt.key()){
             case KeyCode::A:
-                send(new MoveByʸCommand({.target=m_target}, m_vN.repeat ));
+                send(new MoveByʸDCommand({.target=m_target}, m_vN.repeat ));
                 break;
             case KeyCode::D:
-                send(new MoveByʸCommand({.target=m_target}, m_vP.repeat ));
+                send(new MoveByʸDCommand({.target=m_target}, m_vP.repeat ));
                 break;
             case KeyCode::W:
-                send(new MoveByˣCommand({.target=m_target}, m_uP.repeat ));
+                send(new MoveByˣDCommand({.target=m_target}, m_uP.repeat ));
                 break;
             case KeyCode::S:
-                send(new MoveByˣCommand({.target=m_target}, m_uN.repeat ));
+                send(new MoveByˣDCommand({.target=m_target}, m_uN.repeat ));
                 break;
             case KeyCode::Q:
-                send(new MoveByᶻCommand({.target=m_target}, m_wN.repeat ));
+                send(new MoveByᶻDCommand({.target=m_target}, m_wN.repeat ));
                 break;
             case KeyCode::E:
-                send(new MoveByᶻCommand({.target=m_target}, m_wP.repeat ));
+                send(new MoveByᶻDCommand({.target=m_target}, m_wP.repeat ));
                 break;
             case KeyCode::U:
-                send(new AddPositionᶻCommand({.target=m_target}, m_zN.repeat ));
+                send(new AddPositionᶻDCommand({.target=m_target}, m_zN.repeat ));
                 break;
             case KeyCode::O:
-                send(new AddPositionᶻCommand({.target=m_target}, m_zP.repeat ));
+                send(new AddPositionᶻDCommand({.target=m_target}, m_zP.repeat ));
                 break;
             case KeyCode::I:
-                send(new AddPositionˣCommand({.target=m_target}, m_xN.repeat ));
+                send(new AddPositionˣDCommand({.target=m_target}, m_xN.repeat ));
                 break;
             case KeyCode::K:
-                send(new AddPositionˣCommand({.target=m_target}, m_xP.repeat ));
+                send(new AddPositionˣDCommand({.target=m_target}, m_xP.repeat ));
                 break;
             case KeyCode::J:
-                send(new AddPositionʸCommand({.target=m_target}, m_yP.repeat ));
+                send(new AddPositionʸDCommand({.target=m_target}, m_yP.repeat ));
                 break;
             case KeyCode::L:
-                send(new AddPositionʸCommand({.target=m_target}, m_yN.repeat ));
+                send(new AddPositionʸDCommand({.target=m_target}, m_yN.repeat ));
                 break;
             case KeyCode::Kp2:
                 send(new PitchByCommand({.target=m_target}, unit::Degree(m_θN.repeat) ));
@@ -408,13 +408,13 @@ namespace yq::tachyon {
                 send(new RollByCommand({.target=m_target}, unit::Degree(m_φ.input*m_φ.gain*ctx.Δwall.value) ));
             }
             if(m_u.input){
-                send(new MoveByˣCommand({.target=m_target}, m_u.input*m_u.gain*ctx.Δwall.value));
+                send(new MoveByˣDCommand({.target=m_target}, m_u.input*m_u.gain*ctx.Δwall.value));
             }
             if(m_v.input){
-                send(new MoveByʸCommand({.target=m_target}, m_v.input*m_v.gain*ctx.Δwall.value));
+                send(new MoveByʸDCommand({.target=m_target}, m_v.input*m_v.gain*ctx.Δwall.value));
             }
             if(m_w.input){
-                send(new MoveByᶻCommand({.target=m_target}, m_w.input*m_w.gain*ctx.Δwall.value));
+                send(new MoveByᶻDCommand({.target=m_target}, m_w.input*m_w.gain*ctx.Δwall.value));
             }
         }
         return {};

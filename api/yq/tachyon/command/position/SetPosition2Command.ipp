@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SetPosition2Command.hpp"
+#include <yq/tags.hpp>
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::SetPosition²Command)
@@ -33,7 +34,8 @@ namespace yq::tachyon {
     {
         auto w = writer<SetPosition²Command>();
         w.description("Set Position Command");
-        w.property("x", &SetPosition²Command::x);
-        w.property("y", &SetPosition²Command::y);
+        w.property("x", &SetPosition²Command::x).tag(kTag_Log);
+        w.property("y", &SetPosition²Command::y).tag(kTag_Log);
+        w.property("position", &SetPosition²Command::m_position).tag(kTag_Save);
     }
 }

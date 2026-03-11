@@ -30,7 +30,7 @@ namespace yq::tachyon {
         ~SetPosition¹Command();
 
     private:
-        Vector1D const  m_position;
+        Vector1D  m_position;
         
         SetPosition¹Command(const SetPosition¹Command&) = delete;
         SetPosition¹Command(SetPosition¹Command&&) = delete;

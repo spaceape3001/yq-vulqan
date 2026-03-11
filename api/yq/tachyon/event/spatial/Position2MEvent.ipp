@@ -15,7 +15,7 @@ namespace yq::tachyon {
     {
     }
     
-    Position2MEvent::Position2MEvent(const Header&h, const unit::Meter2D& v) : 
+    Position2MEvent::Position2MEvent(const Header&h, const Meter2D& v) : 
         SpatialEvent(h), m_position(v)
     {
     }

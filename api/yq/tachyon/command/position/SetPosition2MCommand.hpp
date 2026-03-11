@@ -32,7 +32,8 @@ namespace yq::tachyon {
         SetPosition²MCommand(const SetPosition²MCommand&, const Header&);
         
     private:
-        Meter2D  m_position;
+        Meter2D  m_position = ZERO;
+        
         SetPosition²MCommand(const SetPosition²MCommand&) = delete;
         SetPosition²MCommand(SetPosition²MCommand&&) = delete;
         SetPosition²MCommand& operator=(const SetPosition²MCommand&) = delete;

@@ -15,7 +15,7 @@ namespace yq::tachyon {
     {
     }
     
-    Position3MEvent::Position3MEvent(const Header&h, const unit::Meter3D& v) : 
+    Position3MEvent::Position3MEvent(const Header&h, const Meter3D& v) : 
         SpatialEvent(h), m_position(v)
     {
     }

@@ -31,7 +31,8 @@ namespace yq::tachyon {
         SetPosition²Command(const SetPosition²Command&, const Header&);
         
     private:
-        Vector2D const  m_position;
+        Vector2D   m_position = ZERO;
+        
         SetPosition²Command(const SetPosition²Command&) = delete;
         SetPosition²Command(SetPosition²Command&&) = delete;
         SetPosition²Command& operator=(const SetPosition²Command&) = delete;

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/aspect/AMinSize2.hpp>
+#include "AMinSize2.hpp"
 #include <yq/tachyon/command/size/AddMinSize2Command.hpp>
 #include <yq/tachyon/command/size/AddMinSizeXCommand.hpp>
 #include <yq/tachyon/command/size/AddMinSizeYCommand.hpp>
@@ -15,7 +15,7 @@
 #include <yq/tachyon/command/size/SetMinSize2Command.hpp>
 #include <yq/tachyon/command/size/SetMinSizeXCommand.hpp>
 #include <yq/tachyon/command/size/SetMinSizeYCommand.hpp>
-#include <yq/tachyon/event/spatial/Size2Event.hpp>
+#include <yq/tachyon/event/spatial/MinSize2DEvent.hpp>
 
 
 namespace yq::tachyon {
@@ -29,7 +29,7 @@ namespace yq::tachyon {
 
     void        AMinSize²::min_size(emit_k)
     {
-        send(new Size²Event({.source=typed()}, m_min_size));
+        send(new MinSize²DEvent({.source=typed()}, m_min_size));
     }
     
     void        AMinSize²::min_size(set_k, const Size2D& sz) 

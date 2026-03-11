@@ -75,7 +75,7 @@
 #include <yq/tachyon/event/mouse/MouseReleaseEvent.hpp>
 
 #include <yq/tachyon/event/spatial/Position2DEvent.hpp>
-#include <yq/tachyon/event/spatial/Size2Event.hpp>
+#include <yq/tachyon/event/spatial/Size2DEvent.hpp>
 
 #include <yq/tachyon/event/sim/PauseEvent.hpp>
 #include <yq/tachyon/event/sim/ResumeEvent.hpp>
@@ -897,7 +897,7 @@ namespace yq::tachyon {
     }
 
 
-    void    Viewer::on_size_event(const Size²Event&evt)
+    void    Viewer::on_size_event(const Size²DEvent&evt)
     {
         if(evt.source() == m_window){
             yInfo() << "Viewer resized (" << evt.x() << ", " << evt.y() << ")";

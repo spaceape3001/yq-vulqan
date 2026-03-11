@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/aspect/AMinSize3.hpp>
+#include "AMinSize3.hpp"
 #include <yq/tachyon/command/size/AddMinSize3Command.hpp>
 #include <yq/tachyon/command/size/AddMinSizeXCommand.hpp>
 #include <yq/tachyon/command/size/AddMinSizeYCommand.hpp>
@@ -18,7 +18,7 @@
 #include <yq/tachyon/command/size/SetMinSizeXCommand.hpp>
 #include <yq/tachyon/command/size/SetMinSizeYCommand.hpp>
 #include <yq/tachyon/command/size/SetMinSizeZCommand.hpp>
-#include <yq/tachyon/event/spatial/Size3Event.hpp>
+#include <yq/tachyon/event/spatial/MinSize3DEvent.hpp>
 
 
 namespace yq::tachyon {
@@ -32,7 +32,7 @@ namespace yq::tachyon {
 
     void        AMinSize³::min_size(emit_k)
     {
-        send(new Size³Event({.source=typed()}, m_min_size));
+        send(new MinSize³DEvent({.source=typed()}, m_min_size));
     }
     
     void        AMinSize³::min_size(set_k, const Size3D& sz) 

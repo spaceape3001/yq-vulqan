@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Source resized in 3-Dimensions
-    class MaxSize³Event : public SpatialEvent {
-        YQ_OBJECT_DECLARE(MaxSize³Event, SpatialEvent)
+    class MinSize³DEvent : public SpatialEvent {
+        YQ_OBJECT_DECLARE(MinSize³DEvent, SpatialEvent)
     public:
-        MaxSize³Event(const Header&, const Size3D&);
+        MinSize³DEvent(const Header&, const Size3D&);
     
         const Size3D&   size() const  { return m_size; }
         
@@ -28,16 +28,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        MaxSize³Event(const Header&);
-        MaxSize³Event(const MaxSize³Event&, const Header&);
-        ~MaxSize³Event();
+        MinSize³DEvent(const Header&);
+        MinSize³DEvent(const MinSize³DEvent&, const Header&);
+        ~MinSize³DEvent();
 
     private:
         Size3D  m_size = ZERO;
         
-        MaxSize³Event(const MaxSize³Event&) = delete;
-        MaxSize³Event(MaxSize³Event&&) = delete;
-        MaxSize³Event& operator=(const MaxSize³Event&) = delete;
-        MaxSize³Event& operator=(MaxSize³Event&&) = delete;
+        MinSize³DEvent(const MinSize³DEvent&) = delete;
+        MinSize³DEvent(MinSize³DEvent&&) = delete;
+        MinSize³DEvent& operator=(const MinSize³DEvent&) = delete;
+        MinSize³DEvent& operator=(MinSize³DEvent&&) = delete;
     };
 }

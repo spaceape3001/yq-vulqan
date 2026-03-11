@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/aspect/AMaxSize4.hpp>
+#include "AMaxSize4.hpp"
 #include <yq/tachyon/command/size/AddMaxSize4Command.hpp>
 #include <yq/tachyon/command/size/AddMaxSizeWCommand.hpp>
 #include <yq/tachyon/command/size/AddMaxSizeXCommand.hpp>
@@ -21,7 +21,7 @@
 #include <yq/tachyon/command/size/SetMaxSizeXCommand.hpp>
 #include <yq/tachyon/command/size/SetMaxSizeYCommand.hpp>
 #include <yq/tachyon/command/size/SetMaxSizeZCommand.hpp>
-#include <yq/tachyon/event/spatial/Size4Event.hpp>
+#include <yq/tachyon/event/spatial/MaxSize4DEvent.hpp>
 
 
 namespace yq::tachyon {
@@ -35,7 +35,7 @@ namespace yq::tachyon {
 
     void        AMaxSize⁴::max_size(emit_k)
     {
-        send(new Size⁴Event({.source=typed()}, m_max_size));
+        send(new MaxSize⁴Event({.source=typed()}, m_max_size));
     }
     
     void        AMaxSize⁴::max_size(set_k, const Size4D& sz) 

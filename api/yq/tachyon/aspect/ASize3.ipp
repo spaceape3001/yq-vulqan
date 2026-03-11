@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/aspect/ASize3.hpp>
+#include "ASize3.hpp"
 #include <yq/tachyon/command/size/AddSize3Command.hpp>
 #include <yq/tachyon/command/size/AddSizeXCommand.hpp>
 #include <yq/tachyon/command/size/AddSizeYCommand.hpp>
@@ -18,7 +18,7 @@
 #include <yq/tachyon/command/size/SetSizeXCommand.hpp>
 #include <yq/tachyon/command/size/SetSizeYCommand.hpp>
 #include <yq/tachyon/command/size/SetSizeZCommand.hpp>
-#include <yq/tachyon/event/spatial/Size3Event.hpp>
+#include <yq/tachyon/event/spatial/Size3DEvent.hpp>
 
 
 namespace yq::tachyon {
@@ -36,7 +36,7 @@ namespace yq::tachyon {
 
     void        ASize³::size(emit_k)
     {
-        send(new Size³Event({.source=typed()}, m_size));
+        send(new Size³DEvent({.source=typed()}, m_size));
     }
     
     void        ASize³::size(set_k, const Size3D& sz) 

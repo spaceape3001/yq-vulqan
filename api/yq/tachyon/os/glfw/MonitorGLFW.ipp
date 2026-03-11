@@ -7,7 +7,7 @@
 #include <yq/tachyon/os/glfw/MonitorGLFW.hpp>
 #include <yq/tachyon/event/spatial/Position2DEvent.hpp>
 #include <yq/tachyon/event/spatial/Scale2Event.hpp>
-#include <yq/tachyon/event/spatial/Size2Event.hpp>
+#include <yq/tachyon/event/spatial/Size2DEvent.hpp>
 #include <yq/tachyon/os/MonitorMetaWriter.hpp>
 #include <GLFW/glfw3.h>
 
@@ -139,7 +139,7 @@ namespace yq::tachyon {
                 // TODO: when we have color depth event, send it here
             }
             if(set(m_size, Size2D( vm->width, vm->height))){
-                send(new Size²Event({.source=this}, m_size));
+                send(new Size²DEvent({.source=this}, m_size));
             }
             m_mode      = vm;
         }

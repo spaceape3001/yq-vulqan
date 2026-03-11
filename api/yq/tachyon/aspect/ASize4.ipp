@@ -21,7 +21,7 @@
 #include <yq/tachyon/command/size/SetSizeXCommand.hpp>
 #include <yq/tachyon/command/size/SetSizeYCommand.hpp>
 #include <yq/tachyon/command/size/SetSizeZCommand.hpp>
-#include <yq/tachyon/event/spatial/Size4Event.hpp>
+#include <yq/tachyon/event/spatial/Size4DEvent.hpp>
 
 
 namespace yq::tachyon {
@@ -35,7 +35,7 @@ namespace yq::tachyon {
 
     void        ASize⁴::size(emit_k)
     {
-        send(new Size⁴Event({.source=typed()}, m_size));
+        send(new Size⁴DEvent({.source=typed()}, m_size));
     }
     
     void        ASize⁴::size(set_k, const Size4D& sz) 

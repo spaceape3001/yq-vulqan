@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/aspect/ASize1.hpp>
+#include "ASize1.hpp"
 #include <yq/tachyon/command/size/AddSize1Command.hpp>
 #include <yq/tachyon/command/size/AddSizeXCommand.hpp>
 #include <yq/tachyon/command/size/MultiplySizeCommand.hpp>
@@ -12,7 +12,7 @@
 #include <yq/tachyon/command/size/MultiplySizeXCommand.hpp>
 #include <yq/tachyon/command/size/SetSize1Command.hpp>
 #include <yq/tachyon/command/size/SetSizeXCommand.hpp>
-#include <yq/tachyon/event/spatial/Size1Event.hpp>
+#include <yq/tachyon/event/spatial/Size1DEvent.hpp>
 
 
 namespace yq::tachyon {
@@ -26,7 +26,7 @@ namespace yq::tachyon {
 
     void        ASize¹::size(emit_k)
     {
-        send(new Size¹Event({.source=typed()}, m_size));
+        send(new Size¹DEvent({.source=typed()}, m_size));
     }
     
     void        ASize¹::size(set_k, const Size1D& sz) 

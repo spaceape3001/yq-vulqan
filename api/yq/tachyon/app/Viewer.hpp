@@ -86,7 +86,7 @@ namespace yq::tachyon {
     class ResumeCommand;
     class ShowCommand;
     class ShowEvent;
-    class Size²Event;
+    class Size²DEvent;
     class SpatialCommand;
     class TitleCommand;
     class UnfloatCommand;
@@ -404,7 +404,7 @@ namespace yq::tachyon {
         void    on_mouse_release_event(const MouseReleaseEvent&);
         void    on_move_event(const Position²DEvent&);
         void    on_restore_command(const RestoreCommand&);
-        void    on_size_event(const Size²Event&);
+        void    on_size_event(const Size²DEvent&);
         void    on_show_command(const ShowCommand&);
         void    on_spatial_command(const SpatialCommand&);
         void    on_title_command(const TitleCommand&);

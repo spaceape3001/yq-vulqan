@@ -6,20 +6,20 @@
 
 #pragma once
 
-#include <yq/tachyon/interface/IPosition1.hpp>
+#include <yq/tachyon/interface/IPosition1D.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
 
     class AddPosition¹DCommand;
     class AddPositionˣDCommand;
-    class MultiplyPositionCommand;
+    class MultiplyPositionDCommand;
     class MultiplyPosition¹DCommand;
     class MultiplyPositionˣDCommand;
     class SetPosition¹DCommand;
     class SetPositionˣDCommand;
 
-    class APosition¹ : public IPosition¹, public virtual Tachyon::Helper {
+    class APosition¹ : public IPosition¹D, public virtual Tachyon::Helper {
     public:
     
         //!  Basic position in the 1D space
@@ -65,7 +65,7 @@ namespace yq::tachyon {
         void        on_add_position1(const AddPosition¹DCommand&);
         void        on_add_positionX(const AddPositionˣDCommand&);
         
-        void        on_multiply_position(const MultiplyPositionCommand&);
+        void        on_multiply_position(const MultiplyPositionDCommand&);
         void        on_multiply_position1(const MultiplyPosition¹DCommand&);
         void        on_multiply_positionX(const MultiplyPositionˣDCommand&);
 

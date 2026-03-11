@@ -42,7 +42,7 @@ namespace yq::tachyon {
     class UnfloatCommand;
 
     class WindowGLFW : public Window, 
-        public APosition², public AMaxSize², public AMinSize², public ASize²,
+        public APosition², public AMaxSize², public AMinSize², public ASize², // might go higher
         public AScale²
     {
         YQ_TACHYON_DECLARE(WindowGLFW, Window)

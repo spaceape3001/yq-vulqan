@@ -59,7 +59,7 @@ namespace yq::tachyon {
     {
         auto w = writer<UserSpatial³>();
         w.description("Spatial³ using user-defined expressions");
-        w.interface<IPosition³>();
+        w.interface<IPosition³D>();
         w.interface<IOrientation³>();
         w.property("h", &UserSpatial³::h).setter(&UserSpatial³::set_h).tag(kTag_Save);
         w.property("p", &UserSpatial³::p).setter(&UserSpatial³::set_p).tag(kTag_Save);

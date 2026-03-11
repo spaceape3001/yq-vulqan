@@ -10,6 +10,7 @@
 #include <yq/math/glm.hpp>
 #include <yq/typedef/size2.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/interface/IPosition2D.hpp>
 #include <yq/tachyon/typedef/monitor.hpp>
 
 namespace yq::tachyon {
@@ -38,7 +39,7 @@ namespace yq::tachyon {
     
     /*! \brief It's a monitor
     */
-    class Monitor : public Tachyon {
+    class Monitor : public Tachyon, public IPosition²D {
         YQ_TACHYON_META(MonitorMeta);
         YQ_TACHYON_DATA(MonitorData)
         YQ_TACHYON_SNAP(MonitorSnap)
@@ -72,3 +73,4 @@ namespace yq::tachyon {
 
 }
 YQ_TYPE_DECLARE(yq::tachyon::MonitorID)
+YQ_TACHYON_FORCE(yq::tachyon::Monitor)

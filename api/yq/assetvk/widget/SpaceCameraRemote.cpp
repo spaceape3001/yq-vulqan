@@ -16,7 +16,7 @@
 #include <yq/tachyon/im/input_double.hpp>
 
 #include <yq/tachyon/proxy/POrientation3.hpp>
-#include <yq/tachyon/proxy/PPosition3.hpp>
+#include <yq/tachyon/proxy/PPosition3D.hpp>
 #include <yq/util/Safety.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
 
@@ -136,7 +136,7 @@ namespace yq::tachyon {
         if(!frame)
             return ;
 
-        PPosition³*pos        = frame->proxy<PPosition³>(m_spatial);
+        PPosition³D*pos        = frame->proxy<PPosition³D>(m_spatial);
         if(!pos)
             return;
 

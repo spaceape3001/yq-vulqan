@@ -78,6 +78,7 @@ namespace yq::tachyon {
         auto w   = writer<Monitor>();
         w.abstract();
         w.description("A monitor, the thing that glows in the dark");
+        w.interface<IPosition²D>();
 
         auto wt = writer<MonitorID>();
         wt.description("Monitor Identifier");

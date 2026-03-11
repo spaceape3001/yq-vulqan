@@ -9,7 +9,6 @@
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/im/lineedit.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
-#include <yq/tachyon/proxy/PPosition3.hpp>
 #include <yq/assetvk/command/user3/User3HCommand.hpp>
 #include <yq/assetvk/command/user3/User3PCommand.hpp>
 #include <yq/assetvk/command/user3/User3RCommand.hpp>

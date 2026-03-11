@@ -10,10 +10,10 @@
 #include <yq/tachyon/command/position/AddPosition2DCommand.hpp>
 #include <yq/tachyon/command/position/AddPositionXDCommand.hpp>
 #include <yq/tachyon/command/position/AddPositionYDCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPosition2Command.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionXCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionYCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionDCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPosition2DCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionXDCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionYDCommand.hpp>
 #include <yq/tachyon/command/position/SetPosition2DCommand.hpp>
 #include <yq/tachyon/command/position/SetPositionXDCommand.hpp>
 #include <yq/tachyon/command/position/SetPositionYDCommand.hpp>
@@ -24,7 +24,7 @@ namespace yq::tachyon {
     template <typename C>
     void APosition²::init_meta(TachyonMeta::Writer<C>& w)
     {
-        w.template interface<IPosition²>();
+        w.template interface<IPosition²D>();
         w.property(UNSAFE, "position", &APosition²::m_position).tag(kTag_Save);
 
         w.slot(UNSAFE, &APosition²::on_set_position2);

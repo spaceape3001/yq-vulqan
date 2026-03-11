@@ -7,9 +7,9 @@
 #include <yq/tachyon/aspect/APosition1.hpp>
 #include <yq/tachyon/command/position/AddPosition1DCommand.hpp>
 #include <yq/tachyon/command/position/AddPositionXDCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPosition1Command.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionXCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionDCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPosition1DCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionXDCommand.hpp>
 #include <yq/tachyon/command/position/SetPosition1DCommand.hpp>
 #include <yq/tachyon/command/position/SetPositionXDCommand.hpp>
 #include <yq/tachyon/event/spatial/Position1DEvent.hpp>
@@ -94,7 +94,7 @@ namespace yq::tachyon {
         position(ADD, X, cmd.Δx());
     }
     
-    void        APosition¹::on_multiply_position(const MultiplyPositionCommand&cmd)
+    void        APosition¹::on_multiply_position(const MultiplyPositionDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

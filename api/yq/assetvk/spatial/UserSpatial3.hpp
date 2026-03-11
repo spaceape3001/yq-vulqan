@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/api/Spatial3.hpp>
 #include <yq/tachyon/interface/IOrientation3.hpp>
-#include <yq/tachyon/interface/IPosition3.hpp>
+#include <yq/tachyon/interface/IPosition3D.hpp>
 #include <yq/tensor/Tensor33.hpp>
 #include <yq/userexpr/Algebra.hpp>
 #include <yq/userexpr/UserExpr.hpp>
@@ -24,7 +24,7 @@ namespace yq::tachyon {
     class User³YCommand;
     class User³ZCommand;
     
-    class UserSpatial³ : public Spatial³, public IPosition³, public IOrientation³ {
+    class UserSpatial³ : public Spatial³, public IPosition³D, public IOrientation³ {
         YQ_TACHYON_SNAP(UserSpatial³Snap)
         YQ_TACHYON_DECLARE(UserSpatial³, Spatial³);
     public:

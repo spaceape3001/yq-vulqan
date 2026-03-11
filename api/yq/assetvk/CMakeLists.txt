@@ -9,6 +9,7 @@ project(yq_assetvk)
 add_library(${PROJECT_NAME} SHARED
     command_circular3.cpp
     command_user3.cpp
+    edit_position.cpp
     event_circular3.cpp
     event_user3.cpp
     gesture_file.cpp
@@ -49,10 +50,6 @@ add_library(${PROJECT_NAME} SHARED
     edit/Orientation3UI.cpp
     edit/OuterTessellation3UI.cpp
     edit/OuterTessellation4UI.cpp
-    edit/Position1UI.cpp
-    edit/Position2UI.cpp
-    edit/Position3UI.cpp
-    edit/Position4UI.cpp
     edit/RangeWUI.cpp
     edit/RangeXUI.cpp
     edit/RangeYUI.cpp

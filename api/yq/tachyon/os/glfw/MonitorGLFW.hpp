@@ -7,9 +7,9 @@
 #pragma once
 
 #include <yq/tachyon/os/Monitor.hpp>
-#include <yq/tachyon/interface/IPosition2.hpp>
-#include <yq/tachyon/interface/IScale2.hpp>
-#include <yq/tachyon/interface/ISize2.hpp>
+//#include <yq/tachyon/interface/IPosition2.hpp>
+//#include <yq/tachyon/interface/IScale2.hpp>
+//#include <yq/tachyon/interface/ISize2.hpp>
 #include <yq/color/RGB.hpp>
 #include <yq/shape/Size2.hpp>
 
@@ -64,3 +64,5 @@ namespace yq::tachyon {
         std::span<const GLFWvidmode*>   _modes() const;
     };
 }
+
+YQ_TACHYON_FORCE(yq::tachyon::MonitorGLFW)

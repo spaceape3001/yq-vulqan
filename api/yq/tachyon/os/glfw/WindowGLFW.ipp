@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/os/glfw/WindowGLFW.hpp>
-#include <yq/tachyon/os/glfw/LoggingGLFW.hpp>
+#include "WindowGLFW.hpp"
+
 #include <yq/tachyon/logging.hpp>
-#include <yq/tachyon/os/WindowMetaWriter.hpp>
+
 #include <yq/tachyon/command/cursor/CursorCaptureCommand.hpp>
 #include <yq/tachyon/command/cursor/CursorDisableCommand.hpp>
 #include <yq/tachyon/command/cursor/CursorHideCommand.hpp>
@@ -23,7 +23,6 @@
 #include <yq/tachyon/command/ui/ShowCommand.hpp>
 #include <yq/tachyon/command/ui/TitleCommand.hpp>
 #include <yq/tachyon/command/ui/UnfloatCommand.hpp>
-#include <yq/tachyon/os/KeyCode.hpp>
 #include <yq/tachyon/event/GamepadEvent.hpp>
 #include <yq/tachyon/event/JoystickEvent.hpp>
 #include <yq/tachyon/event/cursor/CursorCaptureEvent.hpp>
@@ -51,17 +50,19 @@
 #include <yq/tachyon/event/ui/ShowEvent.hpp>
 #include <yq/tachyon/event/ui/TitleEvent.hpp>
 #include <yq/tachyon/event/window/FramebufferResizeEvent.hpp>
+#include <yq/tachyon/os/KeyCode.hpp>
+#include <yq/tachyon/os/glfw/DesktopGLFW.hpp>
+#include <yq/tachyon/os/glfw/LoggingGLFW.hpp>
+#include <yq/tachyon/os/glfw/MonitorGLFW.hpp>
+#include <yq/tachyon/os/WindowMetaWriter.hpp>
 #include <yq/tachyon/request/ui/CloseRequest.hpp>
 #include <yq/tachyon/request/ui/RefreshRequest.hpp>
+#include <yq/tachyon/vulkan/VulqanManager.hpp>
+#include <yq/tachyon/vulkan/ViSurface.hpp>
 #include <yq/trait/numbers.hpp>
 #include <yq/math/utility.hpp>
 #include <yq/tachyon/app/ViewerCreateInfo.hpp>
 
-#include <yq/tachyon/os/glfw/DesktopGLFW.hpp>
-#include <yq/tachyon/os/glfw/LoggingGLFW.hpp>
-#include <yq/tachyon/os/glfw/MonitorGLFW.hpp>
-#include <yq/tachyon/vulkan/VulqanManager.hpp>
-#include <yq/tachyon/vulkan/ViSurface.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::WindowGLFW)
 
@@ -750,7 +751,7 @@ namespace yq::tachyon {
     {
         auto w = writer<WindowGLFW>();
         w.description("GLFW Window");
-        w.interface<IPosition²>();
+        w.interface<IPosition²D>();
         w.slot(&WindowGLFW::on_aspect_command);
         w.slot(&WindowGLFW::on_attention_command);
         w.slot(&WindowGLFW::on_cursor_capture_command);

@@ -7,40 +7,40 @@
 #include "AddPosition3MCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::AddPosition3MCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddPosition³MCommand)
 
 namespace yq::tachyon {
-    AddPosition3MCommand::AddPosition3MCommand(const Header&h) : 
+    AddPosition³MCommand::AddPosition³MCommand(const Header&h) : 
         PositionCommand(h)
     {
     }
 
-    AddPosition3MCommand::AddPosition3MCommand(const Header&h, const Meter3D& Δ) : 
+    AddPosition³MCommand::AddPosition³MCommand(const Header&h, const Meter3D& Δ) : 
         PositionCommand(h), m_Δ(Δ)
     {
     }
     
-    AddPosition3MCommand::AddPosition3MCommand(const AddPosition3MCommand&cp, const Header&h) : 
+    AddPosition³MCommand::AddPosition³MCommand(const AddPosition³MCommand&cp, const Header&h) : 
         PositionCommand(cp, h), m_Δ(cp.m_Δ)
     {
     }
 
-    AddPosition3MCommand::~AddPosition3MCommand()
+    AddPosition³MCommand::~AddPosition³MCommand()
     {
     }
 
-    PostCPtr    AddPosition3MCommand::clone(rebind_k, const Header& h) const 
+    PostCPtr    AddPosition³MCommand::clone(rebind_k, const Header& h) const 
     {
-        return new AddPosition3MCommand(*this, h);
+        return new AddPosition³MCommand(*this, h);
     }
    
-    void AddPosition3MCommand::init_meta()
+    void AddPosition³MCommand::init_meta()
     {
-        auto w = writer<AddPosition3MCommand>();
+        auto w = writer<AddPosition³MCommand>();
         w.description("Add Position Command in 3D (meters)");
-        w.property("Δx", &AddPosition3MCommand::Δx).tag(kTag_Log);
-        w.property("Δy", &AddPosition3MCommand::Δy).tag(kTag_Log);
-        w.property("Δz", &AddPosition3MCommand::Δz).tag(kTag_Log);
-        w.property("Δ", &AddPosition3MCommand::m_Δ).tag(kTag_Save);
+        w.property("Δx", &AddPosition³MCommand::Δx).tag(kTag_Log);
+        w.property("Δy", &AddPosition³MCommand::Δy).tag(kTag_Log);
+        w.property("Δz", &AddPosition³MCommand::Δz).tag(kTag_Log);
+        w.property("Δ", &AddPosition³MCommand::m_Δ).tag(kTag_Save);
     }
 }

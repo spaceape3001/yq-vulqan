@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/interface/IPosition4.hpp>
+#include <yq/tachyon/interface/IPosition4D.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
@@ -16,9 +16,9 @@ namespace yq::tachyon {
     class AddPositionˣDCommand;
     class AddPositionʸDCommand;
     class AddPositionᶻDCommand;
-    class MultiplyPositionCommand;   // here due to copy & paste, however
+    class MultiplyPositionDCommand;   // here due to copy & paste, however
     class MultiplyPosition⁴DCommand;  // might go for it (later)
-    class MultiplyPositionʷCommand;
+    class MultiplyPositionʷDCommand;
     class MultiplyPositionˣDCommand;
     class MultiplyPositionʸDCommand;
     class MultiplyPositionᶻDCommand;
@@ -28,7 +28,7 @@ namespace yq::tachyon {
     class SetPositionʸDCommand;
     class SetPositionᶻDCommand;
 
-    class APosition⁴ : public IPosition⁴, public virtual Tachyon::Helper {
+    class APosition⁴ : public IPosition⁴D, public virtual Tachyon::Helper {
     public:
     
         //!  Basic position in the 4D space
@@ -92,9 +92,9 @@ namespace yq::tachyon {
         void        on_add_positionY(const AddPositionʸDCommand&);
         void        on_add_positionZ(const AddPositionᶻDCommand&);
         
-        void        on_multiply_position(const MultiplyPositionCommand&);
+        void        on_multiply_position(const MultiplyPositionDCommand&);
         void        on_multiply_position4(const MultiplyPosition⁴DCommand&);
-        void        on_multiply_positionW(const MultiplyPositionʷCommand&);
+        void        on_multiply_positionW(const MultiplyPositionʷDCommand&);
         void        on_multiply_positionX(const MultiplyPositionˣDCommand&);
         void        on_multiply_positionY(const MultiplyPositionʸDCommand&);
         void        on_multiply_positionZ(const MultiplyPositionᶻDCommand&);

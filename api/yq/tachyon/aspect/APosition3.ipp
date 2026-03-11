@@ -11,11 +11,11 @@
 #include <yq/tachyon/command/position/AddPositionXDCommand.hpp>
 #include <yq/tachyon/command/position/AddPositionYDCommand.hpp>
 #include <yq/tachyon/command/position/AddPositionZDCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPosition3Command.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionXCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionYCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionZCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionDCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPosition3DCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionXDCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionYDCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionZDCommand.hpp>
 #include <yq/tachyon/command/position/SetPosition3DCommand.hpp>
 #include <yq/tachyon/command/position/SetPositionXDCommand.hpp>
 #include <yq/tachyon/command/position/SetPositionYDCommand.hpp>
@@ -170,7 +170,7 @@ namespace yq::tachyon {
         position(ADD, Z, cmd.Δz());
     }
     
-    void        APosition³::on_multiply_position(const MultiplyPositionCommand&cmd)
+    void        APosition³::on_multiply_position(const MultiplyPositionDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

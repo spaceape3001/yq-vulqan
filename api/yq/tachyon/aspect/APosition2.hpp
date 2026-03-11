@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/interface/IPosition2.hpp>
+#include <yq/tachyon/interface/IPosition2D.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
@@ -14,7 +14,7 @@ namespace yq::tachyon {
     class AddPosition²DCommand;
     class AddPositionˣDCommand;
     class AddPositionʸDCommand;
-    class MultiplyPositionCommand;
+    class MultiplyPositionDCommand;
     class MultiplyPosition²DCommand;
     class MultiplyPositionˣDCommand;
     class MultiplyPositionʸDCommand;
@@ -22,7 +22,7 @@ namespace yq::tachyon {
     class SetPositionˣDCommand;
     class SetPositionʸDCommand;
 
-    class APosition² : public IPosition², public virtual Tachyon::Helper {
+    class APosition² : public IPosition²D, public virtual Tachyon::Helper {
     public:
     
         //!  Basic position in the 2D space
@@ -74,7 +74,7 @@ namespace yq::tachyon {
         void        on_add_positionX(const AddPositionˣDCommand&);
         void        on_add_positionY(const AddPositionʸDCommand&);
         
-        void        on_multiply_position(const MultiplyPositionCommand&);
+        void        on_multiply_position(const MultiplyPositionDCommand&);
         void        on_multiply_position2(const MultiplyPosition²DCommand&);
         void        on_multiply_positionX(const MultiplyPositionˣDCommand&);
         void        on_multiply_positionY(const MultiplyPositionʸDCommand&);

@@ -8,10 +8,10 @@
 #include <yq/tachyon/command/position/AddPosition2DCommand.hpp>
 #include <yq/tachyon/command/position/AddPositionXDCommand.hpp>
 #include <yq/tachyon/command/position/AddPositionYDCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPosition2Command.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionXCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionYCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionDCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPosition2DCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionXDCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionYDCommand.hpp>
 #include <yq/tachyon/command/position/SetPosition2DCommand.hpp>
 #include <yq/tachyon/command/position/SetPositionXDCommand.hpp>
 #include <yq/tachyon/command/position/SetPositionYDCommand.hpp>
@@ -127,7 +127,7 @@ namespace yq::tachyon {
         position(ADD, X, cmd.Δy());
     }
     
-    void        APosition²::on_multiply_position(const MultiplyPositionCommand&cmd)
+    void        APosition²::on_multiply_position(const MultiplyPositionDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

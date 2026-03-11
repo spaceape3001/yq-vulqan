@@ -11,11 +11,11 @@
 #include <yq/tachyon/command/position/AddPositionXDCommand.hpp>
 #include <yq/tachyon/command/position/AddPositionYDCommand.hpp>
 #include <yq/tachyon/command/position/AddPositionZDCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPosition3Command.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionXCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionYCommand.hpp>
-#include <yq/tachyon/command/position/MultiplyPositionZCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionDCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPosition3DCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionXDCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionYDCommand.hpp>
+#include <yq/tachyon/command/position/MultiplyPositionZDCommand.hpp>
 #include <yq/tachyon/command/position/SetPosition3DCommand.hpp>
 #include <yq/tachyon/command/position/SetPositionXDCommand.hpp>
 #include <yq/tachyon/command/position/SetPositionYDCommand.hpp>
@@ -27,7 +27,7 @@ namespace yq::tachyon {
     template <typename C>
     void APosition³::init_meta(TachyonMeta::Writer<C>& w)
     {
-        w.template interface<IPosition³>();
+        w.template interface<IPosition³D>();
         w.property(UNSAFE, "position", &APosition³::m_position).tag(kTag_Save);
         
         w.slot(UNSAFE, &APosition³::on_set_position3);

@@ -156,7 +156,7 @@ namespace yq::tachyon {
         auto w = writer<MonitorGLFW>();
         w.description("GLFW Monitor");
         w.execution(EVERY(5_s));
-        w.interface<IPosition²>();
+        w.interface<IPosition²D>();
         w.interface<ISize²>();
         w.interface<IScale²>();
     }

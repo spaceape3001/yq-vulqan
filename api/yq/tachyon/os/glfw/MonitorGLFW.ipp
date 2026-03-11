@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/os/glfw/MonitorGLFW.hpp>
-#include <yq/tachyon/event/spatial/Position2Event.hpp>
+#include <yq/tachyon/event/spatial/Position2DEvent.hpp>
 #include <yq/tachyon/event/spatial/Scale2Event.hpp>
 #include <yq/tachyon/event/spatial/Size2Event.hpp>
 #include <yq/tachyon/os/MonitorMetaWriter.hpp>
@@ -130,7 +130,7 @@ namespace yq::tachyon {
             return TEARDOWN;
             
         if(set(m_position, _position())){
-            send(new Position²Event({.source=this}, m_position.cast<double>()));
+            send(new Position²DEvent({.source=this}, m_position.cast<double>()));
         }
         
         const GLFWvidmode*  vm  =  glfwGetVideoMode(m_monitor);

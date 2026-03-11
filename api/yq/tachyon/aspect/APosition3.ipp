@@ -20,7 +20,7 @@
 #include <yq/tachyon/command/position/SetPositionXCommand.hpp>
 #include <yq/tachyon/command/position/SetPositionYCommand.hpp>
 #include <yq/tachyon/command/position/SetPositionZCommand.hpp>
-#include <yq/tachyon/event/spatial/Position3Event.hpp>
+#include <yq/tachyon/event/spatial/Position3DEvent.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/vector/Vector3.hxx>
 
@@ -41,7 +41,7 @@ namespace yq::tachyon {
 
     void        APosition³::position(emit_k)
     {
-        send(new Position3Event({.source=typed()}, m_position));
+        send(new Position³DEvent({.source=typed()}, m_position));
     }
 
     void        APosition³::position(set_k, const Vector3D& sz) 

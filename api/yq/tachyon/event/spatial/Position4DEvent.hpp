@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Source moved in 4-Dimensions
-    class Position⁴Event : public SpatialEvent {
-        YQ_OBJECT_DECLARE(Position⁴Event, SpatialEvent)
+    class Position⁴DEvent : public SpatialEvent {
+        YQ_OBJECT_DECLARE(Position⁴DEvent, SpatialEvent)
     public:
-        Position⁴Event(const Header&, const Vector4D&);
+        Position⁴DEvent(const Header&, const Vector4D&);
     
         const Vector4D&   position() const  { return m_position; }
         
@@ -29,16 +29,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        Position⁴Event(const Header&);
-        Position⁴Event(const Position⁴Event&, const Header&);
-        ~Position⁴Event();
+        Position⁴DEvent(const Header&);
+        Position⁴DEvent(const Position⁴DEvent&, const Header&);
+        ~Position⁴DEvent();
 
     private:
         Vector4D  m_position = ZERO;
         
-        Position⁴Event(const Position⁴Event&) = delete;
-        Position⁴Event(Position⁴Event&&) = delete;
-        Position⁴Event& operator=(const Position⁴Event&) = delete;
-        Position⁴Event& operator=(Position⁴Event&&) = delete;
+        Position⁴DEvent(const Position⁴DEvent&) = delete;
+        Position⁴DEvent(Position⁴DEvent&&) = delete;
+        Position⁴DEvent& operator=(const Position⁴DEvent&) = delete;
+        Position⁴DEvent& operator=(Position⁴DEvent&&) = delete;
     };
 }

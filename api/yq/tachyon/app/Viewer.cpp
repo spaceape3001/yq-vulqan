@@ -74,7 +74,7 @@
 #include <yq/tachyon/event/mouse/MousePressEvent.hpp>
 #include <yq/tachyon/event/mouse/MouseReleaseEvent.hpp>
 
-#include <yq/tachyon/event/spatial/Position2Event.hpp>
+#include <yq/tachyon/event/spatial/Position2DEvent.hpp>
 #include <yq/tachyon/event/spatial/Size2Event.hpp>
 
 #include <yq/tachyon/event/sim/PauseEvent.hpp>
@@ -853,7 +853,7 @@ namespace yq::tachyon {
         }
     }
 
-    void    Viewer::on_move_event(const Position²Event&evt)
+    void    Viewer::on_move_event(const Position²DEvent&evt)
     {
         if(evt.source() == m_window){
             // yInfo() << "Viewer moved (" << evt.x() << ", " << evt.y() << ")";

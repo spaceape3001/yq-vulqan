@@ -7,39 +7,39 @@
 #include "Position2MEvent.hpp"
 #include <yq/tachyon/api/EventMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Position2MEvent)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Position²MEvent)
 
 namespace yq::tachyon {
-    Position2MEvent::Position2MEvent(const Header&h) : 
+    Position²MEvent::Position²MEvent(const Header&h) : 
         SpatialEvent(h)
     {
     }
     
-    Position2MEvent::Position2MEvent(const Header&h, const Meter2D& v) : 
+    Position²MEvent::Position²MEvent(const Header&h, const Meter2D& v) : 
         SpatialEvent(h), m_position(v)
     {
     }
 
-    Position2MEvent::Position2MEvent(const Position2MEvent&cp, const Header&h) : 
+    Position²MEvent::Position²MEvent(const Position²MEvent&cp, const Header&h) : 
         SpatialEvent(cp, h), m_position(cp.m_position)
     {
     }
 
-    Position2MEvent::~Position2MEvent()
+    Position²MEvent::~Position²MEvent()
     {
     }
 
-    PostCPtr    Position2MEvent::clone(rebind_k, const Header& h) const 
+    PostCPtr    Position²MEvent::clone(rebind_k, const Header& h) const 
     {
-        return new Position2MEvent(*this, h);
+        return new Position²MEvent(*this, h);
     }
    
-    void Position2MEvent::init_meta()
+    void Position²MEvent::init_meta()
     {
-        auto w = writer<Position2MEvent>();
+        auto w = writer<Position²MEvent>();
         w.description("Position Event in 2D (meters)");
-        w.property("x", &Position2MEvent::x).tag(kTag_Log);
-        w.property("y", &Position2MEvent::y).tag(kTag_Log);
-        w.property("position", &Position2MEvent::m_position).tag(kTag_Save);
+        w.property("x", &Position²MEvent::x).tag(kTag_Log);
+        w.property("y", &Position²MEvent::y).tag(kTag_Log);
+        w.property("position", &Position²MEvent::m_position).tag(kTag_Save);
     }
 }

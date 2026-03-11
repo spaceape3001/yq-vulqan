@@ -15,7 +15,7 @@
 #include <yq/tachyon/command/position/SetPosition2Command.hpp>
 #include <yq/tachyon/command/position/SetPositionXCommand.hpp>
 #include <yq/tachyon/command/position/SetPositionYCommand.hpp>
-#include <yq/tachyon/event/spatial/Position2Event.hpp>
+#include <yq/tachyon/event/spatial/Position2DEvent.hpp>
 
 namespace yq::tachyon {
     APosition²::APosition²(const Vector2D& pos)
@@ -30,7 +30,7 @@ namespace yq::tachyon {
 
     void        APosition²::position(emit_k)
     {
-        send(new Position²Event({.source=typed()}, m_position));
+        send(new Position²DEvent({.source=typed()}, m_position));
     }
 
     void        APosition²::position(set_k, const Vector2D& sz) 

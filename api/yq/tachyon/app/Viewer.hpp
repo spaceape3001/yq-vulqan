@@ -80,7 +80,7 @@ namespace yq::tachyon {
     class MaximizeCommand;
     class MaximizeEvent;
     class PauseCommand;
-    class Position²Event;
+    class Position²DEvent;
     class RestoreCommand;
     class RestoreEvent;
     class ResumeCommand;
@@ -402,7 +402,7 @@ namespace yq::tachyon {
         void    on_mouse_move_event(const MouseMoveEvent&);
         void    on_mouse_press_event(const MousePressEvent&);
         void    on_mouse_release_event(const MouseReleaseEvent&);
-        void    on_move_event(const Position²Event&);
+        void    on_move_event(const Position²DEvent&);
         void    on_restore_command(const RestoreCommand&);
         void    on_size_event(const Size²Event&);
         void    on_show_command(const ShowCommand&);

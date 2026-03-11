@@ -13,10 +13,10 @@
 namespace yq::tachyon {
 
     //! Source moved in 3-Dimensions
-    class Position3MEvent : public SpatialEvent {
-        YQ_OBJECT_DECLARE(Position3MEvent, SpatialEvent)
+    class Position³MEvent : public SpatialEvent {
+        YQ_OBJECT_DECLARE(Position³MEvent, SpatialEvent)
     public:
-        Position3MEvent(const Header&, const Meter3D&);
+        Position³MEvent(const Header&, const Meter3D&);
     
         const Meter3D&   position() const  { return m_position; }
         
@@ -29,16 +29,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        Position3MEvent(const Header&);
-        Position3MEvent(const Position3MEvent&, const Header&);
-        ~Position3MEvent();
+        Position³MEvent(const Header&);
+        Position³MEvent(const Position³MEvent&, const Header&);
+        ~Position³MEvent();
 
     private:
         Meter3D  m_position = ZERO;
         
-        Position3MEvent(const Position3MEvent&) = delete;
-        Position3MEvent(Position3MEvent&&) = delete;
-        Position3MEvent& operator=(const Position3MEvent&) = delete;
-        Position3MEvent& operator=(Position3MEvent&&) = delete;
+        Position³MEvent(const Position³MEvent&) = delete;
+        Position³MEvent(Position³MEvent&&) = delete;
+        Position³MEvent& operator=(const Position³MEvent&) = delete;
+        Position³MEvent& operator=(Position³MEvent&&) = delete;
     };
 }

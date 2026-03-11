@@ -12,7 +12,7 @@
 #include <yq/tachyon/command/position/MultiplyPositionXCommand.hpp>
 #include <yq/tachyon/command/position/SetPosition1Command.hpp>
 #include <yq/tachyon/command/position/SetPositionXCommand.hpp>
-#include <yq/tachyon/event/spatial/Position1Event.hpp>
+#include <yq/tachyon/event/spatial/Position1DEvent.hpp>
 
 namespace yq::tachyon {
     APosition¹::APosition¹()
@@ -26,7 +26,7 @@ namespace yq::tachyon {
 
     void        APosition¹::position(emit_k)
     {
-        send(new Position¹Event({.source=typed()}, m_position));
+        send(new Position¹DEvent({.source=typed()}, m_position));
     }
 
     void        APosition¹::position(set_k, const Vector1D& sz) 

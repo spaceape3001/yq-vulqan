@@ -7,7 +7,6 @@
 #pragma once
 
 #include <yq/tachyon/command/SizeCommand.hpp>
-#include <yq/vector/Vector1.hpp>
 
 namespace yq::tachyon {
 

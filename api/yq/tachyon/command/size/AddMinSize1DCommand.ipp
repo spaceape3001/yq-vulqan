@@ -14,7 +14,7 @@ namespace yq::tachyon {
     {
     }
 
-    AddMinSize¹DCommand::AddMinSize¹DCommand(const Header& h, const Vector1D& v) : 
+    AddMinSize¹DCommand::AddMinSize¹DCommand(const Header& h, const Size1D& v) : 
         SizeCommand(h), m_Δ(v)
     {
     }

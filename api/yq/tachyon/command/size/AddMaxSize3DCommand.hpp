@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/command/SizeCommand.hpp>
-#include <yq/vector/Vector3.hpp>
+#include <yq/shape/Size3.hpp>
 
 namespace yq::tachyon {
 
@@ -15,9 +15,9 @@ namespace yq::tachyon {
     class AddMaxSize³DCommand : public SizeCommand {
         YQ_OBJECT_DECLARE(AddMaxSize³DCommand, SizeCommand)
     public:
-        AddMaxSize³DCommand(const Header&, const Vector3D&);
+        AddMaxSize³DCommand(const Header&, const Size3D&);
     
-        const Vector3D&   Δ() const  { return m_Δ; }
+        const Size3D&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
@@ -33,7 +33,7 @@ namespace yq::tachyon {
         ~AddMaxSize³DCommand();
 
     private:
-        Vector3D  m_Δ = ZERO;
+        Size3D  m_Δ = ZERO;
         
         AddMaxSize³DCommand(const AddMaxSize³DCommand&) = delete;
         AddMaxSize³DCommand(AddMaxSize³DCommand&&) = delete;

@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AddMaxSizeZDCommand.hpp"
+#include "AddMaxSizeZMCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::AddMaxSizeᶻDCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddMaxSizeᶻMCommand)
 
 namespace yq::tachyon {
-    AddMaxSizeᶻDCommand::AddMaxSizeᶻDCommand(const Header&h) : 
+    AddMaxSizeᶻMCommand::AddMaxSizeᶻMCommand(const Header&h) : 
         SizeCommand(h)
     {
     }
     
-    AddMaxSizeᶻDCommand::AddMaxSizeᶻDCommand(const Header&h, double z) : 
+    AddMaxSizeᶻMCommand::AddMaxSizeᶻMCommand(const Header&h, Meter z) : 
         SizeCommand(h), m_Δz(z)
     {
     }
 
-    AddMaxSizeᶻDCommand::AddMaxSizeᶻDCommand(const AddMaxSizeᶻDCommand& cp, const Header& h) : 
+    AddMaxSizeᶻMCommand::AddMaxSizeᶻMCommand(const AddMaxSizeᶻMCommand& cp, const Header& h) : 
         SizeCommand(cp, h), m_Δz(cp.m_Δz)
     {
     }
 
-    AddMaxSizeᶻDCommand::~AddMaxSizeᶻDCommand()
+    AddMaxSizeᶻMCommand::~AddMaxSizeᶻMCommand()
     {
     }
 
-    PostCPtr    AddMaxSizeᶻDCommand::clone(rebind_k, const Header&h) const 
+    PostCPtr    AddMaxSizeᶻMCommand::clone(rebind_k, const Header&h) const 
     {
-        return new AddMaxSizeᶻDCommand(*this, h);
+        return new AddMaxSizeᶻMCommand(*this, h);
     }
     
-    void AddMaxSizeᶻDCommand::init_meta()
+    void AddMaxSizeᶻMCommand::init_meta()
     {
-        auto w = writer<AddMaxSizeᶻDCommand>();
-        w.description("AddMax Size DCommand in Z");
-        w.property("Δz", &AddMaxSizeᶻDCommand::m_Δz).tag(kTag_Log).tag(kTag_Save);
+        auto w = writer<AddMaxSizeᶻMCommand>();
+        w.description("AddMax Size MCommand in Z");
+        w.property("Δz", &AddMaxSizeᶻMCommand::m_Δz).tag(kTag_Log).tag(kTag_Save);
     }
 }

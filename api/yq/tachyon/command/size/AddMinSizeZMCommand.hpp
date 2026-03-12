@@ -6,34 +6,35 @@
 
 #pragma once
 
+#include <yq/unit/declare.hpp>
 #include <yq/tachyon/command/SizeCommand.hpp>
-#include <yq/vector/Vector1.hpp>
+#include <yq/shape/Size1.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's z-position
-    class AddMinSizeᶻDCommand : public SizeCommand {
-        YQ_OBJECT_DECLARE(AddMinSizeᶻDCommand, SizeCommand)
+    class AddMinSizeᶻMCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(AddMinSizeᶻMCommand, SizeCommand)
     public:
-        AddMinSizeᶻDCommand(const Header&, double);
+        AddMinSizeᶻMCommand(const Header&, Meter);
         
         static void init_meta();
         
-        double  Δz() const { return m_Δz; }
+        Meter  Δz() const { return m_Δz; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        AddMinSizeᶻDCommand(const AddMinSizeᶻDCommand&, const Header&);
-        AddMinSizeᶻDCommand(const Header&);
-        ~AddMinSizeᶻDCommand();
+        AddMinSizeᶻMCommand(const AddMinSizeᶻMCommand&, const Header&);
+        AddMinSizeᶻMCommand(const Header&);
+        ~AddMinSizeᶻMCommand();
 
     private:
-        double  m_Δz = 0.0;
+        Meter  m_Δz = 0.0;
         
-        AddMinSizeᶻDCommand(const AddMinSizeᶻDCommand&) = delete;
-        AddMinSizeᶻDCommand(AddMinSizeᶻDCommand&&) = delete;
-        AddMinSizeᶻDCommand& operator=(const AddMinSizeᶻDCommand&) = delete;
-        AddMinSizeᶻDCommand& operator=(AddMinSizeᶻDCommand&&) = delete;
+        AddMinSizeᶻMCommand(const AddMinSizeᶻMCommand&) = delete;
+        AddMinSizeᶻMCommand(AddMinSizeᶻMCommand&&) = delete;
+        AddMinSizeᶻMCommand& operator=(const AddMinSizeᶻMCommand&) = delete;
+        AddMinSizeᶻMCommand& operator=(AddMinSizeᶻMCommand&&) = delete;
     };
 }

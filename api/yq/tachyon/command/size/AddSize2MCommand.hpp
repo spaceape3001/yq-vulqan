@@ -6,37 +6,38 @@
 
 #pragma once
 
+#include <yq/unit/declare.hpp>
 #include <yq/tachyon/command/SizeCommand.hpp>
-#include <yq/vector/Vector2.hpp>
+#include <yq/shape/Size2.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's scale
-    class AddSize²DCommand : public SizeCommand {
-        YQ_OBJECT_DECLARE(AddSize²DCommand, SizeCommand)
+    class AddSize²MCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(AddSize²MCommand, SizeCommand)
     public:
-        AddSize²DCommand(const Header&, const Vector2D&);
+        AddSize²MCommand(const Header&, const Size2D&);
     
-        const Vector2D&   Δ() const  { return m_Δ; }
+        const Size2D&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
-        double  Δx() const { return m_Δ.x; }
-        double  Δy() const { return m_Δ.y; }
+        Meter  Δx() const { return m_Δ.x; }
+        Meter  Δy() const { return m_Δ.y; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
         
     protected:
-        AddSize²DCommand(const AddSize²DCommand&, const Header&);
-        AddSize²DCommand(const Header&);
-        ~AddSize²DCommand();
+        AddSize²MCommand(const AddSize²MCommand&, const Header&);
+        AddSize²MCommand(const Header&);
+        ~AddSize²MCommand();
 
     private:
-        Vector2D  m_Δ = ZERO;
+        Size2D  m_Δ = ZERO;
         
-        AddSize²DCommand(const AddSize²DCommand&) = delete;
-        AddSize²DCommand(AddSize²DCommand&&) = delete;
-        AddSize²DCommand& operator=(const AddSize²DCommand&) = delete;
-        AddSize²DCommand& operator=(AddSize²DCommand&&) = delete;
+        AddSize²MCommand(const AddSize²MCommand&) = delete;
+        AddSize²MCommand(AddSize²MCommand&&) = delete;
+        AddSize²MCommand& operator=(const AddSize²MCommand&) = delete;
+        AddSize²MCommand& operator=(AddSize²MCommand&&) = delete;
     };
 }

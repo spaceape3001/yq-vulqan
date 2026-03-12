@@ -6,39 +6,40 @@
 
 #pragma once
 
+#include <yq/unit/declare.hpp>
 #include <yq/tachyon/command/SizeCommand.hpp>
-#include <yq/vector/Vector4.hpp>
+#include <yq/shape/Size4.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's scale
-    class AddSize⁴DCommand : public SizeCommand {
-        YQ_OBJECT_DECLARE(AddSize⁴DCommand, SizeCommand)
+    class AddSize⁴MCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(AddSize⁴MCommand, SizeCommand)
     public:
-        AddSize⁴DCommand(const Header&, const Vector4D&);
+        AddSize⁴MCommand(const Header&, const Size4D&);
     
-        const Vector4D&   Δ() const  { return m_Δ; }
+        const Size4D&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
-        double  Δx() const { return m_Δ.x; }
-        double  Δy() const { return m_Δ.y; }
-        double  Δz() const { return m_Δ.z; }
-        double  Δw() const { return m_Δ.w; }
+        Meter  Δx() const { return m_Δ.x; }
+        Meter  Δy() const { return m_Δ.y; }
+        Meter  Δz() const { return m_Δ.z; }
+        Meter  Δw() const { return m_Δ.w; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        AddSize⁴DCommand(const AddSize⁴DCommand&, const Header&);
-        AddSize⁴DCommand(const Header&);
-        ~AddSize⁴DCommand();
+        AddSize⁴MCommand(const AddSize⁴MCommand&, const Header&);
+        AddSize⁴MCommand(const Header&);
+        ~AddSize⁴MCommand();
 
     private:
-        Vector4D  m_Δ = ZERO;
+        Size4D  m_Δ = ZERO;
         
-        AddSize⁴DCommand(const AddSize⁴DCommand&) = delete;
-        AddSize⁴DCommand(AddSize⁴DCommand&&) = delete;
-        AddSize⁴DCommand& operator=(const AddSize⁴DCommand&) = delete;
-        AddSize⁴DCommand& operator=(AddSize⁴DCommand&&) = delete;
+        AddSize⁴MCommand(const AddSize⁴MCommand&) = delete;
+        AddSize⁴MCommand(AddSize⁴MCommand&&) = delete;
+        AddSize⁴MCommand& operator=(const AddSize⁴MCommand&) = delete;
+        AddSize⁴MCommand& operator=(AddSize⁴MCommand&&) = delete;
     };
 }

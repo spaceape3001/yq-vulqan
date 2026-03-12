@@ -6,39 +6,40 @@
 
 #pragma once
 
+#include <yq/units.hpp>
 #include <yq/tachyon/command/SizeCommand.hpp>
-#include <yq/vector/Vector4.hpp>
+#include <yq/shape/Size4.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's scale
-    class AddMaxSize⁴DCommand : public SizeCommand {
-        YQ_OBJECT_DECLARE(AddMaxSize⁴DCommand, SizeCommand)
+    class AddMaxSize⁴MCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(AddMaxSize⁴MCommand, SizeCommand)
     public:
-        AddMaxSize⁴DCommand(const Header&, const Vector4D&);
+        AddMaxSize⁴MCommand(const Header&, const Size4D&);
     
-        const Vector4D&   Δ() const  { return m_Δ; }
+        const Size4D&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
-        double  Δx() const { return m_Δ.x; }
-        double  Δy() const { return m_Δ.y; }
-        double  Δz() const { return m_Δ.z; }
-        double  Δw() const { return m_Δ.w; }
+        Meter  Δx() const { return m_Δ.x; }
+        Meter  Δy() const { return m_Δ.y; }
+        Meter  Δz() const { return m_Δ.z; }
+        Meter  Δw() const { return m_Δ.w; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        AddMaxSize⁴DCommand(const AddMaxSize⁴DCommand&, const Header&);
-        AddMaxSize⁴DCommand(const Header&);
-        ~AddMaxSize⁴DCommand();
+        AddMaxSize⁴MCommand(const AddMaxSize⁴MCommand&, const Header&);
+        AddMaxSize⁴MCommand(const Header&);
+        ~AddMaxSize⁴MCommand();
 
     private:
-        Vector4D  m_Δ = ZERO;
+        Size4D  m_Δ = ZERO;
         
-        AddMaxSize⁴DCommand(const AddMaxSize⁴DCommand&) = delete;
-        AddMaxSize⁴DCommand(AddMaxSize⁴DCommand&&) = delete;
-        AddMaxSize⁴DCommand& operator=(const AddMaxSize⁴DCommand&) = delete;
-        AddMaxSize⁴DCommand& operator=(AddMaxSize⁴DCommand&&) = delete;
+        AddMaxSize⁴MCommand(const AddMaxSize⁴MCommand&) = delete;
+        AddMaxSize⁴MCommand(AddMaxSize⁴MCommand&&) = delete;
+        AddMaxSize⁴MCommand& operator=(const AddMaxSize⁴MCommand&) = delete;
+        AddMaxSize⁴MCommand& operator=(AddMaxSize⁴MCommand&&) = delete;
     };
 }

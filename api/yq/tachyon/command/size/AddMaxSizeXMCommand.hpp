@@ -6,34 +6,35 @@
 
 #pragma once
 
+#include <yq/unit/declare.hpp>
 #include <yq/tachyon/command/SizeCommand.hpp>
-#include <yq/vector/Vector1.hpp>
+#include <yq/shape/Size1.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's x-scale
-    class AddMaxSizeˣDCommand : public SizeCommand {
-        YQ_OBJECT_DECLARE(AddMaxSizeˣDCommand, SizeCommand)
+    class AddMaxSizeˣMCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(AddMaxSizeˣMCommand, SizeCommand)
     public:
-        AddMaxSizeˣDCommand(const Header&, double);
+        AddMaxSizeˣMCommand(const Header&, Meter);
         
         static void init_meta();
         
-        double  Δx() const { return m_Δx; }
+        Meter  Δx() const { return m_Δx; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        AddMaxSizeˣDCommand(const AddMaxSizeˣDCommand&, const Header&);
-        AddMaxSizeˣDCommand(const Header&);
-        ~AddMaxSizeˣDCommand();
+        AddMaxSizeˣMCommand(const AddMaxSizeˣMCommand&, const Header&);
+        AddMaxSizeˣMCommand(const Header&);
+        ~AddMaxSizeˣMCommand();
 
     private:
-        double  m_Δx = 0.0;
+        Meter  m_Δx = 0.0;
         
-        AddMaxSizeˣDCommand(const AddMaxSizeˣDCommand&) = delete;
-        AddMaxSizeˣDCommand(AddMaxSizeˣDCommand&&) = delete;
-        AddMaxSizeˣDCommand& operator=(const AddMaxSizeˣDCommand&) = delete;
-        AddMaxSizeˣDCommand& operator=(AddMaxSizeˣDCommand&&) = delete;
+        AddMaxSizeˣMCommand(const AddMaxSizeˣMCommand&) = delete;
+        AddMaxSizeˣMCommand(AddMaxSizeˣMCommand&&) = delete;
+        AddMaxSizeˣMCommand& operator=(const AddMaxSizeˣMCommand&) = delete;
+        AddMaxSizeˣMCommand& operator=(AddMaxSizeˣMCommand&&) = delete;
     };
 }

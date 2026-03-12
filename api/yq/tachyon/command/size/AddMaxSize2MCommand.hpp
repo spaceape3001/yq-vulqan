@@ -6,37 +6,38 @@
 
 #pragma once
 
+#include <yq/units.hpp>
 #include <yq/tachyon/command/SizeCommand.hpp>
-#include <yq/vector/Vector2.hpp>
+#include <yq/shape/Size2.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's scale
-    class AddMaxSize²DCommand : public SizeCommand {
-        YQ_OBJECT_DECLARE(AddMaxSize²DCommand, SizeCommand)
+    class AddMaxSize²MCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(AddMaxSize²MCommand, SizeCommand)
     public:
-        AddMaxSize²DCommand(const Header&, const Vector2D&);
+        AddMaxSize²MCommand(const Header&, const Size2D&);
     
-        const Vector2D&   Δ() const  { return m_Δ; }
+        const Size2D&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
-        double  Δx() const { return m_Δ.x; }
-        double  Δy() const { return m_Δ.y; }
+        Meter  Δx() const { return m_Δ.x; }
+        Meter  Δy() const { return m_Δ.y; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
         
     protected:
-        AddMaxSize²DCommand(const AddMaxSize²DCommand&, const Header&);
-        AddMaxSize²DCommand(const Header&);
-        ~AddMaxSize²DCommand();
+        AddMaxSize²MCommand(const AddMaxSize²MCommand&, const Header&);
+        AddMaxSize²MCommand(const Header&);
+        ~AddMaxSize²MCommand();
 
     private:
-        Vector2D  m_Δ = ZERO;
+        Size2D  m_Δ = ZERO;
         
-        AddMaxSize²DCommand(const AddMaxSize²DCommand&) = delete;
-        AddMaxSize²DCommand(AddMaxSize²DCommand&&) = delete;
-        AddMaxSize²DCommand& operator=(const AddMaxSize²DCommand&) = delete;
-        AddMaxSize²DCommand& operator=(AddMaxSize²DCommand&&) = delete;
+        AddMaxSize²MCommand(const AddMaxSize²MCommand&) = delete;
+        AddMaxSize²MCommand(AddMaxSize²MCommand&&) = delete;
+        AddMaxSize²MCommand& operator=(const AddMaxSize²MCommand&) = delete;
+        AddMaxSize²MCommand& operator=(AddMaxSize²MCommand&&) = delete;
     };
 }

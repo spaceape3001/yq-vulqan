@@ -6,34 +6,34 @@
 
 #pragma once
 
+#include <yq/unit/declare.hpp>
 #include <yq/tachyon/command/SizeCommand.hpp>
-#include <yq/vector/Vector1.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's x-scale
-    class AddSizeˣDCommand : public SizeCommand {
-        YQ_OBJECT_DECLARE(AddSizeˣDCommand, SizeCommand)
+    class AddSizeˣMCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(AddSizeˣMCommand, SizeCommand)
     public:
-        AddSizeˣDCommand(const Header&, double);
+        AddSizeˣMCommand(const Header&, Meter);
         
         static void init_meta();
         
-        double  Δx() const { return m_Δx; }
+        Meter  Δx() const { return m_Δx; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        AddSizeˣDCommand(const AddSizeˣDCommand&, const Header&);
-        AddSizeˣDCommand(const Header&);
-        ~AddSizeˣDCommand();
+        AddSizeˣMCommand(const AddSizeˣMCommand&, const Header&);
+        AddSizeˣMCommand(const Header&);
+        ~AddSizeˣMCommand();
 
     private:
-        double  m_Δx = 0.0;
+        Meter  m_Δx = 0.0;
         
-        AddSizeˣDCommand(const AddSizeˣDCommand&) = delete;
-        AddSizeˣDCommand(AddSizeˣDCommand&&) = delete;
-        AddSizeˣDCommand& operator=(const AddSizeˣDCommand&) = delete;
-        AddSizeˣDCommand& operator=(AddSizeˣDCommand&&) = delete;
+        AddSizeˣMCommand(const AddSizeˣMCommand&) = delete;
+        AddSizeˣMCommand(AddSizeˣMCommand&&) = delete;
+        AddSizeˣMCommand& operator=(const AddSizeˣMCommand&) = delete;
+        AddSizeˣMCommand& operator=(AddSizeˣMCommand&&) = delete;
     };
 }

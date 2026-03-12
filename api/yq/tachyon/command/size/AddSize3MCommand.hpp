@@ -6,38 +6,39 @@
 
 #pragma once
 
+#include <yq/unit/declare.hpp>
 #include <yq/tachyon/command/SizeCommand.hpp>
-#include <yq/vector/Vector3.hpp>
+#include <yq/shape/Size3.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's scale
-    class AddSize³DCommand : public SizeCommand {
-        YQ_OBJECT_DECLARE(AddSize³DCommand, SizeCommand)
+    class AddSize³MCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(AddSize³MCommand, SizeCommand)
     public:
-        AddSize³DCommand(const Header&, const Vector3D&);
+        AddSize³MCommand(const Header&, const Size3D&);
     
-        const Vector3D&   Δ() const  { return m_Δ; }
+        const Size3D&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
-        double  Δx() const { return m_Δ.x; }
-        double  Δy() const { return m_Δ.y; }
-        double  Δz() const { return m_Δ.z; }
+        Meter  Δx() const { return m_Δ.x; }
+        Meter  Δy() const { return m_Δ.y; }
+        Meter  Δz() const { return m_Δ.z; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        AddSize³DCommand(const AddSize³DCommand&, const Header&);
-        AddSize³DCommand(const Header&);
-        ~AddSize³DCommand();
+        AddSize³MCommand(const AddSize³MCommand&, const Header&);
+        AddSize³MCommand(const Header&);
+        ~AddSize³MCommand();
 
     private:
-        Vector3D  m_Δ = ZERO;
+        Size3D  m_Δ = ZERO;
         
-        AddSize³DCommand(const AddSize³DCommand&) = delete;
-        AddSize³DCommand(AddSize³DCommand&&) = delete;
-        AddSize³DCommand& operator=(const AddSize³DCommand&) = delete;
-        AddSize³DCommand& operator=(AddSize³DCommand&&) = delete;
+        AddSize³MCommand(const AddSize³MCommand&) = delete;
+        AddSize³MCommand(AddSize³MCommand&&) = delete;
+        AddSize³MCommand& operator=(const AddSize³MCommand&) = delete;
+        AddSize³MCommand& operator=(AddSize³MCommand&&) = delete;
     };
 }

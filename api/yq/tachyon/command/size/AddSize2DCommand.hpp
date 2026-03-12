@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/command/SizeCommand.hpp>
-#include <yq/vector/Vector2.hpp>
+#include <yq/shape/Size2.hpp>
 
 namespace yq::tachyon {
 
@@ -15,9 +15,9 @@ namespace yq::tachyon {
     class AddSize²DCommand : public SizeCommand {
         YQ_OBJECT_DECLARE(AddSize²DCommand, SizeCommand)
     public:
-        AddSize²DCommand(const Header&, const Vector2D&);
+        AddSize²DCommand(const Header&, const Size2D&);
     
-        const Vector2D&   Δ() const  { return m_Δ; }
+        const Size2D&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
@@ -32,7 +32,7 @@ namespace yq::tachyon {
         ~AddSize²DCommand();
 
     private:
-        Vector2D  m_Δ = ZERO;
+        Size2D  m_Δ = ZERO;
         
         AddSize²DCommand(const AddSize²DCommand&) = delete;
         AddSize²DCommand(AddSize²DCommand&&) = delete;

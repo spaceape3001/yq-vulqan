@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AddMinSize1DCommand.hpp"
+#include "AddMinSize1MCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::AddMinSize¹DCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddMinSize¹MCommand)
 
 namespace yq::tachyon {
-    AddMinSize¹DCommand::AddMinSize¹DCommand(const Header& h) : SizeCommand(h)
+    AddMinSize¹MCommand::AddMinSize¹MCommand(const Header& h) : SizeCommand(h)
     {
     }
 
-    AddMinSize¹DCommand::AddMinSize¹DCommand(const Header& h, const Vector1D& v) : 
+    AddMinSize¹MCommand::AddMinSize¹MCommand(const Header& h, const Size1D& v) : 
         SizeCommand(h), m_Δ(v)
     {
     }
     
-    AddMinSize¹DCommand::AddMinSize¹DCommand(const AddMinSize¹DCommand& cp, const Header& h) : 
+    AddMinSize¹MCommand::AddMinSize¹MCommand(const AddMinSize¹MCommand& cp, const Header& h) : 
         SizeCommand(cp, h), m_Δ(cp.m_Δ)
     {
     }
 
-    AddMinSize¹DCommand::~AddMinSize¹DCommand()
+    AddMinSize¹MCommand::~AddMinSize¹MCommand()
     {
     }
     
-    PostCPtr    AddMinSize¹DCommand::clone(rebind_k, const Header&h) const 
+    PostCPtr    AddMinSize¹MCommand::clone(rebind_k, const Header&h) const 
     {
-        return new AddMinSize¹DCommand(*this, h);
+        return new AddMinSize¹MCommand(*this, h);
     }
 
-    void AddMinSize¹DCommand::init_meta()
+    void AddMinSize¹MCommand::init_meta()
     {
-        auto w = writer<AddMinSize¹DCommand>();
-        w.description("AddMin Size DCommand");
-        w.property("Δx", &AddMinSize¹DCommand::Δx).tag(kTag_Log);
-        w.property("Δ",  &AddMinSize¹DCommand::m_Δ).tag(kTag_Save);
+        auto w = writer<AddMinSize¹MCommand>();
+        w.description("AddMin Size MCommand");
+        w.property("Δx", &AddMinSize¹MCommand::Δx).tag(kTag_Log);
+        w.property("Δ",  &AddMinSize¹MCommand::m_Δ).tag(kTag_Save);
     }
 }

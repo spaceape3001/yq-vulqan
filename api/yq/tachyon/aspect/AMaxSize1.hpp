@@ -35,7 +35,7 @@ namespace yq::tachyon {
         void            max_size(set_k, x_k, double) override;
         
         //!  Move the max_size (ie set to max_size + delta)
-        void            max_size(add_k, const Vector1D&) override;
+        void            max_size(add_k, const Size1D&) override;
         void            max_size(add_k, x_k, double) override;
 
         void            max_size(multiply_k, double) override;

@@ -4,35 +4,35 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AddSizeXDCommand.hpp"
+#include "AddSizeXMCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::AddSizeˣDCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddSizeˣMCommand)
 
 namespace yq::tachyon {
-    AddSizeˣDCommand::AddSizeˣDCommand(const Header&h, double x) : 
+    AddSizeˣMCommand::AddSizeˣMCommand(const Header&h, Meter x) : 
         SizeCommand(h), m_Δx(x)
     {
     }
 
-    AddSizeˣDCommand::AddSizeˣDCommand(const AddSizeˣDCommand& cp, const Header& h) : 
+    AddSizeˣMCommand::AddSizeˣMCommand(const AddSizeˣMCommand& cp, const Header& h) : 
         SizeCommand(cp, h), m_Δx(cp.m_Δx)
     {
     }
     
-    AddSizeˣDCommand::~AddSizeˣDCommand()
+    AddSizeˣMCommand::~AddSizeˣMCommand()
     {
     }
     
-    PostCPtr    AddSizeˣDCommand::clone(rebind_k, const Header&h) const 
+    PostCPtr    AddSizeˣMCommand::clone(rebind_k, const Header&h) const 
     {
-        return new AddSizeˣDCommand(*this, h);
+        return new AddSizeˣMCommand(*this, h);
     }
 
-    void AddSizeˣDCommand::init_meta()
+    void AddSizeˣMCommand::init_meta()
     {
-        auto w = writer<AddSizeˣDCommand>();
-        w.description("Add Size DCommand in X");
-        w.property("Δx", &AddSizeˣDCommand::m_Δx).tag(kTag_Log).tag(kTag_Save);
+        auto w = writer<AddSizeˣMCommand>();
+        w.description("Add Size MCommand in X");
+        w.property("Δx", &AddSizeˣMCommand::m_Δx).tag(kTag_Log).tag(kTag_Save);
     }
 }

@@ -4,41 +4,41 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AddSize2DCommand.hpp"
+#include "AddSize2MCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::AddSize²DCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddSize²MCommand)
 
 namespace yq::tachyon {
-    AddSize²DCommand::AddSize²DCommand(const Header&h) : SizeCommand(h)
+    AddSize²MCommand::AddSize²MCommand(const Header&h) : SizeCommand(h)
     {
     }
     
-    AddSize²DCommand::AddSize²DCommand(const Header& h, const Vector2D& v) : 
+    AddSize²MCommand::AddSize²MCommand(const Header& h, const Size2D& v) : 
         SizeCommand(h), m_Δ(v)
     {
     }
 
-    AddSize²DCommand::AddSize²DCommand(const AddSize²DCommand& cp, const Header& h) : 
+    AddSize²MCommand::AddSize²MCommand(const AddSize²MCommand& cp, const Header& h) : 
         SizeCommand(cp, h), m_Δ(cp.m_Δ)
     {
     }
     
-    AddSize²DCommand::~AddSize²DCommand()
+    AddSize²MCommand::~AddSize²MCommand()
     {
     }
 
-    PostCPtr    AddSize²DCommand::clone(rebind_k, const Header&h) const 
+    PostCPtr    AddSize²MCommand::clone(rebind_k, const Header&h) const 
     {
-        return new AddSize²DCommand(*this, h);
+        return new AddSize²MCommand(*this, h);
     }
     
-    void AddSize²DCommand::init_meta()
+    void AddSize²MCommand::init_meta()
     {
-        auto w = writer<AddSize²DCommand>();
-        w.description("Add Size DCommand");
-        w.property("Δx", &AddSize²DCommand::Δx).tag(kTag_Log);
-        w.property("Δy", &AddSize²DCommand::Δy).tag(kTag_Log);
-        w.property("Δ",  &AddSize²DCommand::m_Δ).tag(kTag_Save);
+        auto w = writer<AddSize²MCommand>();
+        w.description("Add Size MCommand");
+        w.property("Δx", &AddSize²MCommand::Δx).tag(kTag_Log);
+        w.property("Δy", &AddSize²MCommand::Δy).tag(kTag_Log);
+        w.property("Δ",  &AddSize²MCommand::m_Δ).tag(kTag_Save);
     }
 }

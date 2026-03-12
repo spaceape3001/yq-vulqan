@@ -6,38 +6,39 @@
 
 #pragma once
 
+#include <yq/unit/declare.hpp>
 #include <yq/tachyon/command/SizeCommand.hpp>
-#include <yq/vector/Vector3.hpp>
+#include <yq/shape/Size3.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's scale
-    class AddMinSize³DCommand : public SizeCommand {
-        YQ_OBJECT_DECLARE(AddMinSize³DCommand, SizeCommand)
+    class AddMinSize³MCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(AddMinSize³MCommand, SizeCommand)
     public:
-        AddMinSize³DCommand(const Header&, const Vector3D&);
+        AddMinSize³MCommand(const Header&, const Size3D&);
     
-        const Vector3D&   Δ() const  { return m_Δ; }
+        const Size3D&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
-        double  Δx() const { return m_Δ.x; }
-        double  Δy() const { return m_Δ.y; }
-        double  Δz() const { return m_Δ.z; }
+        Meter  Δx() const { return m_Δ.x; }
+        Meter  Δy() const { return m_Δ.y; }
+        Meter  Δz() const { return m_Δ.z; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        AddMinSize³DCommand(const AddMinSize³DCommand&, const Header&);
-        AddMinSize³DCommand(const Header&);
-        ~AddMinSize³DCommand();
+        AddMinSize³MCommand(const AddMinSize³MCommand&, const Header&);
+        AddMinSize³MCommand(const Header&);
+        ~AddMinSize³MCommand();
 
     private:
-        Vector3D  m_Δ = ZERO;
+        Size3D  m_Δ = ZERO;
         
-        AddMinSize³DCommand(const AddMinSize³DCommand&) = delete;
-        AddMinSize³DCommand(AddMinSize³DCommand&&) = delete;
-        AddMinSize³DCommand& operator=(const AddMinSize³DCommand&) = delete;
-        AddMinSize³DCommand& operator=(AddMinSize³DCommand&&) = delete;
+        AddMinSize³MCommand(const AddMinSize³MCommand&) = delete;
+        AddMinSize³MCommand(AddMinSize³MCommand&&) = delete;
+        AddMinSize³MCommand& operator=(const AddMinSize³MCommand&) = delete;
+        AddMinSize³MCommand& operator=(AddMinSize³MCommand&&) = delete;
     };
 }

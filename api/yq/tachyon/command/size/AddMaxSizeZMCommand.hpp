@@ -6,34 +6,35 @@
 
 #pragma once
 
+#include <yq/unit/declare.hpp>
 #include <yq/tachyon/command/SizeCommand.hpp>
-#include <yq/vector/Vector1.hpp>
+#include <yq/shape/Size1.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's z-position
-    class AddMaxSizeᶻDCommand : public SizeCommand {
-        YQ_OBJECT_DECLARE(AddMaxSizeᶻDCommand, SizeCommand)
+    class AddMaxSizeᶻMCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(AddMaxSizeᶻMCommand, SizeCommand)
     public:
-        AddMaxSizeᶻDCommand(const Header&, double);
+        AddMaxSizeᶻMCommand(const Header&, Meter);
         
         static void init_meta();
         
-        double  Δz() const { return m_Δz; }
+        Meter  Δz() const { return m_Δz; }
         
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        AddMaxSizeᶻDCommand(const AddMaxSizeᶻDCommand&, const Header&);
-        AddMaxSizeᶻDCommand(const Header&);
-        ~AddMaxSizeᶻDCommand();
+        AddMaxSizeᶻMCommand(const AddMaxSizeᶻMCommand&, const Header&);
+        AddMaxSizeᶻMCommand(const Header&);
+        ~AddMaxSizeᶻMCommand();
 
     private:
-        double  m_Δz = 0.0;
+        Meter  m_Δz = 0.0;
         
-        AddMaxSizeᶻDCommand(const AddMaxSizeᶻDCommand&) = delete;
-        AddMaxSizeᶻDCommand(AddMaxSizeᶻDCommand&&) = delete;
-        AddMaxSizeᶻDCommand& operator=(const AddMaxSizeᶻDCommand&) = delete;
-        AddMaxSizeᶻDCommand& operator=(AddMaxSizeᶻDCommand&&) = delete;
+        AddMaxSizeᶻMCommand(const AddMaxSizeᶻMCommand&) = delete;
+        AddMaxSizeᶻMCommand(AddMaxSizeᶻMCommand&&) = delete;
+        AddMaxSizeᶻMCommand& operator=(const AddMaxSizeᶻMCommand&) = delete;
+        AddMaxSizeᶻMCommand& operator=(AddMaxSizeᶻMCommand&&) = delete;
     };
 }

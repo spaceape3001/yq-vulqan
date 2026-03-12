@@ -14,7 +14,7 @@ namespace yq::tachyon {
     {
     }
     
-    AddSize⁴DCommand::AddSize⁴DCommand(const Header& h, const Vector4D& v) : 
+    AddSize⁴DCommand::AddSize⁴DCommand(const Header& h, const Size4D& v) : 
         SizeCommand(h), m_Δ(v)
     {
     }

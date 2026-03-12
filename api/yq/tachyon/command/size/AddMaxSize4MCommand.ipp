@@ -4,43 +4,43 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AddMaxSize4DCommand.hpp"
+#include "AddMaxSize4MCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::AddMaxSize⁴DCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddMaxSize⁴MCommand)
 
 namespace yq::tachyon {
-    AddMaxSize⁴DCommand::AddMaxSize⁴DCommand(const Header& h) : SizeCommand(h)
+    AddMaxSize⁴MCommand::AddMaxSize⁴MCommand(const Header& h) : SizeCommand(h)
     {
     }
     
-    AddMaxSize⁴DCommand::AddMaxSize⁴DCommand(const Header& h, const Vector4D& v) : 
+    AddMaxSize⁴MCommand::AddMaxSize⁴MCommand(const Header& h, const Size4D& v) : 
         SizeCommand(h), m_Δ(v)
     {
     }
 
-    AddMaxSize⁴DCommand::AddMaxSize⁴DCommand(const AddMaxSize⁴DCommand& cp, const Header& h) : 
+    AddMaxSize⁴MCommand::AddMaxSize⁴MCommand(const AddMaxSize⁴MCommand& cp, const Header& h) : 
         SizeCommand(cp, h), m_Δ(cp.m_Δ)
     {
     }
     
-    AddMaxSize⁴DCommand::~AddMaxSize⁴DCommand()
+    AddMaxSize⁴MCommand::~AddMaxSize⁴MCommand()
     {
     }
 
-    PostCPtr    AddMaxSize⁴DCommand::clone(rebind_k, const Header&h) const 
+    PostCPtr    AddMaxSize⁴MCommand::clone(rebind_k, const Header&h) const 
     {
-        return new AddMaxSize⁴DCommand(*this, h);
+        return new AddMaxSize⁴MCommand(*this, h);
     }
     
-    void AddMaxSize⁴DCommand::init_meta()
+    void AddMaxSize⁴MCommand::init_meta()
     {
-        auto w = writer<AddMaxSize⁴DCommand>();
-        w.description("AddMax Size DCommand");
-        w.property("Δx", &AddMaxSize⁴DCommand::Δx).tag(kTag_Log);
-        w.property("Δy", &AddMaxSize⁴DCommand::Δy).tag(kTag_Log);
-        w.property("Δz", &AddMaxSize⁴DCommand::Δz).tag(kTag_Log);
-        w.property("Δw", &AddMaxSize⁴DCommand::Δw).tag(kTag_Log);
-        w.property("Δ",  &AddMaxSize⁴DCommand::m_Δ).tag(kTag_Save);
+        auto w = writer<AddMaxSize⁴MCommand>();
+        w.description("AddMax Size MCommand");
+        w.property("Δx", &AddMaxSize⁴MCommand::Δx).tag(kTag_Log);
+        w.property("Δy", &AddMaxSize⁴MCommand::Δy).tag(kTag_Log);
+        w.property("Δz", &AddMaxSize⁴MCommand::Δz).tag(kTag_Log);
+        w.property("Δw", &AddMaxSize⁴MCommand::Δw).tag(kTag_Log);
+        w.property("Δ",  &AddMaxSize⁴MCommand::m_Δ).tag(kTag_Save);
     }
 }

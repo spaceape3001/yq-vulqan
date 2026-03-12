@@ -14,7 +14,7 @@ namespace yq::tachyon {
     {
     }
 
-    AddMaxSize¹DCommand::AddMaxSize¹DCommand(const Header& h, const Vector1D& v) : 
+    AddMaxSize¹DCommand::AddMaxSize¹DCommand(const Header& h, const Size1D& v) : 
         SizeCommand(h), m_Δ(v)
     {
     }

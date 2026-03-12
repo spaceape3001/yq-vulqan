@@ -14,7 +14,7 @@ namespace yq::tachyon {
     {
     }
     
-    AddSize³DCommand::AddSize³DCommand(const Header& h, const Vector3D& v) : 
+    AddSize³DCommand::AddSize³DCommand(const Header& h, const Size3D& v) : 
         SizeCommand(h), m_Δ(v)
     {
     }

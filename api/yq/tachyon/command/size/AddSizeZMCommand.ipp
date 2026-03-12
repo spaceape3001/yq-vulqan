@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AddSizeZDCommand.hpp"
+#include "AddSizeZMCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::AddSizeᶻDCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddSizeᶻMCommand)
 
 namespace yq::tachyon {
-    AddSizeᶻDCommand::AddSizeᶻDCommand(const Header&h) : 
+    AddSizeᶻMCommand::AddSizeᶻMCommand(const Header&h) : 
         SizeCommand(h)
     {
     }
     
-    AddSizeᶻDCommand::AddSizeᶻDCommand(const Header&h, double z) : 
+    AddSizeᶻMCommand::AddSizeᶻMCommand(const Header&h, Meter z) : 
         SizeCommand(h), m_Δz(z)
     {
     }
 
-    AddSizeᶻDCommand::AddSizeᶻDCommand(const AddSizeᶻDCommand& cp, const Header& h) : 
+    AddSizeᶻMCommand::AddSizeᶻMCommand(const AddSizeᶻMCommand& cp, const Header& h) : 
         SizeCommand(cp, h), m_Δz(cp.m_Δz)
     {
     }
 
-    AddSizeᶻDCommand::~AddSizeᶻDCommand()
+    AddSizeᶻMCommand::~AddSizeᶻMCommand()
     {
     }
 
-    PostCPtr    AddSizeᶻDCommand::clone(rebind_k, const Header&h) const 
+    PostCPtr    AddSizeᶻMCommand::clone(rebind_k, const Header&h) const 
     {
-        return new AddSizeᶻDCommand(*this, h);
+        return new AddSizeᶻMCommand(*this, h);
     }
     
-    void AddSizeᶻDCommand::init_meta()
+    void AddSizeᶻMCommand::init_meta()
     {
-        auto w = writer<AddSizeᶻDCommand>();
-        w.description("Add Size DCommand in Z");
-        w.property("Δz", &AddSizeᶻDCommand::m_Δz).tag(kTag_Log).tag(kTag_Save);
+        auto w = writer<AddSizeᶻMCommand>();
+        w.description("Add Size MCommand in Z");
+        w.property("Δz", &AddSizeᶻMCommand::m_Δz).tag(kTag_Log).tag(kTag_Save);
     }
 }

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/event/spatial/MaxSize2DEvent.hpp>
+#include "MaxSize2DEvent.hpp"
 #include <yq/tachyon/api/EventMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::MaxSize²DEvent)

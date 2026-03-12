@@ -4,44 +4,44 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/event/spatial/MinSize4DEvent.hpp>
+#include "MinSize4DEvent.hpp"
 #include <yq/tachyon/api/EventMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MinSize⁴Event)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MinSize⁴DEvent)
 
 namespace yq::tachyon {
-    MinSize⁴Event::MinSize⁴Event(const Header&h) : 
+    MinSize⁴DEvent::MinSize⁴DEvent(const Header&h) : 
         SpatialEvent(h)
     {
     }
     
-    MinSize⁴Event::MinSize⁴Event(const Header&h, const Size4D& v) : 
+    MinSize⁴DEvent::MinSize⁴DEvent(const Header&h, const Size4D& v) : 
         SpatialEvent(h), m_size(v)
     {
     }
 
-    MinSize⁴Event::MinSize⁴Event(const MinSize⁴Event&cp, const Header&h) : 
+    MinSize⁴DEvent::MinSize⁴DEvent(const MinSize⁴DEvent&cp, const Header&h) : 
         SpatialEvent(cp, h), m_size(cp.m_size)
     {
     }
 
-    MinSize⁴Event::~MinSize⁴Event()
+    MinSize⁴DEvent::~MinSize⁴DEvent()
     {
     }
 
-    PostCPtr    MinSize⁴Event::clone(rebind_k, const Header& h) const 
+    PostCPtr    MinSize⁴DEvent::clone(rebind_k, const Header& h) const 
     {
-        return new MinSize⁴Event(*this, h);
+        return new MinSize⁴DEvent(*this, h);
     }
    
-    void MinSize⁴Event::init_meta()
+    void MinSize⁴DEvent::init_meta()
     {
-        auto w = writer<MinSize⁴Event>();
+        auto w = writer<MinSize⁴DEvent>();
         w.description("Min Size Event in 4D");
-        w.property("x", &MinSize⁴Event::x).tag(kTag_Log);
-        w.property("y", &MinSize⁴Event::y).tag(kTag_Log);
-        w.property("z", &MinSize⁴Event::z).tag(kTag_Log);
-        w.property("w", &MinSize⁴Event::w).tag(kTag_Log);
-        w.property("size", &MinSize⁴Event::m_size).tag(kTag_Save);
+        w.property("x", &MinSize⁴DEvent::x).tag(kTag_Log);
+        w.property("y", &MinSize⁴DEvent::y).tag(kTag_Log);
+        w.property("z", &MinSize⁴DEvent::z).tag(kTag_Log);
+        w.property("w", &MinSize⁴DEvent::w).tag(kTag_Log);
+        w.property("size", &MinSize⁴DEvent::m_size).tag(kTag_Save);
     }
 }

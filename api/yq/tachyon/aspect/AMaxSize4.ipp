@@ -35,7 +35,7 @@ namespace yq::tachyon {
 
     void        AMaxSize⁴::max_size(emit_k)
     {
-        send(new MaxSize⁴Event({.source=typed()}, m_max_size));
+        send(new MaxSize⁴DEvent({.source=typed()}, m_max_size));
     }
     
     void        AMaxSize⁴::max_size(set_k, const Size4D& sz) 

@@ -35,7 +35,7 @@ namespace yq::tachyon {
 
     void        AMinSize⁴::min_size(emit_k)
     {
-        send(new MinSize⁴Event({.source=typed()}, m_min_size));
+        send(new MinSize⁴DEvent({.source=typed()}, m_min_size));
     }
     
     void        AMinSize⁴::min_size(set_k, const Size4D& sz) 

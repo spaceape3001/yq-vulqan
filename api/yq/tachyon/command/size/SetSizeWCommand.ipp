@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SetSizeWCommand.hpp"
+#include "SetSizeWDCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetSizeʷCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetSizeʷDCommand)
 
 namespace yq::tachyon {
-    SetSizeʷCommand::SetSizeʷCommand(const Header& h) : 
+    SetSizeʷDCommand::SetSizeʷDCommand(const Header& h) : 
         SizeCommand(h)
     {
     }
 
-    SetSizeʷCommand::SetSizeʷCommand(const Header& h, double v) : 
+    SetSizeʷDCommand::SetSizeʷDCommand(const Header& h, double v) : 
         SizeCommand(h), m_w(v)
     {
     }
 
-    SetSizeʷCommand::SetSizeʷCommand(const SetSizeʷCommand& cp, const Header& h) : 
+    SetSizeʷDCommand::SetSizeʷDCommand(const SetSizeʷDCommand& cp, const Header& h) : 
         SizeCommand(cp, h), m_w(cp.m_w)
     {
     }
     
-    SetSizeʷCommand::~SetSizeʷCommand()
+    SetSizeʷDCommand::~SetSizeʷDCommand()
     {
     }
 
-    PostCPtr    SetSizeʷCommand::clone(rebind_k, const Header&h) const 
+    PostCPtr    SetSizeʷDCommand::clone(rebind_k, const Header&h) const 
     {
-        return new SetSizeʷCommand(*this, h);
+        return new SetSizeʷDCommand(*this, h);
     }
     
-    void SetSizeʷCommand::init_meta()
+    void SetSizeʷDCommand::init_meta()
     {
-        auto w = writer<SetSizeʷCommand>();
-        w.description("Set Size Command in X");
-        w.property("w", &SetSizeʷCommand::m_w).tag(kTag_Log).tag(kTag_Save);
+        auto w = writer<SetSizeʷDCommand>();
+        w.description("Set Size DCommand in X");
+        w.property("w", &SetSizeʷDCommand::m_w).tag(kTag_Log).tag(kTag_Save);
     }
 }

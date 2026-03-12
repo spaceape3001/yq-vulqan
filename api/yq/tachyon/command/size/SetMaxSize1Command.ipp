@@ -4,41 +4,41 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SetMaxSize1Command.hpp"
+#include "SetMaxSize1DCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMaxSize¹Command)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMaxSize¹DCommand)
 
 namespace yq::tachyon {
-    SetMaxSize¹Command::SetMaxSize¹Command(const Header& h) : 
+    SetMaxSize¹DCommand::SetMaxSize¹DCommand(const Header& h) : 
         SizeCommand(h)
     {
     }
 
-    SetMaxSize¹Command::SetMaxSize¹Command(const Header& h, const Size1D& v) : 
+    SetMaxSize¹DCommand::SetMaxSize¹DCommand(const Header& h, const Size1D& v) : 
         SizeCommand(h), m_size(v)
     {
     }
 
-    SetMaxSize¹Command::SetMaxSize¹Command(const SetMaxSize¹Command& cp, const Header& h) : 
+    SetMaxSize¹DCommand::SetMaxSize¹DCommand(const SetMaxSize¹DCommand& cp, const Header& h) : 
         SizeCommand(cp, h), m_size(cp.m_size)
     {
     }
     
-    SetMaxSize¹Command::~SetMaxSize¹Command()
+    SetMaxSize¹DCommand::~SetMaxSize¹DCommand()
     {
     }
 
-    PostCPtr    SetMaxSize¹Command::clone(rebind_k, const Header&h) const 
+    PostCPtr    SetMaxSize¹DCommand::clone(rebind_k, const Header&h) const 
     {
-        return new SetMaxSize¹Command(*this, h);
+        return new SetMaxSize¹DCommand(*this, h);
     }
     
-    void SetMaxSize¹Command::init_meta()
+    void SetMaxSize¹DCommand::init_meta()
     {
-        auto w = writer<SetMaxSize¹Command>();
-        w.description("SetMax Size Command in 1D");
-        w.property("x", &SetMaxSize¹Command::x).tag(kTag_Log);
-        w.property("size", &SetMaxSize¹Command::m_size).tag(kTag_Save);
+        auto w = writer<SetMaxSize¹DCommand>();
+        w.description("SetMax Size DCommand in 1D");
+        w.property("x", &SetMaxSize¹DCommand::x).tag(kTag_Log);
+        w.property("size", &SetMaxSize¹DCommand::m_size).tag(kTag_Save);
     }
 }

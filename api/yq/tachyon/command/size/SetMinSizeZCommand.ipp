@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SetMinSizeZCommand.hpp"
+#include "SetMinSizeZDCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMinSizeᶻCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMinSizeᶻDCommand)
 
 namespace yq::tachyon {
-    SetMinSizeᶻCommand::SetMinSizeᶻCommand(const Header& h) : 
+    SetMinSizeᶻDCommand::SetMinSizeᶻDCommand(const Header& h) : 
         SizeCommand(h)
     {
     }
 
-    SetMinSizeᶻCommand::SetMinSizeᶻCommand(const Header& h, double v) : 
+    SetMinSizeᶻDCommand::SetMinSizeᶻDCommand(const Header& h, double v) : 
         SizeCommand(h), m_z(v)
     {
     }
 
-    SetMinSizeᶻCommand::SetMinSizeᶻCommand(const SetMinSizeᶻCommand& cp, const Header& h) : 
+    SetMinSizeᶻDCommand::SetMinSizeᶻDCommand(const SetMinSizeᶻDCommand& cp, const Header& h) : 
         SizeCommand(cp, h), m_z(cp.m_z)
     {
     }
     
-    SetMinSizeᶻCommand::~SetMinSizeᶻCommand()
+    SetMinSizeᶻDCommand::~SetMinSizeᶻDCommand()
     {
     }
 
-    PostCPtr    SetMinSizeᶻCommand::clone(rebind_k, const Header&h) const 
+    PostCPtr    SetMinSizeᶻDCommand::clone(rebind_k, const Header&h) const 
     {
-        return new SetMinSizeᶻCommand(*this, h);
+        return new SetMinSizeᶻDCommand(*this, h);
     }
     
-    void SetMinSizeᶻCommand::init_meta()
+    void SetMinSizeᶻDCommand::init_meta()
     {
-        auto w = writer<SetMinSizeᶻCommand>();
-        w.description("SetMin Size Command in Z");
-        w.property("z", &SetMinSizeᶻCommand::m_z).tag(kTag_Log).tag(kTag_Save);
+        auto w = writer<SetMinSizeᶻDCommand>();
+        w.description("SetMin Size DCommand in Z");
+        w.property("z", &SetMinSizeᶻDCommand::m_z).tag(kTag_Log).tag(kTag_Save);
     }
 }

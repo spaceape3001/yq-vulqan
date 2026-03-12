@@ -4,42 +4,42 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SetMaxSize2Command.hpp"
+#include "SetMaxSize2DCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMaxSize²Command)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMaxSize²DCommand)
 
 namespace yq::tachyon {
-    SetMaxSize²Command::SetMaxSize²Command(const Header& h) : 
+    SetMaxSize²DCommand::SetMaxSize²DCommand(const Header& h) : 
         SizeCommand(h)
     {
     }
 
-    SetMaxSize²Command::SetMaxSize²Command(const Header& h, const Size2D& v) : 
+    SetMaxSize²DCommand::SetMaxSize²DCommand(const Header& h, const Size2D& v) : 
         SizeCommand(h), m_size(v)
     {
     }
 
-    SetMaxSize²Command::SetMaxSize²Command(const SetMaxSize²Command& cp, const Header& h) : 
+    SetMaxSize²DCommand::SetMaxSize²DCommand(const SetMaxSize²DCommand& cp, const Header& h) : 
         SizeCommand(cp, h), m_size(cp.m_size)
     {
     }
     
-    SetMaxSize²Command::~SetMaxSize²Command()
+    SetMaxSize²DCommand::~SetMaxSize²DCommand()
     {
     }
 
-    PostCPtr    SetMaxSize²Command::clone(rebind_k, const Header&h) const 
+    PostCPtr    SetMaxSize²DCommand::clone(rebind_k, const Header&h) const 
     {
-        return new SetMaxSize²Command(*this, h);
+        return new SetMaxSize²DCommand(*this, h);
     }
     
-    void SetMaxSize²Command::init_meta()
+    void SetMaxSize²DCommand::init_meta()
     {
-        auto w = writer<SetMaxSize²Command>();
-        w.description("SetMax Size Command in 2D");
-        w.property("x", &SetMaxSize²Command::x).tag(kTag_Log);
-        w.property("y", &SetMaxSize²Command::y).tag(kTag_Log);
-        w.property("size", &SetMaxSize²Command::m_size).tag(kTag_Save);
+        auto w = writer<SetMaxSize²DCommand>();
+        w.description("SetMax Size DCommand in 2D");
+        w.property("x", &SetMaxSize²DCommand::x).tag(kTag_Log);
+        w.property("y", &SetMaxSize²DCommand::y).tag(kTag_Log);
+        w.property("size", &SetMaxSize²DCommand::m_size).tag(kTag_Save);
     }
 }

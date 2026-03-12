@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's size
-    class SetMinSize²Command : public SizeCommand {
-        YQ_OBJECT_DECLARE(SetMinSize²Command, SizeCommand)
+    class SetMinSize²DCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(SetMinSize²DCommand, SizeCommand)
     public:
-        SetMinSize²Command(const Header&, const Size2D&);
+        SetMinSize²DCommand(const Header&, const Size2D&);
     
         const Size2D&   size() const  { return m_size; }
         
@@ -27,16 +27,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        SetMinSize²Command(const Header&);
-        SetMinSize²Command(const SetMinSize²Command&, const Header&);
-        ~SetMinSize²Command();
+        SetMinSize²DCommand(const Header&);
+        SetMinSize²DCommand(const SetMinSize²DCommand&, const Header&);
+        ~SetMinSize²DCommand();
 
     private:
         Size2D   m_size = ZERO;
         
-        SetMinSize²Command(const SetMinSize²Command&) = delete;
-        SetMinSize²Command(SetMinSize²Command&&) = delete;
-        SetMinSize²Command& operator=(const SetMinSize²Command&) = delete;
-        SetMinSize²Command& operator=(SetMinSize²Command&&) = delete;
+        SetMinSize²DCommand(const SetMinSize²DCommand&) = delete;
+        SetMinSize²DCommand(SetMinSize²DCommand&&) = delete;
+        SetMinSize²DCommand& operator=(const SetMinSize²DCommand&) = delete;
+        SetMinSize²DCommand& operator=(SetMinSize²DCommand&&) = delete;
     };
 }

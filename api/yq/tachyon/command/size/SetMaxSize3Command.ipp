@@ -4,43 +4,43 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SetMaxSize3Command.hpp"
+#include "SetMaxSize3DCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMaxSize³Command)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetMaxSize³DCommand)
 
 namespace yq::tachyon {
-    SetMaxSize³Command::SetMaxSize³Command(const Header& h) : 
+    SetMaxSize³DCommand::SetMaxSize³DCommand(const Header& h) : 
         SizeCommand(h)
     {
     }
 
-    SetMaxSize³Command::SetMaxSize³Command(const Header& h, const Size3D& v) : 
+    SetMaxSize³DCommand::SetMaxSize³DCommand(const Header& h, const Size3D& v) : 
         SizeCommand(h), m_size(v)
     {
     }
 
-    SetMaxSize³Command::SetMaxSize³Command(const SetMaxSize³Command& cp, const Header& h) : 
+    SetMaxSize³DCommand::SetMaxSize³DCommand(const SetMaxSize³DCommand& cp, const Header& h) : 
         SizeCommand(cp, h), m_size(cp.m_size)
     {
     }
     
-    SetMaxSize³Command::~SetMaxSize³Command()
+    SetMaxSize³DCommand::~SetMaxSize³DCommand()
     {
     }
 
-    PostCPtr    SetMaxSize³Command::clone(rebind_k, const Header&h) const 
+    PostCPtr    SetMaxSize³DCommand::clone(rebind_k, const Header&h) const 
     {
-        return new SetMaxSize³Command(*this, h);
+        return new SetMaxSize³DCommand(*this, h);
     }
     
-    void SetMaxSize³Command::init_meta()
+    void SetMaxSize³DCommand::init_meta()
     {
-        auto w = writer<SetMaxSize³Command>();
-        w.description("SetMax Size Command in 3D");
-        w.property("x", &SetMaxSize³Command::x).tag(kTag_Log);
-        w.property("y", &SetMaxSize³Command::y).tag(kTag_Log);
-        w.property("z", &SetMaxSize³Command::z).tag(kTag_Log);
-        w.property("size", &SetMaxSize³Command::m_size).tag(kTag_Save);
+        auto w = writer<SetMaxSize³DCommand>();
+        w.description("SetMax Size DCommand in 3D");
+        w.property("x", &SetMaxSize³DCommand::x).tag(kTag_Log);
+        w.property("y", &SetMaxSize³DCommand::y).tag(kTag_Log);
+        w.property("z", &SetMaxSize³DCommand::z).tag(kTag_Log);
+        w.property("size", &SetMaxSize³DCommand::m_size).tag(kTag_Save);
     }
 }

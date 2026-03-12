@@ -11,10 +11,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's size
-    class SetMinSizeᶻCommand : public SizeCommand {
-        YQ_OBJECT_DECLARE(SetMinSizeᶻCommand, SizeCommand)
+    class SetMinSizeᶻDCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(SetMinSizeᶻDCommand, SizeCommand)
     public:
-        SetMinSizeᶻCommand(const Header&, double);
+        SetMinSizeᶻDCommand(const Header&, double);
     
         static void init_meta();
         
@@ -23,16 +23,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        SetMinSizeᶻCommand(const Header&);
-        SetMinSizeᶻCommand(const SetMinSizeᶻCommand&, const Header&);
-        ~SetMinSizeᶻCommand();
+        SetMinSizeᶻDCommand(const Header&);
+        SetMinSizeᶻDCommand(const SetMinSizeᶻDCommand&, const Header&);
+        ~SetMinSizeᶻDCommand();
 
     private:
         double   m_z = 0.;
         
-        SetMinSizeᶻCommand(const SetMinSizeᶻCommand&) = delete;
-        SetMinSizeᶻCommand(SetMinSizeᶻCommand&&) = delete;
-        SetMinSizeᶻCommand& operator=(const SetMinSizeᶻCommand&) = delete;
-        SetMinSizeᶻCommand& operator=(SetMinSizeᶻCommand&&) = delete;
+        SetMinSizeᶻDCommand(const SetMinSizeᶻDCommand&) = delete;
+        SetMinSizeᶻDCommand(SetMinSizeᶻDCommand&&) = delete;
+        SetMinSizeᶻDCommand& operator=(const SetMinSizeᶻDCommand&) = delete;
+        SetMinSizeᶻDCommand& operator=(SetMinSizeᶻDCommand&&) = delete;
     };
 }

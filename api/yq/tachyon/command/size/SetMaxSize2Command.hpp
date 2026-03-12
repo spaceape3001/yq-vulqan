@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's size
-    class SetMaxSize²Command : public SizeCommand {
-        YQ_OBJECT_DECLARE(SetMaxSize²Command, SizeCommand)
+    class SetMaxSize²DCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(SetMaxSize²DCommand, SizeCommand)
     public:
-        SetMaxSize²Command(const Header&, const Size2D&);
+        SetMaxSize²DCommand(const Header&, const Size2D&);
     
         const Size2D&   size() const  { return m_size; }
         
@@ -27,16 +27,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        SetMaxSize²Command(const Header&);
-        SetMaxSize²Command(const SetMaxSize²Command&, const Header&);
-        ~SetMaxSize²Command();
+        SetMaxSize²DCommand(const Header&);
+        SetMaxSize²DCommand(const SetMaxSize²DCommand&, const Header&);
+        ~SetMaxSize²DCommand();
 
     private:
         Size2D   m_size = ZERO;
         
-        SetMaxSize²Command(const SetMaxSize²Command&) = delete;
-        SetMaxSize²Command(SetMaxSize²Command&&) = delete;
-        SetMaxSize²Command& operator=(const SetMaxSize²Command&) = delete;
-        SetMaxSize²Command& operator=(SetMaxSize²Command&&) = delete;
+        SetMaxSize²DCommand(const SetMaxSize²DCommand&) = delete;
+        SetMaxSize²DCommand(SetMaxSize²DCommand&&) = delete;
+        SetMaxSize²DCommand& operator=(const SetMaxSize²DCommand&) = delete;
+        SetMaxSize²DCommand& operator=(SetMaxSize²DCommand&&) = delete;
     };
 }

@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's size
-    class SetMinSize³Command : public SizeCommand {
-        YQ_OBJECT_DECLARE(SetMinSize³Command, SizeCommand)
+    class SetMinSize³DCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(SetMinSize³DCommand, SizeCommand)
     public:
-        SetMinSize³Command(const Header&, const Size3D&);
+        SetMinSize³DCommand(const Header&, const Size3D&);
     
         const Size3D&   size() const  { return m_size; }
         
@@ -28,16 +28,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        SetMinSize³Command(const Header&);
-        SetMinSize³Command(const SetMinSize³Command&, const Header&);
-        ~SetMinSize³Command();
+        SetMinSize³DCommand(const Header&);
+        SetMinSize³DCommand(const SetMinSize³DCommand&, const Header&);
+        ~SetMinSize³DCommand();
 
     private:
         Size3D   m_size = ZERO;
         
-        SetMinSize³Command(const SetMinSize³Command&) = delete;
-        SetMinSize³Command(SetMinSize³Command&&) = delete;
-        SetMinSize³Command& operator=(const SetMinSize³Command&) = delete;
-        SetMinSize³Command& operator=(SetMinSize³Command&&) = delete;
+        SetMinSize³DCommand(const SetMinSize³DCommand&) = delete;
+        SetMinSize³DCommand(SetMinSize³DCommand&&) = delete;
+        SetMinSize³DCommand& operator=(const SetMinSize³DCommand&) = delete;
+        SetMinSize³DCommand& operator=(SetMinSize³DCommand&&) = delete;
     };
 }

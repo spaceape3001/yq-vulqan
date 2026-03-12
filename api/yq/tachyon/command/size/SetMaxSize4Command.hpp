@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's size
-    class SetMaxSize⁴Command : public SizeCommand {
-        YQ_OBJECT_DECLARE(SetMaxSize⁴Command, SizeCommand)
+    class SetMaxSize⁴DCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(SetMaxSize⁴DCommand, SizeCommand)
     public:
-        SetMaxSize⁴Command(const Header&, const Size4D&);
+        SetMaxSize⁴DCommand(const Header&, const Size4D&);
     
         const Size4D&   size() const  { return m_size; }
         
@@ -29,16 +29,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        SetMaxSize⁴Command(const Header&);
-        SetMaxSize⁴Command(const SetMaxSize⁴Command&, const Header&);
-        ~SetMaxSize⁴Command();
+        SetMaxSize⁴DCommand(const Header&);
+        SetMaxSize⁴DCommand(const SetMaxSize⁴DCommand&, const Header&);
+        ~SetMaxSize⁴DCommand();
 
     private:
         Size4D   m_size = ZERO;
         
-        SetMaxSize⁴Command(const SetMaxSize⁴Command&) = delete;
-        SetMaxSize⁴Command(SetMaxSize⁴Command&&) = delete;
-        SetMaxSize⁴Command& operator=(const SetMaxSize⁴Command&) = delete;
-        SetMaxSize⁴Command& operator=(SetMaxSize⁴Command&&) = delete;
+        SetMaxSize⁴DCommand(const SetMaxSize⁴DCommand&) = delete;
+        SetMaxSize⁴DCommand(SetMaxSize⁴DCommand&&) = delete;
+        SetMaxSize⁴DCommand& operator=(const SetMaxSize⁴DCommand&) = delete;
+        SetMaxSize⁴DCommand& operator=(SetMaxSize⁴DCommand&&) = delete;
     };
 }

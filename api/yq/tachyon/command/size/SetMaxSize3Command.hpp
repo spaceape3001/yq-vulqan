@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's size
-    class SetMaxSize³Command : public SizeCommand {
-        YQ_OBJECT_DECLARE(SetMaxSize³Command, SizeCommand)
+    class SetMaxSize³DCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(SetMaxSize³DCommand, SizeCommand)
     public:
-        SetMaxSize³Command(const Header&, const Size3D&);
+        SetMaxSize³DCommand(const Header&, const Size3D&);
     
         const Size3D&   size() const  { return m_size; }
         
@@ -28,16 +28,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        SetMaxSize³Command(const Header&);
-        SetMaxSize³Command(const SetMaxSize³Command&, const Header&);
-        ~SetMaxSize³Command();
+        SetMaxSize³DCommand(const Header&);
+        SetMaxSize³DCommand(const SetMaxSize³DCommand&, const Header&);
+        ~SetMaxSize³DCommand();
 
     private:
         Size3D   m_size = ZERO;
         
-        SetMaxSize³Command(const SetMaxSize³Command&) = delete;
-        SetMaxSize³Command(SetMaxSize³Command&&) = delete;
-        SetMaxSize³Command& operator=(const SetMaxSize³Command&) = delete;
-        SetMaxSize³Command& operator=(SetMaxSize³Command&&) = delete;
+        SetMaxSize³DCommand(const SetMaxSize³DCommand&) = delete;
+        SetMaxSize³DCommand(SetMaxSize³DCommand&&) = delete;
+        SetMaxSize³DCommand& operator=(const SetMaxSize³DCommand&) = delete;
+        SetMaxSize³DCommand& operator=(SetMaxSize³DCommand&&) = delete;
     };
 }

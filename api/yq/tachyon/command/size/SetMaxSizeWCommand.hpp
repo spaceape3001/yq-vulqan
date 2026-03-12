@@ -11,10 +11,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's size
-    class SetMaxSizeʷCommand : public SizeCommand {
-        YQ_OBJECT_DECLARE(SetMaxSizeʷCommand, SizeCommand)
+    class SetMaxSizeʷDCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(SetMaxSizeʷDCommand, SizeCommand)
     public:
-        SetMaxSizeʷCommand(const Header&, double);
+        SetMaxSizeʷDCommand(const Header&, double);
     
         static void init_meta();
         
@@ -23,16 +23,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        SetMaxSizeʷCommand(const Header&);
-        SetMaxSizeʷCommand(const SetMaxSizeʷCommand&, const Header&);
-        ~SetMaxSizeʷCommand();
+        SetMaxSizeʷDCommand(const Header&);
+        SetMaxSizeʷDCommand(const SetMaxSizeʷDCommand&, const Header&);
+        ~SetMaxSizeʷDCommand();
 
     private:
         double   m_w = 0.;
         
-        SetMaxSizeʷCommand(const SetMaxSizeʷCommand&) = delete;
-        SetMaxSizeʷCommand(SetMaxSizeʷCommand&&) = delete;
-        SetMaxSizeʷCommand& operator=(const SetMaxSizeʷCommand&) = delete;
-        SetMaxSizeʷCommand& operator=(SetMaxSizeʷCommand&&) = delete;
+        SetMaxSizeʷDCommand(const SetMaxSizeʷDCommand&) = delete;
+        SetMaxSizeʷDCommand(SetMaxSizeʷDCommand&&) = delete;
+        SetMaxSizeʷDCommand& operator=(const SetMaxSizeʷDCommand&) = delete;
+        SetMaxSizeʷDCommand& operator=(SetMaxSizeʷDCommand&&) = delete;
     };
 }

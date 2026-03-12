@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's size
-    class SetSize⁴Command : public SizeCommand {
-        YQ_OBJECT_DECLARE(SetSize⁴Command, SizeCommand)
+    class SetSize⁴DCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(SetSize⁴DCommand, SizeCommand)
     public:
-        SetSize⁴Command(const Header&, const Size4D&);
+        SetSize⁴DCommand(const Header&, const Size4D&);
     
         const Size4D&   size() const  { return m_size; }
         
@@ -29,16 +29,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        SetSize⁴Command(const Header&);
-        SetSize⁴Command(const SetSize⁴Command&, const Header&);
-        ~SetSize⁴Command();
+        SetSize⁴DCommand(const Header&);
+        SetSize⁴DCommand(const SetSize⁴DCommand&, const Header&);
+        ~SetSize⁴DCommand();
 
     private:
         Size4D   m_size = ZERO;
         
-        SetSize⁴Command(const SetSize⁴Command&) = delete;
-        SetSize⁴Command(SetSize⁴Command&&) = delete;
-        SetSize⁴Command& operator=(const SetSize⁴Command&) = delete;
-        SetSize⁴Command& operator=(SetSize⁴Command&&) = delete;
+        SetSize⁴DCommand(const SetSize⁴DCommand&) = delete;
+        SetSize⁴DCommand(SetSize⁴DCommand&&) = delete;
+        SetSize⁴DCommand& operator=(const SetSize⁴DCommand&) = delete;
+        SetSize⁴DCommand& operator=(SetSize⁴DCommand&&) = delete;
     };
 }

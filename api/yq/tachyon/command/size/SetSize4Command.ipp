@@ -4,44 +4,44 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SetSize4Command.hpp"
+#include "SetSize4DCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetSize⁴Command)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetSize⁴DCommand)
 
 namespace yq::tachyon {
-    SetSize⁴Command::SetSize⁴Command(const Header& h) : 
+    SetSize⁴DCommand::SetSize⁴DCommand(const Header& h) : 
         SizeCommand(h)
     {
     }
 
-    SetSize⁴Command::SetSize⁴Command(const Header& h, const Size4D& v) : 
+    SetSize⁴DCommand::SetSize⁴DCommand(const Header& h, const Size4D& v) : 
         SizeCommand(h), m_size(v)
     {
     }
 
-    SetSize⁴Command::SetSize⁴Command(const SetSize⁴Command& cp, const Header& h) : 
+    SetSize⁴DCommand::SetSize⁴DCommand(const SetSize⁴DCommand& cp, const Header& h) : 
         SizeCommand(cp, h), m_size(cp.m_size)
     {
     }
     
-    SetSize⁴Command::~SetSize⁴Command()
+    SetSize⁴DCommand::~SetSize⁴DCommand()
     {
     }
 
-    PostCPtr    SetSize⁴Command::clone(rebind_k, const Header&h) const 
+    PostCPtr    SetSize⁴DCommand::clone(rebind_k, const Header&h) const 
     {
-        return new SetSize⁴Command(*this, h);
+        return new SetSize⁴DCommand(*this, h);
     }
     
-    void SetSize⁴Command::init_meta()
+    void SetSize⁴DCommand::init_meta()
     {
-        auto w = writer<SetSize⁴Command>();
-        w.description("Set Size Command in 4D");
-        w.property("x", &SetSize⁴Command::x).tag(kTag_Log);
-        w.property("y", &SetSize⁴Command::y).tag(kTag_Log);
-        w.property("z", &SetSize⁴Command::z).tag(kTag_Log);
-        w.property("w", &SetSize⁴Command::w).tag(kTag_Log);
-        w.property("size", &SetSize⁴Command::m_size).tag(kTag_Save);
+        auto w = writer<SetSize⁴DCommand>();
+        w.description("Set Size DCommand in 4D");
+        w.property("x", &SetSize⁴DCommand::x).tag(kTag_Log);
+        w.property("y", &SetSize⁴DCommand::y).tag(kTag_Log);
+        w.property("z", &SetSize⁴DCommand::z).tag(kTag_Log);
+        w.property("w", &SetSize⁴DCommand::w).tag(kTag_Log);
+        w.property("size", &SetSize⁴DCommand::m_size).tag(kTag_Save);
     }
 }

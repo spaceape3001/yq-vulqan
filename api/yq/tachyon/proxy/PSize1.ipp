@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/proxy/PSize1.hpp>
-#include <yq/tachyon/command/size/AddSize1Command.hpp>
-#include <yq/tachyon/command/size/AddSizeXCommand.hpp>
-#include <yq/tachyon/command/size/MultiplySizeCommand.hpp>
-#include <yq/tachyon/command/size/MultiplySize1Command.hpp>
-#include <yq/tachyon/command/size/MultiplySizeXCommand.hpp>
-#include <yq/tachyon/command/size/SetSize1Command.hpp>
-#include <yq/tachyon/command/size/SetSizeXCommand.hpp>
+#include <yq/tachyon/command/size/AddSize1DCommand.hpp>
+#include <yq/tachyon/command/size/AddSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySize1DCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeXDCommand.hpp>
+#include <yq/tachyon/command/size/SetSize1DCommand.hpp>
+#include <yq/tachyon/command/size/SetSizeXDCommand.hpp>
 
 namespace yq::tachyon {
     PSize¹::PSize¹(const ISize¹& i) : m_size(i.size())
@@ -53,49 +53,49 @@ namespace yq::tachyon {
     void        PSize¹::size(set_k, const Size1D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetSize¹Command({.target=object()}, v));
+            mail(new SetSize¹DCommand({.target=object()}, v));
         }
     }
 
     void        PSize¹::size(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetSizeˣCommand({.target=object()}, x));
+            mail(new SetSizeˣDCommand({.target=object()}, x));
         }
     }
     
     void        PSize¹::size(add_k, const Vector1D& Δ) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddSize¹Command({.target=object()}, Δ));
+            mail(new AddSize¹DCommand({.target=object()}, Δ));
         }
     }
 
     void        PSize¹::size(add_k, x_k, double Δx) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddSizeˣCommand({.target=object()}, Δx));
+            mail(new AddSizeˣDCommand({.target=object()}, Δx));
         }
     }
 
     void        PSize¹::size(multiply_k, double Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplySize({.target=object()}, Δ));
+            mail(new MultiplySizeDCommand({.target=object()}, Δ));
         }
     }
 
     void        PSize¹::size(multiply_k, const Vector1D& Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplySize¹Command({.target=object()}, Δ));
+            mail(new MultiplySize¹DCommand({.target=object()}, Δ));
         }
     }
 
     void        PSize¹::size(multiply_k, x_k, double Δx) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplySizeˣCommand({.target=object()}, Δx));
+            mail(new MultiplySizeˣDCommand({.target=object()}, Δx));
         }
     }
 }

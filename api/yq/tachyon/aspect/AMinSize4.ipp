@@ -5,22 +5,22 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AMinSize4.hpp"
-#include <yq/tachyon/command/size/AddMinSize4Command.hpp>
-#include <yq/tachyon/command/size/AddMinSizeWCommand.hpp>
-#include <yq/tachyon/command/size/AddMinSizeXCommand.hpp>
-#include <yq/tachyon/command/size/AddMinSizeYCommand.hpp>
-#include <yq/tachyon/command/size/AddMinSizeZCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSize4Command.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeWCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeXCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeYCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeZCommand.hpp>
-#include <yq/tachyon/command/size/SetMinSize4Command.hpp>
-#include <yq/tachyon/command/size/SetMinSizeWCommand.hpp>
-#include <yq/tachyon/command/size/SetMinSizeXCommand.hpp>
-#include <yq/tachyon/command/size/SetMinSizeYCommand.hpp>
-#include <yq/tachyon/command/size/SetMinSizeZCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSize4DCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSizeWDCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSizeZDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSize4DCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeWDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeZDCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSize4DCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSizeWDCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSizeZDCommand.hpp>
 #include <yq/tachyon/event/spatial/MinSize4DEvent.hpp>
 
 
@@ -120,112 +120,112 @@ namespace yq::tachyon {
         min_size(SET, Size4D( m_min_size.x, m_min_size.y, m_min_size.z, m_min_size.w*v ));
     }
 
-    void        AMinSize⁴::on_set_min_size4(const SetMinSize⁴Command&cmd)
+    void        AMinSize⁴::on_set_min_size4(const SetMinSize⁴DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(SET, cmd.size());
     }
     
-    void        AMinSize⁴::on_set_min_sizeW(const SetMinSizeʷCommand&cmd)
+    void        AMinSize⁴::on_set_min_sizeW(const SetMinSizeʷDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(SET, W, cmd.w());
     }
     
-    void        AMinSize⁴::on_set_min_sizeX(const SetMinSizeˣCommand&cmd)
+    void        AMinSize⁴::on_set_min_sizeX(const SetMinSizeˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(SET, X, cmd.x());
     }
     
-    void        AMinSize⁴::on_set_min_sizeY(const SetMinSizeʸCommand&cmd)
+    void        AMinSize⁴::on_set_min_sizeY(const SetMinSizeʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(SET, Y, cmd.y());
     }
     
-    void        AMinSize⁴::on_set_min_sizeZ(const SetMinSizeᶻCommand&cmd)
+    void        AMinSize⁴::on_set_min_sizeZ(const SetMinSizeᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(SET, Z, cmd.z());
     }
 
-    void        AMinSize⁴::on_add_min_size4(const AddMinSize⁴Command&cmd)
+    void        AMinSize⁴::on_add_min_size4(const AddMinSize⁴DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(ADD, cmd.Δ());
     }
     
-    void        AMinSize⁴::on_add_min_sizeW(const AddMinSizeʷCommand&cmd)
+    void        AMinSize⁴::on_add_min_sizeW(const AddMinSizeʷDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(ADD, W, cmd.Δw());
     }
     
-    void        AMinSize⁴::on_add_min_sizeX(const AddMinSizeˣCommand&cmd)
+    void        AMinSize⁴::on_add_min_sizeX(const AddMinSizeˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(ADD, X, cmd.Δx());
     }
 
-    void        AMinSize⁴::on_add_min_sizeY(const AddMinSizeʸCommand&cmd)
+    void        AMinSize⁴::on_add_min_sizeY(const AddMinSizeʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(ADD, X, cmd.Δy());
     }
     
-    void        AMinSize⁴::on_add_min_sizeZ(const AddMinSizeᶻCommand&cmd)
+    void        AMinSize⁴::on_add_min_sizeZ(const AddMinSizeᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(ADD, X, cmd.Δz());
     }
     
-    void        AMinSize⁴::on_multiply_min_size(const MultiplyMinSize&cmd)
+    void        AMinSize⁴::on_multiply_min_size(const MultiplyMinSizeDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(MULTIPLY, cmd.δ());
     }
     
-    void        AMinSize⁴::on_multiply_min_size4(const MultiplyMinSize⁴Command&cmd)
+    void        AMinSize⁴::on_multiply_min_size4(const MultiplyMinSize⁴DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(MULTIPLY, cmd.δ());
     }
     
-    void        AMinSize⁴::on_multiply_min_sizeW(const MultiplyMinSizeʷCommand&cmd)
+    void        AMinSize⁴::on_multiply_min_sizeW(const MultiplyMinSizeʷDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(MULTIPLY, W, cmd.δw());
     }
     
-    void        AMinSize⁴::on_multiply_min_sizeX(const MultiplyMinSizeˣCommand&cmd)
+    void        AMinSize⁴::on_multiply_min_sizeX(const MultiplyMinSizeˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(MULTIPLY, X, cmd.δx());
     }
 
-    void        AMinSize⁴::on_multiply_min_sizeY(const MultiplyMinSizeʸCommand&cmd)
+    void        AMinSize⁴::on_multiply_min_sizeY(const MultiplyMinSizeʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(MULTIPLY, Y, cmd.δy());
     }
     
-    void        AMinSize⁴::on_multiply_min_sizeZ(const MultiplyMinSizeᶻCommand&cmd)
+    void        AMinSize⁴::on_multiply_min_sizeZ(const MultiplyMinSizeᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

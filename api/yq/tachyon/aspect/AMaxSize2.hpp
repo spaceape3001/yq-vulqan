@@ -15,16 +15,16 @@
 
 namespace yq::tachyon {
 
-    class AddMaxSize²Command;
-    class AddMaxSizeˣCommand;
-    class AddMaxSizeʸCommand;
-    class MultiplyMaxSize;
-    class MultiplyMaxSize²Command;
-    class MultiplyMaxSizeˣCommand;
-    class MultiplyMaxSizeʸCommand;
-    class SetMaxSize²Command;
-    class SetMaxSizeˣCommand;
-    class SetMaxSizeʸCommand;
+    class AddMaxSize²DCommand;
+    class AddMaxSizeˣDCommand;
+    class AddMaxSizeʸDCommand;
+    class MultiplyMaxSizeDCommand;
+    class MultiplyMaxSize²DCommand;
+    class MultiplyMaxSizeˣDCommand;
+    class MultiplyMaxSizeʸDCommand;
+    class SetMaxSize²DCommand;
+    class SetMaxSizeˣDCommand;
+    class SetMaxSizeʸDCommand;
 
     class AMaxSize² : public IMaxSize², public virtual Tachyon::Helper {
     public:
@@ -69,18 +69,18 @@ namespace yq::tachyon {
         void        max_size(emit_k);
         
     private:
-        void        on_set_max_size2(const SetMaxSize²Command&);
-        void        on_set_max_sizeX(const SetMaxSizeˣCommand&);
-        void        on_set_max_sizeY(const SetMaxSizeʸCommand&);
+        void        on_set_max_size2(const SetMaxSize²DCommand&);
+        void        on_set_max_sizeX(const SetMaxSizeˣDCommand&);
+        void        on_set_max_sizeY(const SetMaxSizeʸDCommand&);
 
-        void        on_add_max_size2(const AddMaxSize²Command&);
-        void        on_add_max_sizeX(const AddMaxSizeˣCommand&);
-        void        on_add_max_sizeY(const AddMaxSizeʸCommand&);
+        void        on_add_max_size2(const AddMaxSize²DCommand&);
+        void        on_add_max_sizeX(const AddMaxSizeˣDCommand&);
+        void        on_add_max_sizeY(const AddMaxSizeʸDCommand&);
         
-        void        on_multiply_max_size(const MultiplyMaxSize&);
-        void        on_multiply_max_size2(const MultiplyMaxSize²Command&);
-        void        on_multiply_max_sizeX(const MultiplyMaxSizeˣCommand&);
-        void        on_multiply_max_sizeY(const MultiplyMaxSizeʸCommand&);
+        void        on_multiply_max_size(const MultiplyMaxSizeDCommand&);
+        void        on_multiply_max_size2(const MultiplyMaxSize²DCommand&);
+        void        on_multiply_max_sizeX(const MultiplyMaxSizeˣDCommand&);
+        void        on_multiply_max_sizeY(const MultiplyMaxSizeʸDCommand&);
     };
 
 }

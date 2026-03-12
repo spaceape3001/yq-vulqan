@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/proxy/PMinSize1.hpp>
-#include <yq/tachyon/command/size/AddMinSize1Command.hpp>
-#include <yq/tachyon/command/size/AddMinSizeXCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSize1Command.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeXCommand.hpp>
-#include <yq/tachyon/command/size/SetMinSize1Command.hpp>
-#include <yq/tachyon/command/size/SetMinSizeXCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSize1DCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSize1DCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSize1DCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSizeXDCommand.hpp>
 
 namespace yq::tachyon {
     PMinSize¹::PMinSize¹(const IMinSize¹& i) : m_min_size(i.min_size())
@@ -53,49 +53,49 @@ namespace yq::tachyon {
     void        PMinSize¹::min_size(set_k, const Size1D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetMinSize¹Command({.target=object()}, v));
+            mail(new SetMinSize¹DCommand({.target=object()}, v));
         }
     }
 
     void        PMinSize¹::min_size(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetMinSizeˣCommand({.target=object()}, x));
+            mail(new SetMinSizeˣDCommand({.target=object()}, x));
         }
     }
     
     void        PMinSize¹::min_size(add_k, const Vector1D& Δ) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddMinSize¹Command({.target=object()}, Δ));
+            mail(new AddMinSize¹DCommand({.target=object()}, Δ));
         }
     }
 
     void        PMinSize¹::min_size(add_k, x_k, double Δx) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddMinSizeˣCommand({.target=object()}, Δx));
+            mail(new AddMinSizeˣDCommand({.target=object()}, Δx));
         }
     }
 
     void        PMinSize¹::min_size(multiply_k, double Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMinSize({.target=object()}, Δ));
+            mail(new MultiplyMinSizeDCommand({.target=object()}, Δ));
         }
     }
 
     void        PMinSize¹::min_size(multiply_k, const Vector1D& Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMinSize¹Command({.target=object()}, Δ));
+            mail(new MultiplyMinSize¹DCommand({.target=object()}, Δ));
         }
     }
 
     void        PMinSize¹::min_size(multiply_k, x_k, double Δx) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMinSizeˣCommand({.target=object()}, Δx));
+            mail(new MultiplyMinSizeˣDCommand({.target=object()}, Δx));
         }
     }
 }

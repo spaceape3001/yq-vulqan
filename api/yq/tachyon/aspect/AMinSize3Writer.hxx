@@ -7,19 +7,19 @@
 #pragma once
 
 #include <yq/tachyon/aspect/AMinSize3.hpp>
-#include <yq/tachyon/command/size/AddMinSize3Command.hpp>
-#include <yq/tachyon/command/size/AddMinSizeXCommand.hpp>
-#include <yq/tachyon/command/size/AddMinSizeYCommand.hpp>
-#include <yq/tachyon/command/size/AddMinSizeZCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSize3Command.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeXCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeYCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeZCommand.hpp>
-#include <yq/tachyon/command/size/SetMinSize3Command.hpp>
-#include <yq/tachyon/command/size/SetMinSizeXCommand.hpp>
-#include <yq/tachyon/command/size/SetMinSizeYCommand.hpp>
-#include <yq/tachyon/command/size/SetMinSizeZCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSize3DCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSizeZDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSize3DCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeZDCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSize3DCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSizeZDCommand.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/tags.hpp>
 

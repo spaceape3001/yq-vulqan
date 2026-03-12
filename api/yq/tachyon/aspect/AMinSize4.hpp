@@ -15,22 +15,22 @@
 
 namespace yq::tachyon {
 
-    class AddMinSize⁴Command;
-    class AddMinSizeʷCommand;
-    class AddMinSizeˣCommand;
-    class AddMinSizeʸCommand;
-    class AddMinSizeᶻCommand;
-    class MultiplyMinSize;
-    class MultiplyMinSize⁴Command;
-    class MultiplyMinSizeʷCommand;
-    class MultiplyMinSizeˣCommand;
-    class MultiplyMinSizeʸCommand;
-    class MultiplyMinSizeᶻCommand;
-    class SetMinSize⁴Command;
-    class SetMinSizeʷCommand;
-    class SetMinSizeˣCommand;
-    class SetMinSizeʸCommand;
-    class SetMinSizeᶻCommand;
+    class AddMinSize⁴DCommand;
+    class AddMinSizeʷDCommand;
+    class AddMinSizeˣDCommand;
+    class AddMinSizeʸDCommand;
+    class AddMinSizeᶻDCommand;
+    class MultiplyMinSizeDCommand;
+    class MultiplyMinSize⁴DCommand;
+    class MultiplyMinSizeʷDCommand;
+    class MultiplyMinSizeˣDCommand;
+    class MultiplyMinSizeʸDCommand;
+    class MultiplyMinSizeᶻDCommand;
+    class SetMinSize⁴DCommand;
+    class SetMinSizeʷDCommand;
+    class SetMinSizeˣDCommand;
+    class SetMinSizeʸDCommand;
+    class SetMinSizeᶻDCommand;
 
     class AMinSize⁴ : public IMinSize⁴, public virtual Tachyon::Helper {
     public:
@@ -84,24 +84,24 @@ namespace yq::tachyon {
         void        min_size(emit_k);
         
     private:
-        void        on_set_min_size4(const SetMinSize⁴Command&);
-        void        on_set_min_sizeW(const SetMinSizeʷCommand&);
-        void        on_set_min_sizeX(const SetMinSizeˣCommand&);
-        void        on_set_min_sizeY(const SetMinSizeʸCommand&);
-        void        on_set_min_sizeZ(const SetMinSizeᶻCommand&);
+        void        on_set_min_size4(const SetMinSize⁴DCommand&);
+        void        on_set_min_sizeW(const SetMinSizeʷDCommand&);
+        void        on_set_min_sizeX(const SetMinSizeˣDCommand&);
+        void        on_set_min_sizeY(const SetMinSizeʸDCommand&);
+        void        on_set_min_sizeZ(const SetMinSizeᶻDCommand&);
 
-        void        on_add_min_size4(const AddMinSize⁴Command&);
-        void        on_add_min_sizeW(const AddMinSizeʷCommand&);
-        void        on_add_min_sizeX(const AddMinSizeˣCommand&);
-        void        on_add_min_sizeY(const AddMinSizeʸCommand&);
-        void        on_add_min_sizeZ(const AddMinSizeᶻCommand&);
+        void        on_add_min_size4(const AddMinSize⁴DCommand&);
+        void        on_add_min_sizeW(const AddMinSizeʷDCommand&);
+        void        on_add_min_sizeX(const AddMinSizeˣDCommand&);
+        void        on_add_min_sizeY(const AddMinSizeʸDCommand&);
+        void        on_add_min_sizeZ(const AddMinSizeᶻDCommand&);
         
-        void        on_multiply_min_size(const MultiplyMinSize&);
-        void        on_multiply_min_size4(const MultiplyMinSize⁴Command&);
-        void        on_multiply_min_sizeW(const MultiplyMinSizeʷCommand&);
-        void        on_multiply_min_sizeX(const MultiplyMinSizeˣCommand&);
-        void        on_multiply_min_sizeY(const MultiplyMinSizeʸCommand&);
-        void        on_multiply_min_sizeZ(const MultiplyMinSizeᶻCommand&);
+        void        on_multiply_min_size(const MultiplyMinSizeDCommand&);
+        void        on_multiply_min_size4(const MultiplyMinSize⁴DCommand&);
+        void        on_multiply_min_sizeW(const MultiplyMinSizeʷDCommand&);
+        void        on_multiply_min_sizeX(const MultiplyMinSizeˣDCommand&);
+        void        on_multiply_min_sizeY(const MultiplyMinSizeʸDCommand&);
+        void        on_multiply_min_sizeZ(const MultiplyMinSizeᶻDCommand&);
 
     };
 

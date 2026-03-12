@@ -7,13 +7,13 @@
 #pragma once
 
 #include <yq/tachyon/aspect/AMaxSize1.hpp>
-#include <yq/tachyon/command/size/AddMaxSize1Command.hpp>
-#include <yq/tachyon/command/size/AddMaxSizeXCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSizeCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSize1Command.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSizeXCommand.hpp>
-#include <yq/tachyon/command/size/SetMaxSize1Command.hpp>
-#include <yq/tachyon/command/size/SetMaxSizeXCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSize1DCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSize1DCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSize1DCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeXDCommand.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/tags.hpp>
 

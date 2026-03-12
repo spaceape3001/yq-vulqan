@@ -5,19 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ASize3.hpp"
-#include <yq/tachyon/command/size/AddSize3Command.hpp>
-#include <yq/tachyon/command/size/AddSizeXCommand.hpp>
-#include <yq/tachyon/command/size/AddSizeYCommand.hpp>
-#include <yq/tachyon/command/size/AddSizeZCommand.hpp>
-#include <yq/tachyon/command/size/MultiplySizeCommand.hpp>
-#include <yq/tachyon/command/size/MultiplySize3Command.hpp>
-#include <yq/tachyon/command/size/MultiplySizeXCommand.hpp>
-#include <yq/tachyon/command/size/MultiplySizeYCommand.hpp>
-#include <yq/tachyon/command/size/MultiplySizeZCommand.hpp>
-#include <yq/tachyon/command/size/SetSize3Command.hpp>
-#include <yq/tachyon/command/size/SetSizeXCommand.hpp>
-#include <yq/tachyon/command/size/SetSizeYCommand.hpp>
-#include <yq/tachyon/command/size/SetSizeZCommand.hpp>
+#include <yq/tachyon/command/size/AddSize3DCommand.hpp>
+#include <yq/tachyon/command/size/AddSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/AddSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/AddSizeZDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySize3DCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeXDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeYDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplySizeZDCommand.hpp>
+#include <yq/tachyon/command/size/SetSize3DCommand.hpp>
+#include <yq/tachyon/command/size/SetSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/SetSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/SetSizeZDCommand.hpp>
 #include <yq/tachyon/event/spatial/Size3DEvent.hpp>
 
 
@@ -106,91 +106,91 @@ namespace yq::tachyon {
         size(SET, Size3D( m_size.x, m_size.y, m_size.z*v ));
     }
     
-    void        ASize³::on_set_size3(const SetSize³Command&cmd)
+    void        ASize³::on_set_size3(const SetSize³DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, cmd.size());
     }
     
-    void        ASize³::on_set_sizeX(const SetSizeˣCommand&cmd)
+    void        ASize³::on_set_sizeX(const SetSizeˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, X, cmd.x());
     }
     
-    void        ASize³::on_set_sizeY(const SetSizeʸCommand&cmd)
+    void        ASize³::on_set_sizeY(const SetSizeʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, Y, cmd.y());
     }
     
-    void        ASize³::on_set_sizeZ(const SetSizeᶻCommand&cmd)
+    void        ASize³::on_set_sizeZ(const SetSizeᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(SET, Z, cmd.z());
     }
 
-    void        ASize³::on_add_size3(const AddSize³Command&cmd)
+    void        ASize³::on_add_size3(const AddSize³DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(ADD, cmd.Δ());
     }
     
-    void        ASize³::on_add_sizeX(const AddSizeˣCommand&cmd)
+    void        ASize³::on_add_sizeX(const AddSizeˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(ADD, X, cmd.Δx());
     }
     
-    void        ASize³::on_add_sizeY(const AddSizeʸCommand&cmd)
+    void        ASize³::on_add_sizeY(const AddSizeʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(ADD, X, cmd.Δy());
     }
     
-    void        ASize³::on_add_sizeZ(const AddSizeᶻCommand&cmd)
+    void        ASize³::on_add_sizeZ(const AddSizeᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(ADD, X, cmd.Δz());
     }
     
-    void        ASize³::on_multiply_size(const MultiplySize&cmd)
+    void        ASize³::on_multiply_size(const MultiplySizeDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(MULTIPLY, cmd.δ());
     }
     
-    void        ASize³::on_multiply_size3(const MultiplySize³Command&cmd)
+    void        ASize³::on_multiply_size3(const MultiplySize³DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(MULTIPLY, cmd.δ());
     }
     
-    void        ASize³::on_multiply_sizeX(const MultiplySizeˣCommand&cmd)
+    void        ASize³::on_multiply_sizeX(const MultiplySizeˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(MULTIPLY, X, cmd.δx());
     }
     
-    void        ASize³::on_multiply_sizeY(const MultiplySizeʸCommand&cmd)
+    void        ASize³::on_multiply_sizeY(const MultiplySizeʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         size(MULTIPLY, Y, cmd.δy());
     }
     
-    void        ASize³::on_multiply_sizeZ(const MultiplySizeᶻCommand&cmd)
+    void        ASize³::on_multiply_sizeZ(const MultiplySizeᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

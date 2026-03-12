@@ -5,22 +5,22 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AMaxSize4.hpp"
-#include <yq/tachyon/command/size/AddMaxSize4Command.hpp>
-#include <yq/tachyon/command/size/AddMaxSizeWCommand.hpp>
-#include <yq/tachyon/command/size/AddMaxSizeXCommand.hpp>
-#include <yq/tachyon/command/size/AddMaxSizeYCommand.hpp>
-#include <yq/tachyon/command/size/AddMaxSizeZCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSizeCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSize4Command.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSizeWCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSizeXCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSizeYCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSizeZCommand.hpp>
-#include <yq/tachyon/command/size/SetMaxSize4Command.hpp>
-#include <yq/tachyon/command/size/SetMaxSizeWCommand.hpp>
-#include <yq/tachyon/command/size/SetMaxSizeXCommand.hpp>
-#include <yq/tachyon/command/size/SetMaxSizeYCommand.hpp>
-#include <yq/tachyon/command/size/SetMaxSizeZCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSize4DCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeWDCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeZDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSize4DCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeWDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeZDCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSize4DCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeWDCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeZDCommand.hpp>
 #include <yq/tachyon/event/spatial/MaxSize4DEvent.hpp>
 
 
@@ -120,112 +120,112 @@ namespace yq::tachyon {
         max_size(SET, Size4D( m_max_size.x, m_max_size.y, m_max_size.z, m_max_size.w*v ));
     }
 
-    void        AMaxSize⁴::on_set_max_size4(const SetMaxSize⁴Command&cmd)
+    void        AMaxSize⁴::on_set_max_size4(const SetMaxSize⁴DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(SET, cmd.size());
     }
     
-    void        AMaxSize⁴::on_set_max_sizeX(const SetMaxSizeˣCommand&cmd)
+    void        AMaxSize⁴::on_set_max_sizeX(const SetMaxSizeˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(SET, X, cmd.x());
     }
     
-    void        AMaxSize⁴::on_set_max_sizeW(const SetMaxSizeʷCommand&cmd)
+    void        AMaxSize⁴::on_set_max_sizeW(const SetMaxSizeʷDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(SET, W, cmd.w());
     }
 
-    void        AMaxSize⁴::on_set_max_sizeY(const SetMaxSizeʸCommand&cmd)
+    void        AMaxSize⁴::on_set_max_sizeY(const SetMaxSizeʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(SET, Y, cmd.y());
     }
     
-    void        AMaxSize⁴::on_set_max_sizeZ(const SetMaxSizeᶻCommand&cmd)
+    void        AMaxSize⁴::on_set_max_sizeZ(const SetMaxSizeᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(SET, Z, cmd.z());
     }
 
-    void        AMaxSize⁴::on_add_max_size4(const AddMaxSize⁴Command&cmd)
+    void        AMaxSize⁴::on_add_max_size4(const AddMaxSize⁴DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(ADD, cmd.Δ());
     }
     
-    void        AMaxSize⁴::on_add_max_sizeW(const AddMaxSizeʷCommand&cmd)
+    void        AMaxSize⁴::on_add_max_sizeW(const AddMaxSizeʷDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(ADD, W, cmd.Δw());
     }
 
-    void        AMaxSize⁴::on_add_max_sizeX(const AddMaxSizeˣCommand&cmd)
+    void        AMaxSize⁴::on_add_max_sizeX(const AddMaxSizeˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(ADD, X, cmd.Δx());
     }
     
-    void        AMaxSize⁴::on_add_max_sizeY(const AddMaxSizeʸCommand&cmd)
+    void        AMaxSize⁴::on_add_max_sizeY(const AddMaxSizeʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(ADD, X, cmd.Δy());
     }
     
-    void        AMaxSize⁴::on_add_max_sizeZ(const AddMaxSizeᶻCommand&cmd)
+    void        AMaxSize⁴::on_add_max_sizeZ(const AddMaxSizeᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(ADD, X, cmd.Δz());
     }
     
-    void        AMaxSize⁴::on_multiply_max_size(const MultiplyMaxSize&cmd)
+    void        AMaxSize⁴::on_multiply_max_size(const MultiplyMaxSizeDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(MULTIPLY, cmd.δ());
     }
     
-    void        AMaxSize⁴::on_multiply_max_size4(const MultiplyMaxSize⁴Command&cmd)
+    void        AMaxSize⁴::on_multiply_max_size4(const MultiplyMaxSize⁴DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(MULTIPLY, cmd.δ());
     }
     
-    void        AMaxSize⁴::on_multiply_max_sizeW(const MultiplyMaxSizeʷCommand&cmd)
+    void        AMaxSize⁴::on_multiply_max_sizeW(const MultiplyMaxSizeʷDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(MULTIPLY, W, cmd.δw());
     }
 
-    void        AMaxSize⁴::on_multiply_max_sizeX(const MultiplyMaxSizeˣCommand&cmd)
+    void        AMaxSize⁴::on_multiply_max_sizeX(const MultiplyMaxSizeˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(MULTIPLY, X, cmd.δx());
     }
 
-    void        AMaxSize⁴::on_multiply_max_sizeY(const MultiplyMaxSizeʸCommand&cmd)
+    void        AMaxSize⁴::on_multiply_max_sizeY(const MultiplyMaxSizeʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         max_size(MULTIPLY, Y, cmd.δy());
     }
     
-    void        AMaxSize⁴::on_multiply_max_sizeZ(const MultiplyMaxSizeᶻCommand&cmd)
+    void        AMaxSize⁴::on_multiply_max_sizeZ(const MultiplyMaxSizeᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

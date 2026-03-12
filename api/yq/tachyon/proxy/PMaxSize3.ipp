@@ -5,19 +5,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/proxy/PMaxSize3.hpp>
-#include <yq/tachyon/command/size/AddMaxSize3Command.hpp>
-#include <yq/tachyon/command/size/AddMaxSizeXCommand.hpp>
-#include <yq/tachyon/command/size/AddMaxSizeYCommand.hpp>
-#include <yq/tachyon/command/size/AddMaxSizeZCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSizeCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSize3Command.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSizeXCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSizeYCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSizeZCommand.hpp>
-#include <yq/tachyon/command/size/SetMaxSize3Command.hpp>
-#include <yq/tachyon/command/size/SetMaxSizeXCommand.hpp>
-#include <yq/tachyon/command/size/SetMaxSizeYCommand.hpp>
-#include <yq/tachyon/command/size/SetMaxSizeZCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSize3DCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeZDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSize3DCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeZDCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSize3DCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeZDCommand.hpp>
 
 namespace yq::tachyon {
     PMaxSize³::PMaxSize³(const IMaxSize³& i) : m_max_size(i.max_size())
@@ -59,91 +59,91 @@ namespace yq::tachyon {
     void        PMaxSize³::max_size(set_k, const Size3D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetMaxSize³Command({.target=object()}, v));
+            mail(new SetMaxSize³DCommand({.target=object()}, v));
         }
     }
 
     void        PMaxSize³::max_size(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetMaxSizeˣCommand({.target=object()}, x));
+            mail(new SetMaxSizeˣDCommand({.target=object()}, x));
         }
     }
     
     void        PMaxSize³::max_size(set_k, y_k, double y) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetMaxSizeʸCommand({.target=object()}, y));
+            mail(new SetMaxSizeʸDCommand({.target=object()}, y));
         }
     }
     
     void        PMaxSize³::max_size(set_k, z_k, double z) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetMaxSizeᶻCommand({.target=object()}, z));
+            mail(new SetMaxSizeᶻDCommand({.target=object()}, z));
         }
     }
 
     void        PMaxSize³::max_size(add_k, const Vector3D& Δ) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddMaxSize³Command({.target=object()}, Δ));
+            mail(new AddMaxSize³DCommand({.target=object()}, Δ));
         }
     }
 
     void        PMaxSize³::max_size(add_k, x_k, double Δx) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddMaxSizeˣCommand({.target=object()}, Δx));
+            mail(new AddMaxSizeˣDCommand({.target=object()}, Δx));
         }
     }
 
     void        PMaxSize³::max_size(add_k, y_k, double Δy) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddMaxSizeʸCommand({.target=object()}, Δy));
+            mail(new AddMaxSizeʸDCommand({.target=object()}, Δy));
         }
     }
 
     void        PMaxSize³::max_size(add_k, z_k, double Δz) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddMaxSizeᶻCommand({.target=object()}, Δz));
+            mail(new AddMaxSizeᶻDCommand({.target=object()}, Δz));
         }
     }
 
     void        PMaxSize³::max_size(multiply_k, double Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMaxSize({.target=object()}, Δ));
+            mail(new MultiplyMaxSizeDCommand({.target=object()}, Δ));
         }
     }
 
     void        PMaxSize³::max_size(multiply_k, const Vector3D& Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMaxSize³Command({.target=object()}, Δ));
+            mail(new MultiplyMaxSize³DCommand({.target=object()}, Δ));
         }
     }
 
     void        PMaxSize³::max_size(multiply_k, x_k, double Δx) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMaxSizeˣCommand({.target=object()}, Δx));
+            mail(new MultiplyMaxSizeˣDCommand({.target=object()}, Δx));
         }
     }
 
     void        PMaxSize³::max_size(multiply_k, y_k, double Δy) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMaxSizeʸCommand({.target=object()}, Δy));
+            mail(new MultiplyMaxSizeʸDCommand({.target=object()}, Δy));
         }
     }
 
     void        PMaxSize³::max_size(multiply_k, z_k, double Δz) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMaxSizeᶻCommand({.target=object()}, Δz));
+            mail(new MultiplyMaxSizeᶻDCommand({.target=object()}, Δz));
         }
     }
 }

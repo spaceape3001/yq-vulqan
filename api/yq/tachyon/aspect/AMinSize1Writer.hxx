@@ -7,13 +7,13 @@
 #pragma once
 
 #include <yq/tachyon/aspect/AMinSize1.hpp>
-#include <yq/tachyon/command/size/AddMinSize1Command.hpp>
-#include <yq/tachyon/command/size/AddMinSizeXCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSize1Command.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeXCommand.hpp>
-#include <yq/tachyon/command/size/SetMinSize1Command.hpp>
-#include <yq/tachyon/command/size/SetMinSizeXCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSize1DCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSize1DCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSize1DCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSizeXDCommand.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/tags.hpp>
 

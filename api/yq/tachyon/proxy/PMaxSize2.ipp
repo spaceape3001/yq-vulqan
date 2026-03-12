@@ -5,16 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/proxy/PMaxSize2.hpp>
-#include <yq/tachyon/command/size/AddMaxSize2Command.hpp>
-#include <yq/tachyon/command/size/AddMaxSizeXCommand.hpp>
-#include <yq/tachyon/command/size/AddMaxSizeYCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSizeCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSize2Command.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSizeXCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMaxSizeYCommand.hpp>
-#include <yq/tachyon/command/size/SetMaxSize2Command.hpp>
-#include <yq/tachyon/command/size/SetMaxSizeXCommand.hpp>
-#include <yq/tachyon/command/size/SetMaxSizeYCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSize2DCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/AddMaxSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSize2DCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMaxSizeYDCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSize2DCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/SetMaxSizeYDCommand.hpp>
 
 namespace yq::tachyon {
     PMaxSize²::PMaxSize²(const IMaxSize²& i) : m_max_size(i.max_size())
@@ -56,70 +56,70 @@ namespace yq::tachyon {
     void        PMaxSize²::max_size(set_k, const Size2D& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetMaxSize²Command({.target=object()}, v));
+            mail(new SetMaxSize²DCommand({.target=object()}, v));
         }
     }
 
     void        PMaxSize²::max_size(set_k, x_k, double x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetMaxSizeˣCommand({.target=object()}, x));
+            mail(new SetMaxSizeˣDCommand({.target=object()}, x));
         }
     }
     
     void        PMaxSize²::max_size(set_k, y_k, double y) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetMaxSizeʸCommand({.target=object()}, y));
+            mail(new SetMaxSizeʸDCommand({.target=object()}, y));
         }
     }
     
     void        PMaxSize²::max_size(add_k, const Vector2D& Δ) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddMaxSize²Command({.target=object()}, Δ));
+            mail(new AddMaxSize²DCommand({.target=object()}, Δ));
         }
     }
 
     void        PMaxSize²::max_size(add_k, x_k, double Δx) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddMaxSizeˣCommand({.target=object()}, Δx));
+            mail(new AddMaxSizeˣDCommand({.target=object()}, Δx));
         }
     }
 
     void        PMaxSize²::max_size(add_k, y_k, double Δy) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddMaxSizeʸCommand({.target=object()}, Δy));
+            mail(new AddMaxSizeʸDCommand({.target=object()}, Δy));
         }
     }
 
     void        PMaxSize²::max_size(multiply_k, double Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMaxSize({.target=object()}, Δ));
+            mail(new MultiplyMaxSizeDCommand({.target=object()}, Δ));
         }
     }
 
     void        PMaxSize²::max_size(multiply_k, const Vector2D& Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMaxSize²Command({.target=object()}, Δ));
+            mail(new MultiplyMaxSize²DCommand({.target=object()}, Δ));
         }
     }
 
     void        PMaxSize²::max_size(multiply_k, x_k, double Δx) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMaxSizeˣCommand({.target=object()}, Δx));
+            mail(new MultiplyMaxSizeˣDCommand({.target=object()}, Δx));
         }
     }
 
     void        PMaxSize²::max_size(multiply_k, y_k, double Δy) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyMaxSizeʸCommand({.target=object()}, Δy));
+            mail(new MultiplyMaxSizeʸDCommand({.target=object()}, Δy));
         }
     }
 }

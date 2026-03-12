@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "AMinSize1.hpp"
-#include <yq/tachyon/command/size/AddMinSize1Command.hpp>
-#include <yq/tachyon/command/size/AddMinSizeXCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeCommand.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSize1Command.hpp>
-#include <yq/tachyon/command/size/MultiplyMinSizeXCommand.hpp>
-#include <yq/tachyon/command/size/SetMinSize1Command.hpp>
-#include <yq/tachyon/command/size/SetMinSizeXCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSize1DCommand.hpp>
+#include <yq/tachyon/command/size/AddMinSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeDCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSize1DCommand.hpp>
+#include <yq/tachyon/command/size/MultiplyMinSizeXDCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSize1DCommand.hpp>
+#include <yq/tachyon/command/size/SetMinSizeXDCommand.hpp>
 #include <yq/tachyon/event/spatial/MinSize1DEvent.hpp>
 
 
@@ -66,49 +66,49 @@ namespace yq::tachyon {
         min_size(SET, Size1D( m_min_size.x*v));
     }
     
-    void        AMinSize¹::on_set_min_size1(const SetMinSize¹Command&cmd)
+    void        AMinSize¹::on_set_min_size1(const SetMinSize¹DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(SET, cmd.size());
     }
     
-    void        AMinSize¹::on_set_min_sizeX(const SetMinSizeˣCommand&cmd)
+    void        AMinSize¹::on_set_min_sizeX(const SetMinSizeˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(SET, X, cmd.x());
     }
     
-    void        AMinSize¹::on_add_min_size1(const AddMinSize¹Command&cmd)
+    void        AMinSize¹::on_add_min_size1(const AddMinSize¹DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(ADD, cmd.Δ());
     }
     
-    void        AMinSize¹::on_add_min_sizeX(const AddMinSizeˣCommand&cmd)
+    void        AMinSize¹::on_add_min_sizeX(const AddMinSizeˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(ADD, X, cmd.Δx());
     }
     
-    void        AMinSize¹::on_multiply_min_size(const MultiplyMinSize&cmd)
+    void        AMinSize¹::on_multiply_min_size(const MultiplyMinSizeDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(MULTIPLY, cmd.δ());
     }
     
-    void        AMinSize¹::on_multiply_min_size1(const MultiplyMinSize¹Command&cmd)
+    void        AMinSize¹::on_multiply_min_size1(const MultiplyMinSize¹DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         min_size(MULTIPLY, cmd.δ());
     }
     
-    void        AMinSize¹::on_multiply_min_sizeX(const MultiplyMinSizeˣCommand&cmd)
+    void        AMinSize¹::on_multiply_min_sizeX(const MultiplyMinSizeˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

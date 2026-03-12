@@ -15,22 +15,22 @@
 
 namespace yq::tachyon {
 
-    class AddMaxSize⁴Command;
-    class AddMaxSizeˣCommand;
-    class AddMaxSizeʷCommand;
-    class AddMaxSizeʸCommand;
-    class AddMaxSizeᶻCommand;
-    class MultiplyMaxSize;
-    class MultiplyMaxSize⁴Command;
-    class MultiplyMaxSizeʷCommand;
-    class MultiplyMaxSizeˣCommand;
-    class MultiplyMaxSizeʸCommand;
-    class MultiplyMaxSizeᶻCommand;
-    class SetMaxSize⁴Command;
-    class SetMaxSizeʷCommand;
-    class SetMaxSizeˣCommand;
-    class SetMaxSizeʸCommand;
-    class SetMaxSizeᶻCommand;
+    class AddMaxSize⁴DCommand;
+    class AddMaxSizeˣDCommand;
+    class AddMaxSizeʷDCommand;
+    class AddMaxSizeʸDCommand;
+    class AddMaxSizeᶻDCommand;
+    class MultiplyMaxSizeDCommand;
+    class MultiplyMaxSize⁴DCommand;
+    class MultiplyMaxSizeʷDCommand;
+    class MultiplyMaxSizeˣDCommand;
+    class MultiplyMaxSizeʸDCommand;
+    class MultiplyMaxSizeᶻDCommand;
+    class SetMaxSize⁴DCommand;
+    class SetMaxSizeʷDCommand;
+    class SetMaxSizeˣDCommand;
+    class SetMaxSizeʸDCommand;
+    class SetMaxSizeᶻDCommand;
 
     class AMaxSize⁴ : public IMaxSize⁴, public virtual Tachyon::Helper {
     public:
@@ -84,24 +84,24 @@ namespace yq::tachyon {
         void        max_size(emit_k);
         
     private:
-        void        on_set_max_size4(const SetMaxSize⁴Command&);
-        void        on_set_max_sizeW(const SetMaxSizeʷCommand&);
-        void        on_set_max_sizeX(const SetMaxSizeˣCommand&);
-        void        on_set_max_sizeY(const SetMaxSizeʸCommand&);
-        void        on_set_max_sizeZ(const SetMaxSizeᶻCommand&);
+        void        on_set_max_size4(const SetMaxSize⁴DCommand&);
+        void        on_set_max_sizeW(const SetMaxSizeʷDCommand&);
+        void        on_set_max_sizeX(const SetMaxSizeˣDCommand&);
+        void        on_set_max_sizeY(const SetMaxSizeʸDCommand&);
+        void        on_set_max_sizeZ(const SetMaxSizeᶻDCommand&);
 
-        void        on_add_max_size4(const AddMaxSize⁴Command&);
-        void        on_add_max_sizeW(const AddMaxSizeʷCommand&);
-        void        on_add_max_sizeX(const AddMaxSizeˣCommand&);
-        void        on_add_max_sizeY(const AddMaxSizeʸCommand&);
-        void        on_add_max_sizeZ(const AddMaxSizeᶻCommand&);
+        void        on_add_max_size4(const AddMaxSize⁴DCommand&);
+        void        on_add_max_sizeW(const AddMaxSizeʷDCommand&);
+        void        on_add_max_sizeX(const AddMaxSizeˣDCommand&);
+        void        on_add_max_sizeY(const AddMaxSizeʸDCommand&);
+        void        on_add_max_sizeZ(const AddMaxSizeᶻDCommand&);
         
-        void        on_multiply_max_size(const MultiplyMaxSize&);
-        void        on_multiply_max_size4(const MultiplyMaxSize⁴Command&);
-        void        on_multiply_max_sizeW(const MultiplyMaxSizeʷCommand&);
-        void        on_multiply_max_sizeX(const MultiplyMaxSizeˣCommand&);
-        void        on_multiply_max_sizeY(const MultiplyMaxSizeʸCommand&);
-        void        on_multiply_max_sizeZ(const MultiplyMaxSizeᶻCommand&);
+        void        on_multiply_max_size(const MultiplyMaxSizeDCommand&);
+        void        on_multiply_max_size4(const MultiplyMaxSize⁴DCommand&);
+        void        on_multiply_max_sizeW(const MultiplyMaxSizeʷDCommand&);
+        void        on_multiply_max_sizeX(const MultiplyMaxSizeˣDCommand&);
+        void        on_multiply_max_sizeY(const MultiplyMaxSizeʸDCommand&);
+        void        on_multiply_max_sizeZ(const MultiplyMaxSizeᶻDCommand&);
 
     };
 

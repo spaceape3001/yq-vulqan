@@ -11,16 +11,16 @@
 
 namespace yq::tachyon {
 
-    class AddSize²Command;
-    class AddSizeˣCommand;
-    class AddSizeʸCommand;
-    class MultiplySize;
-    class MultiplySize²Command;
-    class MultiplySizeˣCommand;
-    class MultiplySizeʸCommand;
-    class SetSize²Command;
-    class SetSizeˣCommand;
-    class SetSizeʸCommand;
+    class AddSize²DCommand;
+    class AddSizeˣDCommand;
+    class AddSizeʸDCommand;
+    class MultiplySizeDCommand;
+    class MultiplySize²DCommand;
+    class MultiplySizeˣDCommand;
+    class MultiplySizeʸDCommand;
+    class SetSize²DCommand;
+    class SetSizeˣDCommand;
+    class SetSizeʸDCommand;
 
     class ASize² : public ISize², public virtual Tachyon::Helper {
     public:
@@ -65,18 +65,18 @@ namespace yq::tachyon {
         void        size(emit_k);
         
     private:
-        void        on_set_size2(const SetSize²Command&);
-        void        on_set_sizeX(const SetSizeˣCommand&);
-        void        on_set_sizeY(const SetSizeʸCommand&);
+        void        on_set_size2(const SetSize²DCommand&);
+        void        on_set_sizeX(const SetSizeˣDCommand&);
+        void        on_set_sizeY(const SetSizeʸDCommand&);
 
-        void        on_add_size2(const AddSize²Command&);
-        void        on_add_sizeX(const AddSizeˣCommand&);
-        void        on_add_sizeY(const AddSizeʸCommand&);
+        void        on_add_size2(const AddSize²DCommand&);
+        void        on_add_sizeX(const AddSizeˣDCommand&);
+        void        on_add_sizeY(const AddSizeʸDCommand&);
         
-        void        on_multiply_size(const MultiplySize&);
-        void        on_multiply_size2(const MultiplySize²Command&);
-        void        on_multiply_sizeX(const MultiplySizeˣCommand&);
-        void        on_multiply_sizeY(const MultiplySizeʸCommand&);
+        void        on_multiply_size(const MultiplySizeDCommand&);
+        void        on_multiply_size2(const MultiplySize²DCommand&);
+        void        on_multiply_sizeX(const MultiplySizeˣDCommand&);
+        void        on_multiply_sizeY(const MultiplySizeʸDCommand&);
     };
 
 }

@@ -15,16 +15,16 @@
 
 namespace yq::tachyon {
 
-    class AddMinSize²Command;
-    class AddMinSizeˣCommand;
-    class AddMinSizeʸCommand;
-    class MultiplyMinSize;
-    class MultiplyMinSize²Command;
-    class MultiplyMinSizeˣCommand;
-    class MultiplyMinSizeʸCommand;
-    class SetMinSize²Command;
-    class SetMinSizeˣCommand;
-    class SetMinSizeʸCommand;
+    class AddMinSize²DCommand;
+    class AddMinSizeˣDCommand;
+    class AddMinSizeʸDCommand;
+    class MultiplyMinSizeDCommand;
+    class MultiplyMinSize²DCommand;
+    class MultiplyMinSizeˣDCommand;
+    class MultiplyMinSizeʸDCommand;
+    class SetMinSize²DCommand;
+    class SetMinSizeˣDCommand;
+    class SetMinSizeʸDCommand;
 
     class AMinSize² : public IMinSize², public virtual Tachyon::Helper {
     public:
@@ -69,18 +69,18 @@ namespace yq::tachyon {
         void        min_size(emit_k);
         
     private:
-        void        on_set_min_size2(const SetMinSize²Command&);
-        void        on_set_min_sizeX(const SetMinSizeˣCommand&);
-        void        on_set_min_sizeY(const SetMinSizeʸCommand&);
+        void        on_set_min_size2(const SetMinSize²DCommand&);
+        void        on_set_min_sizeX(const SetMinSizeˣDCommand&);
+        void        on_set_min_sizeY(const SetMinSizeʸDCommand&);
 
-        void        on_add_min_size2(const AddMinSize²Command&);
-        void        on_add_min_sizeX(const AddMinSizeˣCommand&);
-        void        on_add_min_sizeY(const AddMinSizeʸCommand&);
+        void        on_add_min_size2(const AddMinSize²DCommand&);
+        void        on_add_min_sizeX(const AddMinSizeˣDCommand&);
+        void        on_add_min_sizeY(const AddMinSizeʸDCommand&);
         
-        void        on_multiply_min_size(const MultiplyMinSize&);
-        void        on_multiply_min_size2(const MultiplyMinSize²Command&);
-        void        on_multiply_min_sizeX(const MultiplyMinSizeˣCommand&);
-        void        on_multiply_min_sizeY(const MultiplyMinSizeʸCommand&);
+        void        on_multiply_min_size(const MultiplyMinSizeDCommand&);
+        void        on_multiply_min_size2(const MultiplyMinSize²DCommand&);
+        void        on_multiply_min_sizeX(const MultiplyMinSizeˣDCommand&);
+        void        on_multiply_min_sizeY(const MultiplyMinSizeʸDCommand&);
     };
 
 }

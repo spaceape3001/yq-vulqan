@@ -16,9 +16,9 @@ namespace yq::tachyon {
     class AddMaxSize³MCommand : public SizeCommand {
         YQ_OBJECT_DECLARE(AddMaxSize³MCommand, SizeCommand)
     public:
-        AddMaxSize³MCommand(const Header&, const Size3D&);
+        AddMaxSize³MCommand(const Header&, const Size3M&);
     
-        const Size3D&   Δ() const  { return m_Δ; }
+        const Size3M&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
@@ -34,7 +34,7 @@ namespace yq::tachyon {
         ~AddMaxSize³MCommand();
 
     private:
-        Size3D  m_Δ = ZERO;
+        Size3M  m_Δ = ZERO;
         
         AddMaxSize³MCommand(const AddMaxSize³MCommand&) = delete;
         AddMaxSize³MCommand(AddMaxSize³MCommand&&) = delete;

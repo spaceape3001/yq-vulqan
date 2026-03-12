@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/unit/declare.hpp>
+#include <yq/units.hpp>
 #include <yq/tachyon/command/SizeCommand.hpp>
 #include <yq/shape/Size4.hpp>
 
@@ -16,9 +16,9 @@ namespace yq::tachyon {
     class AddMinSize⁴MCommand : public SizeCommand {
         YQ_OBJECT_DECLARE(AddMinSize⁴MCommand, SizeCommand)
     public:
-        AddMinSize⁴MCommand(const Header&, const Size4D&);
+        AddMinSize⁴MCommand(const Header&, const Size4M&);
     
-        const Size4D&   Δ() const  { return m_Δ; }
+        const Size4M&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
@@ -35,7 +35,7 @@ namespace yq::tachyon {
         ~AddMinSize⁴MCommand();
 
     private:
-        Size4D  m_Δ = ZERO;
+        Size4M  m_Δ = ZERO;
         
         AddMinSize⁴MCommand(const AddMinSize⁴MCommand&) = delete;
         AddMinSize⁴MCommand(AddMinSize⁴MCommand&&) = delete;

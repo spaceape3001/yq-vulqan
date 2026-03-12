@@ -14,7 +14,7 @@ namespace yq::tachyon {
     {
     }
     
-    AddMinSize⁴MCommand::AddMinSize⁴MCommand(const Header& h, const Size4D& v) : 
+    AddMinSize⁴MCommand::AddMinSize⁴MCommand(const Header& h, const Size4M& v) : 
         SizeCommand(h), m_Δ(v)
     {
     }

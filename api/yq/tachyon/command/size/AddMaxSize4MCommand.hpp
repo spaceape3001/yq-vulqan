@@ -16,9 +16,9 @@ namespace yq::tachyon {
     class AddMaxSize⁴MCommand : public SizeCommand {
         YQ_OBJECT_DECLARE(AddMaxSize⁴MCommand, SizeCommand)
     public:
-        AddMaxSize⁴MCommand(const Header&, const Size4D&);
+        AddMaxSize⁴MCommand(const Header&, const Size4M&);
     
-        const Size4D&   Δ() const  { return m_Δ; }
+        const Size4M&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
@@ -35,7 +35,7 @@ namespace yq::tachyon {
         ~AddMaxSize⁴MCommand();
 
     private:
-        Size4D  m_Δ = ZERO;
+        Size4M  m_Δ = ZERO;
         
         AddMaxSize⁴MCommand(const AddMaxSize⁴MCommand&) = delete;
         AddMaxSize⁴MCommand(AddMaxSize⁴MCommand&&) = delete;

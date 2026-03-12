@@ -16,9 +16,9 @@ namespace yq::tachyon {
     class AddMaxSize²MCommand : public SizeCommand {
         YQ_OBJECT_DECLARE(AddMaxSize²MCommand, SizeCommand)
     public:
-        AddMaxSize²MCommand(const Header&, const Size2D&);
+        AddMaxSize²MCommand(const Header&, const Size2M&);
     
-        const Size2D&   Δ() const  { return m_Δ; }
+        const Size2M&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
@@ -33,7 +33,7 @@ namespace yq::tachyon {
         ~AddMaxSize²MCommand();
 
     private:
-        Size2D  m_Δ = ZERO;
+        Size2M  m_Δ = ZERO;
         
         AddMaxSize²MCommand(const AddMaxSize²MCommand&) = delete;
         AddMaxSize²MCommand(AddMaxSize²MCommand&&) = delete;

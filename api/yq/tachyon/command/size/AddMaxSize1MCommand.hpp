@@ -32,7 +32,7 @@ namespace yq::tachyon {
         AddMaxSize¹MCommand(const Header&);
 
     private:
-        Size1D  m_Δ = ZERO;
+        Size1M  m_Δ = ZERO;
         
         AddMaxSize¹MCommand(const AddMaxSize¹MCommand&) = delete;
         AddMaxSize¹MCommand(AddMaxSize¹MCommand&&) = delete;

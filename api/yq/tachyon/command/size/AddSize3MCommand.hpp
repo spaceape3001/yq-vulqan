@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/unit/declare.hpp>
+#include <yq/units.hpp>
 #include <yq/tachyon/command/SizeCommand.hpp>
 #include <yq/shape/Size3.hpp>
 
@@ -16,9 +16,9 @@ namespace yq::tachyon {
     class AddSize³MCommand : public SizeCommand {
         YQ_OBJECT_DECLARE(AddSize³MCommand, SizeCommand)
     public:
-        AddSize³MCommand(const Header&, const Size3D&);
+        AddSize³MCommand(const Header&, const Size3M&);
     
-        const Size3D&   Δ() const  { return m_Δ; }
+        const Size3M&   Δ() const  { return m_Δ; }
         
         static void init_meta();
         
@@ -34,7 +34,7 @@ namespace yq::tachyon {
         ~AddSize³MCommand();
 
     private:
-        Size3D  m_Δ = ZERO;
+        Size3M  m_Δ = ZERO;
         
         AddSize³MCommand(const AddSize³MCommand&) = delete;
         AddSize³MCommand(AddSize³MCommand&&) = delete;

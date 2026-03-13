@@ -7,7 +7,6 @@
 #pragma once
 
 #include <yq/tachyon/aspect/AVertices3.hpp>
-#include <yq/tachyon/aspect/ASize3.hpp>
 #include <yq/tachyon/pipeline/VBO.hpp>
 #include <yq/tachyon/pipeline/UBO.hpp>
 #include <yq/tachyon/rendered/Shape3.hpp>

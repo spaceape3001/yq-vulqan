@@ -17,7 +17,7 @@
 #include <yq/tachyon/aspect/AMaterial.hpp>
 #include <yq/tachyon/aspect/AOuterTessellation4.hpp>
 #include <yq/tachyon/aspect/ARangeZ.hpp>
-#include <yq/tachyon/aspect/ASize3.hpp>
+#include <yq/tachyon/aspect/ASize3D.hpp>
 #include <yq/tachyon/aspect/ATexture.hpp>
 #include <yq/tachyon/asset/Texture.hpp>
 #include <yq/tachyon/pipeline/Pipeline.hpp>
@@ -45,7 +45,7 @@ namespace yq::tachyon {
         public AMaterial, 
         public AOuterTessellation⁴,
         public ARangeᶻ, 
-        public ASize³,
+        public ASize³D,
         public ATexture
     {
         YQ_TACHYON_SNAP(HeightField³Snap)

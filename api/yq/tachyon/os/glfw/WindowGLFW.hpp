@@ -12,10 +12,10 @@
 #include <yq/tachyon/os/MouseButton.hpp>
 #include <yq/tachyon/os/MouseMode.hpp>
 #include <yq/tachyon/os/WindowMode.hpp>
-#include <yq/tachyon/aspect/AMaxSize2.hpp>
-#include <yq/tachyon/aspect/AMinSize2.hpp>
+#include <yq/tachyon/aspect/AMaxSize2D.hpp>
+#include <yq/tachyon/aspect/AMinSize2D.hpp>
 #include <yq/tachyon/aspect/APosition2.hpp>
-#include <yq/tachyon/aspect/ASize2.hpp>
+#include <yq/tachyon/aspect/ASize2D.hpp>
 #include <yq/tachyon/aspect/AScale2.hpp>
 #include <yq/tachyon/typedef/commands.hpp>
 
@@ -42,7 +42,7 @@ namespace yq::tachyon {
     class UnfloatCommand;
 
     class WindowGLFW : public Window, 
-        public APosition², public AMaxSize², public AMinSize², public ASize², // might go higher
+        public APosition², public AMaxSize²D, public AMinSize²D, public ASize²D, // might go higher
         public AScale²
     {
         YQ_TACHYON_DECLARE(WindowGLFW, Window)
@@ -75,10 +75,10 @@ namespace yq::tachyon {
         //! LOCAL THREAD ONLY
         Size2I              framebuffer(read_k) const;
         
-        using AMaxSize²::max_size;
+        using AMaxSize²D::max_size;
         virtual void    max_size(set_k, const Size2D&) override;
 
-        using AMinSize²::min_size;
+        using AMinSize²D::min_size;
         virtual void    min_size(set_k, const Size2D&) override;
         
         using APosition²::position;
@@ -94,7 +94,7 @@ namespace yq::tachyon {
         bool            scale(settable_k) const override { return false; }
 
 
-        using ASize²::size;
+        using ASize²D::size;
         Size2D          size(read_k) const;
         virtual void    size(set_k, const Size2D&) override;
 

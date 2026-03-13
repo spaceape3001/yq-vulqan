@@ -11,7 +11,7 @@
 #include <yq/tachyon/aspect/AColor.hpp>
 #include <yq/tachyon/aspect/ADrawMode.hpp>
 #include <yq/tachyon/aspect/AMaterial.hpp>
-#include <yq/tachyon/aspect/ASize3.hpp>
+#include <yq/tachyon/aspect/ASize3D.hpp>
 #include <yq/tachyon/aspect/ATexture.hpp>
 
 #include <yq/typedef/uv.hpp>
@@ -43,7 +43,7 @@ namespace yq::tachyon {
         public AColor,
         public ADrawMode,
         public AMaterial,
-        public ASize³,
+        public ASize³D,
         public ATexture
     {
         YQ_TACHYON_SNAP(Shape³Snap)
@@ -79,7 +79,7 @@ namespace yq::tachyon {
             public ABgColor::Param, 
             public AColor::Param, 
             public ADrawMode::Param,
-            public ASize³::Param
+            public ASize³D::Param
         {
             Tristate    auto_center = Tristate::Inherit;
             Tristate    normalize   = Tristate::Inherit;

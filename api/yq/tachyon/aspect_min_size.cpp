@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "aspect/AMinSize1.ipp"
-#include "aspect/AMinSize2.ipp"
-#include "aspect/AMinSize3.ipp"
-#include "aspect/AMinSize4.ipp"
+#include "aspect/AMinSize1D.ipp"
+#include "aspect/AMinSize2D.ipp"
+#include "aspect/AMinSize3D.ipp"
+#include "aspect/AMinSize4D.ipp"

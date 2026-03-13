@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "proxy/PMinSize1.ipp"
-#include "proxy/PMinSize2.ipp"
-#include "proxy/PMinSize3.ipp"
-#include "proxy/PMinSize4.ipp"
+#include "proxy/PMinSize1D.ipp"
+#include "proxy/PMinSize2D.ipp"
+#include "proxy/PMinSize3D.ipp"
+#include "proxy/PMinSize4D.ipp"

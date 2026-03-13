@@ -437,7 +437,7 @@ namespace yq::tachyon {
 
         glfwSetWindowSizeLimits(m_window, m_minSize.x, m_minSize.y, i, j);
         m_maxSize   = { i, j };
-        AMaxSize²::max_size(SET, Size2D(x,y));
+        AMaxSize²D::max_size(SET, Size2D(x,y));
     }
     
     void    WindowGLFW::min_size(set_k, const Size2D& sz) 
@@ -445,7 +445,7 @@ namespace yq::tachyon {
         auto [i,x]  = filter(sz.x);
         auto [j,y]  = filter(sz.y);
         glfwSetWindowSizeLimits(m_window, i, j, m_maxSize.x, m_maxSize.y);
-        AMinSize²::min_size(SET, Size2D(x,y));
+        AMinSize²D::min_size(SET, Size2D(x,y));
     }
     
     ModifierKeys        WindowGLFW::modifiers(read_k) const

@@ -15,6 +15,7 @@
 #include <yq/tachyon/aspect/AColorWriter.hxx>
 #include <yq/tachyon/aspect/ADrawModeWriter.hxx>
 #include <yq/tachyon/aspect/AMaterialWriter.hxx>
+#include <yq/tachyon/aspect/ASize3DWriter.hxx>
 #include <yq/tachyon/asset/Texture.hpp>
 #include <yq/tachyon/command/shape/SetAutoCenterCommand.hpp>
 #include <yq/tachyon/command/shape/SetNormalizeCommand.hpp>
@@ -192,6 +193,7 @@ namespace yq::tachyon {
         AColor::init_meta(w);
         ADrawMode::init_meta(w);
         AMaterial::init_meta(w);
+        ASize³D::init_meta(w);
 
         w.property("auto_center", &Shape³::m_autoCenter).def_value(Tristate::Inherit).tag(kTag_Save);
         w.property("normalize", &Shape³::m_normalize).def_value(Tristate::Inherit).tag(kTag_Save);
@@ -200,7 +202,7 @@ namespace yq::tachyon {
     }
 
     Shape³::Shape³(const Param& p) : 
-        Rendered³(p), ABgColor(p), AColor(p), ADrawMode(p), 
+        Rendered³(p), ABgColor(p), AColor(p), ADrawMode(p), ASize³D(p),
         m_autoCenter(p.auto_center), m_normalize(p.normalize)
     {
         mark();

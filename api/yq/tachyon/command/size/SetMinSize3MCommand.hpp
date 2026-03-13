@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/units/declare.hpp>
+#include <yq/units.hpp>
 #include <yq/tachyon/command/SizeCommand.hpp>
 #include <yq/shape/Size3.hpp>
 

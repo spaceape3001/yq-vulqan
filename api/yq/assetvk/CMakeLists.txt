@@ -10,6 +10,7 @@ add_library(${PROJECT_NAME} SHARED
     command_circular3.cpp
     command_user3.cpp
     edit_position.cpp
+    edit_size.cpp
     event_circular3.cpp
     event_user3.cpp
     gesture_file.cpp
@@ -60,9 +61,6 @@ add_library(${PROJECT_NAME} SHARED
     #edit/Scale4UI.cpp  # Disabled until we need a 4D scale (and implement the interface/proxy)
     edit/SceneUI.cpp
     edit/SimpleSpatial3UI.cpp
-    edit/Size2UI.cpp
-    edit/Size3UI.cpp
-    edit/Size4UI.cpp
     edit/SkyBox3UI.cpp
     edit/TachyonUI.cpp
     edit/TextureUI.cpp

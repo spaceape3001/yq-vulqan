@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "proxy/PMaxSize1.ipp"
-#include "proxy/PMaxSize2.ipp"
-#include "proxy/PMaxSize3.ipp"
-#include "proxy/PMaxSize4.ipp"
+#include "proxy/PMaxSize1D.ipp"
+#include "proxy/PMaxSize2D.ipp"
+#include "proxy/PMaxSize3D.ipp"
+#include "proxy/PMaxSize4D.ipp"

@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "aspect/ASize1.ipp"
-#include "aspect/ASize2.ipp"
-#include "aspect/ASize3.ipp"
-#include "aspect/ASize4.ipp"
+#include "aspect/ASize1D.ipp"
+#include "aspect/ASize2D.ipp"
+#include "aspect/ASize3D.ipp"
+#include "aspect/ASize4D.ipp"

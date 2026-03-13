@@ -157,7 +157,7 @@ namespace yq::tachyon {
         w.description("GLFW Monitor");
         w.execution(EVERY(5_s));
         w.interface<IPosition²D>();
-        w.interface<ISize²>();
+        w.interface<ISize²D>();
         w.interface<IScale²>();
     }
 }

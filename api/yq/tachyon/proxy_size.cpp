@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "proxy/PSize1.ipp"
-#include "proxy/PSize2.ipp"
-#include "proxy/PSize3.ipp"
-#include "proxy/PSize4.ipp"
+#include "proxy/PSize1D.ipp"
+#include "proxy/PSize2D.ipp"
+#include "proxy/PSize3D.ipp"
+#include "proxy/PSize4D.ipp"

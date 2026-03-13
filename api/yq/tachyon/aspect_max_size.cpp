@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "aspect/AMaxSize1.ipp"
-#include "aspect/AMaxSize2.ipp"
-#include "aspect/AMaxSize3.ipp"
-#include "aspect/AMaxSize4.ipp"
+#include "aspect/AMaxSize1D.ipp"
+#include "aspect/AMaxSize2D.ipp"
+#include "aspect/AMaxSize3D.ipp"
+#include "aspect/AMaxSize4D.ipp"

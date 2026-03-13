@@ -9,6 +9,7 @@ project(yq_assetvk)
 add_library(${PROJECT_NAME} SHARED
     command_circular3.cpp
     command_user3.cpp
+    edit_count.cpp
     edit_position.cpp
     edit_size.cpp
     event_circular3.cpp
@@ -33,10 +34,6 @@ add_library(${PROJECT_NAME} SHARED
     edit/CircularSpatial3UI.cpp
     edit/ColorProfileUI.cpp
     edit/ColorUI.cpp
-    edit/Count1UI.cpp
-    edit/Count2UI.cpp
-    edit/Count3UI.cpp
-    edit/Count4UI.cpp
     edit/DrawModeUI.cpp
     edit/FarPlaneUI.cpp
     edit/FieldOfViewUI.cpp

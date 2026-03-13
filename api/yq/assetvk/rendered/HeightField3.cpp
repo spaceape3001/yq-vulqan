@@ -23,7 +23,7 @@
 #include <yq/shape/AxBox2.hxx>
 #include <yq/tachyon/aspect/AColorProfileWriter.hxx>
 #include <yq/tachyon/aspect/AColorWriter.hxx>
-#include <yq/tachyon/aspect/ACount2Writer.hxx>
+#include <yq/tachyon/aspect/ACount2UWriter.hxx>
 #include <yq/tachyon/aspect/ADrawModeWriter.hxx>
 #include <yq/tachyon/aspect/AHeightFieldWriter.hxx>
 #include <yq/tachyon/aspect/AInnerTessellation2Writer.hxx>
@@ -56,7 +56,7 @@ namespace yq::tachyon {
         w.description("Height Field Render Object");
         AColor::init_meta(w);
         AColorProfile::init_meta(w);
-        ACount²::init_meta(w);
+        ACount²U::init_meta(w);
         ADrawMode::init_meta(w);
         AHeightField::init_meta(w);
         AInnerTessellation²::init_meta(w);
@@ -141,7 +141,7 @@ namespace yq::tachyon {
     
     HeightField³::HeightField³(const Param& p) : Rendered³(Param()), 
         AColor(p), 
-        ACount²(p.count), 
+        ACount²U(p.count), 
         ADrawMode(p), 
         AInnerTessellation²(p.inner_tessellation),
         AOuterTessellation⁴(p.outer_tessellation),
@@ -280,12 +280,12 @@ namespace yq::tachyon {
         static const TextureCPtr    sZeroHM    = new Texture(square_raster(0., 2), Sampler::simple());
         static const TextureCPtr    sStdColor  = Texture::IO::load("pp:yq/zcolor/colored.cvp");
         
-        auto& cnt   = ACount²::m_count;
+        auto& cnt   = ACount²U::m_count;
         m_good    = cnt.x && cnt.y;
         if(!m_good)
             return ;
             
-        divide(ACount²::m_count);
+        divide(ACount²U::m_count);
         
         m_ubo.data.oTess    = m_outerTessellation.cast<float>();
         m_ubo.data.iTess    = m_innerTessellation.cast<float>();

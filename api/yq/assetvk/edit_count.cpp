@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "aspect/ACount1U.ipp"
-#include "aspect/ACount2U.ipp"
-#include "aspect/ACount3U.ipp"
-#include "aspect/ACount4U.ipp"
+#include "edit/Count1UUI.ipp"
+#include "edit/Count2UUI.ipp"
+#include "edit/Count3UUI.ipp"
+#include "edit/Count4UUI.ipp"

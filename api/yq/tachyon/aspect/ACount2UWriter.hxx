@@ -1,0 +1,43 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/tachyon/aspect/ACount2U.hpp>
+#include <yq/tachyon/command/count/AddCount2UCommand.hpp>
+#include <yq/tachyon/command/count/AddCountXUCommand.hpp>
+#include <yq/tachyon/command/count/AddCountYUCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCountUCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCount2UCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCountXUCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCountYUCommand.hpp>
+#include <yq/tachyon/command/count/SetCount2UCommand.hpp>
+#include <yq/tachyon/command/count/SetCountXUCommand.hpp>
+#include <yq/tachyon/command/count/SetCountYUCommand.hpp>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/tags.hpp>
+
+namespace yq::tachyon {
+    template <typename C>
+    void ACount²U::init_meta(TachyonMeta::Writer<C>& w)
+    {
+        w.template interface<ICount²U>();
+        w.property(UNSAFE, "count", &ACount²U::m_count).tag(kTag_Save);
+
+        w.slot(UNSAFE, &ACount²U::on_set_count2);
+        w.slot(UNSAFE, &ACount²U::on_set_countX);
+        w.slot(UNSAFE, &ACount²U::on_set_countY);
+
+        w.slot(UNSAFE, &ACount²U::on_add_count2);
+        w.slot(UNSAFE, &ACount²U::on_add_countX);
+        w.slot(UNSAFE, &ACount²U::on_add_countY);
+        
+        w.slot(UNSAFE, &ACount²U::on_multiply_count);
+        w.slot(UNSAFE, &ACount²U::on_multiply_count2);
+        w.slot(UNSAFE, &ACount²U::on_multiply_countX);
+        w.slot(UNSAFE, &ACount²U::on_multiply_countY);
+    }
+}

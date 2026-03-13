@@ -10,7 +10,7 @@
 #include <yq/tachyon/api/Rendered3.hpp>
 #include <yq/tachyon/aspect/AColor.hpp>
 #include <yq/tachyon/aspect/AColorProfile.hpp>
-#include <yq/tachyon/aspect/ACount2.hpp>
+#include <yq/tachyon/aspect/ACount2U.hpp>
 #include <yq/tachyon/aspect/ADrawMode.hpp>
 #include <yq/tachyon/aspect/AHeightField.hpp>
 #include <yq/tachyon/aspect/AInnerTessellation2.hpp>
@@ -38,7 +38,7 @@ namespace yq::tachyon {
     class HeightField³ : public Rendered³, 
         public AColor, 
         public AColorProfile, 
-        public ACount², 
+        public ACount²U, 
         public ADrawMode, 
         public AHeightField, 
         public AInnerTessellation², 

@@ -8,7 +8,7 @@
 
 #include "ASpatial3.hpp"
 #include "AOrientation3Writer.hxx"
-#include "APosition3Writer.hxx"
+#include "APosition3DWriter.hxx"
 #include "AScale3DWriter.hxx"
 
 #include <yq/tachyon/command/position/MoveBy3DCommand.hpp>
@@ -20,7 +20,7 @@ namespace yq::tachyon {
     template <typename C>
     void ASpatial³::init_meta(TachyonMeta::Writer<C>&w)
     {
-        APosition³::init_meta(w);
+        APosition³D::init_meta(w);
         AOrientation³::init_meta(w);
         AScale³D::init_meta(w);
 

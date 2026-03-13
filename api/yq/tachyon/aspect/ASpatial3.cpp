@@ -16,12 +16,12 @@ namespace yq::tachyon {
     }
     
     ASpatial³::ASpatial³(const Param& p) :
-        APosition³(p.position), AOrientation³(p.orientation), AScale³D(p.scale)
+        APosition³D(p.position), AOrientation³(p.orientation), AScale³D(p.scale)
     {
     }
 
     ASpatial³::ASpatial³(const Vector3D& pos, const Quaternion3D& ori, const Vector3D& scale) :
-        APosition³(pos), AOrientation³(ori), AScale³D(scale)
+        APosition³D(pos), AOrientation³(ori), AScale³D(scale)
     {
     }
     

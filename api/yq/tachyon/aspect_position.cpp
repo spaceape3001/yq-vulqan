@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "aspect/APosition1.ipp"
-#include "aspect/APosition2.ipp"
-#include "aspect/APosition3.ipp"
-#include "aspect/APosition4.ipp"
+#include "aspect/APosition1D.ipp"
+#include "aspect/APosition2D.ipp"
+#include "aspect/APosition3D.ipp"
+#include "aspect/APosition4D.ipp"

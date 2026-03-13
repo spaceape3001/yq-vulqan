@@ -14,7 +14,7 @@
 #include <yq/tachyon/os/WindowMode.hpp>
 #include <yq/tachyon/aspect/AMaxSize2D.hpp>
 #include <yq/tachyon/aspect/AMinSize2D.hpp>
-#include <yq/tachyon/aspect/APosition2.hpp>
+#include <yq/tachyon/aspect/APosition2D.hpp>
 #include <yq/tachyon/aspect/ASize2D.hpp>
 #include <yq/tachyon/aspect/AScale2D.hpp>
 #include <yq/tachyon/typedef/commands.hpp>
@@ -42,7 +42,7 @@ namespace yq::tachyon {
     class UnfloatCommand;
 
     class WindowGLFW : public Window, 
-        public APosition², public AMaxSize²D, public AMinSize²D, public ASize²D, // might go higher
+        public APosition²D, public AMaxSize²D, public AMinSize²D, public ASize²D, // might go higher
         public AScale²D
     {
         YQ_TACHYON_DECLARE(WindowGLFW, Window)
@@ -81,7 +81,7 @@ namespace yq::tachyon {
         using AMinSize²D::min_size;
         virtual void    min_size(set_k, const Size2D&) override;
         
-        using APosition²::position;
+        using APosition²D::position;
         Vector2D        position(read_k) const;
         virtual void    position(set_k, const Vector2D&) override;
 

@@ -7,7 +7,7 @@
 #include "SimpleSpatial2.hpp"
 #include <yq/tachyon/api/Spatial2MetaWriter.hpp>
 #include <yq/tachyon/aspect/AOrientation2Writer.hxx>
-#include <yq/tachyon/aspect/APosition2Writer.hxx>
+#include <yq/tachyon/aspect/APosition2DWriter.hxx>
 #include <yq/tachyon/aspect/AScale2DWriter.hxx>
 #include <yq/tachyon/command/position/MoveBy2DCommand.hpp>
 #include <yq/tachyon/command/position/MoveByXDCommand.hpp>
@@ -115,7 +115,7 @@ namespace yq::tachyon {
     {
         auto w = writer<SimpleSpatial²>();
         
-        APosition²::init_meta(w);
+        APosition²D::init_meta(w);
         AScale²D::init_meta(w);
         AOrientation²::init_meta(w);
         

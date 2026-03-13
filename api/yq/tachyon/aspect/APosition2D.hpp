@@ -22,7 +22,7 @@ namespace yq::tachyon {
     class SetPositionˣDCommand;
     class SetPositionʸDCommand;
 
-    class APosition² : public IPosition²D, public virtual Tachyon::Helper {
+    class APosition²D : public IPosition²D, public virtual Tachyon::Helper {
     public:
     
         //!  Basic position in the 2D space
@@ -62,8 +62,8 @@ namespace yq::tachyon {
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        APosition²(const Vector2D& pos=ZERO);
-        virtual ~APosition²();
+        APosition²D(const Vector2D& pos=ZERO);
+        virtual ~APosition²D();
         
     private:
         void        on_set_position2(const SetPosition²DCommand&);

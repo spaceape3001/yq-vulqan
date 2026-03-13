@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/aspect/APosition2.hpp>
+#include <yq/tachyon/aspect/APosition2D.hpp>
 #include <yq/tachyon/command/position/AddPosition2DCommand.hpp>
 #include <yq/tachyon/command/position/AddPositionXDCommand.hpp>
 #include <yq/tachyon/command/position/AddPositionYDCommand.hpp>
@@ -18,137 +18,137 @@
 #include <yq/tachyon/event/spatial/Position2DEvent.hpp>
 
 namespace yq::tachyon {
-    APosition²::APosition²(const Vector2D& pos)
+    APosition²D::APosition²D(const Vector2D& pos)
     {
         if(!is_nan(pos))
             m_position  = pos;
     }
     
-    APosition²::~APosition²()
+    APosition²D::~APosition²D()
     {
     }
 
-    void        APosition²::position(emit_k)
+    void        APosition²D::position(emit_k)
     {
         send(new Position²DEvent({.source=typed()}, m_position));
     }
 
-    void        APosition²::position(set_k, const Vector2D& sz) 
+    void        APosition²D::position(set_k, const Vector2D& sz) 
     {
         m_position  =    sz;
         mark();
         position(EMIT);
     }
     
-    void        APosition²::position(set_k, x_k, double v) 
+    void        APosition²D::position(set_k, x_k, double v) 
     {
         position(SET, Vector2D(v, m_position.y));
     }
     
-    void        APosition²::position(set_k, y_k, double v) 
+    void        APosition²D::position(set_k, y_k, double v) 
     {
         position(SET, Vector2D(m_position.x, v));
     }
     
-    void        APosition²::position(add_k, const Vector2D&v) 
+    void        APosition²D::position(add_k, const Vector2D&v) 
     {
         position(SET, Vector2D( m_position.x+v.x, m_position.y+v.y ));
     }
     
-    void        APosition²::position(add_k, x_k, double v) 
+    void        APosition²D::position(add_k, x_k, double v) 
     {
         position(SET, Vector2D( m_position.x+v, m_position.y ));
     }
     
-    void        APosition²::position(add_k, y_k, double v) 
+    void        APosition²D::position(add_k, y_k, double v) 
     {
         position(SET, Vector2D( m_position.x, m_position.y+v ));
     }
 
-    void        APosition²::position(multiply_k, double v) 
+    void        APosition²D::position(multiply_k, double v) 
     {
         position(SET, Vector2D( m_position.x*v, m_position.y*v ));
     }
     
-    void        APosition²::position(multiply_k, const Vector2D& v) 
+    void        APosition²D::position(multiply_k, const Vector2D& v) 
     {
         position(SET, Vector2D( m_position.x*v.x, m_position.y*v.y ));
     }
     
-    void        APosition²::position(multiply_k, x_k, double v) 
+    void        APosition²D::position(multiply_k, x_k, double v) 
     {
         position(SET, Vector2D( m_position.x*v, m_position.y ));
     }
     
-    void        APosition²::position(multiply_k, y_k, double v) 
+    void        APosition²D::position(multiply_k, y_k, double v) 
     {
         position(SET, Vector2D( m_position.x, m_position.y*v ));
     }
     
-    void        APosition²::on_set_position2(const SetPosition²DCommand&cmd)
+    void        APosition²D::on_set_position2(const SetPosition²DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(SET, cmd.position());
     }
     
-    void        APosition²::on_set_positionX(const SetPositionˣDCommand&cmd)
+    void        APosition²D::on_set_positionX(const SetPositionˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(SET, X, cmd.x());
     }
     
-    void        APosition²::on_set_positionY(const SetPositionʸDCommand&cmd)
+    void        APosition²D::on_set_positionY(const SetPositionʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(SET, Y, cmd.y());
     }
     
-    void        APosition²::on_add_position2(const AddPosition²DCommand&cmd)
+    void        APosition²D::on_add_position2(const AddPosition²DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(ADD, cmd.Δ());
     }
     
-    void        APosition²::on_add_positionX(const AddPositionˣDCommand&cmd)
+    void        APosition²D::on_add_positionX(const AddPositionˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(ADD, X, cmd.Δx());
     }
     
-    void        APosition²::on_add_positionY(const AddPositionʸDCommand&cmd)
+    void        APosition²D::on_add_positionY(const AddPositionʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(ADD, X, cmd.Δy());
     }
     
-    void        APosition²::on_multiply_position(const MultiplyPositionDCommand&cmd)
+    void        APosition²D::on_multiply_position(const MultiplyPositionDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(MULTIPLY, cmd.δ());
     }
     
-    void        APosition²::on_multiply_position2(const MultiplyPosition²DCommand&cmd)
+    void        APosition²D::on_multiply_position2(const MultiplyPosition²DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(MULTIPLY, cmd.δ());
     }
     
-    void        APosition²::on_multiply_positionX(const MultiplyPositionˣDCommand&cmd)
+    void        APosition²D::on_multiply_positionX(const MultiplyPositionˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         position(MULTIPLY, X, cmd.δx());
     }
     
-    void        APosition²::on_multiply_positionY(const MultiplyPositionʸDCommand&cmd)
+    void        APosition²D::on_multiply_positionY(const MultiplyPositionʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

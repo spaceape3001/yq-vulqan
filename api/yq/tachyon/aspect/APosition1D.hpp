@@ -19,7 +19,7 @@ namespace yq::tachyon {
     class SetPosition¹DCommand;
     class SetPositionˣDCommand;
 
-    class APosition¹ : public IPosition¹D, public virtual Tachyon::Helper {
+    class APosition¹D : public IPosition¹D, public virtual Tachyon::Helper {
     public:
     
         //!  Basic position in the 1D space
@@ -53,8 +53,8 @@ namespace yq::tachyon {
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        APosition¹();
-        virtual ~APosition¹();
+        APosition¹D();
+        virtual ~APosition¹D();
 
         void            position(emit_k);
         

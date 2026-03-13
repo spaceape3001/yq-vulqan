@@ -13,7 +13,7 @@
 #include <yq/tachyon/command/count/MultiplyCountXCommand.hpp>
 #include <yq/tachyon/command/count/SetCount1Command.hpp>
 #include <yq/tachyon/command/count/SetCountXCommand.hpp>
-#include <yq/tachyon/event/count/Count1Event.hpp>
+#include <yq/tachyon/event/count/Count1UEvent.hpp>
 
 namespace yq::tachyon {
     ACount¹::ACount¹(const Param& p) : m_count(p.count)
@@ -31,7 +31,7 @@ namespace yq::tachyon {
 
     void        ACount¹::count(emit_k)
     {
-        send(new Count¹Event({.source=typed()}, m_count));
+        send(new Count¹UEvent({.source=typed()}, m_count));
     }
 
     void        ACount¹::count(set_k, const Vector1U& sz) 

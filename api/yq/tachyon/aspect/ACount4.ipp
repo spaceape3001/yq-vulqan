@@ -23,7 +23,7 @@
 #include <yq/tachyon/command/count/SetCountXCommand.hpp>
 #include <yq/tachyon/command/count/SetCountYCommand.hpp>
 #include <yq/tachyon/command/count/SetCountZCommand.hpp>
-#include <yq/tachyon/event/count/Count4Event.hpp>
+#include <yq/tachyon/event/count/Count4UEvent.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/vector/Vector4.hxx>
 
@@ -42,7 +42,7 @@ namespace yq::tachyon {
 
     void        ACount⁴::count(emit_k)
     {
-        send(new Count⁴Event({.source=typed()}, m_count));
+        send(new Count⁴UEvent({.source=typed()}, m_count));
     }
 
     void        ACount⁴::count(set_k, const Vector4U& sz) 

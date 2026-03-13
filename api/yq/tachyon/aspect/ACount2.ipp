@@ -16,7 +16,7 @@
 #include <yq/tachyon/command/count/SetCount2Command.hpp>
 #include <yq/tachyon/command/count/SetCountXCommand.hpp>
 #include <yq/tachyon/command/count/SetCountYCommand.hpp>
-#include <yq/tachyon/event/count/Count2Event.hpp>
+#include <yq/tachyon/event/count/Count2UEvent.hpp>
 
 namespace yq::tachyon {
     ACount²::ACount²(const Param&p) : m_count(p.count)
@@ -33,7 +33,7 @@ namespace yq::tachyon {
 
     void        ACount²::count(emit_k)
     {
-        send(new Count²Event({.source=typed()}, m_count));
+        send(new Count²UEvent({.source=typed()}, m_count));
     }
 
     void        ACount²::count(set_k, const Vector2U& sz) 

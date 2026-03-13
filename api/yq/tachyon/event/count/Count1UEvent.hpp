@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Source moved in 1-Dimension
-    class Count¹Event : public SpatialEvent {
-        YQ_OBJECT_DECLARE(Count¹Event, SpatialEvent)
+    class Count¹UEvent : public SpatialEvent {
+        YQ_OBJECT_DECLARE(Count¹UEvent, SpatialEvent)
     public:
-        Count¹Event(const Header&, const Vector1U&);
+        Count¹UEvent(const Header&, const Vector1U&);
     
         const Vector1U&   count() const  { return m_count; }
         
@@ -26,16 +26,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        Count¹Event(const Header&);
-        Count¹Event(const Count¹Event&, const Header&);
-        ~Count¹Event();
+        Count¹UEvent(const Header&);
+        Count¹UEvent(const Count¹UEvent&, const Header&);
+        ~Count¹UEvent();
 
     private:
         Vector1U   m_count = ZERO;
         
-        Count¹Event(const Count¹Event&) = delete;
-        Count¹Event(Count¹Event&&) = delete;
-        Count¹Event& operator=(const Count¹Event&) = delete;
-        Count¹Event& operator=(Count¹Event&&) = delete;
+        Count¹UEvent(const Count¹UEvent&) = delete;
+        Count¹UEvent(Count¹UEvent&&) = delete;
+        Count¹UEvent& operator=(const Count¹UEvent&) = delete;
+        Count¹UEvent& operator=(Count¹UEvent&&) = delete;
     };
 }

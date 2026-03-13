@@ -9,7 +9,7 @@
 #include "ASpatial3.hpp"
 #include "AOrientation3Writer.hxx"
 #include "APosition3Writer.hxx"
-#include "AScale3Writer.hxx"
+#include "AScale3DWriter.hxx"
 
 #include <yq/tachyon/command/position/MoveBy3DCommand.hpp>
 #include <yq/tachyon/command/position/MoveByXDCommand.hpp>
@@ -22,7 +22,7 @@ namespace yq::tachyon {
     {
         APosition³::init_meta(w);
         AOrientation³::init_meta(w);
-        AScale³::init_meta(w);
+        AScale³D::init_meta(w);
 
         w.slot(UNSAFE, &ASpatial³::on_move³);
         w.slot(UNSAFE, &ASpatial³::on_moveˣ);

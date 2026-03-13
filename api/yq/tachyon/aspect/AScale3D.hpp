@@ -25,7 +25,7 @@ namespace yq::tachyon {
     class SetScaleʸDCommand;
     class SetScaleᶻDCommand;
 
-    class AScale³ : public IScale³D, public virtual Tachyon::Helper {
+    class AScale³D : public IScale³D, public virtual Tachyon::Helper {
     public:
     
         struct Param {
@@ -71,9 +71,9 @@ namespace yq::tachyon {
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        AScale³(const Vector3D& sca=ONE);
-        AScale³(const Param&);
-        virtual ~AScale³();
+        AScale³D(const Vector3D& sca=ONE);
+        AScale³D(const Param&);
+        virtual ~AScale³D();
 
         void            scale(emit_k);
         

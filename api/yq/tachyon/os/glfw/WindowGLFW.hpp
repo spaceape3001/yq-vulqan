@@ -16,7 +16,7 @@
 #include <yq/tachyon/aspect/AMinSize2D.hpp>
 #include <yq/tachyon/aspect/APosition2.hpp>
 #include <yq/tachyon/aspect/ASize2D.hpp>
-#include <yq/tachyon/aspect/AScale2.hpp>
+#include <yq/tachyon/aspect/AScale2D.hpp>
 #include <yq/tachyon/typedef/commands.hpp>
 
 struct GLFWwindow;
@@ -43,7 +43,7 @@ namespace yq::tachyon {
 
     class WindowGLFW : public Window, 
         public APosition², public AMaxSize²D, public AMinSize²D, public ASize²D, // might go higher
-        public AScale²
+        public AScale²D
     {
         YQ_TACHYON_DECLARE(WindowGLFW, Window)
     public:
@@ -85,7 +85,7 @@ namespace yq::tachyon {
         Vector2D        position(read_k) const;
         virtual void    position(set_k, const Vector2D&) override;
 
-        using AScale²::scale;
+        using AScale²D::scale;
         bool            scale(addable_k) const override { return false; }
         bool            scale(multipliable_k) const override { return false; }
         Vector2D        scale(read_k) const;

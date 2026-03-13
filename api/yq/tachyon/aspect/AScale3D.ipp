@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/aspect/AScale3.hpp>
+#include "AScale3D.hpp"
 #include <yq/tachyon/command/scale/AddScale3DCommand.hpp>
 #include <yq/tachyon/command/scale/AddScaleXDCommand.hpp>
 #include <yq/tachyon/command/scale/AddScaleYDCommand.hpp>
@@ -22,26 +22,26 @@
 
 
 namespace yq::tachyon {
-    AScale³::AScale³(const Vector3D& sca)
+    AScale³D::AScale³D(const Vector3D& sca)
     {
         if(!is_nan(sca))
             m_scale = sca;
     }
     
-    AScale³::AScale³(const Param& p) : AScale³(p.scale)
+    AScale³D::AScale³D(const Param& p) : AScale³D(p.scale)
     {
     }
 
-    AScale³::~AScale³()
+    AScale³D::~AScale³D()
     {
     }
 
-    void        AScale³::scale(emit_k)
+    void        AScale³D::scale(emit_k)
     {
         send(new Scale³DEvent({.source=typed()}, m_scale));
     }
 
-    void        AScale³::scale(set_k, const Vector3D& sz) 
+    void        AScale³D::scale(set_k, const Vector3D& sz) 
     {
         if(is_nan(sz))
             return ;
@@ -51,151 +51,151 @@ namespace yq::tachyon {
         scale(EMIT);
     }
     
-    void        AScale³::scale(set_k, x_k, double v) 
+    void        AScale³D::scale(set_k, x_k, double v) 
     {
         scale(SET, Vector3D(v, m_scale.y, m_scale.z));
     }
     
-    void        AScale³::scale(set_k, y_k, double v) 
+    void        AScale³D::scale(set_k, y_k, double v) 
     {
         scale(SET, Vector3D(m_scale.x,v, m_scale.z));
     }
     
-    void        AScale³::scale(set_k, z_k, double v) 
+    void        AScale³D::scale(set_k, z_k, double v) 
     {
         scale(SET, Vector3D(m_scale.x, m_scale.y, v));
     }
     
-    void        AScale³::scale(add_k, const Vector3D&v) 
+    void        AScale³D::scale(add_k, const Vector3D&v) 
     {
         scale(SET, Vector3D( m_scale.x+v.x, m_scale.y+v.y, m_scale.z+v.z ));
     }
     
-    void        AScale³::scale(add_k, x_k, double v) 
+    void        AScale³D::scale(add_k, x_k, double v) 
     {
         scale(SET, Vector3D( m_scale.x+v, m_scale.y, m_scale.z ));
     }
     
-    void        AScale³::scale(add_k, y_k, double v) 
+    void        AScale³D::scale(add_k, y_k, double v) 
     {
         scale(SET, Vector3D( m_scale.x, m_scale.y+v, m_scale.z ));
     }
     
-    void        AScale³::scale(add_k, z_k, double v) 
+    void        AScale³D::scale(add_k, z_k, double v) 
     {
         scale(SET, Vector3D( m_scale.x, m_scale.y, m_scale.z+v ));
     }
 
-    void        AScale³::scale(multiply_k, double v) 
+    void        AScale³D::scale(multiply_k, double v) 
     {
         scale(SET, Vector3D( m_scale.x*v, m_scale.y*v, m_scale.z*v ));
     }
     
-    void        AScale³::scale(multiply_k, const Vector3D& v) 
+    void        AScale³D::scale(multiply_k, const Vector3D& v) 
     {
         scale(SET, Vector3D( m_scale.x*v.x, m_scale.y*v.y, m_scale.z*v.z ));
     }
     
-    void        AScale³::scale(multiply_k, x_k, double v) 
+    void        AScale³D::scale(multiply_k, x_k, double v) 
     {
         scale(SET, Vector3D( m_scale.x*v, m_scale.y, m_scale.z ));
     }
     
-    void        AScale³::scale(multiply_k, y_k, double v) 
+    void        AScale³D::scale(multiply_k, y_k, double v) 
     {
         scale(SET, Vector3D( m_scale.x, m_scale.y*v, m_scale.z ));
     }
     
-    void        AScale³::scale(multiply_k, z_k, double v)
+    void        AScale³D::scale(multiply_k, z_k, double v)
     {
         scale(SET, Vector3D( m_scale.x, m_scale.y, m_scale.z*v ));
     }
     
-    void        AScale³::on_set_scale3(const SetScale³DCommand&cmd)
+    void        AScale³D::on_set_scale3(const SetScale³DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(SET, cmd.scale());
     }
     
-    void        AScale³::on_set_scaleX(const SetScaleˣDCommand&cmd)
+    void        AScale³D::on_set_scaleX(const SetScaleˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(SET, X, cmd.x());
     }
     
-    void        AScale³::on_set_scaleY(const SetScaleʸDCommand&cmd)
+    void        AScale³D::on_set_scaleY(const SetScaleʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(SET, Y, cmd.y());
     }
     
-    void        AScale³::on_set_scaleZ(const SetScaleᶻDCommand&cmd)
+    void        AScale³D::on_set_scaleZ(const SetScaleᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(SET, Z, cmd.z());
     }
 
-    void        AScale³::on_add_scale3(const AddScale³DCommand&cmd)
+    void        AScale³D::on_add_scale3(const AddScale³DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(ADD, cmd.Δ());
     }
     
-    void        AScale³::on_add_scaleX(const AddScaleˣDCommand&cmd)
+    void        AScale³D::on_add_scaleX(const AddScaleˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(ADD, X, cmd.Δx());
     }
     
-    void        AScale³::on_add_scaleY(const AddScaleʸDCommand&cmd)
+    void        AScale³D::on_add_scaleY(const AddScaleʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(ADD, X, cmd.Δy());
     }
     
-    void        AScale³::on_add_scaleZ(const AddScaleᶻDCommand&cmd)
+    void        AScale³D::on_add_scaleZ(const AddScaleᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(ADD, X, cmd.Δz());
     }
     
-    void        AScale³::on_multiply_scale(const MultiplyScaleDCommand&cmd)
+    void        AScale³D::on_multiply_scale(const MultiplyScaleDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(MULTIPLY, cmd.δ());
     }
     
-    void        AScale³::on_multiply_scale3(const MultiplyScale³DCommand&cmd)
+    void        AScale³D::on_multiply_scale3(const MultiplyScale³DCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(MULTIPLY, cmd.δ());
     }
     
-    void        AScale³::on_multiply_scaleX(const MultiplyScaleˣDCommand&cmd)
+    void        AScale³D::on_multiply_scaleX(const MultiplyScaleˣDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(MULTIPLY, X, cmd.δx());
     }
     
-    void        AScale³::on_multiply_scaleY(const MultiplyScaleʸDCommand&cmd)
+    void        AScale³D::on_multiply_scaleY(const MultiplyScaleʸDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         scale(MULTIPLY, Y, cmd.δy());
     }
     
-    void        AScale³::on_multiply_scaleZ(const MultiplyScaleᶻDCommand&cmd)
+    void        AScale³D::on_multiply_scaleZ(const MultiplyScaleᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

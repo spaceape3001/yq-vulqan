@@ -9,7 +9,7 @@
 #include <yq/tachyon/api/Spatial2.hpp>
 #include <yq/tachyon/aspect/AOrientation2.hpp>
 #include <yq/tachyon/aspect/APosition2.hpp>
-#include <yq/tachyon/aspect/AScale2.hpp>
+#include <yq/tachyon/aspect/AScale2D.hpp>
 #include <yq/vector/Spinor2.hpp>
 #include <yq/vector/Vector2.hpp>
 
@@ -27,7 +27,7 @@ namespace yq::tachyon {
     class MoveByˣDCommand;
     class MoveByʸDCommand;
 
-    class SimpleSpatial² : public Spatial², public APosition², public AScale², public AOrientation² {
+    class SimpleSpatial² : public Spatial², public APosition², public AScale²D, public AOrientation² {
         YQ_TACHYON_DECLARE(SimpleSpatial², Spatial²);
     public:
     
@@ -56,7 +56,7 @@ namespace yq::tachyon {
         void    set_scale(const Vector2D&);
         
         using APosition²::position;
-        using AScale²::scale;
+        using AScale²D::scale;
         using AOrientation²::orientation;
 
         static void init_meta();

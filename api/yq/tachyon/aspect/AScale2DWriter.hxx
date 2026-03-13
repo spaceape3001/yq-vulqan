@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/aspect/AScale2.hpp>
+#include <yq/tachyon/aspect/AScale2D.hpp>
 #include <yq/tachyon/command/scale/AddScale2DCommand.hpp>
 #include <yq/tachyon/command/scale/AddScaleXDCommand.hpp>
 #include <yq/tachyon/command/scale/AddScaleYDCommand.hpp>
@@ -22,22 +22,22 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void AScale²::init_meta(TachyonMeta::Writer<C>&w)
+    void AScale²D::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IScale²D>();
-        w.property(UNSAFE, "scale", &AScale²::m_scale).tag(kTag_Save);
+        w.property(UNSAFE, "scale", &AScale²D::m_scale).tag(kTag_Save);
 
-        w.slot(UNSAFE, &AScale²::on_set_scale2);
-        w.slot(UNSAFE, &AScale²::on_set_scaleX);
-        w.slot(UNSAFE, &AScale²::on_set_scaleY);
+        w.slot(UNSAFE, &AScale²D::on_set_scale2);
+        w.slot(UNSAFE, &AScale²D::on_set_scaleX);
+        w.slot(UNSAFE, &AScale²D::on_set_scaleY);
 
-        w.slot(UNSAFE, &AScale²::on_add_scale2);
-        w.slot(UNSAFE, &AScale²::on_add_scaleX);
-        w.slot(UNSAFE, &AScale²::on_add_scaleY);
+        w.slot(UNSAFE, &AScale²D::on_add_scale2);
+        w.slot(UNSAFE, &AScale²D::on_add_scaleX);
+        w.slot(UNSAFE, &AScale²D::on_add_scaleY);
         
-        w.slot(UNSAFE, &AScale²::on_multiply_scale);
-        w.slot(UNSAFE, &AScale²::on_multiply_scale2);
-        w.slot(UNSAFE, &AScale²::on_multiply_scaleX);
-        w.slot(UNSAFE, &AScale²::on_multiply_scaleY);
+        w.slot(UNSAFE, &AScale²D::on_multiply_scale);
+        w.slot(UNSAFE, &AScale²D::on_multiply_scale2);
+        w.slot(UNSAFE, &AScale²D::on_multiply_scaleX);
+        w.slot(UNSAFE, &AScale²D::on_multiply_scaleY);
     }
 }

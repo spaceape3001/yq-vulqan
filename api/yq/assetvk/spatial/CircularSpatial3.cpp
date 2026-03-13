@@ -23,7 +23,7 @@
 
 #include <yq/tachyon/aspect/AOrientation3Writer.hxx>
 #include <yq/tachyon/aspect/APosition3Writer.hxx>
-#include <yq/tachyon/aspect/AScale3Writer.hxx>
+#include <yq/tachyon/aspect/AScale3DWriter.hxx>
 #include <yq/tensor/Tensor33.hxx>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/vector/Vector3.hxx>
@@ -42,7 +42,7 @@ namespace yq::tachyon {
         w.slot(&CircularSpatial³::on_period_command);
         w.slot(&CircularSpatial³::on_radius_command);
         APosition³::init_meta(w);
-        AScale³::init_meta(w);
+        AScale³D::init_meta(w);
         AOrientation³::init_meta(w);
     }
 
@@ -52,7 +52,7 @@ namespace yq::tachyon {
     }
 
     CircularSpatial³::CircularSpatial³(const Param& p) : Spatial³(p), 
-        APosition³(p), AScale³(p), AOrientation³(p),
+        APosition³(p), AScale³D(p), AOrientation³(p),
         m_angle0(p.angle0),
         m_locked(p.locked),
         m_period(p.period),

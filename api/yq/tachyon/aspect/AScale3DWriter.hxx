@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/aspect/AScale3.hpp>
+#include <yq/tachyon/aspect/AScale3D.hpp>
 #include <yq/tachyon/command/scale/AddScale3DCommand.hpp>
 #include <yq/tachyon/command/scale/AddScaleXDCommand.hpp>
 #include <yq/tachyon/command/scale/AddScaleYDCommand.hpp>
@@ -25,25 +25,25 @@
 
 namespace yq::tachyon {
     template <typename C>
-    void AScale³::init_meta(TachyonMeta::Writer<C>&w)
+    void AScale³D::init_meta(TachyonMeta::Writer<C>&w)
     {
         w.template interface<IScale³D>();
-        w.property(UNSAFE, "scale", &AScale³::m_scale).tag(kTag_Save);
+        w.property(UNSAFE, "scale", &AScale³D::m_scale).tag(kTag_Save);
         
-        w.slot(UNSAFE, &AScale³::on_set_scale3);
-        w.slot(UNSAFE, &AScale³::on_set_scaleX);
-        w.slot(UNSAFE, &AScale³::on_set_scaleY);
-        w.slot(UNSAFE, &AScale³::on_set_scaleZ);
+        w.slot(UNSAFE, &AScale³D::on_set_scale3);
+        w.slot(UNSAFE, &AScale³D::on_set_scaleX);
+        w.slot(UNSAFE, &AScale³D::on_set_scaleY);
+        w.slot(UNSAFE, &AScale³D::on_set_scaleZ);
 
-        w.slot(UNSAFE, &AScale³::on_add_scale3);
-        w.slot(UNSAFE, &AScale³::on_add_scaleX);
-        w.slot(UNSAFE, &AScale³::on_add_scaleY);
-        w.slot(UNSAFE, &AScale³::on_add_scaleZ);
+        w.slot(UNSAFE, &AScale³D::on_add_scale3);
+        w.slot(UNSAFE, &AScale³D::on_add_scaleX);
+        w.slot(UNSAFE, &AScale³D::on_add_scaleY);
+        w.slot(UNSAFE, &AScale³D::on_add_scaleZ);
         
-        w.slot(UNSAFE, &AScale³::on_multiply_scale);
-        w.slot(UNSAFE, &AScale³::on_multiply_scale3);
-        w.slot(UNSAFE, &AScale³::on_multiply_scaleX);
-        w.slot(UNSAFE, &AScale³::on_multiply_scaleY);
-        w.slot(UNSAFE, &AScale³::on_multiply_scaleZ);
+        w.slot(UNSAFE, &AScale³D::on_multiply_scale);
+        w.slot(UNSAFE, &AScale³D::on_multiply_scale3);
+        w.slot(UNSAFE, &AScale³D::on_multiply_scaleX);
+        w.slot(UNSAFE, &AScale³D::on_multiply_scaleY);
+        w.slot(UNSAFE, &AScale³D::on_multiply_scaleZ);
     }
 }

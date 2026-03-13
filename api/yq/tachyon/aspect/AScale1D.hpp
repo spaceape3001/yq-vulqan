@@ -6,78 +6,69 @@
 
 #pragma once
 
-#include <yq/tachyon/interface/IScale2D.hpp>
+#include <yq/tachyon/interface/IScale1D.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
 
-    class AddScale²DCommand;
+    class AddScale¹DCommand;
     class AddScaleˣDCommand;
-    class AddScaleʸDCommand;
     class MultiplyScaleDCommand;
-    class MultiplyScale²DCommand;
+    class MultiplyScale¹DCommand;
     class MultiplyScaleˣDCommand;
-    class MultiplyScaleʸDCommand;
-    class SetScale²DCommand;
+    class SetScale¹DCommand;
     class SetScaleˣDCommand;
-    class SetScaleʸDCommand;
 
-    class AScale² : public IScale²D, public virtual Tachyon::Helper {
+    class AScale¹D : public IScale¹D, public virtual Tachyon::Helper {
     public:
     
-        //!  Basic scale in the 2D space
-        Vector2D        scale() const override { return m_scale; }
-        
-        double          scale(x_k) const { return m_scale.x; }
-        double          scale(y_k) const { return m_scale.y; }
+        //!  Basic scale in the 1D space
+        Vector1D        scale() const override { return m_scale; }
 
+        double          scale(x_k) const { return m_scale.x; }
+        
         //!  Set scale the scale (OVERRIDE THIS TO INTERCEPT/REJECT)
-        virtual void    scale(set_k, const Vector2D&) override;
+        virtual void    scale(set_k, const Vector1D&) override;
         void            scale(set_k, x_k, double) override;
-        void            scale(set_k, y_k, double) override;
         
         //!  Move the scale (ie set to scale + delta)
-        void            scale(add_k, const Vector2D&) override;
+        void            scale(add_k, const Vector1D&) override;
         void            scale(add_k, x_k, double) override;
-        void            scale(add_k, y_k, double) override;
 
         void            scale(multiply_k, double) override;
-        void            scale(multiply_k, const Vector2D&) override;
+        void            scale(multiply_k, const Vector1D&) override;
         void            scale(multiply_k, x_k, double) override;
-        void            scale(multiply_k, y_k, double) override;
         
         bool            scale(disabled_k) const { return false; }
         bool            scale(settable_k) const { return true; }
         bool            scale(addable_k) const { return true; }
         bool            scale(multipliable_k) const { return true; }
 
-        const Vector2D& scale(ref_k) const { return m_scale; }
+        const Vector1D& scale(ref_k) const { return m_scale; }
 
     protected:
         
-        Vector2D    m_scale = ONE;
+        Vector1D    m_scale = ONE;
 
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        AScale²();
-        virtual ~AScale²();
-
+        AScale¹D();
+        virtual ~AScale¹D();
+        
         void            scale(emit_k);
         
     private:
-        void        on_set_scale2(const SetScale²DCommand&);
+        void        on_set_scale1(const SetScale¹DCommand&);
         void        on_set_scaleX(const SetScaleˣDCommand&);
-        void        on_set_scaleY(const SetScaleʸDCommand&);
 
-        void        on_add_scale2(const AddScale²DCommand&);
+        void        on_add_scale1(const AddScale¹DCommand&);
         void        on_add_scaleX(const AddScaleˣDCommand&);
-        void        on_add_scaleY(const AddScaleʸDCommand&);
         
         void        on_multiply_scale(const MultiplyScaleDCommand&);
-        void        on_multiply_scale2(const MultiplyScale²DCommand&);
+        void        on_multiply_scale1(const MultiplyScale¹DCommand&);
         void        on_multiply_scaleX(const MultiplyScaleˣDCommand&);
-        void        on_multiply_scaleY(const MultiplyScaleʸDCommand&);
+
     };
 
 }

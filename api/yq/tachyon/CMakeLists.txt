@@ -27,6 +27,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect_min_size.cpp
     aspect_position.cpp
     aspect_range.cpp
+    aspect_scale.cpp
     aspect_size.cpp
     aspect_tessellation.cpp
 
@@ -187,9 +188,6 @@ add_library(${PROJECT_NAME} SHARED
     aspect/AOrientation2.cpp
     aspect/AOrientation3.cpp
     aspect/ARenderMode.cpp
-    aspect/AScale1.cpp
-    aspect/AScale2.cpp
-    aspect/AScale3.cpp
     aspect/ASpatial3.cpp
     aspect/ATexture.cpp
     aspect/ATopology.cpp

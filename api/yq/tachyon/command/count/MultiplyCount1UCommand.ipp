@@ -4,41 +4,41 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "MultiplyCount1Command.hpp"
+#include "MultiplyCount1UCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyCount¹Command)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyCount¹UCommand)
 
 namespace yq::tachyon {
-    MultiplyCount¹Command::MultiplyCount¹Command(const Header& h) : 
+    MultiplyCount¹UCommand::MultiplyCount¹UCommand(const Header& h) : 
         CountCommand(h)
     {
     }
     
-    MultiplyCount¹Command::MultiplyCount¹Command(const Header& h, const Vector1U& v) : 
+    MultiplyCount¹UCommand::MultiplyCount¹UCommand(const Header& h, const Vector1U& v) : 
         CountCommand(h), m_δ(v)
     {
     }
 
-    MultiplyCount¹Command::MultiplyCount¹Command(const MultiplyCount¹Command& cp, const Header& h) : 
+    MultiplyCount¹UCommand::MultiplyCount¹UCommand(const MultiplyCount¹UCommand& cp, const Header& h) : 
         CountCommand(cp, h), m_δ(cp.m_δ)
     {
     }
 
-    MultiplyCount¹Command::~MultiplyCount¹Command()
+    MultiplyCount¹UCommand::~MultiplyCount¹UCommand()
     {
     }
     
-    PostCPtr    MultiplyCount¹Command::clone(rebind_k, const Header&h) const 
+    PostCPtr    MultiplyCount¹UCommand::clone(rebind_k, const Header&h) const 
     {
-        return new MultiplyCount¹Command(*this, h);
+        return new MultiplyCount¹UCommand(*this, h);
     }
 
-    void MultiplyCount¹Command::init_meta()
+    void MultiplyCount¹UCommand::init_meta()
     {
-        auto w = writer<MultiplyCount¹Command>();
+        auto w = writer<MultiplyCount¹UCommand>();
         w.description("Multiply Count Command");
-        w.property("δx", &MultiplyCount¹Command::δx).tag(kTag_Log);
-        w.property("δ", &MultiplyCount¹Command::m_δ).tag(kTag_Save);
+        w.property("δx", &MultiplyCount¹UCommand::δx).tag(kTag_Log);
+        w.property("δ", &MultiplyCount¹UCommand::m_δ).tag(kTag_Save);
     }
 }

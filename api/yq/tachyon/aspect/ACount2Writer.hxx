@@ -7,16 +7,16 @@
 #pragma once
 
 #include <yq/tachyon/aspect/ACount2.hpp>
-#include <yq/tachyon/command/count/AddCount2Command.hpp>
-#include <yq/tachyon/command/count/AddCountXCommand.hpp>
-#include <yq/tachyon/command/count/AddCountYCommand.hpp>
-#include <yq/tachyon/command/count/MultiplyCountCommand.hpp>
-#include <yq/tachyon/command/count/MultiplyCount2Command.hpp>
-#include <yq/tachyon/command/count/MultiplyCountXCommand.hpp>
-#include <yq/tachyon/command/count/MultiplyCountYCommand.hpp>
-#include <yq/tachyon/command/count/SetCount2Command.hpp>
-#include <yq/tachyon/command/count/SetCountXCommand.hpp>
-#include <yq/tachyon/command/count/SetCountYCommand.hpp>
+#include <yq/tachyon/command/count/AddCount2UCommand.hpp>
+#include <yq/tachyon/command/count/AddCountXUCommand.hpp>
+#include <yq/tachyon/command/count/AddCountYUCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCountUCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCount2UCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCountXUCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCountYUCommand.hpp>
+#include <yq/tachyon/command/count/SetCount2UCommand.hpp>
+#include <yq/tachyon/command/count/SetCountXUCommand.hpp>
+#include <yq/tachyon/command/count/SetCountYUCommand.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/tags.hpp>
 

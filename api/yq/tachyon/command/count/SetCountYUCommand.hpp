@@ -11,10 +11,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's size
-    class SetCountʸCommand : public CountCommand {
-        YQ_OBJECT_DECLARE(SetCountʸCommand, CountCommand)
+    class SetCountʸUCommand : public CountCommand {
+        YQ_OBJECT_DECLARE(SetCountʸUCommand, CountCommand)
     public:
-        SetCountʸCommand(const Header&, unsigned);
+        SetCountʸUCommand(const Header&, unsigned);
     
         static void init_meta();
         
@@ -23,16 +23,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        SetCountʸCommand(const Header&);
-        SetCountʸCommand(const SetCountʸCommand&, const Header&);
-        ~SetCountʸCommand();
+        SetCountʸUCommand(const Header&);
+        SetCountʸUCommand(const SetCountʸUCommand&, const Header&);
+        ~SetCountʸUCommand();
 
     private:
         unsigned   m_y = 0.;
         
-        SetCountʸCommand(const SetCountʸCommand&) = delete;
-        SetCountʸCommand(SetCountʸCommand&&) = delete;
-        SetCountʸCommand& operator=(const SetCountʸCommand&) = delete;
-        SetCountʸCommand& operator=(SetCountʸCommand&&) = delete;
+        SetCountʸUCommand(const SetCountʸUCommand&) = delete;
+        SetCountʸUCommand(SetCountʸUCommand&&) = delete;
+        SetCountʸUCommand& operator=(const SetCountʸUCommand&) = delete;
+        SetCountʸUCommand& operator=(SetCountʸUCommand&&) = delete;
     };
 }

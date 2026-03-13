@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AddCountZCommand.hpp"
+#include "AddCountZUCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::AddCountᶻCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddCountᶻUCommand)
 
 namespace yq::tachyon {
-    AddCountᶻCommand::AddCountᶻCommand(const Header&h) : 
+    AddCountᶻUCommand::AddCountᶻUCommand(const Header&h) : 
         CountCommand(h)
     {
     }
     
-    AddCountᶻCommand::AddCountᶻCommand(const Header&h, unsigned z) : 
+    AddCountᶻUCommand::AddCountᶻUCommand(const Header&h, unsigned z) : 
         CountCommand(h), m_Δz(z)
     {
     }
 
-    AddCountᶻCommand::AddCountᶻCommand(const AddCountᶻCommand& cp, const Header& h) : 
+    AddCountᶻUCommand::AddCountᶻUCommand(const AddCountᶻUCommand& cp, const Header& h) : 
         CountCommand(cp, h), m_Δz(cp.m_Δz)
     {
     }
 
-    AddCountᶻCommand::~AddCountᶻCommand()
+    AddCountᶻUCommand::~AddCountᶻUCommand()
     {
     }
 
-    PostCPtr    AddCountᶻCommand::clone(rebind_k, const Header&h) const 
+    PostCPtr    AddCountᶻUCommand::clone(rebind_k, const Header&h) const 
     {
-        return new AddCountᶻCommand(*this, h);
+        return new AddCountᶻUCommand(*this, h);
     }
     
-    void AddCountᶻCommand::init_meta()
+    void AddCountᶻUCommand::init_meta()
     {
-        auto w = writer<AddCountᶻCommand>();
+        auto w = writer<AddCountᶻUCommand>();
         w.description("Add Count Command in Z");
-        w.property("Δz", &AddCountᶻCommand::m_Δz).tag(kTag_Log).tag(kTag_Save);
+        w.property("Δz", &AddCountᶻUCommand::m_Δz).tag(kTag_Log).tag(kTag_Save);
     }
 }

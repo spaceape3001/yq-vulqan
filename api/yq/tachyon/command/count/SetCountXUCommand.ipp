@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SetCountXCommand.hpp"
+#include "SetCountXUCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetCountˣCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetCountˣUCommand)
 
 namespace yq::tachyon {
-    SetCountˣCommand::SetCountˣCommand(const Header& h) : 
+    SetCountˣUCommand::SetCountˣUCommand(const Header& h) : 
         CountCommand(h)
     {
     }
 
-    SetCountˣCommand::SetCountˣCommand(const Header& h, unsigned v) : 
+    SetCountˣUCommand::SetCountˣUCommand(const Header& h, unsigned v) : 
         CountCommand(h), m_x(v)
     {
     }
 
-    SetCountˣCommand::SetCountˣCommand(const SetCountˣCommand& cp, const Header& h) : 
+    SetCountˣUCommand::SetCountˣUCommand(const SetCountˣUCommand& cp, const Header& h) : 
         CountCommand(cp, h), m_x(cp.m_x)
     {
     }
     
-    SetCountˣCommand::~SetCountˣCommand()
+    SetCountˣUCommand::~SetCountˣUCommand()
     {
     }
 
-    PostCPtr    SetCountˣCommand::clone(rebind_k, const Header&h) const 
+    PostCPtr    SetCountˣUCommand::clone(rebind_k, const Header&h) const 
     {
-        return new SetCountˣCommand(*this, h);
+        return new SetCountˣUCommand(*this, h);
     }
     
-    void SetCountˣCommand::init_meta()
+    void SetCountˣUCommand::init_meta()
     {
-        auto w = writer<SetCountˣCommand>();
+        auto w = writer<SetCountˣUCommand>();
         w.description("Set Count Command in X");
-        w.property("x", &SetCountˣCommand::m_x).tag(kTag_Log).tag(kTag_Save);
+        w.property("x", &SetCountˣUCommand::m_x).tag(kTag_Log).tag(kTag_Save);
     }
 }

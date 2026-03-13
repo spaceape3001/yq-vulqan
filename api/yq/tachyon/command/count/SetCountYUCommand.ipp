@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SetCountYCommand.hpp"
+#include "SetCountYUCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::SetCountʸCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SetCountʸUCommand)
 
 namespace yq::tachyon {
-    SetCountʸCommand::SetCountʸCommand(const Header& h) : 
+    SetCountʸUCommand::SetCountʸUCommand(const Header& h) : 
         CountCommand(h)
     {
     }
 
-    SetCountʸCommand::SetCountʸCommand(const Header& h, unsigned v) : 
+    SetCountʸUCommand::SetCountʸUCommand(const Header& h, unsigned v) : 
         CountCommand(h), m_y(v)
     {
     }
 
-    SetCountʸCommand::SetCountʸCommand(const SetCountʸCommand& cp, const Header& h) : 
+    SetCountʸUCommand::SetCountʸUCommand(const SetCountʸUCommand& cp, const Header& h) : 
         CountCommand(cp, h), m_y(cp.m_y)
     {
     }
     
-    SetCountʸCommand::~SetCountʸCommand()
+    SetCountʸUCommand::~SetCountʸUCommand()
     {
     }
 
-    PostCPtr    SetCountʸCommand::clone(rebind_k, const Header&h) const 
+    PostCPtr    SetCountʸUCommand::clone(rebind_k, const Header&h) const 
     {
-        return new SetCountʸCommand(*this, h);
+        return new SetCountʸUCommand(*this, h);
     }
     
-    void SetCountʸCommand::init_meta()
+    void SetCountʸUCommand::init_meta()
     {
-        auto w = writer<SetCountʸCommand>();
+        auto w = writer<SetCountʸUCommand>();
         w.description("Set Count Command in Y");
-        w.property("y", &SetCountʸCommand::m_y).tag(kTag_Log).tag(kTag_Save);
+        w.property("y", &SetCountʸUCommand::m_y).tag(kTag_Log).tag(kTag_Save);
     }
 }

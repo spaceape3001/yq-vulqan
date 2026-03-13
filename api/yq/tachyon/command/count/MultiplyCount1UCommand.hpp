@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to multiply it's scale
-    class MultiplyCount¹Command : public CountCommand {
-        YQ_OBJECT_DECLARE(MultiplyCount¹Command, CountCommand)
+    class MultiplyCount¹UCommand : public CountCommand {
+        YQ_OBJECT_DECLARE(MultiplyCount¹UCommand, CountCommand)
     public:
-        MultiplyCount¹Command(const Header&, const Vector1U&);
+        MultiplyCount¹UCommand(const Header&, const Vector1U&);
     
         const Vector1U&   δ() const  { return m_δ; }
         
@@ -26,17 +26,17 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        ~MultiplyCount¹Command();
-        MultiplyCount¹Command(const MultiplyCount¹Command&, const Header&);
-        MultiplyCount¹Command(const Header&);
+        ~MultiplyCount¹UCommand();
+        MultiplyCount¹UCommand(const MultiplyCount¹UCommand&, const Header&);
+        MultiplyCount¹UCommand(const Header&);
     
 
     private:
         Vector1U  m_δ;
         
-        MultiplyCount¹Command(const MultiplyCount¹Command&) = delete;
-        MultiplyCount¹Command(MultiplyCount¹Command&&) = delete;
-        MultiplyCount¹Command& operator=(const MultiplyCount¹Command&) = delete;
-        MultiplyCount¹Command& operator=(MultiplyCount¹Command&&) = delete;
+        MultiplyCount¹UCommand(const MultiplyCount¹UCommand&) = delete;
+        MultiplyCount¹UCommand(MultiplyCount¹UCommand&&) = delete;
+        MultiplyCount¹UCommand& operator=(const MultiplyCount¹UCommand&) = delete;
+        MultiplyCount¹UCommand& operator=(MultiplyCount¹UCommand&&) = delete;
     };
 }

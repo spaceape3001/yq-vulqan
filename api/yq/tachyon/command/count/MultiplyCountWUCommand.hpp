@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's x-position
-    class MultiplyCountʷCommand : public CountCommand {
-        YQ_OBJECT_DECLARE(MultiplyCountʷCommand, CountCommand)
+    class MultiplyCountʷUCommand : public CountCommand {
+        YQ_OBJECT_DECLARE(MultiplyCountʷUCommand, CountCommand)
     public:
-        MultiplyCountʷCommand(const Header&, unsigned);
+        MultiplyCountʷUCommand(const Header&, unsigned);
         
         static void init_meta();
         
@@ -24,16 +24,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        MultiplyCountʷCommand(const MultiplyCountʷCommand&, const Header&);
-        MultiplyCountʷCommand(const Header&);
-        ~MultiplyCountʷCommand();
+        MultiplyCountʷUCommand(const MultiplyCountʷUCommand&, const Header&);
+        MultiplyCountʷUCommand(const Header&);
+        ~MultiplyCountʷUCommand();
 
     private:
         unsigned  m_δw = 0.0;
         
-        MultiplyCountʷCommand(const MultiplyCountʷCommand&) = delete;
-        MultiplyCountʷCommand(MultiplyCountʷCommand&&) = delete;
-        MultiplyCountʷCommand& operator=(const MultiplyCountʷCommand&) = delete;
-        MultiplyCountʷCommand& operator=(MultiplyCountʷCommand&&) = delete;
+        MultiplyCountʷUCommand(const MultiplyCountʷUCommand&) = delete;
+        MultiplyCountʷUCommand(MultiplyCountʷUCommand&&) = delete;
+        MultiplyCountʷUCommand& operator=(const MultiplyCountʷUCommand&) = delete;
+        MultiplyCountʷUCommand& operator=(MultiplyCountʷUCommand&&) = delete;
     };
 }

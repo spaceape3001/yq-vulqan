@@ -6,16 +6,16 @@
 
 #include "ACount2Writer.hxx"
 
-#include <yq/tachyon/command/count/AddCount2Command.hpp>
-#include <yq/tachyon/command/count/AddCountXCommand.hpp>
-#include <yq/tachyon/command/count/AddCountYCommand.hpp>
-#include <yq/tachyon/command/count/MultiplyCountCommand.hpp>
-#include <yq/tachyon/command/count/MultiplyCount2Command.hpp>
-#include <yq/tachyon/command/count/MultiplyCountXCommand.hpp>
-#include <yq/tachyon/command/count/MultiplyCountYCommand.hpp>
-#include <yq/tachyon/command/count/SetCount2Command.hpp>
-#include <yq/tachyon/command/count/SetCountXCommand.hpp>
-#include <yq/tachyon/command/count/SetCountYCommand.hpp>
+#include <yq/tachyon/command/count/AddCount2UCommand.hpp>
+#include <yq/tachyon/command/count/AddCountXUCommand.hpp>
+#include <yq/tachyon/command/count/AddCountYUCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCountUCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCount2UCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCountXUCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCountYUCommand.hpp>
+#include <yq/tachyon/command/count/SetCount2UCommand.hpp>
+#include <yq/tachyon/command/count/SetCountXUCommand.hpp>
+#include <yq/tachyon/command/count/SetCountYUCommand.hpp>
 #include <yq/tachyon/event/count/Count2UEvent.hpp>
 
 namespace yq::tachyon {
@@ -88,70 +88,70 @@ namespace yq::tachyon {
         count(SET, Vector2U( m_count.x, m_count.y*v ));
     }
     
-    void        ACount²::on_set_count2(const SetCount²Command&cmd)
+    void        ACount²::on_set_count2(const SetCount²UCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         count(SET, cmd.count());
     }
     
-    void        ACount²::on_set_countX(const SetCountˣCommand&cmd)
+    void        ACount²::on_set_countX(const SetCountˣUCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         count(SET, X, cmd.x());
     }
     
-    void        ACount²::on_set_countY(const SetCountʸCommand&cmd)
+    void        ACount²::on_set_countY(const SetCountʸUCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         count(SET, Y, cmd.y());
     }
     
-    void        ACount²::on_add_count2(const AddCount²Command&cmd)
+    void        ACount²::on_add_count2(const AddCount²UCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         count(ADD, cmd.Δ());
     }
     
-    void        ACount²::on_add_countX(const AddCountˣCommand&cmd)
+    void        ACount²::on_add_countX(const AddCountˣUCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         count(ADD, X, cmd.Δx());
     }
     
-    void        ACount²::on_add_countY(const AddCountʸCommand&cmd)
+    void        ACount²::on_add_countY(const AddCountʸUCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         count(ADD, X, cmd.Δy());
     }
     
-    void        ACount²::on_multiply_count(const MultiplyCountCommand&cmd)
+    void        ACount²::on_multiply_count(const MultiplyCountUCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         count(MULTIPLY, cmd.δ());
     }
     
-    void        ACount²::on_multiply_count2(const MultiplyCount²Command&cmd)
+    void        ACount²::on_multiply_count2(const MultiplyCount²UCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         count(MULTIPLY, cmd.δ());
     }
     
-    void        ACount²::on_multiply_countX(const MultiplyCountˣCommand&cmd)
+    void        ACount²::on_multiply_countX(const MultiplyCountˣUCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
         count(MULTIPLY, X, cmd.δx());
     }
     
-    void        ACount²::on_multiply_countY(const MultiplyCountʸCommand&cmd)
+    void        ACount²::on_multiply_countY(const MultiplyCountʸUCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

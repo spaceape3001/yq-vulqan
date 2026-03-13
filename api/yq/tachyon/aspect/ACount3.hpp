@@ -11,19 +11,19 @@
 
 namespace yq::tachyon {
 
-    class AddCount³Command;
-    class AddCountˣCommand;
-    class AddCountʸCommand;
-    class AddCountᶻCommand;
-    class MultiplyCountCommand; 
-    class MultiplyCount³Command;
-    class MultiplyCountˣCommand;
-    class MultiplyCountʸCommand;
-    class MultiplyCountᶻCommand;
-    class SetCount³Command;
-    class SetCountˣCommand;
-    class SetCountʸCommand;
-    class SetCountᶻCommand;
+    class AddCount³UCommand;
+    class AddCountˣUCommand;
+    class AddCountʸUCommand;
+    class AddCountᶻUCommand;
+    class MultiplyCountUCommand; 
+    class MultiplyCount³UCommand;
+    class MultiplyCountˣUCommand;
+    class MultiplyCountʸUCommand;
+    class MultiplyCountᶻUCommand;
+    class SetCount³UCommand;
+    class SetCountˣUCommand;
+    class SetCountʸUCommand;
+    class SetCountᶻUCommand;
 
     class ACount³ : public ICount³, public virtual Tachyon::Helper {
     public:
@@ -78,20 +78,20 @@ namespace yq::tachyon {
         void        count(emit_k);
 
     private:
-        void        on_set_count3(const SetCount³Command&);
-        void        on_set_countX(const SetCountˣCommand&);
-        void        on_set_countY(const SetCountʸCommand&);
-        void        on_set_countZ(const SetCountᶻCommand&);
+        void        on_set_count3(const SetCount³UCommand&);
+        void        on_set_countX(const SetCountˣUCommand&);
+        void        on_set_countY(const SetCountʸUCommand&);
+        void        on_set_countZ(const SetCountᶻUCommand&);
 
-        void        on_add_count3(const AddCount³Command&);
-        void        on_add_countX(const AddCountˣCommand&);
-        void        on_add_countY(const AddCountʸCommand&);
-        void        on_add_countZ(const AddCountᶻCommand&);
+        void        on_add_count3(const AddCount³UCommand&);
+        void        on_add_countX(const AddCountˣUCommand&);
+        void        on_add_countY(const AddCountʸUCommand&);
+        void        on_add_countZ(const AddCountᶻUCommand&);
         
-        void        on_multiply_count(const MultiplyCountCommand&);
-        void        on_multiply_count3(const MultiplyCount³Command&);
-        void        on_multiply_countX(const MultiplyCountˣCommand&);
-        void        on_multiply_countY(const MultiplyCountʸCommand&);
-        void        on_multiply_countZ(const MultiplyCountᶻCommand&);
+        void        on_multiply_count(const MultiplyCountUCommand&);
+        void        on_multiply_count3(const MultiplyCount³UCommand&);
+        void        on_multiply_countX(const MultiplyCountˣUCommand&);
+        void        on_multiply_countY(const MultiplyCountʸUCommand&);
+        void        on_multiply_countZ(const MultiplyCountᶻUCommand&);
     };
 }

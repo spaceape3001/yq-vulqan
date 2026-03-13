@@ -7,15 +7,14 @@
 #pragma once
 
 #include <yq/tachyon/command/CountCommand.hpp>
-#include <yq/vector/Vector1.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's z-position
-    class AddCountᶻCommand : public CountCommand {
-        YQ_OBJECT_DECLARE(AddCountᶻCommand, CountCommand)
+    class AddCountᶻUCommand : public CountCommand {
+        YQ_OBJECT_DECLARE(AddCountᶻUCommand, CountCommand)
     public:
-        AddCountᶻCommand(const Header&, unsigned);
+        AddCountᶻUCommand(const Header&, unsigned);
         
         static void init_meta();
         
@@ -24,16 +23,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        AddCountᶻCommand(const AddCountᶻCommand&, const Header&);
-        AddCountᶻCommand(const Header&);
-        ~AddCountᶻCommand();
+        AddCountᶻUCommand(const AddCountᶻUCommand&, const Header&);
+        AddCountᶻUCommand(const Header&);
+        ~AddCountᶻUCommand();
 
     private:
         unsigned  m_Δz = 0.0;
         
-        AddCountᶻCommand(const AddCountᶻCommand&) = delete;
-        AddCountᶻCommand(AddCountᶻCommand&&) = delete;
-        AddCountᶻCommand& operator=(const AddCountᶻCommand&) = delete;
-        AddCountᶻCommand& operator=(AddCountᶻCommand&&) = delete;
+        AddCountᶻUCommand(const AddCountᶻUCommand&) = delete;
+        AddCountᶻUCommand(AddCountᶻUCommand&&) = delete;
+        AddCountᶻUCommand& operator=(const AddCountᶻUCommand&) = delete;
+        AddCountᶻUCommand& operator=(AddCountᶻUCommand&&) = delete;
     };
 }

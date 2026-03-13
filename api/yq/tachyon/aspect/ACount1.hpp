@@ -11,13 +11,13 @@
 
 namespace yq::tachyon {
 
-    class AddCount¹Command;
-    class AddCountˣCommand;
-    class MultiplyCountCommand;
-    class MultiplyCount¹Command;
-    class MultiplyCountˣCommand;
-    class SetCount¹Command;
-    class SetCountˣCommand;
+    class AddCount¹UCommand;
+    class AddCountˣUCommand;
+    class MultiplyCountUCommand;
+    class MultiplyCount¹UCommand;
+    class MultiplyCountˣUCommand;
+    class SetCount¹UCommand;
+    class SetCountˣUCommand;
 
     class ACount¹ : public ICount¹, public virtual Tachyon::Helper {
     public:
@@ -64,15 +64,15 @@ namespace yq::tachyon {
         void            count(emit_k);
         
     private:
-        void        on_set_count1(const SetCount¹Command&);
-        void        on_set_countX(const SetCountˣCommand&);
+        void        on_set_count1(const SetCount¹UCommand&);
+        void        on_set_countX(const SetCountˣUCommand&);
 
-        void        on_add_count1(const AddCount¹Command&);
-        void        on_add_countX(const AddCountˣCommand&);
+        void        on_add_count1(const AddCount¹UCommand&);
+        void        on_add_countX(const AddCountˣUCommand&);
         
-        void        on_multiply_count(const MultiplyCountCommand&);
-        void        on_multiply_count1(const MultiplyCount¹Command&);
-        void        on_multiply_countX(const MultiplyCountˣCommand&);
+        void        on_multiply_count(const MultiplyCountUCommand&);
+        void        on_multiply_count1(const MultiplyCount¹UCommand&);
+        void        on_multiply_countX(const MultiplyCountˣUCommand&);
 
     };
 

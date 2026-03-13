@@ -5,16 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/proxy/PCount2.hpp>
-#include <yq/tachyon/command/count/AddCount2Command.hpp>
-#include <yq/tachyon/command/count/AddCountXCommand.hpp>
-#include <yq/tachyon/command/count/AddCountYCommand.hpp>
-#include <yq/tachyon/command/count/MultiplyCountCommand.hpp>
-#include <yq/tachyon/command/count/MultiplyCount2Command.hpp>
-#include <yq/tachyon/command/count/MultiplyCountXCommand.hpp>
-#include <yq/tachyon/command/count/MultiplyCountYCommand.hpp>
-#include <yq/tachyon/command/count/SetCount2Command.hpp>
-#include <yq/tachyon/command/count/SetCountXCommand.hpp>
-#include <yq/tachyon/command/count/SetCountYCommand.hpp>
+#include <yq/tachyon/command/count/AddCount2UCommand.hpp>
+#include <yq/tachyon/command/count/AddCountXUCommand.hpp>
+#include <yq/tachyon/command/count/AddCountYUCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCountUCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCount2UCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCountXUCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCountYUCommand.hpp>
+#include <yq/tachyon/command/count/SetCount2UCommand.hpp>
+#include <yq/tachyon/command/count/SetCountXUCommand.hpp>
+#include <yq/tachyon/command/count/SetCountYUCommand.hpp>
 
 namespace yq::tachyon {
     PCount²::PCount²(const ICount²& i) : m_count(i.count())
@@ -54,70 +54,70 @@ namespace yq::tachyon {
     void        PCount²::count(set_k, const Vector2U& v) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetCount²Command({.target=object()}, v));
+            mail(new SetCount²UCommand({.target=object()}, v));
         }
     }
 
     void        PCount²::count(set_k, x_k, unsigned x) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetCountˣCommand({.target=object()}, x));
+            mail(new SetCountˣUCommand({.target=object()}, x));
         }
     }
     
     void        PCount²::count(set_k, y_k, unsigned y) 
     {
         if(m_flags(F::Settable) && !m_flags(F::Disabled)){
-            mail(new SetCountʸCommand({.target=object()}, y));
+            mail(new SetCountʸUCommand({.target=object()}, y));
         }
     }
 
     void        PCount²::count(add_k, const Vector2U& Δ) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddCount²Command({.target=object()}, Δ));
+            mail(new AddCount²UCommand({.target=object()}, Δ));
         }
     }
 
     void        PCount²::count(add_k, x_k, unsigned Δx) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddCountˣCommand({.target=object()}, Δx));
+            mail(new AddCountˣUCommand({.target=object()}, Δx));
         }
     }
 
     void        PCount²::count(add_k, y_k, unsigned Δy) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddCountʸCommand({.target=object()}, Δy));
+            mail(new AddCountʸUCommand({.target=object()}, Δy));
         }
     }
 
     void        PCount²::count(multiply_k, unsigned Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyCountCommand({.target=object()}, Δ));
+            mail(new MultiplyCountUCommand({.target=object()}, Δ));
         }
     }
 
     void        PCount²::count(multiply_k, const Vector2U& Δ) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyCount²Command({.target=object()}, Δ));
+            mail(new MultiplyCount²UCommand({.target=object()}, Δ));
         }
     }
 
     void        PCount²::count(multiply_k, x_k, unsigned Δx) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyCountˣCommand({.target=object()}, Δx));
+            mail(new MultiplyCountˣUCommand({.target=object()}, Δx));
         }
     }
 
     void        PCount²::count(multiply_k, y_k, unsigned Δy) 
     {
         if(m_flags(F::Multipliable) && !m_flags(F::Disabled)){
-            mail(new MultiplyCountʸCommand({.target=object()}, Δy));
+            mail(new MultiplyCountʸUCommand({.target=object()}, Δy));
         }
     }
 }

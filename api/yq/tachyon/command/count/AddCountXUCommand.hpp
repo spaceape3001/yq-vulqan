@@ -7,15 +7,14 @@
 #pragma once
 
 #include <yq/tachyon/command/CountCommand.hpp>
-#include <yq/vector/Vector1.hpp>
 
 namespace yq::tachyon {
 
     //! Instructs an object to set it's x-scale
-    class AddCountˣCommand : public CountCommand {
-        YQ_OBJECT_DECLARE(AddCountˣCommand, CountCommand)
+    class AddCountˣUCommand : public CountCommand {
+        YQ_OBJECT_DECLARE(AddCountˣUCommand, CountCommand)
     public:
-        AddCountˣCommand(const Header&, unsigned);
+        AddCountˣUCommand(const Header&, unsigned);
         
         static void init_meta();
         
@@ -24,16 +23,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        AddCountˣCommand(const AddCountˣCommand&, const Header&);
-        AddCountˣCommand(const Header&);
-        ~AddCountˣCommand();
+        AddCountˣUCommand(const AddCountˣUCommand&, const Header&);
+        AddCountˣUCommand(const Header&);
+        ~AddCountˣUCommand();
 
     private:
         unsigned  m_Δx = 0.0;
         
-        AddCountˣCommand(const AddCountˣCommand&) = delete;
-        AddCountˣCommand(AddCountˣCommand&&) = delete;
-        AddCountˣCommand& operator=(const AddCountˣCommand&) = delete;
-        AddCountˣCommand& operator=(AddCountˣCommand&&) = delete;
+        AddCountˣUCommand(const AddCountˣUCommand&) = delete;
+        AddCountˣUCommand(AddCountˣUCommand&&) = delete;
+        AddCountˣUCommand& operator=(const AddCountˣUCommand&) = delete;
+        AddCountˣUCommand& operator=(AddCountˣUCommand&&) = delete;
     };
 }

@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's size
-    class SetCount¹Command : public CountCommand {
-        YQ_OBJECT_DECLARE(SetCount¹Command, CountCommand)
+    class SetCount¹UCommand : public CountCommand {
+        YQ_OBJECT_DECLARE(SetCount¹UCommand, CountCommand)
     public:
-        SetCount¹Command(const Header&, const Vector1U&);
+        SetCount¹UCommand(const Header&, const Vector1U&);
     
         const Vector1U&   count() const  { return m_count; }
         
@@ -26,16 +26,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        SetCount¹Command(const Header&);
-        SetCount¹Command(const SetCount¹Command&, const Header&);
-        ~SetCount¹Command();
+        SetCount¹UCommand(const Header&);
+        SetCount¹UCommand(const SetCount¹UCommand&, const Header&);
+        ~SetCount¹UCommand();
 
     private:
         Vector1U   m_count = ZERO;
         
-        SetCount¹Command(const SetCount¹Command&) = delete;
-        SetCount¹Command(SetCount¹Command&&) = delete;
-        SetCount¹Command& operator=(const SetCount¹Command&) = delete;
-        SetCount¹Command& operator=(SetCount¹Command&&) = delete;
+        SetCount¹UCommand(const SetCount¹UCommand&) = delete;
+        SetCount¹UCommand(SetCount¹UCommand&&) = delete;
+        SetCount¹UCommand& operator=(const SetCount¹UCommand&) = delete;
+        SetCount¹UCommand& operator=(SetCount¹UCommand&&) = delete;
     };
 }

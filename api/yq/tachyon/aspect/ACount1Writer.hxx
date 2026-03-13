@@ -7,13 +7,13 @@
 #pragma once
 
 #include <yq/tachyon/aspect/ACount1.hpp>
-#include <yq/tachyon/command/count/AddCount1Command.hpp>
-#include <yq/tachyon/command/count/AddCountXCommand.hpp>
-#include <yq/tachyon/command/count/MultiplyCountCommand.hpp>
-#include <yq/tachyon/command/count/MultiplyCount1Command.hpp>
-#include <yq/tachyon/command/count/MultiplyCountXCommand.hpp>
-#include <yq/tachyon/command/count/SetCount1Command.hpp>
-#include <yq/tachyon/command/count/SetCountXCommand.hpp>
+#include <yq/tachyon/command/count/AddCount1UCommand.hpp>
+#include <yq/tachyon/command/count/AddCountXUCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCountUCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCount1UCommand.hpp>
+#include <yq/tachyon/command/count/MultiplyCountXUCommand.hpp>
+#include <yq/tachyon/command/count/SetCount1UCommand.hpp>
+#include <yq/tachyon/command/count/SetCountXUCommand.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/tags.hpp>
 

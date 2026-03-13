@@ -4,35 +4,35 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AddCountXCommand.hpp"
+#include "AddCountXUCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::AddCountˣCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddCountˣUCommand)
 
 namespace yq::tachyon {
-    AddCountˣCommand::AddCountˣCommand(const Header&h, unsigned x) : 
+    AddCountˣUCommand::AddCountˣUCommand(const Header&h, unsigned x) : 
         CountCommand(h), m_Δx(x)
     {
     }
 
-    AddCountˣCommand::AddCountˣCommand(const AddCountˣCommand& cp, const Header& h) : 
+    AddCountˣUCommand::AddCountˣUCommand(const AddCountˣUCommand& cp, const Header& h) : 
         CountCommand(cp, h), m_Δx(cp.m_Δx)
     {
     }
     
-    AddCountˣCommand::~AddCountˣCommand()
+    AddCountˣUCommand::~AddCountˣUCommand()
     {
     }
     
-    PostCPtr    AddCountˣCommand::clone(rebind_k, const Header&h) const 
+    PostCPtr    AddCountˣUCommand::clone(rebind_k, const Header&h) const 
     {
-        return new AddCountˣCommand(*this, h);
+        return new AddCountˣUCommand(*this, h);
     }
 
-    void AddCountˣCommand::init_meta()
+    void AddCountˣUCommand::init_meta()
     {
-        auto w = writer<AddCountˣCommand>();
+        auto w = writer<AddCountˣUCommand>();
         w.description("Add Count Command in X");
-        w.property("Δx", &AddCountˣCommand::m_Δx).tag(kTag_Log).tag(kTag_Save);
+        w.property("Δx", &AddCountˣUCommand::m_Δx).tag(kTag_Log).tag(kTag_Save);
     }
 }

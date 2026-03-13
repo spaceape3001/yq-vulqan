@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's y-position
-    class MultiplyCountʸCommand : public CountCommand {
-        YQ_OBJECT_DECLARE(MultiplyCountʸCommand, CountCommand)
+    class MultiplyCountʸUCommand : public CountCommand {
+        YQ_OBJECT_DECLARE(MultiplyCountʸUCommand, CountCommand)
     public:
-        MultiplyCountʸCommand(const Header&, unsigned);
+        MultiplyCountʸUCommand(const Header&, unsigned);
         
         static void init_meta();
         
@@ -24,16 +24,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        MultiplyCountʸCommand(const MultiplyCountʸCommand&, const Header&);
-        MultiplyCountʸCommand(const Header&);
-        ~MultiplyCountʸCommand();
+        MultiplyCountʸUCommand(const MultiplyCountʸUCommand&, const Header&);
+        MultiplyCountʸUCommand(const Header&);
+        ~MultiplyCountʸUCommand();
 
     private:
         unsigned  m_δy = 0.0;
         
-        MultiplyCountʸCommand(const MultiplyCountʸCommand&) = delete;
-        MultiplyCountʸCommand(MultiplyCountʸCommand&&) = delete;
-        MultiplyCountʸCommand& operator=(const MultiplyCountʸCommand&) = delete;
-        MultiplyCountʸCommand& operator=(MultiplyCountʸCommand&&) = delete;
+        MultiplyCountʸUCommand(const MultiplyCountʸUCommand&) = delete;
+        MultiplyCountʸUCommand(MultiplyCountʸUCommand&&) = delete;
+        MultiplyCountʸUCommand& operator=(const MultiplyCountʸUCommand&) = delete;
+        MultiplyCountʸUCommand& operator=(MultiplyCountʸUCommand&&) = delete;
     };
 }

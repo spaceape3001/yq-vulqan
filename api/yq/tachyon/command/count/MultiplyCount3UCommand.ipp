@@ -4,43 +4,43 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "MultiplyCount3Command.hpp"
+#include "MultiplyCount3UCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyCount³Command)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyCount³UCommand)
 
 namespace yq::tachyon {
-    MultiplyCount³Command::MultiplyCount³Command(const Header& h) : 
+    MultiplyCount³UCommand::MultiplyCount³UCommand(const Header& h) : 
         CountCommand(h)
     {
     }
 
-    MultiplyCount³Command::MultiplyCount³Command(const Header& h, const Vector3U& v) : 
+    MultiplyCount³UCommand::MultiplyCount³UCommand(const Header& h, const Vector3U& v) : 
         CountCommand(h), m_δ(v)
     {
     }
 
-    MultiplyCount³Command::MultiplyCount³Command(const MultiplyCount³Command& cp, const Header& h) : 
+    MultiplyCount³UCommand::MultiplyCount³UCommand(const MultiplyCount³UCommand& cp, const Header& h) : 
         CountCommand(cp, h), m_δ(cp.m_δ)
     {
     }
     
-    MultiplyCount³Command::~MultiplyCount³Command()
+    MultiplyCount³UCommand::~MultiplyCount³UCommand()
     {
     }
 
-    PostCPtr    MultiplyCount³Command::clone(rebind_k, const Header&h) const 
+    PostCPtr    MultiplyCount³UCommand::clone(rebind_k, const Header&h) const 
     {
-        return new MultiplyCount³Command(*this, h);
+        return new MultiplyCount³UCommand(*this, h);
     }
     
-    void MultiplyCount³Command::init_meta()
+    void MultiplyCount³UCommand::init_meta()
     {
-        auto w = writer<MultiplyCount³Command>();
+        auto w = writer<MultiplyCount³UCommand>();
         w.description("Multiply Count Command");
-        w.property("δx", &MultiplyCount³Command::δx).tag(kTag_Log);
-        w.property("δy", &MultiplyCount³Command::δy).tag(kTag_Log);
-        w.property("δz", &MultiplyCount³Command::δz).tag(kTag_Log);
-        w.property("δ", &MultiplyCount³Command::m_δ).tag(kTag_Save);
+        w.property("δx", &MultiplyCount³UCommand::δx).tag(kTag_Log);
+        w.property("δy", &MultiplyCount³UCommand::δy).tag(kTag_Log);
+        w.property("δz", &MultiplyCount³UCommand::δz).tag(kTag_Log);
+        w.property("δ", &MultiplyCount³UCommand::m_δ).tag(kTag_Save);
     }
 }

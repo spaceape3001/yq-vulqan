@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "MultiplyCountZCommand.hpp"
+#include "MultiplyCountZUCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyCountᶻCommand)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyCountᶻUCommand)
 
 namespace yq::tachyon {
-    MultiplyCountᶻCommand::MultiplyCountᶻCommand(const Header&h) : 
+    MultiplyCountᶻUCommand::MultiplyCountᶻUCommand(const Header&h) : 
         CountCommand(h)
     {
     }
     
-    MultiplyCountᶻCommand::MultiplyCountᶻCommand(const Header&h, unsigned z) : 
+    MultiplyCountᶻUCommand::MultiplyCountᶻUCommand(const Header&h, unsigned z) : 
         CountCommand(h), m_δz(z)
     {
     }
     
-    MultiplyCountᶻCommand::MultiplyCountᶻCommand(const MultiplyCountᶻCommand& cp, const Header& h) : 
+    MultiplyCountᶻUCommand::MultiplyCountᶻUCommand(const MultiplyCountᶻUCommand& cp, const Header& h) : 
         CountCommand(cp, h), m_δz(cp.m_δz)
     {
     }
 
-    MultiplyCountᶻCommand::~MultiplyCountᶻCommand()
+    MultiplyCountᶻUCommand::~MultiplyCountᶻUCommand()
     {
     }
 
-    PostCPtr    MultiplyCountᶻCommand::clone(rebind_k, const Header&h) const 
+    PostCPtr    MultiplyCountᶻUCommand::clone(rebind_k, const Header&h) const 
     {
-        return new MultiplyCountᶻCommand(*this, h);
+        return new MultiplyCountᶻUCommand(*this, h);
     }
     
-    void MultiplyCountᶻCommand::init_meta()
+    void MultiplyCountᶻUCommand::init_meta()
     {
-        auto w = writer<MultiplyCountᶻCommand>();
+        auto w = writer<MultiplyCountᶻUCommand>();
         w.description("Multiply Count Command");
-        w.property("δz", &MultiplyCountᶻCommand::m_δz).tag(kTag_Log).tag(kTag_Save);
+        w.property("δz", &MultiplyCountᶻUCommand::m_δz).tag(kTag_Log).tag(kTag_Save);
     }
 }

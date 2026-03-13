@@ -4,42 +4,42 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "MultiplyCount2Command.hpp"
+#include "MultiplyCount2UCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyCount²Command)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MultiplyCount²UCommand)
 
 namespace yq::tachyon {
-    MultiplyCount²Command::MultiplyCount²Command(const Header& h) : 
+    MultiplyCount²UCommand::MultiplyCount²UCommand(const Header& h) : 
         CountCommand(h)
     {
     }
 
-    MultiplyCount²Command::MultiplyCount²Command(const Header& h, const Vector2U& v) : 
+    MultiplyCount²UCommand::MultiplyCount²UCommand(const Header& h, const Vector2U& v) : 
         CountCommand(h), m_δ(v)
     {
     }
 
-    MultiplyCount²Command::MultiplyCount²Command(const MultiplyCount²Command& cp, const Header& h) : 
+    MultiplyCount²UCommand::MultiplyCount²UCommand(const MultiplyCount²UCommand& cp, const Header& h) : 
         CountCommand(cp, h), m_δ(cp.m_δ)
     {
     }
     
-    MultiplyCount²Command::~MultiplyCount²Command()
+    MultiplyCount²UCommand::~MultiplyCount²UCommand()
     {
     }
 
-    PostCPtr    MultiplyCount²Command::clone(rebind_k, const Header&h) const 
+    PostCPtr    MultiplyCount²UCommand::clone(rebind_k, const Header&h) const 
     {
-        return new MultiplyCount²Command(*this, h);
+        return new MultiplyCount²UCommand(*this, h);
     }
     
-    void MultiplyCount²Command::init_meta()
+    void MultiplyCount²UCommand::init_meta()
     {
-        auto w = writer<MultiplyCount²Command>();
+        auto w = writer<MultiplyCount²UCommand>();
         w.description("Multiply Count Command");
-        w.property("δx", &MultiplyCount²Command::δx).tag(kTag_Log);
-        w.property("δy", &MultiplyCount²Command::δy).tag(kTag_Log);
-        w.property("δ", &MultiplyCount²Command::m_δ).tag(kTag_Save);
+        w.property("δx", &MultiplyCount²UCommand::δx).tag(kTag_Log);
+        w.property("δy", &MultiplyCount²UCommand::δy).tag(kTag_Log);
+        w.property("δ", &MultiplyCount²UCommand::m_δ).tag(kTag_Save);
     }
 }

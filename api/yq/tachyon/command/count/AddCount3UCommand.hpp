@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to set it's scale
-    class AddCount³Command : public CountCommand {
-        YQ_OBJECT_DECLARE(AddCount³Command, CountCommand)
+    class AddCount³UCommand : public CountCommand {
+        YQ_OBJECT_DECLARE(AddCount³UCommand, CountCommand)
     public:
-        AddCount³Command(const Header&, const Vector3U&);
+        AddCount³UCommand(const Header&, const Vector3U&);
     
         const Vector3U&   Δ() const  { return m_Δ; }
         
@@ -28,16 +28,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        AddCount³Command(const AddCount³Command&, const Header&);
-        AddCount³Command(const Header&);
-        ~AddCount³Command();
+        AddCount³UCommand(const AddCount³UCommand&, const Header&);
+        AddCount³UCommand(const Header&);
+        ~AddCount³UCommand();
 
     private:
         Vector3U  m_Δ = ZERO;
         
-        AddCount³Command(const AddCount³Command&) = delete;
-        AddCount³Command(AddCount³Command&&) = delete;
-        AddCount³Command& operator=(const AddCount³Command&) = delete;
-        AddCount³Command& operator=(AddCount³Command&&) = delete;
+        AddCount³UCommand(const AddCount³UCommand&) = delete;
+        AddCount³UCommand(AddCount³UCommand&&) = delete;
+        AddCount³UCommand& operator=(const AddCount³UCommand&) = delete;
+        AddCount³UCommand& operator=(AddCount³UCommand&&) = delete;
     };
 }

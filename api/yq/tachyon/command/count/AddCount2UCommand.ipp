@@ -4,41 +4,41 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "AddCount2Command.hpp"
+#include "AddCount2UCommand.hpp"
 #include <yq/tachyon/api/CommandMetaWriter.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::AddCount²Command)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::AddCount²UCommand)
 
 namespace yq::tachyon {
-    AddCount²Command::AddCount²Command(const Header&h) : CountCommand(h)
+    AddCount²UCommand::AddCount²UCommand(const Header&h) : CountCommand(h)
     {
     }
     
-    AddCount²Command::AddCount²Command(const Header& h, const Vector2U& v) : 
+    AddCount²UCommand::AddCount²UCommand(const Header& h, const Vector2U& v) : 
         CountCommand(h), m_Δ(v)
     {
     }
 
-    AddCount²Command::AddCount²Command(const AddCount²Command& cp, const Header& h) : 
+    AddCount²UCommand::AddCount²UCommand(const AddCount²UCommand& cp, const Header& h) : 
         CountCommand(cp, h), m_Δ(cp.m_Δ)
     {
     }
     
-    AddCount²Command::~AddCount²Command()
+    AddCount²UCommand::~AddCount²UCommand()
     {
     }
 
-    PostCPtr    AddCount²Command::clone(rebind_k, const Header&h) const 
+    PostCPtr    AddCount²UCommand::clone(rebind_k, const Header&h) const 
     {
-        return new AddCount²Command(*this, h);
+        return new AddCount²UCommand(*this, h);
     }
     
-    void AddCount²Command::init_meta()
+    void AddCount²UCommand::init_meta()
     {
-        auto w = writer<AddCount²Command>();
+        auto w = writer<AddCount²UCommand>();
         w.description("Add Count Command");
-        w.property("Δx", &AddCount²Command::Δx).tag(kTag_Log);
-        w.property("Δy", &AddCount²Command::Δy).tag(kTag_Log);
-        w.property("Δ",  &AddCount²Command::m_Δ).tag(kTag_Save);
+        w.property("Δx", &AddCount²UCommand::Δx).tag(kTag_Log);
+        w.property("Δy", &AddCount²UCommand::Δy).tag(kTag_Log);
+        w.property("Δ",  &AddCount²UCommand::m_Δ).tag(kTag_Save);
     }
 }

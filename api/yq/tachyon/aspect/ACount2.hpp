@@ -11,16 +11,16 @@
 
 namespace yq::tachyon {
 
-    class AddCount²Command;
-    class AddCountˣCommand;
-    class AddCountʸCommand;
-    class MultiplyCountCommand;
-    class MultiplyCount²Command;
-    class MultiplyCountˣCommand;
-    class MultiplyCountʸCommand;
-    class SetCount²Command;
-    class SetCountˣCommand;
-    class SetCountʸCommand;
+    class AddCount²UCommand;
+    class AddCountˣUCommand;
+    class AddCountʸUCommand;
+    class MultiplyCountUCommand;
+    class MultiplyCount²UCommand;
+    class MultiplyCountˣUCommand;
+    class MultiplyCountʸUCommand;
+    class SetCount²UCommand;
+    class SetCountˣUCommand;
+    class SetCountʸUCommand;
 
     class ACount² : public ICount², public virtual Tachyon::Helper {
     public:
@@ -71,17 +71,17 @@ namespace yq::tachyon {
         virtual ~ACount²();
         
     private:
-        void        on_set_count2(const SetCount²Command&);
-        void        on_set_countX(const SetCountˣCommand&);
-        void        on_set_countY(const SetCountʸCommand&);
+        void        on_set_count2(const SetCount²UCommand&);
+        void        on_set_countX(const SetCountˣUCommand&);
+        void        on_set_countY(const SetCountʸUCommand&);
 
-        void        on_add_count2(const AddCount²Command&);
-        void        on_add_countX(const AddCountˣCommand&);
-        void        on_add_countY(const AddCountʸCommand&);
+        void        on_add_count2(const AddCount²UCommand&);
+        void        on_add_countX(const AddCountˣUCommand&);
+        void        on_add_countY(const AddCountʸUCommand&);
         
-        void        on_multiply_count(const MultiplyCountCommand&);
-        void        on_multiply_count2(const MultiplyCount²Command&);
-        void        on_multiply_countX(const MultiplyCountˣCommand&);
-        void        on_multiply_countY(const MultiplyCountʸCommand&);
+        void        on_multiply_count(const MultiplyCountUCommand&);
+        void        on_multiply_count2(const MultiplyCount²UCommand&);
+        void        on_multiply_countX(const MultiplyCountˣUCommand&);
+        void        on_multiply_countY(const MultiplyCountʸUCommand&);
     };
 }

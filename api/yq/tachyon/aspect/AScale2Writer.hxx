@@ -7,16 +7,16 @@
 #pragma once
 
 #include <yq/tachyon/aspect/AScale2.hpp>
-#include <yq/tachyon/command/scale/AddScale2Command.hpp>
-#include <yq/tachyon/command/scale/AddScaleXCommand.hpp>
-#include <yq/tachyon/command/scale/AddScaleYCommand.hpp>
-#include <yq/tachyon/command/scale/MultiplyScaleCommand.hpp>
-#include <yq/tachyon/command/scale/MultiplyScale2Command.hpp>
-#include <yq/tachyon/command/scale/MultiplyScaleXCommand.hpp>
-#include <yq/tachyon/command/scale/MultiplyScaleYCommand.hpp>
-#include <yq/tachyon/command/scale/SetScale2Command.hpp>
-#include <yq/tachyon/command/scale/SetScaleXCommand.hpp>
-#include <yq/tachyon/command/scale/SetScaleYCommand.hpp>
+#include <yq/tachyon/command/scale/AddScale2DCommand.hpp>
+#include <yq/tachyon/command/scale/AddScaleXDCommand.hpp>
+#include <yq/tachyon/command/scale/AddScaleYDCommand.hpp>
+#include <yq/tachyon/command/scale/MultiplyScaleDCommand.hpp>
+#include <yq/tachyon/command/scale/MultiplyScale2DCommand.hpp>
+#include <yq/tachyon/command/scale/MultiplyScaleXDCommand.hpp>
+#include <yq/tachyon/command/scale/MultiplyScaleYDCommand.hpp>
+#include <yq/tachyon/command/scale/SetScale2DCommand.hpp>
+#include <yq/tachyon/command/scale/SetScaleXDCommand.hpp>
+#include <yq/tachyon/command/scale/SetScaleYDCommand.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/tags.hpp>
 

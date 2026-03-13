@@ -11,19 +11,19 @@
 
 namespace yq::tachyon {
 
-    class AddScale³Command;
-    class AddScaleˣCommand;
-    class AddScaleʸCommand;
-    class AddScaleᶻCommand;
-    class MultiplyScaleCommand;
-    class MultiplyScale³Command;
-    class MultiplyScaleˣCommand;
-    class MultiplyScaleʸCommand;
-    class MultiplyScaleᶻCommand;
-    class SetScale³Command;
-    class SetScaleˣCommand;
-    class SetScaleʸCommand;
-    class SetScaleᶻCommand;
+    class AddScale³DCommand;
+    class AddScaleˣDCommand;
+    class AddScaleʸDCommand;
+    class AddScaleᶻDCommand;
+    class MultiplyScaleDCommand;
+    class MultiplyScale³DCommand;
+    class MultiplyScaleˣDCommand;
+    class MultiplyScaleʸDCommand;
+    class MultiplyScaleᶻDCommand;
+    class SetScale³DCommand;
+    class SetScaleˣDCommand;
+    class SetScaleʸDCommand;
+    class SetScaleᶻDCommand;
 
     class AScale³ : public IScale³, public virtual Tachyon::Helper {
     public:
@@ -78,21 +78,21 @@ namespace yq::tachyon {
         void            scale(emit_k);
         
     private:
-        void        on_set_scale3(const SetScale³Command&);
-        void        on_set_scaleX(const SetScaleˣCommand&);
-        void        on_set_scaleY(const SetScaleʸCommand&);
-        void        on_set_scaleZ(const SetScaleᶻCommand&);
+        void        on_set_scale3(const SetScale³DCommand&);
+        void        on_set_scaleX(const SetScaleˣDCommand&);
+        void        on_set_scaleY(const SetScaleʸDCommand&);
+        void        on_set_scaleZ(const SetScaleᶻDCommand&);
 
-        void        on_add_scale3(const AddScale³Command&);
-        void        on_add_scaleX(const AddScaleˣCommand&);
-        void        on_add_scaleY(const AddScaleʸCommand&);
-        void        on_add_scaleZ(const AddScaleᶻCommand&);
+        void        on_add_scale3(const AddScale³DCommand&);
+        void        on_add_scaleX(const AddScaleˣDCommand&);
+        void        on_add_scaleY(const AddScaleʸDCommand&);
+        void        on_add_scaleZ(const AddScaleᶻDCommand&);
         
-        void        on_multiply_scale(const MultiplyScaleCommand&);
-        void        on_multiply_scale3(const MultiplyScale³Command&);
-        void        on_multiply_scaleX(const MultiplyScaleˣCommand&);
-        void        on_multiply_scaleY(const MultiplyScaleʸCommand&);
-        void        on_multiply_scaleZ(const MultiplyScaleᶻCommand&);
+        void        on_multiply_scale(const MultiplyScaleDCommand&);
+        void        on_multiply_scale3(const MultiplyScale³DCommand&);
+        void        on_multiply_scaleX(const MultiplyScaleˣDCommand&);
+        void        on_multiply_scaleY(const MultiplyScaleʸDCommand&);
+        void        on_multiply_scaleZ(const MultiplyScaleᶻDCommand&);
     };
 
 }

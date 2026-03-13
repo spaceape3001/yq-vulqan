@@ -7,13 +7,13 @@
 #pragma once
 
 #include <yq/tachyon/aspect/AScale1.hpp>
-#include <yq/tachyon/command/scale/AddScale1Command.hpp>
-#include <yq/tachyon/command/scale/AddScaleXCommand.hpp>
-#include <yq/tachyon/command/scale/MultiplyScaleCommand.hpp>
-#include <yq/tachyon/command/scale/MultiplyScale1Command.hpp>
-#include <yq/tachyon/command/scale/MultiplyScaleXCommand.hpp>
-#include <yq/tachyon/command/scale/SetScale1Command.hpp>
-#include <yq/tachyon/command/scale/SetScaleXCommand.hpp>
+#include <yq/tachyon/command/scale/AddScale1DCommand.hpp>
+#include <yq/tachyon/command/scale/AddScaleXDCommand.hpp>
+#include <yq/tachyon/command/scale/MultiplyScaleDCommand.hpp>
+#include <yq/tachyon/command/scale/MultiplyScale1DCommand.hpp>
+#include <yq/tachyon/command/scale/MultiplyScaleXDCommand.hpp>
+#include <yq/tachyon/command/scale/SetScale1DCommand.hpp>
+#include <yq/tachyon/command/scale/SetScaleXDCommand.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 #include <yq/tachyon/tags.hpp>
 

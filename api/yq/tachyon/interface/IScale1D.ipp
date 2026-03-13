@@ -4,17 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/interface/IScale1.hpp>
+#include "IScale1D.hpp"
 
 #include <yq/tachyon/api/InterfaceMetaWriter.hpp>
-#include <yq/tachyon/proxy/PScale1.hpp>
+#include <yq/tachyon/proxy/PScale1D.hpp>
 
-YQ_INTERFACE_IMPLEMENT(yq::tachyon::IScale¹)
+YQ_INTERFACE_IMPLEMENT(yq::tachyon::IScale¹D)
 
 namespace yq::tachyon {
-    void    IScale¹::init_meta()
+    void    IScale¹D::init_meta()
     {
-        auto w = writer<IScale¹>();
+        auto w = writer<IScale¹D>();
         w.description("1D Scale");
     }
 }

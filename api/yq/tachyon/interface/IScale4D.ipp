@@ -4,17 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/interface/IScale3.hpp>
+#include "IScale4D.hpp"
 
 #include <yq/tachyon/api/InterfaceMetaWriter.hpp>
-#include <yq/tachyon/proxy/PScale3.hpp>
+#include <yq/tachyon/proxy/PScale4D.hpp>
 
-YQ_INTERFACE_IMPLEMENT(yq::tachyon::IScale³)
+YQ_INTERFACE_IMPLEMENT(yq::tachyon::IScale⁴D)
 
 namespace yq::tachyon {
-    void    IScale³::init_meta()
+    void    IScale⁴D::init_meta()
     {
-        auto w = writer<IScale³>();
-        w.description("3D Scale");
+        auto w = writer<IScale⁴D>();
+        w.description("4D Scale");
     }
 }

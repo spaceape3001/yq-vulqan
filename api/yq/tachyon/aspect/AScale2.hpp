@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/interface/IScale2.hpp>
+#include <yq/tachyon/interface/IScale2D.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
@@ -22,7 +22,7 @@ namespace yq::tachyon {
     class SetScaleˣDCommand;
     class SetScaleʸDCommand;
 
-    class AScale² : public IScale², public virtual Tachyon::Helper {
+    class AScale² : public IScale²D, public virtual Tachyon::Helper {
     public:
     
         //!  Basic scale in the 2D space

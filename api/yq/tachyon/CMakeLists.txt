@@ -91,6 +91,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy_min_size.cpp
     proxy_position.cpp
     proxy_range.cpp
+    proxy_scale.cpp
     proxy_size.cpp
     proxy_tessellation.cpp
 
@@ -329,9 +330,6 @@ add_library(${PROJECT_NAME} SHARED
     proxy/POrientation2.cpp
     proxy/POrientation3.cpp
     proxy/PRenderMode.cpp
-    proxy/PScale1.cpp
-    proxy/PScale2.cpp
-    proxy/PScale3.cpp
     proxy/PTexture.cpp
     proxy/PTopology.cpp
     proxy/PVertices3.cpp

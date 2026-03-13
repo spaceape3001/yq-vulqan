@@ -4,17 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/interface/IScale2.hpp>
+#include "IScale2D.hpp"
 
 #include <yq/tachyon/api/InterfaceMetaWriter.hpp>
-#include <yq/tachyon/proxy/PScale2.hpp>
+#include <yq/tachyon/proxy/PScale2D.hpp>
 
-YQ_INTERFACE_IMPLEMENT(yq::tachyon::IScale²)
+YQ_INTERFACE_IMPLEMENT(yq::tachyon::IScale²D)
 
 namespace yq::tachyon {
-    void    IScale²::init_meta()
+    void    IScale²D::init_meta()
     {
-        auto w = writer<IScale²>();
+        auto w = writer<IScale²D>();
         w.description("2D Scale");
     }
 }

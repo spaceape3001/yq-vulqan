@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Scale4UI.hpp"
+#include "Scale4DUI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/im/input_double.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
-#include <yq/tachyon/proxy/PScale4.hpp>
+#include <yq/tachyon/proxy/PScale4D.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Scale⁴UI)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Scale⁴DUI)
 
 namespace yq::tachyon {
-    void Scale⁴UI::init_meta()
+    void Scale⁴DUI::init_meta()
     {
-        auto w = writer<Scale⁴UI>();
+        auto w = writer<Scale⁴DUI>();
         w.description("UIEditor for Scale⁴");
-        w.edits<PScale⁴>();
-        w.field("Scale", &Scale⁴UI::scale);
+        w.edits<PScale⁴D>();
+        w.field("Scale", &Scale⁴DUI::scale);
     }
     
-    Scale⁴UI::Scale⁴UI(UIFlags flags)
+    Scale⁴DUI::Scale⁴DUI(UIFlags flags)
     {
     }
     
-    Scale⁴UI::Scale⁴UI(const Scale⁴UI& cp) : UIEditor(cp)
+    Scale⁴DUI::Scale⁴DUI(const Scale⁴DUI& cp) : UIEditor(cp)
     {
     }
     
-    Scale⁴UI* Scale⁴UI::clone() const
+    Scale⁴DUI* Scale⁴DUI::clone() const
     {
-        return new Scale⁴UI(*this);
+        return new Scale⁴DUI(*this);
     }
 
-    void    Scale⁴UI::scale()
+    void    Scale⁴DUI::scale()
     {
-        PScale⁴* p   = snap()->proxy<PScale⁴>();
+        PScale⁴D* p   = snap()->proxy<PScale⁴D>();
         if(!p)
             return ;
             

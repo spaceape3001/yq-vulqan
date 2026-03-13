@@ -158,7 +158,7 @@ namespace yq::tachyon {
         w.execution(EVERY(5_s));
         w.interface<IPosition²D>();
         w.interface<ISize²D>();
-        w.interface<IScale²>();
+        w.interface<IScale²D>();
     }
 }
 

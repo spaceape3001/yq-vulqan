@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/interface/IScale3.hpp>
+#include <yq/tachyon/interface/IScale3D.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
@@ -25,7 +25,7 @@ namespace yq::tachyon {
     class SetScaleʸDCommand;
     class SetScaleᶻDCommand;
 
-    class AScale³ : public IScale³, public virtual Tachyon::Helper {
+    class AScale³ : public IScale³D, public virtual Tachyon::Helper {
     public:
     
         struct Param {

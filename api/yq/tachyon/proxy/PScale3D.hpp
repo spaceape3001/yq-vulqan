@@ -7,10 +7,10 @@
 #pragma once
 
 #include <yq/tachyon/api/Proxy.hpp>
-#include <yq/tachyon/interface/IScale3.hpp>
+#include <yq/tachyon/interface/IScale3D.hpp>
 
 namespace yq::tachyon {
-    class PScale³ : public Proxy, public IScale³  /* TODO: public public IScale */ {
+    class PScale³D : public Proxy, public IScale³D  /* TODO: public public IScale */ {
     public:
         Vector3D    scale() const override {  return m_scale;  }
         bool        scale(disabled_k) const override;
@@ -40,8 +40,8 @@ namespace yq::tachyon {
 
         const Vector3D&  scale(ref_k) const {  return m_scale;  }
 
-        PScale³(const IScale³& i);
-        ~PScale³();
+        PScale³D(const IScale³D& i);
+        ~PScale³D();
 
     private:
         const Vector3D  m_scale;

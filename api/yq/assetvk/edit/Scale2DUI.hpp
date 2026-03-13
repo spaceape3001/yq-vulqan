@@ -9,17 +9,13 @@
 #include <yq/tachyon/ui/UIEditor.hpp>
 
 namespace yq::tachyon {
-    /*
-        LOL... edit for a proxy/interface not yet needed, retaining the code
-    */
-
-    class Scale⁴UI : public UIEditor {
-        YQ_OBJECT_DECLARE(Scale⁴UI, UIEditor)
+    class Scale²DUI : public UIEditor {
+        YQ_OBJECT_DECLARE(Scale²DUI, UIEditor)
     public:
-        Scale⁴UI(UIFlags flags={});
-        Scale⁴UI(const Scale⁴UI&);
+        Scale²DUI(UIFlags flags={});
+        Scale²DUI(const Scale²DUI&);
         
-        virtual Scale⁴UI* clone() const;
+        virtual Scale²DUI* clone() const;
         
         void    scale();
         

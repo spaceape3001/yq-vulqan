@@ -24,7 +24,7 @@ namespace yq::tachyon {
     template <typename C>
     void AScale²::init_meta(TachyonMeta::Writer<C>&w)
     {
-        w.template interface<IScale²>();
+        w.template interface<IScale²D>();
         w.property(UNSAFE, "scale", &AScale²::m_scale).tag(kTag_Save);
 
         w.slot(UNSAFE, &AScale²::on_set_scale2);

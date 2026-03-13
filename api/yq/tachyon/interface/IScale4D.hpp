@@ -6,36 +6,39 @@
 
 #pragma once
 
-#include <yq/vector/Vector3.hpp>
+#include <yq/vector/Vector4.hpp>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/Interface.hpp>
 
 namespace yq::tachyon {
-    class PScale³;
+    class PScale⁴D;
 
     //! Interface for a single object position
     //! \note Inheritance is not permissible here
-    class IScale³ {
+    class IScale⁴D {
     public:
-        YQ_INTERFACE_DECLARE(IScale³, PScale³)
+        YQ_INTERFACE_DECLARE(IScale⁴D, PScale⁴D)
         
-        virtual Vector3D    scale() const = 0;
+        virtual Vector4D    scale() const = 0;
         
-        virtual void        scale(set_k, const Vector3D&){}
+        virtual void        scale(set_k, const Vector4D&){}
         virtual void        scale(set_k, x_k, double){}
         virtual void        scale(set_k, y_k, double){}
         virtual void        scale(set_k, z_k, double){}
+        virtual void        scale(set_k, w_k, double){}
         
-        virtual void        scale(add_k, const Vector3D&Δ){}
+        virtual void        scale(add_k, const Vector4D&Δ){}
         virtual void        scale(add_k, x_k, double Δx){}
         virtual void        scale(add_k, y_k, double Δy){}
         virtual void        scale(add_k, z_k, double Δz){}
+        virtual void        scale(add_k, w_k, double Δz){}
 
         virtual void        scale(multiply_k, double){}
-        virtual void        scale(multiply_k, const Vector3D&Δ){}
+        virtual void        scale(multiply_k, const Vector4D&Δ){}
         virtual void        scale(multiply_k, x_k, double Δx){}
         virtual void        scale(multiply_k, y_k, double Δy){}
         virtual void        scale(multiply_k, z_k, double Δz){}
+        virtual void        scale(multiply_k, w_k, double Δw){}
 
         virtual bool        scale(disabled_k) const { return false; }
         virtual bool        scale(settable_k) const { return false; }

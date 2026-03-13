@@ -4,40 +4,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Scale3UI.hpp"
+#include "Scale3DUI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/im/input_double.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
-#include <yq/tachyon/proxy/PScale3.hpp>
+#include <yq/tachyon/proxy/PScale3D.hpp>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Scale³UI)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Scale³DUI)
 
 namespace yq::tachyon {
-    void Scale³UI::init_meta()
+    void Scale³DUI::init_meta()
     {
-        auto w = writer<Scale³UI>();
+        auto w = writer<Scale³DUI>();
         w.description("UIEditor for Scale³");
-        w.edits<PScale³>();
-        w.field("Scale", &Scale³UI::scale);
+        w.edits<PScale³D>();
+        w.field("Scale", &Scale³DUI::scale);
     }
     
-    Scale³UI::Scale³UI(UIFlags flags)
+    Scale³DUI::Scale³DUI(UIFlags flags)
     {
     }
     
-    Scale³UI::Scale³UI(const Scale³UI& cp) : UIEditor(cp)
+    Scale³DUI::Scale³DUI(const Scale³DUI& cp) : UIEditor(cp)
     {
     }
     
-    Scale³UI* Scale³UI::clone() const
+    Scale³DUI* Scale³DUI::clone() const
     {
-        return new Scale³UI(*this);
+        return new Scale³DUI(*this);
     }
 
-    void    Scale³UI::scale()
+    void    Scale³DUI::scale()
     {
-        PScale³* p   = snap()->proxy<PScale³>();
+        PScale³D* p   = snap()->proxy<PScale³D>();
         if(!p)
             return ;
             

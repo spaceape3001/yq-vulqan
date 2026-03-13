@@ -11,6 +11,7 @@ add_library(${PROJECT_NAME} SHARED
     command_user3.cpp
     edit_count.cpp
     edit_position.cpp
+    edit_scale.cpp
     edit_size.cpp
     event_circular3.cpp
     event_user3.cpp
@@ -53,9 +54,6 @@ add_library(${PROJECT_NAME} SHARED
     edit/RangeYUI.cpp
     edit/RangeZUI.cpp
     edit/RenderedUI.cpp
-    edit/Scale2UI.cpp
-    edit/Scale3UI.cpp
-    #edit/Scale4UI.cpp  # Disabled until we need a 4D scale (and implement the interface/proxy)
     edit/SceneUI.cpp
     edit/SimpleSpatial3UI.cpp
     edit/SkyBox3UI.cpp

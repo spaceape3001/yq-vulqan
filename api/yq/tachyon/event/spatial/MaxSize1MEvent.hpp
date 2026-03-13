@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/units.hpp>
 #include <yq/tachyon/event/SpatialEvent.hpp>
 #include <yq/shape/Size1.hpp>
 

@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/units.hpp>
 #include <yq/tachyon/event/SpatialEvent.hpp>
 #include <yq/shape/Size1.hpp>
 
@@ -17,7 +18,7 @@ namespace yq::tachyon {
     public:
         MinSize¹MEvent(const Header&, const Size1M&);
     
-        const Size1D&   size() const  { return m_size; }
+        const Size1M&   size() const  { return m_size; }
         
         static void init_meta();
         

@@ -12,7 +12,7 @@
 #include <yq/tachyon/command/scale/MultiplyScaleXCommand.hpp>
 #include <yq/tachyon/command/scale/SetScale1Command.hpp>
 #include <yq/tachyon/command/scale/SetScaleXCommand.hpp>
-#include <yq/tachyon/event/spatial/Scale1Event.hpp>
+#include <yq/tachyon/event/spatial/Scale1DEvent.hpp>
 
 
 namespace yq::tachyon {
@@ -26,7 +26,7 @@ namespace yq::tachyon {
 
     void        AScale¹::scale(emit_k)
     {
-        send(new Scale¹Event({.source=typed()}, m_scale));
+        send(new Scale¹DEvent({.source=typed()}, m_scale));
     }
 
     void        AScale¹::scale(set_k, const Vector1D& sz) 

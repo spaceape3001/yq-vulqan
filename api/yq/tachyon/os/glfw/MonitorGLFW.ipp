@@ -6,7 +6,7 @@
 
 #include <yq/tachyon/os/glfw/MonitorGLFW.hpp>
 #include <yq/tachyon/event/spatial/Position2DEvent.hpp>
-#include <yq/tachyon/event/spatial/Scale2Event.hpp>
+#include <yq/tachyon/event/spatial/Scale2DEvent.hpp>
 #include <yq/tachyon/event/spatial/Size2DEvent.hpp>
 #include <yq/tachyon/os/MonitorMetaWriter.hpp>
 #include <GLFW/glfw3.h>
@@ -145,7 +145,7 @@ namespace yq::tachyon {
         }
         
         if(set(m_scale, _scale())){
-            send(new Scale²Event({.source=this}, m_scale.cast<double>()));
+            send(new Scale²DEvent({.source=this}, m_scale.cast<double>()));
         }
         
         return {};

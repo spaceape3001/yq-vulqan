@@ -15,7 +15,7 @@
 #include <yq/tachyon/command/scale/SetScale2Command.hpp>
 #include <yq/tachyon/command/scale/SetScaleXCommand.hpp>
 #include <yq/tachyon/command/scale/SetScaleYCommand.hpp>
-#include <yq/tachyon/event/spatial/Scale2Event.hpp>
+#include <yq/tachyon/event/spatial/Scale2DEvent.hpp>
 
 namespace yq::tachyon {
     AScale²::AScale²()
@@ -28,7 +28,7 @@ namespace yq::tachyon {
 
     void        AScale²::scale(emit_k)
     {
-        send(new Scale²Event({.source=typed()}, m_scale));
+        send(new Scale²DEvent({.source=typed()}, m_scale));
     }
 
     void        AScale²::scale(set_k, const Vector2D& sz) 

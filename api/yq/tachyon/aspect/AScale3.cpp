@@ -18,7 +18,7 @@
 #include <yq/tachyon/command/scale/SetScaleXCommand.hpp>
 #include <yq/tachyon/command/scale/SetScaleYCommand.hpp>
 #include <yq/tachyon/command/scale/SetScaleZCommand.hpp>
-#include <yq/tachyon/event/spatial/Scale3Event.hpp>
+#include <yq/tachyon/event/spatial/Scale3DEvent.hpp>
 
 
 namespace yq::tachyon {
@@ -38,7 +38,7 @@ namespace yq::tachyon {
 
     void        AScale³::scale(emit_k)
     {
-        send(new Scale³Event({.source=typed()}, m_scale));
+        send(new Scale³DEvent({.source=typed()}, m_scale));
     }
 
     void        AScale³::scale(set_k, const Vector3D& sz) 

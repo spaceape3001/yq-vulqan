@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Source rescaled in 1-Dimension
-    class Scale¹Event : public SpatialEvent {
-        YQ_OBJECT_DECLARE(Scale¹Event, SpatialEvent)
+    class Scale¹DEvent : public SpatialEvent {
+        YQ_OBJECT_DECLARE(Scale¹DEvent, SpatialEvent)
     public:
-        Scale¹Event(const Header&, const Vector1D&);
+        Scale¹DEvent(const Header&, const Vector1D&);
     
         const Vector1D&   scale() const  { return m_scale; }
         
@@ -26,16 +26,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        Scale¹Event(const Header&);
-        Scale¹Event(const Scale¹Event&, const Header&);
-        ~Scale¹Event();
+        Scale¹DEvent(const Header&);
+        Scale¹DEvent(const Scale¹DEvent&, const Header&);
+        ~Scale¹DEvent();
 
     private:
         Vector1D    m_scale = ZERO;
         
-        Scale¹Event(const Scale¹Event&) = delete;
-        Scale¹Event(Scale¹Event&&) = delete;
-        Scale¹Event& operator=(const Scale¹Event&) = delete;
-        Scale¹Event& operator=(Scale¹Event&&) = delete;
+        Scale¹DEvent(const Scale¹DEvent&) = delete;
+        Scale¹DEvent(Scale¹DEvent&&) = delete;
+        Scale¹DEvent& operator=(const Scale¹DEvent&) = delete;
+        Scale¹DEvent& operator=(Scale¹DEvent&&) = delete;
     };
 }

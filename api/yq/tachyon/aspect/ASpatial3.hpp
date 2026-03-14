@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/aspect/APosition3D.hpp>
-#include <yq/tachyon/aspect/AOrientation3.hpp>
+#include <yq/tachyon/aspect/AOrientation3D.hpp>
 #include <yq/tachyon/aspect/AScale3D.hpp>
 
 namespace yq::tachyon {
@@ -22,7 +22,7 @@ namespace yq::tachyon {
         Thus, a Rendered³ could use this for relative to a 0,0,0 that a real spatial makes use of.  (Think like parts 
         to a car or something.)
     */
-    class ASpatial³ : public virtual Tachyon::Helper, public APosition³D, public AOrientation³, public AScale³D {
+    class ASpatial³ : public virtual Tachyon::Helper, public APosition³D, public AOrientation³D, public AScale³D {
     public:
     
         // if you want to do it this way...
@@ -43,7 +43,7 @@ namespace yq::tachyon {
         
         using APosition³D::position;
         using AScale³D::scale;
-        using AOrientation³::orientation;
+        using AOrientation³D::orientation;
 
     protected:
         ASpatial³();

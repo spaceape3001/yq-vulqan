@@ -15,7 +15,7 @@
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
 #include <yq/tachyon/im/input_double.hpp>
 
-#include <yq/tachyon/proxy/POrientation3.hpp>
+#include <yq/tachyon/proxy/POrientation3D.hpp>
 #include <yq/tachyon/proxy/PPosition3D.hpp>
 #include <yq/util/Safety.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
@@ -140,7 +140,7 @@ namespace yq::tachyon {
         if(!pos)
             return;
 
-        POrientation³*ori     = frame->proxy<POrientation³>(m_spatial);
+        POrientation³D*ori     = frame->proxy<POrientation³D>(m_spatial);
         if(!ori)
             return;
             

@@ -46,7 +46,7 @@ add_library(${PROJECT_NAME} SHARED
     edit/Mesh3UI.cpp
     edit/MeshUI.cpp
     edit/NearPlaneUI.cpp
-    edit/Orientation3UI.cpp
+    edit/Orientation3DUI.cpp
     edit/OuterTessellation3UI.cpp
     edit/OuterTessellation4UI.cpp
     edit/RangeWUI.cpp

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Spatial2.hpp>
-#include <yq/tachyon/aspect/AOrientation2.hpp>
+#include <yq/tachyon/aspect/AOrientation2D.hpp>
 #include <yq/tachyon/aspect/APosition2D.hpp>
 #include <yq/tachyon/aspect/AScale2D.hpp>
 #include <yq/vector/Spinor2.hpp>
@@ -27,7 +27,7 @@ namespace yq::tachyon {
     class MoveByˣDCommand;
     class MoveByʸDCommand;
 
-    class SimpleSpatial² : public Spatial², public APosition²D, public AScale²D, public AOrientation² {
+    class SimpleSpatial² : public Spatial², public APosition²D, public AScale²D, public AOrientation²D {
         YQ_TACHYON_DECLARE(SimpleSpatial², Spatial²);
     public:
     
@@ -57,7 +57,7 @@ namespace yq::tachyon {
         
         using APosition²D::position;
         using AScale²D::scale;
-        using AOrientation²::orientation;
+        using AOrientation²D::orientation;
 
         static void init_meta();
         

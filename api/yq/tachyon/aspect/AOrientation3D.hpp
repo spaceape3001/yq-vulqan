@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/interface/IOrientation3.hpp>
+#include <yq/tachyon/interface/IOrientation3D.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
@@ -20,7 +20,7 @@ namespace yq::tachyon {
     class SetRollCommand;
     class YawByCommand;
 
-    class AOrientation³ : public IOrientation³, public virtual Tachyon::Helper {
+    class AOrientation³D : public IOrientation³D, public virtual Tachyon::Helper {
     public:
     
         struct Param {
@@ -63,9 +63,9 @@ namespace yq::tachyon {
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        AOrientation³(const Param&);
-        AOrientation³(const Quaternion3D& ori=IDENTITY);
-        virtual ~AOrientation³();
+        AOrientation³D(const Param&);
+        AOrientation³D(const Quaternion3D& ori=IDENTITY);
+        virtual ~AOrientation³D();
         
         void        orientation(emit_k);
 

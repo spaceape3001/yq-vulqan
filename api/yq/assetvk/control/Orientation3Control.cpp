@@ -6,7 +6,7 @@
 
 #include "Orientation3Control.hpp"
 #include <yq/tachyon/api/Frame.hpp>
-#include <yq/tachyon/proxy/POrientation3.hpp>
+#include <yq/tachyon/proxy/POrientation3D.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/ControlMetaWriter.hpp>
 #include <yq/tachyon/im/input_scaled_double.hpp>
@@ -53,7 +53,7 @@ namespace yq::tachyon {
         if(!frame)
             return;
         
-        POrientation³* proxy     = frame -> proxy<POrientation³>(m_tachyon);
+        POrientation³D* proxy     = frame -> proxy<POrientation³D>(m_tachyon);
         if(!proxy)
             return;
         

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Spatial3.hpp>
-#include <yq/tachyon/aspect/AOrientation3.hpp>
+#include <yq/tachyon/aspect/AOrientation3D.hpp>
 #include <yq/tachyon/aspect/APosition3D.hpp>
 #include <yq/tachyon/aspect/AScale3D.hpp>
 #include <yq/tensor/Tensor33.hpp>
@@ -25,7 +25,7 @@ namespace yq::tachyon {
         #undef NAN
     #endif
     
-    class CircularSpatial³ : public Spatial³, public APosition³D, public AScale³D, public AOrientation³ {
+    class CircularSpatial³ : public Spatial³, public APosition³D, public AScale³D, public AOrientation³D {
         YQ_TACHYON_SNAP(CircularSpatial³Snap)
         YQ_TACHYON_DECLARE(CircularSpatial³, Spatial³)
     public:
@@ -33,7 +33,7 @@ namespace yq::tachyon {
         // note, revision, position is now the origin....
         // and orientation covers the rotor
     
-        struct Param : public Spatial³::Param, public APosition³D::Param, public AScale³D::Param, public AOrientation³::Param {
+        struct Param : public Spatial³::Param, public APosition³D::Param, public AScale³D::Param, public AOrientation³D::Param {
             Radian          angle0      = 0._rad;   //!< Starting angle
             bool            locked      = false;
             Second          period      = 10._s;

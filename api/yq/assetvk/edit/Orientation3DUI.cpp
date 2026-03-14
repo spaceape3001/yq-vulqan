@@ -4,43 +4,43 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Orientation3UI.hpp"
+#include "Orientation3DUI.hpp"
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/im/input_double.hpp>
 #include <yq/tachyon/im/input_scaled_double.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
-#include <yq/tachyon/proxy/POrientation3.hpp>
+#include <yq/tachyon/proxy/POrientation3D.hpp>
 #include <yq/vector/Quaternion3.hxx>
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Orientation³UI)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Orientation³DUI)
 
 namespace yq::tachyon {
-    void Orientation³UI::init_meta()
+    void Orientation³DUI::init_meta()
     {
-        auto w = writer<Orientation³UI>();
+        auto w = writer<Orientation³DUI>();
         w.description("UIEditor for Orientation³");
-        w.edits<POrientation³>();
-        w.field("HPR", &Orientation³UI::hpr);
-        w.field("Quaternion", &Orientation³UI::quaternion);
+        w.edits<POrientation³D>();
+        w.field("HPR", &Orientation³DUI::hpr);
+        w.field("Quaternion", &Orientation³DUI::quaternion);
     }
     
-    Orientation³UI::Orientation³UI(UIFlags flags)
+    Orientation³DUI::Orientation³DUI(UIFlags flags)
     {
     }
     
-    Orientation³UI::Orientation³UI(const Orientation³UI& cp) : UIEditor(cp)
+    Orientation³DUI::Orientation³DUI(const Orientation³DUI& cp) : UIEditor(cp)
     {
     }
     
-    Orientation³UI* Orientation³UI::clone() const
+    Orientation³DUI* Orientation³DUI::clone() const
     {
-        return new Orientation³UI(*this);
+        return new Orientation³DUI(*this);
     }
 
-    void    Orientation³UI::hpr()
+    void    Orientation³DUI::hpr()
     {
-        POrientation³* proxy   = snap()->proxy<POrientation³>();
+        POrientation³D* proxy   = snap()->proxy<POrientation³D>();
         if(!proxy)
             return ;
 
@@ -104,9 +104,9 @@ namespace yq::tachyon {
         }
     }
 
-    void    Orientation³UI::quaternion()
+    void    Orientation³DUI::quaternion()
     {
-        POrientation³* proxy   = snap()->proxy<POrientation³>();
+        POrientation³D* proxy   = snap()->proxy<POrientation³D>();
         if(!proxy)
             return ;
             

@@ -7,11 +7,11 @@
 #pragma once
 
 #include <yq/tachyon/api/Proxy.hpp>
-#include <yq/tachyon/interface/IOrientation2.hpp>
+#include <yq/tachyon/interface/IOrientation2D.hpp>
 
 namespace yq::tachyon {
 
-    class POrientation² : public Proxy, public IOrientation² {
+    class POrientation²D : public Proxy, public IOrientation²D {
     public:
     
         Spinor2D        orientation() const override;
@@ -32,8 +32,8 @@ namespace yq::tachyon {
 
         const Spinor2D&    orientation(ref_k) const { return m_orientation; }
 
-        POrientation²(const IOrientation²& i);
-        ~POrientation²();
+        POrientation²D(const IOrientation²D& i);
+        ~POrientation²D();
     private:
         const Spinor2D        m_orientation;
     };

@@ -25,6 +25,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect_count.cpp
     aspect_max_size.cpp
     aspect_min_size.cpp
+    aspect_orientation.cpp
     aspect_position.cpp
     aspect_range.cpp
     aspect_scale.cpp
@@ -90,6 +91,7 @@ add_library(${PROJECT_NAME} SHARED
     proxy_count.cpp
     proxy_max_size.cpp
     proxy_min_size.cpp
+    proxy_orientation.cpp
     proxy_position.cpp
     proxy_range.cpp
     proxy_scale.cpp
@@ -185,8 +187,6 @@ add_library(${PROJECT_NAME} SHARED
     aspect/AMaterial.cpp
     aspect/AMesh.cpp
     aspect/ANearPlane.cpp
-    aspect/AOrientation2.cpp
-    aspect/AOrientation3.cpp
     aspect/ARenderMode.cpp
     aspect/ASpatial3.cpp
     aspect/ATexture.cpp
@@ -325,8 +325,6 @@ add_library(${PROJECT_NAME} SHARED
     proxy/PMaterial.cpp
     proxy/PMesh.cpp
     proxy/PNearPlane.cpp
-    proxy/POrientation2.cpp
-    proxy/POrientation3.cpp
     proxy/PRenderMode.cpp
     proxy/PTexture.cpp
     proxy/PTopology.cpp

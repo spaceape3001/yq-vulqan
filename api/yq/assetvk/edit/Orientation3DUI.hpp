@@ -10,13 +10,13 @@
 #include <yq/units.hpp>
 
 namespace yq::tachyon {
-    class Orientation³UI : public UIEditor {
-        YQ_OBJECT_DECLARE(Orientation³UI, UIEditor)
+    class Orientation³DUI : public UIEditor {
+        YQ_OBJECT_DECLARE(Orientation³DUI, UIEditor)
     public:
-        Orientation³UI(UIFlags flags={});
-        Orientation³UI(const Orientation³UI&);
+        Orientation³DUI(UIFlags flags={});
+        Orientation³DUI(const Orientation³DUI&);
         
-        virtual Orientation³UI* clone() const;
+        virtual Orientation³DUI* clone() const;
         
         void    hpr();
         void    quaternion();

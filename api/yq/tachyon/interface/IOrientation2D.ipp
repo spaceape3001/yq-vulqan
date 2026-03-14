@@ -4,17 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/interface/IOrientation3.hpp>
+#include "IOrientation2D.hpp"
 
 #include <yq/tachyon/api/InterfaceMetaWriter.hpp>
-#include <yq/tachyon/proxy/POrientation2.hpp>
+#include <yq/tachyon/proxy/POrientation2D.hpp>
 
-YQ_INTERFACE_IMPLEMENT(yq::tachyon::IOrientation²)
+YQ_INTERFACE_IMPLEMENT(yq::tachyon::IOrientation²D)
 
 namespace yq::tachyon {
-    void    IOrientation²::init_meta()
+    void    IOrientation²D::init_meta()
     {
-        auto w = writer<IOrientation²>();
+        auto w = writer<IOrientation²D>();
         w.description("2D Orientation");
     }
 }

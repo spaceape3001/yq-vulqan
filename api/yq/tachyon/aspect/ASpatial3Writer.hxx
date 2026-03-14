@@ -7,7 +7,7 @@
 #pragma once
 
 #include "ASpatial3.hpp"
-#include "AOrientation3Writer.hxx"
+#include "AOrientation3DWriter.hxx"
 #include "APosition3DWriter.hxx"
 #include "AScale3DWriter.hxx"
 
@@ -21,7 +21,7 @@ namespace yq::tachyon {
     void ASpatial³::init_meta(TachyonMeta::Writer<C>&w)
     {
         APosition³D::init_meta(w);
-        AOrientation³::init_meta(w);
+        AOrientation³D::init_meta(w);
         AScale³D::init_meta(w);
 
         w.slot(UNSAFE, &ASpatial³::on_move³);

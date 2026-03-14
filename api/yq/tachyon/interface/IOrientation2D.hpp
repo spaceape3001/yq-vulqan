@@ -13,10 +13,10 @@
 #include <yq/tachyon/api/Interface.hpp>
 
 namespace yq::tachyon {
-    class POrientation²;
+    class POrientation²D;
 
-    class IOrientation² {
-        YQ_INTERFACE_DECLARE(IOrientation², POrientation²)
+    class IOrientation²D {
+        YQ_INTERFACE_DECLARE(IOrientation²D, POrientation²D)
     public:
     
         virtual Spinor2D        orientation() const = 0;

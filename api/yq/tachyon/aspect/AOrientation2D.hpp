@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/interface/IOrientation2.hpp>
+#include <yq/tachyon/interface/IOrientation2D.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
@@ -16,7 +16,7 @@ namespace yq::tachyon {
     class SetOrientation²Command;
     class YawByCommand;
 
-    class AOrientation² : public IOrientation², public virtual Tachyon::Helper {
+    class AOrientation²D : public IOrientation²D, public virtual Tachyon::Helper {
     public:
     
         //!  Basic orientation in the 3D space
@@ -47,8 +47,8 @@ namespace yq::tachyon {
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        AOrientation²();
-        virtual ~AOrientation²();
+        AOrientation²D();
+        virtual ~AOrientation²D();
         
         void        orientation(emit_k);
 

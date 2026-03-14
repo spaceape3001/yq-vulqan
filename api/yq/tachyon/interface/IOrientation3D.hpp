@@ -13,10 +13,10 @@
 #include <yq/tachyon/api/Interface.hpp>
 
 namespace yq::tachyon {
-    class POrientation³;
+    class POrientation³D;
 
-    class IOrientation³ {
-        YQ_INTERFACE_DECLARE(IOrientation³, POrientation³)
+    class IOrientation³D {
+        YQ_INTERFACE_DECLARE(IOrientation³D, POrientation³D)
     public:
     
         virtual Quaternion3D    orientation() const = 0;

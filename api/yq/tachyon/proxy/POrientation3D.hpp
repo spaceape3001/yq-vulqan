@@ -7,11 +7,11 @@
 #pragma once
 
 #include <yq/tachyon/api/Proxy.hpp>
-#include <yq/tachyon/interface/IOrientation3.hpp>
+#include <yq/tachyon/interface/IOrientation3D.hpp>
 
 namespace yq::tachyon {
 
-    class POrientation³ : public Proxy, public IOrientation³ {
+    class POrientation³D : public Proxy, public IOrientation³D {
     public:
     
         Quaternion3D    orientation() const override;
@@ -39,8 +39,8 @@ namespace yq::tachyon {
 
         const Quaternion3D&    orientation(ref_k) const { return m_orientation; }
 
-        POrientation³(const IOrientation³& i);
-        ~POrientation³();
+        POrientation³D(const IOrientation³D& i);
+        ~POrientation³D();
     private:
         const Quaternion3D        m_orientation;
     };

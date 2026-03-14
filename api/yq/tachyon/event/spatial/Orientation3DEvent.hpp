@@ -12,10 +12,10 @@
 namespace yq::tachyon {
 
     //! Source rotated in 3-Dimensions
-    class Orientation³Event : public SpatialEvent {
-        YQ_OBJECT_DECLARE(Orientation³Event, SpatialEvent)
+    class Orientation³DEvent : public SpatialEvent {
+        YQ_OBJECT_DECLARE(Orientation³DEvent, SpatialEvent)
     public:
-        Orientation³Event(const Header&, const Quaternion3D&);
+        Orientation³DEvent(const Header&, const Quaternion3D&);
     
         const Quaternion3D&   orientation() const  { return m_orientation; }
         
@@ -33,16 +33,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
 
     protected:
-        Orientation³Event(const Orientation³Event&, const Header&);
-        Orientation³Event(const Header&);
-        ~Orientation³Event();
+        Orientation³DEvent(const Orientation³DEvent&, const Header&);
+        Orientation³DEvent(const Header&);
+        ~Orientation³DEvent();
 
     private:
         Quaternion3D  m_orientation = IDENTITY;
         
-        Orientation³Event(const Orientation³Event&) = delete;
-        Orientation³Event(Orientation³Event&&) = delete;
-        Orientation³Event& operator=(const Orientation³Event&) = delete;
-        Orientation³Event& operator=(Orientation³Event&&) = delete;
+        Orientation³DEvent(const Orientation³DEvent&) = delete;
+        Orientation³DEvent(Orientation³DEvent&&) = delete;
+        Orientation³DEvent& operator=(const Orientation³DEvent&) = delete;
+        Orientation³DEvent& operator=(Orientation³DEvent&&) = delete;
     };
 }

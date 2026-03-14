@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "command/RangeCommand.ipp"
-#include "command/range/SetRangeWCommand.ipp"
-#include "command/range/SetRangeXCommand.ipp"
-#include "command/range/SetRangeYCommand.ipp"
-#include "command/range/SetRangeZCommand.ipp"
+#include "command/range/SetRangeWDCommand.ipp"
+#include "command/range/SetRangeXDCommand.ipp"
+#include "command/range/SetRangeYDCommand.ipp"
+#include "command/range/SetRangeZDCommand.ipp"

@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "event/RangeEvent.ipp"
-#include "event/range/RangeWEvent.ipp"
-#include "event/range/RangeXEvent.ipp"
-#include "event/range/RangeYEvent.ipp"
-#include "event/range/RangeZEvent.ipp"
+#include "event/range/RangeWDEvent.ipp"
+#include "event/range/RangeXDEvent.ipp"
+#include "event/range/RangeYDEvent.ipp"
+#include "event/range/RangeZDEvent.ipp"

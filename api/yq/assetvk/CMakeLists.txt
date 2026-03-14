@@ -11,6 +11,7 @@ add_library(${PROJECT_NAME} SHARED
     command_user3.cpp
     edit_count.cpp
     edit_position.cpp
+    edit_range.cpp
     edit_scale.cpp
     edit_size.cpp
     event_circular3.cpp
@@ -49,10 +50,6 @@ add_library(${PROJECT_NAME} SHARED
     edit/Orientation3DUI.cpp
     edit/OuterTessellation3UI.cpp
     edit/OuterTessellation4UI.cpp
-    edit/RangeWUI.cpp
-    edit/RangeXUI.cpp
-    edit/RangeYUI.cpp
-    edit/RangeZUI.cpp
     edit/RenderedUI.cpp
     edit/SceneUI.cpp
     edit/SimpleSpatial3UI.cpp

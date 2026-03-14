@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "proxy/PRangeW.ipp"
-#include "proxy/PRangeX.ipp"
-#include "proxy/PRangeY.ipp"
-#include "proxy/PRangeZ.ipp"
+#include "proxy/PRangeWD.ipp"
+#include "proxy/PRangeXD.ipp"
+#include "proxy/PRangeYD.ipp"
+#include "proxy/PRangeZD.ipp"

@@ -16,7 +16,7 @@
 #include <yq/tachyon/aspect/AInnerTessellation2.hpp>
 #include <yq/tachyon/aspect/AMaterial.hpp>
 #include <yq/tachyon/aspect/AOuterTessellation4.hpp>
-#include <yq/tachyon/aspect/ARangeZ.hpp>
+#include <yq/tachyon/aspect/ARangeZD.hpp>
 #include <yq/tachyon/aspect/ASize3D.hpp>
 #include <yq/tachyon/aspect/ATexture.hpp>
 #include <yq/tachyon/asset/Texture.hpp>
@@ -44,7 +44,7 @@ namespace yq::tachyon {
         public AInnerTessellation², 
         public AMaterial, 
         public AOuterTessellation⁴,
-        public ARangeᶻ, 
+        public ARangeᶻD, 
         public ASize³D,
         public ATexture
     {

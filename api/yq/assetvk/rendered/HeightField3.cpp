@@ -29,7 +29,7 @@
 #include <yq/tachyon/aspect/AInnerTessellation2Writer.hxx>
 #include <yq/tachyon/aspect/AMaterialWriter.hxx>
 #include <yq/tachyon/aspect/AOuterTessellation4Writer.hxx>
-#include <yq/tachyon/aspect/ARangeZWriter.hxx>
+#include <yq/tachyon/aspect/ARangeZDWriter.hxx>
 #include <yq/tachyon/aspect/ASize3DWriter.hxx>
 #include <yq/tachyon/aspect/ATextureWriter.hxx>
 #include <yq/vector/Vector4.hxx>
@@ -62,7 +62,7 @@ namespace yq::tachyon {
         AInnerTessellation²::init_meta(w);
         AMaterial::init_meta(w);
         AOuterTessellation⁴::init_meta(w);
-        ARangeᶻ::init_meta(w);
+        ARangeᶻD::init_meta(w);
         ASize³D::init_meta(w);
         ATexture::init_meta(w);
 
@@ -145,7 +145,7 @@ namespace yq::tachyon {
         ADrawMode(p), 
         AInnerTessellation²(p.inner_tessellation),
         AOuterTessellation⁴(p.outer_tessellation),
-        ARangeᶻ(p.z_range), 
+        ARangeᶻD(p.z_range), 
         ASize³D(p.size)
     {
     }

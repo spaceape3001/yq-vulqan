@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "aspect/ARangeWD.ipp"
-#include "aspect/ARangeXD.ipp"
-#include "aspect/ARangeYD.ipp"
-#include "aspect/ARangeZD.ipp"
+#include "edit/RangeWDUI.ipp"
+#include "edit/RangeXDUI.ipp"
+#include "edit/RangeYDUI.ipp"
+#include "edit/RangeZDUI.ipp"

@@ -4,47 +4,47 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "ASpatial3Writer.hxx"
+#include "ASpatial3DWriter.hxx"
 
 #include <yq/tensor/Tensor33.hxx>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/vector/Vector3.hxx>
 
 namespace yq::tachyon {
-    ASpatial³::ASpatial³()
+    ASpatial³D::ASpatial³D()
     {
     }
     
-    ASpatial³::ASpatial³(const Param& p) :
+    ASpatial³D::ASpatial³D(const Param& p) :
         APosition³D(p.position), AOrientation³D(p.orientation), AScale³D(p.scale)
     {
     }
 
-    ASpatial³::ASpatial³(const Vector3D& pos, const Quaternion3D& ori, const Vector3D& scale) :
+    ASpatial³D::ASpatial³D(const Vector3D& pos, const Quaternion3D& ori, const Vector3D& scale) :
         APosition³D(pos), AOrientation³D(ori), AScale³D(scale)
     {
     }
     
-    ASpatial³::~ASpatial³()
+    ASpatial³D::~ASpatial³D()
     {
     }
 
-    void    ASpatial³::rotate_by(const Quaternion3D& δQ)
+    void    ASpatial³D::rotate_by(const Quaternion3D& δQ)
     {
-        ASpatial³::orientation(ROTATE, δQ);
+        ASpatial³D::orientation(ROTATE, δQ);
     }
     
-    void    ASpatial³::rotate_by(const unit::Radian3D& Δang )
+    void    ASpatial³D::rotate_by(const unit::Radian3D& Δang )
     {
-        ASpatial³::orientation(ROTATE, Δang);
+        ASpatial³D::orientation(ROTATE, Δang);
     }
     
-    void    ASpatial³::inflate_by(const Vector3D& δZ)
+    void    ASpatial³D::inflate_by(const Vector3D& δZ)
     {
-        ASpatial³::scale(MULTIPLY, δZ);
+        ASpatial³D::scale(MULTIPLY, δZ);
     }
 
-    void    ASpatial³::on_move³(const MoveBy³DCommand& cmd)
+    void    ASpatial³D::on_move³(const MoveBy³DCommand& cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -52,7 +52,7 @@ namespace yq::tachyon {
         position(ADD, orientation(REF) * scale(REF).emul(cmd.Δ()));
     }
     
-    void    ASpatial³::on_moveˣ(const MoveByˣDCommand& cmd)
+    void    ASpatial³D::on_moveˣ(const MoveByˣDCommand& cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -60,7 +60,7 @@ namespace yq::tachyon {
         position(ADD, orientation(REF) * Vector3D(X, scale(X) * cmd.Δx()));
     }
     
-    void    ASpatial³::on_moveʸ(const MoveByʸDCommand& cmd)
+    void    ASpatial³D::on_moveʸ(const MoveByʸDCommand& cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -68,7 +68,7 @@ namespace yq::tachyon {
         position(ADD, orientation(REF) * Vector3D(Y, scale(Y) * cmd.Δy()));
     }
     
-    void    ASpatial³::on_moveᶻ(const MoveByᶻDCommand&cmd)
+    void    ASpatial³D::on_moveᶻ(const MoveByᶻDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;
@@ -76,19 +76,19 @@ namespace yq::tachyon {
         position(ADD, orientation(REF) * Vector3D(Z, scale(Z) * cmd.Δz()));
     }
 
-    void    ASpatial³::set_orientation(const Quaternion3D& Q)
+    void    ASpatial³D::set_orientation(const Quaternion3D& Q)
     {
-        ASpatial³::orientation(SET, Q);
+        ASpatial³D::orientation(SET, Q);
     }
     
-    void    ASpatial³::set_position(const Vector3D& v)
+    void    ASpatial³D::set_position(const Vector3D& v)
     {
-        ASpatial³::position(SET, v);
+        ASpatial³D::position(SET, v);
     }
 
-    void    ASpatial³::set_scale(const Vector3D& v)
+    void    ASpatial³D::set_scale(const Vector3D& v)
     {
-        ASpatial³::scale(SET, v);
+        ASpatial³D::scale(SET, v);
     }
 }
 

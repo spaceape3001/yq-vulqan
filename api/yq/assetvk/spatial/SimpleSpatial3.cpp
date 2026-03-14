@@ -6,17 +6,17 @@
 
 #include "SimpleSpatial3.hpp"
 #include <yq/tachyon/api/Spatial3MetaWriter.hpp>
-#include <yq/tachyon/aspect/ASpatial3Writer.hxx>
+#include <yq/tachyon/aspect/ASpatial3DWriter.hxx>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::SimpleSpatial³)
 
 namespace yq::tachyon {
     SimpleSpatial³::SimpleSpatial³(const Vector3D& pos, const Quaternion3D& ori, const Vector3D& scale, const Param& p) :
-        Spatial³(p), ASpatial³(pos, ori, scale)
+        Spatial³(p), ASpatial³D(pos, ori, scale)
     {
     }
 
-    SimpleSpatial³::SimpleSpatial³(const Param& p) : Spatial³(p), ASpatial³(p)
+    SimpleSpatial³::SimpleSpatial³(const Param& p) : Spatial³(p), ASpatial³D(p)
     {
     }
     
@@ -34,7 +34,7 @@ namespace yq::tachyon {
     {
         auto w = writer<SimpleSpatial³>();
         
-        ASpatial³::init_meta(w);
+        ASpatial³D::init_meta(w);
         
         w.description("Simple Spatial in 3 dimensions");
     }

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Spatial3.hpp>
-#include <yq/tachyon/aspect/ASpatial3.hpp>
+#include <yq/tachyon/aspect/ASpatial3D.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
 
@@ -32,7 +32,7 @@ namespace yq::tachyon {
         
         \note The resulting coordinate system is north-east-down!
     */
-    class SimpleSpatial³ : public Spatial³, public ASpatial³ {
+    class SimpleSpatial³ : public Spatial³, public ASpatial³D {
         YQ_TACHYON_DECLARE(SimpleSpatial³, Spatial³);
     public:
     
@@ -40,7 +40,7 @@ namespace yq::tachyon {
             NOTE:  Scale doesn't really belong in spatials... will move it (belongs in rendereds, for sure)
         */
     
-        struct Param : public Spatial³::Param, public ASpatial³::Param {
+        struct Param : public Spatial³::Param, public ASpatial³D::Param {
             Param(){}
         };
     

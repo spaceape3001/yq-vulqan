@@ -22,7 +22,7 @@ namespace yq::tachyon {
         Thus, a Rendered³ could use this for relative to a 0,0,0 that a real spatial makes use of.  (Think like parts 
         to a car or something.)
     */
-    class ASpatial³ : public virtual Tachyon::Helper, public APosition³D, public AOrientation³D, public AScale³D {
+    class ASpatial³D : public virtual Tachyon::Helper, public APosition³D, public AOrientation³D, public AScale³D {
     public:
     
         // if you want to do it this way...
@@ -46,10 +46,10 @@ namespace yq::tachyon {
         using AOrientation³D::orientation;
 
     protected:
-        ASpatial³();
-        ASpatial³(const Param&);
-        ASpatial³(const Vector3D& pos, const Quaternion3D& ori = IDENTITY, const Vector3D& scale = ONE);
-        ~ASpatial³();
+        ASpatial³D();
+        ASpatial³D(const Param&);
+        ASpatial³D(const Vector3D& pos, const Quaternion3D& ori = IDENTITY, const Vector3D& scale = ONE);
+        ~ASpatial³D();
 
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);

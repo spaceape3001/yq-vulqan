@@ -19,6 +19,7 @@ namespace yq::tachyon {
     void Video::init_meta()
     {
         auto w = writer<Video>();
+        w.description("Video asset");
     }
 }
 

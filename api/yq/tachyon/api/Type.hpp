@@ -30,6 +30,7 @@ namespace yq::tachyon {
         ImGui,
         Joystick,
         Keyboard,
+        Kinetic,
         Layer,
         Light,
         Light³,

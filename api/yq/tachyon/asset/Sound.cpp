@@ -19,6 +19,7 @@ namespace yq::tachyon {
     void Sound::init_meta()
     {
         auto w = writer<Sound>();
+        w.description("Sound asset");
     }
 }
 

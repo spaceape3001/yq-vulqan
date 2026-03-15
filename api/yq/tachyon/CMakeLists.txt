@@ -20,7 +20,14 @@ add_library(${PROJECT_NAME} SHARED
     #   Keep these sections in ALPHABETICAL order!
     ##  These are the "unity" build files
     
+    api_camera.cpp
+    api_kinetic.cpp
+    api_light.cpp
     api_meta.cpp
+    api_post.cpp
+    api_rendered.cpp
+    api_scene.cpp
+    api_spatial.cpp
 
     aspect_count.cpp
     aspect_max_size.cpp
@@ -126,43 +133,24 @@ add_library(${PROJECT_NAME} SHARED
     api/2D.cpp
     api/3D.cpp
     api/Action.cpp
-    api/Camera.cpp
-    api/Camera3.cpp
     api/CameraTweak.cpp
-    api/Command.cpp
     api/Control.cpp
     api/Controller.cpp
     api/Delegate.cpp
     #api/Editor.cpp
-    api/Event.cpp
     api/Frame.cpp
     api/Gesture.cpp
     api/InterfaceMeta.cpp
     api/Layer.cpp
-    api/Light.cpp    
-    api/Light3.cpp
     api/Manager.cpp
     api/Math.cpp
-    api/Message.cpp
     api/Mini.cpp
     api/Model.cpp
     api/N.cpp
     api/Panel.cpp
     api/Payload.cpp
     api/Perspective.cpp
-    api/Post.cpp
     api/Proxy.cpp
-    api/Rendered.cpp
-    api/Rendered2.cpp
-    api/Rendered3.cpp
-    api/Reply.cpp
-    api/Request.cpp
-    api/Scene.cpp
-    #api/Scene2.cpp
-    api/Scene3.cpp
-    api/Spatial.cpp
-    api/Spatial2.cpp
-    api/Spatial3.cpp
     api/Tachyon.cpp
     api/Tasker.cpp
     api/Thread.cpp

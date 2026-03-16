@@ -27,6 +27,7 @@
 #include <yq/tachyon/typedef/group.hpp>
 #include <yq/tachyon/typedef/joystick.hpp>
 #include <yq/tachyon/typedef/keyboard.hpp>
+#include <yq/tachyon/typedef/kinetic.hpp>
 #include <yq/tachyon/typedef/layer.hpp>
 #include <yq/tachyon/typedef/light.hpp>
 #include <yq/tachyon/typedef/light3.hpp>
@@ -36,6 +37,7 @@
 #include <yq/tachyon/typedef/mouse.hpp>
 #include <yq/tachyon/typedef/rendered.hpp>
 #include <yq/tachyon/typedef/rendered3.hpp>
+#include <yq/tachyon/typedef/physics.hpp>
 #include <yq/tachyon/typedef/post.hpp>
 #include <yq/tachyon/typedef/scene.hpp>
 #include <yq/tachyon/typedef/scene3.hpp>
@@ -103,6 +105,7 @@ namespace yq::tachyon {
         bool contains(GroupID) const;
         bool contains(JoystickID) const;
         bool contains(KeyboardID) const;
+        bool contains(KineticID) const;
         bool contains(LayerID) const;
         bool contains(LightID) const;
         bool contains(Light³ID) const;
@@ -110,6 +113,7 @@ namespace yq::tachyon {
         bool contains(ModelID) const;
         bool contains(MonitorID) const;
         bool contains(MouseID) const;
+        bool contains(PhysicsID) const;
         bool contains(RenderedID) const;
         bool contains(Rendered³ID) const;
         bool contains(SceneID) const;
@@ -133,6 +137,7 @@ namespace yq::tachyon {
         size_t count(group_k) const;
         size_t count(joystick_k) const;
         size_t count(keyboard_k) const;
+        size_t count(kinetic_k) const;
         size_t count(layer_k) const;
         size_t count(light_k) const;
         size_t count(light³_k) const;
@@ -140,6 +145,7 @@ namespace yq::tachyon {
         size_t count(model_k) const;
         size_t count(monitor_k) const;
         size_t count(mouse_k) const;
+        size_t count(physics_k) const;
         size_t count(rendered³_k) const;
         size_t count(rendered_k) const;
         size_t count(scene_k) const;
@@ -166,6 +172,7 @@ namespace yq::tachyon {
         const GroupData*                    data(GroupID) const;
         const JoystickData*                 data(JoystickID) const;
         const KeyboardData*                 data(KeyboardID) const;
+        const KineticData*                  data(KineticID) const;
         const LayerData*                    data(LayerID) const;
         const LightData*                    data(LightID) const;
         const Light³Data*                   data(Light³ID) const;
@@ -173,6 +180,7 @@ namespace yq::tachyon {
         const ModelData*                    data(ModelID) const;
         const MonitorData*                  data(MonitorID) const;
         const MouseData*                    data(MouseID) const;
+        const PhysicsData*                  data(PhysicsID) const;
         const RenderedData*                 data(RenderedID) const;
         const Rendered³Data*                data(Rendered³ID) const;
         const SceneData*                    data(SceneID) const;
@@ -210,6 +218,7 @@ namespace yq::tachyon {
         const std::set<GroupID>&            ids(group_k) const;
         const std::set<JoystickID>&         ids(joystick_k) const;
         const std::set<KeyboardID>&         ids(keyboard_k) const;
+        const std::set<KineticID>&          ids(kinetic_k) const;
         const std::set<LayerID>&            ids(layer_k) const;
         const std::set<LightID>&            ids(light_k) const;
         const std::set<Light³ID>&           ids(light³_k) const;
@@ -217,6 +226,7 @@ namespace yq::tachyon {
         const std::set<ModelID>&            ids(model_k) const;
         const std::set<MonitorID>&          ids(monitor_k) const;
         const std::set<MouseID>&            ids(mouse_k) const;
+        const std::set<PhysicsID>&          ids(physics_k) const;
         const std::set<RenderedID>&         ids(rendered_k) const;
         const std::set<Rendered³ID>&        ids(rendered³_k) const;
         const std::set<SceneID>&            ids(scene_k) const;
@@ -240,12 +250,14 @@ namespace yq::tachyon {
         const GroupMeta*                    meta(GroupID) const;
         const JoystickMeta*                 meta(JoystickID) const;
         const KeyboardMeta*                 meta(KeyboardID) const;
+        const KineticMeta*                  meta(KineticID) const;
         const LayerMeta*                    meta(LayerID) const;
         const LightMeta*                    meta(LightID) const;
         const Light³Meta*                   meta(Light³ID) const;
         const ManagerMeta*                  meta(ManagerID) const;
         const ModelMeta*                    meta(ModelID) const;
         const MouseMeta*                    meta(MouseID) const;
+        const PhysicsMeta*                  meta(PhysicsID) const;
         const RenderedMeta*                 meta(RenderedID) const;
         const Rendered³Meta*                meta(Rendered³ID) const;
         const SceneMeta*                    meta(SceneID) const;
@@ -292,6 +304,8 @@ namespace yq::tachyon {
         //! \note WARNING this will break thread-safety guarantees
         Keyboard*                           object(KeyboardID) const;
 
+        Kinetic*                            object(KineticID) const;
+
         //! Layer pointer
         //! \note WARNING this will break thread-safety guarantees
         Layer*                              object(LayerID) const;
@@ -313,6 +327,8 @@ namespace yq::tachyon {
         //! Mouse pointer
         //! \note WARNING this will break thread-safety guarantees
         Mouse*                              object(MouseID) const;
+
+        Physics*                            object(PhysicsID) const;
 
         //! Rendered pointer
         //! \note WARNING this will break thread-safety guarantees
@@ -394,6 +410,7 @@ namespace yq::tachyon {
         const GroupSnap*                    snap(GroupID) const;
         const JoystickSnap*                 snap(JoystickID) const;
         const KeyboardSnap*                 snap(KeyboardID) const;
+        const KineticSnap*                  snap(KineticID) const;
         const LayerSnap*                    snap(LayerID) const;
         const LightSnap*                    snap(LightID) const;
         const Light³Snap*                   snap(Light³ID) const;
@@ -401,6 +418,7 @@ namespace yq::tachyon {
         const ModelSnap*                    snap(ModelID) const;
         const MonitorSnap*                  snap(MonitorID) const;
         const MouseSnap*                    snap(MouseID) const;
+        const PhysicsSnap*                  snap(PhysicsID) const;
         const RenderedSnap*                 snap(RenderedID) const;
         const Rendered³Snap*                snap(Rendered³ID) const;
         const SceneSnap*                    snap(SceneID) const;
@@ -480,6 +498,7 @@ namespace yq::tachyon {
         Container<Group, GroupData, GroupSnap>                      m_groups;
         Container<Joystick, JoystickData, JoystickSnap>             m_joysticks;
         Container<Keyboard, KeyboardData, KeyboardSnap>             m_keyboards;
+        Container<Kinetic, KineticData, KineticSnap>                m_kinetics;
         Container<Layer, LayerData, LayerSnap>                      m_layers;
         Container<Light, LightData, LightSnap>                      m_lights;
         Container<Light³, Light³Data, Light³Snap>                   m_light³s;
@@ -487,6 +506,7 @@ namespace yq::tachyon {
         Container<Model, ModelData, ModelSnap>                      m_models;
         Container<Monitor, MonitorData, MonitorSnap>                m_monitors;
         Container<Mouse, MouseData, MouseSnap>                      m_mouses;
+        Container<Physics, PhysicsData, PhysicsSnap>                m_physics;
         Container<Rendered, RenderedData, RenderedSnap>             m_rendereds;
         Container<Rendered³, Rendered³Data, Rendered³Snap>          m_rendered³s;
         Container<Scene, SceneData, SceneSnap>                      m_scenes;

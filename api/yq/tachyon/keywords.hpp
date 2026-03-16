@@ -162,6 +162,7 @@ namespace yq::tachyon {
     };
     
     struct origin_k {};
+    struct physics_k {};
     struct pivot_k {};
     
     struct point_k {};
@@ -317,6 +318,7 @@ namespace yq::tachyon {
     static constexpr const none_k               NONE;
     static constexpr const north_k              NORTH;
     static constexpr const origin_k             ORIGIN;
+    static constexpr const physics_k            PHYSICS;
     static constexpr const pivot_k              PIVOT;
     static constexpr const point_k              POINT;
     static constexpr const popup_k              POPUP;

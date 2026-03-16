@@ -41,6 +41,7 @@ namespace yq::tachyon {
         Rendered,
         Rendered²,
         Rendered³,
+        Physics,
         Scene,
         Scene³,
         Spatial,

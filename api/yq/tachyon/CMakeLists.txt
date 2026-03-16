@@ -150,6 +150,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Panel.cpp
     api/Payload.cpp
     api/Perspective.cpp
+    api/Physics.cpp
     api/Proxy.cpp
     api/Tachyon.cpp
     api/Tasker.cpp

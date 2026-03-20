@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/typedef/vector2.hpp>
+#include <yq/unit/declare.hpp>
+#include <functional>
+
+namespace yq::tachyon {
+    using FNScreenUnmapper²M = std::function<Meter2D(const Vector2D&)>;
+}
+

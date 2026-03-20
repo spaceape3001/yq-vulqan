@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/typedef/vector3.hpp>
+#include <yq/unit/declare.hpp>
+#include <functional>
+
+namespace yq::tachyon {
+    using FNScreenUnmapper³M = std::function<Meter3D(const Vector3D&)>;
+}
+

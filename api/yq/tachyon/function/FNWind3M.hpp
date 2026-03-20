@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/typedef/vector3.hpp>
+#include <yq/unit/declare.hpp>
+#include <functional>
+
+namespace yq::tachyon {
+    using FNWind³M  = std::function<MeterPerSecond3D(const Meter3D&)>;
+}
+

@@ -27,9 +27,10 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    KineticMeta::KineticMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
-        TachyonMeta(name, base, sl)
+    KineticMeta::KineticMeta(std::string_view name, SpatialMeta& base, const std::source_location& sl) : 
+        SpatialMeta(name, base, sl)
     {
+        set(Flag::KINETIC);
         set(Type::Kinetic);
         repo().all.push_back(this);
     }
@@ -37,7 +38,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Kinetic::Kinetic(const Param& p) : Tachyon(p)
+    Kinetic::Kinetic(const Param& p) : Spatial(p)
     {
     }
 

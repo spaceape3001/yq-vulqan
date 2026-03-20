@@ -31,6 +31,7 @@ namespace yq::tachyon {
         Joystick,
         Keyboard,
         Kinetic,
+        Kinetic³,
         Layer,
         Light,
         Light³,

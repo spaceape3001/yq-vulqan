@@ -30,7 +30,7 @@ namespace yq::tachyon {
     PhysicsMeta::PhysicsMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
         TachyonMeta(name, base, sl)
     {
-        set(Flag::CAMERA);
+        set(Flag::PHYSICS);
         set(Type::Physics);
         repo().all.push_back(this);
     }

@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/physics/state/DState32.hpp>
 #include <yq/physics/state/DState22.hpp>
 
 #include "api/Kinetic.ipp"
+#include "api/Kinetic3.ipp"
 

@@ -32,10 +32,14 @@ namespace yq::tachyon {
         
         TypedID         spatial() const { return m_spatial; }
         
-        //  \brief Sets the spatial 
-        //  \note Not thread safe
+        //!  \brief Sets the spatial/kinetic
+        //!  \note Not thread safe
+        //!  \note PREFERRED METHOD
         void            set_spatial(TypedID);
 
+        //! \brief Sets the spatial
+        //! \note Not thread safe
+        //! \note For spatials (not kinetics)
         void            set_spatial(SpatialID);
 
         template <typename C>
@@ -49,6 +53,7 @@ namespace yq::tachyon {
         template <SomeSpatial T=Spatial>
         T*          create_spatial(const typename T::MyMeta&);        
 
+        //! Creates a "child" spatial and sets it as our spatial
     protected:
         И();
         virtual ~И();

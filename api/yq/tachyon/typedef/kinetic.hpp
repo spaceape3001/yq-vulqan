@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include <concepts>
 
 namespace yq {
     template <typename> class Ref;
@@ -27,4 +28,7 @@ namespace yq::tachyon {
     using KineticID = ID<Kinetic>;
     
     class KineticMeta;
+
+    template <class E>
+    concept SomeKinetic = std::derived_from<E,Kinetic>;
 }

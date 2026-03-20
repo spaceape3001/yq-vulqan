@@ -24,8 +24,9 @@
 #include <yq/tachyon/api/Group.hpp>
 #include <yq/tachyon/api/GroupData.hpp>
 
-#include <yq/tachyon/api/Kinetic.hpp>
-#include <yq/tachyon/api/KineticData.hpp>
+#include <yq/tachyon/api/Kinetic3.hpp>
+#include <yq/tachyon/api/Kinetic3Data.hpp>
+
 #include <yq/tachyon/api/Layer.hpp>
 #include <yq/tachyon/api/LayerData.hpp>
 #include <yq/tachyon/api/Light3.hpp>
@@ -225,6 +226,8 @@ namespace yq::tachyon {
             m_keyboards.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Kinetic))
             m_kinetics.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Kinetic³))
+            m_kinetic³s.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Layer))
             m_layers.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Light))
@@ -333,6 +336,11 @@ namespace yq::tachyon {
     bool Frame::contains(KineticID id) const
     {
         return m_kinetics.has(id);
+    }
+
+    bool Frame::contains(Kinetic³ID id) const
+    {
+        return m_kinetic³s.has(id);
     }
 
     bool Frame::contains(LayerID id) const
@@ -505,6 +513,11 @@ namespace yq::tachyon {
         return m_kinetics.count();
     }
     
+    size_t Frame::count(kinetic³_k) const
+    {
+        return m_kinetic³s.count();
+    }
+
     size_t Frame::count(light_k) const
     {
         return m_lights.count();
@@ -667,6 +680,11 @@ namespace yq::tachyon {
         return m_kinetics.data(id);
     }
 
+    const Kinetic³Data*                  Frame::data(Kinetic³ID id) const
+    {
+        return m_kinetic³s.data(id);
+    }
+
     const LightData*                    Frame::data(LightID id) const
     {
         return m_lights.data(id);
@@ -820,6 +838,11 @@ namespace yq::tachyon {
     const std::set<KineticID>&          Frame::ids(kinetic_k) const
     {
         return m_kinetics.ids;
+    }
+    
+    const std::set<Kinetic³ID>&          Frame::ids(kinetic³_k) const
+    {
+        return m_kinetic³s.ids;
     }
     
     const std::set<LayerID>&            Frame::ids(layer_k) const
@@ -1003,6 +1026,14 @@ namespace yq::tachyon {
     }
     
     const KineticMeta*                  Frame::meta(KineticID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+
+    const Kinetic³Meta*                  Frame::meta(Kinetic³ID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -1218,6 +1249,11 @@ namespace yq::tachyon {
         return m_kinetics.pointer(id);
     }
 
+    Kinetic³*                           Frame::object(Kinetic³ID id) const
+    {
+        return m_kinetic³s.pointer(id);
+    }
+
     Light*                              Frame::object(LightID id) const
     {
         return m_lights.pointer(id);
@@ -1390,6 +1426,7 @@ namespace yq::tachyon {
             << "  Groups:        " << count(GROUP) << "\n"
             << "  Keyboards:     " << count(KEYBOARD) << "\n"
             << "  Kinetics:      " << count(KINETIC) << "\n"
+            << "  Kinetic³s:     " << count(KINETIC³) << "\n"
             << "  Joysticks:     " << count(JOYSTICK) << "\n"
             << "  Layers:        " << count(LAYER) << "\n"
             << "  Lights:        " << count(LIGHT) << "\n"
@@ -1492,6 +1529,10 @@ namespace yq::tachyon {
         return m_kinetics.snap(id);
     }
 
+    const Kinetic³Snap*                Frame::snap(Kinetic³ID id) const
+    {
+        return m_kinetic³s.snap(id);
+    }
 
     const LayerSnap*                   Frame::snap(LayerID id) const
     {

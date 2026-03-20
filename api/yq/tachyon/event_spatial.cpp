@@ -39,6 +39,7 @@
 #include "event/spatial/Scale2DEvent.ipp"
 #include "event/spatial/Scale3DEvent.ipp"
 #include "event/spatial/Scale4DEvent.ipp"
+#include "event/spatial/ScaleMEvent.ipp"
 #include "event/spatial/Size1DEvent.ipp"
 #include "event/spatial/Size1MEvent.ipp"
 #include "event/spatial/Size2DEvent.ipp"

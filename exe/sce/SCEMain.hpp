@@ -6,12 +6,18 @@
 
 #pragma once
 
-#include <yq/vkqt/app/YAppThread.hpp>
+#include <yq/vkqt/app/YMain.hpp>
 
-class SceneApp : public yq::tachyon::YAppThread {
-    YQ_TACHYON_DECLARE(SceneApp, YAppThread)
+using namespace yq;
+using namespace yq::tachyon;
+
+class SCEMain : public YMain {
+    YQ_TACHYON_DECLARE(SCEMain, YMain)
     Q_OBJECT
 public:
-    SceneApp(int&,char* argv[], yq::tachyon::Application&);
-    ~SceneApp();
+
+    SCEMain();
+    ~SCEMain();
+    
+    static void init_meta();
 };

@@ -65,7 +65,7 @@ namespace yq::tachyon {
     
     static constexpr std::initializer_list<NameRequired>    kStdExtensions = {
     };
-    
+
     static constexpr std::initializer_list<NameRequired>    kStdLayers = {
     };
     
@@ -248,6 +248,7 @@ namespace yq::tachyon {
         }
         if(want_debug){
             g.extensions.requested.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+            //g.extensions.requested.push_back(VK_EXT_DEVICE_ADDRESS_BINDING_REPORT_EXTENSION_NAME);
             //g.extensions.requested.push_back("VK_EXT_debug_report");
         }
 
@@ -311,7 +312,7 @@ namespace yq::tachyon {
             // bit annoyed validation *won't* let me do an ALL type of shortcut....
             dbg.flags           = {};
             dbg.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
-            dbg.messageType     = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_DEVICE_ADDRESS_BINDING_BIT_EXT;
+            dbg.messageType     = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT /* | VK_DEBUG_UTILS_MESSAGE_TYPE_DEVICE_ADDRESS_BINDING_BIT_EXT */;
             dbg.pfnUserCallback = (PFN_vkDebugUtilsMessengerCallbackEXT) &VulqanManager::debugging_callback;
             dbg.pUserData       = this;
             

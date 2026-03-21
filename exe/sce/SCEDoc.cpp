@@ -4,15 +4,27 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "SceneApp.hpp"
+#include "SCEDoc.hpp"
 #include <yq/tachyon/api/ThreadMetaWriter.hpp>
 
-YQ_TACHYON_IMPLEMENT(SceneApp)
+YQ_TACHYON_IMPLEMENT(SCEDoc)
 
-SceneApp::SceneApp(int&argc, char* argv[], yq::tachyon::Application& app) : YAppThread(argc, argv, app)
+void SCEDoc::init_meta()
+{
+    auto w = writer<SCEDoc>();
+    w.description("SCEDoc/Thread");
+}
+    
+SCEDoc::SCEDoc()
 {
 }
 
-SceneApp::~SceneApp()
+SCEDoc::~SCEDoc()
 {
 }
+
+
+
+#include "moc_SCEDoc.cpp"
+
+

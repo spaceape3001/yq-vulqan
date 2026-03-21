@@ -4,16 +4,20 @@
 ##
 ################################################################################
 
-project(scedit)
+project(sce)
 
 find_package(Qt6 REQUIRED Core Gui PrintSupport Widgets )
 
 SET(CMAKE_AUTOMOC ON)
 
 add_executable(${PROJECT_NAME}
-    SceneApp.cpp
-    SceneApp.hpp
     main.cpp
+    SCEDoc.cpp
+    SCEDoc.hpp
+    SCEMain.cpp
+    SCEMain.hpp
+    SCEApp.cpp
+    SCEApp.hpp
 )
 
 target_link_libraries(${PROJECT_NAME}

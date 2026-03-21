@@ -1,0 +1,60 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <yq/core/Logging.hpp>
+#include <yq/tachyon/api/Tachyon.hxx>
+#include <yq/vkqt/app/YApp.hpp>
+#include <yq/resource/Resource.hpp>
+#include <yq/process/PluginLoader.hpp>
+
+#include "SCEApp.hpp"
+#include "SCEMain.hpp"
+
+
+int main(int argc, char* argv[])
+{
+    AppCreateInfo       aci;
+    aci.thread.app          = [&](Application& app) -> Ref<AppThread> {
+        return new SCEApp(argc, argv, app);
+    };
+    aci.thread.viewer       = PER;
+    aci.view.title          = "Scenery Editor";
+    aci.view.size           = { 1920, 1080 };
+    aci.view.clear          = { 0.0f, 0.0f, 0.0f, 1.f };
+    aci.view.imgui          = true;
+    aci.view.resizable      = true;
+    aci.view.depth_buffer   = ENABLE;
+    aci.vulkan.graphics     = 16U;      // why not????
+
+    YApp        app(argc, argv, aci);
+
+    Meta::init();
+    app.vulqan_libraries(LOAD);
+    Meta::init();
+    load_plugin_dir("plugin/xg");
+    Meta::init();
+    load_plugin_dir("plugin/xgvk");
+    Meta::init();
+    //load_plugin_dir("plugin/gtools");
+    Meta::init();
+    #ifdef YQ_LUA_ENABLE
+    load_plugin_dir("plugin/lua");
+    //load_plugin_dir("plugin/luavk");
+    #endif
+    
+    Meta::freeze();
+    for(const std::filesystem::path& pth : Resource::all_paths())
+        yInfo() << "resource path> " << pth;
+
+    app.start();
+
+
+
+
+    std::cout << "Hello World!\n";
+    return 0;
+}

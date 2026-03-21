@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
+#include <yq/assetvk/io/FileIOManager.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
 #include <yq/vkqt/app/YApp.hpp>
@@ -13,7 +14,10 @@
 
 #include "SCEApp.hpp"
 #include "SCEMain.hpp"
+#include "SCEProject.hpp"
 
+TypedID     gFileIO;
+TypedID     gProjectID;
 
 int main(int argc, char* argv[])
 {
@@ -21,6 +25,7 @@ int main(int argc, char* argv[])
     aci.thread.app          = [&](Application& app) -> Ref<AppThread> {
         return new SCEApp(argc, argv, app);
     };
+    aci.thread.io           = true;
     aci.thread.viewer       = PER;
     aci.view.title          = "Scenery Editor";
     aci.view.size           = { 1920, 1080 };
@@ -52,9 +57,14 @@ int main(int argc, char* argv[])
 
     app.start();
 
+    for(StdThread st : StdThread::all_values())
+        yInfo() << "thread " << st.key() << "> " << Thread::standard(st).id;
 
-
-
-    std::cout << "Hello World!\n";
+    gFileIO     = Tachyon::create_on<FileIOManager>(IO)->typed_id();
+    gProjectID  = Tachyon::create_on<SCEProject>(IO)->typed_id();
+    
+    SCEMain*w           = Tachyon::create<SCEMain>();
+    w -> show();
+    app.run();
     return 0;
 }

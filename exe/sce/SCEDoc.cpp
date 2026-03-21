@@ -23,6 +23,10 @@ SCEDoc::~SCEDoc()
 {
 }
 
+void SCEDoc::snap(SCEDocSnap&sn) const
+{
+    EditThread::snap(sn);
+}
 
 
 #include "moc_SCEDoc.cpp"

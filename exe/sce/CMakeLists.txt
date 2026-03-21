@@ -12,12 +12,18 @@ SET(CMAKE_AUTOMOC ON)
 
 add_executable(${PROJECT_NAME}
     main.cpp
-    SCEDoc.cpp
-    SCEDoc.hpp
-    SCEMain.cpp
-    SCEMain.hpp
     SCEApp.cpp
     SCEApp.hpp
+    SCEDoc.cpp
+    SCEDoc.hpp
+    SCEEditor.cpp
+    SCEEditor.hpp
+    SCEMain.cpp
+    SCEMain.hpp
+    SCEProject.cpp
+    SCEProject.hpp
+    SCEViewer.cpp
+    SCEViewer.hpp
 )
 
 target_link_libraries(${PROJECT_NAME}

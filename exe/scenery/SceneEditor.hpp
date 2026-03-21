@@ -12,7 +12,10 @@
 #include <yq/tachyon/typedef/controller.hpp>
 #include <yq/tachyon/typedef/light.hpp>
 #include <yq/tachyon/typedef/light3.hpp>
+#include <yq/tachyon/typedef/kinetic.hpp>
+#include <yq/tachyon/typedef/kinetic3.hpp>
 #include <yq/tachyon/typedef/model.hpp>
+#include <yq/tachyon/typedef/physics.hpp>
 #include <yq/tachyon/typedef/rendered.hpp>
 #include <yq/tachyon/typedef/rendered3.hpp>
 #include <yq/tachyon/typedef/scene.hpp>
@@ -118,7 +121,8 @@ public:
     void                action_create_light(const Payload&);
     void                action_create_light_spatial(const Payload&);
     void                action_create_model(const Payload&);
-    //void                action_create_physics(const Payload&);          // TODO....
+    void                action_create_model_kinetic(const Payload&);
+    void                action_create_physics(const Payload&);          // TODO....
     void                action_create_rendered(const Payload&);
     void                action_create_rendered_spatial(const Payload&);
     void                action_create_scene(const Payload&);
@@ -144,6 +148,7 @@ public:
     ControllerID        selected(controller_k) const { return m_controller.selected; }
     LightID             selected(light_k) const { return m_light.selected; }
     ModelID             selected(model_k) const { return m_model.selected; }
+    PhysicsID           selected(physics_k) const { return m_physics.selected; }
     RenderedID          selected(rendered_k) const { return m_rendered.selected; }
     SceneID             selected(scene_k) const { return m_scene.selected; }
     
@@ -189,6 +194,11 @@ private:
     } m_collision;
     
     struct {
+        const KineticMeta*      meta        = nullptr;
+        TypedID                 context;
+    } m_kinetic;
+
+    struct {
         const LightMeta*        meta        = nullptr;
         LightTableUI*           table       = nullptr;
         LightID                 selected;
@@ -201,6 +211,13 @@ private:
         ModelID                 selected;
         UITachyonEditor*        properties  = nullptr;
     } m_model;
+    
+    struct {
+        const PhysicsMeta*      meta        = nullptr;
+        PhysicsTableUI*         table       = nullptr;
+        PhysicsID               selected;
+        UITachyonEditor*        properties  = nullptr;
+    } m_physics;
 
     struct {
         const RenderedMeta*     meta        = nullptr;
@@ -222,6 +239,8 @@ private:
         const SpatialMeta*      meta        = nullptr;
         TypedID                 context;
     } m_spatial;
+
+
 
     TypedID                 m_fileIO;
     std::filesystem::path   m_filepath;
@@ -251,6 +270,7 @@ private:
     void            _activate(ControllerID);
     void            _activate(LightID);
     void            _activate(ModelID);
+    void            _activate(PhysicsID);
     void            _activate(RenderedID);
 
     void            _load(StdThread, const std::filesystem::path&);
@@ -262,8 +282,11 @@ private:
     LightID         _create(const LightMeta&);
     SpatialID       _create(light_k, const SpatialMeta&);
     SpatialID       _create(Light³ID, const SpatialMeta&);
+    KineticID       _create(model_k, const KineticMeta&);
+    KineticID       _create(ModelID, const KineticMeta&);
     ModelID         _create(const ModelMeta&);
     RenderedID      _create(const RenderedMeta&);
+    PhysicsID       _create(const PhysicsMeta&);
     SpatialID       _create(rendered_k, const SpatialMeta&);
     SpatialID       _create(Rendered³ID, const SpatialMeta&);
     SceneID         _create(const SceneMeta&);
@@ -287,6 +310,7 @@ private:
     void    on_meta_selection_changed_event(const MetaSelectionChangedEvent&);
     void    on_model_select_event(const ModelSelectEvent&);
     void    on_open_tsx_file_command(const OpenTSXFileCommand&);
+    void    on_physics_select_event(const PhysicsSelectEvent&);
     void    on_rendered_select_event(const RenderedSelectEvent&);
     void    on_save_tsx_reply(const SaveTSXReply&);
     void    on_save_as_tsx_file_command(const SaveAsTSXFileCommand&);

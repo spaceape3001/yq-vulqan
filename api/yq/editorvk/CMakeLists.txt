@@ -9,6 +9,7 @@ add_library(yq_editorvk SHARED
     event/ControllerSelectEvent.cpp
     event/LightSelectEvent.cpp
     event/ModelSelectEvent.cpp
+    event/PhysicsSelectEvent.cpp
     event/RenderedSelectEvent.cpp
     event/SceneAddEvent.cpp
     event/SceneRemoveEvent.cpp
@@ -20,6 +21,7 @@ add_library(yq_editorvk SHARED
     table/ControllerTableUI.cpp
     table/LightTableUI.cpp
     table/ModelTableUI.cpp
+    table/PhysicsTableUI.cpp
     table/RenderedTableUI.cpp
     table/SceneTableUI.cpp
 )

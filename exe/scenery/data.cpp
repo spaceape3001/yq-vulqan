@@ -13,6 +13,7 @@
 #include <yq/tachyon/api/Light.hpp>
 #include <yq/tachyon/api/Light3.hpp>
 #include <yq/tachyon/api/Model.hpp>
+#include <yq/tachyon/api/Physics.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
 #include <yq/tachyon/api/Rendered3.hpp>
 #include <yq/tachyon/api/Scene.hpp>
@@ -59,6 +60,14 @@ ModelID                 editing(model_k)
     return editor -> selected(MODEL);
 }
 
+PhysicsID              editing(physics_k)
+{
+    SceneEditor*    editor  = dynamic_cast<SceneEditor*>(UIElement::widget());
+    if(!editor)
+        return {};
+    return editor -> selected(PHYSICS);
+}
+
 RenderedID              editing(rendered_k)
 {
     SceneEditor*    editor  = dynamic_cast<SceneEditor*>(UIElement::widget());
@@ -78,101 +87,6 @@ SceneID                 editing(scene_k)
 
     ////////////// LAST DATA /////////////
 
-const CameraData*       lastdata(CameraID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> data(id);
-}
-
-const Camera³Data*      lastdata(Camera³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> data(id);
-}
-
-const ControllerData*   lastdata(ControllerID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> data(id);
-}
-
-const LightData*        lastdata(LightID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> data(id);
-}
-
-const Light³Data*       lastdata(Light³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> data(id);
-}
-
-const ModelData*        lastdata(ModelID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> data(id);
-}
-
-const RenderedData*     lastdata(RenderedID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> data(id);
-}
-
-const Rendered³Data*    lastdata(Rendered³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> data(id);
-}
-
-const SceneData*        lastdata(SceneID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> data(id);
-}
-
-const Scene³Data*       lastdata(Scene³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> data(id);
-}
-
-const SpatialData*      lastdata(SpatialID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> data(id);
-}
-
-const Spatial³Data*     lastdata(Spatial³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> data(id);
-}
 
 const CameraData*       lastdata(camera_k)
 {
@@ -204,6 +118,11 @@ const ModelData*        lastdata(model_k)
     return lastdata(editing(MODEL));
 }
 
+const PhysicsData*      lastdata(physics_k)
+{
+    return lastdata(editing(PHYSICS));
+}
+
 const RenderedData*     lastdata(rendered_k)
 {
     return lastdata(editing(RENDERED));
@@ -226,101 +145,6 @@ const Scene³Data*       lastdata(scene³_k)
 
     ////////////// POINTERS /////////////
 
-Camera*                 pointer(CameraID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> object(id);
-}
-
-Camera³*                pointer(Camera³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> object(id);
-}
-
-Controller*             pointer(ControllerID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> object(id);
-}
-
-Light*                  pointer(LightID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> object(id);
-}
-
-Light³*                 pointer(Light³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> object(id);
-}
-
-Model*                  pointer(ModelID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> object(id);
-}
-
-Rendered*               pointer(RenderedID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> object(id);
-}
-
-Rendered³*              pointer(Rendered³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> object(id);
-}
-
-Scene*                  pointer(SceneID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> object(id);
-}
-
-Scene³*                 pointer(Scene³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> object(id);
-}
-
-Spatial*                pointer(SpatialID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> object(id);
-}
-
-Spatial³*               pointer(Spatial³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> object(id);
-}
 
 Camera*                 pointer(camera_k)
 {
@@ -352,6 +176,11 @@ Model*                  pointer(model_k)
     return pointer(editing(MODEL));
 }
 
+Physics*                pointer(physics_k)
+{
+    return pointer(editing(PHYSICS));
+}
+
 Rendered*               pointer(rendered_k)
 {
     return pointer(editing(RENDERED));
@@ -373,104 +202,6 @@ Scene³*                 pointer(scene³_k)
 }
 
     ////////////// SNAPSHOTS /////////////
-
-
-const CameraSnap*       snapshot(CameraID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> snap(id);
-}
-
-const Camera³Snap*      snapshot(Camera³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> snap(id);
-}
-
-const ControllerSnap*   snapshot(ControllerID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> snap(id);
-}
-
-const LightSnap*        snapshot(LightID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> snap(id);
-}
-
-const Light³Snap*       snapshot(Light³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> snap(id);
-}
-
-const ModelSnap*        snapshot(ModelID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> snap(id);
-}
-
-const RenderedSnap*     snapshot(RenderedID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> snap(id);
-}
-
-const Rendered³Snap*    snapshot(Rendered³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> snap(id);
-}
-
-const SceneSnap*        snapshot(SceneID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> snap(id);
-}
-
-const Scene³Snap*       snapshot(Scene³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> snap(id);
-}
-
-const SpatialSnap*      snapshot(SpatialID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> snap(id);
-}
-
-const Spatial³Snap*     snapshot(Spatial³ID id)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return nullptr;
-    return frame -> snap(id);
-}
-
 
 const CameraSnap*       snapshot(camera_k)
 {
@@ -502,6 +233,11 @@ const ModelSnap*        snapshot(model_k)
     return snapshot(editing(MODEL));
 }
 
+const PhysicsSnap*      snapshot(physics_k)
+{
+    return snapshot(editing(PHYSICS));
+}
+
 const RenderedSnap*     snapshot(rendered_k)
 {
     return snapshot(editing(RENDERED));
@@ -524,10 +260,3 @@ const Scene³Snap*       snapshot(scene³_k)
 
 ///
 
-TypedID                 typed_for(TachyonID tac)
-{
-    const Frame*    frame   = Frame::current();
-    if(!frame)  
-        return {};
-    return frame->typed(tac);
-}

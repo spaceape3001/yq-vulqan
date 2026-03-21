@@ -86,6 +86,8 @@ add_library(${PROJECT_NAME} SHARED
     event_ui.cpp
     event_window.cpp
     
+    fastdata.cpp
+    
     gesture_file.cpp
     
     interface.cpp

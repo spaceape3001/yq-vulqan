@@ -13,4 +13,5 @@ add_subdirectory(gamevk)
 
 if(Build_Qt6)
     add_subdirectory(xgqt)
+    add_subdirectory(scedit)
 endif()

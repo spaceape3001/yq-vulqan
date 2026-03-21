@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include <yq/tachyon/api/TachyonData.hpp>
-#include <yq/tachyon/typedef/kinetic.hpp>
+#include <yq/core/DelayInit.hpp>
+#include <yq/tachyon/api/ID.hpp>
+#include <yq/tachyon/typedef/tachyon.hpp>
+#include <QMetaType>
+
+Q_DECLARE_METATYPE(yq::tachyon::TachyonID)
 
 namespace yq::tachyon {
-    struct KineticSnap : public TachyonSnap {
-    };
-    
-    struct KineticData : public TachyonData {
-    };
+    YQ_INVOKE( qRegisterMetaType<TachyonID>(); )
 }

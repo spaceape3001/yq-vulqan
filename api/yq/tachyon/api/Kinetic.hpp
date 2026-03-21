@@ -8,7 +8,7 @@
 
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
-#include <yq/tachyon/api/Spatial.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/typedef/kinetic.hpp>
 
 namespace yq::tachyon {
@@ -19,7 +19,7 @@ namespace yq::tachyon {
     
         Information for cameras.
     */
-    class KineticMeta : public SpatialMeta {
+    class KineticMeta : public TachyonMeta {
     public:
         template <typename C> struct Writer;
 
@@ -27,7 +27,7 @@ namespace yq::tachyon {
         static const std::vector<const KineticMeta*>&    all();
         
         //! Standard constructor for the camera information
-        KineticMeta(std::string_view, SpatialMeta&, const std::source_location& sl = std::source_location::current());
+        KineticMeta(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
         
     private:
     
@@ -48,11 +48,11 @@ namespace yq::tachyon {
         
         \note We're limited to three dimensions here
     */
-    class Kinetic : public Spatial {
+    class Kinetic : public Tachyon {
         YQ_TACHYON_META(KineticMeta);
         YQ_TACHYON_DATA(KineticData)
         YQ_TACHYON_SNAP(KineticSnap)
-        YQ_TACHYON_DECLARE(Kinetic, Spatial)
+        YQ_TACHYON_DECLARE(Kinetic, Tachyon)
     public:    
     
         /*

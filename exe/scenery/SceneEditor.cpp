@@ -39,6 +39,7 @@
 #include <yq/editorvk/event/ControllerSelectEvent.hpp>
 #include <yq/editorvk/event/LightSelectEvent.hpp>
 #include <yq/editorvk/event/ModelSelectEvent.hpp>
+#include <yq/editorvk/event/PhysicsSelectEvent.hpp>
 #include <yq/editorvk/event/RenderedSelectEvent.hpp>
 #include <yq/editorvk/event/SceneAddEvent.hpp>
 #include <yq/editorvk/event/SceneRemoveEvent.hpp>
@@ -50,6 +51,7 @@
 #include <yq/editorvk/table/ControllerTableUI.hpp>
 #include <yq/editorvk/table/LightTableUI.hpp>
 #include <yq/editorvk/table/ModelTableUI.hpp>
+#include <yq/editorvk/table/PhysicsTableUI.hpp>
 #include <yq/editorvk/table/RenderedTableUI.hpp>
 #include <yq/editorvk/table/SceneTableUI.hpp>
 
@@ -68,11 +70,14 @@
 
 #include <yq/tachyon/api/Camera3.hpp>
 #include <yq/tachyon/api/Camera3Data.hpp>
-
+#include <yq/tachyon/api/Controller.hpp>
 #include <yq/tachyon/api/Frame.hpp>
+#include <yq/tachyon/api/Kinetic3.hpp>
+#include <yq/tachyon/api/Kinetic3Data.hpp>
 #include <yq/tachyon/api/Light3.hpp>
 #include <yq/tachyon/api/Light3Data.hpp>
 #include <yq/tachyon/api/Model.hpp>
+#include <yq/tachyon/api/Physics.hpp>
 #include <yq/tachyon/api/Rendered3.hpp>
 #include <yq/tachyon/api/Rendered3Data.hpp>
 #include <yq/tachyon/api/Scene.hpp>
@@ -245,6 +250,7 @@ void SceneEditor::init_slots()
     w.slot(&SceneEditor::on_meta_selection_changed_event);
     w.slot(&SceneEditor::on_model_select_event);
     w.slot(&SceneEditor::on_open_tsx_file_command);
+    w.slot(&SceneEditor::on_physics_select_event);
     w.slot(&SceneEditor::on_rendered_select_event);
     w.slot(&SceneEditor::on_save_as_tsx_file_command);
     w.slot(&SceneEditor::on_save_tsx_reply);
@@ -368,29 +374,48 @@ void SceneEditor::init_ui()
         }
         
         {
-            //auto csModels           = controlTree.section("Models").tree();
-            //auto blModels           = csModels.section("Available").make<UIBuildableMetaList<Model>>();
-            //auto curModels          = csModels.section("Current").make<ModelTableUI>();
-            //auto propModels         = csModels.section("Properties");
-            //auto addSpatial         = propModels << new CreateMenuUI("Add/Create Spatial##AddModelSpatialUI", meta<Spatial>());
-            //auto inspModels         = propModels.make<UITachyonEditor>();
+            auto csModels           = controlTree.section("Models").tree();
+            auto blModels           = csModels.section("Available").make<UIBuildableMetaList<Model>>();
+            auto curModels          = csModels.section("Current").make<ModelTableUI>();
+            auto propModels         = csModels.section("Properties");
+            auto addKinetic         = propModels << new CreateMenuUI("Add/Create Kinetic##AddKineticUI", meta<Kinetic>());
+            auto inspModels         = propModels.make<UITachyonEditor>();
 
-            //blModels.uid("ModelAvailable");
-            //blModels.flag(SET, UIFlag::EmitSignal);
+            blModels.uid("ModelAvailable");
+            blModels.flag(SET, UIFlag::EmitSignal);
 
-            //curModels.uid("ModelTable");
+            curModels.uid("ModelTable");
             
-            //addSpatial.action(&SceneEditor::action_create_model_spatial);
+            addKinetic.action(&SceneEditor::action_create_model_kinetic);
 
-            //inspModels.uid("ModelInspector");
-            //inspModels.flag(SET, UIFlag::Children);
+            inspModels.uid("ModelInspector");
+            inspModels.flag(SET, UIFlag::Children);
         }
 
         {
-            //auto csPhysics          = controlTree.section("Physics").tree();
-            //auto blPhysics          = csPhysics.section("Available").make<UIBuildableMetaList<Physic>>();
-            //auto curPhysics         = csPhysics.section("Current").make<PhysicsTableUI>();
-            //auto propPhysics        = csPhysics.section("Properties");
+            auto csPhysics          = controlTree.section("Physics").tree();
+            auto blPhysics          = csPhysics.section("Available").make<UIBuildableMetaList<Physics>>();
+            auto curPhysics         = csPhysics.section("Current").make<PhysicsTableUI>();
+            auto propPhysics        = csPhysics.section("Properties");
+            auto addSpatial         = propPhysics << new CreateMenuUI("Add/Create Physics##AddPhysicsUI", meta<Physics>());
+            auto inspPhysics         = propPhysics.make<UITachyonEditor>();
+
+            blPhysics.uid("PhysicsAvailable");
+            blPhysics.flag(SET, UIFlag::EmitSignal);
+
+            curPhysics.uid("PhysicsTable");
+
+            //addSpatial.action(&SceneEditor::action_create_physics_spatial);
+
+            inspPhysics.uid("PhysicsInspector");
+            inspPhysics.flag(SET, UIFlag::Children);
+        }
+
+        {
+            auto csKinetics          = controlTree.section("Kinetics").tree();
+            auto blKinetics          = csKinetics.section("Available").make<UIBuildableMetaList<Kinetic>>();
+            //auto curPhysics         = csKinetics.section("Current").make<PhysicsTableUI>();
+            //auto propPhysics        = csKinetics.section("Properties");
             //auto addSpatial         = propPhysics << new CreateMenuUI("Add/Create Spatial##AddPhysicsSpatialUI", meta<Spatial>());
 
             //blPhysics.uid("PhysicsAvailable");
@@ -538,37 +563,48 @@ void SceneEditor::init_ui()
         (cameraMenu << new CreateMenuUI("Add/Create##AddCameraUI", meta<Camera>())).action(&SceneEditor::action_create_camera);
     }
     
-    auto sceneMenu         = menuBar.menu("Scene");
-    {
-        (sceneMenu << new CreateMenuUI("Add/Create##AddSceneUI", meta<Scene>())).action(&SceneEditor::action_create_scene);
-    }
-    
-    auto lightMenu         = menuBar.menu("Light");
-    {
-        (lightMenu << new CreateMenuUI("Add/Create##AddLightUI", meta<Light>())).action(&SceneEditor::action_create_light);
-    }
-    
-    auto renderedMenu      = menuBar.menu("Rendered");
-    {
-        (renderedMenu << new CreateMenuUI("Add/Create##AddRenderedUI", meta<Rendered>())).action(&SceneEditor::action_create_rendered);
-    }
-    
-    
-    auto modelMenu         = menuBar.menu("Model");
-    {
-        //(model_menu << new CreateMenuUI("Add/Create##AddModelUI", meta<Model>())).action(&SceneEditor::action_create_model);
-    }
-    
     auto controllerMenu     = menuBar.menu("Controller");
     {
-        //(controller_menu << new CreateMenuUI("Add/Create##AddControllerUI", meta<Controller>())).action(&SceneEditor::action_create_controller);
+        (controllerMenu << new CreateMenuUI("Add/Create##AddControllerUI", meta<Controller>())).action(&SceneEditor::action_create_controller);
     }
     
     auto collisionMenu     = menuBar.menu("Collision");
     {
     }
+
+    auto kineticsMenu       = menuBar.menu("Kinetics");
+    {
+        //(kineticsMenu << new CreateMenuUI("Add/Create##AddKineticsUI", meta<Kinetics>())).action(&SceneEditor::action_create_kinetics);
+    }
+
+    auto lightMenu         = menuBar.menu("Light");
+    {
+        (lightMenu << new CreateMenuUI("Add/Create##AddLightUI", meta<Light>())).action(&SceneEditor::action_create_light);
+    }
+    
+    auto modelMenu         = menuBar.menu("Model");
+    {
+        (modelMenu << new CreateMenuUI("Add/Create##AddModelUI", meta<Model>())).action(&SceneEditor::action_create_model);
+        //(model_menu << new CreateMenuUI("Add/Create##AddModelUI", meta<Model>())).action(&SceneEditor::action_create_model);
+    }
+    
     
     auto physicsMenu       = menuBar.menu("Physics");
+    {
+        (physicsMenu << new CreateMenuUI("Add/Create##AddMPhysicslUI", meta<Model>())).action(&SceneEditor::action_create_physics);
+    }
+
+    auto renderedMenu      = menuBar.menu("Rendered");
+    {
+        (renderedMenu << new CreateMenuUI("Add/Create##AddRenderedUI", meta<Rendered>())).action(&SceneEditor::action_create_rendered);
+    }
+    
+    auto sceneMenu         = menuBar.menu("Scene");
+    {
+        (sceneMenu << new CreateMenuUI("Add/Create##AddSceneUI", meta<Scene>())).action(&SceneEditor::action_create_scene);
+    }
+    
+    auto spatialMenu         = menuBar.menu("Spatial");    
     {
     }
     
@@ -653,6 +689,17 @@ void    SceneEditor::_activate(ModelID id)
         m_model.table -> set_selected(id);
     if(m_model.properties && (m_model.properties->bound() != id))
         m_model.properties -> bind(TypedID(id.id, Type::Model));
+}
+
+void    SceneEditor::_activate(PhysicsID id)
+{
+    if(m_physics.selected == id)
+        return;
+    m_physics.selected   = id;
+    if(m_physics.table && (m_physics.table->selected() != id))
+        m_physics.table -> set_selected(id);
+    if(m_physics.properties && (m_physics.properties->bound() != id))
+        m_physics.properties -> bind(TypedID(id.id, Type::Physics));
 }
 
 void    SceneEditor::_activate(RenderedID id)
@@ -787,6 +834,51 @@ ModelID         SceneEditor::_create(const ModelMeta& meta)
     Model* res = Tachyon::create_on<Model>(EDIT, meta);
     if(!res){
         yNotice() << "Unable to create model (" << meta.stem() << ") due to instantiation problem";
+        return {};
+    }
+    return res->id();
+}
+
+KineticID       SceneEditor::_create(model_k, const KineticMeta& meta)
+{
+    TypedID     pid = typed_for(m_model.selected);
+    if(pid(Type::Model))
+        return _create(m_model.selected, meta);
+    return {};
+}
+
+KineticID       SceneEditor::_create(ModelID pid, const KineticMeta& meta)
+{
+    Model*     parent  = pointer(pid);
+    if(!parent) {
+        yNotice() << "Unable to create spatial (" << meta.stem() << ") due to no corresponding light (id " << pid.id << ")";
+        return {};
+    }
+    
+    const ModelSnap*     psnap   = snapshot(pid);
+    if(!psnap){
+        yNotice() << "Unable to create spatial (" << meta.stem() << ") due to no corresponding light (id " << pid.id << ") on the frame";
+        return {};
+    }
+
+    Kinetic*    res  = parent->create_child_on<Kinetic>(EDIT, meta);
+    if(!res){
+        yNotice() << "Unable to create kinetic (" << meta.stem() << ") due to instantiation problem";
+        return {};
+    }
+    
+    //  TODO
+    //if(!psnap->spatial)
+        //send(new SetSpatialCommand({.target=*parent}, *res));
+        
+    return res->id();
+}
+
+PhysicsID         SceneEditor::_create(const PhysicsMeta& meta)
+{
+    Physics* res = Tachyon::create_on<Physics>(EDIT, meta);
+    if(!res){
+        yNotice() << "Unable to create physics (" << meta.stem() << ") due to instantiation problem";
         return {};
     }
     return res->id();
@@ -1089,11 +1181,20 @@ void    SceneEditor::action_create_model(const Payload& pay)
     }
 }
 
-#if 0
+void    SceneEditor::action_create_model_kinetic(const Payload& pay)
+{
+    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateMeta))){
+        const KineticMeta*   meta    = dynamic_cast<const KineticMeta*>(itr.second);
+        if(!meta)
+            continue;
+        _create(MODEL, *meta);
+    }
+}
+
 void    SceneEditor::action_create_physics(const Payload& pay)
 {
     for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateMeta))){
-        const PhysicsInfo*   meta    = dynamic_cast<const PhysicsInfo*>(itr.second);
+        const PhysicsMeta*   meta    = dynamic_cast<const PhysicsMeta*>(itr.second);
         if(!meta)
             continue;
         PhysicsID res = _create(*meta);
@@ -1101,7 +1202,6 @@ void    SceneEditor::action_create_physics(const Payload& pay)
             _activate(res);
     }
 }
-#endif
 
 void    SceneEditor::action_create_rendered(const Payload& pay)
 {
@@ -1228,6 +1328,15 @@ void    SceneEditor::on_controller_select_event(const ControllerSelectEvent&evt)
     _activate(evt.controller());
 }
 
+
+void    SceneEditor::on_import_tsx_file_command(const ImportTSXFileCommand&cmd)
+{
+    if(cmd.target() != id())
+        return;
+        
+    _import(cmd.filepath());
+}
+
 void    SceneEditor::on_light_select_event(const LightSelectEvent&evt)
 {
     _activate(evt.light());
@@ -1266,6 +1375,14 @@ void    SceneEditor::on_meta_selection_changed_event(const MetaSelectionChangedE
 {
     if(const CameraMeta* p = dynamic_cast<const CameraMeta*>(evt.meta()))
         m_camera.meta       = p;
+    if(const ControllerMeta* p = dynamic_cast<const ControllerMeta*>(evt.meta()))
+        m_controller.meta     = p;
+    if(const LightMeta* p = dynamic_cast<const LightMeta*>(evt.meta()))
+        m_light.meta     = p;
+    if(const ModelMeta* p = dynamic_cast<const ModelMeta*>(evt.meta()))
+        m_model.meta     = p;
+    if(const PhysicsMeta* p = dynamic_cast<const PhysicsMeta*>(evt.meta()))
+        m_physics.meta     = p;
     if(const RenderedMeta* p = dynamic_cast<const RenderedMeta*>(evt.meta()))
         m_rendered.meta     = p;
     if(const SceneMeta* p = dynamic_cast<const SceneMeta*>(evt.meta()))
@@ -1277,13 +1394,11 @@ void    SceneEditor::on_model_select_event(const ModelSelectEvent&evt)
     _activate(evt.model());
 }
 
-void    SceneEditor::on_import_tsx_file_command(const ImportTSXFileCommand&cmd)
+void    SceneEditor::on_physics_select_event(const PhysicsSelectEvent&evt)
 {
-    if(cmd.target() != id())
-        return;
-        
-    _import(cmd.filepath());
+    _activate(evt.physics());
 }
+
 
 void    SceneEditor::on_open_tsx_file_command(const OpenTSXFileCommand& cmd)
 {
@@ -1447,6 +1562,10 @@ Execution   SceneEditor::setup(const Context&ctx)
         m_model.properties      = static_cast<UITachyonEditor*>(element(FIRST, "ModelInspector"));
     if(!m_model.table)
         m_model.table           = static_cast<ModelTableUI*>(element(FIRST, "ModelTable"));
+    if(!m_physics.properties)
+        m_physics.properties      = static_cast<UITachyonEditor*>(element(FIRST, "PhysicsInspector"));
+    if(!m_physics.table)
+        m_physics.table           = static_cast<PhysicsTableUI*>(element(FIRST, "PhysicsTable"));
     if(!m_rendered.properties)
         m_rendered.properties   = static_cast<UITachyonEditor*>(element(FIRST, "RenderedInspector"));
     if(!m_rendered.table)

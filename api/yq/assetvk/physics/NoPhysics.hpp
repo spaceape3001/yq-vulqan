@@ -7,9 +7,10 @@
 #pragma once
 
 #include <yq/tachyon/api/Physics.hpp>
+#include <yq/tachyon/aspect/AScreenScaleM.hpp>
 
 namespace yq::tachyon {
-    class NoPhysics : public Physics {
+    class NoPhysics : public Physics, public AScreenScaleM {
         YQ_TACHYON_DECLARE(NoPhysics, Physics)
     public:
     
@@ -20,7 +21,7 @@ namespace yq::tachyon {
         
     protected:
         void        snap(PhysicsSnap&) const;
-    private:
-        Meter       m_scale = 1._cm;
     };
 }
+
+YQ_TACHYON_FORCE(yq::tachyon::NoPhysics)

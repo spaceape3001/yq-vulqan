@@ -8,3 +8,4 @@
 #include "proxy/PScale2D.ipp"
 #include "proxy/PScale3D.ipp"
 #include "proxy/PScale4D.ipp"
+#include "proxy/PScreenScaleM.ipp"

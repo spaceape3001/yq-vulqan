@@ -177,6 +177,7 @@ add_library(${PROJECT_NAME} SHARED
     aspect/AMesh.cpp
     aspect/ANearPlane.cpp
     aspect/ARenderMode.cpp
+    aspect/AScreenScaleM.cpp
     aspect/ASpatial3D.cpp
     aspect/ATexture.cpp
     aspect/ATopology.cpp

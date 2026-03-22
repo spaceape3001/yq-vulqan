@@ -15,6 +15,20 @@ SCEMain::SCEMain()
 {
     resize(1920, 1080);
     setWindowTitle(tr("Scene Editor"));
+    
+    activateTabs();
+    enableDetachableTabs();
+    enableClosableTabs();
+    
+    QMenu*  fileMenu    = makeMenu("file", "File");
+    QMenu*  editMenu    = makeMenu("edit", "Edit");
+    QMenu*  viewMenu    = makeMenu("view", "View");
+    
+    //  and other things....
+    
+    QMenu*  winMenu     = makeMenu("window", "Window");
+    QMenu*  helpMenu    = makeMenu("help", "Help");
+    QMenu*  dbgMenu     = makeMenu("debug", "Debug");
 }
 
 SCEMain::SCEMain(PostStartupFN&&fn) : SCEMain()
@@ -24,6 +38,11 @@ SCEMain::SCEMain(PostStartupFN&&fn) : SCEMain()
 
 SCEMain::~SCEMain()
 {
+}
+
+SCEMain* SCEMain::newMain() 
+{
+    return Tachyon::create<SCEMain>( /* copy whatever */ );
 }
 
 Execution   SCEMain::setup(const Context&ctx) 

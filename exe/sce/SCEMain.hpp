@@ -27,6 +27,8 @@ public:
     
 protected:
     virtual Execution   setup(const Context&) override;
+    
+    virtual SCEMain*     newMain() override;
 
 private:
     PostStartupFN           m_startup;

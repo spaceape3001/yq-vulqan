@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/tachyon.hpp>
+#include <yq/tachyon/typedef/mouse.hpp>
 #include <QMetaType>
 
-Q_DECLARE_METATYPE(yq::tachyon::TachyonID)
+Q_DECLARE_METATYPE(yq::tachyon::MouseID)
 

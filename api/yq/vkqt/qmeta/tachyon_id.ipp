@@ -6,4 +6,8 @@
 
 #include "tachyon_id.hpp"
 
+#include <yq/core/DelayInit.hpp>
 
+namespace yq::tachyon {
+    YQ_INVOKE( qRegisterMetaType<TachyonID>(); )
+}

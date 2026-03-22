@@ -4,11 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#pragma once
+#include "widget_id.hpp"
 
-#include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/tachyon.hpp>
-#include <QMetaType>
+#include <yq/core/DelayInit.hpp>
 
-Q_DECLARE_METATYPE(yq::tachyon::TachyonID)
-
+namespace yq::tachyon {
+    YQ_INVOKE( qRegisterMetaType<WidgetID>(); )
+}

@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+#include <yq/tachyon/api/ThreadData.hpp>
+
+namespace yq::tachyon {
+    struct TEAppThreadSnap : public ThreadSnap {
+    };
+    
+    struct TEAppThreadData : public ThreadData {
+    };
+}

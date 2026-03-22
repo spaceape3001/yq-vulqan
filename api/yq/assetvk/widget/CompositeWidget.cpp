@@ -5,6 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "CompositeWidget.hpp"
+#include "CompositeWidgetData.hpp"
+
 #include <yq/tachyon/api/Camera3.hpp>
 #include <yq/tachyon/api/Camera3Data.hpp>
 #include <yq/tachyon/api/CameraTweak.hpp>
@@ -84,6 +86,11 @@ namespace yq::tachyon {
         for(const CLayer& lay : m_layers)
             _prerecord(ctx, lay);
         Widget::prerecord(ctx);
+    }
+
+    void CompositeWidget::snap(CompositeWidgetSnap&sn) const
+    {
+        Widget::snap(sn);
     }
 
     void CompositeWidget::init_meta()

@@ -42,5 +42,6 @@ if(Build_Qt6)
     add_subdirectory(vkqt)
     add_subdirectory(assetqt)
     add_subdirectory(xgqt)
+    add_subdirectory(tedit)
 endif()
 

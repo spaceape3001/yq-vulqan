@@ -73,6 +73,20 @@ namespace yq::tachyon {
             return s_app->m_cInfo.app_name;
         return "";
     }
+    
+    void    Application::info_resource_paths()
+    {
+        for(const std::filesystem::path& pth : Resource::all_paths())
+            tachyonInfo << "resource path> " << pth;
+    }
+    
+    void    Application::info_std_threads() 
+    {
+        for(StdThread st : StdThread::all_values())
+            tachyonInfo << "std thread " << st.key() << "> " << Thread::standard(st).id;
+    }
+
+    ////////////////////////////
 
     Application::Application(int argc, char* argv[], const AppCreateInfo& aci) : 
         BasicApp(argc, argv, aci), m_cInfo(_update(aci))

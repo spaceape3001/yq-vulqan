@@ -8,11 +8,16 @@
 
 #include <yq/tachyon/api/Widget.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
+#include <yq/tachyon/typedef/physics.hpp>
 #include <yq/tachyon/typedef/scene.hpp>
 #include <yq/tachyon/enum/RenderMode.hpp>
 
 namespace yq::tachyon {
+    struct CompositeWidgetData;
+    struct CompositeWidgetSnap;
     class CompositeWidget : public Widget {
+        YQ_TACHYON_DATA(CompositeWidgetData)
+        YQ_TACHYON_SNAP(CompositeWidgetSnap)
         YQ_WIDGET_DECLARE(CompositeWidget, Widget)
     public:
     
@@ -39,6 +44,9 @@ namespace yq::tachyon {
     
         std::vector<CLayer> m_layers;
         RGBA4F              m_bgcolor       = { 0., 0., 0., 1. };
+        PhysicsID           m_physics;
+        
+        void    snap(CompositeWidgetSnap&) const;
 
         void    _prerecord(ViContext&, const CLayer&);
         using Widget::prerecord;

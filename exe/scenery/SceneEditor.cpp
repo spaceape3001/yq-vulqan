@@ -30,6 +30,7 @@
 #include <yq/assetvk/tweak/OriginCameraTweak.hpp>
 #include <yq/assetvk/ui/UIBuildableMetaListWriter.hpp>
 #include <yq/assetvk/ui/UITachyonEditorWriter.hpp>
+#include <yq/assetvk/widget/CompositeWidgetData.hpp>
 #include <yq/assetvk/widget/FrameInspector.hpp>
 
 #include <yq/date/dateutils.hpp>

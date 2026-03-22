@@ -5,13 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SCEApp.hpp"
-#include <yq/tachyon/api/ThreadMetaWriter.hpp>
-
-YQ_TACHYON_IMPLEMENT(SCEApp)
 
 SCEApp* SCEApp::s_app   = nullptr;
 
-SCEApp::SCEApp(int&argc, char* argv[], yq::tachyon::Application& app) : YAppThread(argc, argv, app)
+SCEApp::SCEApp(int&argc, char* argv[], const AppCreateInfo& aci) : TEApp(argc, argv, aci)
 {
     s_app   = this;
 
@@ -36,4 +33,4 @@ SCEApp::~SCEApp()
     s_app = nullptr;
 }
 
-#include "moc_SCEApp.cpp"
+

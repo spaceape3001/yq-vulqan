@@ -8,13 +8,14 @@
 #include <yq/assetvk/io/FileIOManager.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
+#include <yq/tedit/TEApp.hpp>
 #include <yq/vkqt/app/YApp.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/process/PluginLoader.hpp>
 
 #include "SCEApp.hpp"
 #include "SCEMain.hpp"
-#include "SCEProject.hpp"
+//#include "SCEProject.hpp"
 
 TypedID     gFileIO;
 TypedID     gProjectID;
@@ -22,9 +23,6 @@ TypedID     gProjectID;
 int main(int argc, char* argv[])
 {
     AppCreateInfo       aci;
-    aci.thread.app          = [&](Application& app) -> Ref<AppThread> {
-        return new SCEApp(argc, argv, app);
-    };
     aci.thread.io           = true;
     aci.thread.viewer       = PER;
     aci.view.title          = "Scenery Editor";
@@ -35,7 +33,7 @@ int main(int argc, char* argv[])
     aci.view.depth_buffer   = ENABLE;
     aci.vulkan.graphics     = 16U;      // why not????
 
-    YApp        app(argc, argv, aci);
+    SCEApp        app(argc, argv, aci);
 
     Meta::init();
     app.vulqan_libraries(LOAD);
@@ -52,16 +50,12 @@ int main(int argc, char* argv[])
     #endif
     
     Meta::freeze();
-    for(const std::filesystem::path& pth : Resource::all_paths())
-        yInfo() << "resource path> " << pth;
-
+    app.info_resource_paths();
     app.start();
-
-    for(StdThread st : StdThread::all_values())
-        yInfo() << "thread " << st.key() << "> " << Thread::standard(st).id;
+    app.info_std_threads();
 
     gFileIO     = Tachyon::create_on<FileIOManager>(IO)->typed_id();
-    gProjectID  = Tachyon::create_on<SCEProject>(IO)->typed_id();
+    //gProjectID  = Tachyon::create_on<SCEProject>(IO)->typed_id();
     
     SCEMain*w           = Tachyon::create<SCEMain>();
     w -> show();

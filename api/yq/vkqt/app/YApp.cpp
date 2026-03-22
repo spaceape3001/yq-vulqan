@@ -28,70 +28,10 @@ namespace yq::tachyon {
     int              YApp::s_argCnt = 0;
     char**           YApp::s_argPtr = nullptr;
 
-    AppCreateInfo    YApp::_threads(int argc, char*argv[], const AppCreateInfo&aci)
+    YApp::YApp(int argc, char* argv[], const AppCreateInfo& aci) : Application(argc, argv, aci)
     {
         s_argCnt    = argc;
         s_argPtr    = argv;
-        
-        AppCreateInfo   ret = aci;
-        
-        if(!ret.thread.app){
-            ret.thread.app      = [](Application& app) -> Ref<AppThread> {
-                return new YAppThread(s_argCnt, s_argPtr, app);
-            };
-        }
-
-        if(!ret.thread.audio.create){
-            ret.thread.audio.create     = [](Application&) -> Ref<AudioThread>{
-                return new XThread<AudioThread>;
-            };
-        }
-        if(!ret.thread.auxillary.create){
-            ret.thread.auxillary.create = [](Application&) -> Ref<AuxillaryThread>{
-                return new XThread<AuxillaryThread>;
-            };
-        }
-        if(!ret.thread.edit.create){
-            ret.thread.edit.create = [](Application&) -> Ref<EditThread>{
-                return new XThread<EditThread>;
-            };
-        }
-        if(!ret.thread.game.create){
-            ret.thread.game.create = [](Application&) -> Ref<GameThread>{
-                return new XThread<GameThread>;
-            };
-        }
-        if(!ret.thread.io.create){
-            ret.thread.io.create = [](Application&) -> Ref<IOThread>{
-                return new XThread<IOThread>;
-            };
-        }
-        if(!ret.thread.network.create){
-            ret.thread.network.create = [](Application&) -> Ref<NetworkThread>{
-                return new XThread<NetworkThread>;
-            };
-        }
-        if(!ret.thread.sim.create){
-            ret.thread.sim.create = [](Application&) -> Ref<SimThread>{
-                return new XThread<SimThread>;
-            };
-        }
-        if(!ret.thread.task.create){
-            ret.thread.task.create = [](Application&) -> Ref<TaskThread>{
-                return new XThread<TaskThread>;
-            };
-        }
-        if(!ret.thread.viewer.create){
-            ret.thread.viewer.create = [](Application&) -> Ref<ViewerThread>{
-                return new XThread<ViewerThread>;
-            };
-        }
-        
-        return ret; // HACK... need full thing
-    }
-
-    YApp::YApp(int argc, char* argv[], const AppCreateInfo& aci) : Application(argc, argv, _threads(argc, argv, aci))
-    {
     }
 
     YApp::~YApp()
@@ -100,6 +40,57 @@ namespace yq::tachyon {
 
     bool YApp::start() 
     {
+        if(!m_cInfo.thread.app){
+            m_cInfo.thread.app      = [](Application& app) -> Ref<AppThread> {
+                return new YAppThread(s_argCnt, s_argPtr, app);
+            };
+        }
+        if(!m_cInfo.thread.audio.create){
+            m_cInfo.thread.audio.create     = [](Application&) -> Ref<AudioThread>{
+                return new XThread<AudioThread>;
+            };
+        }
+        if(!m_cInfo.thread.auxillary.create){
+            m_cInfo.thread.auxillary.create = [](Application&) -> Ref<AuxillaryThread>{
+                return new XThread<AuxillaryThread>;
+            };
+        }
+        if(!m_cInfo.thread.edit.create){
+            m_cInfo.thread.edit.create = [](Application&) -> Ref<EditThread>{
+                return new XThread<EditThread>;
+            };
+        }
+        if(!m_cInfo.thread.game.create){
+            m_cInfo.thread.game.create = [](Application&) -> Ref<GameThread>{
+                return new XThread<GameThread>;
+            };
+        }
+        if(!m_cInfo.thread.io.create){
+            m_cInfo.thread.io.create = [](Application&) -> Ref<IOThread>{
+                return new XThread<IOThread>;
+            };
+        }
+        if(!m_cInfo.thread.network.create){
+            m_cInfo.thread.network.create = [](Application&) -> Ref<NetworkThread>{
+                return new XThread<NetworkThread>;
+            };
+        }
+        if(!m_cInfo.thread.sim.create){
+            m_cInfo.thread.sim.create = [](Application&) -> Ref<SimThread>{
+                return new XThread<SimThread>;
+            };
+        }
+        if(!m_cInfo.thread.task.create){
+            m_cInfo.thread.task.create = [](Application&) -> Ref<TaskThread>{
+                return new XThread<TaskThread>;
+            };
+        }
+        if(!m_cInfo.thread.viewer.create){
+            m_cInfo.thread.viewer.create = [](Application&) -> Ref<ViewerThread>{
+                return new XThread<ViewerThread>;
+            };
+        }
+    
         if(!Application::start())   
             return false;
         m_thread.app -> leak(); // m_appThread = m_thread.app;

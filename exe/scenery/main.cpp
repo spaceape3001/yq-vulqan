@@ -76,13 +76,10 @@ int main(int argc, char* argv[])
     }
     
     Meta::freeze();
-    for(const std::filesystem::path& pth : Resource::all_paths())
-        yInfo() << "resource path> " << pth;
+    app.info_resource_paths();
     
     app.start();
-    
-    for(StdThread st : StdThread::all_values())
-        yInfo() << "thread " << st.key() << "> " << Thread::standard(st).id;
+    app.info_std_threads();
     
     gFileIO             = Tachyon::create_on<FileIOManager>(IO)->typed_id();
     SceneEditor* w      = Widget::create<SceneEditor>([&](SceneEditor& se){

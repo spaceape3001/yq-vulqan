@@ -36,8 +36,7 @@ int main(int argc, char* argv[])
     
     
     Meta::freeze();
-    for(const std::filesystem::path& pth : Resource::all_paths())
-        yInfo() << "resource path> " << pth;
+    app.info_resource_paths();
 
     app.start();
     auto mw   = Tachyon::create<AppWindow>();

@@ -68,6 +68,9 @@ namespace yq::tachyon {
         
         static std::string_view     app_name();
 
+        static void    info_resource_paths();
+        static void    info_std_threads();
+
         /*! \brief Constructor
         
             \param[in]  argc    Pass onto me what the main() was given
@@ -98,6 +101,7 @@ namespace yq::tachyon {
         ViewerID                    create(viewer_k, const ViewerCreateInfo&, WidgetPtr);
 
         
+
         bool    is_headless() const;
 
         /*! \brief Exec loop for a bunch of windows

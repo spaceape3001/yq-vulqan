@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "SCEMain.hpp"
-#include "SCEProject.hpp"
+//#include "SCEProject.hpp"
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 
@@ -36,8 +36,8 @@ Execution   SCEMain::setup(const Context&ctx)
         return WAIT;
 
     const Frame*    frame   = Frame::current();
-    if(!frame->contains(gProjectID))
-        return WAIT;
+    //if(!frame->contains(gProjectID))
+        //return WAIT;
     if(!frame->contains(id()))
         return WAIT;
         

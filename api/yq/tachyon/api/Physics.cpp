@@ -8,8 +8,10 @@
 #include "PhysicsData.hpp"
 #include "PhysicsMetaWriter.hpp"
 //#include <yq/tachyon/api/Post.hpp>
-#include <yq/meta/Init.hpp>
+
 #include <yq/units.hpp>
+#include <yq/meta/Init.hpp>
+#include <yq/tachyon/api/Frame.hpp>
 #include <yq/vector/Vector3.hpp>
 
 
@@ -55,7 +57,7 @@ namespace yq::tachyon {
     {
     }
 
-    MeterPerSecond²3D PhysicsSnap::gravity(const Meter3D& pt, const Frame*) const
+    MeterPerSecond²3D PhysicsSnap::gravity(const Meter3D& pt) const
     {
         MeterPerSecond²3D   sum = ZERO;
         for(auto& fn : gravity3){
@@ -67,41 +69,60 @@ namespace yq::tachyon {
             sum += g;
         }
         
-        //  frame.... for when we have parentage...
-        
         return sum;
     }
 
-    Vector2D          PhysicsSnap::map(const Meter2D&pt, const Frame*) const
+    Vector2D          PhysicsSnap::map(const Meter2D&pt, const Frame* frame) const
     {
-        if(!screen2map)
-            return NAN;
-        return screen2map(pt);
+        if(screen2map)
+            return screen2map(pt);
+        if(const PhysicsSnap* p = parent(frame))
+            return p->map(pt, frame);
+        return NAN;
     }
 
-    Vector3D          PhysicsSnap::map(const Meter3D&pt, const Frame*) const
+    Vector3D          PhysicsSnap::map(const Meter3D&pt, const Frame* frame) const
     {
         //  frame... for when we have parentage...
-        if(!screen3map)
-            return NAN;
-        return screen3map(pt);
+        if(screen3map)
+            return screen3map(pt);
+        if(const PhysicsSnap* p = parent(frame))
+            return p->map(pt, frame);
+        return NAN;
+    }
+
+    const PhysicsSnap*          PhysicsSnap::parent(const Frame* frame) const
+    {
+        if(!TachyonSnap::parent)
+            return nullptr;
+        
+        if(!frame)
+            frame   = Frame::current();
+        if(!frame)
+            return nullptr;
+        
+        return dynamic_cast<const PhysicsSnap*>(frame->snap(TachyonSnap::parent));
     }
     
-    Meter2D           PhysicsSnap::unmap(const Vector2D&v, const Frame*) const
+    Meter2D           PhysicsSnap::unmap(const Vector2D&v, const Frame* frame) const
     {
-        if(!screen2rev)
-            return NAN;
-        return screen2rev(v);
+        if(screen2rev)
+            return screen2rev(v);
+        if(const PhysicsSnap* p = parent(frame))
+            return p->unmap(v, frame);
+        return NAN;
     }
 
-    Meter3D           PhysicsSnap::unmap(const Vector3D&v, const Frame*) const
+    Meter3D           PhysicsSnap::unmap(const Vector3D&v, const Frame* frame) const
     {
-        if(!screen3rev)
-            return NAN;
-        return screen3rev(v);
+        if(screen3rev)
+            return screen3rev(v);
+        if(const PhysicsSnap* p = parent(frame))
+            return p->unmap(v, frame);
+        return NAN;
     }
 
-    MeterPerSecond3D  PhysicsSnap::wind(const Meter3D& pt, const Frame*) const
+    MeterPerSecond3D  PhysicsSnap::wind(const Meter3D& pt) const
     {
         MeterPerSecond3D    sum = ZERO;
         for(auto& fn : wind3){
@@ -112,8 +133,6 @@ namespace yq::tachyon {
                 continue;
             sum += w;
         }
-        
-        //  frame... for when we have parentage...
         
         return sum;
     }

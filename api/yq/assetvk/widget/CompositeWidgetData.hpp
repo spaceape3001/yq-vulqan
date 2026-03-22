@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/tachyon/api/WidgetData.hpp>
+
+namespace yq::tachyon {
+    struct CompositeWidgetSnap : public WidgetSnap {
+    };
+    
+    struct CompositeWidgetData : public WidgetData {
+    };
+}

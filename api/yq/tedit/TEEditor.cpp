@@ -17,7 +17,7 @@ namespace yq::tachyon {
         w.description("Common Editor");
     }
 
-    TEEditor::TEEditor(QWidget*parent) : XWidget<gluon::UndoSubWindow, Tachyon>(parent)
+    TEEditor::TEEditor(QWidget*parent) : xwidget_type(parent)
     {
     }
     

@@ -19,6 +19,14 @@ add_library(${PROJECT_NAME} SHARED
     TEDoc.hpp
     TEEditor.cpp
     TEEditor.hpp
+    TEManager.cpp
+    TEManager.hpp
+    TEViewCtrl.cpp
+    TEViewCtrl.hpp
+    TEViewCtrlBox.cpp
+    TEViewCtrlBox.hpp
+    TEViewCtrlDock.cpp
+    TEViewCtrlDock.hpp
     TEViewer.cpp
     TEViewer.hpp
 )

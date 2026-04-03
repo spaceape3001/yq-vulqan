@@ -8,6 +8,7 @@
 //#include "SCEProject.hpp"
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tedit/TEViewCtrlDock.hpp>
 
 YQ_TACHYON_IMPLEMENT(SCEMain)
 
@@ -20,15 +21,27 @@ SCEMain::SCEMain()
     enableDetachableTabs();
     enableClosableTabs();
     
-    QMenu*  fileMenu    = makeMenu("file", "File");
-    QMenu*  editMenu    = makeMenu("edit", "Edit");
-    QMenu*  viewMenu    = makeMenu("view", "View");
+    QMenu*  fileMenu        = makeMenu("file", "File");
+    QMenu*  editMenu        = makeMenu("edit", "Edit");
+    QMenu*  viewMenu        = makeMenu("view", "View");
+    
+    QMenu*  cameraMenu      = makeMenu("camera", "Camera");
+    QMenu*  collisionMenu   = makeMenu("collision", "Collision" );
+    QMenu*  kineticsMenu    = makeMenu("kinetics", "Kinetics");
+    QMenu*  lightMenu       = makeMenu("light", "Light");
+    QMenu*  modelMenu       = makeMenu("model", "Model");
+    QMenu*  physicsMenu     = makeMenu("physics", "Physics");
+    QMenu*  renderedMenu    = makeMenu("rendered", "Rendered");
+    QMenu*  sceneMenu       = makeMenu("scene", "Scene");
+    QMenu*  spatialMenu     = makeMenu("spatial", "Spatial");
     
     //  and other things....
     
-    QMenu*  winMenu     = makeMenu("window", "Window");
-    QMenu*  helpMenu    = makeMenu("help", "Help");
-    QMenu*  dbgMenu     = makeMenu("debug", "Debug");
+    QMenu*  windowMenu      = makeMenu("window", "Window");
+    QMenu*  helpMenu        = makeMenu("help", "Help");
+    QMenu*  debugMenu       = makeMenu("debug", "Debug");
+    
+    addDock(new TEViewCtrlDock);
 }
 
 SCEMain::SCEMain(PostStartupFN&&fn) : SCEMain()

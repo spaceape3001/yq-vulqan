@@ -9,6 +9,7 @@
 #include <yq/core/Logging.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
 #include <yq/tedit/TEApp.hpp>
+#include <yq/tedit/TEManager.hpp>
 #include <yq/vkqt/app/YApp.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/process/PluginLoader.hpp>
@@ -53,6 +54,8 @@ int main(int argc, char* argv[])
     app.info_resource_paths();
     app.start();
     app.info_std_threads();
+
+    Tachyon::create<TEManager>();
 
     gFileIO     = Tachyon::create_on<FileIOManager>(IO)->typed_id();
     //gProjectID  = Tachyon::create_on<SCEProject>(IO)->typed_id();

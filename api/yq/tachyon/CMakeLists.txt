@@ -21,6 +21,7 @@ add_library(${PROJECT_NAME} SHARED
     ##  These are the "unity" build files
     
     api_camera.cpp
+    api_domain.cpp
     api_kinetic.cpp
     api_light.cpp
     api_meta.cpp

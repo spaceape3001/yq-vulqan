@@ -23,6 +23,8 @@ namespace yq::tachyon {
         Controller,
         Cursor,
         Desktop,
+        Domain,
+        Domain³,
         Editor,
         Gamepad,
         GraphicsCard,

@@ -372,21 +372,17 @@ namespace yq::tachyon {
         return static_cast<bool>(std::get_if<reject_k>(&pa));
     }
 
-    void Tachyon::retain(TachyonPtr tp)
+    void Tachyon::retain(TachyonPtr tp, use_thread_t ut)
     {
-        Thread::retain(tp);
+        if(auto* p = std::get_if<ThreadID>(&ut)){
+            Thread::retain(tp, *p);
+        } else if(auto* p = std::get_if<StdThread>(&ut)){
+            Thread::retain(tp, *p);
+        } else {
+            Thread::retain(tp);
+        }
     }
     
-    void Tachyon::retain(TachyonPtr tp, ThreadID tid)
-    {
-        Thread::retain(tp, tid);
-    }
-
-    void Tachyon::retain(TachyonPtr tp, StdThread st)
-    {
-        Thread::retain(tp, st);
-    }
-
     bool Tachyon::unspecified(const PostAdvice&pa) 
     {
         return static_cast<bool>(std::get_if<std::monostate>(&pa));

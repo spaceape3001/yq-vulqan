@@ -53,41 +53,23 @@ namespace yq::tachyon {
     }
 
     template <SomeTachyon T, typename ... Args>
-    T*  Tachyon::create_on(StdThread st, Args&&... args)
+    T*  Tachyon::create_on(use_thread_t ut, Args&&... args)
     {
         Ref<T>  tp  = new T(std::forward<decltype(args)>(args)...);
-        retain(tp, st);
+        retain(tp, ut);
         return tp.ptr();
     }
 
     template <SomeTachyon T>
-    T*   Tachyon::create_on(StdThread st, const typename T::MyMeta& meta)
+    T*   Tachyon::create_on(use_thread_t ut, const typename T::MyMeta& meta)
     {
         Ref<T> tp = dynamic_cast<T*>(meta.create()); // should *NEVER* fail unless uncreatable
         if(tp){
-            retain(tp, st);
+            retain(tp, ut);
         }
         return tp.ptr();
     }
-
-    template <SomeTachyon T, typename ... Args>
-    T*  Tachyon::create_on(ThreadID st, Args&&... args)
-    {
-        Ref<T>  tp  = new T(std::forward<decltype(args)>(args)...);
-        retain(tp, st);
-        return tp.ptr();
-    }
-
-    template <SomeTachyon T>
-    T*   Tachyon::create_on(ThreadID st, const typename T::MyMeta& meta)
-    {
-        Ref<T> tp = dynamic_cast<T*>(meta.create()); // should *NEVER* fail unless uncreatable
-        if(tp){
-            retain(tp, st);
-        }
-        return tp.ptr();
-    }
-
+     
     ////////////////////////////////////////////
     //  Child-tachyon creates
 
@@ -115,22 +97,11 @@ namespace yq::tachyon {
     }
 
     template <SomeTachyon T, typename ... Args>
-    T*  Tachyon::create_child_on(ThreadID st, Args&&... args)
+    T*  Tachyon::create_child_on(use_thread_t ut, Args&&... args)
     {
         Ref<T>   tp  = new T(std::forward<decltype(args)>(args)...);
         tp -> m_flags |= F::DifferentThread;
-        retain(tp, st);
-        tp->_set_parent(*this);
-        _add_child(*tp);
-        return tp.ptr();
-    }
-
-    template <SomeTachyon T, typename ... Args>
-    T*  Tachyon::create_child_on(StdThread st, Args&&... args)
-    {
-        Ref<T>   tp  = new T(std::forward<decltype(args)>(args)...);
-        tp -> m_flags |= F::DifferentThread;
-        retain(tp, st);
+        retain(tp, ut);
         tp->_set_parent(*this);
         _add_child(*tp);
         return tp.ptr();
@@ -138,27 +109,14 @@ namespace yq::tachyon {
 
 
     template <SomeTachyon T>
-    T*   Tachyon::create_child_on(ThreadID st, const typename T::MyMeta& meta)
+    T*   Tachyon::create_child_on(use_thread_t ut, const typename T::MyMeta& meta)
     {
         Ref<T> tp = dynamic_cast<T*>(meta.create()); // should *NEVER* fail unless uncreatable
         if(tp){
             tp -> m_flags |= F::DifferentThread;
             tp->_set_parent(*this);
             _add_child(*tp);
-            retain(tp, st);
-        }
-        return tp.ptr();
-    }
-
-    template <SomeTachyon T>
-    T*   Tachyon::create_child_on(StdThread st, const typename T::MyMeta& meta)
-    {
-        Ref<T> tp = dynamic_cast<T*>(meta.create()); // should *NEVER* fail unless uncreatable
-        if(tp){
-            tp -> m_flags |= F::DifferentThread;
-            tp->_set_parent(*this);
-            _add_child(*tp);
-            retain(tp, st);
+            retain(tp, ut);
         }
         return tp.ptr();
     }

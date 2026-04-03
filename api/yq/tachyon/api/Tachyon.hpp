@@ -25,6 +25,7 @@
 #include <yq/tachyon/typedef/proxy.hpp>
 #include <yq/tachyon/typedef/tachyon.hpp>
 #include <yq/tachyon/typedef/thread.hpp>
+#include <yq/tachyon/typedef/use_thread.hpp>
 #include <yq/typedef/any_maps.hpp>
 #include <yq/typedef/string_maps.hpp>
 
@@ -437,22 +438,13 @@ namespace yq::tachyon {
         template <SomeTachyon T>
         static T*   create(const typename T::MyMeta&);
 
-
-        //! Creates a tachyon in the sim/game-thread
+        //! Creates a tachyon in the specified thread
         template <SomeTachyon T, typename ... Args>
-        static T*   create_on(StdThread, Args&&...);
-
-        //! Creates a tachyon in the sim/game-thread
-        template <SomeTachyon T, typename ... Args>
-        static T*   create_on(ThreadID, Args&&...);
-        
-        //! Creates a tachyon on the Application thread (caution here)
-        template <SomeTachyon T=Tachyon>
-        static T*   create_on(StdThread, const typename T::MyMeta&);
+        static T*   create_on(use_thread_t, Args&&...);
 
         //! Creates a tachyon on the Application thread (caution here)
         template <SomeTachyon T=Tachyon>
-        static T*   create_on(ThreadID, const typename T::MyMeta&);
+        static T*   create_on(use_thread_t, const typename T::MyMeta&);
 
         //! Creates a "child" tachyon to the given tachyon
         template <SomeTachyon T, typename ... Args>
@@ -464,19 +456,11 @@ namespace yq::tachyon {
 
         //! Creates a "child" tachyon to the given tachyon
         template <SomeTachyon T, typename ... Args>
-        T*          create_child_on(ThreadID, Args&&...);
-
-        //! Creates a "child" tachyon to the given tachyon
-        template <SomeTachyon T, typename ... Args>
-        T*          create_child_on(StdThread, Args&&...);
+        T*          create_child_on(use_thread_t, Args&&...);
 
         //! Creates a "child" tachyon using the given meta information
         template <SomeTachyon T=Tachyon>
-        T*          create_child_on(StdThread, const typename T::MyMeta&);
-
-        template <SomeTachyon T=Tachyon>
-        T*          create_child_on(ThreadID, const typename T::MyMeta&);
-
+        T*          create_child_on(use_thread_t, const typename T::MyMeta&);
 
         //template <SomeTachyon T>
         //static T*   create(const typename T::MyInfo&, std::span<const Any> args);
@@ -774,9 +758,7 @@ namespace yq::tachyon {
         Tachyon(init_k, const Param& p={});
         Tachyon(thread_k, const Param& p={});
         
-        static void retain(TachyonPtr);
-        static void retain(TachyonPtr, ThreadID);
-        static void retain(TachyonPtr, StdThread);
+        static void retain(TachyonPtr, use_thread_t ut={});
 
         static constexpr const unsigned int     kInvalidThread  = (unsigned int) ~0;
         

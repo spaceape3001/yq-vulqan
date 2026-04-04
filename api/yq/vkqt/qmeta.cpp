@@ -30,6 +30,7 @@
 #include "qmeta/spatial3_id.ipp"
 #include "qmeta/tachyon_id.ipp"
 #include "qmeta/thread_id.ipp"
+#include "qmeta/typed_id.ipp"
 #include "qmeta/viewer_id.ipp"
 #include "qmeta/widget_id.ipp"
 #include "qmeta/window_id.ipp"

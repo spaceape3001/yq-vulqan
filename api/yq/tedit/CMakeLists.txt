@@ -29,6 +29,43 @@ add_library(${PROJECT_NAME} SHARED
     TEViewCtrlDock.hpp
     TEViewer.cpp
     TEViewer.hpp
+    
+    xrs/MCamera.cpp
+    xrs/MCamera.hpp
+    xrs/MCompositeWidget.cpp
+    xrs/MCompositeWidget.hpp
+    xrs/MController.cpp
+    xrs/MController.hpp
+    xrs/MDomain.cpp
+    xrs/MDomain.hpp
+    #xrs/MGroup.cpp
+    #xrs/MGroup.hpp
+    xrs/MKinetic.cpp
+    xrs/MKinetic.hpp
+    xrs/MLayer.cpp
+    xrs/MLayer.hpp
+    xrs/MLight.cpp
+    xrs/MLight.hpp
+    xrs/MManager.cpp
+    xrs/MManager.hpp
+    xrs/MModel.cpp
+    xrs/MModel.hpp
+    xrs/MPhysics.cpp
+    xrs/MPhysics.hpp
+    xrs/MRendered.cpp
+    xrs/MRendered.hpp
+    xrs/MScene.cpp
+    xrs/MScene.hpp
+    xrs/MSpatial.cpp
+    xrs/MSpatial.hpp
+    xrs/MTachyon.cpp
+    xrs/MTachyon.hpp
+    xrs/MThread.cpp
+    xrs/MThread.hpp
+    xrs/MViewer.cpp
+    xrs/MViewer.hpp
+    xrs/MWidget.cpp
+    xrs/MWidget.hpp
 )
 
 target_link_libraries(${PROJECT_NAME}

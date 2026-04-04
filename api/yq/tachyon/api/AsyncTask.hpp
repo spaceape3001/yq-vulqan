@@ -9,6 +9,7 @@
 #include <yq/tachyon/api/StdThread.hpp>
 #include <yq/tachyon/typedef/thread.hpp>
 #include <yq/tachyon/typedef/async_task.hpp>
+#include <yq/tachyon/typedef/use_thread.hpp>
 
 namespace yq::tachyon {
 
@@ -30,6 +31,5 @@ namespace yq::tachyon {
         AsyncTask& operator=(AsyncTask&&) = delete;
     };
     
-    void    schedule_this(StdThread, AsyncTaskUPtr&&);
-    void    schedule_this(ThreadID, AsyncTaskUPtr&&);
+    void    schedule_this(use_thread_t, AsyncTaskUPtr&&);
 }

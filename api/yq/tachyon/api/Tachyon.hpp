@@ -736,13 +736,8 @@ namespace yq::tachyon {
         
         //! An asynchronous task on the given thread
         //! \return Future of the appropriate type
-        template <typename Pred>
-        auto    tasker(StdThread, Pred&&);
-        
-        //! An asynchronous task on the given thread
-        //! \return Future of the appropriate type
-        template <typename Pred>
-        auto    tasker(ThreadID,  Pred&&);
+        //template <typename Pred>
+        //auto    tasker(use_thread_t, Pred&&);
 
     private:
         friend class Proxy;

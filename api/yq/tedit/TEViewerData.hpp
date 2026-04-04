@@ -12,7 +12,7 @@
 
 namespace yq::tachyon {
     struct TEViewerSnap : public CompositeWidgetSnap {
-        PhysicsID                   physics;
+        //PhysicsID                   physics;
     };
     
     struct TEViewerData : public CompositeWidgetData {

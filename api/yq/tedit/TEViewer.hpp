@@ -15,6 +15,8 @@ namespace yq::tachyon {
     struct TEViewerData;
     struct TEViewerSnap;
     
+    /*! \brief Manage a viewer (with widget)
+    */
     class TEViewer : public XTachyon<QObject, CompositeWidget> {
         YQ_TACHYON_DATA(TEViewerData)
         YQ_TACHYON_SNAP(TEViewerSnap)

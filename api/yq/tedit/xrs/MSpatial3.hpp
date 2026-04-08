@@ -6,19 +6,18 @@
 
 #pragma once
 
-#include <yq/tachyon/typedef/model.hpp>
-#include <yq/tedit/xrs/MTachyon.hpp>
+#include <yq/tedit/xrs/MSpatial.hpp>
 
 namespace yq::tachyon {
-    class MModel : public MTachyon {
-        YQ_TACHYON_DECLARE(MModel, MTachyon)
+
+    // 3 because Qt Moc is stupid on identifiers
+    class MSpatial3 : public MSpatial {
+        YQ_TACHYON_DECLARE(MSpatial3, MSpatial)
         Q_OBJECT
     public:
     
-        MModel(TypedID);
-        ~MModel();
-        
-        ModelID     oid() const;
+        MSpatial3(TypedID);
+        ~MSpatial3();
         
         static void init_meta();
     };

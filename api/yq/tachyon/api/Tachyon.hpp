@@ -739,6 +739,10 @@ namespace yq::tachyon {
         //template <typename Pred>
         //auto    tasker(use_thread_t, Pred&&);
 
+        static void retain(TachyonPtr, use_thread_t ut={});
+        
+        void retain(child_k, TachyonPtr, use_thread_t ut={});
+
     private:
         friend class Proxy;
         friend class Frame;
@@ -753,7 +757,6 @@ namespace yq::tachyon {
         Tachyon(init_k, const Param& p={});
         Tachyon(thread_k, const Param& p={});
         
-        static void retain(TachyonPtr, use_thread_t ut={});
 
         static constexpr const unsigned int     kInvalidThread  = (unsigned int) ~0;
         

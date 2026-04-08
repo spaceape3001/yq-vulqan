@@ -6,19 +6,18 @@
 
 #pragma once
 
-#include <yq/tachyon/typedef/model.hpp>
-#include <yq/tedit/xrs/MTachyon.hpp>
+#include <yq/tedit/xrs/MLight.hpp>
 
 namespace yq::tachyon {
-    class MModel : public MTachyon {
-        YQ_TACHYON_DECLARE(MModel, MTachyon)
+
+    // 3 because Qt Moc is stupid on identifiers
+    class MLight3 : public MLight {
+        YQ_TACHYON_DECLARE(MLight3, MLight)
         Q_OBJECT
     public:
     
-        MModel(TypedID);
-        ~MModel();
-        
-        ModelID     oid() const;
+        MLight3(TypedID);
+        ~MLight3();
         
         static void init_meta();
     };

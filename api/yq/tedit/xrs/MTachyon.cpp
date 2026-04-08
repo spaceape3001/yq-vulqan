@@ -6,6 +6,7 @@
 
 #include "MTachyon.hpp"
 #include "MTachyonMetaWriter.hpp"
+#include <yq/container/Map.hpp>
 #include <yq/gluon/core/ustring.hpp>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
@@ -17,7 +18,7 @@ YQ_TACHYON_IMPLEMENT(yq::tachyon::MTachyon)
 namespace yq::tachyon {
     struct MTachyonMeta::Repo {
         std::vector<const MTachyonMeta*>    all;
-        std::map<id_t, const MTachyonMeta*> lookup;
+        Map<id_t, const MTachyonMeta*>      lookup;
     };
     
     MTachyonMeta::Repo& MTachyonMeta::repo()
@@ -26,6 +27,20 @@ namespace yq::tachyon {
         return s_repo;
     }
     
+    const MTachyonMeta*  MTachyonMeta::find(id_t i)
+    {
+        return repo().lookup.get(i, nullptr);
+    }
+
+    const MTachyonMeta*  MTachyonMeta::find(const TachyonMeta&tm)
+    {
+        static const Repo& _r = repo();
+        for(const TachyonMeta* p = &tm; p; p = dynamic_cast<const TachyonMeta*>(p->base())){
+            if(const MTachyonMeta*r = _r.lookup.get(tm.id(), nullptr))
+                return r;
+        }
+        return nullptr;
+    }
 
     MTachyonMeta::MTachyonMeta(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
         TachyonMeta(zName, base, sl)
@@ -37,6 +52,7 @@ namespace yq::tachyon {
     {
         repo().lookup[tm.id()]   = this;
     }
+
 
 // ------------------------------------------------------------------------
 

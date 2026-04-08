@@ -6,19 +6,18 @@
 
 #pragma once
 
-#include <yq/tachyon/typedef/model.hpp>
-#include <yq/tedit/xrs/MTachyon.hpp>
+#include <yq/tedit/xrs/MCamera.hpp>
 
 namespace yq::tachyon {
-    class MModel : public MTachyon {
-        YQ_TACHYON_DECLARE(MModel, MTachyon)
+
+    // 3 because Qt Moc is stupid on identifiers
+    class MCamera3 : public MCamera {
+        YQ_TACHYON_DECLARE(MCamera3, MCamera)
         Q_OBJECT
     public:
     
-        MModel(TypedID);
-        ~MModel();
-        
-        ModelID     oid() const;
+        MCamera3(TypedID);
+        ~MCamera3();
         
         static void init_meta();
     };

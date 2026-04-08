@@ -4,5 +4,5 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tedit/TEDoc.hpp>
+#include <yq/tedit/TEDocument.hpp>
 #include <yq/tachyon/api/ThreadMetaWriter.hpp>

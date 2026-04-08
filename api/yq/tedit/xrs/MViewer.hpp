@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/tachyon/typedef/viewer.hpp>
 #include <yq/tedit/xrs/MTachyon.hpp>
 
 namespace yq::tachyon {
@@ -16,6 +17,13 @@ namespace yq::tachyon {
     
         MViewer(TypedID);
         ~MViewer();
+        
+        ViewerID        oid() const;
+        TypedID         owindow() const;
+        TypedID         owidget() const;
+        TypedID         ofocus() const;
+        
+        const ViewerSnap*   osnap() const;
         
         static void init_meta();
     };

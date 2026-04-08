@@ -6,19 +6,18 @@
 
 #pragma once
 
-#include <yq/tachyon/typedef/model.hpp>
-#include <yq/tedit/xrs/MTachyon.hpp>
+#include <yq/tedit/xrs/MKinetic.hpp>
 
 namespace yq::tachyon {
-    class MModel : public MTachyon {
-        YQ_TACHYON_DECLARE(MModel, MTachyon)
+
+    // 3 because Qt Moc is stupid on identifiers
+    class MKinetic3 : public MKinetic {
+        YQ_TACHYON_DECLARE(MKinetic3, MKinetic)
         Q_OBJECT
     public:
     
-        MModel(TypedID);
-        ~MModel();
-        
-        ModelID     oid() const;
+        MKinetic3(TypedID);
+        ~MKinetic3();
         
         static void init_meta();
     };

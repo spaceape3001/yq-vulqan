@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tedit/TEApp.hpp>
+#include <yq/tedit/app/TEApp.hpp>
 
 using namespace yq;
 using namespace yq::tachyon;

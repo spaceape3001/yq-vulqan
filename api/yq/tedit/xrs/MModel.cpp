@@ -19,6 +19,13 @@ namespace yq::tachyon {
     {
     }
     
+    ModelID     MModel::oid() const
+    {
+        if(!m_otherID(Type::Model))
+            return {};
+        return { m_otherID.id };
+    }
+
     void MModel::init_meta()
     {
         auto w = writer<MModel>();

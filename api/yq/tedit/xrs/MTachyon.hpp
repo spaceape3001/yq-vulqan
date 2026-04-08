@@ -23,6 +23,9 @@ namespace yq::tachyon {
         
         virtual MTachyon*           create(TypedID) const { return nullptr; }
         
+        static const MTachyonMeta*  find(id_t);
+        static const MTachyonMeta*  find(const TachyonMeta&);
+        
     private:
     
         void    add_managed(const TachyonMeta&);

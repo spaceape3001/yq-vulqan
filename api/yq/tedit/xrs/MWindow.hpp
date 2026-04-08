@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <yq/tachyon/typedef/model.hpp>
+#include <yq/tachyon/typedef/window.hpp>
 #include <yq/tedit/xrs/MTachyon.hpp>
 
 namespace yq::tachyon {
-    class MModel : public MTachyon {
-        YQ_TACHYON_DECLARE(MModel, MTachyon)
+    class MWindow : public MTachyon {
+        YQ_TACHYON_DECLARE(MWindow, MTachyon)
         Q_OBJECT
     public:
     
-        MModel(TypedID);
-        ~MModel();
+        MWindow(TypedID);
+        ~MWindow();
         
-        ModelID     oid() const;
+        WindowID     oid() const;
         
         static void init_meta();
     };

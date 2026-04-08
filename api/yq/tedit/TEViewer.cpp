@@ -28,4 +28,4 @@ namespace yq::tachyon {
         
 }
 
-#include "moc_TEViewer.cpp"
+//#include "moc_TEViewer.cpp"

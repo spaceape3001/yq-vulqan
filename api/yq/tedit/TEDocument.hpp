@@ -11,25 +11,25 @@
 #include <yq/vkqt/XThread.hpp>
 
 namespace yq::tachyon {
-    struct TEDocData;
-    struct TEDocSnap;
+    struct TEDocumentData;
+    struct TEDocumentSnap;
     
     //! Document of stuff that lives on the frame, so needs a dedicated thread
     //! And it's Qt for qt based tools
-    class TEDoc : public XThread<EditThread> {
-        YQ_TACHYON_DATA(TEDocData)
-        YQ_TACHYON_SNAP(TEDocSnap)
-        YQ_TACHYON_DECLARE(TEDoc, EditThread)
+    class TEDocument : public XThread<EditThread> {
+        YQ_TACHYON_DATA(TEDocumentData)
+        YQ_TACHYON_SNAP(TEDocumentSnap)
+        YQ_TACHYON_DECLARE(TEDocument, EditThread)
         Q_OBJECT
     public:
 
         static void init_meta();
         
-        TEDoc();
-        ~TEDoc();
+        TEDocument();
+        ~TEDocument();
 
     protected:
-        void snap(TEDocSnap&) const;
+        void snap(TEDocumentSnap&) const;
         
         Url     m_url;
     };

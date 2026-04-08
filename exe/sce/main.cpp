@@ -8,8 +8,8 @@
 #include <yq/assetvk/io/FileIOManager.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
-#include <yq/tedit/TEApp.hpp>
 #include <yq/tedit/TEManager.hpp>
+#include <yq/tedit/app/TEApp.hpp>
 #include <yq/vkqt/app/YApp.hpp>
 #include <yq/resource/Resource.hpp>
 #include <yq/process/PluginLoader.hpp>

@@ -1089,6 +1089,17 @@ namespace yq::tachyon {
         return {};
     }
 
+    
+    void Tachyon::retain(child_k, TachyonPtr tp, use_thread_t ut)
+    {
+        if(!tp)
+            return;
+        tp->_set_parent(*this);
+        _add_child(*tp);
+        retain(tp, ut);
+    }
+    
+
     bool    Tachyon::running() const
     {
         return m_stage == Stage::Running;

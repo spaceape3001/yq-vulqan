@@ -6,6 +6,6 @@
 
 #pragma once
 
-#include <yq/tedit/TEAppThread.hpp>
+#include <yq/tedit/app/TEAppThread.hpp>
 #include <yq/tachyon/api/ThreadMetaWriter.hpp>
 

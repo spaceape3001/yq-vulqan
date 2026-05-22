@@ -83,6 +83,8 @@ namespace yq::tachyon {
         
         const AppCreateInfo&        app_info() const { return m_cInfo; }
         
+        AppThread*                  app_thread() { return m_thread.app.ptr(); }
+        
         //! This is the dynamic settings from the installed configuration file
         const VulqanConfig&         config() const { return m_config; }
         

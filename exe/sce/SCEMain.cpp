@@ -41,7 +41,7 @@ SCEMain::SCEMain()
     QMenu*  helpMenu        = makeMenu("help", "Help");
     QMenu*  debugMenu       = makeMenu("debug", "Debug");
     
-    addDock(new TEViewCtrlDock);
+    //addDock(new TEViewCtrlDock);
 }
 
 SCEMain::SCEMain(PostStartupFN&&fn) : SCEMain()

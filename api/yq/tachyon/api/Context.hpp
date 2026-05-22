@@ -25,8 +25,10 @@ namespace yq::tachyon {
         bool            paused      = false;
 
         struct {
+            use_thread_t    kinetic;
             use_thread_t    model;
             use_thread_t    rendered;
+            use_thread_t    spatial;
         } thread;
 
         uint64_t        tick        = 0ULL;     //!< Thread tick number

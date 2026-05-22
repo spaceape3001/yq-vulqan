@@ -24,8 +24,13 @@ TypedID     gProjectID;
 int main(int argc, char* argv[])
 {
     AppCreateInfo       aci;
+    aci.thread.auxillary    = true;
+    aci.thread.edit         = true;
+    aci.thread.game         = true;
     aci.thread.io           = true;
-    aci.thread.viewer       = PER;
+    aci.thread.sim          = true;
+    aci.thread.task         = true;
+    aci.thread.viewer       = true;
     aci.view.title          = "Scenery Editor";
     aci.view.size           = { 1920, 1080 };
     aci.view.clear          = { 0.0f, 0.0f, 0.0f, 1.f };

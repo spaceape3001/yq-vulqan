@@ -14,6 +14,9 @@
 
 namespace yq::tachyon {
     struct Scene³Snap : public SceneSnap, public ③Snap {
+        
+        //  Move the mapping functions here...
+
         Scene³Snap();
         virtual ~Scene³Snap();
     };

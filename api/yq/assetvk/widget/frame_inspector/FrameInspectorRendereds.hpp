@@ -7,6 +7,7 @@
 #pragma once
 
 #include "FrameInspectorTachyons.hpp"
+#include <yq/core/Enumeration.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
 #include <yq/tachyon/api/RenderedData.hpp>
 #include <yq/tachyon/im/text.hpp>
@@ -46,7 +47,7 @@ namespace yq::tachyon {
                 im::text("Culled");
             }
             if(ImGui::TableNextColumn()){
-                im::text(snap->culled.key());
+                im::text(display_of(snap->culled));
             }
 
             ImGui::TableNextRow();
@@ -95,7 +96,7 @@ namespace yq::tachyon {
                 im::text("Wireframe");
             }
             if(ImGui::TableNextColumn()){
-                im::text(snap->wireframe.key());
+                im::text(display_of(snap->wireframe));
             }
         }
 

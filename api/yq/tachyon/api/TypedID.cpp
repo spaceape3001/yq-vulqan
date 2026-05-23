@@ -8,6 +8,9 @@
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/api/Thread.hpp>
 #include <yq/meta/Init.hpp>
+#include <yq/core/Enumeration.hxx>
+
+YQ_ENUM_IMPLEMENT(yq::tachyon::Type)
 
 namespace yq::tachyon {
 

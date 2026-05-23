@@ -157,7 +157,7 @@ void ObjWin::update_title()
         t   = std::format("{} - {} - ObjEdit", m_filepath.stem().string(), m_filepath.parent_path().string());
     }
     yInfo() << "Sending command to alter title to :" << t;
-    send(new TitleCommand({.target={ Type::Viewer, viewer().id }}, t));
+    send(new TitleCommand({.target={ viewer().id, Type::Viewer }}, t));
 }
 
 YQ_TACHYON_IMPLEMENT(ObjWin)

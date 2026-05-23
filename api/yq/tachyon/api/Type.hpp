@@ -6,9 +6,7 @@
 
 #pragma once
 
-#include <yq/core/Flag.hpp>
-#include <yq/core/Enum.hpp>
-#include <yq/meta/MetaBinder.hpp>
+#include <yq/core/Flags.hpp>
 
 namespace yq::tachyon {
 
@@ -17,7 +15,7 @@ namespace yq::tachyon {
         kept small... switch the actual type as we grow, until then...
     */
     
-    YQ_ENUM(Type, , 
+    enum class Type {
         Camera,
         Camera³,
         Controller,
@@ -59,7 +57,7 @@ namespace yq::tachyon {
         Widget³,
         Widget⁴,
         Window
-    );
+    };
     
-    using Types = Flag<Type>;
+    using Types = Flags<Type>;
 }

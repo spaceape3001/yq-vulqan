@@ -12,8 +12,11 @@
 
 #include <yq/tachyon/enum/AxisRemap.hpp>
 #include <yq/tachyon/enum/GimbalMode.hpp>
+#include <yq/tachyon/enum/LightType.hpp>
 #include <yq/tachyon/enum/RenderMode.hpp>
+#include <yq/tachyon/enum/SaveFlags.hpp>
 #include <yq/tachyon/enum/SaveType.hpp>
+#include <yq/tachyon/enum/UIFlags.hpp>
 
 #include <yq/tachyon/os/HatState.hpp>
 #include <yq/tachyon/os/MouseButton.hpp>
@@ -52,6 +55,22 @@
 
 #include <yq/meta/Init.hpp>
 
+#include <yq/core/Enumeration.hxx>
+
+YQ_ENUM_IMPLEMENT(yq::tachyon::AxisRemap)
+YQ_ENUM_IMPLEMENT(yq::tachyon::GimbalMode)
+YQ_ENUM_IMPLEMENT(yq::tachyon::HatState)
+YQ_ENUM_IMPLEMENT(yq::tachyon::LightType)
+YQ_ENUM_IMPLEMENT(yq::tachyon::MouseButton)
+YQ_ENUM_IMPLEMENT(yq::tachyon::MouseMode)
+YQ_ENUM_IMPLEMENT(yq::tachyon::Platform)
+YQ_ENUM_IMPLEMENT(yq::tachyon::RenderMode)
+YQ_ENUM_IMPLEMENT(yq::tachyon::Response)
+YQ_ENUM_IMPLEMENT(yq::tachyon::SaveFlag)
+YQ_ENUM_IMPLEMENT(yq::tachyon::SaveType)
+YQ_ENUM_IMPLEMENT(yq::tachyon::StdThread)
+YQ_ENUM_IMPLEMENT(yq::tachyon::UIFlag)
+
 YQ_TYPE_IMPLEMENT(yq::tachyon::AxisRemap)
 YQ_TYPE_IMPLEMENT(yq::tachyon::BorderColor)
 YQ_TYPE_IMPLEMENT(yq::tachyon::BufferUsage)
@@ -74,6 +93,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewCreateFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::IndexType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::HatState)
+YQ_TYPE_IMPLEMENT(yq::tachyon::LightType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LogicOp)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButton)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButtons)

@@ -10,6 +10,10 @@
 #include <GLFW/glfw3.h>
 #include <imgui.h>
 
+#include <yq/core/Enumeration.hxx>
+
+YQ_ENUM_IMPLEMENT(yq::tachyon::KeyCode)
+
 namespace yq::tachyon {
     int         encode(KeyCode kc, KeyCodex cdx)
     {

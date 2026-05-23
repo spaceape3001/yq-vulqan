@@ -6,12 +6,10 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
-#include <yq/core/Flag.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
-    YQ_ENUM(MouseButton, ,
+    enum class MouseButton : uint8_t {
         Button1 = 0,
         Button2 = 1,
         Button3 = 2,
@@ -24,9 +22,9 @@ namespace yq::tachyon {
         Left    = Button1,
         Right   = Button2,
         Middle  = Button3
-    );
+    };
     
-    using MouseButtons  = Flag<MouseButton,uint8_t>;
+    using MouseButtons  = Flags<MouseButton,uint8_t>;
 }
 YQ_TYPE_DECLARE(yq::tachyon::MouseButton)
 YQ_TYPE_DECLARE(yq::tachyon::MouseButtons)

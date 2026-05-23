@@ -60,6 +60,8 @@
 #include <yq/tachyon/vulkan/VulqanManager.hpp>
 #include <yq/tachyon/vulkan/ViSurface.hpp>
 #include <yq/trait/numbers.hpp>
+
+#include <yq/core/Enumeration.hpp>
 #include <yq/math/utility.hpp>
 #include <yq/tachyon/app/ViewerCreateInfo.hpp>
 
@@ -692,11 +694,11 @@ namespace yq::tachyon {
     {
         Window::snap(sn);
 
-        for(KeyCode kc : KeyCode::all_values()){
+        for(KeyCode kc : values_of<KeyCode>()){
             int gk  = encode_glfw(kc);
             if(gk == GLFW_KEY_UNKNOWN)
                 continue;
-            sn.keyboard.keys.set((int) kc.value(), glfwGetKey(m_window, gk) == GLFW_PRESS);
+            sn.keyboard.keys.set((int) kc, glfwGetKey(m_window, gk) == GLFW_PRESS);
         }
 
         sn.keyboard.modifiers   = modifiers(READ);

@@ -6,11 +6,10 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
-    YQ_ENUM(SaveType, , 
+    enum class SaveType : uint8_t {
         //! General save, non-specific
         General,
         
@@ -22,7 +21,7 @@ namespace yq::tachyon {
         
         //! Component type of save, again, meant for reuse
         Component
-    )
+    };
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::SaveType)

@@ -6,8 +6,7 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
-#include <yq/core/Flag.hpp>
+#include <yq/core/Flags.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -15,7 +14,7 @@ namespace yq::tachyon {
     
         These are obviously used in UI framework, expected/supported modifier keys
     */
-    YQ_ENUM(ModifierKey, , 
+    enum class ModifierKey : uint8_t {
         AltLeft,
         AltRight,
         CapsLock,
@@ -27,9 +26,10 @@ namespace yq::tachyon {
         ShiftRight,
         SuperLeft,
         SuperRight
-    )
+    };
+    
     //! Bit mask of modifier keys
-    using ModifierKeys  = Flag<ModifierKey,uint16_t>;
+    using ModifierKeys  = Flags<ModifierKey,uint16_t>;
     
     bool    has_shift(ModifierKeys);
     bool    has_control(ModifierKeys);

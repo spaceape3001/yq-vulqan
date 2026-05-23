@@ -95,7 +95,7 @@ namespace yq::tachyon {
             return f->typed(TachyonID{id});
         }
         
-        return TypedID(id);
+        return TypedID(TachyonID{id});
     }
 
     Expect<CameraID>       cameraID(lua_State* l, int n)

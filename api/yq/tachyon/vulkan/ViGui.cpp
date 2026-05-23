@@ -843,7 +843,7 @@ namespace yq::tachyon {
         ImGui::SetCurrentContext(m_context);
         update_modifiers(evt.modifiers());
         ImGuiIO& io = ImGui::GetIO();
-        int b   = (int) evt.button().value();
+        int b   = (int) evt.button();
         if((b >= 0) && (b < ImGuiMouseButton_COUNT)){
             io.AddMouseButtonEvent(b, true);
         }
@@ -856,7 +856,7 @@ namespace yq::tachyon {
         ImGui::SetCurrentContext(m_context);
         update_modifiers(evt.modifiers());
         ImGuiIO& io = ImGui::GetIO();
-        int b   = (int) evt.button().value();
+        int b   = (int) evt.button();
         if((b >= 0) && (b < ImGuiMouseButton_COUNT)){
             io.AddMouseButtonEvent(b, false);
         }

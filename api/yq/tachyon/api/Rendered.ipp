@@ -112,10 +112,10 @@ namespace yq::tachyon {
 
     const Pipeline* Rendered::pipeline(RenderMode rm) const
     {
-        int     r   = rm.value();
+        int     r   = (int) rm;
         do {
-            if(m_pipelines[(RenderMode::enum_t) r])
-                return m_pipelines[(RenderMode::enum_t) r];
+            if(m_pipelines[(RenderMode) r])
+                return m_pipelines[(RenderMode) r];
         } while(r-- > (int) RenderMode::Simple);
         return metaInfo().default_pipeline();
     }

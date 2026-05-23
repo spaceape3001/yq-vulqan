@@ -98,9 +98,9 @@ namespace {
                     break;
                 }
                 
-                StdThread   st2(cmd, &ok);
-                if(ok){
-                    app->set_thread(st, st2);
+                auto x = ::yq::enumeration<StdThread>().value(cmd);
+                if(x){
+                    app->set_thread(st, *x);
                     break;
                 }
             }

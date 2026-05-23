@@ -6,12 +6,11 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
-#include <yq/core/Flag.hpp>
+//#include <yq/core/Flags.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
-    YQ_ENUM(HatState, ,
+    enum class HatState : uint8_t {
         Centered        = 0,
         Up              = 1,
         Right           = 2,
@@ -21,7 +20,7 @@ namespace yq::tachyon {
         RightDown       = 6,
         LeftUp          = 9,
         LeftDown        = 12
-    )
+    };
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::HatState)

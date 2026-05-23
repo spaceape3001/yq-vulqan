@@ -7,9 +7,6 @@
 #pragma once
 
 #include "AxisRemap.hpp"
-#include <yq/core/Enumeration.hxx>
-
-YQ_ENUM_IMPLEMENT(yq::tachyon::AxisRemap)
 
 namespace yq::tachyon {
     static void reg_axisremap()

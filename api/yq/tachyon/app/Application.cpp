@@ -31,13 +31,14 @@
 
 #include <yq/tachyon/vulkan/VulqanManager.hpp>
 
-#include <yq/resource/Resource.hpp>
-#include <yq/core/ThreadId.hpp>
 #include <yq/core/Cleanup.hpp>
+#include <yq/core/Enumeration.hpp>
+#include <yq/core/ThreadId.hpp>
 #include <yq/meta/Init.hpp>
 #include <yq/config/config.hpp>
 #include <yq/process/OSUtils.hpp>
 #include <yq/process/PluginLoader.hpp>
+#include <yq/resource/Resource.hpp>
 //#include <yq/post/boxes/SimpleBox.hpp>
 
 #include <filesystem>
@@ -82,8 +83,8 @@ namespace yq::tachyon {
     
     void    Application::info_std_threads() 
     {
-        for(StdThread st : StdThread::all_values())
-            tachyonInfo << "std thread " << st.key() << "> " << Thread::standard(st).id;
+        for(StdThread st : values_of<StdThread>())
+            tachyonInfo << "std thread " << key_of(st) << "> " << Thread::standard(st).id;
     }
 
     ////////////////////////////
@@ -310,7 +311,7 @@ namespace yq::tachyon {
         }
         m_thread.app -> tick();
         Thread::standard(StdThread::App, m_thread.app->id(), true);
-        for(StdThread st : StdThread::all_values()){
+        for(StdThread st : values_of<StdThread>()){
             if( st != StdThread::App)
                 Thread::standard(st, m_thread.app->id());
         }

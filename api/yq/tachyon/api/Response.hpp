@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -20,7 +19,7 @@ namespace yq::tachyon {
         Negatives   is failure/rejection
         
     */
-    YQ_ENUM(Response, ,
+    enum class Response {
         //! Success
         QaPla           = 0,
         Accepted        = QaPla,
@@ -51,6 +50,6 @@ namespace yq::tachyon {
         // Busy/Processing
         Busy            = 1,
         Processing      = Busy,
-    );
+    };
 }
 YQ_TYPE_DECLARE(yq::tachyon::Response)

@@ -6,14 +6,13 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
-    YQ_ENUM(GimbalMode, , 
+    enum class GimbalMode : uint8_t {
         Free,
         Locked
-    )
+    };
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::GimbalMode)

@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
-#include <yq/core/Flag.hpp>
+#include <yq/core/Flags.hpp>
 #include <yq/meta/MetaBinder.hpp>
 #include <yq/tachyon/typedef/thread.hpp>
 #include <yq/tachyon/api/ID.hpp>
+#include <map>
 #include <variant>
 
 namespace yq::tachyon {
@@ -21,7 +21,7 @@ namespace yq::tachyon {
         \note This is *NOT* a restriction, simply a way to automate some
         common needed threads.
     */
-    YQ_ENUM(StdThread, , 
+    enum class StdThread {
         //! Auto thread (whatever)
         Auto    = 0,
         
@@ -54,9 +54,9 @@ namespace yq::tachyon {
         
         // Visual/UI thread
         Viewer
-    )
+    };
     
-    using StdThreadFlags    = Flag<StdThread>;
+    using StdThreadFlags    = Flags<StdThread>;
     using StdThreadRevMap   = std::map<ThreadID, StdThread>;
     using ThreadSpec        = std::variant<std::monostate, ThreadID, StdThread>;
 }

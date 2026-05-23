@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
+
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -18,7 +18,7 @@ namespace yq::tachyon {
         Mapping to GLFW codes, ie, the stuff the keyboard can generate w/o 
         modifier interpretation.
     */
-    YQ_ENUM(KeyCode, ,
+    enum class KeyCode {
         None            = 0,
         Unknown,
         Space,
@@ -126,7 +126,7 @@ namespace yq::tachyon {
         MsX2, 
         MsWheelX, 
         MsWheelY
-    )
+    };
     
     enum class KeyCodex : uint8_t {
         GLFW,

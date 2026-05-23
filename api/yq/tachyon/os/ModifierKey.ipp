@@ -7,6 +7,9 @@
 #include <yq/tachyon/os/ModifierKey.hpp>
 
 #include <yq/meta/Init.hpp>
+#include <yq/core/Enumeration.hxx>
+
+YQ_ENUM_IMPLEMENT(yq::tachyon::ModifierKey)
 
 namespace yq::tachyon {
     bool    has_shift(ModifierKeys keys)

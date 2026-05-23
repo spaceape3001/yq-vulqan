@@ -6,6 +6,7 @@
 
 #include "dragdrop.hpp"
 #include <yq/net/Url.hpp>
+#include <yq/text/IgCase.hpp>
 #include <yq/text/match.hpp>
 
 namespace yq::tachyon::im {

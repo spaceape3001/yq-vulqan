@@ -260,7 +260,7 @@ namespace yq::tachyon {
         
         if(m_status(S::Topology)){
             if(const PTopology* p = sn.proxy<PTopology>()){
-                m_topology  = (VkPrimitiveTopology) p->topology().value();
+                m_topology  = (VkPrimitiveTopology) p->topology();
             }
         }
         

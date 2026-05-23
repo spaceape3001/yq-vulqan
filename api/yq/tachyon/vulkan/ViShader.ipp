@@ -4,7 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/vulkan/ViShader.hpp>
+#include "ViShader.hpp"
+
+#include <yq/core/Enumeration.hpp>
 #include <yq/tachyon/errors.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/asset/Shader.hpp>
@@ -82,7 +84,7 @@ namespace yq::tachyon {
         createInfo.pCode    = reinterpret_cast<const uint32_t*>(sh.payload.data());
         VkResult res = vkCreateShaderModule(dev, &createInfo, nullptr, &m_shader);
         if(res != VK_SUCCESS){
-            vizWarning << "vkCreateShaderModule(" << sh.type.key() << "): VkResult " << (int32_t) res;
+            vizWarning << "vkCreateShaderModule(" << key_of(sh.type) << "): VkResult " << (int32_t) res;
             return errors::shader_cant_create();
         }
         

@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -16,9 +15,9 @@ namespace yq::tachyon {
         Combined with the cull mode, this can speed up rendering by telling the pipeline to 
         skip a face based on this orientation.
     */
-    YQ_ENUM(FrontFace, , 
+    enum class FrontFace {
         CounterClockwise    = 0,
         Clockwise = 1
-    )
+    };
 }
 YQ_TYPE_DECLARE(yq::tachyon::FrontFace)

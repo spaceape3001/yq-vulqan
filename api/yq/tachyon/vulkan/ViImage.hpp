@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/core/Expect.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/shape/Size4.hpp>
 #include <yq/typedef/size4.hpp>

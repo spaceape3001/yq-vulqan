@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -15,7 +14,7 @@ namespace yq::tachyon {
     
         This is the topology of an object going into the pipeline to be rendered.
     */
-    YQ_ENUM(Topology, , 
+    enum class Topology {
         //! List of points
         PointList = 0,
         
@@ -49,7 +48,7 @@ namespace yq::tachyon {
         //! Patch list
         //! (note, use this if you're doing GPU tessellation)
         PatchList = 10
-    )
+    };
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::Topology)

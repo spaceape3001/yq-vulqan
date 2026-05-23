@@ -7,6 +7,7 @@
 #include "ImageHMV.hpp"
 
 #include <yq/core/DelayInit.hpp>
+#include <yq/core/Enumeration.hpp>
 #include <yq/core/ErrorDB.hpp>
 #include <yq/resource/ResourceDriverAPI.hpp>
 #include <yq/tachyon/logging.hpp>
@@ -206,12 +207,12 @@ namespace yq::tachyon {
                     info.arrayLayers    = *x;
                 } 
                 if(is_similar(k, "format")){
-                    bool    ok  = false;
-                    info.format = DataFormat(v, &ok);
-                    if(!ok){
+                    auto x = enumeration<DataFormat>().value(v);
+                    if(!x){
                         tachyonError << "Loading " << url << ": Bad format";
                         return {};
                     }
+                    info.format = *x;
                     
                     switch(info.format){
                     case DataFormat::R8_SINT:
@@ -366,20 +367,20 @@ namespace yq::tachyon {
                     }
                 } 
                 if(is_similar(k, "tiling")){
-                    bool    ok  = false;
-                    info.tiling = ImageTiling(v, &ok);
-                    if(!ok){
+                    auto x  = enumeration<ImageTiling>().value(v);
+                    if(!x){
                         tachyonError << "Loading " << url << ": Bad image tiling";
                         return {};
                     }
+                    info.tiling = *x;
                 } 
                 if(is_similar(k, "type")){
-                    bool    ok  = false;
-                    info.type = RasterType(v, &ok);
-                    if(!ok){
-                        tachyonError << "Loading " << url << ": Bad image tiling";
+                    auto x = enumeration<RasterType>().value(v);
+                    if(!x){
+                        tachyonError << "Loading " << url << ": Bad image type";
                         return {};
                     }
+                    info.type = *x;
                 } 
             }
         }
@@ -603,11 +604,11 @@ namespace yq::tachyon {
 
 
         ostr << "array=" << ras.info.arrayLayers << '\n';
-        ostr << "format=" << ras.info.format.key() << '\n';
+        ostr << "format=" << key_of(ras.info.format) << '\n';
         ostr << "mip=" << ras.info.mipLevels << '\n';
         ostr << "size=" << ras.info.size.x << "," << ras.info.size.y << "," << ras.info.size.z << "," << ras.info.size.w << '\n';
-        ostr << "tiling=" << ras.info.tiling.key() << '\n';
-        ostr << "type=" << ras.info.type.key() << '\n';
+        ostr << "tiling=" << key_of(ras.info.tiling) << '\n';
+        ostr << "type=" << key_of(ras.info.type) << '\n';
         ostr << '\n';
 
         for(unsigned w = 0; w<nw; ++w)

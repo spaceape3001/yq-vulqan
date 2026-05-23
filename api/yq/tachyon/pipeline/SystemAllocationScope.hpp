@@ -6,13 +6,12 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
-#include <yq/core/Flag.hpp>
+#include <yq/core/Flags.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
     //! Scope of system allocation
-    YQ_ENUM(SystemAllocationScope, ,
+    enum class SystemAllocationScope {
         //! Command allocation scope
         Command = 0,
         
@@ -27,9 +26,9 @@ namespace yq::tachyon {
         
         //! Instance allocation scope
         Instance = 4
-    )
+    };
     
-    using SystemAllocationScopeFlags = Flag<SystemAllocationScope>;
+    using SystemAllocationScopeFlags = Flags<SystemAllocationScope, uint32_t>;
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::SystemAllocationScope)

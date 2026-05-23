@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -14,7 +13,7 @@ namespace yq::tachyon {
     
         Logical operation, as submitted to vulkan.
     */
-    YQ_ENUM(LogicOp, , 
+    enum class LogicOp {
         Clear           = 0,
         And             = 1,
         AndReverse      = 2,
@@ -31,6 +30,6 @@ namespace yq::tachyon {
         OrInverted      = 13,
         Nand            = 14,
         Set             = 15
-    )
+    };
 }
 YQ_TYPE_DECLARE(yq::tachyon::LogicOp)

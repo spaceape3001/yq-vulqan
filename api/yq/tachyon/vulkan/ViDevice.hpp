@@ -6,8 +6,9 @@
 
 #pragma once
 
-#include <yq/core/Ref.hpp>
 #include <yq/core/Cleanup.hpp>
+#include <yq/core/Ref.hpp>
+#include <yq/core/Expect.hpp>
 #include <vulkan/vulkan_core.h>
 #include <vk_mem_alloc.h>
 #include <tbb/spin_rw_mutex.h>

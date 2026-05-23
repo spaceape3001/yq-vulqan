@@ -13,6 +13,7 @@
 #include <yq/tachyon/pipeline/PipelineBinding.hpp>
 #include <yq/tachyon/pipeline/SampleCount.hpp>
 #include <yq/tachyon/pipeline/StoreOp.hpp>
+#include <vector>
 
 namespace yq::tachyon {
     struct AttachmentReference {

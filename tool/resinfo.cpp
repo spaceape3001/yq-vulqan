@@ -4,6 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <yq/core/Enumeration.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/process/PluginLoader.hpp>
 #include <yq/tachyon/application.hpp>
@@ -35,7 +36,7 @@ void    print_mesh(const Mesh& msh)
 
 void    print_raster(const Raster&ras)
 {
-    std::cout << ras.info.format.key() << ", ";
+    std::cout << key_of(ras.info.format) << ", ";
     std::cout << ras.info.size.x;
     if(ras.info.size.y){
         std::cout << " x " << ras.info.size.y;
@@ -54,7 +55,7 @@ void    print_sampler(const Sampler&)
 
 void    print_shader(const Shader&sh)
 {
-    std::cout << sh.type.key() << ", bytes=" << sh.data_size();
+    std::cout << key_of(sh.type) << ", bytes=" << sh.data_size();
 }
 
 void    print_texture(const Texture&)

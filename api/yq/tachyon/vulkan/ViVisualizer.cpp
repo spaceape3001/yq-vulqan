@@ -147,7 +147,7 @@ namespace yq::tachyon {
             return create_error<"null surface">();
 
         for(auto pm : vqGetPhysicalDeviceSurfacePresentModesKHR(vk_physical_device(), vk_surface()))
-            m_presentModes.insert((PresentMode::enum_t) pm);
+            m_presentModes.insert((PresentMode) pm);
         m_presentMode           = m_presentModes.contains(vcd.viewer.pmode) ? vcd.viewer.pmode : PresentMode{ PresentMode::Fifo };
 
         m_surfaceFormats        = vqGetPhysicalDeviceSurfaceFormatsKHR(physical(), surface());
@@ -194,7 +194,7 @@ namespace yq::tachyon {
         }
         if(auto p = std::get_if<DataFormat>(&u.snapshot)){
             snapshot.enable = true;
-            snapshot.format = (VkFormat) (p->value());
+            snapshot.format = (VkFormat) *p;
         }
         
         if(snapshot.enable){

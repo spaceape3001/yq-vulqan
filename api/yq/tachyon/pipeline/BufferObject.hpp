@@ -13,7 +13,7 @@ namespace yq::tachyon {
 
     //! Helper for buffer objects
     //! Simple helper to help with managing buffer objects, and spinning their results out
-    template <BufferUsage::enum_t buf>
+    template <BufferUsage buf>
     struct BufferObject {
         BufferCPtr      buffer;
         

@@ -6,8 +6,7 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
-#include <yq/core/Flag.hpp>
+#include <yq/core/Flags.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -15,7 +14,7 @@ namespace yq::tachyon {
     
         This is the type of shader (supported)
     */
-    YQ_ENUM(ShaderType, ,
+    enum class ShaderType : uint8_t {
         //! Unknown shader type
         UNKNOWN,
         //! Vertex shader
@@ -34,10 +33,10 @@ namespace yq::tachyon {
         TASK,
         //! Mesh shader
         MESH
-    )
+    };
     
     //! Mask of shader types
-    using ShaderTypeFlags   = Flag<ShaderType>;
+    using ShaderTypeFlags   = Flags<ShaderType, uint32_t>;
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::ShaderType)

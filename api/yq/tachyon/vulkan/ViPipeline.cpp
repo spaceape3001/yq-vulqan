@@ -79,7 +79,7 @@ namespace yq::tachyon {
         
         
         m_layout    = pLay;
-        m_binding   = (VkPipelineBindPoint) m_config->binding().value();
+        m_binding   = (VkPipelineBindPoint) m_config->binding();
         m_status    = {};
         m_id        = pLay -> id();
         
@@ -125,7 +125,7 @@ namespace yq::tachyon {
         pipelineInfo.pVertexInputState = &pLay->vertex_create_info();
 
         VqPipelineInputAssemblyStateCreateInfo inputAssembly;
-        inputAssembly.topology                  = (VkPrimitiveTopology) m_config->topology().value();
+        inputAssembly.topology                  = (VkPrimitiveTopology) m_config->topology();
         switch(opts.primitive_restart){
         case Tristate::No:
             inputAssembly.primitiveRestartEnable = VK_FALSE;
@@ -206,12 +206,12 @@ namespace yq::tachyon {
             lineWidth   = m_config->line_width();
 
         VqPipelineRasterizationStateCreateInfo  rasterizer;
-        rasterizer.polygonMode              = (VkPolygonMode) polyMode.value();
+        rasterizer.polygonMode              = (VkPolygonMode) polyMode;
         rasterizer.depthClampEnable         = VK_FALSE; // opts.depth_clamp ? VK_TRUE : VK_FALSE;
         rasterizer.rasterizerDiscardEnable  = VK_FALSE; // opts.rasterizer_discard ? VK_TRUE : VK_FALSE;
         rasterizer.lineWidth                = lineWidth;
-        rasterizer.cullMode                 = (VkCullModeFlags) m_config->culling().value();
-        rasterizer.frontFace                = (VkFrontFace) m_config->front().value();
+        rasterizer.cullMode                 = (VkCullModeFlags) m_config->culling();
+        rasterizer.frontFace                = (VkFrontFace) m_config->front();
         rasterizer.depthBiasEnable          = VK_FALSE;
         rasterizer.depthBiasConstantFactor  = 0.0f; // Optional
         rasterizer.depthBiasClamp           = 0.0f; // Optional
@@ -364,9 +364,9 @@ namespace yq::tachyon {
             }
             
             if(i.second.define->cullMode){
-                rasterizer.cullMode                 = (VkCullModeFlags) (*(i.second.define->cullMode)).value();
+                rasterizer.cullMode                 = (VkCullModeFlags) (*(i.second.define->cullMode));
             } else {
-                rasterizer.cullMode                 = (VkCullModeFlags) m_config->culling().value();
+                rasterizer.cullMode                 = (VkCullModeFlags) m_config->culling();
             }
 
             if(i.second.define->lineWidth){
@@ -378,20 +378,20 @@ namespace yq::tachyon {
             }
             
             if(i.second.define->frontFace){
-                rasterizer.frontFace                = (VkFrontFace) (*(i.second.define->frontFace)).value();
+                rasterizer.frontFace                = (VkFrontFace) (*(i.second.define->frontFace));
             } else {
-                rasterizer.frontFace                = (VkFrontFace) m_config->front().value();
+                rasterizer.frontFace                = (VkFrontFace) m_config->front();
             }
 
             if(i.second.define->polygonMode){
                 PolygonMode pm  = *(i.second.define->polygonMode);
                 if(pm == PolygonMode::Auto){
-                    rasterizer.polygonMode          = (VkPolygonMode) polyMode.value();
+                    rasterizer.polygonMode          = (VkPolygonMode) polyMode;
                 } else {
-                    rasterizer.polygonMode          = (VkPolygonMode) pm.value();
+                    rasterizer.polygonMode          = (VkPolygonMode) pm;
                 }
             } else {
-                rasterizer.polygonMode              = (VkPolygonMode) polyMode.value();
+                rasterizer.polygonMode              = (VkPolygonMode) polyMode;
             }
 
             VkResult res  = vkCreateGraphicsPipelines(m_viz.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &me.pipeline);

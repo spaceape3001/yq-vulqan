@@ -6,8 +6,7 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
-#include <yq/core/Flag.hpp>
+#include <yq/core/Flags.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -16,7 +15,7 @@ namespace yq::tachyon {
         These are translated over to vulkan, meant to be an easier 
         way than dealing with the overly LONG vulkan codes.
     */
-    YQ_ENUM(BufferUsage, , 
+    enum class BufferUsage : uint8_t {
         TransferSource                          = 0,
         TransferDestination                     = 1,
         UniformTexel                            = 2,
@@ -43,8 +42,8 @@ namespace yq::tachyon {
         MicromapStorage                         = 24,
         DescriptorsDescriptor                   = 26,
         RayTracing = ShaderBindingTable
-    )
-    using BufferUsageFlags  = Flag<BufferUsage>;
+    };
+    using BufferUsageFlags  = Flags<BufferUsage, uint32_t>;
 }
 YQ_TYPE_DECLARE(yq::tachyon::BufferUsage)
 YQ_TYPE_DECLARE(yq::tachyon::BufferUsageFlags)

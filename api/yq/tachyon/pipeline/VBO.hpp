@@ -15,7 +15,7 @@ namespace yq::tachyon {
     
     /*! Array-based buffer without storage
     */
-    template <typename T, BufferUsage::enum_t BUF>
+    template <typename T, BufferUsage BUF>
     struct ABO : public BufferObject<BUF> {
         static_assert(is_trivial<T>, "T should be trivial");
     
@@ -72,7 +72,7 @@ namespace yq::tachyon {
     
     /*! Array-based buffer with storage
     */
-    template <typename T, BufferUsage::enum_t BUF>
+    template <typename T, BufferUsage BUF>
     struct AB1 : public BufferObject<BUF> {
         static_assert(is_trivial<T>, "T should be trivial");
 

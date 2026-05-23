@@ -6,19 +6,18 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
 
     //! Vertex Input Rate
-    YQ_ENUM(VertexInputRate, , 
+    enum class VertexInputRate {
     
         //! Vertex based Vertex Input Rate
         Vertex = 0,
         
         //! Instance based Vertex Input Rate
         Instance = 1
-    )
+    };
 }
 YQ_TYPE_DECLARE(yq::tachyon::VertexInputRate)

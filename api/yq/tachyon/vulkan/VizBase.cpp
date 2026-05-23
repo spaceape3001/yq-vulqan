@@ -251,7 +251,7 @@ namespace yq::tachyon {
             if(*x == DataFormat::UNDEFINED)
                 return true;
             
-            m_depth.format    = (VkFormat) x -> value();
+            m_depth.format    = (VkFormat) *x;
         }
         
         m_depth.clear       = vqClearValue(p.depth_clear);
@@ -298,7 +298,7 @@ namespace yq::tachyon {
 
     void     VizBase::color_format(set_k, DataFormat v)
     {
-        m_color.format  = (VkFormat) v.value();
+        m_color.format  = (VkFormat) v;
     }
     
     void     VizBase::color_format(set_k, VkFormat v)

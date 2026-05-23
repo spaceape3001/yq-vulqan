@@ -6,6 +6,7 @@
 
 #include <yq/tachyon/io/GLSLShader.hpp>
 
+#include <yq/core/Enumeration.hpp>
 #include <yq/core/ErrorDB.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/file/FileUtils.hpp>
@@ -172,7 +173,7 @@ namespace yq::tachyon::glsl {
     ShaderType  shader_type(const std::filesystem::path& pth)
     {
         std::string             sspec   = pth.string();
-        return ShaderType(file_extension(sspec));
+        return enumeration<ShaderType>().decode(file_extension(sspec));
     }
     
     namespace {

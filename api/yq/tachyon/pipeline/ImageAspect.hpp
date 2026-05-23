@@ -6,12 +6,11 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
-#include <yq/core/Flag.hpp>
+#include <yq/core/Flags.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
-    YQ_ENUM(ImageAspect, ,
+    enum class ImageAspect : uint8_t {
         Color           =  0,
         Depth           =  1,
         Stencil         =  2,
@@ -23,9 +22,9 @@ namespace yq::tachyon {
         MemoryPlane1    =  8,
         MemoryPlane2    =  9,
         MemoryPlane3    = 10
-    )
+    };
     
-    using ImageAspectFlags  = Flag<ImageAspect>;
+    using ImageAspectFlags  = Flags<ImageAspect, uint32_t>;
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::ImageAspect)

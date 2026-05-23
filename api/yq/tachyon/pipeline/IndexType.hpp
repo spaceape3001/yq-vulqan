@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -14,11 +13,11 @@ namespace yq::tachyon {
     
         Data type code for the index buffer object 
     */
-    YQ_ENUM(IndexType, ,
+    enum class IndexType {
         none    = 1000165000,
         uint16  = 0,
         uint32  = 1,
         uint8   = 1000265000
-    )
+    };
 }
 YQ_TYPE_DECLARE(yq::tachyon::IndexType)

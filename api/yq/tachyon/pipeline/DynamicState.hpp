@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -14,8 +13,7 @@ namespace yq::tachyon {
     /*! \brief Dynamic State
     
     */
-
-    YQ_ENUM(DynamicState, , 
+    enum class DynamicState {
         Viewport = 0,
         Scissor = 1,
         LineWidth = 2,
@@ -88,7 +86,7 @@ namespace yq::tachyon {
         CoverageReductionMode = 1000455032,
         AttachmentFeedbackLoopEnable = 1000524000,
         LineStipple = 1000259000
-    )
+    };
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::DynamicState)

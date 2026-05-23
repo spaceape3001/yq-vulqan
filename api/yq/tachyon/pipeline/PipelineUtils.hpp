@@ -18,7 +18,7 @@ namespace yq::tachyon {
         Meta::id_t          type_id     = 0;    //!< Meta type ID
         unsigned int        bindings    = 1;    //!< Number of bindings to be used
         DataFormat          format;             //!< Data format
-        IndexType           index;
+        IndexType           index       = IndexType::none;
     };
     
     std::span<const DataFormatData>   data_format_data();

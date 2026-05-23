@@ -20,6 +20,7 @@
 
 #include <optional>
 #include <span>
+#include <system_error>
 #include <vulkan/vulkan_core.h>
 
 namespace yq {

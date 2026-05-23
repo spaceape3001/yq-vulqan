@@ -151,7 +151,7 @@ namespace yq::tachyon {
             VkVertexInputBindingDescription b;
             b.binding   = v.binding;
             b.stride    = v.stride;
-            b.inputRate = (VkVertexInputRate) v.inputRate.value();
+            b.inputRate = (VkVertexInputRate) v.inputRate;
             m_vertexBindings.push_back(b);
             
             for(auto& va : v.attributes){
@@ -159,13 +159,13 @@ namespace yq::tachyon {
                 a.binding       = v.binding;
                 a.location      = va.location;
                 a.offset        = va.offset;
-                a.format        = (VkFormat) va.format.value();
+                a.format        = (VkFormat) va.format;
                 m_vertexAttributes.push_back(a);
             }
         }
 
         for(DynamicState ds : m_config->dynamic_states())
-            m_dynamicStateSet.insert((VkDynamicState) ds.value());
+            m_dynamicStateSet.insert((VkDynamicState) ds);
         m_dynamicStateSet.insert(VK_DYNAMIC_STATE_VIEWPORT);
         m_dynamicStates = makeVector(m_dynamicStateSet);
 

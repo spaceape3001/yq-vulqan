@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -17,7 +16,7 @@ namespace yq::tachyon {
         This can lead to better optimizations.
     */
 
-    YQ_ENUM(DataActivity, , 
+    enum class DataActivity {
         //! Make zero expectations, ie, gets ignored
         UNSURE  = 0,
     
@@ -40,7 +39,7 @@ namespace yq::tachyon {
         //! Data is expected to ALWAYS change with time
         //! Revision management might be useful for things not changing every tick.
         REFRESH
-    )
+    };
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::DataActivity)

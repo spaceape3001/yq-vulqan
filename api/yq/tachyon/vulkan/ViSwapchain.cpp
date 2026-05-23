@@ -86,7 +86,7 @@ namespace yq::tachyon {
         swapInfo.imageArrayLayers = 1;    // we're not steroscopic (YET)  <-- OCULUS HERE
         swapInfo.imageUsage       = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
         
-        VkPresentModeKHR            presentMode = (VkPresentModeKHR) m_viz.present_mode().value();
+        VkPresentModeKHR            presentMode = (VkPresentModeKHR) m_viz.present_mode();
         
         uint32_t queueFamilyIndices[] = {m_viz.graphics_queue_family().index, m_viz.present_queue_family().index};
         if (m_viz.graphics_queue_family() != m_viz.present_queue_family()) {
@@ -146,7 +146,7 @@ namespace yq::tachyon {
         VqImageViewCreateInfo   depthViewInfo;
 
         if(m_viz.depth_enabled()){
-            depthInfo.format        = m_viz.depth_format();
+            depthInfo.format        = (DataFormat) m_viz.depth_format();
             depthInfo.size.x        = m_extents.width;
             depthInfo.size.y        = m_extents.height;
             depthInfo.size.z        = 1;

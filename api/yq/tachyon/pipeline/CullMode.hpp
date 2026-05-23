@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -15,7 +14,7 @@ namespace yq::tachyon {
     
         Cull mode for vulkan/pipeline
     */
-    YQ_ENUM(CullMode, , 
+    enum class CullMode {
         Auto    = -1,
     
         //! No culling
@@ -29,7 +28,7 @@ namespace yq::tachyon {
         
         //! Cull both
         FrontBack   = 3
-    )
+    };
 }
 
 YQ_TYPE_DECLARE(yq::tachyon::CullMode)

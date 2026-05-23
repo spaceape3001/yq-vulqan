@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -29,7 +28,7 @@ namespace yq::tachyon {
         (ie, the comparison on the GPU comes to three status bits, 
             and this is the match/no-match state)
     */
-    YQ_ENUM(CompareOp, , 
+    enum class CompareOp : uint8_t {
         //! Always fail
         Never           = 0,
         
@@ -53,6 +52,6 @@ namespace yq::tachyon {
         
         //! Always
         Always          = 7
-    )
+    };
 }
 YQ_TYPE_DECLARE(yq::tachyon::CompareOp)

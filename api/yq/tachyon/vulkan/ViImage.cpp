@@ -68,7 +68,7 @@ namespace yq::tachyon {
                 return errors::image_cant_create_temporary();
         }
         
-        size_t       bpp       = ViImage::format_bytes((VkFormat) info.format.value());
+        size_t       bpp       = ViImage::format_bytes((VkFormat) info.format);
         if(!bpp)
             return errors::image_bad_format();
         
@@ -481,16 +481,16 @@ namespace yq::tachyon {
         m_info                  = info;
         
         VqImageCreateInfo   imgInfo;
-        imgInfo.imageType       = (VkImageType) m_info.type.value();
+        imgInfo.imageType       = (VkImageType) m_info.type;
         imgInfo.extent.width    = (uint32_t) m_info.size.x;
         imgInfo.extent.height   = (uint32_t) m_info.size.y;
         imgInfo.extent.depth    = (uint32_t) m_info.size.z;
         imgInfo.mipLevels       = m_info.mipLevels;
         imgInfo.arrayLayers     = m_info.arrayLayers;
         imgInfo.samples         = VK_SAMPLE_COUNT_1_BIT;
-        imgInfo.format          = (VkFormat) m_info.format.value();
+        imgInfo.format          = (VkFormat) m_info.format;
         imgInfo.usage           = p.usage;
-        imgInfo.tiling          = (VkImageTiling) m_info.tiling.value();
+        imgInfo.tiling          = (VkImageTiling) m_info.tiling;
         imgInfo.sharingMode     = VK_SHARING_MODE_EXCLUSIVE;
         imgInfo.flags           = p.flags;
         

@@ -25,20 +25,20 @@ namespace yq::tachyon {
     {
         VqSamplerCreateInfo     ret;
         ret.flags                   = (VkSamplerCreateFlags) sami.flags.value();
-        ret.magFilter               = (VkFilter) sami.magFilter.value();
-        ret.minFilter               = (VkFilter) sami.minFilter.value();
-        ret.mipmapMode              = (VkSamplerMipmapMode) sami.mipmapMode.value();
-        ret.addressModeU            = (VkSamplerAddressMode) sami.addressMode.u.value();
-        ret.addressModeV            = (VkSamplerAddressMode) sami.addressMode.v.value();
-        ret.addressModeW            = (VkSamplerAddressMode) sami.addressMode.w.value();
+        ret.magFilter               = (VkFilter) sami.magFilter;
+        ret.minFilter               = (VkFilter) sami.minFilter;
+        ret.mipmapMode              = (VkSamplerMipmapMode) sami.mipmapMode;
+        ret.addressModeU            = (VkSamplerAddressMode) sami.addressMode.u;
+        ret.addressModeV            = (VkSamplerAddressMode) sami.addressMode.v;
+        ret.addressModeW            = (VkSamplerAddressMode) sami.addressMode.w;
         ret.mipLodBias              = sami.mipLodBias;
         ret.anisotropyEnable        = sami.anisotropyEnable ? *sami.anisotropyEnable : VK_TRUE;
         ret.maxAnisotropy           = sami.maxAnisotropy ? *sami.maxAnisotropy : viz.max_sampler_anisotropy();
         ret.compareEnable           = sami.compareEnable ? VK_TRUE : VK_FALSE;
-        ret.compareOp               = (VkCompareOp) sami.compareOp.value();
+        ret.compareOp               = (VkCompareOp) sami.compareOp;
         ret.minLod                  = sami.minLod;
         ret.maxLod                  = sami.maxLod;
-        ret.borderColor             = (VkBorderColor) sami.borderColor.value();
+        ret.borderColor             = (VkBorderColor) sami.borderColor;
         ret.unnormalizedCoordinates = sami.unnormalizedCoordinates ? VK_TRUE : VK_FALSE;
         return ret;
     }

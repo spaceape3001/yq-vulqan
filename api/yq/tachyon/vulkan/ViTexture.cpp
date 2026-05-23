@@ -117,7 +117,7 @@ namespace yq::tachyon {
         info.flags  = texInfo.imageViewFlags.value();
         
         if(texInfo.imageViewType){
-            info.viewType   = (VkImageViewType) (*texInfo.imageViewType).value();
+            info.viewType   = (VkImageViewType) (*texInfo.imageViewType);
         } else {
             switch(imgInfo.type){
             case RasterType::Is1D:
@@ -136,16 +136,16 @@ namespace yq::tachyon {
         }
 
         if(texInfo.format){
-            info.format = (VkFormat) (*texInfo.format).value();
+            info.format = (VkFormat) (*texInfo.format);
         } else {
-            info.format = (VkFormat) imgInfo.format.value();
+            info.format = (VkFormat) imgInfo.format;
         }
         
         info.components = {
-            .r = (VkComponentSwizzle) texInfo.swizzle.red.value(),
-            .g = (VkComponentSwizzle) texInfo.swizzle.green.value(),
-            .b = (VkComponentSwizzle) texInfo.swizzle.blue.value(),
-            .a = (VkComponentSwizzle) texInfo.swizzle.alpha.value()
+            .r = (VkComponentSwizzle) texInfo.swizzle.red,
+            .g = (VkComponentSwizzle) texInfo.swizzle.green,
+            .b = (VkComponentSwizzle) texInfo.swizzle.blue,
+            .a = (VkComponentSwizzle) texInfo.swizzle.alpha
         };
 
         info.subresourceRange.aspectMask        = (VkImageAspectFlags) texInfo.aspect.value();

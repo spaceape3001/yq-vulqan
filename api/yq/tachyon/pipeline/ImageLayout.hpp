@@ -6,11 +6,10 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
-    YQ_ENUM(ImageLayout, ,
+    enum class ImageLayout {
         Undefined = 0,
         General = 1,
         ColorAttachment = 2,
@@ -41,6 +40,6 @@ namespace yq::tachyon {
         VideoReadOnlyStencilAttachment = DepthReadOnlyStencilAttachment,
         DepthAttachStencilReadOnly = DepthAttachmentStencilReadOnly,
         ShadingRate = FragmentShadingRateAttachment,
-    )
+    };
 }
 YQ_TYPE_DECLARE(yq::tachyon::ImageLayout)

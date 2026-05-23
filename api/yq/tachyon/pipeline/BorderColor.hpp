@@ -6,11 +6,10 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
-    YQ_ENUM(BorderColor, , 
+    enum class BorderColor {
         FloatTransparentBlack = 0,
         IntTransparentBlack = 1,
         FloatOpaqueBlack = 2,
@@ -19,6 +18,6 @@ namespace yq::tachyon {
         IntOpaqueWhite = 5,
         FloatCustomEXT = 1000287003,
         IntCustomEXT = 1000287004
-    )
+    };
 }
 YQ_TYPE_DECLARE(yq::tachyon::BorderColor)

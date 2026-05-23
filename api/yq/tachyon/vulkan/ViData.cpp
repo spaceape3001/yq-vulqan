@@ -378,7 +378,7 @@ namespace yq::tachyon {
             m_ibo.config    = &*m_config->m_indexBuffer;
             m_ibo.external  = m_ibo.config->external;
             m_ibo.index     = 0;
-            m_ibo.type      = (VkIndexType) m_ibo.config->type.value();
+            m_ibo.type      = (VkIndexType) m_ibo.config->type;
             switch(m_ibo.type){
             case VK_INDEX_TYPE_UINT8:
                 m_ibo.stride    = sizeof(uint8_t);

@@ -233,12 +233,12 @@ namespace yq::tachyon {
     {
         VqImageViewCreateInfo   ret;
         ret.flags                           = (VkImageViewCreateFlags) in.flags.value();
-        ret.viewType                        = (VkImageViewType) in.type.value();
-        ret.format                          = (VkFormat) in.format.value();
-        ret.components.r                    = (VkComponentSwizzle) in.swizzle.red.value();
-        ret.components.g                    = (VkComponentSwizzle) in.swizzle.green.value();
-        ret.components.b                    = (VkComponentSwizzle) in.swizzle.blue.value();
-        ret.components.a                    = (VkComponentSwizzle) in.swizzle.alpha.value();
+        ret.viewType                        = (VkImageViewType) in.type;
+        ret.format                          = (VkFormat) in.format;
+        ret.components.r                    = (VkComponentSwizzle) in.swizzle.red;
+        ret.components.g                    = (VkComponentSwizzle) in.swizzle.green;
+        ret.components.b                    = (VkComponentSwizzle) in.swizzle.blue;
+        ret.components.a                    = (VkComponentSwizzle) in.swizzle.alpha;
         ret.subresourceRange.aspectMask     = (VkImageAspectFlags) in.aspect.value();
         ret.subresourceRange.baseMipLevel   = in.baseMipLevel;
         ret.subresourceRange.levelCount     = in.levelCount;

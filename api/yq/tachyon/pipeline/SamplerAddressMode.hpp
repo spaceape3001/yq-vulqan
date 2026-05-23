@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <yq/core/Enum.hpp>
 #include <yq/meta/MetaBinder.hpp>
 
 namespace yq::tachyon {
@@ -14,7 +13,7 @@ namespace yq::tachyon {
     
         How the sampler deals with u,v < 0 and/or u,v > 1
     */
-    YQ_ENUM(SamplerAddressMode, ,
+    enum class SamplerAddressMode {
     
         //! Periodic
         Repeat  = 0,
@@ -31,6 +30,6 @@ namespace yq::tachyon {
         //! Mirror clamp to edge
         //! \note Needs extension to work
         MirrorClampToEdge = 4
-    )
+    };
 }
 YQ_TYPE_DECLARE(yq::tachyon::SamplerAddressMode)

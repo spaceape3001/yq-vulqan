@@ -11,7 +11,7 @@
 #include <yq/vector/Vector3.hpp>
 
 namespace yq::tachyon {
-    YQ_ENUM(AxisRemap,,
+    enum class AxisRemap {
         X_Y_Z_,
         X_Y_Zn,
         X_YnZ_,
@@ -65,7 +65,7 @@ namespace yq::tachyon {
         ZnY_Xn,
         ZnYnX_,
         ZnYnXn
-    )
+    };
     
     template <typename T>
     constexpr Vector3<T> remap(AxisRemap a, const Vector3<T>& v)

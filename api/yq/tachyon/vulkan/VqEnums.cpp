@@ -6,13 +6,14 @@
 
 #include <yq/tachyon/vulkan/VqEnums.hpp>
 #include <yq/core/Enum.hpp>
+#include <yq/core/Enumeration.hxx>
 
 namespace yq::tachyon {
     static const std::string_view szUnknown   = "(unknown)";
 
         //  TODO: Fold these into tachyon/enum
 
-    YQ_ENUM(VqColorSpaceKHR, , 
+    enum class VqColorSpaceKHR {
         SRGB_NONLINEAR_KHR = 0,
         DISPLAY_P3_NONLINEAR_EXT = 1000104001,
         EXTENDED_SRGB_LINEAR_EXT = 1000104002,
@@ -29,17 +30,14 @@ namespace yq::tachyon {
         PASS_THROUGH_EXT = 1000104013,
         EXTENDED_SRGB_NONLINEAR_EXT = 1000104014,
         DISPLAY_NATIVE_AMD = 1000213000
-    )
+    };
 
     std::string_view to_string_view(VkColorSpaceKHR v)
     {
-        int n   = (int) v;
-        if(VqColorSpaceKHR::has_value(n))
-            return VqColorSpaceKHR(n).key();
-        return "(unknown color space)";
+        return key_of(v, "(unknown color space)");
     }
     
-    YQ_ENUM(VqDebugReportObjectType, , 
+    enum class VqDebugReportObjectType {
         UNKNOWN_EXT = 0,
         INSTANCE_EXT = 1,
         PHYSICAL_DEVICE_EXT = 2,
@@ -79,54 +77,16 @@ namespace yq::tachyon {
         ACCELERATION_STRUCTURE_KHR_EXT = 1000150000,
         ACCELERATION_STRUCTURE_NV_EXT = 1000165000,
         BUFFER_COLLECTION_FUCHSIA_EXT = 1000366000,
-    )
+    };
     
     std::string_view                        to_string_view(VkDebugReportObjectTypeEXT v)
     {
-        int n   = (int) v;
-        if(VqDebugReportObjectType::has_value(n))
-            return VqDebugReportObjectType(n).key();
-        return "(unknown object_type)";
+        return key_of(v, "(unknown object_type)");
     }
 
     std::string_view    to_string_view(VqDescriptorType v)
     {
-        switch(v){
-        case VqDescriptorType::Sampler:
-            return "Sampler";
-        case VqDescriptorType::CombinedImageSampler:
-            return "CombinedImageSampler";
-        case VqDescriptorType::SampledImage:
-            return "SampledImage";
-        case VqDescriptorType::StorageImage:
-            return "StorageImage";
-        case VqDescriptorType::UniformTexelBuffer:
-            return "UniformTexelBuffer";
-        case VqDescriptorType::StorageTexelBuffer:
-            return "StorageTexelBuffer";
-        case VqDescriptorType::UniformBuffer:
-            return "UniformBuffer";
-        case VqDescriptorType::StorageBuffer:
-            return "StorageBuffer";
-        case VqDescriptorType::UniformBufferDynamic:
-            return "UniformBufferDynamic";
-        case VqDescriptorType::StorageBufferDynamic:
-            return "StorageBufferDynamic";
-        case VqDescriptorType::InputAttachment:
-            return "InputAttachment";
-        case VqDescriptorType::InlineUniformBlock:
-            return "InlineUniformBlock";
-        case VqDescriptorType::AccelerationStructure:
-            return "AccelerationStructure";
-        case VqDescriptorType::SampleWeightImage:
-            return "SampleWeightImage";
-        case VqDescriptorType::BlockMatchImage:
-            return "BlockMatchImage";
-        case VqDescriptorType::Mutable:
-            return "Mutable";
-        default:
-            return szUnknown;
-        }
+        return display_of(v, szUnknown);
     }
     
     std::string_view    to_string_view(VkDescriptorType v)
@@ -134,7 +94,7 @@ namespace yq::tachyon {
         return to_string_view(VqDescriptorType(v));
     }
         
-    YQ_ENUM(VqDynamicState, ,
+    enum class VqDynamicState {
         VIEWPORT = 0,
         SCISSOR = 1,
         LINE_WIDTH = 2,
@@ -172,14 +132,11 @@ namespace yq::tachyon {
         PATCH_CONTROL_POINTS_EXT = 1000377000,
         LOGIC_OP_EXT = 1000377003,
         COLOR_WRITE_ENABLE_EXT = 1000381000
-    )
+    };
     
     std::string_view                        to_string_view(VkDynamicState v)
     {
-        int n   = (int) v;
-        if(VqDynamicState::has_value(n))
-            return VqDynamicState(n).key();
-        return "(unknown object_type)";
+        return key_of(v,  "(unknown object_type)");
     }
 
     std::string_view to_string_view(VkFormat fmt)
@@ -691,24 +648,20 @@ namespace yq::tachyon {
         }
     }
     
-    YQ_ENUM(VqPhysicalDeviceType, ,
+    enum class VqPhysicalDeviceType {
         Other = 0,
         Integrated = 1,
         Discrete = 2,
         Virtual = 3,
         CPU     = 4
-    )
+    };
 
     std::string_view                        to_string_view(VkPhysicalDeviceType v)
     {
-        int n   = (int) v;
-        if(VqPhysicalDeviceType::has_value(n))
-            return VqPhysicalDeviceType(n).key();
-        return "(unknown device type)";
+        return key_of((VqPhysicalDeviceType) v,  "(unknown device type)");
     }
 
 
-    
     std::string_view    to_string_view(VqPipelineBindPoint v)
     {
         switch(v){

@@ -1,9 +1,10 @@
 # CHANGE LOG
 
-## Upcoming
+## 2026.05.24
 
 * Pipeline role rename
 * Gestures (to allow UI actions to complete)
+* C++26 (enumerations)
 
 ## 2025.12.26
 

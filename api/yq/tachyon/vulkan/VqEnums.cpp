@@ -5,7 +5,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/vulkan/VqEnums.hpp>
-#include <yq/core/Enum.hpp>
 #include <yq/core/Enumeration.hxx>
 
 namespace yq::tachyon {

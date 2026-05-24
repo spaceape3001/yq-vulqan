@@ -98,7 +98,7 @@ namespace {
                     break;
                 }
                 
-                auto x = ::yq::enumeration<StdThread>().value(cmd);
+                auto x = value_of<StdThread>(cmd);
                 if(x){
                     app->set_thread(st, *x);
                     break;

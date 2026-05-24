@@ -207,7 +207,7 @@ namespace yq::tachyon {
                     info.arrayLayers    = *x;
                 } 
                 if(is_similar(k, "format")){
-                    auto x = enumeration<DataFormat>().value(v);
+                    auto x = value_of<DataFormat>(v);
                     if(!x){
                         tachyonError << "Loading " << url << ": Bad format";
                         return {};
@@ -367,7 +367,7 @@ namespace yq::tachyon {
                     }
                 } 
                 if(is_similar(k, "tiling")){
-                    auto x  = enumeration<ImageTiling>().value(v);
+                    auto x  = value_of<ImageTiling>(v);
                     if(!x){
                         tachyonError << "Loading " << url << ": Bad image tiling";
                         return {};
@@ -375,7 +375,7 @@ namespace yq::tachyon {
                     info.tiling = *x;
                 } 
                 if(is_similar(k, "type")){
-                    auto x = enumeration<RasterType>().value(v);
+                    auto x = value_of<RasterType>(v);
                     if(!x){
                         tachyonError << "Loading " << url << ": Bad image type";
                         return {};

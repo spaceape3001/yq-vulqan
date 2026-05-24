@@ -173,7 +173,7 @@ namespace yq::tachyon::glsl {
     ShaderType  shader_type(const std::filesystem::path& pth)
     {
         std::string             sspec   = pth.string();
-        return enumeration<ShaderType>().decode(file_extension(sspec));
+        return value_of<ShaderType>(file_extension(sspec), DEFAULT);
     }
     
     namespace {

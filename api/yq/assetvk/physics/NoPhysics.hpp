@@ -7,10 +7,9 @@
 #pragma once
 
 #include <yq/tachyon/api/Physics.hpp>
-#include <yq/tachyon/aspect/AScreenScaleM.hpp>
 
 namespace yq::tachyon {
-    class NoPhysics : public Physics, public AScreenScaleM {
+    class NoPhysics : public Physics {
         YQ_TACHYON_DECLARE(NoPhysics, Physics)
     public:
     

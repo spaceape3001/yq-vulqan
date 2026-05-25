@@ -45,3 +45,5 @@ if(Build_Qt6)
     add_subdirectory(tedit)
 endif()
 
+# Other naming ideas
+#   puppetry (for character animation)

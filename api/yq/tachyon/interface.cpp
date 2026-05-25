@@ -49,7 +49,6 @@
 #include "interface/IScale2D.ipp"
 #include "interface/IScale3D.ipp"
 #include "interface/IScale4D.ipp"
-#include "interface/IScreenScaleM.ipp"
 #include "interface/ISize1D.ipp"
 #include "interface/ISize2D.ipp"
 #include "interface/ISize3D.ipp"

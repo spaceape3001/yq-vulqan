@@ -28,6 +28,10 @@ namespace yq::tachyon {
         ~Scene³Meta();
     };
     
+    /*! \brief 3D Scene
+    
+        
+    */
     class Scene³ : public Scene, public ③ {
         YQ_TACHYON_META(Scene³Meta)
         YQ_TACHYON_SNAP(Scene³Snap)

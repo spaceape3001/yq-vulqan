@@ -10,12 +10,15 @@
 
 #include <yq/tachyon/api/Response.hpp>
 
+#include <yq/tachyon/enum/AngleUnit.hpp>
 #include <yq/tachyon/enum/AxisRemap.hpp>
 #include <yq/tachyon/enum/GimbalMode.hpp>
+#include <yq/tachyon/enum/LengthUnit.hpp>
 #include <yq/tachyon/enum/LightType.hpp>
 #include <yq/tachyon/enum/RenderMode.hpp>
 #include <yq/tachyon/enum/SaveFlags.hpp>
 #include <yq/tachyon/enum/SaveType.hpp>
+#include <yq/tachyon/enum/TimeUnit.hpp>
 #include <yq/tachyon/enum/UIFlags.hpp>
 
 #include <yq/tachyon/os/HatState.hpp>
@@ -58,6 +61,7 @@
 
 #include <yq/core/Enumeration.hxx>
 
+YQ_ENUM_IMPLEMENT(yq::tachyon::AngleUnit)
 YQ_ENUM_IMPLEMENT(yq::tachyon::AxisRemap)
 YQ_ENUM_IMPLEMENT(yq::tachyon::BorderColor)
 YQ_ENUM_IMPLEMENT(yq::tachyon::BufferUsage)
@@ -78,6 +82,7 @@ YQ_ENUM_IMPLEMENT(yq::tachyon::ImageViewCreateFlag)
 YQ_ENUM_IMPLEMENT(yq::tachyon::ImageViewType)
 YQ_ENUM_IMPLEMENT(yq::tachyon::IndexType)
 YQ_ENUM_IMPLEMENT(yq::tachyon::LightType)
+YQ_ENUM_IMPLEMENT(yq::tachyon::LengthUnit)
 YQ_ENUM_IMPLEMENT(yq::tachyon::MouseButton)
 YQ_ENUM_IMPLEMENT(yq::tachyon::LogicOp)
 YQ_ENUM_IMPLEMENT(yq::tachyon::MouseMode)
@@ -99,9 +104,11 @@ YQ_ENUM_IMPLEMENT(yq::tachyon::StdThread)
 YQ_ENUM_IMPLEMENT(yq::tachyon::StoreOp)
 YQ_ENUM_IMPLEMENT(yq::tachyon::UIFlag)
 YQ_ENUM_IMPLEMENT(yq::tachyon::SystemAllocationScope)
+YQ_ENUM_IMPLEMENT(yq::tachyon::TimeUnit)
 YQ_ENUM_IMPLEMENT(yq::tachyon::Topology)
 YQ_ENUM_IMPLEMENT(yq::tachyon::VertexInputRate)
 
+YQ_TYPE_IMPLEMENT(yq::tachyon::AngleUnit)
 YQ_TYPE_IMPLEMENT(yq::tachyon::AxisRemap)
 YQ_TYPE_IMPLEMENT(yq::tachyon::BorderColor)
 YQ_TYPE_IMPLEMENT(yq::tachyon::BufferUsage)
@@ -124,6 +131,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewCreateFlags)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ImageViewType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::IndexType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::HatState)
+YQ_TYPE_IMPLEMENT(yq::tachyon::LengthUnit)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LightType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LogicOp)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButton)
@@ -148,6 +156,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::StdThread)
 YQ_TYPE_IMPLEMENT(yq::tachyon::StoreOp)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SystemAllocationScope)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SystemAllocationScopeFlags)
+YQ_TYPE_IMPLEMENT(yq::tachyon::TimeUnit)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Topology)
 YQ_TYPE_IMPLEMENT(yq::tachyon::VertexInputRate)
 

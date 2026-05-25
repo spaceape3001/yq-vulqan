@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/units.hpp>
 #include <yq/color/RGB.hpp>
 #include <yq/color/RGBA.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
@@ -31,7 +32,11 @@ namespace yq::tachyon {
     
     /*! \brief Frame of things to be rendered
     
-        This will include lighting (eventually) & rendered objects.
+        This will include lighting (eventually) & rendered objects, models, etc.  
+        Due to duplication, domain will be folded in?
+        
+        Presence of the ScreenScale implies a physical relationship; it'll override 
+        a default of 100:1 (cm).
     */
     class Scene : public Tachyon {
         YQ_TACHYON_META(SceneMeta)
@@ -50,6 +55,7 @@ namespace yq::tachyon {
         const RGBA4F&   bgcolor() const { return m_bgcolor; }
         virtual void    set_bgcolor(const RGBA4F&); // override to check/reject color sets
 
+        static constexpr const Meter    kDefaultScreenPitch  = 1._cm;
 
     protected:
         
@@ -59,6 +65,7 @@ namespace yq::tachyon {
         RGBA4F  m_bgcolor = { 0., 0., 0., -1. };
         
         void    on_set_bg_color(const SetBgColorCommand&);
+        
     };
 }
 YQ_TYPE_DECLARE(yq::tachyon::SceneID)

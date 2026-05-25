@@ -21,6 +21,7 @@
 #include <yq/tachyon/typedef/controller.hpp>
 #include <yq/tachyon/typedef/cursor.hpp>
 #include <yq/tachyon/typedef/desktop.hpp>
+#include <yq/tachyon/typedef/engine.hpp>
 #include <yq/tachyon/typedef/frame.hpp>
 #include <yq/tachyon/typedef/gamepad.hpp>
 #include <yq/tachyon/typedef/graphics_card.hpp>
@@ -33,6 +34,7 @@
 #include <yq/tachyon/typedef/light.hpp>
 #include <yq/tachyon/typedef/light3.hpp>
 #include <yq/tachyon/typedef/manager.hpp>
+#include <yq/tachyon/typedef/master.hpp>
 #include <yq/tachyon/typedef/model.hpp>
 #include <yq/tachyon/typedef/monitor.hpp>
 #include <yq/tachyon/typedef/mouse.hpp>
@@ -101,6 +103,7 @@ namespace yq::tachyon {
         bool contains(CursorID) const;
         bool contains(DesktopID) const;
         //bool contains(EditorID) const;
+        bool contains(EngineID) const;
         bool contains(GamepadID) const;
         bool contains(GraphicsCardID) const;
         bool contains(GroupID) const;
@@ -112,6 +115,7 @@ namespace yq::tachyon {
         bool contains(LightID) const;
         bool contains(Light³ID) const;
         bool contains(ManagerID) const;
+        bool contains(MasterID) const;
         bool contains(ModelID) const;
         bool contains(MonitorID) const;
         bool contains(MouseID) const;
@@ -134,6 +138,7 @@ namespace yq::tachyon {
         size_t count(controller_k) const;
         size_t count(cursor_k) const;
         size_t count(desktop_k) const;
+        size_t count(engine_k) const;
         size_t count(gamepad_k) const;
         size_t count(graphics_card_k) const;
         size_t count(group_k) const;
@@ -144,6 +149,7 @@ namespace yq::tachyon {
         size_t count(layer_k) const;
         size_t count(light_k) const;
         size_t count(light³_k) const;
+        size_t count(master_k) const;
         size_t count(manager_k) const;
         size_t count(model_k) const;
         size_t count(monitor_k) const;
@@ -170,6 +176,7 @@ namespace yq::tachyon {
         const CursorData*                   data(CursorID) const;
         const DesktopData*                  data(DesktopID) const;
         //const EditorData*                   data(EditorID) const;
+        const EngineData*                   data(EngineID) const;
         const GamepadData*                  data(GamepadID) const;
         const GraphicsCardData*             data(GraphicsCardID) const;
         const GroupData*                    data(GroupID) const;
@@ -181,6 +188,7 @@ namespace yq::tachyon {
         const LightData*                    data(LightID) const;
         const Light³Data*                   data(Light³ID) const;
         const ManagerData*                  data(ManagerID) const;
+        const MasterData*                   data(MasterID) const;
         const ModelData*                    data(ModelID) const;
         const MonitorData*                  data(MonitorID) const;
         const MouseData*                    data(MouseID) const;
@@ -198,7 +206,9 @@ namespace yq::tachyon {
         const WidgetData*                   data(WidgetID) const;
         const WindowData*                   data(WindowID) const;
         
+        EngineID                            first(engine_k) const;
         GraphicsCardID                      first(graphics_card_k) const;
+        MasterID                            first(master_k) const;
         
         template <typename C, typename Pred>
         void        foreach(ptr_k, std::span<const TypedID> ids, Pred&& pred) const;
@@ -217,6 +227,7 @@ namespace yq::tachyon {
         const std::set<ControllerID>&       ids(controller_k) const;
         const std::set<CursorID>&           ids(cursor_k) const;
         const std::set<DesktopID>&          ids(desktop_k) const;
+        const std::set<EngineID>&           ids(engine_k) const;
         const std::set<GamepadID>&          ids(gamepad_k) const;
         const std::set<GraphicsCardID>&     ids(graphics_card_k) const;
         const std::set<GroupID>&            ids(group_k) const;
@@ -228,6 +239,7 @@ namespace yq::tachyon {
         const std::set<LightID>&            ids(light_k) const;
         const std::set<Light³ID>&           ids(light³_k) const;
         const std::set<ManagerID>&          ids(manager_k) const;
+        const std::set<MasterID>&           ids(master_k) const;
         const std::set<ModelID>&            ids(model_k) const;
         const std::set<MonitorID>&          ids(monitor_k) const;
         const std::set<MouseID>&            ids(mouse_k) const;
@@ -250,6 +262,7 @@ namespace yq::tachyon {
         const ControllerMeta*               meta(ControllerID) const;
         const CursorMeta*                   meta(CursorID) const;
         const DesktopMeta*                  meta(DesktopID) const;
+        const EngineMeta*                   meta(EngineID) const;
         const GamepadMeta*                  meta(GamepadID) const;
         const GraphicsCardMeta*             meta(GraphicsCardID) const;
         const GroupMeta*                    meta(GroupID) const;
@@ -261,6 +274,7 @@ namespace yq::tachyon {
         const LightMeta*                    meta(LightID) const;
         const Light³Meta*                   meta(Light³ID) const;
         const ManagerMeta*                  meta(ManagerID) const;
+        const MasterMeta*                   meta(MasterID) const;
         const ModelMeta*                    meta(ModelID) const;
         const MouseMeta*                    meta(MouseID) const;
         const PhysicsMeta*                  meta(PhysicsID) const;
@@ -294,6 +308,8 @@ namespace yq::tachyon {
 
         //Editor*                             object(EditorID) const;
         
+        Engine*                             object(EngineID) const;
+
         Gamepad*                            object(GamepadID) const;
 
         GraphicsCard*                       object(GraphicsCardID) const;
@@ -327,6 +343,7 @@ namespace yq::tachyon {
         //! Manager pointer
         //! \note WARNING this will break thread-safety guarantees
         Manager*                            object(ManagerID) const;
+        Master*                             object(MasterID) const;
 
         //! Model pointer
         //! \note WARNING this will break thread-safety guarantees
@@ -413,6 +430,7 @@ namespace yq::tachyon {
         const CursorSnap*                   snap(CursorID) const;
         const DesktopSnap*                  snap(DesktopID) const;
         //const EditorSnap*                   snap(EditorID) const;
+        const EngineSnap*                   snap(EngineID) const;
         const GamepadSnap*                  snap(GamepadID) const;
         const GraphicsCardSnap*             snap(GraphicsCardID) const;
         const GroupSnap*                    snap(GroupID) const;
@@ -424,6 +442,7 @@ namespace yq::tachyon {
         const LightSnap*                    snap(LightID) const;
         const Light³Snap*                   snap(Light³ID) const;
         const ManagerSnap*                  snap(ManagerID) const;
+        const MasterSnap*                   snap(MasterID) const;
         const ModelSnap*                    snap(ModelID) const;
         const MonitorSnap*                  snap(MonitorID) const;
         const MouseSnap*                    snap(MouseID) const;
@@ -502,6 +521,7 @@ namespace yq::tachyon {
         Container<Cursor, CursorData, CursorSnap>                   m_cursors;
         Container<Desktop, DesktopData, DesktopSnap>                m_desktops;
         //Container<Editor, EditorData, EditorSnap>                   m_editors;
+        Container<Engine, EngineData, EngineSnap>                   m_engines;
         Container<Gamepad, GamepadData, GamepadSnap>                m_gamepads;
         Container<GraphicsCard, GraphicsCardData, GraphicsCardSnap> m_graphicsCards;
         Container<Group, GroupData, GroupSnap>                      m_groups;
@@ -513,6 +533,7 @@ namespace yq::tachyon {
         Container<Light, LightData, LightSnap>                      m_lights;
         Container<Light³, Light³Data, Light³Snap>                   m_light³s;
         Container<Manager, ManagerData, ManagerSnap>                m_managers;
+        Container<Master, MasterData, MasterSnap>                   m_masters;
         Container<Model, ModelData, ModelSnap>                      m_models;
         Container<Monitor, MonitorData, MonitorSnap>                m_monitors;
         Container<Mouse, MouseData, MouseSnap>                      m_mouses;

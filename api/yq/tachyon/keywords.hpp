@@ -85,6 +85,8 @@ namespace yq::tachyon {
     
     struct emit_k {};
     
+    struct engine_k {};
+    
     struct event_k{};
     
     struct every_k : public ::yq::every_k {
@@ -138,6 +140,7 @@ namespace yq::tachyon {
     //struct light_k {};    // moved to the toolbox
     struct light³_k {};
     struct manager_k {};
+    struct master_k {};
     struct maximum_k : public ::yq::maximum_k {
         consteval operator SizePolicy() const noexcept { return kSizePolicy_Maximum; }
     };
@@ -280,6 +283,7 @@ namespace yq::tachyon {
     static constexpr const east_k               EAST;
     static constexpr const edit_k               EDIT;
     static constexpr const emit_k               EMIT;
+    static constexpr const engine_k             ENGINE;
     static constexpr const event_k              EVENT;
     static constexpr const every_k              EVERY;
     static constexpr const external_k           EXTERNAL;
@@ -307,6 +311,7 @@ namespace yq::tachyon {
     static constexpr const layout_k             LAYOUT;
     static constexpr const light³_k             LIGHT³;
     static constexpr const manager_k            MANAGER;
+    static constexpr const master_k             MASTER;
     static constexpr const maximum_k            MAX;
     static constexpr const maximum_k            MAXIMUM;
     static constexpr const mesh_k               MESH;

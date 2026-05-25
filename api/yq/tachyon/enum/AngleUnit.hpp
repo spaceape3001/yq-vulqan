@@ -1,0 +1,20 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/meta/MetaBinder.hpp>
+
+namespace yq::tachyon {
+    enum class AngleUnit {
+        Degree,
+        Radian,
+        Gradian
+    };
+}
+
+YQ_TYPE_DECLARE(yq::tachyon::AngleUnit)
+

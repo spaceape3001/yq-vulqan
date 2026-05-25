@@ -18,7 +18,7 @@
 
 namespace yq::tachyon {
     class Frame;
-    struct PhysicsSnap : public TachyonSnap, public ScreenScaleSnap {
+    struct PhysicsSnap : public TachyonSnap {
         // this list will expand... all valid physics in use
     
     
@@ -33,17 +33,6 @@ namespace yq::tachyon {
         
         MeterPerSecond²3D           gravity(const Meter3D&) const;
         MeterPerSecond3D            wind(const Meter3D&) const;
-        
-        //! \note Will return NAN when mapping is undefined
-        Vector3D                    map(const Meter3D&, const Frame* frame=nullptr) const;
-        //! \note Will return NAN when mapping is undefined
-        Vector2D                    map(const Meter2D&, const Frame* frame=nullptr) const;
-        
-        //! \note Will return NAN when unmapping is undefined
-        Meter2D                     unmap(const Vector2D&, const Frame* frame=nullptr) const;
-
-        //! \note Will return NAN when unmapping is undefined
-        Meter3D                     unmap(const Vector3D&, const Frame* frame=nullptr) const;
         
         const PhysicsSnap*          parent(const Frame* frame=nullptr) const;
     };

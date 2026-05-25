@@ -52,7 +52,6 @@ add_library(${PROJECT_NAME} SHARED
     edit/OuterTessellation4UI.cpp
     edit/RenderedUI.cpp
     edit/SceneUI.cpp
-    edit/ScreenScaleMUI.cpp
     edit/SimpleSpatial3UI.cpp
     edit/SkyBox3UI.cpp
     edit/TachyonUI.cpp

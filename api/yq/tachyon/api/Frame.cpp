@@ -43,6 +43,10 @@
 #include <yq/tachyon/api/Spatial3.hpp>
 #include <yq/tachyon/api/Spatial3Data.hpp>
 
+#include <yq/tachyon/app/Engine.hpp>
+#include <yq/tachyon/app/EngineData.hpp>
+#include <yq/tachyon/app/Master.hpp>
+#include <yq/tachyon/app/MasterData.hpp>
 #include <yq/tachyon/app/Viewer.hpp>
 #include <yq/tachyon/app/ViewerData.hpp>
 
@@ -214,6 +218,8 @@ namespace yq::tachyon {
             m_desktops.insert(t, tac.data.ptr(), tac.snap.ptr());
         //if(types(Type::Editor))
             //m_editors.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Engine))
+            m_engines.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Gamepad))
             m_gamepads.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::GraphicsCard))
@@ -236,6 +242,8 @@ namespace yq::tachyon {
             m_light³s.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Manager))
             m_managers.insert(t, tac.data.ptr(), tac.snap.ptr());
+        if(types(Type::Master))
+            m_masters.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Model))
             m_models.insert(t, tac.data.ptr(), tac.snap.ptr());
         if(types(Type::Monitor))
@@ -308,6 +316,12 @@ namespace yq::tachyon {
     }
     #endif
 
+    bool Frame::contains(EngineID id) const
+    {
+        return m_engines.has(id);
+    }
+
+
     bool Frame::contains(GamepadID id) const
     {
         return m_gamepads.has(id);
@@ -361,6 +375,11 @@ namespace yq::tachyon {
     bool Frame::contains(ManagerID id) const
     {
         return m_managers.has(id);
+    }
+
+    bool Frame::contains(MasterID id) const
+    {
+        return m_masters.has(id);
     }
 
     bool Frame::contains(ModelID id) const
@@ -482,6 +501,11 @@ namespace yq::tachyon {
     {
         return m_desktops.count();
     }
+
+    size_t Frame::count(engine_k) const
+    {
+        return m_engines.count();
+    }
     
     size_t Frame::count(gamepad_k) const
     {
@@ -538,6 +562,11 @@ namespace yq::tachyon {
         return m_managers.count();
     }
     
+    size_t Frame::count(master_k) const
+    {
+        return m_masters.count();
+    }
+
     size_t Frame::count(model_k) const
     {
         return m_models.count();
@@ -650,6 +679,11 @@ namespace yq::tachyon {
     }
     #endif
 
+    const EngineData*                   Frame::data(EngineID id) const
+    {
+        return m_engines.data(id);
+    }
+
     const GamepadData*                  Frame::data(GamepadID id) const
     {
         return m_gamepads.data(id);
@@ -680,7 +714,7 @@ namespace yq::tachyon {
         return m_kinetics.data(id);
     }
 
-    const Kinetic³Data*                  Frame::data(Kinetic³ID id) const
+    const Kinetic³Data*                 Frame::data(Kinetic³ID id) const
     {
         return m_kinetic³s.data(id);
     }
@@ -705,57 +739,62 @@ namespace yq::tachyon {
         return m_managers.data(id);
     }
 
+    const MasterData*                   Frame::data(MasterID id) const
+    {
+        return m_masters.data(id);
+    }
+
     const ModelData*                    Frame::data(ModelID id) const
     {
         return m_models.data(id);
     }
 
-    const MouseData*                   Frame::data(MouseID id) const
+    const MouseData*                    Frame::data(MouseID id) const
     {
         return m_mouses.data(id);
     }
 
-    const PhysicsData*                 Frame::data(PhysicsID id) const
+    const PhysicsData*                  Frame::data(PhysicsID id) const
     {
         return m_physics.data(id);
     }
 
-    const RenderedData*                Frame::data(RenderedID id) const
+    const RenderedData*                 Frame::data(RenderedID id) const
     {
         return m_rendereds.data(id);
     }
 
-    const Rendered³Data*               Frame::data(Rendered³ID id) const
+    const Rendered³Data*                Frame::data(Rendered³ID id) const
     {
         return m_rendered³s.data(id);
     }
 
-    const SceneData*                   Frame::data(SceneID id) const
+    const SceneData*                    Frame::data(SceneID id) const
     {
         return m_scenes.data(id);
     }
 
-    const Scene³Data*                  Frame::data(Scene³ID id) const
+    const Scene³Data*                   Frame::data(Scene³ID id) const
     {
         return m_scene³s.data(id);
     }
 
-    const SpatialData*                 Frame::data(SpatialID id) const
+    const SpatialData*                  Frame::data(SpatialID id) const
     {
         return m_spatials.data(id);
     }
 
-    const Spatial²Data*                Frame::data(Spatial²ID id) const
+    const Spatial²Data*                 Frame::data(Spatial²ID id) const
     {
         return m_spatial²s.data(id);
     }
 
-    const Spatial³Data*                Frame::data(Spatial³ID id) const
+    const Spatial³Data*                 Frame::data(Spatial³ID id) const
     {
         return m_spatial³s.data(id);
     }
 
-    const TachyonData*                 Frame::data(TachyonID id) const
+    const TachyonData*                  Frame::data(TachyonID id) const
     {
         return m_tachyons.data(id);
     }
@@ -780,9 +819,19 @@ namespace yq::tachyon {
         return m_windows.data(id);
     }
 
+    EngineID                            Frame::first(engine_k) const
+    {
+        return m_engines.first();
+    }
+
     GraphicsCardID                      Frame::first(graphics_card_k) const
     {
         return m_graphicsCards.first();
+    }
+
+    MasterID                            Frame::first(master_k) const
+    {
+        return m_masters.first();
     }
 
     const std::set<CameraID>&           Frame::ids(camera_k) const
@@ -810,6 +859,11 @@ namespace yq::tachyon {
         return m_desktops.ids;
     }
     
+    const std::set<EngineID>&           Frame::ids(engine_k) const
+    {
+        return m_engines.ids;
+    }
+
     const std::set<GamepadID>&          Frame::ids(gamepad_k) const
     {
         return m_gamepads.ids;
@@ -840,7 +894,7 @@ namespace yq::tachyon {
         return m_kinetics.ids;
     }
     
-    const std::set<Kinetic³ID>&          Frame::ids(kinetic³_k) const
+    const std::set<Kinetic³ID>&         Frame::ids(kinetic³_k) const
     {
         return m_kinetic³s.ids;
     }
@@ -865,6 +919,11 @@ namespace yq::tachyon {
         return m_managers.ids;
     }
     
+    const std::set<MasterID>&           Frame::ids(master_k) const
+    {
+        return m_masters.ids;
+    }
+
     const std::set<ModelID>&            Frame::ids(model_k) const
     {
         return m_models.ids;
@@ -985,6 +1044,14 @@ namespace yq::tachyon {
         return nullptr;
     }
     
+    const EngineMeta*                   Frame::meta(EngineID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+    
     const GamepadMeta*                  Frame::meta(GamepadID id) const
     {
         auto obj = object(id);
@@ -1033,7 +1100,7 @@ namespace yq::tachyon {
         return nullptr;
     }
 
-    const Kinetic³Meta*                  Frame::meta(Kinetic³ID id) const
+    const Kinetic³Meta*                 Frame::meta(Kinetic³ID id) const
     {
         auto obj = object(id);
         if(obj)
@@ -1073,6 +1140,14 @@ namespace yq::tachyon {
         return nullptr;
     }
     
+    const MasterMeta*                   Frame::meta(MasterID id) const
+    {
+        auto obj = object(id);
+        if(obj)
+            return &obj->metaInfo();
+        return nullptr;
+    }
+
     const ModelMeta*                    Frame::meta(ModelID id) const
     {
         auto obj = object(id);
@@ -1219,6 +1294,11 @@ namespace yq::tachyon {
         return m_desktops.pointer(id);
     }
 
+    Engine*                             Frame::object(EngineID id) const
+    {
+        return m_engines.pointer(id);
+    }
+
     Gamepad*                            Frame::object(GamepadID id) const
     {
         return m_gamepads.pointer(id);
@@ -1274,6 +1354,11 @@ namespace yq::tachyon {
         return m_managers.pointer(id);
     }
 
+    Master*                             Frame::object(MasterID id) const
+    {
+        return m_masters.pointer(id);
+    }
+
     Model*                              Frame::object(ModelID id) const
     {
         return m_models.pointer(id);
@@ -1309,17 +1394,17 @@ namespace yq::tachyon {
         return m_scene³s.pointer(id);
     }
 
-    Spatial*                              Frame::object(SpatialID id) const
+    Spatial*                            Frame::object(SpatialID id) const
     {
         return m_spatials.pointer(id);
     }
 
-    Spatial²*                             Frame::object(Spatial²ID id) const
+    Spatial²*                           Frame::object(Spatial²ID id) const
     {
         return m_spatial²s.pointer(id);
     }
 
-    Spatial³*                             Frame::object(Spatial³ID id) const
+    Spatial³*                           Frame::object(Spatial³ID id) const
     {
         return m_spatial³s.pointer(id);
     }
@@ -1421,6 +1506,7 @@ namespace yq::tachyon {
             << "  Controllers:   " << count(CONTROLLER) << "\n"
             << "  Cursors:       " << count(CURSOR) << "\n"
             << "  Desktops:      " << count(DESKTOP) << "\n"
+            << "  Engines:       " << count(ENGINE) << "\n"
             << "  Gamepads:      " << count(GAMEPAD) << "\n"
             << "  GraphicsCards: " << count(GRAPHICS_CARD) << "\n"
             << "  Groups:        " << count(GROUP) << "\n"
@@ -1432,6 +1518,7 @@ namespace yq::tachyon {
             << "  Lights:        " << count(LIGHT) << "\n"
             << "  Light³s:       " << count(LIGHT³) << "\n"
             << "  Managers:      " << count(MANAGER) << "\n"
+            << "  Masters:       " << count(MASTER) << "\n"
             << "  Models:        " << count(MODEL) << "\n"
             << "  Mouses:        " << count(MOUSE) << "\n"
             << "  Physics:       " << count(PHYSICS) << "\n"
@@ -1499,6 +1586,11 @@ namespace yq::tachyon {
         return m_desktops.snap(id);
     }
 
+    const EngineSnap*                  Frame::snap(EngineID id) const
+    {
+        return m_engines.snap(id);
+    }
+
     const GamepadSnap*                 Frame::snap(GamepadID id) const
     {
         return m_gamepads.snap(id);
@@ -1554,6 +1646,11 @@ namespace yq::tachyon {
         return m_managers.snap(id);
     }
 
+    const MasterSnap*                  Frame::snap(MasterID id) const
+    {
+        return m_masters.snap(id);
+    }
+
     const ModelSnap*                   Frame::snap(ModelID id) const
     {
         return m_models.snap(id);
@@ -1590,22 +1687,22 @@ namespace yq::tachyon {
         return m_scenes.snap(id);
     }
 
-    const Scene³Snap*                   Frame::snap(Scene³ID id) const
+    const Scene³Snap*                  Frame::snap(Scene³ID id) const
     {
         return m_scene³s.snap(id);
     }
 
-    const SpatialSnap*                   Frame::snap(SpatialID id) const
+    const SpatialSnap*                 Frame::snap(SpatialID id) const
     {
         return m_spatials.snap(id);
     }
 
-    const Spatial²Snap*                   Frame::snap(Spatial²ID id) const
+    const Spatial²Snap*                Frame::snap(Spatial²ID id) const
     {
         return m_spatial²s.snap(id);
     }
 
-    const Spatial³Snap*                   Frame::snap(Spatial³ID id) const
+    const Spatial³Snap*                Frame::snap(Spatial³ID id) const
     {
         return m_spatial³s.snap(id);
     }

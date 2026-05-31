@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/tags.hpp>
-#include <yq/tachyon/api/Domain.hpp>
-#include <yq/tachyon/api/DomainData.hpp>
-#include <yq/tachyon/api/DomainMetaWriter.hpp>
+#include "Domain.hpp"
+#include "DomainData.hpp"
+#include "DomainMetaWriter.hpp"
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Domain);

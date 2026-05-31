@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Domain3.hpp>
-#include <yq/tachyon/api/Domain3Data.hpp>
-#include <yq/tachyon/api/Domain3MetaWriter.hpp>
+#include "Domain3.hpp"
+#include "Domain3Data.hpp"
+#include "Domain3MetaWriter.hpp"
 #include <yq/tachyon/api/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
 

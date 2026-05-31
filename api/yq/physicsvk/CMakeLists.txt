@@ -7,7 +7,7 @@
 project(yq_physicsvk)
 
 add_library(${PROJECT_NAME} SHARED
-    physicsvk.cpp
+    api_domain.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

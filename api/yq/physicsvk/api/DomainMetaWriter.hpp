@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Domain.hpp>
-#include <yq/tachyon/api/DomainData.hpp>
+#include <yq/physicsvk/api/Domain.hpp>
+#include <yq/physicsvk/api/DomainData.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {

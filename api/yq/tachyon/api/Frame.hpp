@@ -228,7 +228,7 @@ namespace yq::tachyon {
             if constexpr (std::is_same_v<T,Tachyon>){
                 return snap_of({id});
             } else {
-                return static_cast<const snap_t<T>*>(snap_of(type_v<T>, id));
+                return (const snap_t<T>*) (snap_of(type_v<T>, id));
             }
         }
         

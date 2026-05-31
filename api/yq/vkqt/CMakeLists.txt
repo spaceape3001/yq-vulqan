@@ -27,6 +27,9 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
     yq_tachyon
     yq_gluon
     yq_core
+    
+    yq_gamevk       # temporary
+    yq_physicsvk    # temporary
 )
 
 LinkTest(${PROJECT_NAME})

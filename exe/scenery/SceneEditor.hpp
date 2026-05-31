@@ -7,13 +7,13 @@
 #pragma once
 
 #include <yq/asset/widget/CompositeWidget.hpp>
+#include <yq/physicsvk/typedef/kinetic.hpp>
+#include <yq/physicsvk/typedef/kinetic3.hpp>
 #include <yq/tachyon/typedef/camera.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
 #include <yq/tachyon/typedef/controller.hpp>
 #include <yq/tachyon/typedef/light.hpp>
 #include <yq/tachyon/typedef/light3.hpp>
-#include <yq/tachyon/typedef/kinetic.hpp>
-#include <yq/tachyon/typedef/kinetic3.hpp>
 #include <yq/tachyon/typedef/model.hpp>
 #include <yq/tachyon/typedef/physics.hpp>
 #include <yq/tachyon/typedef/rendered.hpp>

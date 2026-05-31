@@ -21,6 +21,7 @@ target_link_libraries(${PROJECT_NAME}
         yq_assetvk
         yq_luavk
         yq_date
+        yq_physicsvk
 )
 
 target_include_directories(${PROJECT_NAME}

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/kinetic.hpp>
+#include <yq/physicsvk/typedef/kinetic.hpp>
 #include <QMetaType>
 
 Q_DECLARE_METATYPE(yq::tachyon::KineticID)

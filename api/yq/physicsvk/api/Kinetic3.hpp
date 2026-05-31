@@ -7,8 +7,8 @@
 #pragma once
 
 #include <yq/tachyon/api/3D.hpp>
-#include <yq/tachyon/api/Kinetic.hpp>
-#include <yq/tachyon/typedef/kinetic3.hpp>
+#include <yq/physicsvk/api/Kinetic.hpp>
+#include <yq/physicsvk/typedef/kinetic3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
 

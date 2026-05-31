@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Collision.hpp>
-#include <yq/tachyon/api/CollisionData.hpp>
-#include <yq/tachyon/api/CollisionMetaWriter.hpp>
+#include "Collision.hpp"
+#include "CollisionData.hpp"
+#include "CollisionMetaWriter.hpp"
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

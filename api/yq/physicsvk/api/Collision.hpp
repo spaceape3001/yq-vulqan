@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Tachyon.hpp>
-#include <yq/tachyon/typedef/collision.hpp>
+#include <yq/physicsvk/typedef/collision.hpp>
 
 namespace yq::tachyon {
 
@@ -15,7 +15,7 @@ namespace yq::tachyon {
     
     /*! \brief Collision Information
     
-        Information for cameras.
+        Information for collision shapes/models.
     */
     class CollisionMeta : public TachyonMeta {
     public:

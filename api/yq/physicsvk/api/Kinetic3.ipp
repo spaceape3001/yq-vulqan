@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Kinetic3.hpp>
-#include <yq/tachyon/api/Kinetic3Data.hpp>
-#include <yq/tachyon/api/Kinetic3MetaWriter.hpp>
+#include "Kinetic3.hpp"
+#include "Kinetic3Data.hpp"
+#include "Kinetic3MetaWriter.hpp"
 #include <yq/tachyon/command/SpatialCommand.hpp>
 #include <yq/tachyon/api/3DWriter.hxx>
 #include <yq/meta/Init.hpp>

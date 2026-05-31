@@ -21,7 +21,6 @@ add_library(${PROJECT_NAME} SHARED
     ##  These are the "unity" build files
     
     api_camera.cpp
-    api_kinetic.cpp
     api_light.cpp
     api_meta.cpp
     api_post.cpp
@@ -87,8 +86,6 @@ add_library(${PROJECT_NAME} SHARED
     event_tessellation.cpp
     event_ui.cpp
     event_window.cpp
-    
-    fastdata.cpp
     
     gesture_file.cpp
     

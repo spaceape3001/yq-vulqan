@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Kinetic.hpp>
-#include <yq/tachyon/api/KineticData.hpp>
-#include <yq/tachyon/api/KineticMetaWriter.hpp>
+#include "Kinetic.hpp"
+#include "KineticData.hpp"
+#include "KineticMetaWriter.hpp"
 #include <yq/tachyon/api/Post.hpp>
 #include <yq/meta/Init.hpp>
 

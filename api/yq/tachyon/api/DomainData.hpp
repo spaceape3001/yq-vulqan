@@ -9,7 +9,6 @@
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/api/TypedID.hpp>
 #include <yq/tachyon/typedef/domain.hpp>
-#include <yq/tachyon/typedef/master.hpp>
 #include <yq/tachyon/typedef/model.hpp>
 #include <yq/tachyon/typedef/physics.hpp>
 

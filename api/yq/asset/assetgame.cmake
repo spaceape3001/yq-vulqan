@@ -4,18 +4,16 @@
 ##
 ################################################################################
 
-project(yq_gamevk)
+project(yq_assetgame)
 
 add_library(${PROJECT_NAME} SHARED
-    command_master.cpp
-    event_master.cpp
-
-    app/Master.cpp
+    assetgame.cpp
 )
 
-target_link_libraries(${PROJECT_NAME}
-PUBLIC
+target_link_libraries(${PROJECT_NAME} PUBLIC
+    yq_gamevk
     yq_tachyon
+    yq_core
 )
 
 yq_vklib(${PROJECT_NAME})

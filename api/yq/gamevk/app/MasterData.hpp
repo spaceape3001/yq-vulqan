@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/api/ManagerData.hpp>
 #include <yq/tachyon/enum/LengthUnit.hpp>
-#include <yq/tachyon/typedef/master.hpp>
+#include <yq/gamevk/typedef/master.hpp>
 
 namespace yq::tachyon {
     struct MasterSnap : public ManagerSnap {

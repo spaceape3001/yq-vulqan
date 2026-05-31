@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/api/Manager.hpp>
 #include <yq/tachyon/enum/LengthUnit.hpp>
-#include <yq/tachyon/typedef/master.hpp>
+#include <yq/gamevk/typedef/master.hpp>
 
 namespace yq::tachyon {
 

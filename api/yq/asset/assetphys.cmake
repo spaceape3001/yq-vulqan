@@ -4,20 +4,20 @@
 ##
 ################################################################################
 
-project(yq_gamevk)
+project(yq_assetphys)
 
 add_library(${PROJECT_NAME} SHARED
-    command_master.cpp
-    event_master.cpp
-
-    app/Master.cpp
+     physics/NoPhysics.cpp
 )
 
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(${PROJECT_NAME} 
 PUBLIC
     yq_tachyon
+    yq_userexpr
+
 )
 
 yq_vklib(${PROJECT_NAME})
 LinkTest(${PROJECT_NAME})
+
 

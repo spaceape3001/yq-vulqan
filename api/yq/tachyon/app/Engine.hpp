@@ -21,7 +21,7 @@ namespace yq::tachyon {
 
     /*! \brief Engine of the game/simulation/etc
     
-        This is the "master manager" to control the game/dungeon/simulation/animation/whatever.
+        There should only be one of these
     */
     class Engine : public Manager {
         YQ_TACHYON_META(EngineMeta)
@@ -36,7 +36,9 @@ namespace yq::tachyon {
         Engine();
         ~Engine();
         
-        Meter   engine_scale() const { return m_engineScale; }
+        Meter       engine_scale() const { return m_engineScale; }
+
+        EngineID    id() const { return EngineID{ UniqueID::id() }; }
         
     protected:
         void finalize(EngineData&) const;

@@ -23,7 +23,6 @@
 #include <yq/tachyon/ui/UIElement.hpp>
 #include <format>
 
-using namespace yq;
 using namespace yq::tachyon;
 
     ////////////// EDITING /////////////
@@ -44,7 +43,7 @@ ControllerID            editing(controller_k)
     return editor -> selected(CONTROLLER);
 }
 
-LightID                 editing(light_k)
+LightID                 editing(yq::tachyon::light_k)
 {
     SceneEditor*    editor  = dynamic_cast<SceneEditor*>(UIElement::widget());
     if(!editor)
@@ -103,7 +102,7 @@ const ControllerData*   lastdata(controller_k)
     return lastdata(editing(CONTROLLER));
 }
 
-const LightData*        lastdata(light_k)
+const LightData*        lastdata(yq::tachyon::light_k)
 {
     return lastdata(editing(LIGHT));
 }
@@ -161,7 +160,7 @@ Controller*             pointer(controller_k)
     return pointer(editing(CONTROLLER));
 }
 
-Light*                  pointer(light_k)
+Light*                  pointer(yq::tachyon::light_k)
 {
     return pointer(editing(LIGHT));
 }
@@ -218,7 +217,7 @@ const ControllerSnap*   snapshot(controller_k)
     return snapshot(editing(CONTROLLER));
 }
 
-const LightSnap*        snapshot(light_k)
+const LightSnap*        snapshot(yq::tachyon::light_k)
 {
     return snapshot(editing(LIGHT));
 }

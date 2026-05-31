@@ -21,7 +21,8 @@ namespace yq::tachyon {
 
     /*! \brief Master of the game/simulation/etc
     
-        This is the "master manager" to control the game/dungeon/simulation/animation/whatever.
+        This is the "manager" to control the game/dungeon/simulation/animation/whatever.  
+        There can be more than one, but every domain should have one!
     */
     class Master : public Manager {
         YQ_TACHYON_META(MasterMeta)
@@ -33,6 +34,8 @@ namespace yq::tachyon {
         static void init_meta();
         Master();
         ~Master();
+        
+        MasterID    id() const { return MasterID{ UniqueID::id() }; }
         
     protected:
         void finalize(MasterData&) const;

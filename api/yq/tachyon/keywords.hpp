@@ -6,13 +6,17 @@
 
 #pragma once
 
+#define YQ_KEYWORD_OMIT_LIGHT
 #define YQ_KEYWORD_OMIT_MAX
 #define YQ_KEYWORD_OMIT_MIN
 #define YQ_KEYWORD_OMIT_NONE
+#define YQ_KEYWORD_OMIT_THREAD
+#define YQ_KEYWORD_OMIT_WIDGET
 
 #include <yq/keywords.hpp>
 #include <yq/math/Cardinal.hpp>
 #include <yq/tachyon/api/StdThread.hpp>
+#include <yq/tachyon/api/Type.hpp>
 #include <yq/tachyon/pipeline/DataActivity.hpp>
 #include <yq/tachyon/os/Platform.hpp>
 #include <yq/tachyon/api/SizePolicy.hpp>
@@ -22,6 +26,43 @@ namespace yq::tachyon {
 
     struct EveryTime;
     struct EveryCount;
+    
+    class Camera;
+    class Camera³;
+    class Collision;
+    class Controller;
+    class Cursor;
+    class Desktop;
+    class Domain;
+    class Engine;
+    class Gamepad;
+    class GraphicsCard;
+    class Group;
+    class Joystick;
+    class Keyboard;
+    class Kinetic;
+    class Kinetic³;
+    class Layer;
+    class Light;
+    class Light³;
+    class Manager;
+    class Master;
+    class Model;
+    class Monitor;
+    class Mouse;
+    class Physics;
+    class Rendered;
+    class Rendered³;
+    class Scene;
+    class Scene³;
+    class Spatial;
+    class Spatial²;
+    class Spatial³;
+    class Tachyon;
+    class Thread;
+    class Viewer;
+    class Widget;
+    class Window;
 
     // IF we define these in the toolbox, we'll derive the types
     struct align_k {};
@@ -45,10 +86,24 @@ namespace yq::tachyon {
 
     struct browse_k {};
 
-    struct camera_k {};
-    struct camera³_k {};
+    struct camera_k {
+        using class_t = Camera;
+        static constexpr const Type kType = Type::Camera;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    struct camera³_k {
+        using class_t = Camera³;
+        static constexpr const Type kType = Type::Camera³;
+        consteval operator Type() const noexcept { return kType; }
+    };
     struct center_k {
         consteval operator Cardinal() const noexcept { return Cardinal::Center; }
+    };
+    
+    struct collision_k {
+        using class_t = Collision;
+        static constexpr const Type kType = Type::Collision;
+        consteval operator Type() const noexcept { return kType; }
     };
 
     struct color_k {};
@@ -59,17 +114,33 @@ namespace yq::tachyon {
     
     struct content_k {};
     
-    struct controller_k {};
+    struct controller_k {
+        using class_t = Controller;
+        static constexpr const Type kType = Type::Controller;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    
     struct controllers_k {};
+    struct cursor : ::yq::cursor_k {
+    };
+    
     struct d2l_k    {};
     struct delegate_k {};
     struct depth_k {};
-    struct desktop_k {};
+    struct desktop_k {
+        using class_t = Desktop;
+        static constexpr const Type kType = Type::Desktop;
+        consteval operator Type() const noexcept { return kType; }
+    };
     struct device_k {};
     struct dialog_k {};
     struct direct_k{};
     struct dock_k {};
-    struct domain_k {};
+    struct domain_k {
+        using class_t = Domain;
+        static constexpr const Type kType = Type::Domain;
+        consteval operator Type() const noexcept { return kType; }
+    };
 
     struct dynamic_k {
         consteval operator DataActivity() const noexcept { return DataActivity::DYNAMIC; }
@@ -85,7 +156,10 @@ namespace yq::tachyon {
     
     struct emit_k {};
     
-    struct engine_k {};
+    struct engine_k {
+        using class_t = Engine;
+        static constexpr const Type kType = Type::Engine;
+    };
     
     struct event_k{};
     
@@ -107,16 +181,28 @@ namespace yq::tachyon {
         consteval operator StdThread() const noexcept  { return StdThread::Game; }
     };
     
-    struct gamepad_k {};
+    struct gamepad_k {
+        using class_t = Gamepad;
+        static constexpr const Type kType = Type::Gamepad;
+        consteval operator Type() const noexcept { return kType; }
+    };
     struct gesture_k {};
     
     struct glfw_k {
         consteval operator Platform() const noexcept { return Platform::GLFW; }
     };
     
-    struct graphics_card_k {};
+    struct graphics_card_k {
+        using class_t = GraphicsCard;
+        static constexpr const Type kType = Type::GraphicsCard;
+        consteval operator Type() const noexcept { return kType; }
+    };
     
-    struct group_k {};
+    struct group_k {
+        using class_t = Group;
+        static constexpr const Type kType = Type::Group;
+        consteval operator Type() const noexcept { return kType; }
+    };
     
     struct headless_k {};
 
@@ -130,17 +216,53 @@ namespace yq::tachyon {
         consteval operator StdThread() const noexcept  { return StdThread::IO; }
     };
     
-    struct joystick_k {};
-    struct keyboard_k {};
-    struct kinetic_k {};
-    struct kinetic³_k {};
+    struct joystick_k {
+        using class_t = Joystick;
+        static constexpr const Type kType = Type::Joystick;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    struct keyboard_k {
+        using class_t = Keyboard;
+        static constexpr const Type kType = Type::Keyboard;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    struct kinetic_k {
+        using class_t = Kinetic;
+        static constexpr const Type kType = Type::Kinetic;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    struct kinetic³_k {
+        using class_t = Kinetic³;
+        static constexpr const Type kType = Type::Kinetic³;
+        consteval operator Type() const noexcept { return kType; }
+    };
     struct l2d_k {};
-    struct layer_k {};
+    struct layer_k {
+        using class_t = Layer;
+        static constexpr const Type kType = Type::Layer;
+        consteval operator Type() const noexcept { return kType; }
+    };
     struct layout_k {};
-    //struct light_k {};    // moved to the toolbox
-    struct light³_k {};
-    struct manager_k {};
-    struct master_k {};
+    struct light_k : public ::yq::light_k {
+        using class_t = Light;
+        static constexpr const Type kType = Type::Light;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    struct light³_k {
+        using class_t = Light³;
+        static constexpr const Type kType = Type::Light³;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    struct manager_k {
+        using class_t = Manager;
+        static constexpr const Type kType = Type::Manager;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    struct master_k {
+        using class_t = Master;
+        static constexpr const Type kType = Type::Master;
+        consteval operator Type() const noexcept { return kType; }
+    };
     struct maximum_k : public ::yq::maximum_k {
         consteval operator SizePolicy() const noexcept { return kSizePolicy_Maximum; }
     };
@@ -149,9 +271,21 @@ namespace yq::tachyon {
         consteval operator SizePolicy() const noexcept { return kSizePolicy_Minimum; }
     };
     struct minmax_k {};
-    struct model_k {};
-    struct monitor_k {};
-    struct mouse_k {};
+    struct model_k {
+        using class_t = Model;
+        static constexpr const Type kType = Type::Model;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    struct monitor_k {
+        using class_t = Monitor;
+        static constexpr const Type kType = Type::Monitor;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    struct mouse_k {
+        using class_t = Mouse;
+        static constexpr const Type kType = Type::Mouse;
+        consteval operator Type() const noexcept { return kType; }
+    };
 
     struct network_k {
         consteval operator StdThread() const noexcept  { return StdThread::Network; }
@@ -166,7 +300,11 @@ namespace yq::tachyon {
     };
     
     struct origin_k {};
-    struct physics_k {};
+    struct physics_k {
+        using class_t = Physics;
+        static constexpr const Type kType = Type::Physics;
+        consteval operator Type() const noexcept { return kType; }
+    };
     struct pivot_k {};
     
     struct point_k {};
@@ -179,13 +317,29 @@ namespace yq::tachyon {
         consteval operator DataActivity() const noexcept { return DataActivity::REFRESH; }
     };
     
-    struct rendered_k {};
-    struct rendered³_k {};
+    struct rendered_k {
+        using class_t = Rendered;
+        static constexpr const Type kType = Type::Rendered;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    struct rendered³_k {
+        using class_t = Rendered³;
+        static constexpr const Type kType = Type::Rendered³;
+        consteval operator Type() const noexcept { return kType; }
+    };
     struct resource_k {};
     struct rotation_k {};
     struct scale_k {};
-    struct scene_k {};
-    struct scene³_k {};
+    struct scene_k {
+        using class_t = Scene;
+        static constexpr const Type kType = Type::Scene;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    struct scene³_k {
+        using class_t = Scene³;
+        static constexpr const Type kType = Type::Scene³;
+        consteval operator Type() const noexcept { return kType; }
+    };
     
     struct schedule_k {};
 
@@ -203,9 +357,21 @@ namespace yq::tachyon {
         consteval operator Cardinal() const noexcept { return Cardinal::South; }
     };
     
-    struct spatial_k {};
-    struct spatial²_k {};
-    struct spatial³_k {};
+    struct spatial_k {
+        using class_t = Spatial;
+        static constexpr const Type kType = Type::Spatial;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    struct spatial²_k {
+        using class_t = Spatial²;
+        static constexpr const Type kType = Type::Spatial²;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    struct spatial³_k {
+        using class_t = Spatial³;
+        static constexpr const Type kType = Type::Spatial³;
+        consteval operator Type() const noexcept { return kType; }
+    };
 
     struct static_k {
         consteval operator DataActivity() const noexcept { return DataActivity::STATIC; }
@@ -214,7 +380,9 @@ namespace yq::tachyon {
     struct swapable_k {};
     
     struct sweep_k {};
-    struct tachyon_k {};
+    struct tachyon_k {
+        using class_t = Tachyon;
+    };
 
     struct task_k {
         consteval operator StdThread() const noexcept  { return StdThread::Task; }
@@ -223,11 +391,19 @@ namespace yq::tachyon {
     struct teardown_k {};
     struct tex_k {};
     struct texture_k {};
+    struct thread_k : public ::yq::thread_k {
+        using class_t = Thread;
+        static constexpr const Type kType = Type::Thread;
+        consteval operator Type() const noexcept { return kType; }
+    };
     struct toolbar_k {};
     struct transform_k {};
     struct ui_k {};
     
     struct viewer_k {
+        using class_t = Viewer;
+        static constexpr const Type kType = Type::Viewer;
+        consteval operator Type() const noexcept { return kType; }
         consteval operator StdThread() const noexcept  { return StdThread::Viewer; }
     };
 
@@ -236,7 +412,16 @@ namespace yq::tachyon {
     struct west_k {
         consteval operator Cardinal() const noexcept { return Cardinal::West; }
     };
-    struct window_k {};
+    struct widget_k : public ::yq::widget_k {
+        using class_t = Widget;
+        static constexpr const Type kType = Type::Widget;
+        consteval operator Type() const noexcept { return kType; }
+    };
+    struct window_k {
+        using class_t = Window;
+        static constexpr const Type kType = Type::Window;
+        consteval operator Type() const noexcept { return kType; }
+    };
     
     // any problematic macros....
     #ifdef LOCK
@@ -264,6 +449,7 @@ namespace yq::tachyon {
     static constexpr const camera_k             CAMERA;
     static constexpr const camera³_k            CAMERA³;
     static constexpr const center_k             CENTER, CENTRE;
+    static constexpr const collision_k          COLLISION;
     static constexpr const color_k              COLOR;
     static constexpr const common_k             COMMON;
     static constexpr const content_k            CONTENT;
@@ -309,6 +495,7 @@ namespace yq::tachyon {
     static constexpr const l2d_k                L2D;
     static constexpr const layer_k              LAYER;
     static constexpr const layout_k             LAYOUT;
+    static constexpr const light_k              LIGHT;
     static constexpr const light³_k             LIGHT³;
     static constexpr const manager_k            MANAGER;
     static constexpr const master_k             MASTER;
@@ -356,11 +543,13 @@ namespace yq::tachyon {
     static constexpr const teardown_k           TEARDOWN;
     static constexpr const tex_k                TEX;
     static constexpr const texture_k            TEXTURE;
+    static constexpr const thread_k             THREAD;
     static constexpr const toolbar_k            TOOLBAR;
     static constexpr const transform_k          TRANSFORM;
     static constexpr const ui_k                 UI;
     static constexpr const viewer_k             VIEWER;
     static constexpr const vulqan_k             VULQAN;
     static constexpr const west_k               WEST;
+    static constexpr const widget_k             WIDGET;
     static constexpr const window_k             WINDOW;
 }

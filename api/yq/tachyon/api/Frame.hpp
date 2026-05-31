@@ -7,6 +7,7 @@
 #pragma once
 
 #include <yq/units.hpp>
+#include <yq/container/EnumMap.hpp>
 #include <yq/core/Object.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/tachyon/keywords.hpp>
@@ -18,6 +19,7 @@
 #include <yq/tachyon/typedef/camera.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
 #include <yq/tachyon/typedef/clock.hpp>
+#include <yq/tachyon/typedef/collision.hpp>
 #include <yq/tachyon/typedef/controller.hpp>
 #include <yq/tachyon/typedef/cursor.hpp>
 #include <yq/tachyon/typedef/desktop.hpp>
@@ -99,6 +101,7 @@ namespace yq::tachyon {
         
         bool contains(CameraID) const;
         bool contains(Camera³ID) const;
+        bool contains(CollisionID) const;
         bool contains(ControllerID) const;
         bool contains(CursorID) const;
         bool contains(DesktopID) const;
@@ -135,6 +138,7 @@ namespace yq::tachyon {
         
         size_t count(camera_k) const;
         size_t count(camera³_k) const;
+        size_t count(collision_k) const;
         size_t count(controller_k) const;
         size_t count(cursor_k) const;
         size_t count(desktop_k) const;
@@ -172,6 +176,7 @@ namespace yq::tachyon {
     
         const CameraData*                   data(CameraID) const;
         const Camera³Data*                  data(Camera³ID) const;
+        const CollisionData*                data(CollisionID) const;
         const ControllerData*               data(ControllerID) const;
         const CursorData*                   data(CursorID) const;
         const DesktopData*                  data(DesktopID) const;
@@ -224,6 +229,7 @@ namespace yq::tachyon {
         
         const std::set<CameraID>&           ids(camera_k) const;
         const std::set<Camera³ID>&          ids(camera³_k) const;
+        const std::set<CollisionID>&        ids(collision_k) const;
         const std::set<ControllerID>&       ids(controller_k) const;
         const std::set<CursorID>&           ids(cursor_k) const;
         const std::set<DesktopID>&          ids(desktop_k) const;
@@ -259,6 +265,7 @@ namespace yq::tachyon {
 
         const CameraMeta*                   meta(CameraID) const;
         const Camera³Meta*                  meta(Camera³ID) const;
+        const CollisionMeta*                meta(CollisionID) const;
         const ControllerMeta*               meta(ControllerID) const;
         const CursorMeta*                   meta(CursorID) const;
         const DesktopMeta*                  meta(DesktopID) const;
@@ -296,6 +303,7 @@ namespace yq::tachyon {
         Camera*                             object(CameraID) const;
         Camera³*                            object(Camera³ID) const;
 
+        Collision*                          object(CollisionID) const;
         Controller*                         object(ControllerID) const;
 
         //! Cursor pointer
@@ -426,6 +434,7 @@ namespace yq::tachyon {
         
         const CameraSnap*                   snap(CameraID) const;
         const Camera³Snap*                  snap(Camera³ID) const;
+        const CollisionSnap*                snap(CollisionID) const;
         const ControllerSnap*               snap(ControllerID) const;
         const CursorSnap*                   snap(CursorID) const;
         const DesktopSnap*                  snap(DesktopID) const;
@@ -479,8 +488,7 @@ namespace yq::tachyon {
         static void init_meta();
 
     private:
-
-        static std::atomic<uint64_t>    s_lastId;
+        void add(ThreadID, const TachyonFrame&);
 
         // triple template argument to avoid the header includes for smarter
         template <typename T, typename D, typename S> 
@@ -493,7 +501,7 @@ namespace yq::tachyon {
             std::unordered_map<uint64_t, Ref<const D>>  datas;
             std::unordered_map<uint64_t, Ref<const S>>  snaps;
             std::multimap<std::string,uint64_t,IgCase>  names;
-            std::set<ID<T>>                             ids;
+            std::set<ID<T>>                             ids; // only thing that needs to be "different"
             
             void        insert(Tachyon*, const TachyonData*, const TachyonSnap*);
             const D*    data(uint64_t) const;
@@ -503,17 +511,36 @@ namespace yq::tachyon {
             size_t      count() const;
             ID<T>       first() const;
         };
+
+        static thread_local const Frame*                            s_current;
     
+
+        static std::atomic<uint64_t>                                s_lastId;
+
         const ThreadID          m_origin;
         const uint64_t          m_number;
         const time_point_t      m_wallclock;
         const uint64_t          m_tick;
         const unit::Second      m_time;
         
-        static thread_local const Frame*                            s_current;
                                                                     
         std::unordered_map<uint64_t, ThreadID>                      m_owners;
         std::unordered_map<uint64_t, Types>                         m_types;
+        
+        struct TBit {
+            ThreadID                owner;
+            Types                   types;
+            Ref<Tachyon>            object;
+            Ref<const TachyonData>  data;
+            Ref<const TachyonSnap>  snap;
+        };
+        
+        using id_set_t = std::set<TachyonID>;
+        
+        std::unordered_map<uint64_t,TBit>                           m_data;
+        EnumMap<Type, std::set<TachyonID>>                          m_idsByType;
+        std::set<TachyonID>                                         m_allIds;
+        
                                                                     
         Container<Camera, CameraData, CameraSnap>                   m_cameras;
         Container<Camera³, Camera³Data, Camera³Snap>                m_camera³s;
@@ -559,9 +586,7 @@ namespace yq::tachyon {
         friend class ViProcessor;
 
         Frame(ThreadID, uint64_t, unit::Second);
-        ~Frame();
-        
-        void add(ThreadID, const TachyonFrame&);
+        virtual ~Frame();
         
         struct Builder;
     

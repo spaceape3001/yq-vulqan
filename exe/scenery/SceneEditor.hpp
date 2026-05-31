@@ -76,6 +76,7 @@ class SceneEditor : public CompositeWidget {
 public:
 
     using PostStartupFN = std::function<void(SceneEditor&)>;
+    using light_k = yq::tachyon::light_k;
 
     static void     clear_edit_thread();
     static void     clear_aux_thread();
@@ -143,6 +144,7 @@ public:
     
     void                cmd_window_new();
     //void                cmd_window_save_layout();
+
 
     CameraID            selected(camera_k) const { return m_camera.selected; }
     ControllerID        selected(controller_k) const { return m_controller.selected; }

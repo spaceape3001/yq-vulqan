@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <yq/shape/Rectangle2.hpp>
-#include <yq/math/glm.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/typedef/physics.hpp>
 
@@ -44,7 +42,7 @@ namespace yq::tachyon {
     /*! \brief Rules of the road for a kinetic
     
         This is the general rules of the road for a kinetic object; gravity, collision, terrain effects,
-        collision, etc will be stored/managed here.  It'll be ONE physics object to a kinetic.  
+        collision, etc will be stored/managed here.  It'll be ONE physics object to a domain/kinetic.  
         Now, physics objects can be chained together (like kinetics)
         
         Note, physics will be expected to have delegates/functions, for the various rules (like 
@@ -66,13 +64,15 @@ namespace yq::tachyon {
             structure referencing structure... 
         */
     
+        /*
+            2026 MAY 25 -- moving toward a physics being a *single* type of
+            thing (ie, collision KD tree or spring force)
+        */
+    
     
         //! Generic parameter structure
         //! Allows us to expand parameters w/o affecting *everybody*
         //struct Values;
-    
-        //! Returns the transform to go world -> screen space
-        //virtual glm::dmat4  world2screen(const Values&) const = 0;
     
         static void init_meta();
 
@@ -82,7 +82,6 @@ namespace yq::tachyon {
     
         void        snap(PhysicsSnap&) const;
         void        finalize(PhysicsData&) const;
-        
         
         //! Default constructor
         Physics(const Param&p = {});

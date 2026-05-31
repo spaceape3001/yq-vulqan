@@ -16,8 +16,10 @@ namespace yq::tachyon {
     */
     
     enum class Type {
+        Unknown,
         Camera,
         Camera³,
+        Collision,
         Controller,
         Cursor,
         Desktop,
@@ -60,6 +62,8 @@ namespace yq::tachyon {
         Widget⁴,
         Window
     };
+    
+    // want to get the above into a hash/reflection to auto bind enum/type
     
     using Types = Flags<Type>;
 }

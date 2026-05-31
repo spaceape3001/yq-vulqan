@@ -21,12 +21,14 @@
 #include <yq/tachyon/typedef/spatial.hpp>
 #include <yq/tachyon/typedef/spatial3.hpp>
 
-using namespace yq;
+//using namespace yq;
 using namespace yq::tachyon;
+
+//using light_k = yq::tachyon::light_k;
 
 CameraID                editing(camera_k);
 ControllerID            editing(controller_k);
-LightID                 editing(light_k);
+LightID                 editing(yq::tachyon::light_k);
 ModelID                 editing(model_k);
 PhysicsID               editing(physics_k);
 RenderedID              editing(rendered_k);
@@ -35,7 +37,7 @@ SceneID                 editing(scene_k);
 Camera*                 pointer(camera_k);
 Camera³*                pointer(camera³_k);
 Controller*             pointer(controller_k);
-Light*                  pointer(light_k);
+Light*                  pointer(yq::tachyon::light_k);
 Light³*                 pointer(light³_k);
 Model*                  pointer(model_k);
 Physics*                pointer(physics_k);
@@ -47,7 +49,7 @@ Scene³*                 pointer(scene³_k);
 const CameraData*       lastdata(camera_k);
 const Camera³Data*      lastdata(camera³_k);
 const ControllerData*   lastdata(controller_k);
-const LightData*        lastdata(light_k);
+const LightData*        lastdata(yq::tachyon::light_k);
 const Light³Data*       lastdata(light³_k);
 const ModelData*        lastdata(model_k);
 const PhysicsData*      lastdata(physics_k);
@@ -59,7 +61,7 @@ const Scene³Data*       lastdata(scene³_k);
 const CameraSnap*       snapshot(camera_k);
 const Camera³Snap*      snapshot(camera³_k);
 const ControllerSnap*   snapshot(controller_k);
-const LightSnap*        snapshot(light_k);
+const LightSnap*        snapshot(yq::tachyon::light_k);
 const Light³Snap*       snapshot(light³_k);
 const ModelSnap*        snapshot(model_k);
 const PhysicsSnap*      snapshot(physics_k);

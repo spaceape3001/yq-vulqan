@@ -3,6 +3,7 @@
 //  YOUR QUILL
 //
 ////////////////////////////////////////////////////////////////////////////////
+#include <yq/tachyon/keywords.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/lua/info.hpp>
 #include <yq/lua/logging.hpp>

@@ -1,0 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+namespace yq { 
+    template <typename> class Ref;
+}
+
+namespace yq::tachyon {
+    class GameFrame;
+    using GameFramePtr           = Ref<GameFrame>;
+    using GameFrameCPtr          = Ref<const GameFrame>;
+}

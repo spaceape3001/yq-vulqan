@@ -72,6 +72,14 @@ namespace yq::tachyon {
         wt.casts<TachyonID>();
     }
 
+    ///////////////////////////////////////
+    DomainData::DomainData() = default;
+    DomainData::~DomainData() = default;
+
+    ///////////////////////////////////////
+
+    DomainSnap::DomainSnap() = default;
+    DomainSnap::~DomainSnap() = default;
 }
 
 

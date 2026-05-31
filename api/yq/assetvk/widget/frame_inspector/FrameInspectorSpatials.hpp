@@ -52,7 +52,7 @@ namespace yq::tachyon {
 
         void    render(ViContext&ctx) override
         {
-            for(SpatialID v : m_frame->ids(SPATIAL)){
+            for(SpatialID v : m_frame->ids<Spatial>()){
                 if(!begin(v))
                     continue;
                 render(SPATIAL);

@@ -6,6 +6,7 @@
 
 #pragma once
 
+#define YQ_KEYWORD_OMIT_CURSOR
 #define YQ_KEYWORD_OMIT_LIGHT
 #define YQ_KEYWORD_OMIT_MAX
 #define YQ_KEYWORD_OMIT_MIN
@@ -121,7 +122,10 @@ namespace yq::tachyon {
     };
     
     struct controllers_k {};
-    struct cursor : ::yq::cursor_k {
+    struct cursor_k : ::yq::cursor_k {
+        using class_t = Cursor;
+        static constexpr const Type kType = Type::Cursor;
+        consteval operator Type() const noexcept { return kType; }
     };
     
     struct d2l_k    {};
@@ -159,6 +163,7 @@ namespace yq::tachyon {
     struct engine_k {
         using class_t = Engine;
         static constexpr const Type kType = Type::Engine;
+        consteval operator Type() const noexcept { return kType; }
     };
     
     struct event_k{};
@@ -455,6 +460,7 @@ namespace yq::tachyon {
     static constexpr const content_k            CONTENT;
     static constexpr const controller_k         CONTROLLER;
     static constexpr const controllers_k        CONTROLLERS;
+    static constexpr const cursor_k             CURSOR;
     static constexpr const d2l_k                D2L;
     static constexpr const delegate_k           DELEGATE;
     static constexpr const delete_k             DELETE;

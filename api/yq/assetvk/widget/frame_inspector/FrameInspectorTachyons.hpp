@@ -332,7 +332,7 @@ namespace yq::tachyon {
             if(!m_frame)
                 return ;
 
-            for(TachyonID v : m_frame->ids(TACHYON)){
+            for(TachyonID v : m_frame->ids<Tachyon>()){
                 if(!begin(v))
                     continue;
 

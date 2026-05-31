@@ -97,7 +97,7 @@ namespace yq::tachyon {
 
         void    render(ViContext&ctx) override
         {
-            for(GamepadID v : m_frame->ids(GAMEPAD)){
+            for(GamepadID v : m_frame->ids<Gamepad>()){
                 if(!begin(v))
                     continue;
                 render(GAMEPAD);

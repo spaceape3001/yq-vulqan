@@ -124,7 +124,7 @@ namespace yq::tachyon {
         if(!frame)
             return;
         
-        std::set<LightID>  lights = frame->ids(LIGHT);
+        std::set<LightID>  lights = frame->ids<Light>();
         
         for(auto itr = m_rows.begin(); itr != m_rows.end(); ){
             if(!lights.contains(itr->light)){

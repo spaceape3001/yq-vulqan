@@ -41,7 +41,7 @@ namespace yq::tachyon {
 
         void    render(ViContext&ctx) override
         {
-            for(LightID v : m_frame->ids(LIGHT)){
+            for(LightID v : m_frame->ids<Light>()){
                 if(!begin(v))
                     continue;
                 render(LIGHT);

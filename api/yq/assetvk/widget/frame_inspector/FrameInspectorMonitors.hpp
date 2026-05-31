@@ -63,7 +63,7 @@ namespace yq::tachyon {
 
         void   render(ViContext&ctx) override
         {
-            for(MonitorID v : m_frame->ids(MONITOR)){
+            for(MonitorID v : m_frame->ids<Monitor>()){
                 if(!begin(v))
                     continue;
                 render(MONITOR);

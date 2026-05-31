@@ -97,7 +97,7 @@ namespace yq::tachyon {
 
         void    render(ViContext&ctx) override
         {
-            for(JoystickID v : m_frame->ids(JOYSTICK)){
+            for(JoystickID v : m_frame->ids<Joystick>()){
                 if(!begin(v))
                     continue;
                 render(JOYSTICK);

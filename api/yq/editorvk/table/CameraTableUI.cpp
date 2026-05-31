@@ -130,7 +130,7 @@ namespace yq::tachyon {
         if(!frame)
             return;
 
-        std::set<CameraID>  cameras = frame->ids(CAMERA);
+        std::set<CameraID>  cameras = frame->ids<Camera>();
         
         for(auto itr = m_rows.begin(); itr != m_rows.end(); ){
             if(!cameras.contains(itr->camera)){

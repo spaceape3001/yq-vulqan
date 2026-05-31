@@ -39,6 +39,8 @@ namespace yq::tachyon {
         YQ_TACHYON_SNAP(SpatialSnap)
         YQ_TACHYON_DECLARE(Spatial, Tachyon)
     public:
+
+        static constexpr const Type kType   = Type::Spatial;
     
         virtual uint8_t dimensions(count_k) const = 0;
     

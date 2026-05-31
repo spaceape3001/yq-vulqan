@@ -65,7 +65,7 @@ namespace yq::tachyon {
 
         void    render(ViContext&ctx) override
         {
-            for(Rendered³ID v : m_frame->ids(RENDERED³)){
+            for(Rendered³ID v : m_frame->ids<Rendered³>()){
                 if(!begin(v))
                     continue;
                 render(RENDERED³);

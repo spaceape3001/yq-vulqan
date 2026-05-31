@@ -89,6 +89,8 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Widget, Tachyon)
     public:
     
+        static constexpr const Type kType   = Type::Widget;
+
         /*
             STARTUP...
             

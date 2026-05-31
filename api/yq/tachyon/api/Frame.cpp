@@ -88,6 +88,7 @@
 #include <yq/tachyon/api/Spatial.hpp>
 #include <yq/tachyon/api/SpatialData.hpp>
 
+#include <yq/core/Enumeration.hpp>
 #include <yq/core/StreamOps.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/meta/ObjectMetaWriter.hpp>
@@ -183,6 +184,9 @@ namespace yq::tachyon {
     Frame::Frame(ThreadID th, uint64_t ti, unit::Second now) : 
         m_origin(th), m_number(++s_lastId), m_wallclock(clock_t::now()), m_tick(ti), m_time(now)
     {
+        for(Type t : values_of<Type>()){
+            m_idsByType[t]  = {};
+        }
     }
 
 
@@ -198,10 +202,25 @@ namespace yq::tachyon {
         Types     types = tac.object->metaInfo().types();
         TachyonID id    = tac.object->id();
 
-        if(th){
-            m_owners[id]    = th;
+        //if(th){
+            //m_owners[id]    = th;
+        //}
+        //m_types[id]     = types;
+        m_allIds.insert(id);
+        auto& tbit  = m_data[id];
+        if(th)
+            tbit.owner          = th;
+        //tbit.types              = types;
+        tbit.object             = tac.object;
+        tbit.data               = tac.data;
+        tbit.snap               = tac.snap;
+        tbit.typedId            = *tac.object;
+        for(Type t : values_of<Type>()){
+            if(!types(t))
+                continue;
+            m_idsByType[t].insert(id);
         }
-        m_types[id]     = types;
+        
         
         Tachyon*   t = const_cast<Tachyon*>(tac.object.ptr());
         m_tachyons.insert(t, tac.data.ptr(), tac.snap.ptr());
@@ -284,192 +303,23 @@ namespace yq::tachyon {
         return sn->children;
     }
 
-    bool Frame::contains(CameraID id) const
+    bool Frame::contains(Type type, uint64_t id) const
     {
-        return m_cameras.has(id);
+        if(!is_valid(type))
+            return false;
+        return m_idsByType[type].contains({id});
     }
 
-    bool Frame::contains(Camera³ID id) const
+    bool Frame::contains(TypedID tid) const
     {
-        return m_camera³s.has(id);
+        return m_data.contains(tid.id);
     }
 
-    bool Frame::contains(ControllerID id) const
+    size_t Frame::count(Type t) const
     {
-        return m_controllers.has(id);
-    }
-
-    bool Frame::contains(CursorID id) const
-    {
-        return m_cursors.has(id);
-    }
-
-    bool Frame::contains(DesktopID id) const
-    {
-        return m_desktops.has(id);
-    }
-
-    #if 0
-    bool Frame::contains(EditorID id) const
-    {
-        return m_editors.has(id);
-    }
-    #endif
-
-    bool Frame::contains(EngineID id) const
-    {
-        return m_engines.has(id);
-    }
-
-
-    bool Frame::contains(GamepadID id) const
-    {
-        return m_gamepads.has(id);
-    }
-
-    bool Frame::contains(GraphicsCardID id) const
-    {
-        return m_graphicsCards.has(id);
-    }
-
-    bool Frame::contains(GroupID id) const
-    {
-        return m_groups.has(id);
-    }
-    
-    bool Frame::contains(JoystickID id) const
-    {
-        return m_joysticks.has(id);
-    }
-
-    bool Frame::contains(KeyboardID id) const
-    {
-        return m_keyboards.has(id);
-    }
-
-    bool Frame::contains(KineticID id) const
-    {
-        return m_kinetics.has(id);
-    }
-
-    bool Frame::contains(Kinetic³ID id) const
-    {
-        return m_kinetic³s.has(id);
-    }
-
-    bool Frame::contains(LayerID id) const
-    {
-        return m_layers.has(id);
-    }
-
-    bool Frame::contains(LightID id) const
-    {
-        return m_lights.has(id);
-    }
-
-    bool Frame::contains(Light³ID id) const
-    {
-        return m_light³s.has(id);
-    }
-
-    bool Frame::contains(ManagerID id) const
-    {
-        return m_managers.has(id);
-    }
-
-    bool Frame::contains(MasterID id) const
-    {
-        return m_masters.has(id);
-    }
-
-    bool Frame::contains(ModelID id) const
-    {
-        return m_models.has(id);
-    }
-
-    bool Frame::contains(MonitorID id) const
-    {
-        return m_monitors.has(id);
-    }
-
-    bool Frame::contains(MouseID id) const
-    {
-        return m_mouses.has(id);
-    }
-
-    bool Frame::contains(PhysicsID id) const
-    {
-        return m_physics.has(id);
-    }
-
-    bool Frame::contains(RenderedID id) const
-    {
-        return m_rendereds.has(id);
-    }
-
-    bool Frame::contains(Rendered³ID id) const
-    {
-        return m_rendered³s.has(id);
-    }
-
-    bool Frame::contains(SceneID id) const
-    {
-        return m_scenes.has(id);
-    }
-
-    bool Frame::contains(Scene³ID id) const
-    {
-        return m_scene³s.has(id);
-    }
-    
-    bool Frame::contains(SpatialID id) const
-    {
-        return m_spatials.has(id);
-    }
-
-    bool Frame::contains(Spatial²ID id) const
-    {
-        return m_spatial²s.has(id);
-    }
-
-    bool Frame::contains(Spatial³ID id) const
-    {
-        return m_spatial³s.has(id);
-    }
-
-    bool Frame::contains(TachyonID id) const
-    {
-        return m_tachyons.has(id);
-    }
-    
-    bool Frame::contains(ThreadID id) const
-    {
-        return m_threads.has(id);
-    }
-    
-    bool Frame::contains(ViewerID id) const
-    {
-        return m_viewers.has(id);
-    }
-
-    bool Frame::contains(WidgetID id) const
-    {
-        return m_widgets.has(id);
-    }
-
-    bool Frame::contains(WindowID id) const
-    {
-        return m_windows.has(id);
-    }
-
-    size_t Frame::count(camera_k) const
-    {
-        return m_cameras.count();
-    }
-    
-    size_t Frame::count(camera³_k) const
-    {
-        return m_camera³s.count();
+        if(!is_valid(t))
+            return 0;
+        return m_idsByType[t].size();
     }
 
     size_t Frame::count(children_k, TachyonID tid) const
@@ -487,164 +337,9 @@ namespace yq::tachyon {
         return ret;
     }
 
-    size_t Frame::count(controller_k) const
-    {
-        return m_controllers.count();
-    }
-    
-    size_t Frame::count(cursor_k) const
-    {
-        return m_cursors.count();
-    }
-    
-    size_t Frame::count(desktop_k) const
-    {
-        return m_desktops.count();
-    }
-
-    size_t Frame::count(engine_k) const
-    {
-        return m_engines.count();
-    }
-    
-    size_t Frame::count(gamepad_k) const
-    {
-        return m_gamepads.count();
-    }
-
-    size_t Frame::count(graphics_card_k) const
-    {
-        return m_graphicsCards.count();
-    }
-
-    size_t Frame::count(group_k) const
-    {
-        return m_groups.count();
-    }
-
-    size_t Frame::count(joystick_k) const
-    {
-        return m_joysticks.count();
-    }
-    
-    size_t Frame::count(keyboard_k) const
-    {
-        return m_keyboards.count();
-    }
-    
-    size_t Frame::count(kinetic_k) const
-    {
-        return m_kinetics.count();
-    }
-    
-    size_t Frame::count(kinetic³_k) const
-    {
-        return m_kinetic³s.count();
-    }
-
-    size_t Frame::count(light_k) const
-    {
-        return m_lights.count();
-    }
-    
-    size_t Frame::count(layer_k) const
-    {
-        return m_layers.count();
-    }
-
-    size_t Frame::count(light³_k) const
-    {
-        return m_light³s.count();
-    }
-
-    size_t Frame::count(manager_k) const
-    {
-        return m_managers.count();
-    }
-    
-    size_t Frame::count(master_k) const
-    {
-        return m_masters.count();
-    }
-
-    size_t Frame::count(model_k) const
-    {
-        return m_models.count();
-    }
-    
-    size_t Frame::count(monitor_k) const
-    {
-        return m_monitors.count();
-    }
-
-    size_t Frame::count(mouse_k) const
-    {
-        return m_mouses.count();
-    }
-    
-    size_t Frame::count(physics_k) const
-    {
-        return m_physics.count();
-    }
-    
-    size_t Frame::count(rendered_k) const
-    {
-        return m_rendereds.count();
-    }
-
-    size_t Frame::count(rendered³_k) const
-    {
-        return m_rendered³s.count();
-    }
-
-    size_t Frame::count(scene_k) const
-    {
-        return m_scenes.count();
-    }
-    
-    size_t Frame::count(scene³_k) const
-    {
-        return m_scene³s.count();
-    }
-
-    size_t Frame::count(spatial_k) const
-    {
-        return m_spatials.count();
-    }
-    
-    size_t Frame::count(spatial²_k) const
-    {
-        return m_spatial²s.count();
-    }
-
-    size_t Frame::count(spatial³_k) const
-    {
-        return m_spatial³s.count();
-    }
-
     size_t Frame::count(tachyon_k) const
     {
-        return m_tachyons.count();
-    }
-
-    size_t Frame::count(thread_k) const
-    {
-        return m_threads.count();
-    }
-
-    size_t Frame::count(viewer_k) const
-    {
-        return m_viewers.count();
-    }
-
-    size_t Frame::count(widget_k) const
-    {
-        return m_widgets.count();
-    }
-    
-    size_t Frame::count(window_k) const
-    {
-        return m_windows.count();
+        return m_allIds.size();
     }
     
     const CameraData*                   Frame::data(CameraID id) const
@@ -834,6 +529,17 @@ namespace yq::tachyon {
         return m_masters.first();
     }
 
+    const std::set<TachyonID>&          Frame::ids_of(Type t) const
+    {
+        static const std::set<TachyonID> s_null;
+        if(!is_valid(t))
+            return s_null;
+        return m_idsByType[t];
+    }
+    
+    
+    /*
+
     const std::set<CameraID>&           Frame::ids(camera_k) const
     {
         return m_cameras.ids;
@@ -1003,6 +709,7 @@ namespace yq::tachyon {
     {
         return m_windows.ids;
     }
+    */
 
     const CameraMeta*                   Frame::meta(CameraID id) const
     {
@@ -1451,9 +1158,8 @@ namespace yq::tachyon {
 
     ThreadID                            Frame::owner(TachyonID tac) const
     {
-        auto i = m_owners.find(tac);
-        if(i != m_owners.end())
-            return i->second;
+        if(auto itr = m_data.find(tac); itr != m_data.end())
+            return itr->second.owner;
         return {};
     }
     
@@ -1734,7 +1440,9 @@ namespace yq::tachyon {
 
     TypedID Frame::typed(TachyonID id) const
     {
-        return TypedID(id, types(id));
+        if(auto itr = m_data.find(id); itr != m_data.end())
+            return itr->second.typedId;
+        return {};
     }
 
     TypedID Frame::typed(StdThread st) const
@@ -1744,9 +1452,8 @@ namespace yq::tachyon {
     
     Types   Frame::types(TachyonID id) const
     {
-        auto i = m_types.find(id);
-        if(i != m_types.end())
-            return i->second;
+        if(auto itr = m_data.find(id); itr != m_data.end())
+            return itr->second.typedId.types;
         return {};
     }
 

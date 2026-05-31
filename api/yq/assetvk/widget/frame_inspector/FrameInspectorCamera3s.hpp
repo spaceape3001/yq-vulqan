@@ -78,7 +78,7 @@ namespace yq::tachyon {
         
         void    render(ViContext&ctx) override
         {
-            for(Camera³ID v : m_frame->ids(CAMERA³)){
+            for(Camera³ID v : m_frame->ids<Camera³>()){
                 if(!begin(v))
                     continue;
                     

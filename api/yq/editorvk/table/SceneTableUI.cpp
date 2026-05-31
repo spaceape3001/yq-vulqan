@@ -237,7 +237,7 @@ namespace yq::tachyon {
         if(!frame)
             return;
 
-        std::set<SceneID>   scenes = frame->ids(SCENE);
+        std::set<SceneID>   scenes = frame->ids<Scene>();
         std::set<SceneID>   removed;
         
         for(auto itr = m_rows.begin(); itr != m_rows.end(); ){

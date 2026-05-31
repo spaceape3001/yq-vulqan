@@ -41,7 +41,7 @@ namespace yq::tachyon {
         
         void    render(ViContext&ctx) override
         {
-            for(DesktopID v : m_frame->ids(DESKTOP)){
+            for(DesktopID v : m_frame->ids<Desktop>()){
                 if(!begin(v))
                     continue;
                 render(DESKTOP);

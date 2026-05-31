@@ -297,6 +297,8 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Tachyon, Object)
     public:
 
+        static constexpr const Type kType   = Type::Unknown;
+
         class Helper;
         
         /*! \brief Quick identity

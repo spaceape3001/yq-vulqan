@@ -66,7 +66,7 @@ namespace yq::tachyon {
 
         void    render(ViContext&ctx) override
         {
-            for(ControllerID v : m_frame->ids(CONTROLLER)){
+            for(ControllerID v : m_frame->ids<Controller>()){
                 if(!begin(v))
                     continue;
                     

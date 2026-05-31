@@ -16,6 +16,7 @@
 #include <yq/tachyon/api/TypedID.hpp>
 #include <yq/tachyon/api/Interface.hpp>
 #include <yq/tachyon/api/Proxy.hpp>
+#include <yq/tachyon/api/types.hpp>
 #include <yq/tachyon/typedef/camera.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
 #include <yq/tachyon/typedef/clock.hpp>
@@ -56,6 +57,7 @@
 #include <yq/tachyon/typedef/window.hpp>
 
 #include <yq/tachyon/logging.hpp>
+
 
 #include <chrono>
 #include <functional>
@@ -99,79 +101,30 @@ namespace yq::tachyon {
 
         std::span<const TypedID>    children(TachyonID) const;
         
-        bool contains(CameraID) const;
-        bool contains(Camera³ID) const;
-        bool contains(CollisionID) const;
-        bool contains(ControllerID) const;
-        bool contains(CursorID) const;
-        bool contains(DesktopID) const;
-        //bool contains(EditorID) const;
-        bool contains(EngineID) const;
-        bool contains(GamepadID) const;
-        bool contains(GraphicsCardID) const;
-        bool contains(GroupID) const;
-        bool contains(JoystickID) const;
-        bool contains(KeyboardID) const;
-        bool contains(KineticID) const;
-        bool contains(Kinetic³ID) const;
-        bool contains(LayerID) const;
-        bool contains(LightID) const;
-        bool contains(Light³ID) const;
-        bool contains(ManagerID) const;
-        bool contains(MasterID) const;
-        bool contains(ModelID) const;
-        bool contains(MonitorID) const;
-        bool contains(MouseID) const;
-        bool contains(PhysicsID) const;
-        bool contains(RenderedID) const;
-        bool contains(Rendered³ID) const;
-        bool contains(SceneID) const;
-        bool contains(Scene³ID) const;
-        bool contains(SpatialID) const;
-        bool contains(Spatial²ID) const;
-        bool contains(Spatial³ID) const;
-        bool contains(TachyonID) const;
-        bool contains(ThreadID) const;
-        bool contains(ViewerID) const;
-        bool contains(WidgetID) const;
-        bool contains(WindowID) const;
+        bool contains(Type, uint64_t) const;
+        bool contains(TypedID) const;
         
-        size_t count(camera_k) const;
-        size_t count(camera³_k) const;
-        size_t count(collision_k) const;
-        size_t count(controller_k) const;
-        size_t count(cursor_k) const;
-        size_t count(desktop_k) const;
-        size_t count(engine_k) const;
-        size_t count(gamepad_k) const;
-        size_t count(graphics_card_k) const;
-        size_t count(group_k) const;
-        size_t count(joystick_k) const;
-        size_t count(keyboard_k) const;
-        size_t count(kinetic_k) const;
-        size_t count(kinetic³_k) const;
-        size_t count(layer_k) const;
-        size_t count(light_k) const;
-        size_t count(light³_k) const;
-        size_t count(master_k) const;
-        size_t count(manager_k) const;
-        size_t count(model_k) const;
-        size_t count(monitor_k) const;
-        size_t count(mouse_k) const;
-        size_t count(physics_k) const;
-        size_t count(rendered³_k) const;
-        size_t count(rendered_k) const;
-        size_t count(scene_k) const;
-        size_t count(scene³_k) const;
-        size_t count(spatial_k) const;
-        size_t count(spatial²_k) const;
-        size_t count(spatial³_k) const;
+        template <typename T>
+        bool contains(ID<T> id) const 
+        {
+            if constexpr (std::is_same_v<T,Tachyon>){
+                return m_allIds.contains(id);
+            } else
+                return contains(type_v<T>, id.id);
+        }
+        
+        template <typename T=Tachyon>
+        size_t count() const
+        {
+            if constexpr (std::is_same_v<T,Tachyon>){
+                return m_allIds.size();
+            } else {
+                return count(type_v<T>);
+            }
+        }
+        
+        size_t count(Type) const;
         size_t count(tachyon_k) const;
-        size_t count(thread_k) const;
-        size_t count(viewer_k) const;
-        size_t count(widget_k) const;
-        size_t count(window_k) const;
-        
         size_t count(children_k, TachyonID) const;
     
         const CameraData*                   data(CameraID) const;
@@ -227,6 +180,19 @@ namespace yq::tachyon {
         template <typename Pred>
         void        foreach(child_k, recursive_k, TachyonID, Pred&& pred) const;
         
+        template <typename T=Tachyon>
+        const std::set<ID<T>>&              ids() const
+        {
+            if constexpr (std::is_same_v<T,Tachyon>){
+                return m_allIds;
+            } else {
+                return reinterpret_cast<const std::set<ID<T>>&>(ids_of(type_v<T>));
+            }
+        }
+        
+        const std::set<TachyonID>&          ids_of(Type) const;
+        
+        /*
         const std::set<CameraID>&           ids(camera_k) const;
         const std::set<Camera³ID>&          ids(camera³_k) const;
         const std::set<CollisionID>&        ids(collision_k) const;
@@ -262,6 +228,7 @@ namespace yq::tachyon {
         const std::set<ViewerID>&           ids(viewer_k) const;
         const std::set<WidgetID>&           ids(widget_k) const;
         const std::set<WindowID>&           ids(window_k) const;
+        */
 
         const CameraMeta*                   meta(CameraID) const;
         const Camera³Meta*                  meta(Camera³ID) const;
@@ -524,12 +491,13 @@ namespace yq::tachyon {
         const unit::Second      m_time;
         
                                                                     
-        std::unordered_map<uint64_t, ThreadID>                      m_owners;
-        std::unordered_map<uint64_t, Types>                         m_types;
+        //std::unordered_map<uint64_t, ThreadID>                      m_owners;
+        //std::unordered_map<uint64_t, Types>                         m_types;
         
         struct TBit {
             ThreadID                owner;
-            Types                   types;
+            TypedID                 typedId;
+            //Types                   types;
             Ref<Tachyon>            object;
             Ref<const TachyonData>  data;
             Ref<const TachyonSnap>  snap;
@@ -540,6 +508,7 @@ namespace yq::tachyon {
         std::unordered_map<uint64_t,TBit>                           m_data;
         EnumMap<Type, std::set<TachyonID>>                          m_idsByType;
         std::set<TachyonID>                                         m_allIds;
+        //EnumMap<Type,size_t>                                        m_counts;
         
                                                                     
         Container<Camera, CameraData, CameraSnap>                   m_cameras;

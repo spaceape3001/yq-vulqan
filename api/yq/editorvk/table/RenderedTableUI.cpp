@@ -123,7 +123,7 @@ namespace yq::tachyon {
         const Frame* frame = Frame::current();
         if(!frame)
             return ;
-        std::set<RenderedID>  rendereds = frame->ids(RENDERED);
+        std::set<RenderedID>  rendereds = frame->ids<Rendered>();
         
         for(auto itr = m_rows.begin(); itr != m_rows.end(); ){
             if(!rendereds.contains(itr->rendered)){

@@ -54,6 +54,8 @@ namespace yq::tachyon {
         YQ_TACHYON_SNAP(CameraSnap)
         YQ_TACHYON_DECLARE(Camera, Tachyon)
     public:    
+
+        static constexpr const Type kType   = Type::Camera;
     
         /*
             We *MIGHT* want to divide up the camera into position, 

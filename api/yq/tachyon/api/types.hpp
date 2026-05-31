@@ -9,52 +9,42 @@
 #include <yq/tachyon/api/Type.hpp>
 
 namespace yq::tachyon {
-    class Camera;
-    class Camera³;
-    class Controller;
-    class Cursor;
-    class Desktop;
-    class Engine;
-    class Gamepad;
-    class GraphicsCard;
-    class Group;
-    class Joystick;
-    class Keyboard;
-    class Kinetic;
-    class Kinetic³;
-    class Layer;
-    class Light;
-    class Light³;
-    class Manager;
-    class Master;
-    class Model;
-    class Monitor;
-    class Mouse;
-    class Physics;
-    class Rendered;
-    class Rendered³;
-    class Scene;
-    class Scene³;
-    class Spatial;
-    class Spatial²;
-    class Spatial³;
-    class Thread;
-    class Viewer;
-    class Widget;
-    class Window;
+    class Tachyon;
+    class TachyonData;
+    class TachyonMeta;
+    class TachyonSnap;
 
     template <typename T>
     struct TypeTypeDeducer {
         static constexpr const Type kType   = Type::Unknown;
+        using MyMeta                        = TachyonMeta;
+        using MyData                        = TachyonData;
+        using MySnap                        = TachyonSnap;
     };
     
+    template <typename T>
+    static constexpr const Type type_v      = TypeTypeDeducer<T>::kType;
+    template <typename T>
+    using meta_t        = typename TypeTypeDeducer<T>::MyMeta;
+    template <typename T>
+    using data_t        = typename TypeTypeDeducer<T>::MyData;
+    template <typename T>
+    using snap_t        = typename TypeTypeDeducer<T>::MySnap;
+    
     #define YQ_TYPETYPE(name)                                   \
+        class name; \
+        class name##Data; \
+        class name##Meta; \
+        class name##Snap; \
         template <> struct TypeTypeDeducer<name> {              \
             static constexpr const Type kType   = Type::name;   \
+            using MyData                        = name##Data;   \
+            using MyMeta                        = name##Meta;   \
+            using MySnap                        = name##Snap;   \
         };
         
     YQ_TYPETYPE(Camera)
-    YQ_TYPETYPE(Camera)
+    YQ_TYPETYPE(Camera³)
     YQ_TYPETYPE(Controller)
     YQ_TYPETYPE(Cursor)
     YQ_TYPETYPE(Desktop)

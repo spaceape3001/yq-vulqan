@@ -164,7 +164,7 @@ namespace yq::tachyon {
         
         void    render(ViContext&ctx) override
         {
-            for(WindowID v : m_frame->ids(WINDOW)){
+            for(WindowID v : m_frame->ids<Window>()){
                 if(!begin(v))
                     continue;
                 render(WINDOW);

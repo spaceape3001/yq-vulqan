@@ -123,7 +123,7 @@ namespace yq::tachyon {
         if(!frame)
             return;
             
-        std::set<ModelID>  models = frame->ids(MODEL);
+        std::set<ModelID>  models = frame->ids<Model>();
         
         for(auto itr = m_rows.begin(); itr != m_rows.end(); ){
             if(!models.contains(itr->model)){

@@ -195,19 +195,19 @@ void     SceneEditor::clear_thread(ThreadID owner)
         tac -> cmd_teardown();
     };
     
-    for(CameraID c : frame->ids(CAMERA))
+    for(CameraID c : frame->ids<Camera>())
         zap(c);
-    for(ControllerID c : frame->ids(CONTROLLER))
+    for(ControllerID c : frame->ids<Controller>())
         zap(c);
-    for(LightID c : frame->ids(LIGHT))
+    for(LightID c : frame->ids<Light>())
         zap(c);
-    for(ModelID c : frame->ids(MODEL))
+    for(ModelID c : frame->ids<Model>())
         zap(c);
-    for(RenderedID c : frame->ids(RENDERED))
+    for(RenderedID c : frame->ids<Rendered>())
         zap(c);
-    for(SceneID c : frame->ids(SCENE))
+    for(SceneID c : frame->ids<Scene>())
         zap(c);
-    for(SpatialID c : frame->ids(SPATIAL))
+    for(SpatialID c : frame->ids<Spatial>())
         zap(c);
 }
 

@@ -48,6 +48,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Thread, Tachyon)
     public:
     
+        static constexpr const Type kType   = Type::Thread;
     
         static void init_meta();
         

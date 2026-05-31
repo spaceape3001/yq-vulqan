@@ -45,6 +45,8 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Controller, Tachyon)
     public:
 
+        static constexpr const Type kType   = Type::Controller;
+
         struct Param : public Tachyon::Param {
             bool        enabled = true;
             Param(){}

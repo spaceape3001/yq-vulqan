@@ -51,6 +51,8 @@ namespace yq::tachyon {
         YQ_TACHYON_SNAP(ModelSnap)
         YQ_TACHYON_DECLARE(Model, Tachyon)
     public:    
+
+        static constexpr const Type kType   = Type::Model;
     
         static void init_meta();
 

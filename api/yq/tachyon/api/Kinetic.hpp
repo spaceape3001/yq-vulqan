@@ -55,6 +55,8 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Kinetic, Tachyon)
     public:    
     
+        static constexpr const Type kType   = Type::Kinetic;
+
         /*
             We *MIGHT* want to divide up the camera into position, 
             lens, etc... or that's a later development on a dedicated

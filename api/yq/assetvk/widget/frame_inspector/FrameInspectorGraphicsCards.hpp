@@ -60,7 +60,7 @@ namespace yq::tachyon {
 
         void    render(ViContext&ctx) override
         {
-            for(GraphicsCardID v : m_frame->ids(GRAPHICS_CARD)){
+            for(GraphicsCardID v : m_frame->ids<GraphicsCard>()){
                 if(!begin(v))
                     continue;
                 render(GRAPHICS_CARD);

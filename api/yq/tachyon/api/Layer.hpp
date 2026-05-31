@@ -30,6 +30,8 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Layer, Tachyon)
     public:
     
+        static constexpr const Type kType   = Type::Layer;
+
         Layer(const Param&p={});
         virtual ~Layer();
         

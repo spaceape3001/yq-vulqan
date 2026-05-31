@@ -41,7 +41,7 @@ namespace yq::tachyon {
 
         void    render(ViContext&ctx) override
         {
-            for(ManagerID v : m_frame->ids(MANAGER)){
+            for(ManagerID v : m_frame->ids<Manager>()){
                 if(!begin(v))
                     continue;
                 render(MANAGER);

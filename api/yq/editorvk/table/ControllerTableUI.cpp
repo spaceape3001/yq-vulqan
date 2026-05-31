@@ -124,7 +124,7 @@ namespace yq::tachyon {
         if(!frame)
             return;
             
-        std::set<ControllerID>  controllers = frame->ids(CONTROLLER);
+        std::set<ControllerID>  controllers = frame->ids<Controller>();
         
         for(auto itr = m_rows.begin(); itr != m_rows.end(); ){
             if(!controllers.contains(itr->controller)){

@@ -3,6 +3,7 @@
 //  YOUR QUILL
 //
 ////////////////////////////////////////////////////////////////////////////////
+
 #include <yq/tachyon/keywords.hpp>
 #include <yq/core/DelayInit.hpp>
 #include <yq/lua/info.hpp>
@@ -93,7 +94,7 @@ namespace {
     int lh_frame_cameras(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Camera>(l, f.ids(CAMERA));
+            push_ids<Camera>(l, f.ids<Camera>());
             return 1;
         });
     }
@@ -124,7 +125,7 @@ namespace {
     int lh_frame_controllers(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Controller>(l, f.ids(CONTROLLER));
+            push_ids<Controller>(l, f.ids<Controller>());
             return 1;
         });
     }
@@ -139,7 +140,7 @@ namespace {
     int lh_frame_cursors(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Cursor>(l, f.ids(CURSOR));
+            push_ids<Cursor>(l, f.ids<Cursor>());
             return 1;
         });
     }
@@ -147,7 +148,7 @@ namespace {
     int lh_frame_desktops(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Desktop>(l, f.ids(DESKTOP));
+            push_ids<Desktop>(l, f.ids<Desktop>());
             return 1;
         });
     }
@@ -155,7 +156,7 @@ namespace {
     int lh_frame_gamepads(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Gamepad>(l, f.ids(GAMEPAD));
+            push_ids<Gamepad>(l, f.ids<Gamepad>());
             return 1;
         });
     }
@@ -163,15 +164,25 @@ namespace {
     int lh_frame_graphics_cards(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<GraphicsCard>(l, f.ids(GRAPHICS_CARD));
+            push_ids<GraphicsCard>(l, f.ids<GraphicsCard>());
             return 1;
         });
     }
 
+    /*
+    int lh_frame_groups(lua_State*l)
+    {
+        return framing(l, [&](const Frame&f) -> int {
+            push_ids<Group>(l, f.ids<Group>());
+            return 1;
+        });
+    }
+    */
+
     int lh_frame_joysticks(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Joystick>(l, f.ids(JOYSTICK));
+            push_ids<Joystick>(l, f.ids<Joystick>());
             return 1;
         });
     }
@@ -179,7 +190,7 @@ namespace {
     int lh_frame_keyboards(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Keyboard>(l, f.ids(KEYBOARD));
+            push_ids<Keyboard>(l, f.ids<Keyboard>());
             return 1;
         });
     }
@@ -187,7 +198,7 @@ namespace {
     int lh_frame_layers(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Layer>(l, f.ids(LAYER));
+            push_ids<Layer>(l, f.ids<Layer>());
             return 1;
         });
     }
@@ -195,7 +206,7 @@ namespace {
     int lh_frame_lights(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Light>(l, f.ids(LIGHT));
+            push_ids<Light>(l, f.ids<Light>());
             return 1;
         });
     }
@@ -203,7 +214,7 @@ namespace {
     int lh_frame_managers(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Manager>(l, f.ids(MANAGER));
+            push_ids<Manager>(l, f.ids<Manager>());
             return 1;
         });
     }
@@ -211,7 +222,7 @@ namespace {
     int lh_frame_models(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Model>(l, f.ids(MODEL));
+            push_ids<Model>(l, f.ids<Model>());
             return 1;
         });
     }
@@ -219,7 +230,7 @@ namespace {
     int lh_frame_mouses(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Mouse>(l, f.ids(MOUSE));
+            push_ids<Mouse>(l, f.ids<Mouse>());
             return 1;
         });
     }
@@ -227,7 +238,7 @@ namespace {
     int lh_frame_monitors(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Monitor>(l, f.ids(MONITOR));
+            push_ids<Monitor>(l, f.ids<Monitor>());
             return 1;
         });
     }
@@ -235,7 +246,7 @@ namespace {
     int lh_frame_rendereds(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Rendered>(l, f.ids(RENDERED));
+            push_ids<Rendered>(l, f.ids<Rendered>());
             return 1;
         });
     }
@@ -243,7 +254,7 @@ namespace {
     int lh_frame_scenes(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Scene>(l, f.ids(SCENE));
+            push_ids<Scene>(l, f.ids<Scene>());
             return 1;
         });
     }
@@ -251,7 +262,7 @@ namespace {
     int lh_frame_spatials(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Spatial>(l, f.ids(SPATIAL));
+            push_ids<Spatial>(l, f.ids<Spatial>());
             return 1;
         });
     }
@@ -259,7 +270,7 @@ namespace {
     int lh_frame_tachyons(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Tachyon>(l, f.ids(TACHYON));
+            push_ids<Tachyon>(l, f.ids<Tachyon>());
             return 1;
         });
     }
@@ -267,7 +278,7 @@ namespace {
     int lh_frame_threads(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Thread>(l, f.ids(THREAD));
+            push_ids<Thread>(l, f.ids<Thread>());
             return 1;
         });
     }
@@ -291,7 +302,7 @@ namespace {
     int lh_frame_viewers(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Viewer>(l, f.ids(VIEWER));
+            push_ids<Viewer>(l, f.ids<Viewer>());
             return 1;
         });
     }
@@ -299,7 +310,7 @@ namespace {
     int lh_frame_widgets(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Widget>(l, f.ids(WIDGET));
+            push_ids<Widget>(l, f.ids<Widget>());
             return 1;
         });
     }
@@ -307,7 +318,7 @@ namespace {
     int lh_frame_windows(lua_State*l)
     {
         return framing(l, [&](const Frame&f) -> int {
-            push_ids<Window>(l, f.ids(WINDOW));
+            push_ids<Window>(l, f.ids<Window>());
             return 1;
         });
     }
@@ -425,6 +436,11 @@ namespace {
             if(FunctionInfo* fi = mi->add("gpus", &lh_frame_graphics_cards)){  
                 fi->brief("Graphic Cards on the frame");
             }
+            /*
+            if(FunctionInfo* fi = mi->add("groups", &lh_frame_groups)){  
+                fi->brief("Groups on the frame");
+            }
+            */
             if(FunctionInfo* fi = mi->add("joysticks", &lh_frame_joysticks)){  
                 fi->brief("Joysticks on the frame");
             }

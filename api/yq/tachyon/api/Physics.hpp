@@ -58,6 +58,8 @@ namespace yq::tachyon {
         YQ_TACHYON_SNAP(PhysicsSnap)
         YQ_TACHYON_DECLARE(Physics, Tachyon)
     public:    
+
+        static constexpr const Type kType   = Type::Physics;
     
         /*
             PARAMETERS -- might need to move to a map?  Otherwise it's 

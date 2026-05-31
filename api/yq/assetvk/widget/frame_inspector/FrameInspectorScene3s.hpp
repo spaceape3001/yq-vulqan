@@ -52,7 +52,7 @@ namespace yq::tachyon {
         
         void    render(ViContext&ctx) override
         {
-            for(Scene³ID v : m_frame->ids(SCENE³)){
+            for(Scene³ID v : m_frame->ids<Scene³>()){
                 if(!begin(v))
                     continue;
                 render(SCENE³);

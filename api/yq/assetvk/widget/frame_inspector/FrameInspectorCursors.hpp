@@ -41,7 +41,7 @@ namespace yq::tachyon {
 
         void    render(ViContext&ctx) override
         {
-            for(CursorID v : m_frame->ids(CURSOR)){
+            for(CursorID v : m_frame->ids<Cursor>()){
                 if(!begin(v))
                     continue;
                     

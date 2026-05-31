@@ -41,7 +41,7 @@ namespace yq::tachyon {
 
         void    render(ViContext&ctx) override
         {
-            for(KeyboardID v : m_frame->ids(KEYBOARD)){
+            for(KeyboardID v : m_frame->ids<Keyboard>()){
                 if(!begin(v))
                     continue;
                 render(KEYBOARD);

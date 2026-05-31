@@ -123,7 +123,7 @@ namespace yq::tachyon {
         if(!frame)
             return;
             
-        std::set<PhysicsID>  physics = frame->ids(PHYSICS);
+        std::set<PhysicsID>  physics = frame->ids<Physics>();
         
         for(auto itr = m_rows.begin(); itr != m_rows.end(); ){
             if(!physics.contains(itr->physics)){

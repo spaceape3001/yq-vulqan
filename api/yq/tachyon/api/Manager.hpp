@@ -27,6 +27,8 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Manager, Tachyon)
     public:
     
+        static constexpr const Type kType   = Type::Manager;
+    
         static void init_meta();
 
         using Tachyon::Param;

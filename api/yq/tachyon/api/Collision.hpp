@@ -52,6 +52,7 @@ namespace yq::tachyon {
         YQ_TACHYON_DECLARE(Collision, Tachyon)
     public:    
     
+        static constexpr const Type kType   = Type::Collision;
         static void init_meta();
 
         CollisionID            id() const { return CollisionID(UniqueID::id()); }

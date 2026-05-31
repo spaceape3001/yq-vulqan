@@ -67,6 +67,8 @@ namespace yq::tachyon {
         YQ_TACHYON_SNAP(RenderedSnap)
         YQ_TACHYON_DECLARE(Rendered, Tachyon)
     public:
+
+        static constexpr const Type kType   = Type::Rendered;
     
         /*
             Render Mode... is for simple/lighted/ray-tracing (with full lighting)

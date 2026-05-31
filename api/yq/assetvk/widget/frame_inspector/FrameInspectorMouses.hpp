@@ -41,7 +41,7 @@ namespace yq::tachyon {
         
         void    render(ViContext&ctx) override
         {
-            for(MouseID v : m_frame->ids(MOUSE)){
+            for(MouseID v : m_frame->ids<Mouse>()){
                 if(!begin(v))
                     continue;
                 render(MOUSE);

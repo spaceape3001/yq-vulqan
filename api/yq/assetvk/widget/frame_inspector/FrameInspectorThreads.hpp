@@ -76,7 +76,7 @@ namespace yq::tachyon {
         
         void    render(ViContext&ctx) override
         {
-            for(ThreadID v : m_frame->ids(THREAD)){
+            for(ThreadID v : m_frame->ids<Thread>()){
                 if(!begin(v))
                     continue;
                     

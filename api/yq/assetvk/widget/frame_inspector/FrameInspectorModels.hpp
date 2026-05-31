@@ -41,7 +41,7 @@ namespace yq::tachyon {
 
         void    render(ViContext&ctx) override
         {
-            for(ModelID v : m_frame->ids(MODEL)){
+            for(ModelID v : m_frame->ids<Model>()){
                 if(!begin(v))
                     continue;
                 render(MODEL);

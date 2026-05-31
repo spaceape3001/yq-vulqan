@@ -10,7 +10,7 @@
 #include <yq/color/RGBA.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
-#include <yq/tachyon/typedef/layer.hpp>
+#include <yq/tachyon/typedef/group.hpp>
 
 namespace yq::tachyon {
     class GroupMeta : public TachyonMeta {

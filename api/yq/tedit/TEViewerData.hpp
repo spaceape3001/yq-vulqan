@@ -6,7 +6,7 @@
 
 #pragma once 
 
-#include <yq/assetvk/widget/CompositeWidgetData.hpp>
+#include <yq/asset/widget/CompositeWidgetData.hpp>
 #include <yq/tachyon/api/ID.hpp>
 #include <yq/tachyon/typedef/physics.hpp>
 

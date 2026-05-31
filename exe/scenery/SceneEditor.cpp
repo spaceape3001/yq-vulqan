@@ -12,26 +12,26 @@
 
 #include <yq/errors.hpp>
 
-#include <yq/assetvk/camera/SpaceCamera.hpp>
-#include <yq/assetvk/control/ThreadOverclockEditUIWriter.hpp>
-#include <yq/assetvk/control/ThreadTimeEditUIWriter.hpp>
-#include <yq/assetvk/controller/Space3Controller.hpp>
-#include <yq/assetvk/debug/UIFrameMetrics.hpp>
-#include <yq/assetvk/debug/ValidationDebugTableUI.hpp>
-#include <yq/assetvk/gesture/file/ImportTSXFileGesture.hpp>
-#include <yq/assetvk/gesture/file/OpenTSXFileGesture.hpp>
-#include <yq/assetvk/gesture/file/SaveTSXFileGesture.hpp>
-#include <yq/assetvk/menu/CreateMenuUI.hpp>
-#include <yq/assetvk/scene/HUDScene.hpp>
-#include <yq/assetvk/scene/BackgroundScene.hpp>
-#include <yq/assetvk/scene/ForegroundScene.hpp>
-#include <yq/assetvk/scene/SimpleScene.hpp>
-#include <yq/assetvk/spatial/SimpleSpatial3.hpp>
-#include <yq/assetvk/tweak/OriginCameraTweak.hpp>
-#include <yq/assetvk/ui/UIBuildableMetaListWriter.hpp>
-#include <yq/assetvk/ui/UITachyonEditorWriter.hpp>
-#include <yq/assetvk/widget/CompositeWidgetData.hpp>
-#include <yq/assetvk/widget/FrameInspector.hpp>
+#include <yq/asset/camera/SpaceCamera.hpp>
+#include <yq/asset/control/ThreadOverclockEditUIWriter.hpp>
+#include <yq/asset/control/ThreadTimeEditUIWriter.hpp>
+#include <yq/asset/controller/Space3Controller.hpp>
+#include <yq/asset/debug/UIFrameMetrics.hpp>
+#include <yq/asset/debug/ValidationDebugTableUI.hpp>
+#include <yq/asset/gesture/file/ImportTSXFileGesture.hpp>
+#include <yq/asset/gesture/file/OpenTSXFileGesture.hpp>
+#include <yq/asset/gesture/file/SaveTSXFileGesture.hpp>
+#include <yq/asset/menu/CreateMenuUI.hpp>
+#include <yq/asset/scene/HUDScene.hpp>
+#include <yq/asset/scene/BackgroundScene.hpp>
+#include <yq/asset/scene/ForegroundScene.hpp>
+#include <yq/asset/scene/SimpleScene.hpp>
+#include <yq/asset/spatial/SimpleSpatial3.hpp>
+#include <yq/asset/tweak/OriginCameraTweak.hpp>
+#include <yq/asset/ui/UIBuildableMetaListWriter.hpp>
+#include <yq/asset/ui/UITachyonEditorWriter.hpp>
+#include <yq/asset/widget/CompositeWidgetData.hpp>
+#include <yq/asset/widget/FrameInspector.hpp>
 
 #include <yq/date/dateutils.hpp>
 
@@ -102,7 +102,7 @@
 #include <yq/tachyon/command/thread/ScheduleCommand.hpp>
 #include <yq/tachyon/command/ui/TitleCommand.hpp>
 
-#include <yq/assetvk/event/panel/MetaSelectionChangedEvent.hpp>
+#include <yq/asset/event/panel/MetaSelectionChangedEvent.hpp>
 #include <yq/tachyon/event/vulqan/VulqanDebugEvent.hpp>
 
 #include <yq/tachyon/io/Save.hpp>

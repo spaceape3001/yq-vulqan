@@ -6,9 +6,9 @@
 
 #include "SceneApp.hpp"
 #include "SceneEditor.hpp"
-#include <yq/assetvk/camera/SpaceCamera.hpp>
-#include <yq/assetvk/scene/SimpleScene.hpp>
-#include <yq/assetvk/spatial/SimpleSpatial3.hpp>
+#include <yq/asset/camera/SpaceCamera.hpp>
+#include <yq/asset/scene/SimpleScene.hpp>
+#include <yq/asset/spatial/SimpleSpatial3.hpp>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
 

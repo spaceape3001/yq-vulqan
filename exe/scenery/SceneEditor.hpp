@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/assetvk/widget/CompositeWidget.hpp>
+#include <yq/asset/widget/CompositeWidget.hpp>
 #include <yq/tachyon/typedef/camera.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
 #include <yq/tachyon/typedef/controller.hpp>

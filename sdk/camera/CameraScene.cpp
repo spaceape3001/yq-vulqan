@@ -6,14 +6,14 @@
 
 #include "CameraScene.hpp"
 
-#include <yq/assetvk/camera/SpaceCamera.hpp>
-#include <yq/assetvk/rendered/Billboard3.hpp>
-#include <yq/assetvk/rendered/Tetrahedron3.hpp>
-#include <yq/assetvk/rendered/ImageQuad3.hpp>
-#include <yq/assetvk/rendered/Quadrilateral3.hpp>
-#include <yq/assetvk/rendered/SkyBox3.hpp>
-#include <yq/assetvk/rendered/Triangle3.hpp>
-#include <yq/assetvk/spatial/SimpleSpatial3.hpp>
+#include <yq/asset/camera/SpaceCamera.hpp>
+#include <yq/asset/rendered/Billboard3.hpp>
+#include <yq/asset/rendered/Tetrahedron3.hpp>
+#include <yq/asset/rendered/ImageQuad3.hpp>
+#include <yq/asset/rendered/Quadrilateral3.hpp>
+#include <yq/asset/rendered/SkyBox3.hpp>
+#include <yq/asset/rendered/Triangle3.hpp>
+#include <yq/asset/spatial/SimpleSpatial3.hpp>
 
 #include <yq/color/colors.hpp>
 #include <yq/shape/AxBox2.hpp>

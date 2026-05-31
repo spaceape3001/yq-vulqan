@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/assetvk/widget/SceneWidget.hpp>
+#include <yq/asset/widget/SceneWidget.hpp>
 #include <yq/tachyon/typedef/scene3.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
 

@@ -20,8 +20,8 @@
 
 #include "types.hpp"
 
-#include <yq/assetvk/rendered/Triangle3.hpp>
-#include <yq/assetvk/scene/SimpleScene.hpp>
+#include <yq/asset/rendered/Triangle3.hpp>
+#include <yq/asset/scene/SimpleScene.hpp>
 
 #include <yq/core/DelayInit.hpp>
 #include <yq/core/Logging.hpp>
@@ -38,7 +38,7 @@
 #include <yq/vector/Vector2.hpp>
 #include <yq/vector/Vector3.hxx>
 
-#include <yq/assetvk/spatial/SimpleSpatial3.hpp>
+#include <yq/asset/spatial/SimpleSpatial3.hpp>
 
 #include <yq/tachyon/application.hpp>
 #include <yq/tachyon/buffer.hpp>
@@ -51,7 +51,7 @@
 #include <yq/tachyon/command/orientation/SetOrientation3Command.hpp>
 #include <yq/tachyon/api/Scene3MetaWriter.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>
-#include <yq/assetvk/widget/SceneWidget.hpp>
+#include <yq/asset/widget/SceneWidget.hpp>
 #include <yq/tachyon/utility/LoggerBox.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
 #include <yq/tachyon/api/N.hxx>

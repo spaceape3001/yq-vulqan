@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/ut.hpp>
-#include <yq/assetvk/spatial/SimpleSpatial3.hpp>
+#include <yq/asset/spatial/SimpleSpatial3.hpp>
 #include <yq/core/Logging.hpp>
 #include <yq/math/tolerance/Absolute.hpp>
 #include <yq/tachyon/application.hpp>

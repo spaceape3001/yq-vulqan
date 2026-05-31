@@ -7,11 +7,11 @@
 #include "MainWidget.hpp"
 #include "CameraScene.hpp"
 
-#include <yq/assetvk/camera/SpaceCamera.hpp>
-#include <yq/assetvk/controller/Space3Controller.hpp>
-#include <yq/assetvk/spatial/SimpleSpatial3.hpp>
-#include <yq/assetvk/widget/SpaceCameraRemote.hpp>
-#include <yq/assetvk/widget/FrameInspector.hpp>
+#include <yq/asset/camera/SpaceCamera.hpp>
+#include <yq/asset/controller/Space3Controller.hpp>
+#include <yq/asset/spatial/SimpleSpatial3.hpp>
+#include <yq/asset/widget/SpaceCameraRemote.hpp>
+#include <yq/asset/widget/FrameInspector.hpp>
 
 #include <yq/tachyon/command/controller/ListenCommand.hpp>
 //#include <yq/tachyon/command/io/SaveCommand.hpp>

@@ -9,8 +9,8 @@
 //#include "ViewPanel.hpp"
 
 #include <yq/xg/XGElement.hpp>
-#include <yq/assetvk/menu/CreateMenuUI.hpp>
-#include <yq/assetvk/ui/UIBuildableMetaListWriter.hpp>
+#include <yq/asset/menu/CreateMenuUI.hpp>
+#include <yq/asset/ui/UIBuildableMetaListWriter.hpp>
 
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/api/WidgetMetaWriter.hpp>

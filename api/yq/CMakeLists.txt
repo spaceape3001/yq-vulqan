@@ -14,8 +14,11 @@
 ##  This is the MAIN vulkan library, it's always first
 add_subdirectory(tachyon)
 
-##  Asset are general things that most apps will be interested in
-add_subdirectory(assetvk)
+##  Physics Stuff
+add_subdirectory(physicsvk)
+
+##  Game stuff
+add_subdirectory(gamevk)
 
 ##  A simple console (ImGui based)
 add_subdirectory(consolevk)
@@ -32,11 +35,9 @@ add_subdirectory(luavk)
 ##  Executive Graph
 add_subdirectory(xgvk)
 
-##  Game stuff
-add_subdirectory(gamevk)
-
 ## Scene Editor
 add_subdirectory(editorvk)
+
 
 if(Build_Qt6)
     add_subdirectory(vkqt)
@@ -47,3 +48,6 @@ endif()
 
 # Other naming ideas
 #   puppetry (for character animation)
+
+##  Asset are general things that most apps will be interested in
+add_subdirectory(asset)

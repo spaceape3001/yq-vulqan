@@ -6,7 +6,7 @@
 
 #include "MCompositeWidget.hpp"
 #include "MTachyonMetaWriter.hpp"
-#include <yq/assetvk/widget/CompositeWidget.hpp>
+#include <yq/asset/widget/CompositeWidget.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::MCompositeWidget)
 

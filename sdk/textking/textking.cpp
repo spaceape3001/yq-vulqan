@@ -15,7 +15,7 @@
 #include <yq/process/PluginLoader.hpp>
 #include <yq/text/format.hpp>
 
-#include <yq/assetvk/widget/TextArea.hpp>
+#include <yq/asset/widget/TextArea.hpp>
 #include <yq/tachyon/application.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/viewer.hpp>

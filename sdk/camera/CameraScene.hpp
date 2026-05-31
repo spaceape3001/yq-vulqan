@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/assetvk/scene/SimpleScene.hpp>
+#include <yq/asset/scene/SimpleScene.hpp>
 
 using namespace yq;
 using namespace yq::tachyon;

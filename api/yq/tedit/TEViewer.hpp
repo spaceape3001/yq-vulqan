@@ -9,7 +9,7 @@
 #include <tbb/spin_rw_mutex.h>
 #include <yq/core/Ref.hpp>
 #include <yq/vkqt/XTachyon.hpp>
-#include <yq/assetvk/widget/CompositeWidget.hpp>
+#include <yq/asset/widget/CompositeWidget.hpp>
 
 namespace yq::tachyon {
     struct TEViewerData;

@@ -1,0 +1,500 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/tachyon/api/Widget.hpp>
+#include <yq/asset/widget/FrameInspector.hpp>
+#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/Thread.hpp>
+#include <yq/tachyon/api/InterfaceMeta.hpp>
+#include <yq/tachyon/im/text.hpp>
+#include <yq/unit/literals.hpp>
+#include <yq/text/join.hpp>
+
+namespace yq::tachyon {
+    class FrameInspectorTachyons : public Widget, public FrameInspector::Pane {
+        YQ_TACHYON_DECLARE(FrameInspectorTachyons, Widget)
+    public:
+
+        using FrameInspector::Pane::render;
+    
+        FrameInspectorTachyons() 
+        {
+        }
+        
+        ~FrameInspectorTachyons()
+        {
+        }
+        
+        static void init_meta()
+        {
+        }
+        
+        using FrameInspector::Pane::begin;
+
+        bool    begin(TachyonID tid)
+        {
+            set(tid);
+            if(!m_tachyon)
+                return false;
+
+            std::string nid = name();
+            nid += '.';
+            nid += to_string_view(tid.id);
+
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+
+            guard([&](){
+                m_tree  = ImGui::TreeNodeEx(nid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, "%ld", tid.id);
+            });
+
+            ImGui::TableNextColumn();
+            im::text(m_tachyon->metaInfo().name());
+            if(m_tree){
+                ImGui::Indent();
+            }
+            return m_tree;
+        }
+        
+        size_t count() const override 
+        { 
+            return m_frame->count(TACHYON); 
+        }
+
+        bool countable() const override 
+        { 
+            return true; 
+        }
+        
+        using FrameInspector::Pane::end;
+        
+        void    end()
+        {
+            begin(TABLE);
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("------");
+            }
+            ImGui::TableNextColumn();
+            
+            if(m_tree){
+                ImGui::Unindent();
+                m_tree  = false;
+            }
+        }
+
+
+        void    meta_id(TachyonID tid)
+        {
+            if(!tid){
+                im::text("(none) {0}");
+                return;
+            }
+        
+            if(!m_frame){
+                ImGui::Text("(no-frame) {%ld}", tid.id);
+                return;
+            }
+            
+            const Tachyon*  t   = m_frame->object(tid);
+            if(!m_frame){
+                ImGui::Text("(missing) {%ld}", tid.id);
+                return;
+            }
+            
+            std::string_view    mn  = t->metaInfo().name();
+            ImGui::Text("%.*s {%ld}", (int) mn.size(), mn.data(), tid.id);
+        }
+        
+        void    meta_name(const ObjectMeta& objInfo)
+        {
+            std::string_view    mn  = objInfo.name();
+            ImGui::Text("%.*s", (int) mn.size(), mn.data());
+        }
+
+        void    meta_name(TachyonID tid)
+        {
+            if(!tid){
+                im::text("(none)");
+                return;
+            }
+        
+            if(!m_frame){
+                im::text("(no-frame)");
+                return;
+            }
+            
+            const Tachyon*  t   = m_frame->object(tid);
+            if(!m_frame){
+                im::text("(missing)");
+                return;
+            }
+            
+            meta_name(t->metaInfo());
+        }
+        
+        const char* name() const override { return "Tachyon"; }
+        
+        void    render(tachyon_k)
+        {
+            bool    treeOpen    = false;
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("------");
+            }
+            if(ImGui::TableNextColumn()){
+                im::text(">>> TACHYON PROPERTIES <<<");
+            }
+            
+            table(NESTED, "Children", m_snap->children);
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("Cycle");
+            }
+            if(ImGui::TableNextColumn()){
+                if(m_data->cycleTime < 1_µs){
+                    ImGui::Text("%lf ns", m_data->cycleTime.value);
+                } else if(m_data->cycleTime < 1_ms){
+                    ImGui::Text("%lf µs", unit::Microsecond(m_data->cycleTime).value);
+                } else if(m_data->cycleTime < 1_s){
+                    ImGui::Text("%lf ms", unit::Millisecond(m_data->cycleTime).value);
+                } else {
+                    ImGui::Text("%lf s",  unit::Second(m_data->cycleTime).value);
+                }
+            }
+            
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            guard([&](){
+                std::string tid    = "inbound";
+                tid += to_string_view(m_tachyon->id().id);
+                treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, "Inbound");
+            });
+            ImGui::TableNextColumn();
+            im::text(m_data->inbound.size());
+
+            if(treeOpen){
+                end(TABLE);
+                ImGui::Indent();
+
+                table_inbound();
+                
+                ImGui::Unindent();
+                begin(TABLE);
+            }
+        
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            guard([&](){
+                std::string tid    = "outbound";
+                tid += to_string_view(m_tachyon->id().id);
+                treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, "Outbound");
+            });
+            ImGui::TableNextColumn();
+            im::text(m_data->outbound.size());
+
+            if(treeOpen){
+                end(TABLE);
+                ImGui::Indent();
+
+                table_outbound();
+                
+                ImGui::Unindent();
+                begin(TABLE);
+            }
+        
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("Owner");
+            }
+            if(ImGui::TableNextColumn()){
+                meta_id(m_data->owner);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("Parent");
+            }
+            if(ImGui::TableNextColumn()){
+                meta_id(m_snap->parent);
+            }
+
+
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            
+            if(m_snap->proxies.empty()){
+                treeOpen = false;
+                im::text("Proxies");
+            } else {
+                guard([&](){
+                    std::string tid    = "proxies";
+                    tid += to_string_view(m_tachyon->id().id);
+                    treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, "Proxies");
+                });
+            }
+            if(ImGui::TableNextColumn()){
+                im::text(m_snap->proxies.size());
+            }
+
+            if(treeOpen){
+                ImGui::Indent();
+                for(const Proxy* p : m_snap->proxies){
+                    const InterfaceMeta*    ii  = p->interface(INFO);
+                    if(!ii)
+                        continue;
+                    const void* iff = ii->interface(p);
+
+                    std::string pname(p->interface(INFO)->stem());
+                    ImGui::TableNextRow();
+                    ImGui::TableNextColumn();
+                    
+                    if(!ii->properties(COUNT)){
+                        treeOpen        = false;
+                        im::text(pname);
+                    } else {
+                        guard([&](){
+                            std::string tid    = "proxy";
+                            tid += to_string_view(m_tachyon->id().id);
+                            tid += pname;
+                            treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, pname.c_str());
+                        });
+                    }
+                    ImGui::TableNextColumn();
+                    im::text(ii->properties(COUNT));
+                    if(treeOpen && iff){
+                        ImGui::Indent();
+                        for(const PropertyMeta* pi : ii->properties()){
+                            any_x   val = pi->get(iff);
+                        
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            im::text(pi->name());
+                            ImGui::TableNextColumn();
+                            
+                            if(!val){
+                                im::text("(unable to fetch)");
+                            } else {
+                                im::text(*val);
+                            }
+                        }
+                        ImGui::Unindent();
+                    }
+                }
+                ImGui::Unindent();
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("Revision");
+            }
+            if(ImGui::TableNextColumn()){
+                im::text(m_snap->revision);
+            }
+
+            ImGui::TableNextRow();
+            if(ImGui::TableNextColumn()){
+                im::text("Stage");
+            }
+            if(ImGui::TableNextColumn()){
+                std::string msg;
+                if(m_snap->started){
+                    msg = "Started";
+                }
+                if(m_snap->running){
+                    msg += ", Running";
+                }
+                if(m_snap->paused){
+                    msg += ", Paused";
+                }
+                if(m_snap->teardown){
+                    msg += ", Teardown";
+                }
+                im::text(msg.c_str());
+            }
+        }
+        
+        void    separator()
+        {
+            ImGui::TableNextRow();
+            ImGui::Separator();
+        }
+    
+        void    render(ViContext&ctx) override
+        {
+            if(!m_frame)
+                return ;
+
+            for(TachyonID v : m_frame->ids<Tachyon>()){
+                if(!begin(v))
+                    continue;
+
+                render(TACHYON);
+                end();
+            }
+        }
+        
+        void    table(const char* str_id, std::span<const TypedID> values)
+        {
+            if(!ImGui::BeginTable(str_id, 2, ImGuiTableFlags_SizingFixedFit))
+                return ;
+            
+            ImGui::TableSetupColumn("ID");
+            ImGui::TableSetupColumn("Type");
+            ImGui::TableHeadersRow();
+            
+            for(const TypedID& t : values){
+                ImGui::TableNextRow();
+                if(ImGui::TableNextColumn()){
+                    im::text(t.id);
+                }
+                if(ImGui::TableNextColumn()){
+                    meta_name(t);
+                }
+            }
+            
+            ImGui::EndTable();
+        }
+        
+        
+        void    table(nested_k, const char* str_id, std::span<const TypedID> typed)
+        {
+            bool treeOpen = false;
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            guard([&](){
+                std::string tid    = str_id;
+                tid += to_string_view(m_tachyon->id().id);
+                treeOpen    = ImGui::TreeNodeEx(tid.c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen, str_id);
+            });
+            ImGui::TableNextColumn();
+            im::text(typed.size());
+
+            if(treeOpen){
+                end(TABLE);
+                table(str_id, typed);
+                begin(TABLE);
+            }
+        }
+
+        void    table_children()
+        {
+            table("Children", m_snap->children);
+        }
+        
+        void    table_inbound() 
+        {
+            if(!ImGui::BeginTable("InPosts", 5, ImGuiTableFlags_SizingFixedFit))
+                return ;
+                
+            ImGui::TableSetupColumn("ID");
+            ImGui::TableSetupColumn("Type");
+            ImGui::TableSetupColumn("Source");
+            ImGui::TableSetupColumn("Target");
+            ImGui::TableSetupColumn("State");
+            ImGui::TableHeadersRow();
+            
+            for(const InPost& ip : m_data->inbound){
+                ImGui::TableNextRow();
+
+                if(!ip.post){
+                    ImGui::TableNextColumn();
+                    im::text("(null)");
+                    continue;
+                }
+                    
+                if(ImGui::TableNextColumn()){
+                    im::text(ip.post->id());
+                }
+                if(ImGui::TableNextColumn()){
+                    meta_name(ip.post->metaInfo());
+                }
+                if(ImGui::TableNextColumn()){
+                    meta_id(ip.post->source());
+                }
+                if(ImGui::TableNextColumn()){
+                    meta_id(ip.post->target());
+                }
+                if(ImGui::TableNextColumn()){
+                    switch(ip.state){
+                    case InPost::State::Accepted:
+                        im::text("Accepted");
+                        break;
+                    case InPost::State::Rejected:
+                        im::text("Rejected");
+                        break;
+                    case InPost::State::Duplicate:
+                        im::text("Duplicate");
+                        break;
+                    }
+                }
+            }
+            
+            ImGui::EndTable();
+        }
+        
+        void    table_outbound()
+        {
+            if(!ImGui::BeginTable("OutPosts", 4, ImGuiTableFlags_SizingFixedFit))
+                return ;
+
+            ImGui::TableSetupColumn("ID");
+            ImGui::TableSetupColumn("Type");
+            ImGui::TableSetupColumn("Source");
+            ImGui::TableSetupColumn("Target");
+            ImGui::TableHeadersRow();
+            
+            for(const OutPost& op : m_data->outbound){
+                ImGui::TableNextRow();
+                if(!op.post){
+                    ImGui::TableNextColumn();
+                    im::text("(null)");
+                    continue;
+                }
+                if(ImGui::TableNextColumn()){
+                    im::text(op.post->id().id);
+                }
+                if(ImGui::TableNextColumn()){
+                    meta_name(op.post->metaInfo());
+                }
+                if(ImGui::TableNextColumn()){
+                    meta_id(op.post->source());
+                }
+                if(ImGui::TableNextColumn()){
+                    meta_id(op.post->target());
+                }
+            }
+            ImGui::EndTable();
+        }
+        
+        void    set(TachyonID tid) 
+        {
+            if(m_frame){
+                m_snap      = m_frame->snap(tid);
+                m_data      = m_frame->data(tid);
+                m_tachyon   = m_frame->object(tid);
+            }
+        }
+
+        //const char*     imgui_id() const override
+        //{
+            //return m_imguiID.c_str();
+        //}
+        
+    protected:
+        const TachyonSnap*      m_snap      = nullptr;
+        const TachyonData*      m_data      = nullptr;
+        const Tachyon*          m_tachyon   = nullptr;
+    private:
+        bool                    m_init      = false;
+        bool                    m_tree      = false;
+        std::string             m_imguiID;
+    };
+}

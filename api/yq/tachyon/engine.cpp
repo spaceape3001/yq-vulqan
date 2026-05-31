@@ -16,7 +16,7 @@ namespace yq::tachyon {
         const Frame* frame = Frame::current();
         if(!frame)
             return Engine::kDefault_EngineScale;
-        EngineID    engID   = frame->first(ENGINE);
+        EngineID    engID   = frame->first<Engine>();
         if(!engID)
             return Engine::kDefault_EngineScale;
         const EngineSnap* es    = frame->snap(engID);

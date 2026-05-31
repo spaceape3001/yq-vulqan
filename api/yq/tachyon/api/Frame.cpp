@@ -103,64 +103,6 @@ namespace yq::tachyon {
         w.abstract();
     }
 
-
-    template <typename T, typename D, typename S>
-    size_t   Frame::Container<T,D,S>::count() const
-    {
-        return objects.size();
-    }
-
-    template <typename T, typename D, typename S>
-    const D*   Frame::Container<T,D,S>::data(uint64_t n) const
-    {
-        auto i = datas.find(n);
-        if(i != datas.end())
-            return i->second.ptr();
-        return nullptr;
-    }
-
-    template <typename T, typename D, typename S>
-    ID<T>   Frame::Container<T,D,S>::first() const
-    {
-        if(ids.empty())
-            return {};
-        return ID<T>(*ids.begin());
-    }
-
-    template <typename T, typename D, typename S>
-    bool    Frame::Container<T,D,S>::has(uint64_t n) const
-    {
-        return datas.contains(n);
-    }
-
-    template <typename T, typename D, typename S>
-    void    Frame::Container<T,D,S>::insert(Tachyon* p, const TachyonData* d, const TachyonSnap* s)
-    {
-        objects[p->id()]      = static_cast<T*>(p);
-        datas[p->id()]        = static_cast<const data_k*>(d);
-        snaps[p->id()]        = static_cast<const snap_t*>(s);
-        names.insert({p->name(), p->id()});
-        ids.insert(ID<T>(p->id()));
-    }
-    
-    template <typename T, typename D, typename S>
-    T* Frame::Container<T,D,S>::pointer(uint64_t n) const
-    {
-        auto i = objects.find(n);
-        if(i != objects.end())
-            return const_cast<T*>(i->second.ptr());
-        return nullptr;
-    }
-        
-    template <typename T, typename D, typename S>
-    const S*    Frame::Container<T,D,S>::snap(uint64_t n) const
-    {
-        auto i = snaps.find(n);
-        if(i != snaps.end())
-            return i->second.ptr();
-        return nullptr;
-    }
-    
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
 
@@ -220,79 +162,6 @@ namespace yq::tachyon {
                 continue;
             m_idsByType[t].insert(id);
         }
-        
-        
-        Tachyon*   t = const_cast<Tachyon*>(tac.object.ptr());
-        m_tachyons.insert(t, tac.data.ptr(), tac.snap.ptr());
-
-        if(types(Type::Camera))
-            m_cameras.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Camera³))
-            m_camera³s.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Controller))
-            m_controllers.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Cursor))
-            m_cursors.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Desktop))
-            m_desktops.insert(t, tac.data.ptr(), tac.snap.ptr());
-        //if(types(Type::Editor))
-            //m_editors.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Engine))
-            m_engines.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Gamepad))
-            m_gamepads.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::GraphicsCard))
-            m_graphicsCards.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Group))
-            m_groups.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Joystick))
-            m_joysticks.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Keyboard))
-            m_keyboards.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Kinetic))
-            m_kinetics.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Kinetic³))
-            m_kinetic³s.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Layer))
-            m_layers.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Light))
-            m_lights.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Light³))
-            m_light³s.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Manager))
-            m_managers.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Master))
-            m_masters.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Model))
-            m_models.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Monitor))
-            m_monitors.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Mouse))
-            m_mouses.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Physics))
-            m_physics.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Rendered))
-            m_rendereds.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Rendered³))
-            m_rendered³s.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Scene))
-            m_scenes.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Scene³))
-            m_scene³s.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Spatial))
-            m_spatials.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Spatial²))
-            m_spatial²s.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Spatial³))
-            m_spatial³s.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Thread))
-            m_threads.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Viewer))
-            m_viewers.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Widget))
-            m_widgets.insert(t, tac.data.ptr(), tac.snap.ptr());
-        if(types(Type::Window))
-            m_windows.insert(t, tac.data.ptr(), tac.snap.ptr());
     }
 
     std::span<const TypedID>    Frame::children(TachyonID tac) const
@@ -342,191 +211,38 @@ namespace yq::tachyon {
         return m_allIds.size();
     }
     
-    const CameraData*                   Frame::data(CameraID id) const
+    const TachyonData*                  Frame::data_of(Type type, uint64_t id) const
     {
-        return m_cameras.data(id);
-    }
-
-    const Camera³Data*                  Frame::data(Camera³ID id) const
-    {
-        return m_camera³s.data(id);
-    }
-
-    const ControllerData*               Frame::data(ControllerID id) const
-    {
-        return m_controllers.data(id);
-    }
-
-    const CursorData*                   Frame::data(CursorID id) const
-    {
-        return m_cursors.data(id);
-    }
-
-    const DesktopData*                  Frame::data(DesktopID id) const
-    {
-        return m_desktops.data(id);
-    }
-
-    #if 0
-    const EditorData*                   Frame::data(EditorID id) const
-    {
-        return m_editors.data(id);
-    }
-    #endif
-
-    const EngineData*                   Frame::data(EngineID id) const
-    {
-        return m_engines.data(id);
-    }
-
-    const GamepadData*                  Frame::data(GamepadID id) const
-    {
-        return m_gamepads.data(id);
-    }
-
-    const GraphicsCardData*             Frame::data(GraphicsCardID id) const
-    {
-        return m_graphicsCards.data(id);
-    }
-
-    const GroupData*                    Frame::data(GroupID id) const
-    {
-        return m_groups.data(id);
-    }
-
-    const JoystickData*                 Frame::data(JoystickID id) const
-    {
-        return m_joysticks.data(id);
-    }
-
-    const KeyboardData*                 Frame::data(KeyboardID id) const
-    {
-        return m_keyboards.data(id);
-    }
-
-    const KineticData*                  Frame::data(KineticID id) const
-    {
-        return m_kinetics.data(id);
-    }
-
-    const Kinetic³Data*                 Frame::data(Kinetic³ID id) const
-    {
-        return m_kinetic³s.data(id);
-    }
-
-    const LightData*                    Frame::data(LightID id) const
-    {
-        return m_lights.data(id);
-    }
-
-    const LayerData*                    Frame::data(LayerID id) const
-    {
-        return m_layers.data(id);
-    }
-
-    const Light³Data*                   Frame::data(Light³ID id) const
-    {
-        return m_light³s.data(id);
-    }
-
-    const ManagerData*                  Frame::data(ManagerID id) const
-    {
-        return m_managers.data(id);
-    }
-
-    const MasterData*                   Frame::data(MasterID id) const
-    {
-        return m_masters.data(id);
-    }
-
-    const ModelData*                    Frame::data(ModelID id) const
-    {
-        return m_models.data(id);
-    }
-
-    const MouseData*                    Frame::data(MouseID id) const
-    {
-        return m_mouses.data(id);
-    }
-
-    const PhysicsData*                  Frame::data(PhysicsID id) const
-    {
-        return m_physics.data(id);
-    }
-
-    const RenderedData*                 Frame::data(RenderedID id) const
-    {
-        return m_rendereds.data(id);
-    }
-
-    const Rendered³Data*                Frame::data(Rendered³ID id) const
-    {
-        return m_rendered³s.data(id);
-    }
-
-    const SceneData*                    Frame::data(SceneID id) const
-    {
-        return m_scenes.data(id);
-    }
-
-    const Scene³Data*                   Frame::data(Scene³ID id) const
-    {
-        return m_scene³s.data(id);
-    }
-
-    const SpatialData*                  Frame::data(SpatialID id) const
-    {
-        return m_spatials.data(id);
-    }
-
-    const Spatial²Data*                 Frame::data(Spatial²ID id) const
-    {
-        return m_spatial²s.data(id);
-    }
-
-    const Spatial³Data*                 Frame::data(Spatial³ID id) const
-    {
-        return m_spatial³s.data(id);
-    }
-
-    const TachyonData*                  Frame::data(TachyonID id) const
-    {
-        return m_tachyons.data(id);
+        if(auto itr = m_data.find(id); itr != m_data.end()){
+            if(itr->second.typedId.types(type))
+                return itr->second.data.ptr();
+        }
+        return nullptr;
     }
     
-    const ThreadData*                   Frame::data(ThreadID id) const
+    const TachyonData*                  Frame::data_of(TachyonID tid) const
     {
-        return m_threads.data(id);
+        if(auto itr = m_data.find(tid); itr != m_data.end())
+            return itr->second.data.ptr();
+        return nullptr;
     }
 
-    const ViewerData*                   Frame::data(ViewerID id) const
+    TachyonID                           Frame::first_of(Type type) const
     {
-        return m_viewers.data(id);
+        if(!is_valid(type))
+            return {};
+        auto& tb = m_idsByType[type];
+        if(tb.empty())
+            return {};
+        return *tb.begin();
     }
 
-    const WidgetData*                   Frame::data(WidgetID id) const
-    {
-        return m_widgets.data(id);
-    }
 
-    const WindowData*                   Frame::data(WindowID id) const
+    TachyonID                           Frame::first_of(tachyon_k) const
     {
-        return m_windows.data(id);
-    }
-
-    EngineID                            Frame::first(engine_k) const
-    {
-        return m_engines.first();
-    }
-
-    GraphicsCardID                      Frame::first(graphics_card_k) const
-    {
-        return m_graphicsCards.first();
-    }
-
-    MasterID                            Frame::first(master_k) const
-    {
-        return m_masters.first();
+        if(m_allIds.empty())    [[unlikely]]
+            return {};
+        return *m_allIds.begin();
     }
 
     const std::set<TachyonID>&          Frame::ids_of(Type t) const
@@ -536,610 +252,41 @@ namespace yq::tachyon {
             return s_null;
         return m_idsByType[t];
     }
-    
-    
-    /*
 
-    const std::set<CameraID>&           Frame::ids(camera_k) const
+    const TachyonMeta*                  Frame::meta_of(Type t, uint64_t id) const
     {
-        return m_cameras.ids;
-    }
-    
-    const std::set<Camera³ID>&          Frame::ids(camera³_k) const
-    {
-        return m_camera³s.ids;
-    }
-    
-    const std::set<ControllerID>&       Frame::ids(controller_k) const
-    {
-        return m_controllers.ids;
-    }
-    
-    const std::set<CursorID>&           Frame::ids(cursor_k) const
-    {
-        return m_cursors.ids;
-    }
-    
-    const std::set<DesktopID>&          Frame::ids(desktop_k) const
-    {
-        return m_desktops.ids;
-    }
-    
-    const std::set<EngineID>&           Frame::ids(engine_k) const
-    {
-        return m_engines.ids;
-    }
-
-    const std::set<GamepadID>&          Frame::ids(gamepad_k) const
-    {
-        return m_gamepads.ids;
-    }
-
-    const std::set<GraphicsCardID>&     Frame::ids(graphics_card_k) const
-    {
-        return m_graphicsCards.ids;
-    }
-
-    const std::set<GroupID>&            Frame::ids(group_k) const
-    {
-        return m_groups.ids;
-    }
-
-    const std::set<JoystickID>&         Frame::ids(joystick_k) const
-    {
-        return m_joysticks.ids;
-    }
-    
-    const std::set<KeyboardID>&         Frame::ids(keyboard_k) const
-    {
-        return m_keyboards.ids;
-    }
-
-    const std::set<KineticID>&          Frame::ids(kinetic_k) const
-    {
-        return m_kinetics.ids;
-    }
-    
-    const std::set<Kinetic³ID>&         Frame::ids(kinetic³_k) const
-    {
-        return m_kinetic³s.ids;
-    }
-    
-    const std::set<LayerID>&            Frame::ids(layer_k) const
-    {
-        return m_layers.ids;
-    }
-    
-    const std::set<LightID>&            Frame::ids(light_k) const
-    {
-        return m_lights.ids;
-    }
-
-    const std::set<Light³ID>&           Frame::ids(light³_k) const
-    {
-        return m_light³s.ids;
-    }
-    
-    const std::set<ManagerID>&          Frame::ids(manager_k) const
-    {
-        return m_managers.ids;
-    }
-    
-    const std::set<MasterID>&           Frame::ids(master_k) const
-    {
-        return m_masters.ids;
-    }
-
-    const std::set<ModelID>&            Frame::ids(model_k) const
-    {
-        return m_models.ids;
-    }
-
-    const std::set<MonitorID>&          Frame::ids(monitor_k) const
-    {
-        return m_monitors.ids;
-    }
-    
-    const std::set<MouseID>&            Frame::ids(mouse_k) const
-    {
-        return m_mouses.ids;
-    }
-
-    const std::set<PhysicsID>&          Frame::ids(physics_k) const
-    {
-        return m_physics.ids;
-    }
-    
-    const std::set<RenderedID>&         Frame::ids(rendered_k) const
-    {
-        return m_rendereds.ids;
-    }
-    
-    const std::set<Rendered³ID>&        Frame::ids(rendered³_k) const
-    {
-        return m_rendered³s.ids;
-    }
-    
-    const std::set<SceneID>&            Frame::ids(scene_k) const
-    {
-        return m_scenes.ids;
-    }
-    
-    const std::set<Scene³ID>&           Frame::ids(scene³_k) const
-    {
-        return m_scene³s.ids;
-    }
-    
-    const std::set<SpatialID>&          Frame::ids(spatial_k) const
-    {
-        return m_spatials.ids;
-    }
-    
-    const std::set<Spatial²ID>&         Frame::ids(spatial²_k) const
-    {
-        return m_spatial²s.ids;
-    }
-    
-    const std::set<Spatial³ID>&         Frame::ids(spatial³_k) const
-    {
-        return m_spatial³s.ids;
-    }
-
-    const std::set<TachyonID>&          Frame::ids(tachyon_k) const
-    {
-        return m_tachyons.ids;
-    }
-    
-    const std::set<ThreadID>&           Frame::ids(thread_k) const
-    {
-        return m_threads.ids;
-    }
-    
-    const std::set<ViewerID>&           Frame::ids(viewer_k) const
-    {
-        return m_viewers.ids;
-    }
-    
-    const std::set<WidgetID>&           Frame::ids(widget_k) const
-    {
-        return m_widgets.ids;
-    }
-    
-    const std::set<WindowID>&           Frame::ids(window_k) const
-    {
-        return m_windows.ids;
-    }
-    */
-
-    const CameraMeta*                   Frame::meta(CameraID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const Camera³Meta*                  Frame::meta(Camera³ID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const ControllerMeta*               Frame::meta(ControllerID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const CursorMeta*                   Frame::meta(CursorID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const DesktopMeta*                  Frame::meta(DesktopID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const EngineMeta*                   Frame::meta(EngineID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const GamepadMeta*                  Frame::meta(GamepadID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const GraphicsCardMeta*             Frame::meta(GraphicsCardID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const GroupMeta*                    Frame::meta(GroupID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const JoystickMeta*                 Frame::meta(JoystickID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const KeyboardMeta*                 Frame::meta(KeyboardID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const KineticMeta*                  Frame::meta(KineticID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
+        if(auto itr = m_data.find(id); itr != m_data.end() && itr->second.object){
+            if(itr->second.typedId.types(t))
+                return &itr->second.object->metaInfo();
+        }
         return nullptr;
     }
 
-    const Kinetic³Meta*                 Frame::meta(Kinetic³ID id) const
+    const TachyonMeta*                  Frame::meta_of(TachyonID tid) const
     {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-
-    const LayerMeta*                    Frame::meta(LayerID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
+        if(auto itr = m_data.find(tid.id); itr != m_data.end()){
+            if(itr->second.object)
+                return &itr->second.object->metaInfo();
+        }
         return nullptr;
     }
     
-    const LightMeta*                    Frame::meta(LightID id) const
+    Tachyon*    Frame::object_of(Type type, uint64_t id) const
     {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
+        if(auto itr = m_data.find(id); itr != m_data.end()){
+            if(itr->second.typedId.types(type))
+                return const_cast<Tachyon*>(itr->second.object.ptr());
+        }
         return nullptr;
     }
     
-    const Light³Meta*                   Frame::meta(Light³ID id) const
+    Tachyon*    Frame::object_of(TachyonID id) const
     {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const ManagerMeta*                  Frame::meta(ManagerID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const MasterMeta*                   Frame::meta(MasterID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
+        if(auto itr = m_data.find(id); itr != m_data.end())
+            return const_cast<Tachyon*>(itr->second.object.ptr());
         return nullptr;
     }
 
-    const ModelMeta*                    Frame::meta(ModelID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const MouseMeta*                    Frame::meta(MouseID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-
-    const PhysicsMeta*                  Frame::meta(PhysicsID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-
-    
-    const RenderedMeta*                 Frame::meta(RenderedID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const Rendered³Meta*                Frame::meta(Rendered³ID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const SceneMeta*                    Frame::meta(SceneID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const Scene³Meta*                   Frame::meta(Scene³ID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const SpatialMeta*                  Frame::meta(SpatialID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const Spatial²Meta*                 Frame::meta(Spatial²ID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const Spatial³Meta*                 Frame::meta(Spatial³ID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const TachyonMeta*                  Frame::meta(TachyonID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const ThreadMeta*                   Frame::meta(ThreadID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const TachyonMeta*                  Frame::meta(ViewerID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const WidgetMeta*                   Frame::meta(WidgetID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    const WindowMeta*                   Frame::meta(WindowID id) const
-    {
-        auto obj = object(id);
-        if(obj)
-            return &obj->metaInfo();
-        return nullptr;
-    }
-    
-    Camera*                             Frame::object(CameraID id) const
-    {
-        return m_cameras.pointer(id);
-    }
-
-    Camera³*                            Frame::object(Camera³ID id) const
-    {
-        return m_camera³s.pointer(id);
-    }
-
-    Controller*                         Frame::object(ControllerID id) const
-    {
-        return m_controllers.pointer(id);
-    }
-
-    Cursor*                             Frame::object(CursorID id) const
-    {
-        return m_cursors.pointer(id);
-    }
-
-    Desktop*                            Frame::object(DesktopID id) const
-    {
-        return m_desktops.pointer(id);
-    }
-
-    Engine*                             Frame::object(EngineID id) const
-    {
-        return m_engines.pointer(id);
-    }
-
-    Gamepad*                            Frame::object(GamepadID id) const
-    {
-        return m_gamepads.pointer(id);
-    }
-
-    GraphicsCard*                       Frame::object(GraphicsCardID id) const
-    {
-        return m_graphicsCards.pointer(id);
-    }
-
-    Group*                              Frame::object(GroupID id) const
-    {
-        return m_groups.pointer(id);
-    }
-
-    Joystick*                           Frame::object(JoystickID id) const
-    {
-        return m_joysticks.pointer(id);
-    }
-
-    Keyboard*                           Frame::object(KeyboardID id) const
-    {
-        return m_keyboards.pointer(id);
-    }
-
-    Kinetic*                            Frame::object(KineticID id) const
-    {
-        return m_kinetics.pointer(id);
-    }
-
-    Kinetic³*                           Frame::object(Kinetic³ID id) const
-    {
-        return m_kinetic³s.pointer(id);
-    }
-
-    Light*                              Frame::object(LightID id) const
-    {
-        return m_lights.pointer(id);
-    }
-
-    Layer*                              Frame::object(LayerID id) const
-    {
-        return m_layers.pointer(id);
-    }
-
-    Light³*                             Frame::object(Light³ID id) const
-    {
-        return m_light³s.pointer(id);
-    }
-
-    Manager*                            Frame::object(ManagerID id) const
-    {
-        return m_managers.pointer(id);
-    }
-
-    Master*                             Frame::object(MasterID id) const
-    {
-        return m_masters.pointer(id);
-    }
-
-    Model*                              Frame::object(ModelID id) const
-    {
-        return m_models.pointer(id);
-    }
-
-    Mouse*                              Frame::object(MouseID id) const
-    {
-        return m_mouses.pointer(id);
-    }
-
-    Physics*                            Frame::object(PhysicsID id) const
-    {
-        return m_physics.pointer(id);
-    }
-
-    Rendered*                           Frame::object(RenderedID id) const
-    {
-        return m_rendereds.pointer(id);
-    }
-
-    Rendered³*                          Frame::object(Rendered³ID id) const
-    {
-        return m_rendered³s.pointer(id);
-    }
-
-    Scene*                              Frame::object(SceneID id) const
-    {
-        return m_scenes.pointer(id);
-    }
-
-    Scene³*                             Frame::object(Scene³ID id) const
-    {
-        return m_scene³s.pointer(id);
-    }
-
-    Spatial*                            Frame::object(SpatialID id) const
-    {
-        return m_spatials.pointer(id);
-    }
-
-    Spatial²*                           Frame::object(Spatial²ID id) const
-    {
-        return m_spatial²s.pointer(id);
-    }
-
-    Spatial³*                           Frame::object(Spatial³ID id) const
-    {
-        return m_spatial³s.pointer(id);
-    }
-
-    Tachyon*                            Frame::object(TachyonID id) const
-    {
-        return m_tachyons.pointer(id);
-    }
-    
-    Thread*                             Frame::object(ThreadID id) const
-    {
-        return m_threads.pointer(id);
-    }
-    
-    Viewer*                             Frame::object(ViewerID id) const
-    {
-        return m_viewers.pointer(id);
-    }
-
-    Widget*                             Frame::object(WidgetID id) const
-    {
-        return m_widgets.pointer(id);
-    }
-
-    Window*                             Frame::object(WindowID id) const
-    {
-        return m_windows.pointer(id);
-    }
 
     Tachyon*                            Frame::object(parent_k, TachyonID tac) const
     {
@@ -1151,10 +298,6 @@ namespace yq::tachyon {
         return object(root(tac));
     }
 
-    Tachyon*                            Frame::object(tachyon_k, uint64_t id) const
-    {
-        return m_tachyons.pointer(id);
-    }
 
     ThreadID                            Frame::owner(TachyonID tac) const
     {
@@ -1267,175 +410,20 @@ namespace yq::tachyon {
         return ret;
     }
 
-    const CameraSnap*                  Frame::snap(CameraID id) const
+    const TachyonSnap*                 Frame::snap_of(Type type, uint64_t id) const
     {
-        return m_cameras.snap(id);
-    }
-
-    const Camera³Snap*                 Frame::snap(Camera³ID id) const
-    {
-        return m_camera³s.snap(id);
-    }
-
-    const ControllerSnap*              Frame::snap(ControllerID id) const
-    {
-        return m_controllers.snap(id);
-    }
-
-    const CursorSnap*                  Frame::snap(CursorID id) const
-    {
-        return m_cursors.snap(id);
-    }
-
-    const DesktopSnap*                 Frame::snap(DesktopID id) const
-    {
-        return m_desktops.snap(id);
-    }
-
-    const EngineSnap*                  Frame::snap(EngineID id) const
-    {
-        return m_engines.snap(id);
-    }
-
-    const GamepadSnap*                 Frame::snap(GamepadID id) const
-    {
-        return m_gamepads.snap(id);
-    }
-
-    const GraphicsCardSnap*            Frame::snap(GraphicsCardID id) const
-    {
-        return m_graphicsCards.snap(id);
-    }
-
-    const GroupSnap*                   Frame::snap(GroupID id) const
-    {
-        return m_groups.snap(id);
-    }
-
-    const JoystickSnap*                Frame::snap(JoystickID id) const
-    {
-        return m_joysticks.snap(id);
-    }
-
-    const KeyboardSnap*                Frame::snap(KeyboardID id) const
-    {
-        return m_keyboards.snap(id);
-    }
-
-    const KineticSnap*                 Frame::snap(KineticID id) const
-    {
-        return m_kinetics.snap(id);
-    }
-
-    const Kinetic³Snap*                Frame::snap(Kinetic³ID id) const
-    {
-        return m_kinetic³s.snap(id);
-    }
-
-    const LayerSnap*                   Frame::snap(LayerID id) const
-    {
-        return m_layers.snap(id);
-    }
-
-    const LightSnap*                   Frame::snap(LightID id) const
-    {
-        return m_lights.snap(id);
-    }
-
-    const Light³Snap*                   Frame::snap(Light³ID id) const
-    {
-        return m_light³s.snap(id);
-    }
-
-    const ManagerSnap*                 Frame::snap(ManagerID id) const
-    {
-        return m_managers.snap(id);
-    }
-
-    const MasterSnap*                  Frame::snap(MasterID id) const
-    {
-        return m_masters.snap(id);
-    }
-
-    const ModelSnap*                   Frame::snap(ModelID id) const
-    {
-        return m_models.snap(id);
-    }
-
-    const MonitorSnap*                 Frame::snap(MonitorID id) const
-    {
-        return m_monitors.snap(id);
-    }
-
-    const MouseSnap*                   Frame::snap(MouseID id) const
-    {
-        return m_mouses.snap(id);
-    }
-
-    const PhysicsSnap*                 Frame::snap(PhysicsID id) const
-    {
-        return m_physics.snap(id);
-    }
-
-
-    const RenderedSnap*                Frame::snap(RenderedID id) const
-    {
-        return m_rendereds.snap(id);
-    }
-
-    const Rendered³Snap*               Frame::snap(Rendered³ID id) const
-    {
-        return m_rendered³s.snap(id);
-    }
-
-    const SceneSnap*                   Frame::snap(SceneID id) const
-    {
-        return m_scenes.snap(id);
-    }
-
-    const Scene³Snap*                  Frame::snap(Scene³ID id) const
-    {
-        return m_scene³s.snap(id);
-    }
-
-    const SpatialSnap*                 Frame::snap(SpatialID id) const
-    {
-        return m_spatials.snap(id);
-    }
-
-    const Spatial²Snap*                Frame::snap(Spatial²ID id) const
-    {
-        return m_spatial²s.snap(id);
-    }
-
-    const Spatial³Snap*                Frame::snap(Spatial³ID id) const
-    {
-        return m_spatial³s.snap(id);
-    }
-
-    const TachyonSnap*                 Frame::snap(TachyonID id) const
-    {
-        return m_tachyons.snap(id);
+        if(auto itr = m_data.find(id); itr != m_data.end()){
+            if(itr->second.typedId.types(type))
+                return itr->second.snap.ptr();
+        }
+        return nullptr;
     }
     
-    const ThreadSnap*                  Frame::snap(ThreadID id) const
+    const TachyonSnap*                 Frame::snap_of(TachyonID id) const
     {
-        return m_threads.snap(id);
-    }
-
-    const ViewerSnap*                  Frame::snap(ViewerID id) const
-    {
-        return m_viewers.snap(id);
-    }
-
-    const WidgetSnap*                  Frame::snap(WidgetID id) const
-    {
-        return m_widgets.snap(id);
-    }
-
-    const WindowSnap*                  Frame::snap(WindowID id) const
-    {
-        return m_windows.snap(id);
+        if(auto itr = m_data.find(id); itr != m_data.end())
+            return itr->second.snap.ptr();
+        return nullptr;
     }
 
     TypedID Frame::typed(TachyonID id) const

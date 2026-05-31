@@ -7,21 +7,36 @@
 #include "fastdata.hpp"
 
 #include <yq/tachyon/api/Camera.hpp>
+#include <yq/tachyon/api/CameraData.hpp>
 #include <yq/tachyon/api/Camera3.hpp>
+#include <yq/tachyon/api/Camera3Data.hpp>
 #include <yq/tachyon/api/Controller.hpp>
+#include <yq/tachyon/api/ControllerData.hpp>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/Kinetic.hpp>
+#include <yq/tachyon/api/KineticData.hpp>
 #include <yq/tachyon/api/Kinetic3.hpp>
+#include <yq/tachyon/api/Kinetic3Data.hpp>
 #include <yq/tachyon/api/Light.hpp>
+#include <yq/tachyon/api/LightData.hpp>
 #include <yq/tachyon/api/Light3.hpp>
+#include <yq/tachyon/api/Light3Data.hpp>
 #include <yq/tachyon/api/Model.hpp>
+#include <yq/tachyon/api/ModelData.hpp>
 #include <yq/tachyon/api/Physics.hpp>
+#include <yq/tachyon/api/PhysicsData.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
+#include <yq/tachyon/api/RenderedData.hpp>
 #include <yq/tachyon/api/Rendered3.hpp>
+#include <yq/tachyon/api/Rendered3Data.hpp>
 #include <yq/tachyon/api/Scene.hpp>
+#include <yq/tachyon/api/SceneData.hpp>
 #include <yq/tachyon/api/Scene3.hpp>
+#include <yq/tachyon/api/Scene3Data.hpp>
 #include <yq/tachyon/api/Spatial.hpp>
+#include <yq/tachyon/api/SpatialData.hpp>
 #include <yq/tachyon/api/Spatial3.hpp>
+#include <yq/tachyon/api/Spatial3Data.hpp>
 
 namespace yq::tachyon {
     //////////////////////////////////////////////////////////////////////////////////

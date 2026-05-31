@@ -972,7 +972,7 @@ namespace yq::tachyon {
             return WAIT;
 
         if(!m_graphicsCard){
-            GraphicsCardID  gid = frame->first(GRAPHICS_CARD);
+            GraphicsCardID  gid = frame->first<GraphicsCard>();
             if(!gid){
                 if(exceeded)
                     viewerAlert   << "Viewer{" << id() << "}: Graphics Card not detected, aborting";

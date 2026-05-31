@@ -126,47 +126,35 @@ namespace yq::tachyon {
         size_t count(Type) const;
         size_t count(tachyon_k) const;
         size_t count(children_k, TachyonID) const;
+        const TachyonData*                  data_of(Type, uint64_t) const;
+        const TachyonData*                  data_of(TachyonID) const;
     
-        const CameraData*                   data(CameraID) const;
-        const Camera³Data*                  data(Camera³ID) const;
-        const CollisionData*                data(CollisionID) const;
-        const ControllerData*               data(ControllerID) const;
-        const CursorData*                   data(CursorID) const;
-        const DesktopData*                  data(DesktopID) const;
-        //const EditorData*                   data(EditorID) const;
-        const EngineData*                   data(EngineID) const;
-        const GamepadData*                  data(GamepadID) const;
-        const GraphicsCardData*             data(GraphicsCardID) const;
-        const GroupData*                    data(GroupID) const;
-        const JoystickData*                 data(JoystickID) const;
-        const KeyboardData*                 data(KeyboardID) const;
-        const KineticData*                  data(KineticID) const;
-        const Kinetic³Data*                 data(Kinetic³ID) const;
-        const LayerData*                    data(LayerID) const;
-        const LightData*                    data(LightID) const;
-        const Light³Data*                   data(Light³ID) const;
-        const ManagerData*                  data(ManagerID) const;
-        const MasterData*                   data(MasterID) const;
-        const ModelData*                    data(ModelID) const;
-        const MonitorData*                  data(MonitorID) const;
-        const MouseData*                    data(MouseID) const;
-        const PhysicsData*                  data(PhysicsID) const;
-        const RenderedData*                 data(RenderedID) const;
-        const Rendered³Data*                data(Rendered³ID) const;
-        const SceneData*                    data(SceneID) const;
-        const Scene³Data*                   data(Scene³ID) const;
-        const SpatialData*                  data(SpatialID) const;
-        const Spatial²Data*                 data(Spatial²ID) const;
-        const Spatial³Data*                 data(Spatial³ID) const;
-        const TachyonData*                  data(TachyonID) const;
-        const ThreadData*                   data(ThreadID) const;
-        const ViewerData*                   data(ViewerID) const;
-        const WidgetData*                   data(WidgetID) const;
-        const WindowData*                   data(WindowID) const;
+        template <typename T>
+        const data_t<T>*                    data(const ID<T>& id) const
+        {
+            if constexpr (std::is_same_v<T,Tachyon>){
+                return data_of({id.id});
+            } else {
+                return static_cast<const data_t<T>*>(data_of(type_v<T>,id.id));
+            }
+        }
         
-        EngineID                            first(engine_k) const;
-        GraphicsCardID                      first(graphics_card_k) const;
-        MasterID                            first(master_k) const;
+        const TachyonData*                  data(TypedID tid) const
+        {
+            return data_of({tid});
+        }
+        
+        TachyonID                           first_of(Type) const;
+        TachyonID                           first_of(tachyon_k) const;
+        
+        template <typename T>
+        ID<T>                               first() const
+        {
+            if constexpr (std::is_same_v<T,Tachyon>){
+                return first_of(TACHYON);
+            } else
+                return (ID<T>) first_of(type_v<T>);
+        }
         
         template <typename C, typename Pred>
         void        foreach(ptr_k, std::span<const TypedID> ids, Pred&& pred) const;
@@ -192,176 +180,41 @@ namespace yq::tachyon {
         
         const std::set<TachyonID>&          ids_of(Type) const;
         
-        /*
-        const std::set<CameraID>&           ids(camera_k) const;
-        const std::set<Camera³ID>&          ids(camera³_k) const;
-        const std::set<CollisionID>&        ids(collision_k) const;
-        const std::set<ControllerID>&       ids(controller_k) const;
-        const std::set<CursorID>&           ids(cursor_k) const;
-        const std::set<DesktopID>&          ids(desktop_k) const;
-        const std::set<EngineID>&           ids(engine_k) const;
-        const std::set<GamepadID>&          ids(gamepad_k) const;
-        const std::set<GraphicsCardID>&     ids(graphics_card_k) const;
-        const std::set<GroupID>&            ids(group_k) const;
-        const std::set<JoystickID>&         ids(joystick_k) const;
-        const std::set<KeyboardID>&         ids(keyboard_k) const;
-        const std::set<KineticID>&          ids(kinetic_k) const;
-        const std::set<Kinetic³ID>&         ids(kinetic³_k) const;
-        const std::set<LayerID>&            ids(layer_k) const;
-        const std::set<LightID>&            ids(light_k) const;
-        const std::set<Light³ID>&           ids(light³_k) const;
-        const std::set<ManagerID>&          ids(manager_k) const;
-        const std::set<MasterID>&           ids(master_k) const;
-        const std::set<ModelID>&            ids(model_k) const;
-        const std::set<MonitorID>&          ids(monitor_k) const;
-        const std::set<MouseID>&            ids(mouse_k) const;
-        const std::set<PhysicsID>&          ids(physics_k) const;
-        const std::set<RenderedID>&         ids(rendered_k) const;
-        const std::set<Rendered³ID>&        ids(rendered³_k) const;
-        const std::set<SceneID>&            ids(scene_k) const;
-        const std::set<Scene³ID>&           ids(scene³_k) const;
-        const std::set<SpatialID>&          ids(spatial_k) const;
-        const std::set<Spatial²ID>&         ids(spatial²_k) const;
-        const std::set<Spatial³ID>&         ids(spatial³_k) const;
-        const std::set<TachyonID>&          ids(tachyon_k) const;
-        const std::set<ThreadID>&           ids(thread_k) const;
-        const std::set<ViewerID>&           ids(viewer_k) const;
-        const std::set<WidgetID>&           ids(widget_k) const;
-        const std::set<WindowID>&           ids(window_k) const;
-        */
-
-        const CameraMeta*                   meta(CameraID) const;
-        const Camera³Meta*                  meta(Camera³ID) const;
-        const CollisionMeta*                meta(CollisionID) const;
-        const ControllerMeta*               meta(ControllerID) const;
-        const CursorMeta*                   meta(CursorID) const;
-        const DesktopMeta*                  meta(DesktopID) const;
-        const EngineMeta*                   meta(EngineID) const;
-        const GamepadMeta*                  meta(GamepadID) const;
-        const GraphicsCardMeta*             meta(GraphicsCardID) const;
-        const GroupMeta*                    meta(GroupID) const;
-        const JoystickMeta*                 meta(JoystickID) const;
-        const KeyboardMeta*                 meta(KeyboardID) const;
-        const KineticMeta*                  meta(KineticID) const;
-        const Kinetic³Meta*                 meta(Kinetic³ID) const;
-        const LayerMeta*                    meta(LayerID) const;
-        const LightMeta*                    meta(LightID) const;
-        const Light³Meta*                   meta(Light³ID) const;
-        const ManagerMeta*                  meta(ManagerID) const;
-        const MasterMeta*                   meta(MasterID) const;
-        const ModelMeta*                    meta(ModelID) const;
-        const MouseMeta*                    meta(MouseID) const;
-        const PhysicsMeta*                  meta(PhysicsID) const;
-        const RenderedMeta*                 meta(RenderedID) const;
-        const Rendered³Meta*                meta(Rendered³ID) const;
-        const SceneMeta*                    meta(SceneID) const;
-        const Scene³Meta*                   meta(Scene³ID) const;
-        const SpatialMeta*                  meta(SpatialID) const;
-        const Spatial²Meta*                 meta(Spatial²ID) const;
-        const Spatial³Meta*                 meta(Spatial³ID) const;
-        const TachyonMeta*                  meta(TachyonID) const;
-        const ThreadMeta*                   meta(ThreadID) const;
-        const TachyonMeta*                  meta(ViewerID) const;
-        const WidgetMeta*                   meta(WidgetID) const;
-        const WindowMeta*                   meta(WindowID) const;
+        const TachyonMeta*                  meta_of(Type, uint64_t) const;
+        const TachyonMeta*                  meta_of(TachyonID) const;
         
-        //! Camera pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Camera*                             object(CameraID) const;
-        Camera³*                            object(Camera³ID) const;
-
-        Collision*                          object(CollisionID) const;
-        Controller*                         object(ControllerID) const;
-
-        //! Cursor pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Cursor*                             object(CursorID) const;
-
-        //! Desktop pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Desktop*                            object(DesktopID) const;
-
-        //Editor*                             object(EditorID) const;
+        template <typename T>
+        const meta_t<T>*                    meta(ID<T> id) const
+        {
+            if constexpr (std::is_same_v<T,Tachyon>){
+                return meta_of({id.id});
+            } else {
+                return static_cast<const meta_t<T>*>( meta_of(type_v<T>, id));
+            }
+        }
         
-        Engine*                             object(EngineID) const;
+        const TachyonMeta*                  meta(const TypedID tid) const
+        {
+            return meta_of(tid);
+        }
 
-        Gamepad*                            object(GamepadID) const;
-
-        GraphicsCard*                       object(GraphicsCardID) const;
-
-        //! Group pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Group*                              object(GroupID) const;
-
-        //! Joystick pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Joystick*                           object(JoystickID) const;
-
-        //! Keyboard pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Keyboard*                           object(KeyboardID) const;
-
-        Kinetic*                            object(KineticID) const;
-
-        Kinetic³*                           object(Kinetic³ID) const;
-
-        //! Layer pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Layer*                              object(LayerID) const;
-
-        //! Light pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Light*                              object(LightID) const;
-
-        Light³*                             object(Light³ID) const;
-
-        //! Manager pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Manager*                            object(ManagerID) const;
-        Master*                             object(MasterID) const;
-
-        //! Model pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Model*                              object(ModelID) const;
-
-        //! Mouse pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Mouse*                              object(MouseID) const;
-
-        Physics*                            object(PhysicsID) const;
-
-        //! Rendered pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Rendered*                           object(RenderedID) const;
-
-        Rendered³*                          object(Rendered³ID) const;
-
-        Scene*                              object(SceneID) const;
-        Scene³*                             object(Scene³ID) const;
-
-        Spatial*                            object(SpatialID) const;
-        Spatial²*                           object(Spatial²ID) const;
-        Spatial³*                           object(Spatial³ID) const;
-
-        //! Tachyon pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Tachyon*                            object(TachyonID) const;
-
-        Tachyon*                            object(tachyon_k, uint64_t) const;
-
-        //! Thread pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Thread*                             object(ThreadID) const;
+        Tachyon*                            object_of(Type, uint64_t) const;
+        Tachyon*                            object_of(TachyonID) const;
         
-        Viewer*                             object(ViewerID) const;
-
-        //! Widget pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Widget*                             object(WidgetID) const;
+        template <typename T>
+        T*  object(ID<T> id) const
+        {
+            if constexpr (std::is_same_v<T,Tachyon>){
+                return object_of({id.id});
+            } else {
+                return static_cast<T*>(object_of(type_v<T>, id.id));
+            }
+        }
         
-        //! Window pointer
-        //! \note WARNING this will break thread-safety guarantees
-        Window*                             object(WindowID) const;
+        Tachyon* object(TypedID tid) const
+        {
+            return object_of({tid.id});
+        }
 
         Tachyon*                            object(parent_k, TachyonID) const;
         Tachyon*                            object(root_k, TachyonID) const;
@@ -399,43 +252,23 @@ namespace yq::tachyon {
         TypedID                             root(Type, TachyonID) const;
 
         
-        const CameraSnap*                   snap(CameraID) const;
-        const Camera³Snap*                  snap(Camera³ID) const;
-        const CollisionSnap*                snap(CollisionID) const;
-        const ControllerSnap*               snap(ControllerID) const;
-        const CursorSnap*                   snap(CursorID) const;
-        const DesktopSnap*                  snap(DesktopID) const;
-        //const EditorSnap*                   snap(EditorID) const;
-        const EngineSnap*                   snap(EngineID) const;
-        const GamepadSnap*                  snap(GamepadID) const;
-        const GraphicsCardSnap*             snap(GraphicsCardID) const;
-        const GroupSnap*                    snap(GroupID) const;
-        const JoystickSnap*                 snap(JoystickID) const;
-        const KeyboardSnap*                 snap(KeyboardID) const;
-        const KineticSnap*                  snap(KineticID) const;
-        const Kinetic³Snap*                 snap(Kinetic³ID) const;
-        const LayerSnap*                    snap(LayerID) const;
-        const LightSnap*                    snap(LightID) const;
-        const Light³Snap*                   snap(Light³ID) const;
-        const ManagerSnap*                  snap(ManagerID) const;
-        const MasterSnap*                   snap(MasterID) const;
-        const ModelSnap*                    snap(ModelID) const;
-        const MonitorSnap*                  snap(MonitorID) const;
-        const MouseSnap*                    snap(MouseID) const;
-        const PhysicsSnap*                  snap(PhysicsID) const;
-        const RenderedSnap*                 snap(RenderedID) const;
-        const Rendered³Snap*                snap(Rendered³ID) const;
-        const SceneSnap*                    snap(SceneID) const;
-        const Scene³Snap*                   snap(Scene³ID) const;
-        const SpatialSnap*                  snap(SpatialID) const;
-        const Spatial²Snap*                 snap(Spatial²ID) const;
-        const Spatial³Snap*                 snap(Spatial³ID) const;
-        const TachyonSnap*                  snap(TachyonID) const;
-        const ThreadSnap*                   snap(ThreadID) const;
-        const ViewerSnap*                   snap(ViewerID) const;
-        const WidgetSnap*                   snap(WidgetID) const;
-        const WindowSnap*                   snap(WindowID) const;
+        const TachyonSnap*                  snap_of(Type, uint64_t) const;
+        const TachyonSnap*                  snap_of(TachyonID) const;
+
+        template <typename T>
+        const snap_t<T>*                    snap(ID<T> id) const
+        {
+            if constexpr (std::is_same_v<T,Tachyon>){
+                return snap_of({id});
+            } else {
+                return static_cast<const snap_t<T>*>(snap_of(type_v<T>, id));
+            }
+        }
         
+        const TachyonSnap*      snap(TypedID id) const
+        {
+            return snap_of({id.id});
+        }
 
         Types           types(TachyonID) const;
         TypedID         typed(TachyonID) const;
@@ -457,30 +290,7 @@ namespace yq::tachyon {
     private:
         void add(ThreadID, const TachyonFrame&);
 
-        // triple template argument to avoid the header includes for smarter
-        template <typename T, typename D, typename S> 
-        struct Container {
-            using tachyon_k     = T;
-            using data_k        = D;
-            using snap_t        = S;
-            
-            std::unordered_map<uint64_t, Ref<T>>        objects;
-            std::unordered_map<uint64_t, Ref<const D>>  datas;
-            std::unordered_map<uint64_t, Ref<const S>>  snaps;
-            std::multimap<std::string,uint64_t,IgCase>  names;
-            std::set<ID<T>>                             ids; // only thing that needs to be "different"
-            
-            void        insert(Tachyon*, const TachyonData*, const TachyonSnap*);
-            const D*    data(uint64_t) const;
-            const S*    snap(uint64_t) const;
-            T*          pointer(uint64_t) const;
-            bool        has(uint64_t) const;
-            size_t      count() const;
-            ID<T>       first() const;
-        };
-
         static thread_local const Frame*                            s_current;
-    
 
         static std::atomic<uint64_t>                                s_lastId;
 
@@ -491,13 +301,9 @@ namespace yq::tachyon {
         const unit::Second      m_time;
         
                                                                     
-        //std::unordered_map<uint64_t, ThreadID>                      m_owners;
-        //std::unordered_map<uint64_t, Types>                         m_types;
-        
         struct TBit {
             ThreadID                owner;
             TypedID                 typedId;
-            //Types                   types;
             Ref<Tachyon>            object;
             Ref<const TachyonData>  data;
             Ref<const TachyonSnap>  snap;
@@ -508,45 +314,7 @@ namespace yq::tachyon {
         std::unordered_map<uint64_t,TBit>                           m_data;
         EnumMap<Type, std::set<TachyonID>>                          m_idsByType;
         std::set<TachyonID>                                         m_allIds;
-        //EnumMap<Type,size_t>                                        m_counts;
         
-                                                                    
-        Container<Camera, CameraData, CameraSnap>                   m_cameras;
-        Container<Camera³, Camera³Data, Camera³Snap>                m_camera³s;
-        Container<Controller, ControllerData, ControllerSnap>       m_controllers;
-        Container<Cursor, CursorData, CursorSnap>                   m_cursors;
-        Container<Desktop, DesktopData, DesktopSnap>                m_desktops;
-        //Container<Editor, EditorData, EditorSnap>                   m_editors;
-        Container<Engine, EngineData, EngineSnap>                   m_engines;
-        Container<Gamepad, GamepadData, GamepadSnap>                m_gamepads;
-        Container<GraphicsCard, GraphicsCardData, GraphicsCardSnap> m_graphicsCards;
-        Container<Group, GroupData, GroupSnap>                      m_groups;
-        Container<Joystick, JoystickData, JoystickSnap>             m_joysticks;
-        Container<Keyboard, KeyboardData, KeyboardSnap>             m_keyboards;
-        Container<Kinetic, KineticData, KineticSnap>                m_kinetics;
-        Container<Kinetic³, Kinetic³Data, Kinetic³Snap>             m_kinetic³s;
-        Container<Layer, LayerData, LayerSnap>                      m_layers;
-        Container<Light, LightData, LightSnap>                      m_lights;
-        Container<Light³, Light³Data, Light³Snap>                   m_light³s;
-        Container<Manager, ManagerData, ManagerSnap>                m_managers;
-        Container<Master, MasterData, MasterSnap>                   m_masters;
-        Container<Model, ModelData, ModelSnap>                      m_models;
-        Container<Monitor, MonitorData, MonitorSnap>                m_monitors;
-        Container<Mouse, MouseData, MouseSnap>                      m_mouses;
-        Container<Physics, PhysicsData, PhysicsSnap>                m_physics;
-        Container<Rendered, RenderedData, RenderedSnap>             m_rendereds;
-        Container<Rendered³, Rendered³Data, Rendered³Snap>          m_rendered³s;
-        Container<Scene, SceneData, SceneSnap>                      m_scenes;
-        Container<Scene³, Scene³Data, Scene³Snap>                   m_scene³s;
-        Container<Spatial, SpatialData, SpatialSnap>                m_spatials;
-        Container<Spatial², Spatial²Data, Spatial²Snap>             m_spatial²s;
-        Container<Spatial³, Spatial³Data, Spatial³Snap>             m_spatial³s;
-        Container<Tachyon, TachyonData, TachyonSnap>                m_tachyons;
-        Container<Thread, ThreadData, ThreadSnap>                   m_threads;
-        Container<Viewer, ViewerData, ViewerSnap>                   m_viewers;
-        Container<Widget, WidgetData, WidgetSnap>                   m_widgets;
-        Container<Window, WindowData, WindowSnap>                   m_windows;
-
 
         friend class Thread;
         friend class Tasker;
@@ -587,7 +355,7 @@ namespace yq::tachyon {
     void    Frame::foreach(ptr_k, std::span<const TypedID> ids, Pred&& pred) const
     {
         for(const TypedID& t : ids){
-            C*  c   = dynamic_cast<C*>(object(TACHYON, t.id));
+            C*  c   = dynamic_cast<C*>(object(t));
             if(c){
                 pred(c);
             }
@@ -598,7 +366,7 @@ namespace yq::tachyon {
     void    Frame::foreach(ref_k, std::span<const TypedID> ids, Pred&& pred) const
     {
         for(const TypedID& t : ids){
-            C*  c   = dynamic_cast<C*>(object(TACHYON, t.id));
+            C*  c   = dynamic_cast<C*>(object(t));
             if(c){
                 pred(*c);
             }

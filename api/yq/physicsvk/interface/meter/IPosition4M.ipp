@@ -7,7 +7,7 @@
 #include "IPosition4M.hpp"
 
 #include <yq/tachyon/api/InterfaceMetaWriter.hpp>
-#include <yq/physicsvk/proxy/PPosition4M.hpp>
+#include <yq/physicsvk/proxy/meter/PPosition4M.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IPosition⁴M)
 

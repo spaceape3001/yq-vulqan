@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Proxy.hpp>
-#include <yq/physicsvk/interface/IPosition2M.hpp>
+#include <yq/physicsvk/interface/meter/IPosition2M.hpp>
 
 namespace yq::tachyon {
     class PPosition²M : public Proxy, public IPosition²M  /* TODO: public IPosition²MI, public IPosition²M, public IPosition */ {

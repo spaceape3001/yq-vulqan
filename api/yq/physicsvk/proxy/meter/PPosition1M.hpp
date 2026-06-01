@@ -8,7 +8,7 @@
 
 #include <yq/units.hpp>
 #include <yq/tachyon/api/Proxy.hpp>
-#include <yq/physicsvk/interface/IPosition1M.hpp>
+#include <yq/physicsvk/interface/meter/IPosition1M.hpp>
 #include <yq/vector/Vector1.hpp>
 
 namespace yq::tachyon {

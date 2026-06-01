@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "interface/IPosition1M.ipp"
-#include "interface/IPosition2M.ipp"
-#include "interface/IPosition3M.ipp"
-#include "interface/IPosition4M.ipp"
+#include "interface/meter/IPosition1M.ipp"
+#include "interface/meter/IPosition2M.ipp"
+#include "interface/meter/IPosition3M.ipp"
+#include "interface/meter/IPosition4M.ipp"

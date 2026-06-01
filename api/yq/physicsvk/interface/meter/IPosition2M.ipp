@@ -4,17 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "IPosition3M.hpp"
+#include "IPosition2M.hpp"
 
 #include <yq/tachyon/api/InterfaceMetaWriter.hpp>
-#include <yq/physicsvk/proxy/PPosition3M.hpp>
+#include <yq/physicsvk/proxy/meter/PPosition2M.hpp>
 
-YQ_INTERFACE_IMPLEMENT(yq::tachyon::IPosition³M)
+YQ_INTERFACE_IMPLEMENT(yq::tachyon::IPosition²M)
 
 namespace yq::tachyon {
-    void    IPosition³M::init_meta()
+    void    IPosition²M::init_meta()
     {
-        auto w = writer<IPosition³M>();
-        w.description("3D Position (meters)");
+        auto w = writer<IPosition²M>();
+        w.description("2D Position (meters)");
     }
 }

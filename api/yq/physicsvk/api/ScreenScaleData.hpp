@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <yq/tachyon/function/FNScreenMapper2M.hpp>
-#include <yq/tachyon/function/FNScreenMapper3M.hpp>
-#include <yq/tachyon/function/FNScreenUnmapper2M.hpp>
-#include <yq/tachyon/function/FNScreenUnmapper3M.hpp>
+#include <yq/physicsvk/function/FNScreenMapper2M.hpp>
+#include <yq/physicsvk/function/FNScreenMapper3M.hpp>
+#include <yq/physicsvk/function/FNScreenUnmapper2M.hpp>
+#include <yq/physicsvk/function/FNScreenUnmapper3M.hpp>
 
 namespace yq::tachyon {
     struct ScreenScaleSnap {

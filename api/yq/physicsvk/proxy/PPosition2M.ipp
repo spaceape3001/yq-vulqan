@@ -5,16 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PPosition2M.hpp"
+#include <yq/physicsvk/command/position/meter/AddPosition2MCommand.hpp>
+#include <yq/physicsvk/command/position/meter/AddPositionXMCommand.hpp>
+#include <yq/physicsvk/command/position/meter/AddPositionYMCommand.hpp>
+#include <yq/physicsvk/command/position/meter/SetPosition2MCommand.hpp>
+#include <yq/physicsvk/command/position/meter/SetPositionXMCommand.hpp>
+#include <yq/physicsvk/command/position/meter/SetPositionYMCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPosition2DCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionXDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionYDCommand.hpp>
-#include <yq/tachyon/command/position/meter/AddPosition2MCommand.hpp>
-#include <yq/tachyon/command/position/meter/AddPositionXMCommand.hpp>
-#include <yq/tachyon/command/position/meter/AddPositionYMCommand.hpp>
-#include <yq/tachyon/command/position/meter/SetPosition2MCommand.hpp>
-#include <yq/tachyon/command/position/meter/SetPositionXMCommand.hpp>
-#include <yq/tachyon/command/position/meter/SetPositionYMCommand.hpp>
 
 namespace yq::tachyon {
     PPosition²M::PPosition²M(const IPosition²M& i) : m_position(i.position())

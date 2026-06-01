@@ -10,8 +10,6 @@ add_library(${PROJECT_NAME} SHARED
     api_domain.cpp
     api_kinetic.cpp
     
-    command_position.cpp
-    command_size.cpp
     
     interface.cpp
     proxy_position.cpp

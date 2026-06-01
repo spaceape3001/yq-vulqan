@@ -5,13 +5,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PPosition1M.hpp"
-#include <yq/physicsvk/command/position/AddPosition1MCommand.hpp>
-#include <yq/physicsvk/command/position/AddPositionXMCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPosition1DCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionXDCommand.hpp>
-#include <yq/physicsvk/command/position/SetPosition1MCommand.hpp>
-#include <yq/physicsvk/command/position/SetPositionXMCommand.hpp>
+#include <yq/tachyon/command/position/meter/AddPosition1MCommand.hpp>
+#include <yq/tachyon/command/position/meter/AddPositionXMCommand.hpp>
+#include <yq/tachyon/command/position/meter/SetPosition1MCommand.hpp>
+#include <yq/tachyon/command/position/meter/SetPositionXMCommand.hpp>
 
 namespace yq::tachyon {
     PPosition¹M::PPosition¹M(const IPosition¹M& i) : m_position(i.position())

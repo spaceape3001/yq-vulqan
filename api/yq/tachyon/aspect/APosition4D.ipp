@@ -170,7 +170,7 @@ namespace yq::tachyon {
         position(ADD, cmd.Δ());
     }
     
-    void        APosition⁴D::on_add_positionW(const AddPositionʷCommand&cmd)
+    void        APosition⁴D::on_add_positionW(const AddPositionʷDCommand&cmd)
     {
         if(cmd.target() != typed())
             return;

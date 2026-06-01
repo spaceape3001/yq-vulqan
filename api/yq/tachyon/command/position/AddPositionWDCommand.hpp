@@ -11,10 +11,10 @@
 namespace yq::tachyon {
 
     //! Instructs an object to adjust (self-increment) their position by given amount
-    class AddPositionʷCommand : public PositionCommand {
-        YQ_OBJECT_DECLARE(AddPositionʷCommand, PositionCommand)
+    class AddPositionʷDCommand : public PositionCommand {
+        YQ_OBJECT_DECLARE(AddPositionʷDCommand, PositionCommand)
     public:
-        AddPositionʷCommand(const Header&, double Δw);
+        AddPositionʷDCommand(const Header&, double Δw);
     
         static void init_meta();
         
@@ -23,16 +23,16 @@ namespace yq::tachyon {
         virtual PostCPtr    clone(rebind_k, const Header&) const override;
     protected:
         
-        AddPositionʷCommand(const AddPositionʷCommand&, const Header&);
-        AddPositionʷCommand(const Header&);
-        ~AddPositionʷCommand();
+        AddPositionʷDCommand(const AddPositionʷDCommand&, const Header&);
+        AddPositionʷDCommand(const Header&);
+        ~AddPositionʷDCommand();
 
     private:
         double  m_Δw = 0.0;
         
-        AddPositionʷCommand(const AddPositionʷCommand&) = delete;
-        AddPositionʷCommand(AddPositionʷCommand&&) = delete;
-        AddPositionʷCommand& operator=(const AddPositionʷCommand&);
-        AddPositionʷCommand& operator=(AddPositionʷCommand&&);
+        AddPositionʷDCommand(const AddPositionʷDCommand&) = delete;
+        AddPositionʷDCommand(AddPositionʷDCommand&&) = delete;
+        AddPositionʷDCommand& operator=(const AddPositionʷDCommand&);
+        AddPositionʷDCommand& operator=(AddPositionʷDCommand&&);
     };
 }

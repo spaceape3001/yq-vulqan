@@ -104,7 +104,7 @@ namespace yq::tachyon {
     void        PPosition⁴D::position(add_k, w_k, double Δw) 
     {
         if(m_flags(F::Addable) && !m_flags(F::Disabled)){
-            mail(new AddPositionʷCommand({.target=object()}, Δw));
+            mail(new AddPositionʷDCommand({.target=object()}, Δw));
         }
     }
 

@@ -10,6 +10,7 @@ add_library(${PROJECT_NAME} SHARED
     api_domain.cpp
     api_kinetic.cpp
     api/Collision.cpp
+    api/Physics.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

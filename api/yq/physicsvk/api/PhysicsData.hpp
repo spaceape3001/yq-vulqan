@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/api/ScreenScaleData.hpp>
-#include <yq/tachyon/typedef/physics.hpp>
+#include <yq/physicsvk/typedef/physics.hpp>
 #include <yq/tachyon/function/FNGravity3M.hpp>
 #include <yq/tachyon/function/FNScreenMapper2M.hpp>
 #include <yq/tachyon/function/FNScreenMapper3M.hpp>

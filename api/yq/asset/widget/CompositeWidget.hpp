@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/api/Widget.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
-#include <yq/tachyon/typedef/physics.hpp>
+//#include <yq/tachyon/typedef/physics.hpp>
 #include <yq/tachyon/typedef/scene.hpp>
 #include <yq/tachyon/enum/RenderMode.hpp>
 
@@ -44,7 +44,7 @@ namespace yq::tachyon {
     
         std::vector<CLayer> m_layers;
         RGBA4F              m_bgcolor       = { 0., 0., 0., 1. };
-        PhysicsID           m_physics;
+        //PhysicsID           m_physics;
         
         void    snap(CompositeWidgetSnap&) const;
 

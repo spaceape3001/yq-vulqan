@@ -15,7 +15,7 @@
 #include <yq/tachyon/typedef/light.hpp>
 #include <yq/tachyon/typedef/light3.hpp>
 #include <yq/tachyon/typedef/model.hpp>
-#include <yq/tachyon/typedef/physics.hpp>
+#include <yq/physicsvk/typedef/physics.hpp>
 #include <yq/tachyon/typedef/rendered.hpp>
 #include <yq/tachyon/typedef/rendered3.hpp>
 #include <yq/tachyon/typedef/scene.hpp>

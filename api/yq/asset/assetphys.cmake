@@ -14,7 +14,7 @@ target_link_libraries(${PROJECT_NAME}
 PUBLIC
     yq_tachyon
     yq_userexpr
-
+    yq_physicsvk
 )
 
 yq_vklib(${PROJECT_NAME})

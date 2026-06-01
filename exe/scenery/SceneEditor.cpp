@@ -78,7 +78,7 @@
 #include <yq/tachyon/api/Light3.hpp>
 #include <yq/tachyon/api/Light3Data.hpp>
 #include <yq/tachyon/api/Model.hpp>
-#include <yq/tachyon/api/Physics.hpp>
+#include <yq/physicsvk/api/Physics.hpp>
 #include <yq/tachyon/api/Rendered3.hpp>
 #include <yq/tachyon/api/Rendered3Data.hpp>
 #include <yq/tachyon/api/Scene.hpp>

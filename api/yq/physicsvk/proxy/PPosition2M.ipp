@@ -5,16 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PPosition2M.hpp"
-#include <yq/tachyon/command/position/AddPosition2MCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionXMCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionYMCommand.hpp>
+#include <yq/physicsvk/command/position/AddPosition2MCommand.hpp>
+#include <yq/physicsvk/command/position/AddPositionXMCommand.hpp>
+#include <yq/physicsvk/command/position/AddPositionYMCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPosition2DCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionXDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionYDCommand.hpp>
-#include <yq/tachyon/command/position/SetPosition2MCommand.hpp>
-#include <yq/tachyon/command/position/SetPositionXMCommand.hpp>
-#include <yq/tachyon/command/position/SetPositionYMCommand.hpp>
+#include <yq/physicsvk/command/position/SetPosition2MCommand.hpp>
+#include <yq/physicsvk/command/position/SetPositionXMCommand.hpp>
+#include <yq/physicsvk/command/position/SetPositionYMCommand.hpp>
 
 namespace yq::tachyon {
     PPosition²M::PPosition²M(const IPosition²M& i) : m_position(i.position())

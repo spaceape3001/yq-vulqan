@@ -4,17 +4,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/interface/IPosition1M.hpp>
+#include "IPosition4M.hpp"
 
 #include <yq/tachyon/api/InterfaceMetaWriter.hpp>
-#include <yq/tachyon/proxy/PPosition1M.hpp>
+#include <yq/physicsvk/proxy/PPosition4M.hpp>
 
-YQ_INTERFACE_IMPLEMENT(yq::tachyon::IPosition¹M)
+YQ_INTERFACE_IMPLEMENT(yq::tachyon::IPosition⁴M)
 
 namespace yq::tachyon {
-    void    IPosition¹M::init_meta()
+    void    IPosition⁴M::init_meta()
     {
-        auto w = writer<IPosition¹M>();
-        w.description("1D Position");
+        auto w = writer<IPosition⁴M>();
+        w.description("4D Position (meters)");
     }
 }

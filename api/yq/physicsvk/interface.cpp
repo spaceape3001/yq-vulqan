@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "proxy/PPosition1D.ipp"
-#include "proxy/PPosition2D.ipp"
-#include "proxy/PPosition3D.ipp"
-#include "proxy/PPosition4D.ipp"
+#include "interface/IPosition1M.ipp"
+#include "interface/IPosition2M.ipp"
+#include "interface/IPosition3M.ipp"
+#include "interface/IPosition4M.ipp"

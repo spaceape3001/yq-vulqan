@@ -5,22 +5,22 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PPosition4M.hpp"
-#include <yq/tachyon/command/position/AddPosition4MCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionWMCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionXMCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionYMCommand.hpp>
-#include <yq/tachyon/command/position/AddPositionZMCommand.hpp>
+#include <yq/physicsvk/command/position/AddPosition4MCommand.hpp>
+#include <yq/physicsvk/command/position/AddPositionWMCommand.hpp>
+#include <yq/physicsvk/command/position/AddPositionXMCommand.hpp>
+#include <yq/physicsvk/command/position/AddPositionYMCommand.hpp>
+#include <yq/physicsvk/command/position/AddPositionZMCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPosition4DCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionWDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionXDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionYDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionZDCommand.hpp>
-#include <yq/tachyon/command/position/SetPosition4MCommand.hpp>
-#include <yq/tachyon/command/position/SetPositionWMCommand.hpp>
-#include <yq/tachyon/command/position/SetPositionXMCommand.hpp>
-#include <yq/tachyon/command/position/SetPositionYMCommand.hpp>
-#include <yq/tachyon/command/position/SetPositionZMCommand.hpp>
+#include <yq/physicsvk/command/position/SetPosition4MCommand.hpp>
+#include <yq/physicsvk/command/position/SetPositionWMCommand.hpp>
+#include <yq/physicsvk/command/position/SetPositionXMCommand.hpp>
+#include <yq/physicsvk/command/position/SetPositionYMCommand.hpp>
+#include <yq/physicsvk/command/position/SetPositionZMCommand.hpp>
 
 namespace yq::tachyon {
     PPosition⁴M::PPosition⁴M(const IPosition⁴M& i) : m_position(i.position())

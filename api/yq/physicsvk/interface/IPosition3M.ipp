@@ -4,10 +4,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/interface/IPosition3M.hpp>
+#include "IPosition3M.hpp"
 
 #include <yq/tachyon/api/InterfaceMetaWriter.hpp>
-#include <yq/tachyon/proxy/PPosition3M.hpp>
+#include <yq/physicsvk/proxy/PPosition3M.hpp>
 
 YQ_INTERFACE_IMPLEMENT(yq::tachyon::IPosition³M)
 

@@ -1,0 +1,39 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//  YOUR QUILL
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <yq/units.hpp>
+#include <yq/tachyon/command/SizeCommand.hpp>
+
+namespace yq::tachyon {
+
+    //! Instructs an object to set it's size
+    class SetSizeʸCMCommand : public SizeCommand {
+        YQ_OBJECT_DECLARE(SetSizeʸCMCommand, SizeCommand)
+    public:
+        SetSizeʸCMCommand(const Header&, Centimeter);
+    
+        static void init_meta();
+        
+        Centimeter  y() const { return m_y; }
+        
+        virtual PostCPtr    clone(rebind_k, const Header&) const override;
+
+    protected:
+        SetSizeʸCMCommand(const Header&);
+        SetSizeʸCMCommand(const SetSizeʸCMCommand&, const Header&);
+        ~SetSizeʸCMCommand();
+
+    private:
+        Centimeter   m_y = 0.;
+        
+        SetSizeʸCMCommand(const SetSizeʸCMCommand&) = delete;
+        SetSizeʸCMCommand(SetSizeʸCMCommand&&) = delete;
+        SetSizeʸCMCommand& operator=(const SetSizeʸCMCommand&) = delete;
+        SetSizeʸCMCommand& operator=(SetSizeʸCMCommand&&) = delete;
+    };
+}

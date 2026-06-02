@@ -6,34 +6,34 @@
 
 #pragma once
 
-#include <yq/physicsvk/interface/meter/IPosition1M.hpp>
+#include <yq/physicsvk/interface/centimeter/IPosition1CM.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
 
-    class AddPosition¹MCommand;
-    class AddPositionˣMCommand;
+    class AddPosition¹CMCommand;
+    class AddPositionˣCMCommand;
     class MultiplyPositionDCommand;
     class MultiplyPosition¹DCommand;
     class MultiplyPositionˣDCommand;
-    class SetPosition¹MCommand;
-    class SetPositionˣMCommand;
+    class SetPosition¹CMCommand;
+    class SetPositionˣCMCommand;
 
-    class APosition¹M : public IPosition¹M, public virtual Tachyon::Helper {
+    class APosition¹CM : public IPosition¹CM, public virtual Tachyon::Helper {
     public:
     
         //!  Basic position in the 1D space
-        Vector1M        position() const override { return m_position; }
+        Centimeter1D    position() const override { return m_position; }
 
-        Meter           position(x_k) const { return m_position.x; }
+        Centimeter      position(x_k) const { return m_position.x; }
         
         //!  Set position the position (OVERRIDE THIS TO INTERCEPT/REJECT)
-        virtual void    position(set_k, const Vector1M&) override;
-        void            position(set_k, x_k, Meter) override;
+        virtual void    position(set_k, const Centimeter1D&) override;
+        void            position(set_k, x_k, Centimeter) override;
         
         //!  Move the position (ie set to position + delta)
-        void            position(add_k, const Vector1M&) override;
-        void            position(add_k, x_k, Meter) override;
+        void            position(add_k, const Centimeter1D&) override;
+        void            position(add_k, x_k, Centimeter) override;
 
         void            position(multiply_k, double) override;
         void            position(multiply_k, const Vector1D&) override;
@@ -44,26 +44,26 @@ namespace yq::tachyon {
         bool            position(addable_k) const { return true; }
         bool            position(multipliable_k) const { return true; }
 
-        const Vector1M& position(ref_k) const { return m_position; }
+        const Centimeter1D& position(ref_k) const { return m_position; }
 
     protected:
         
-        Vector1M    m_position = ZERO;
+        Centimeter1D    m_position = ZERO;
         
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        APosition¹M();
-        virtual ~APosition¹M();
+        APosition¹CM();
+        virtual ~APosition¹CM();
 
         void            position(emit_k);
         
     private:
-        void        on_set_position1(const SetPosition¹MCommand&);
-        void        on_set_positionX(const SetPositionˣMCommand&);
+        void        on_set_position1(const SetPosition¹CMCommand&);
+        void        on_set_positionX(const SetPositionˣCMCommand&);
 
-        void        on_add_position1(const AddPosition¹MCommand&);
-        void        on_add_positionX(const AddPositionˣMCommand&);
+        void        on_add_position1(const AddPosition¹CMCommand&);
+        void        on_add_positionX(const AddPositionˣCMCommand&);
         
         void        on_multiply_position(const MultiplyPositionDCommand&);
         void        on_multiply_position1(const MultiplyPosition¹DCommand&);

@@ -54,7 +54,7 @@ namespace yq::tachyon {
         void            position(add_k, w_k, Meter) override;
 
         void            position(multiply_k, double) override;
-        void            position(multiply_k, const Vector4M&) override;
+        void            position(multiply_k, const Vector4D&) override;
         void            position(multiply_k, x_k, double) override;
         void            position(multiply_k, y_k, double) override;
         void            position(multiply_k, z_k, double) override;

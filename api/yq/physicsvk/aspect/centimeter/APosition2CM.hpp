@@ -6,40 +6,40 @@
 
 #pragma once
 
-#include <yq/physicsvk/interface/meter/IPosition2M.hpp>
+#include <yq/physicsvk/interface/centimeter/IPosition2CM.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 
 namespace yq::tachyon {
 
-    class AddPosition²MCommand;
-    class AddPositionˣMCommand;
-    class AddPositionʸMCommand;
+    class AddPosition²CMCommand;
+    class AddPositionˣCMCommand;
+    class AddPositionʸCMCommand;
     class MultiplyPositionDCommand;
     class MultiplyPosition²DCommand;
     class MultiplyPositionˣDCommand;
     class MultiplyPositionʸDCommand;
-    class SetPosition²MCommand;
-    class SetPositionˣMCommand;
-    class SetPositionʸMCommand;
+    class SetPosition²CMCommand;
+    class SetPositionˣCMCommand;
+    class SetPositionʸCMCommand;
 
-    class APosition²M : public IPosition²M, public virtual Tachyon::Helper {
+    class APosition²CM : public IPosition²CM, public virtual Tachyon::Helper {
     public:
     
         //!  Basic position in the 2D space
-        Vector2M        position() const override { return m_position; }
+        Centimeter2D        position() const override { return m_position; }
         
-        Meter           position(x_k) const { return m_position.x; }
-        Meter           position(y_k) const { return m_position.y; }
+        Centimeter           position(x_k) const { return m_position.x; }
+        Centimeter           position(y_k) const { return m_position.y; }
 
         //!  Set position the position (OVERRIDE THIS TO INTERCEPT/REJECT)
-        virtual void    position(set_k, const Vector2M&) override;
-        void            position(set_k, x_k, Meter) override;
-        void            position(set_k, y_k, Meter) override;
+        virtual void    position(set_k, const Centimeter2D&) override;
+        void            position(set_k, x_k, Centimeter) override;
+        void            position(set_k, y_k, Centimeter) override;
         
         //!  Move the position (ie set to position + delta)
-        void            position(add_k, const Vector2M&) override;
-        void            position(add_k, x_k, Meter) override;
-        void            position(add_k, y_k, Meter) override;
+        void            position(add_k, const Centimeter2D&) override;
+        void            position(add_k, x_k, Centimeter) override;
+        void            position(add_k, y_k, Centimeter) override;
 
         void            position(multiply_k, double) override;
         void            position(multiply_k, const Vector2D&) override;
@@ -51,28 +51,28 @@ namespace yq::tachyon {
         bool            position(addable_k) const { return true; }
         bool            position(multipliable_k) const { return true; }
 
-        const Vector2M& position(ref_k) const { return m_position; }
+        const Centimeter2D& position(ref_k) const { return m_position; }
 
     protected:
 
-        Vector2M        m_position = ZERO;
+        Centimeter2D        m_position = ZERO;
     
         void            position(emit_k);
         
         template <typename C>
         static void init_meta(TachyonMeta::Writer<C>&);
         
-        APosition²M(const Vector2M& pos=ZERO);
-        virtual ~APosition²M();
+        APosition²CM(const Centimeter2D& pos=ZERO);
+        virtual ~APosition²CM();
         
     private:
-        void        on_set_position2(const SetPosition²MCommand&);
-        void        on_set_positionX(const SetPositionˣMCommand&);
-        void        on_set_positionY(const SetPositionʸMCommand&);
+        void        on_set_position2(const SetPosition²CMCommand&);
+        void        on_set_positionX(const SetPositionˣCMCommand&);
+        void        on_set_positionY(const SetPositionʸCMCommand&);
 
-        void        on_add_position2(const AddPosition²MCommand&);
-        void        on_add_positionX(const AddPositionˣMCommand&);
-        void        on_add_positionY(const AddPositionʸMCommand&);
+        void        on_add_position2(const AddPosition²CMCommand&);
+        void        on_add_positionX(const AddPositionˣCMCommand&);
+        void        on_add_positionY(const AddPositionʸCMCommand&);
         
         void        on_multiply_position(const MultiplyPositionDCommand&);
         void        on_multiply_position2(const MultiplyPosition²DCommand&);

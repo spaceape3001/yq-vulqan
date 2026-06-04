@@ -8,10 +8,9 @@
 
 #include <yq/meta/MetaBinder.hpp>
 #include <yq/units.hpp>
-#include <functional>
 
 namespace yq::tachyon {
-    enum class LengthUnit {
+    enum class LengthUnit : uint8_t {
         Centimeter,
         Foot,
         Inch,

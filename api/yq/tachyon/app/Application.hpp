@@ -70,7 +70,8 @@ namespace yq::tachyon {
 
         static void    info_resource_paths();
         static void    info_std_threads();
-
+        
+        
         /*! \brief Constructor
         
             \param[in]  argc    Pass onto me what the main() was given
@@ -102,9 +103,7 @@ namespace yq::tachyon {
         //! \return Viewer ID if not running, null otherwise
         ViewerID                    create(viewer_k, const ViewerCreateInfo&, WidgetPtr);
 
-        
-
-        bool    is_headless() const;
+        bool                        is_headless() const;
 
         /*! \brief Exec loop for a bunch of windows
 
@@ -147,6 +146,10 @@ namespace yq::tachyon {
         void    set_thread(StdThread, const thread_enabler_t&);
         void    set_headless(bool);
         void    set_appname(std::string_view);
+
+        void    set_angle_unit(AngleUnit);
+        void    set_length_unit(LengthUnit);
+        void    set_time_unit(TimeUnit);
         
     protected:
         AppCreateInfo           m_cInfo;

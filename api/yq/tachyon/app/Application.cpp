@@ -45,6 +45,13 @@
 
 namespace yq::tachyon {
 
+    namespace engine {
+        extern AngleUnit   gAngleUnit;
+        extern LengthUnit  gLengthUnit;
+        extern TimeUnit    gTimeUnit;
+    }
+    
+
     static AppCreateInfo    _update(const AppCreateInfo& aci)
     {
         AppCreateInfo   ret = aci;
@@ -65,6 +72,23 @@ namespace yq::tachyon {
         s_done = true;
     }
 
+
+    namespace {
+        bool        is_single(const thread_enabler_t& ts)
+        {
+            if(std::get_if<enabled_k>(&ts))
+                return true;
+            if(auto p = std::get_if<bool>(&ts))
+                return *p;
+            return false;
+        }
+
+        template <typename T>
+        bool        is_single(const thread_spec_t<T>& ts)
+        {
+            return is_single(ts.enable);
+        }
+    }
 
     Application*    Application::s_app  = nullptr;
 
@@ -99,6 +123,10 @@ namespace yq::tachyon {
             throw AppException("Only one application per customer!");
         }
         s_app   = this;
+        
+        engine::gAngleUnit  = aci.units.angle;
+        engine::gLengthUnit = aci.units.length;
+        engine::gTimeUnit   = aci.units.time;
         
         if(aci.auto_res_configure)
             configure_standand_resource_path();
@@ -250,19 +278,90 @@ namespace yq::tachyon {
         return m_stage == Running;
     }
 
-    bool        is_single(const thread_enabler_t& ts)
+    void    Application::set_angle_unit(AngleUnit au)
     {
-        if(std::get_if<enabled_k>(&ts))
-            return true;
-        if(auto p = std::get_if<bool>(&ts))
-            return *p;
-        return false;
+        if(Meta::thread_safe_write() && (m_stage == Stage::Uninit)){
+            m_cInfo.units.angle = au;
+            engine::gAngleUnit  = au;
+        }
     }
 
-    template <typename T>
-    bool        is_single(const thread_spec_t<T>& ts)
+
+    void    Application::set_appname(std::string_view v)
     {
-        return is_single(ts.enable);
+        if(Meta::thread_safe_write() && (m_stage == Stage::Uninit)){
+            m_cInfo.app_name    = std::string(v);
+        }
+    }
+
+    void    Application::set_headless(bool v)
+    {
+        if(Meta::thread_safe_write() && (m_stage == Stage::Uninit)){
+            m_cInfo.vulkan.headless    = v;
+        }
+    }
+
+    void    Application::set_length_unit(LengthUnit lu)
+    {
+        if(Meta::thread_safe_write() && (m_stage == Stage::Uninit)){
+            m_cInfo.units.length    = lu;
+            engine::gLengthUnit     = lu;
+        }
+    }
+    
+    void    Application::set_thread(StdThread st, const thread_enabler_t&v)
+    {
+        if(Meta::thread_safe_write() && (m_stage == Stage::Uninit)){
+            switch(st){
+            case StdThread::Audio:
+                m_cInfo.thread.audio        = v;
+                break;
+            case StdThread::Auxillary:
+                m_cInfo.thread.auxillary    = v;
+                break;
+            case StdThread::Edit:
+                m_cInfo.thread.edit         = v;
+                break;
+            case StdThread::Game:
+                m_cInfo.thread.game         = v;
+                break;
+            case StdThread::IO:
+                m_cInfo.thread.io           = v;
+                break;
+            case StdThread::Network:
+                m_cInfo.thread.network      = v;
+                break;
+            case StdThread::Sim:
+                m_cInfo.thread.sim          = v;
+                break;
+            case StdThread::Task:
+                m_cInfo.thread.task         = v;
+                break;
+            case StdThread::Viewer:
+                m_cInfo.thread.viewer       = v;
+                break;
+            default:
+                break;
+            }
+        }
+    }
+        
+    void    Application::set_time_unit(TimeUnit tu)
+    {
+        if(Meta::thread_safe_write() && (m_stage == Stage::Uninit)){
+            m_cInfo.units.time  = tu;
+            engine::gTimeUnit   = tu;
+        }
+    }
+
+    ////////////////////////////////////
+    void    Application::shutting_down()
+    {
+        //  this tells managers/threads to quit
+        if(m_vulkan)
+            m_vulkan->cmd_teardown();
+        if(m_desktop)
+            m_desktop->cmd_teardown();
     }
 
     bool        Application::start()
@@ -401,15 +500,6 @@ namespace yq::tachyon {
         return true;
     }
 
-    void    Application::shutting_down()
-    {
-        //  this tells managers/threads to quit
-        if(m_vulkan)
-            m_vulkan->cmd_teardown();
-        if(m_desktop)
-            m_desktop->cmd_teardown();
-    }
-
     void    Application::start_thread(ThreadPtr th)
     {
         // This *might* be reentrant unsafe depending on if the thread does anything funny in their start...
@@ -421,57 +511,6 @@ namespace yq::tachyon {
         th->start();
     }
 
-    void    Application::set_appname(std::string_view v)
-    {
-        if(Meta::thread_safe_write() && (m_stage == Stage::Uninit)){
-            m_cInfo.app_name    = std::string(v);
-        }
-    }
-
-    void    Application::set_headless(bool v)
-    {
-        if(Meta::thread_safe_write() && (m_stage == Stage::Uninit)){
-            m_cInfo.vulkan.headless    = v;
-        }
-    }
-    
-    void    Application::set_thread(StdThread st, const thread_enabler_t&v)
-    {
-        if(Meta::thread_safe_write() && (m_stage == Stage::Uninit)){
-            switch(st){
-            case StdThread::Audio:
-                m_cInfo.thread.audio        = v;
-                break;
-            case StdThread::Auxillary:
-                m_cInfo.thread.auxillary    = v;
-                break;
-            case StdThread::Edit:
-                m_cInfo.thread.edit         = v;
-                break;
-            case StdThread::Game:
-                m_cInfo.thread.game         = v;
-                break;
-            case StdThread::IO:
-                m_cInfo.thread.io           = v;
-                break;
-            case StdThread::Network:
-                m_cInfo.thread.network      = v;
-                break;
-            case StdThread::Sim:
-                m_cInfo.thread.sim          = v;
-                break;
-            case StdThread::Task:
-                m_cInfo.thread.task         = v;
-                break;
-            case StdThread::Viewer:
-                m_cInfo.thread.viewer       = v;
-                break;
-            default:
-                break;
-            }
-        }
-    }
-        
     bool    Application::started() const
     {
         return (m_stage == Started) || (m_stage == Running);

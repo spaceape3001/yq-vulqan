@@ -6,22 +6,30 @@
 
 #include "engine.hpp"
 
-#include <yq/tachyon/api/Frame.hpp>
-#include <yq/tachyon/app/Engine.hpp>
-#include <yq/tachyon/app/EngineData.hpp>
+#include <yq/tachyon/app/Application.hpp>
 
-namespace yq::tachyon {
-    Meter        engine_scale()
+namespace yq::tachyon::engine {
+    AngleUnit   gAngleUnit  = AngleUnit::Degree;
+    LengthUnit  gLengthUnit = LengthUnit::Centimeter;
+    TimeUnit    gTimeUnit   = TimeUnit::Second;
+
+    AngleUnit   angle_unit()
     {
-        const Frame* frame = Frame::current();
-        if(!frame)
-            return Engine::kDefault_EngineScale;
-        EngineID    engID   = frame->first<Engine>();
-        if(!engID)
-            return Engine::kDefault_EngineScale;
-        const EngineSnap* es    = frame->snap(engID);
-        if(!es)
-            return Engine::kDefault_EngineScale;
-        return es->engine_scale;
+        return gAngleUnit;
+    }
+    
+    Meter       length_scale()
+    {
+        return scale_of(gLengthUnit);
+    }
+    
+    LengthUnit  length_unit()
+    {
+        return gLengthUnit;
+    }
+    
+    TimeUnit    time_unit()
+    {
+        return gTimeUnit;
     }
 }

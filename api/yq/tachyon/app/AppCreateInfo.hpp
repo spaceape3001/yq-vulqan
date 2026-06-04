@@ -6,13 +6,16 @@
 
 #pragma once
 
+#include <yq/tachyon/keywords.hpp>
 #include <yq/core/BasicAppConfig.hpp>
 #include <yq/core/Required.hpp>
 #include <yq/macro/debugrel.hpp>
 #include <yq/typedef/filesystem_path.hpp>
 #include <yq/tachyon/app/ViewerCreateInfo.hpp>
+#include <yq/tachyon/enum/AngleUnit.hpp>
+#include <yq/tachyon/enum/LengthUnit.hpp>
+#include <yq/tachyon/enum/TimeUnit.hpp>
 #include <yq/tachyon/os/Platform.hpp>
-#include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/vulkan/VulqanCreateInfo.hpp>
 
 #include <optional>
@@ -114,8 +117,15 @@ namespace yq::tachyon {
         //ThreadPolicy                vthreads                = ThreadPolicy::Single;
         
         VulqanCreateInfo            vulkan;
-
         
+        //! Display related units... physics always in MKS
+        //! (ie a 2x2x2 cube in screen coordinates is... 2cm per side)
+        struct {
+            AngleUnit   angle   = AngleUnit::Degree;
+            LengthUnit  length  = LengthUnit::Centimeter;
+            TimeUnit    time    = TimeUnit::Second;
+        } units;
+ 
         AppCreateInfo() = default;
     };
 }

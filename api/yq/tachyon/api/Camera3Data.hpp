@@ -6,9 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/3DData.hpp>
-#include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/api/CameraData.hpp>
+#include <yq/tachyon/api/dim/3DData.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
 #include <yq/tensor/Tensor44.hpp>
 

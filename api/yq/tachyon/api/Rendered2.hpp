@@ -11,7 +11,7 @@
 #include <yq/shape/Circle2.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
 #include <yq/vector/Vector2.hpp>
-#include <yq/tachyon/api/2D.hpp>
+#include <yq/tachyon/api/dim/2D.hpp>
 #include <yq/tachyon/typedef/bounds2.hpp>
 #include <yq/tachyon/typedef/rendered2.hpp>
 #include <yq/tachyon/typedef/spatial2.hpp>

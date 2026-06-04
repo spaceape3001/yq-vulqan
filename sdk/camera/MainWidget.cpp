@@ -23,7 +23,7 @@
 #include <yq/text/match.hpp>
 #include <yq/tachyon/logging.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
-#include <yq/tachyon/api/N.hxx>
+#include <yq/tachyon/api/dim/N.hxx>
 
 using namespace yq;
 using namespace yq::tachyon;

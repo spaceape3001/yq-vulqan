@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/3D.hpp>
 #include <yq/tachyon/api/Camera.hpp>
+#include <yq/tachyon/api/dim/3D.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/vector/Quaternion3.hpp>

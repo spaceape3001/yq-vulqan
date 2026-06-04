@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/3D.hpp>
+#include <yq/tachyon/api/dim/3D.hpp>
 #include <yq/physicsvk/api/Domain.hpp>
 #include <yq/physicsvk/typedef/domain3.hpp>
 

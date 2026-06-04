@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Spatial2.hpp>
-#include <yq/tachyon/api/Spatial2Data.hpp>
-#include <yq/tachyon/api/Spatial2MetaWriter.hpp>
+#include "Spatial2.hpp"
+#include "Spatial2Data.hpp"
+#include "Spatial2MetaWriter.hpp"
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Spatial²);

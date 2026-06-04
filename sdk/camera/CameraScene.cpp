@@ -28,7 +28,7 @@
 #include <yq/vector/Vector3.hxx>
 #include <yq/typedef/string_initlists.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
-#include <yq/tachyon/api/N.hxx>
+#include <yq/tachyon/api/dim/N.hxx>
 
 using namespace yq;
 using namespace yq::tachyon;

@@ -12,7 +12,7 @@
 #include <yq/tachyon/api/Rendered.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>
-#include <yq/tachyon/api/3D.hpp>
+#include <yq/tachyon/api/dim/3D.hpp>
 #include <yq/tachyon/typedef/bounds3.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
 #include <yq/tachyon/typedef/rendered3.hpp>

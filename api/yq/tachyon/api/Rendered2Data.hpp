@@ -9,7 +9,7 @@
 #include <yq/core/Tristate.hpp>
 #include <yq/shape/AxBox2.hpp>
 #include <yq/shape/Circle2.hpp>
-#include <yq/tachyon/api/2DData.hpp>
+#include <yq/tachyon/api/dim/2DData.hpp>
 #include <yq/tachyon/api/RenderedData.hpp>
 #include <yq/tachyon/typedef/bounds2.hpp>
 #include <yq/tachyon/typedef/rendered2.hpp>

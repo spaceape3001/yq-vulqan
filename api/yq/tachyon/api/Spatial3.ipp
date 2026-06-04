@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Spatial3.hpp"
-#include <yq/tachyon/api/Spatial3Data.hpp>
-#include <yq/tachyon/api/Spatial3MetaWriter.hpp>
+#include "Spatial3Data.hpp"
+#include "Spatial3MetaWriter.hpp"
 #include <yq/tachyon/api/Math.hpp>
 #include <yq/meta/Init.hpp>
 

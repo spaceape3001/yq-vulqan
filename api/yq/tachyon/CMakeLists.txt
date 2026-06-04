@@ -21,6 +21,7 @@ add_library(${PROJECT_NAME} SHARED
     ##  These are the "unity" build files
     
     api_camera.cpp
+    api_dim.cpp
     api_light.cpp
     api_meta.cpp
     api_post.cpp
@@ -130,9 +131,9 @@ add_library(${PROJECT_NAME} SHARED
     action/PostAction.cpp
     action/VisibleUIAction.cpp
 
-    api/1D.cpp
-    api/2D.cpp
-    api/3D.cpp
+    #api/1D.cpp
+    #api/2D.cpp
+    #api/3D.cpp
     api/Action.cpp
     api/CameraTweak.cpp
     api/Control.cpp
@@ -147,7 +148,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Math.cpp
     api/Mini.cpp
     api/Model.cpp
-    api/N.cpp
+    #api/N.cpp
     api/Panel.cpp
     api/Payload.cpp
     api/Perspective.cpp

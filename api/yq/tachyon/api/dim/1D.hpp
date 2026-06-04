@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/api/ID.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
-#include <yq/tachyon/api/N.hpp>
+#include <yq/tachyon/api/dim/N.hpp>
 //#include <yq/tachyon/typedef/spatial.hpp>
 //#include <yq/tachyon/typedef/spatial2.hpp>
 //#include <yq/typedef/tensor44.hpp>

@@ -138,7 +138,7 @@
 #include <iostream>
 
 #include <yq/tachyon/api/Tachyon.hxx>
-#include <yq/tachyon/api/N.hxx>
+#include <yq/tachyon/api/dim/N.hxx>
 #include <yq/tachyon/errors.hpp>
 
 YQ_TACHYON_IMPLEMENT(SceneEditor)

@@ -4,12 +4,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Camera3.hpp>
-#include <yq/tachyon/api/Camera3Data.hpp>
-#include <yq/tachyon/api/Camera3MetaWriter.hpp>
+#include "Camera3.hpp"
+#include "Camera3Data.hpp"
+#include "Camera3MetaWriter.hpp"
 #include <yq/tachyon/command/SpatialCommand.hpp>
 #include <yq/tachyon/command/camera/SetScreenCommand.hpp>
-#include <yq/tachyon/api/3DWriter.hxx>
+#include <yq/tachyon/api/dim/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
 #include <yq/tachyon/logging.hpp>
 

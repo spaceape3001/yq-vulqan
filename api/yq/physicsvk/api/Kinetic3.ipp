@@ -8,7 +8,7 @@
 #include "Kinetic3Data.hpp"
 #include "Kinetic3MetaWriter.hpp"
 #include <yq/tachyon/command/SpatialCommand.hpp>
-#include <yq/tachyon/api/3DWriter.hxx>
+#include <yq/tachyon/api/dim/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Kinetic³)

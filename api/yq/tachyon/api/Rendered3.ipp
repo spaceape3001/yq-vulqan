@@ -4,12 +4,13 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Rendered3.hpp>
-#include <yq/tachyon/api/Rendered3MetaWriter.hpp>
+#include "Rendered3.hpp"
+#include "Rendered3Data.hpp"
+#include "Rendered3MetaWriter.hpp"
 #include <yq/tachyon/command/SpatialCommand.hpp>
 #include <yq/vector/Quaternion3.hxx>
 #include <yq/tensor/Tensor44.hxx>
-#include <yq/tachyon/api/3DWriter.hxx>
+#include <yq/tachyon/api/dim/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {

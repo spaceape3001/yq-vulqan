@@ -54,7 +54,7 @@
 #include <yq/asset/widget/SceneWidget.hpp>
 #include <yq/tachyon/utility/LoggerBox.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
-#include <yq/tachyon/api/N.hxx>
+#include <yq/tachyon/api/dim/N.hxx>
 
 #ifdef WANT_FRAME_INSPECTOR
 #include <yq/tachyon/widget/FrameInspector.hpp>

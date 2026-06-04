@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/NData.hpp>
+#include <yq/tachyon/api/dim/NData.hpp>
 #include <yq/tachyon/typedef/spatial3.hpp>
 
 namespace yq::tachyon {

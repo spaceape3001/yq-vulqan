@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "N.hpp"
+#include "NData.hpp"
 #include <yq/tachyon/api/Frame.hpp>
-#include <yq/tachyon/api/NData.hpp>
 #include <yq/tachyon/api/Spatial.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/command/SpatialCommand.hpp>

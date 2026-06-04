@@ -8,11 +8,11 @@
 
 #include <yq/tachyon/api/ID.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
-#include <yq/tachyon/api/N.hpp>
-#include <yq/tachyon/typedef/spatial3.hpp>
-#include <yq/typedef/tensor44.hpp>
-#include <yq/vector/Quaternion3.hpp>
-#include <yq/vector/Vector3.hpp>
+#include <yq/tachyon/api/dim/N.hpp>
+//#include <yq/tachyon/typedef/spatial3.hpp>
+//#include <yq/typedef/tensor44.hpp>
+//#include <yq/vector/Quaternion3.hpp>
+//#include <yq/vector/Vector3.hpp>
 
 namespace yq::tachyon {
 

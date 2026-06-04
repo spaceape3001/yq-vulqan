@@ -9,7 +9,7 @@
 #include <yq/core/Tristate.hpp>
 #include <yq/shape/AxBox3.hpp>
 #include <yq/shape/Sphere3.hpp>
-#include <yq/tachyon/api/3DData.hpp>
+#include <yq/tachyon/api/dim/3DData.hpp>
 #include <yq/tachyon/api/RenderedData.hpp>
 #include <yq/tachyon/typedef/bounds3.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>

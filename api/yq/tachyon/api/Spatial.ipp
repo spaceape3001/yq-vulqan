@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "Spatial.hpp"
+#include "SpatialData.hpp"
+#include "SpatialMetaWriter.hpp"
 
 #include <yq/tachyon/tags.hpp>
-#include <yq/tachyon/api/SpatialData.hpp>
-#include <yq/tachyon/api/SpatialMetaWriter.hpp>
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Spatial)

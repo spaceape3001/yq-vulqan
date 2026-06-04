@@ -7,7 +7,7 @@
 #include "Domain3.hpp"
 #include "Domain3Data.hpp"
 #include "Domain3MetaWriter.hpp"
-#include <yq/tachyon/api/3DWriter.hxx>
+#include <yq/tachyon/api/dim/3DWriter.hxx>
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Domain³)

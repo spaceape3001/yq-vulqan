@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/3DData.hpp>
+#include <yq/tachyon/api/dim/3DData.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/api/LightData.hpp>
 #include <yq/tachyon/typedef/light3.hpp>

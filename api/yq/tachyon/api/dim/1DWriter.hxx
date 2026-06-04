@@ -14,8 +14,8 @@
     mechanisms will work.
 */
 
-#include <yq/tachyon/api/2D.hpp>
-#include <yq/tachyon/api/NWriter.hxx>
+#include <yq/tachyon/api/dim/2D.hpp>
+#include <yq/tachyon/api/dim/NWriter.hxx>
 
 namespace yq::tachyon {
     template <typename C>

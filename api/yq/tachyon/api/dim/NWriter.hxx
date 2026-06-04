@@ -14,14 +14,21 @@
     mechanisms will work.
 */
 
-#include <yq/tachyon/api/3D.hpp>
-#include <yq/tachyon/api/NWriter.hxx>
+#include <yq/tachyon/api/TachyonMetaWriter.hpp>
+#include <yq/tachyon/api/dim/N.hpp>
+#include <yq/tachyon/event/SpatialEvent.hpp>
+#include <yq/tachyon/command/SpatialCommand.hpp>
+#include <yq/tachyon/command/generic/SetSpatialCommand.hpp>
+#include <yq/tachyon/tags.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    void     ③::init_meta(TachyonMeta::Writer<C>&w)
+    void     И::init_meta(TachyonMeta::Writer<C>& w)
     {
-        И::init_meta(w);
+        w.slot(UNSAFE, &И::on_spatial_command);
+        w.slot(UNSAFE, &И::on_spatial_event);
+        w.slot(UNSAFE, &И::on_set_spatial_command);
+        w.property(UNSAFE, "spatial", &И::m_spatial).tag({kTag_Save, kTag_TachyonID});
     }
 }
 

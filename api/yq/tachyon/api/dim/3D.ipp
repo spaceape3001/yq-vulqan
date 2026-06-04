@@ -4,8 +4,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/3D.hpp>
-#include <yq/tachyon/api/3DData.hpp>
+#include <yq/tachyon/api/dim/3D.hpp>
+#include <yq/tachyon/api/dim/3DData.hpp>
 #include <yq/tensor/Tensor44.hpp>
 #include <yq/tachyon/api/Tachyon.hxx>
 

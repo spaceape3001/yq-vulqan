@@ -4,42 +4,44 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/1D.hpp>
-#include <yq/tachyon/api/1DData.hpp>
+#include "2D.hpp"
+#include "2DData.hpp"
+#include <yq/tensor/Tensor44.hpp>
+//#include <yq/tachyon/spatial/SimpleSpatial2.hpp>
 
 namespace yq::tachyon {
-    ①Data::①Data()
+    ②Data::②Data()
     {
     }
     
-    ①Data::~①Data()
+    ②Data::~②Data()
     {
     }
 
-    ①Snap::①Snap()
+    ②Snap::②Snap()
     {
     }
     
-    ①Snap::~①Snap()
+    ②Snap::~②Snap()
     {
     }
     
 
-    ①::①()
+    ②::②()
     {
     }
     
-    ①::~①()
+    ②::~②()
     {
     }
 
-    void    ①::finalize(①Data&d) const
+    void    ②::finalize(②Data&d) const
     {
         И::finalize(d);
     }
 
 #if 0
-    Spatial³ID    ①::make_simple_spatial(
+    Spatial³ID    ②::make_simple_spatial(
         const Vector2D& position,
         const Quaternion2D& orientation,
         const Vector2D& scale
@@ -59,7 +61,7 @@ namespace yq::tachyon {
     }
 #endif
 
-    void    ①::snap(①Snap&sn) const
+    void    ②::snap(②Snap&sn) const
     {
         И::snap(sn);
     }

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/3DData.hpp>
+#include <yq/tachyon/api/dim/3DData.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/api/SceneData.hpp>
 #include <yq/tachyon/typedef/scene3.hpp>

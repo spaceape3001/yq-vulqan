@@ -106,6 +106,8 @@ add_library(${PROJECT_NAME} SHARED
     proxy_scale.cpp
     proxy_size.cpp
     proxy_tessellation.cpp
+    
+    screen.cpp
 
     thread.cpp
     

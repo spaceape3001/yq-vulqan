@@ -5,10 +5,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "PPosition1M.hpp"
-#include <yq/physicsvk/command/position/meter/AddPosition1MCommand.hpp>
-#include <yq/physicsvk/command/position/meter/AddPositionXMCommand.hpp>
-#include <yq/physicsvk/command/position/meter/SetPosition1MCommand.hpp>
-#include <yq/physicsvk/command/position/meter/SetPositionXMCommand.hpp>
+#include <yq/tachyon/command/position/meter/AddPosition1MCommand.hpp>
+#include <yq/tachyon/command/position/meter/AddPositionXMCommand.hpp>
+#include <yq/tachyon/command/position/meter/SetPosition1MCommand.hpp>
+#include <yq/tachyon/command/position/meter/SetPositionXMCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPosition1DCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionXDCommand.hpp>

@@ -6,14 +6,14 @@
 
 #include "APosition1MWriter.hxx"
 #include "APosition1M.hpp"
-#include <yq/physicsvk/command/position/meter/AddPosition1MCommand.hpp>
-#include <yq/physicsvk/command/position/meter/AddPositionXMCommand.hpp>
-#include <yq/physicsvk/command/position/meter/SetPosition1MCommand.hpp>
-#include <yq/physicsvk/command/position/meter/SetPositionXMCommand.hpp>
+#include <yq/tachyon/command/position/meter/AddPosition1MCommand.hpp>
+#include <yq/tachyon/command/position/meter/AddPositionXMCommand.hpp>
+#include <yq/tachyon/command/position/meter/SetPosition1MCommand.hpp>
+#include <yq/tachyon/command/position/meter/SetPositionXMCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPosition1DCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionXDCommand.hpp>
-#include <yq/physicsvk/event/spatial/meter/Position1MEvent.hpp>
+#include <yq/tachyon/event/spatial/meter/Position1MEvent.hpp>
 
 namespace yq::tachyon {
     APosition¹M::APosition¹M()

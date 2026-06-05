@@ -7,16 +7,16 @@
 #pragma once
 
 #include <yq/physicsvk/aspect/meter/APosition4M.hpp>
-#include <yq/physicsvk/command/position/meter/AddPosition4MCommand.hpp>
-#include <yq/physicsvk/command/position/meter/AddPositionWMCommand.hpp>
-#include <yq/physicsvk/command/position/meter/AddPositionXMCommand.hpp>
-#include <yq/physicsvk/command/position/meter/AddPositionYMCommand.hpp>
-#include <yq/physicsvk/command/position/meter/AddPositionZMCommand.hpp>
-#include <yq/physicsvk/command/position/meter/SetPosition4MCommand.hpp>
-#include <yq/physicsvk/command/position/meter/SetPositionWMCommand.hpp>
-#include <yq/physicsvk/command/position/meter/SetPositionXMCommand.hpp>
-#include <yq/physicsvk/command/position/meter/SetPositionYMCommand.hpp>
-#include <yq/physicsvk/command/position/meter/SetPositionZMCommand.hpp>
+#include <yq/tachyon/command/position/meter/AddPosition4MCommand.hpp>
+#include <yq/tachyon/command/position/meter/AddPositionWMCommand.hpp>
+#include <yq/tachyon/command/position/meter/AddPositionXMCommand.hpp>
+#include <yq/tachyon/command/position/meter/AddPositionYMCommand.hpp>
+#include <yq/tachyon/command/position/meter/AddPositionZMCommand.hpp>
+#include <yq/tachyon/command/position/meter/SetPosition4MCommand.hpp>
+#include <yq/tachyon/command/position/meter/SetPositionWMCommand.hpp>
+#include <yq/tachyon/command/position/meter/SetPositionXMCommand.hpp>
+#include <yq/tachyon/command/position/meter/SetPositionYMCommand.hpp>
+#include <yq/tachyon/command/position/meter/SetPositionZMCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionDCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPosition4DCommand.hpp>
 #include <yq/tachyon/command/position/MultiplyPositionWDCommand.hpp>

@@ -12,9 +12,9 @@ add_library(${PROJECT_NAME} SHARED
 
     aspect_position.cpp
     
-    command_position.cpp
-    command_size.cpp
-    event_spatial.cpp
+    #command_position.cpp
+    #command_size.cpp
+    #event_spatial.cpp
     
     interface.cpp
     proxy_position.cpp

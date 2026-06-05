@@ -9,12 +9,12 @@
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/physicsvk/api/ScreenScaleData.hpp>
 #include <yq/physicsvk/typedef/physics.hpp>
-#include <yq/physicsvk/function/FNGravity3M.hpp>
-#include <yq/physicsvk/function/FNScreenMapper2M.hpp>
-#include <yq/physicsvk/function/FNScreenMapper3M.hpp>
-#include <yq/physicsvk/function/FNScreenUnmapper2M.hpp>
-#include <yq/physicsvk/function/FNScreenUnmapper3M.hpp>
-#include <yq/physicsvk/function/FNWind3M.hpp>
+#include <yq/tachyon/function/FNGravity3M.hpp>
+#include <yq/tachyon/function/FNScreenMapper2M.hpp>
+#include <yq/tachyon/function/FNScreenMapper3M.hpp>
+#include <yq/tachyon/function/FNScreenUnmapper2M.hpp>
+#include <yq/tachyon/function/FNScreenUnmapper3M.hpp>
+#include <yq/tachyon/function/FNWind3M.hpp>
 
 namespace yq::tachyon {
     class Frame;

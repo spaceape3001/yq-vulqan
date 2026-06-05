@@ -13,7 +13,6 @@
 #include <yq/unit/declare.hpp>
 
 namespace yq::tachyon::engine {
-
     double          to_screen(Meter);
     double          to_screen(Centimeter);
     double          to_screen(Foot);
@@ -52,11 +51,27 @@ namespace yq::tachyon::engine {
     Centimeter3D    to_centimeter(const Vector3D&);
     Centimeter4D    to_centimeter(const Vector4D&);
 
+    Foot            to_foot(double);
+    Foot1D          to_foot(const Vector1D&);
+    Foot2D          to_foot(const Vector2D&);
+    Foot3D          to_foot(const Vector3D&);
+    Foot4D          to_foot(const Vector4D&);
 
-    Kilometer   to_kilometer(double);
-    Foot        to_foot(double);
-    Inch        to_inch(double);
-    Meter       to_meter(double);
-    
-    
+    Inch            to_inch(double);
+    Inch1D          to_inch(const Vector1D&);
+    Inch2D          to_inch(const Vector2D&);
+    Inch3D          to_inch(const Vector3D&);
+    Inch4D          to_inch(const Vector4D&);
+
+    Kilometer       to_kilometer(double);
+    Kilometer1D     to_kilometer(const Vector1D&);
+    Kilometer2D     to_kilometer(const Vector2D&);
+    Kilometer3D     to_kilometer(const Vector3D&);
+    Kilometer4D     to_kilometer(const Vector4D&);
+
+    Meter           to_meter(double);
+    Meter1D         to_meter(const Vector1D&);
+    Meter2D         to_meter(const Vector2D&);
+    Meter3D         to_meter(const Vector3D&);
+    Meter4D         to_meter(const Vector4D&);
 }

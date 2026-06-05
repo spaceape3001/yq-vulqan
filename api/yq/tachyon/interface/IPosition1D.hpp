@@ -9,6 +9,7 @@
 #include <yq/vector/Vector1.hpp>
 #include <yq/tachyon/keywords.hpp>
 #include <yq/tachyon/api/Interface.hpp>
+#include <yq/unit/declare.hpp>
 
 namespace yq::tachyon {
     class PPosition¹D;
@@ -21,6 +22,12 @@ namespace yq::tachyon {
         
         //!  Basic position in the 1D space
         virtual Vector1D    position() const = 0;
+        
+        Centimeter1D        position(centimeter_k) const;
+        Foot1D              position(foot_k) const;
+        Inch1D              position(inch_k) const;
+        Kilometer1D         position(kilometer_k) const;
+        Meter1D             position(meter_k) const;
         
         //!  Set position the position
         virtual void        position(set_k, const Vector1D&){}

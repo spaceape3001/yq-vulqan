@@ -21,6 +21,12 @@ namespace yq::tachyon {
         
         //!  Basic position in the 4D space
         virtual Vector4D    position() const = 0;
+
+        Centimeter4D        position(centimeter_k) const;
+        Foot4D              position(foot_k) const;
+        Inch4D              position(inch_k) const;
+        Kilometer4D         position(kilometer_k) const;
+        Meter4D             position(meter_k) const;
         
         //!  Set position the position
         virtual void        position(set_k, const Vector4D&){}

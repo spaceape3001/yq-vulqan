@@ -21,6 +21,12 @@ namespace yq::tachyon {
         
         //!  Basic position in the 3D space
         virtual Vector3D    position() const = 0;
+
+        Centimeter3D        position(centimeter_k) const;
+        Foot3D              position(foot_k) const;
+        Inch3D              position(inch_k) const;
+        Kilometer3D         position(kilometer_k) const;
+        Meter3D             position(meter_k) const;
         
         //!  Set position the position
         virtual void        position(set_k, const Vector3D&){}

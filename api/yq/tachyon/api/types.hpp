@@ -48,6 +48,7 @@ namespace yq::tachyon {
     YQ_TYPETYPE(Controller)
     YQ_TYPETYPE(Cursor)
     YQ_TYPETYPE(Desktop)
+    YQ_TYPETYPE(Domain)
     YQ_TYPETYPE(Engine)
     YQ_TYPETYPE(Gamepad)
     YQ_TYPETYPE(GraphicsCard)

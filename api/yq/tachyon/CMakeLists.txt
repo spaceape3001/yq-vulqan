@@ -22,7 +22,6 @@ add_library(${PROJECT_NAME} SHARED
     
     api_camera.cpp
     api_dim.cpp
-    api_domain.cpp
     api_light.cpp
     api_kinetic.cpp
     api_meta.cpp
@@ -146,6 +145,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Control.cpp
     api/Controller.cpp
     api/Delegate.cpp
+    api/Domain.cpp
     #api/Editor.cpp
     api/Frame.cpp
     api/Gesture.cpp

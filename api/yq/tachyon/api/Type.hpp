@@ -24,7 +24,6 @@ namespace yq::tachyon {
         Cursor,
         Desktop,
         Domain,
-        Domain³,
         Editor,
         Engine,
         Gamepad,

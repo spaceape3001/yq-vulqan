@@ -48,6 +48,7 @@ add_library(${PROJECT_NAME} SHARED
     command_file.cpp
     command_height_field.cpp
     command_light.cpp
+    command_master.cpp
     command_material.cpp
     command_mesh.cpp
     #command_offset.cpp
@@ -78,6 +79,7 @@ add_library(${PROJECT_NAME} SHARED
     event_joystick.cpp
     event_keyboard.cpp
     event_light.cpp
+    event_master.cpp
     event_monitor.cpp
     event_mouse.cpp
     event_range.cpp

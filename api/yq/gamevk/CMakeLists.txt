@@ -7,8 +7,8 @@
 project(yq_gamevk)
 
 add_library(${PROJECT_NAME} SHARED
-    command_master.cpp
-    event_master.cpp
+    #command_master.cpp
+    #event_master.cpp
 
     app/Master.cpp
 )

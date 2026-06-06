@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/Tachyon.hpp>
-#include <yq/physicsvk/typedef/collision.hpp>
+#include <yq/tachyon/typedef/collision.hpp>
 
 namespace yq::tachyon {
 

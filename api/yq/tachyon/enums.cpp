@@ -15,6 +15,7 @@
 #include <yq/tachyon/enum/GimbalMode.hpp>
 #include <yq/tachyon/enum/LengthUnit.hpp>
 #include <yq/tachyon/enum/LightType.hpp>
+#include <yq/tachyon/enum/MassUnit.hpp>
 #include <yq/tachyon/enum/RenderMode.hpp>
 #include <yq/tachyon/enum/SaveFlags.hpp>
 #include <yq/tachyon/enum/SaveType.hpp>
@@ -85,6 +86,7 @@ YQ_ENUM_IMPLEMENT(yq::tachyon::LightType)
 YQ_ENUM_IMPLEMENT(yq::tachyon::LengthUnit)
 YQ_ENUM_IMPLEMENT(yq::tachyon::MouseButton)
 YQ_ENUM_IMPLEMENT(yq::tachyon::LogicOp)
+YQ_ENUM_IMPLEMENT(yq::tachyon::MassUnit)
 YQ_ENUM_IMPLEMENT(yq::tachyon::MouseMode)
 YQ_ENUM_IMPLEMENT(yq::tachyon::PipelineBinding)
 YQ_ENUM_IMPLEMENT(yq::tachyon::Platform)
@@ -134,6 +136,7 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::HatState)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LengthUnit)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LightType)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LogicOp)
+YQ_TYPE_IMPLEMENT(yq::tachyon::MassUnit)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButton)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseButtons)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseMode)

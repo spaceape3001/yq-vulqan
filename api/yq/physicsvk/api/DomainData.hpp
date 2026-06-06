@@ -8,9 +8,9 @@
 
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/api/TypedID.hpp>
-#include <yq/physicsvk/typedef/domain.hpp>
+#include <yq/tachyon/typedef/domain.hpp>
 #include <yq/tachyon/typedef/model.hpp>
-#include <yq/physicsvk/typedef/physics.hpp>
+#include <yq/tachyon/typedef/physics.hpp>
 
 namespace yq::tachyon {
     struct DomainSnap : public TachyonSnap {

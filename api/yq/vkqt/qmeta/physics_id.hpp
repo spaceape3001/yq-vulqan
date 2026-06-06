@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/ID.hpp>
-#include <yq/physicsvk/typedef/physics.hpp>
+#include <yq/tachyon/typedef/physics.hpp>
 #include <QMetaType>
 
 Q_DECLARE_METATYPE(yq::tachyon::PhysicsID)

@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/event/EditorEvent.hpp>
 #include <yq/tachyon/api/ID.hpp>
-#include <yq/physicsvk/typedef/physics.hpp>
+#include <yq/tachyon/typedef/physics.hpp>
 
 namespace yq::tachyon {
 

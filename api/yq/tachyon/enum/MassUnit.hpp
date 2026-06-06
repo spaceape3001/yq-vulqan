@@ -6,9 +6,16 @@
 
 #pragma once
 
-#include <yq/tachyon/api/ID.hpp>
-#include <yq/tachyon/typedef/kinetic3.hpp>
-#include <QMetaType>
+#include <yq/meta/MetaBinder.hpp>
 
-Q_DECLARE_METATYPE(yq::tachyon::Kinetic³ID)
+namespace yq::tachyon {
+    enum class MassUnit {
+        Gram,
+        Kilogram,
+        Ounce,
+        Pound
+    };
+}
+
+YQ_TYPE_DECLARE(yq::tachyon::MassUnit)
 

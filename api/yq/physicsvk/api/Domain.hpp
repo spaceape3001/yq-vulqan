@@ -10,7 +10,7 @@
 #include <yq/color/RGBA.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 //#include <yq/tachyon/api/Rendered.hpp>
-#include <yq/physicsvk/typedef/domain.hpp>
+#include <yq/tachyon/typedef/domain.hpp>
 
 namespace yq::tachyon {
     class DomainMeta : public TachyonMeta {

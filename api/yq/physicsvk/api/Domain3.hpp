@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/api/dim/3D.hpp>
 #include <yq/physicsvk/api/Domain.hpp>
-#include <yq/physicsvk/typedef/domain3.hpp>
+#include <yq/tachyon/typedef/domain3.hpp>
 
 namespace yq::tachyon {
     class Domain³Meta : public DomainMeta {

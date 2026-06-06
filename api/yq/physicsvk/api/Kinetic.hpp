@@ -9,7 +9,7 @@
 #include <yq/shape/Rectangle2.hpp>
 #include <yq/math/glm.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
-#include <yq/physicsvk/typedef/kinetic.hpp>
+#include <yq/tachyon/typedef/kinetic.hpp>
 
 namespace yq::tachyon {
 

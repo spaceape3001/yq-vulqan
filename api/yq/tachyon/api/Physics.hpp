@@ -42,8 +42,7 @@ namespace yq::tachyon {
     /*! \brief Rules of the road for a kinetic
     
         This is the general rules of the road for a kinetic object; gravity, collision, terrain effects,
-        collision, etc will be stored/managed here.  It'll be ONE physics object to a domain/kinetic.  
-        Now, physics objects can be chained together (like kinetics)
+        collision, etc will be these. (Management is now on domain/master)
         
         Note, physics will be expected to have delegates/functions, for the various rules (like 
         gravity or collision or coordinate mapping), and these delegates will be accessible from 

@@ -27,7 +27,7 @@ namespace yq::tachyon {
         static Repo& repo();
     };
     
-    /*! \brief Frame of models
+    /*! \brief Frame of models/kinetics
     
         This is a collection of models for sim... analogous of Scene for Rendereds.
         

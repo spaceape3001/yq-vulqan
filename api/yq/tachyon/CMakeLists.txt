@@ -23,7 +23,6 @@ add_library(${PROJECT_NAME} SHARED
     api_camera.cpp
     api_dim.cpp
     api_light.cpp
-    api_kinetic.cpp
     api_meta.cpp
     api_physics.cpp
     api_post.cpp
@@ -150,6 +149,8 @@ add_library(${PROJECT_NAME} SHARED
     api/Frame.cpp
     api/Gesture.cpp
     api/InterfaceMeta.cpp
+    api/Kinetic.cpp
+    api/Kinetic3.cpp
     api/Layer.cpp
     api/Manager.cpp
     api/Math.cpp

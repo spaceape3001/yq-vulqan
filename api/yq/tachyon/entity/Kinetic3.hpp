@@ -7,7 +7,7 @@
 #pragma once
 
 #include <yq/tachyon/api/dim/3D.hpp>
-#include <yq/tachyon/model/Kinetic.hpp>
+#include <yq/tachyon/entity/Kinetic.hpp>
 #include <yq/tachyon/typedef/kinetic3.hpp>
 #include <yq/vector/Quaternion3.hpp>
 #include <yq/vector/Vector3.hpp>

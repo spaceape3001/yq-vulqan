@@ -6,21 +6,17 @@
 
 #pragma once
 
-#include <yq/tachyon/model/Physics.hpp>
+#include <yq/tachyon/entity/Entity3.hpp>
 
 namespace yq::tachyon {
-    class NoPhysics : public Physics {
-        YQ_TACHYON_DECLARE(NoPhysics, Physics)
+    class SimpleEntity³ : public Entity³ {
+        YQ_TACHYON_DECLARE(SimpleEntity³, Entity³)
     public:
     
-        NoPhysics();
-        ~NoPhysics();
+        SimpleEntity³(const Param&p={});
+        ~SimpleEntity³();
         
         static void init_meta();
-        
-    protected:
-        void        snap(PhysicsSnap&) const;
     };
+    
 }
-
-YQ_TACHYON_FORCE(yq::tachyon::NoPhysics)

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/model/PhysicsData.hpp>
+#include <yq/tachyon/api/PhysicsData.hpp>
 #include <yq/tachyon/function/FNForce3M.hpp>
 #include <yq/tachyon/typedef/force3.hpp>
 #include <yq/vector/Vector3.hpp>

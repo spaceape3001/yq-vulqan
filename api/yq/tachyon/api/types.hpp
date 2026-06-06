@@ -68,6 +68,7 @@ namespace yq::tachyon {
     YQ_TYPETYPE(Mass)
     YQ_TYPETYPE(Master)
     YQ_TYPETYPE(Model)
+    YQ_TYPETYPE(Moment³)
     YQ_TYPETYPE(Monitor)
     YQ_TYPETYPE(Mouse)
     YQ_TYPETYPE(Physics)

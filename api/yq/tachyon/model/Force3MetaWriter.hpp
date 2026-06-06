@@ -8,7 +8,7 @@
 
 #include <yq/tachyon/model/Force3.hpp>
 #include <yq/tachyon/model/Force3Data.hpp>
-#include <yq/tachyon/model/PhysicsMetaWriter.hpp>
+#include <yq/tachyon/api/PhysicsMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

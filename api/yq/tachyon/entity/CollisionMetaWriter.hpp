@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <yq/tachyon/model/Mass.hpp>
-#include <yq/tachyon/model/MassData.hpp>
+#include <yq/tachyon/model/Collision.hpp>
+#include <yq/tachyon/model/CollisionData.hpp>
 #include <yq/tachyon/api/ModelMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class MassMeta::Writer : public ModelMeta::Writer<C> {
+    class CollisionMeta::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(MassMeta* layerInfo) : ModelMeta::Writer<C>(layerInfo)
+        Writer(CollisionMeta* collisionInfo) : TachyonMeta::Writer<C>(collisionInfo)
         {
         }
         
-        Writer(MassMeta& layerInfo) : Writer(&layerInfo)
+        Writer(CollisionMeta& collisionInfo) : Writer(&collisionInfo)
         {
         }
     };

@@ -155,6 +155,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Panel.cpp
     api/Payload.cpp
     api/Perspective.cpp
+    api/Physics.cpp
     api/Proxy.cpp
     api/Tachyon.cpp
     api/Tasker.cpp
@@ -246,6 +247,12 @@ add_library(${PROJECT_NAME} SHARED
     
     data/Vertex3.cpp
     
+    entity/Entity.cpp
+    entity/Entity3.cpp
+    entity/Kinetic.cpp
+    entity/Kinetic3.cpp
+    entity/Mass.cpp
+
     enum/UIFlags.cpp
 
     event/AppEvent.cpp
@@ -304,13 +311,7 @@ add_library(${PROJECT_NAME} SHARED
     message/EmptyMessage.cpp
 
     model/Acceleration3.cpp
-    model/Entity.cpp
-    model/Entity3.cpp
     model/Force3.cpp
-    model/Mass.cpp
-    model/Kinetic.cpp
-    model/Kinetic3.cpp
-    model/Physics.cpp
 
     pipeline/Buffer.cpp
     pipeline/Pipeline.cpp

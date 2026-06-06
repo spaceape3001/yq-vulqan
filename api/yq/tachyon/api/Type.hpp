@@ -45,6 +45,7 @@ namespace yq::tachyon {
         Mass,
         Master,
         Model,
+        Moment³,
         Monitor,
         Mouse,
         Rendered,

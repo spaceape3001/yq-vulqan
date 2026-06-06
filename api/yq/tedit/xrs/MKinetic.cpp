@@ -6,7 +6,7 @@
 
 #include "MKinetic.hpp"
 #include "MTachyonMetaWriter.hpp"
-#include <yq/tachyon/model/Kinetic.hpp>
+#include <yq/tachyon/entity/Kinetic.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::MKinetic)
 

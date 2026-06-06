@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/model/Entity.hpp>
+#include <yq/tachyon/entity/Entity.hpp>
 #include <yq/tachyon/typedef/entity3.hpp>
 
 namespace yq::tachyon {

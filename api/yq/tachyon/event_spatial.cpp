@@ -32,3 +32,7 @@
 #include "event/spatial/Size3DEvent.ipp"
 #include "event/spatial/Size4DEvent.ipp"
 
+#include "event/spatial/Position1MEvent.ipp"
+#include "event/spatial/Position2MEvent.ipp"
+#include "event/spatial/Position3MEvent.ipp"
+#include "event/spatial/Position4MEvent.ipp"

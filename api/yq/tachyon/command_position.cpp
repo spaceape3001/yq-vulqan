@@ -37,3 +37,8 @@
 #include "command/position/SetPositionXDCommand.ipp"
 #include "command/position/SetPositionYDCommand.ipp"
 #include "command/position/SetPositionZDCommand.ipp"
+
+#include "command/position/SetPosition1MCommand.ipp"
+#include "command/position/SetPosition2MCommand.ipp"
+#include "command/position/SetPosition3MCommand.ipp"
+#include "command/position/SetPosition4MCommand.ipp"

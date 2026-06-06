@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Mass.hpp>
-#include <yq/tachyon/api/MassData.hpp>
+#include <yq/tachyon/model/Entity.hpp>
+#include <yq/tachyon/model/EntityData.hpp>
 #include <yq/tachyon/api/ModelMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class MassMeta::Writer : public ModelMeta::Writer<C> {
+    class EntityMeta::Writer : public ModelMeta::Writer<C> {
     public:
-        Writer(MassMeta* layerInfo) : ModelMeta::Writer<C>(layerInfo)
+        Writer(EntityMeta* entityInfo) : ModelMeta::Writer<C>(entityInfo)
         {
         }
         
-        Writer(MassMeta& layerInfo) : Writer(&layerInfo)
+        Writer(EntityMeta& entityInfo) : Writer(&entityInfo)
         {
         }
     };

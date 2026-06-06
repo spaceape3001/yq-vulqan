@@ -137,7 +137,6 @@ add_library(${PROJECT_NAME} SHARED
     action/PostAction.cpp
     action/VisibleUIAction.cpp
 
-    api/Acceleration3.cpp
     api/Action.cpp
     api/CameraTweak.cpp
     api/Control.cpp
@@ -145,24 +144,17 @@ add_library(${PROJECT_NAME} SHARED
     api/Delegate.cpp
     api/Domain.cpp
     #api/Editor.cpp
-    api/Entity.cpp
-    api/Entity3.cpp
-    api/Force3.cpp
     api/Frame.cpp
     api/Gesture.cpp
     api/InterfaceMeta.cpp
-    api/Kinetic.cpp
-    api/Kinetic3.cpp
     api/Layer.cpp
     api/Manager.cpp
-    api/Mass.cpp
     api/Math.cpp
     api/Mini.cpp
     api/Model.cpp
     api/Panel.cpp
     api/Payload.cpp
     api/Perspective.cpp
-    api/Physics.cpp
     api/Proxy.cpp
     api/Tachyon.cpp
     api/Tasker.cpp
@@ -310,6 +302,15 @@ add_library(${PROJECT_NAME} SHARED
     #io/Wavefront.cpp
     
     message/EmptyMessage.cpp
+
+    model/Acceleration3.cpp
+    model/Entity.cpp
+    model/Entity3.cpp
+    model/Force3.cpp
+    model/Mass.cpp
+    model/Kinetic.cpp
+    model/Kinetic3.cpp
+    model/Physics.cpp
 
     pipeline/Buffer.cpp
     pipeline/Pipeline.cpp

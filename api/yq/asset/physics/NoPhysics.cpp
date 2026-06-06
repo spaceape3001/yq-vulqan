@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "NoPhysics.hpp"
-#include <yq/tachyon/api/Physics.hpp>
-#include <yq/tachyon/api/PhysicsData.hpp>
-#include <yq/tachyon/api/PhysicsMetaWriter.hpp>
+#include <yq/tachyon/model/Physics.hpp>
+#include <yq/tachyon/model/PhysicsData.hpp>
+#include <yq/tachyon/model/PhysicsMetaWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::NoPhysics)
 

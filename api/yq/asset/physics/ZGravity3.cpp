@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "ZGravity3.hpp"
-#include <yq/tachyon/api/Acceleration3MetaWriter.hpp>
+#include <yq/tachyon/model/Acceleration3MetaWriter.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::ZGravity³)
 

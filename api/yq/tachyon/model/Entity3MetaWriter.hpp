@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Entity3.hpp>
-#include <yq/tachyon/api/Entity3Data.hpp>
-#include <yq/tachyon/api/EntityMetaWriter.hpp>
+#include <yq/tachyon/model/Entity3.hpp>
+#include <yq/tachyon/model/Entity3Data.hpp>
+#include <yq/tachyon/model/EntityMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

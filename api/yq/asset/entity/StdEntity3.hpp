@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Entity3.hpp>
+#include <yq/tachyon/model/Entity3.hpp>
 
 namespace yq::tachyon {
     class StdEntity³ : public Entity³ {

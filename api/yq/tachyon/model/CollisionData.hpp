@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include <yq/tachyon/api/TachyonData.hpp>
-#include <yq/tachyon/typedef/kinetic.hpp>
+#include <yq/tachyon/model/ModelData.hpp>
+#include <yq/tachyon/typedef/collision.hpp>
 
 namespace yq::tachyon {
-    struct KineticSnap : public TachyonSnap {
+    struct CollisionSnap : public TachyonSnap {
     };
     
-    struct KineticData : public TachyonData {
+    struct CollisionData : public TachyonData {
     };
 }

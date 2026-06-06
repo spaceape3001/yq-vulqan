@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Kinetic.hpp>
-#include <yq/tachyon/api/KineticData.hpp>
+#include <yq/tachyon/model/Kinetic.hpp>
+#include <yq/tachyon/model/KineticData.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/model/Model.hpp>
 #include <yq/tachyon/typedef/collision.hpp>
 
 namespace yq::tachyon {

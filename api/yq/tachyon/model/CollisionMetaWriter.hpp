@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/physicsvk/api/Collision.hpp>
-#include <yq/physicsvk/api/CollisionData.hpp>
+#include <yq/tachyon/model/Collision.hpp>
+#include <yq/tachyon/model/CollisionData.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {

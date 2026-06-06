@@ -76,7 +76,7 @@ add_library(${PROJECT_NAME} SHARED
 
     mini/TextLabel.cpp
 
-    physics/NoPhysics.cpp
+    #physics/NoPhysics.cpp
     physics/ZGravity3.cpp
 
         #   TODO... unify the color/grad in a way that makes sense (and won't be terribly confusing)

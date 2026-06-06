@@ -19,8 +19,6 @@
 #include <yq/tachyon/api/Light3Data.hpp>
 #include <yq/tachyon/api/Model.hpp>
 #include <yq/tachyon/api/ModelData.hpp>
-#include <yq/tachyon/api/Physics.hpp>
-#include <yq/tachyon/api/PhysicsData.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
 #include <yq/tachyon/api/RenderedData.hpp>
 #include <yq/tachyon/api/Rendered3.hpp>
@@ -33,6 +31,9 @@
 #include <yq/tachyon/api/SpatialData.hpp>
 #include <yq/tachyon/api/Spatial3.hpp>
 #include <yq/tachyon/api/Spatial3Data.hpp>
+
+#include <yq/tachyon/model/Physics.hpp>
+#include <yq/tachyon/model/PhysicsData.hpp>
 #include <yq/tachyon/ui/UIElement.hpp>
 #include <format>
 

@@ -9,8 +9,8 @@
 #include <yq/editorvk/event/PhysicsSelectEvent.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/texture.hpp>
-#include <yq/tachyon/api/Physics.hpp>
-#include <yq/tachyon/api/PhysicsData.hpp>
+#include <yq/tachyon/model/Physics.hpp>
+#include <yq/tachyon/model/PhysicsData.hpp>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 

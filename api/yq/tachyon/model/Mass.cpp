@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Mass.hpp>
-#include <yq/tachyon/api/MassData.hpp>
-#include <yq/tachyon/api/MassMetaWriter.hpp>
+#include "Mass.hpp"
+#include "MassData.hpp"
+#include "MassMetaWriter.hpp"
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Mass);

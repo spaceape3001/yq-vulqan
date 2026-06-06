@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Acceleration3.hpp>
-#include <yq/tachyon/api/Acceleration3Data.hpp>
-#include <yq/tachyon/api/PhysicsMetaWriter.hpp>
+#include <yq/tachyon/model/Acceleration3.hpp>
+#include <yq/tachyon/model/Acceleration3Data.hpp>
+#include <yq/tachyon/model/PhysicsMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

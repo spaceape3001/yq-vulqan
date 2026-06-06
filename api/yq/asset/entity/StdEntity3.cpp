@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "StdEntity3.hpp"
-#include <yq/tachyon/api/Entity3MetaWriter.hpp>
+#include <yq/tachyon/model/Entity3MetaWriter.hpp>
 
 namespace yq::tachyon {
     StdEntity³::StdEntity³(const Param&p) : Entity³(p)

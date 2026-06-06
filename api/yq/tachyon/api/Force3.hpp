@@ -34,7 +34,7 @@ namespace yq::tachyon {
     };
     
 
-    /*! \brief A light
+    /*! \brief A force type of thing... easily summarized to Force = FN(me)
     */
     class Force³ : public Physics {
         YQ_TACHYON_META(Force³Meta);

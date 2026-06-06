@@ -43,6 +43,7 @@ namespace yq::tachyon {
             using MySnap                        = name##Snap;   \
         };
         
+    YQ_TYPETYPE(Acceleration³)
     YQ_TYPETYPE(Camera)
     YQ_TYPETYPE(Camera³)
     YQ_TYPETYPE(Controller)
@@ -64,6 +65,7 @@ namespace yq::tachyon {
     YQ_TYPETYPE(Light)
     YQ_TYPETYPE(Light³)
     YQ_TYPETYPE(Manager)
+    YQ_TYPETYPE(Mass)
     YQ_TYPETYPE(Master)
     YQ_TYPETYPE(Model)
     YQ_TYPETYPE(Monitor)

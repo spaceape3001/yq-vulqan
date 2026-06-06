@@ -117,6 +117,7 @@ namespace yq::tachyon {
     void Physics::snap(PhysicsSnap& sn) const
     {
         Model::snap(sn);
+        sn.enabled  = m_enabled;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

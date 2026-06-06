@@ -17,6 +17,7 @@ namespace yq::tachyon {
     
     enum class Type {
         Unknown,
+        Acceleration³,
         Camera,
         Camera³,
         Collision,
@@ -41,6 +42,7 @@ namespace yq::tachyon {
         Light,
         Light³,
         Manager,
+        Mass,
         Master,
         Model,
         Monitor,

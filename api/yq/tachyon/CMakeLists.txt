@@ -45,6 +45,7 @@ add_library(${PROJECT_NAME} SHARED
     command_controller.cpp
     command_count.cpp
     command_cursor.cpp
+    command_entity.cpp
     command_file.cpp
     command_height_field.cpp
     command_light.cpp
@@ -53,6 +54,7 @@ add_library(${PROJECT_NAME} SHARED
     command_mesh.cpp
     #command_offset.cpp
     command_orientation.cpp
+    command_physics.cpp
     command_position.cpp
     command_range.cpp
     command_rendered.cpp
@@ -135,6 +137,7 @@ add_library(${PROJECT_NAME} SHARED
     action/PostAction.cpp
     action/VisibleUIAction.cpp
 
+    api/Acceleration3.cpp
     api/Action.cpp
     api/CameraTweak.cpp
     api/Control.cpp
@@ -152,6 +155,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Kinetic3.cpp
     api/Layer.cpp
     api/Manager.cpp
+    api/Mass.cpp
     api/Math.cpp
     api/Mini.cpp
     api/Model.cpp

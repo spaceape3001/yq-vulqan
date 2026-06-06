@@ -81,6 +81,8 @@ namespace yq::tachyon {
 
     protected:
     
+        bool        m_enabled   = true;
+    
         void        snap(PhysicsSnap&) const;
         void        finalize(PhysicsData&) const;
         

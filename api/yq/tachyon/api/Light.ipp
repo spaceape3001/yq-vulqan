@@ -4,9 +4,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/api/Light.hpp>
-#include <yq/tachyon/api/LightData.hpp>
-#include <yq/tachyon/api/LightMetaWriter.hpp>
+#include "Light.hpp"
+#include "LightData.hpp"
+#include "LightMetaWriter.hpp"
 #include <yq/tachyon/api/Post.hpp>
 #include <yq/tachyon/command/light/LightColorCommand.hpp>
 #include <yq/tachyon/command/light/LightIntensityCommand.hpp>

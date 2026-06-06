@@ -13,7 +13,7 @@ namespace yq::tachyon {
 
     class Collision;
     
-    /*! \brief Collision Information
+    /*! \brief Collision Information Meta
     
         Information for collision shapes/models.
     */
@@ -38,12 +38,9 @@ namespace yq::tachyon {
     */
 
 
-    /*! \brief Shows up on the screen
+    /*! \brief Collision
     
-        If you want it to show up on the viewport, it needs to be renderable, and thus derived
-        from this thing.  
-        
-        \note We're limited to three dimensions here
+        Want to be contained by walls/floor/gravity... this is the thing
     */
     class Collision : public Tachyon {
         YQ_TACHYON_META(CollisionMeta);

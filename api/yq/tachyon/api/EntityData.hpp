@@ -6,11 +6,13 @@
 
 #pragma once
 
-#include <yq/typedef/vector2.hpp>
-#include <yq/unit/declare.hpp>
-#include <functional>
+#include <yq/tachyon/api/ModelData.hpp>
+#include <yq/tachyon/typedef/entity.hpp>
 
 namespace yq::tachyon {
-    using FNScreenUnmapper²M = std::function<Meter2D(const Vector2D&)>;
+    struct EntitySnap : public ModelSnap {
+    };
+    
+    struct EntityData : public ModelData {
+    };
 }
-

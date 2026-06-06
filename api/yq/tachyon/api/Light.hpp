@@ -50,6 +50,8 @@ namespace yq::tachyon {
         YQ_TACHYON_SNAP(LightSnap)
         YQ_TACHYON_DECLARE(Light, Tachyon)
     public:    
+
+        static constexpr const Type kType   = Type::Light;
     
         static void init_meta();
 

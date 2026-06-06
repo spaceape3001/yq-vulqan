@@ -24,7 +24,6 @@ add_library(${PROJECT_NAME} SHARED
     api_dim.cpp
     api_light.cpp
     api_meta.cpp
-    api_physics.cpp
     api_post.cpp
     api_rendered.cpp
     api_scene.cpp
@@ -136,9 +135,6 @@ add_library(${PROJECT_NAME} SHARED
     action/PostAction.cpp
     action/VisibleUIAction.cpp
 
-    #api/1D.cpp
-    #api/2D.cpp
-    #api/3D.cpp
     api/Action.cpp
     api/CameraTweak.cpp
     api/Control.cpp
@@ -146,6 +142,9 @@ add_library(${PROJECT_NAME} SHARED
     api/Delegate.cpp
     api/Domain.cpp
     #api/Editor.cpp
+    api/Entity.cpp
+    api/Entity3.cpp
+    api/Force3.cpp
     api/Frame.cpp
     api/Gesture.cpp
     api/InterfaceMeta.cpp
@@ -156,10 +155,10 @@ add_library(${PROJECT_NAME} SHARED
     api/Math.cpp
     api/Mini.cpp
     api/Model.cpp
-    #api/N.cpp
     api/Panel.cpp
     api/Payload.cpp
     api/Perspective.cpp
+    api/Physics.cpp
     api/Proxy.cpp
     api/Tachyon.cpp
     api/Tasker.cpp

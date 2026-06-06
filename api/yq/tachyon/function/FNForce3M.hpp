@@ -6,11 +6,12 @@
 
 #pragma once
 
+#include <yq/tachyon/typedef/model.hpp>
 #include <yq/typedef/vector3.hpp>
 #include <yq/unit/declare.hpp>
 #include <functional>
 
 namespace yq::tachyon {
-    using FNScreenMapper³M = std::function<Vector3D(const Meter3D&)>;
+    using FNForce³M = std::function<Newton3D(ModelID)>;
 }
 

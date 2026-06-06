@@ -6,11 +6,12 @@
 
 #pragma once
 
-#include <yq/typedef/vector2.hpp>
+#include <yq/tachyon/typedef/model.hpp>
+#include <yq/typedef/vector3.hpp>
 #include <yq/unit/declare.hpp>
 #include <functional>
 
 namespace yq::tachyon {
-    using FNScreenMapper²M = std::function<Vector2D(const Meter2D&)>;
+    using FNAcceleration³M   = std::function<MeterPerSecond²3D(ModelID)>;
 }
 

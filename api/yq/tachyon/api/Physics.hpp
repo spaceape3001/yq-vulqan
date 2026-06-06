@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/tachyon/api/Tachyon.hpp>
+#include <yq/tachyon/api/Model.hpp>
 #include <yq/tachyon/typedef/physics.hpp>
 
 namespace yq::tachyon {
@@ -17,7 +17,7 @@ namespace yq::tachyon {
     
         Information for physics.
     */
-    class PhysicsMeta : public TachyonMeta {
+    class PhysicsMeta : public ModelMeta {
     public:
         template <typename C> struct Writer;
 
@@ -25,7 +25,7 @@ namespace yq::tachyon {
         static const std::vector<const PhysicsMeta*>&    all();
         
         //! Standard constructor for the camera information
-        PhysicsMeta(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
+        PhysicsMeta(std::string_view, ModelMeta&, const std::source_location& sl = std::source_location::current());
         
     private:
     
@@ -51,11 +51,11 @@ namespace yq::tachyon {
         \note We *might* have a data manager for the actual environment data, that'll get requests and
         what not.  It'll be this physics tachyon that's required to package it up for everybody else to use.
     */
-    class Physics : public Tachyon {
+    class Physics : public Model {
         YQ_TACHYON_META(PhysicsMeta);
         YQ_TACHYON_DATA(PhysicsData)
         YQ_TACHYON_SNAP(PhysicsSnap)
-        YQ_TACHYON_DECLARE(Physics, Tachyon)
+        YQ_TACHYON_DECLARE(Physics, Model)
     public:    
 
         static constexpr const Type kType   = Type::Physics;

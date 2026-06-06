@@ -37,8 +37,8 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    PhysicsMeta::PhysicsMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
-        TachyonMeta(name, base, sl)
+    PhysicsMeta::PhysicsMeta(std::string_view name, ModelMeta& base, const std::source_location& sl) : 
+        ModelMeta(name, base, sl)
     {
         set(Flag::PHYSICS);
         set(Type::Physics);
@@ -56,52 +56,52 @@ namespace yq::tachyon {
     {
     }
 
-    MeterPerSecond²3D PhysicsSnap::gravity(const Meter3D& pt) const
-    {
-        MeterPerSecond²3D   sum = ZERO;
-        for(auto& fn : gravity3){
-            if(!fn)
-                continue;
-            MeterPerSecond²3D   g   = fn(pt);
-            if(is_nan(g))
-                continue;
-            sum += g;
-        }
+    //MeterPerSecond²3D PhysicsSnap::gravity(const Meter3D& pt) const
+    //{
+        //MeterPerSecond²3D   sum = ZERO;
+        //for(auto& fn : gravity3){
+            //if(!fn)
+                //continue;
+            //MeterPerSecond²3D   g   = fn(pt);
+            //if(is_nan(g))
+                //continue;
+            //sum += g;
+        //}
         
-        return sum;
-    }
+        //return sum;
+    //}
 
-    const PhysicsSnap*          PhysicsSnap::parent(const Frame* frame) const
-    {
-        if(!TachyonSnap::parent)
-            return nullptr;
+    //const PhysicsSnap*          PhysicsSnap::parent(const Frame* frame) const
+    //{
+        //if(!TachyonSnap::parent)
+            //return nullptr;
         
-        if(!frame)
-            frame   = Frame::current();
-        if(!frame)
-            return nullptr;
+        //if(!frame)
+            //frame   = Frame::current();
+        //if(!frame)
+            //return nullptr;
         
-        return dynamic_cast<const PhysicsSnap*>(frame->snap(TachyonSnap::parent));
-    }
+        //return dynamic_cast<const PhysicsSnap*>(frame->snap(TachyonSnap::parent));
+    //}
 
-    MeterPerSecond3D  PhysicsSnap::wind(const Meter3D& pt) const
-    {
-        MeterPerSecond3D    sum = ZERO;
-        for(auto& fn : wind3){
-            if(!fn)
-                continue;
-            MeterPerSecond3D w = fn(pt);
-            if(is_nan(w))
-                continue;
-            sum += w;
-        }
+    //MeterPerSecond3D  PhysicsSnap::wind(const Meter3D& pt) const
+    //{
+        //MeterPerSecond3D    sum = ZERO;
+        //for(auto& fn : wind3){
+            //if(!fn)
+                //continue;
+            //MeterPerSecond3D w = fn(pt);
+            //if(is_nan(w))
+                //continue;
+            //sum += w;
+        //}
         
-        return sum;
-    }
+        //return sum;
+    //}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Physics::Physics(const Param& p) : Tachyon(p)
+    Physics::Physics(const Param& p) : Model(p)
     {
     }
 
@@ -111,12 +111,12 @@ namespace yq::tachyon {
 
     void Physics::finalize(PhysicsData& d) const
     {
-        Tachyon::finalize(d);
+        Model::finalize(d);
     }
 
     void Physics::snap(PhysicsSnap& sn) const
     {
-        Tachyon::snap(sn);
+        Model::snap(sn);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

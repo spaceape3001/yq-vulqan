@@ -6,6 +6,8 @@
 
 #include "qmeta/camera_id.ipp"
 #include "qmeta/camera3_id.ipp"
+#include "qmeta/collision_id.ipp"
+#include "qmeta/collision3_id.ipp"
 #include "qmeta/controller_id.ipp"
 #include "qmeta/cursor_id.ipp"
 #include "qmeta/desktop_id.ipp"
@@ -18,6 +20,8 @@
 #include "qmeta/light_id.ipp"
 #include "qmeta/light3_id.ipp"
 #include "qmeta/manager_id.ipp"
+#include "qmeta/mass_id.ipp"
+#include "qmeta/master_id.ipp"
 #include "qmeta/model_id.ipp"
 #include "qmeta/monitor_id.ipp"
 #include "qmeta/physics_id.ipp"

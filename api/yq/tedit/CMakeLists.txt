@@ -39,12 +39,16 @@ add_library(${PROJECT_NAME} SHARED
     xrs/MCamera3.hpp
     xrs/MCollision.cpp
     xrs/MCollision.hpp
+    xrs/MCollision3.cpp
+    xrs/MCollision3.hpp
     xrs/MCompositeWidget.cpp
     xrs/MCompositeWidget.hpp
     xrs/MController.cpp
     xrs/MController.hpp
     xrs/MDomain.cpp
     xrs/MDomain.hpp
+    xrs/MForce3.cpp
+    xrs/MForce3.hpp
     #xrs/MGroup.cpp
     #xrs/MGroup.hpp
     xrs/MKinetic.cpp

@@ -6,7 +6,7 @@
 
 #include "MPhysics.hpp"
 #include "MTachyonMetaWriter.hpp"
-#include <yq/physicsvk/api/Physics.hpp>
+#include <yq/tachyon/api/Physics.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::MPhysics)
 

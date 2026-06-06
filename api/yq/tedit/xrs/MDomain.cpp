@@ -6,7 +6,7 @@
 
 #include "MDomain.hpp"
 #include "MTachyonMetaWriter.hpp"
-#include <yq/physicsvk/api/Domain.hpp>
+#include <yq/tachyon/api/Domain.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::MDomain)
 

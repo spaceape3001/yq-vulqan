@@ -73,12 +73,12 @@
 #include <yq/tachyon/api/Camera3Data.hpp>
 #include <yq/tachyon/api/Controller.hpp>
 #include <yq/tachyon/api/Frame.hpp>
-#include <yq/physicsvk/api/Kinetic3.hpp>
-#include <yq/physicsvk/api/Kinetic3Data.hpp>
+#include <yq/tachyon/api/Kinetic3.hpp>
+#include <yq/tachyon/api/Kinetic3Data.hpp>
 #include <yq/tachyon/api/Light3.hpp>
 #include <yq/tachyon/api/Light3Data.hpp>
 #include <yq/tachyon/api/Model.hpp>
-#include <yq/physicsvk/api/Physics.hpp>
+#include <yq/tachyon/api/Physics.hpp>
 #include <yq/tachyon/api/Rendered3.hpp>
 #include <yq/tachyon/api/Rendered3Data.hpp>
 #include <yq/tachyon/api/Scene.hpp>

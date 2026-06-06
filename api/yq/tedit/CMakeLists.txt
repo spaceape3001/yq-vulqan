@@ -87,8 +87,6 @@ add_library(${PROJECT_NAME} SHARED
 
 target_link_libraries(${PROJECT_NAME}
 PUBLIC
-    yq_gamevk
-    yq_physicsvk
     yq_vkqt
     yq_assetvk
 )

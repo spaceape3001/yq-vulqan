@@ -22,8 +22,11 @@ add_library(${PROJECT_NAME} SHARED
     
     api_camera.cpp
     api_dim.cpp
+    api_domain.cpp
     api_light.cpp
+    api_kinetic.cpp
     api_meta.cpp
+    api_physics.cpp
     api_post.cpp
     api_rendered.cpp
     api_scene.cpp
@@ -167,6 +170,7 @@ add_library(${PROJECT_NAME} SHARED
     api/Widget.cpp
     
     app/Application.cpp
+    app/Master.cpp
     app/Viewer.cpp
     app/VulqanConfig.cpp
 

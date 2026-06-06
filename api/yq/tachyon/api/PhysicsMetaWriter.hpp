@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <yq/physicsvk/api/Kinetic.hpp>
-#include <yq/physicsvk/api/KineticData.hpp>
+#include <yq/tachyon/api/Physics.hpp>
+#include <yq/tachyon/api/PhysicsData.hpp>
 #include <yq/tachyon/api/TachyonMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class KineticMeta::Writer : public TachyonMeta::Writer<C> {
+    class PhysicsMeta::Writer : public TachyonMeta::Writer<C> {
     public:
-        Writer(KineticMeta* kineticInfo) : TachyonMeta::Writer<C>(kineticInfo)
+        Writer(PhysicsMeta* physicsInfo) : TachyonMeta::Writer<C>(physicsInfo)
         {
         }
         
-        Writer(KineticMeta& kineticInfo) : Writer(&kineticInfo)
+        Writer(PhysicsMeta& physicsInfo) : Writer(&physicsInfo)
         {
         }
     };

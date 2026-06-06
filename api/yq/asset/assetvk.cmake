@@ -74,6 +74,8 @@ add_library(${PROJECT_NAME} SHARED
 
     mini/TextLabel.cpp
 
+    physics/NoPhysics.cpp
+
         #   TODO... unify the color/grad in a way that makes sense (and won't be terribly confusing)
 
     rendered/Billboard3.cpp

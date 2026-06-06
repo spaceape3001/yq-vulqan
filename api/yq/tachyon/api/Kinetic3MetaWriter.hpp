@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq/physicsvk/api/Kinetic3.hpp>
-#include <yq/physicsvk/api/Kinetic3Data.hpp>
-#include <yq/physicsvk/api/KineticMetaWriter.hpp>
+#include <yq/tachyon/api/Kinetic3.hpp>
+#include <yq/tachyon/api/Kinetic3Data.hpp>
+#include <yq/tachyon/api/KineticMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

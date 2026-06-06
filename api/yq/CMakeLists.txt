@@ -15,10 +15,10 @@
 add_subdirectory(tachyon)
 
 ##  Physics Stuff
-add_subdirectory(physicsvk)
+# add_subdirectory(physicsvk)
 
 ##  Game stuff
-add_subdirectory(gamevk)
+# add_subdirectory(gamevk)
 
 ##  A simple console (ImGui based)
 add_subdirectory(consolevk)

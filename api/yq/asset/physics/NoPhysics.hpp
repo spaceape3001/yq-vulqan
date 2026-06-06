@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <yq/physicsvk/api/Physics.hpp>
+#include <yq/tachyon/api/Physics.hpp>
 
 namespace yq::tachyon {
     class NoPhysics : public Physics {

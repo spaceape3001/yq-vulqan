@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <yq/physicsvk/api/Domain3.hpp>
-#include <yq/physicsvk/api/Domain3Data.hpp>
-#include <yq/physicsvk/api/DomainMetaWriter.hpp>
+#include <yq/tachyon/api/Domain3.hpp>
+#include <yq/tachyon/api/Domain3Data.hpp>
+#include <yq/tachyon/api/DomainMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>

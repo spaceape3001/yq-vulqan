@@ -9,7 +9,7 @@
 #include <yq/physics/state/DState32.hpp>
 #include <yq/tachyon/api/dim/3DData.hpp>
 #include <yq/tachyon/api/TachyonData.hpp>
-#include <yq/physicsvk/api/KineticData.hpp>
+#include <yq/tachyon/api/KineticData.hpp>
 #include <yq/tachyon/typedef/kinetic3.hpp>
 #include <yq/tensor/Tensor44.hpp>
 

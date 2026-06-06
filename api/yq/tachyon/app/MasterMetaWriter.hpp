@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <yq/gamevk/app/Master.hpp>
-#include <yq/gamevk/app/MasterData.hpp>
+#include <yq/tachyon/app/Master.hpp>
+#include <yq/tachyon/app/MasterData.hpp>
 #include <yq/tachyon/api/ManagerMetaWriter.hpp>
 
 namespace yq::tachyon {

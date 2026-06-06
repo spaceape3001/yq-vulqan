@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <yq/tachyon/api/ModelData.hpp>
+#include <yq/tachyon/entity/CollisionData.hpp>
 #include <yq/tachyon/typedef/moment3.hpp>
 #include <yq/vector/Vector3.hpp>
 #include <yq/units.hpp>
 
 namespace yq::tachyon {
-    struct Moment³Snap : public ModelSnap {
-        Moment³Snap();
-        ~Moment³Snap();
+    struct Collision³Snap : public CollisionSnap {
+        Collision³Snap();
+        ~Collision³Snap();
     };
     
-    struct Moment³Data : public ModelData {
-        Moment³Data();
-        ~Moment³Data();
+    struct Collision³Data : public CollisionData {
+        Collision³Data();
+        ~Collision³Data();
     };
 }

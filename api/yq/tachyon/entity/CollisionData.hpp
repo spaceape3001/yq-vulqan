@@ -10,9 +10,9 @@
 #include <yq/tachyon/typedef/collision.hpp>
 
 namespace yq::tachyon {
-    struct CollisionSnap : public TachyonSnap {
+    struct CollisionSnap : public ModelSnap {
     };
     
-    struct CollisionData : public TachyonData {
+    struct CollisionData : public ModelData {
     };
 }

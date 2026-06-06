@@ -25,8 +25,8 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    CollisionMeta::CollisionMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
-        TachyonMeta(name, base, sl)
+    CollisionMeta::CollisionMeta(std::string_view name, ModelMeta& base, const std::source_location& sl) : 
+        ModelMeta(name, base, sl)
     {
         set(Type::Collision);
         repo().all.push_back(this);
@@ -35,7 +35,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Collision::Collision(const Param& p) : Tachyon(p)
+    Collision::Collision(const Param& p) : Model(p)
     {
     }
 
@@ -46,7 +46,7 @@ namespace yq::tachyon {
 
     void Collision::snap(CollisionSnap& sn) const
     {
-        Tachyon::snap(sn);
+        Model::snap(sn);
     }
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

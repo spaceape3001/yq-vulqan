@@ -46,6 +46,8 @@ namespace yq::tachyon {
     YQ_TYPETYPE(Acceleration³)
     YQ_TYPETYPE(Camera)
     YQ_TYPETYPE(Camera³)
+    YQ_TYPETYPE(Collision)
+    YQ_TYPETYPE(Collision³)
     YQ_TYPETYPE(Controller)
     YQ_TYPETYPE(Cursor)
     YQ_TYPETYPE(Desktop)

@@ -6,15 +6,15 @@
 
 #pragma once
 
-#include <yq/tachyon/model/Collision.hpp>
-#include <yq/tachyon/model/CollisionData.hpp>
+#include <yq/tachyon/entity/Collision.hpp>
+#include <yq/tachyon/entity/CollisionData.hpp>
 #include <yq/tachyon/api/ModelMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class CollisionMeta::Writer : public TachyonMeta::Writer<C> {
+    class CollisionMeta::Writer : public ModelMeta::Writer<C> {
     public:
-        Writer(CollisionMeta* collisionInfo) : TachyonMeta::Writer<C>(collisionInfo)
+        Writer(CollisionMeta* collisionInfo) : ModelMeta::Writer<C>(collisionInfo)
         {
         }
         

@@ -17,7 +17,7 @@ namespace yq::tachyon {
     
         Information for collision shapes/models.
     */
-    class CollisionMeta : public TachyonMeta {
+    class CollisionMeta : public ModelMeta {
     public:
         template <typename C> struct Writer;
 
@@ -25,7 +25,7 @@ namespace yq::tachyon {
         static const std::vector<const CollisionMeta*>&    all();
         
         //! Standard constructor for the camera information
-        CollisionMeta(std::string_view, TachyonMeta&, const std::source_location& sl = std::source_location::current());
+        CollisionMeta(std::string_view, ModelMeta&, const std::source_location& sl = std::source_location::current());
     private:
     
         // This *may* go into toolbox... some common "dynamic creation kit"
@@ -42,11 +42,11 @@ namespace yq::tachyon {
     
         Want to be contained by walls/floor/gravity... this is the thing
     */
-    class Collision : public Tachyon {
+    class Collision : public Model {
         YQ_TACHYON_META(CollisionMeta);
         YQ_TACHYON_DATA(CollisionData)
         YQ_TACHYON_SNAP(CollisionSnap)
-        YQ_TACHYON_DECLARE(Collision, Tachyon)
+        YQ_TACHYON_DECLARE(Collision, Model)
     public:    
     
         static constexpr const Type kType   = Type::Collision;

@@ -25,8 +25,8 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    Moment³Meta::Moment³Meta(std::string_view name, MomentMeta& base, const std::source_location& sl) : 
-        MomentMeta(name, base, sl)
+    Moment³Meta::Moment³Meta(std::string_view name, ModelMeta& base, const std::source_location& sl) : 
+        ModelMeta(name, base, sl)
     {
         set(Type::Moment³);
         repo().all.push_back(this);
@@ -45,7 +45,7 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Moment³::Moment³(const Param& p) : Moment(p)
+    Moment³::Moment³(const Param& p) : Model(p)
     {
     }
 
@@ -55,12 +55,12 @@ namespace yq::tachyon {
 
     void Moment³::finalize(Moment³Data&d) const
     {
-        Moment::finalize(d);
+        Model::finalize(d);
     }
 
     void Moment³::snap(Moment³Snap& sn) const
     {
-        Moment::snap(sn);
+        Model::snap(sn);
     }
 
 

@@ -59,6 +59,7 @@ namespace yq::tachyon {
         
         //! Default destructor
         ~Moment³();
+        
     };
 
 }

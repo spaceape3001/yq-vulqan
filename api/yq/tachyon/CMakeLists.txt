@@ -247,11 +247,14 @@ add_library(${PROJECT_NAME} SHARED
     
     data/Vertex3.cpp
     
+    entity/Collision.cpp
+    entity/Collision3.cpp
     entity/Entity.cpp
     entity/Entity3.cpp
     entity/Kinetic.cpp
     entity/Kinetic3.cpp
     entity/Mass.cpp
+    entity/Moment3.cpp
 
     enum/UIFlags.cpp
 

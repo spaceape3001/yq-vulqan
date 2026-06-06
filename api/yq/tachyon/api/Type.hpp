@@ -21,6 +21,7 @@ namespace yq::tachyon {
         Camera,
         Camera³,
         Collision,
+        Collision³,
         Controller,
         Cursor,
         Desktop,

@@ -313,8 +313,8 @@ add_library(${PROJECT_NAME} SHARED
     
     message/EmptyMessage.cpp
 
-    model/Acceleration3.cpp
-    model/Force3.cpp
+    physics/Acceleration3.cpp
+    physics/Force3.cpp
 
     pipeline/Buffer.cpp
     pipeline/Pipeline.cpp

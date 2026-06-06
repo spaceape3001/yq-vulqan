@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <yq/tachyon/model/Force3.hpp>
-#include <yq/tachyon/model/Force3Data.hpp>
+#include <yq/tachyon/physics/Acceleration3.hpp>
+#include <yq/tachyon/physics/Acceleration3Data.hpp>
 #include <yq/tachyon/api/PhysicsMetaWriter.hpp>
 
 namespace yq::tachyon {
     template <typename C>
-    class Force³Meta::Writer : public PhysicsMeta::Writer<C> {
+    class Acceleration³Meta::Writer : public PhysicsMeta::Writer<C> {
     public:
-        Writer(Force³Meta* myInfo) : PhysicsMeta::Writer<C>(myInfo)
+        Writer(Acceleration³Meta* myInfo) : PhysicsMeta::Writer<C>(myInfo)
         {
         }
         
-        Writer(Force³Meta& myInfo) : Writer(&myInfo)
+        Writer(Acceleration³Meta& myInfo) : Writer(&myInfo)
         {
         }
     };

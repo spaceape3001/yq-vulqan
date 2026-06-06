@@ -72,6 +72,8 @@ add_library(${PROJECT_NAME} SHARED
     
     light/AmbientLight.cpp
 
+    mass/FixedMass.cpp
+
     menu/CreateMenuUI.cpp
 
     mini/TextLabel.cpp

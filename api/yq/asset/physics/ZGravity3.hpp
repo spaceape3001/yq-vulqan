@@ -5,8 +5,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <yq/tachyon/model/Acceleration3.hpp>
-#include <yq/tachyon/model/Acceleration3Data.hpp>
+#include <yq/tachyon/physics/Acceleration3.hpp>
+#include <yq/tachyon/physics/Acceleration3Data.hpp>
 
 namespace yq::tachyon {
     struct ZGravity³Snap : public Acceleration³Snap {

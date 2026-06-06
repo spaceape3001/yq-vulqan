@@ -37,6 +37,8 @@ add_library(${PROJECT_NAME} SHARED
     xrs/MCamera.hpp
     xrs/MCamera3.cpp
     xrs/MCamera3.hpp
+    xrs/MCollision.cpp
+    xrs/MCollision.hpp
     xrs/MCompositeWidget.cpp
     xrs/MCompositeWidget.hpp
     xrs/MController.cpp

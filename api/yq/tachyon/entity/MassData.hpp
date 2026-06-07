@@ -12,10 +12,23 @@
 #include <yq/units.hpp>
 
 namespace yq::tachyon {
-    struct MassSnap : public ModelSnap {
+    class MassSnap : public ModelSnap {
+        YQ_OBJECT_DECLARE(MassSnap, ModelSnap)
+    public:
+    
         Kilogram        mass{};
+        
+        MassSnap();
+        virtual ~MassSnap();
+        static void init_meta();
     };
     
-    struct MassData : public ModelData {
+    class MassData : public ModelData {
+        YQ_OBJECT_DECLARE(MassData, ModelData)
+    public:
+
+        MassData();
+        virtual ~MassData();
+        static void init_meta();
     };
 }

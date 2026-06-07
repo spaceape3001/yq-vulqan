@@ -32,6 +32,27 @@ namespace yq::tachyon {
         repo().all.push_back(this);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    CollisionData::CollisionData() = default;
+    CollisionData::~CollisionData() = default; 
+
+    void CollisionData::init_meta()
+    {
+        auto w = writer<CollisionData>();
+        w.description("Collision Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    CollisionSnap::CollisionSnap() = default;
+    CollisionSnap::~CollisionSnap() = default; 
+
+    void CollisionSnap::init_meta()
+    {
+        auto w = writer<CollisionSnap>();
+        w.description("Collision Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -68,3 +89,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Collision)
 YQ_TYPE_IMPLEMENT(yq::tachyon::CollisionID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::CollisionData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::CollisionSnap)

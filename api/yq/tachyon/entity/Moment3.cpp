@@ -37,11 +37,22 @@ namespace yq::tachyon {
     Moment³Data::Moment³Data() = default;
     Moment³Data::~Moment³Data() = default;
 
+    void Moment³Data::init_meta()
+    {
+        auto w = writer<Moment³Data>();
+        w.description("Moment³ Frame Data");
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Moment³Snap::Moment³Snap() = default;
     Moment³Snap::~Moment³Snap() = default;
 
+    void Moment³Snap::init_meta()
+    {
+        auto w = writer<Moment³Snap>();
+        w.description("Moment³ Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -81,3 +92,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Moment³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Moment³ID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Moment³Data)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Moment³Snap)

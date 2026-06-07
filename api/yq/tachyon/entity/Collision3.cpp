@@ -37,11 +37,22 @@ namespace yq::tachyon {
     Collision³Data::Collision³Data() = default;
     Collision³Data::~Collision³Data() = default;
 
+    void Collision³Data::init_meta()
+    {
+        auto w = writer<Collision³Data>();
+        w.description("Collision³ Frame Data");
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Collision³Snap::Collision³Snap() = default;
     Collision³Snap::~Collision³Snap() = default;
 
+    void Collision³Snap::init_meta()
+    {
+        auto w = writer<Collision³Snap>();
+        w.description("Collision³ Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -81,3 +92,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Collision³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Collision³ID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Collision³Data)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Collision³Snap)

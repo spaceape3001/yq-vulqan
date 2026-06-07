@@ -10,9 +10,21 @@
 #include <yq/tachyon/typedef/entity.hpp>
 
 namespace yq::tachyon {
-    struct EntitySnap : public ModelSnap {
+    class EntitySnap : public ModelSnap {
+        YQ_OBJECT_DECLARE(EntitySnap, ModelSnap)
+    public:
+    
+        EntitySnap();
+        virtual ~EntitySnap();
+        static void init_meta();
     };
     
-    struct EntityData : public ModelData {
+    class EntityData : public ModelData {
+        YQ_OBJECT_DECLARE(EntityData, ModelData)
+    public:
+
+        EntityData();
+        virtual ~EntityData();
+        static void init_meta();
     };
 }

@@ -9,8 +9,10 @@
 #include "MassMetaWriter.hpp"
 #include <yq/meta/Init.hpp>
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Mass);
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Mass)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MassID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MassData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MassSnap)
 
 namespace yq::tachyon {
 
@@ -23,7 +25,30 @@ namespace yq::tachyon {
     MassMeta::~MassMeta()
     {
     }
+
+    /////////////////////////////////////
     
+    MassData::MassData() = default;
+    MassData::~MassData() = default;
+    
+    void MassData::init_meta()
+    {
+        auto w = writer<MassData>();
+        w.description("Mass Frame Data");
+    }
+
+    /////////////////////////////////////
+    
+    MassSnap::MassSnap() = default;
+    MassSnap::~MassSnap() = default;
+    
+    void MassSnap::init_meta()
+    {
+        auto w = writer<MassSnap>();
+        w.description("Mass Snapshot");
+    }
+
+    /////////////////////////////////////
 
     Mass::Mass(const Param&p) : Model(p)
     {

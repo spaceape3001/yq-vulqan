@@ -12,13 +12,19 @@
 #include <yq/units.hpp>
 
 namespace yq::tachyon {
-    struct Collision³Snap : public CollisionSnap {
+    class Collision³Snap : public CollisionSnap {
+        YQ_OBJECT_DECLARE(Collision³Snap, CollisionSnap)
+    public:
         Collision³Snap();
-        ~Collision³Snap();
+        virtual ~Collision³Snap();
+        static void init_meta();
     };
     
-    struct Collision³Data : public CollisionData {
+    class Collision³Data : public CollisionData {
+        YQ_OBJECT_DECLARE(Collision³Data, CollisionData)
+    public:
         Collision³Data();
         ~Collision³Data();
+        static void init_meta();
     };
 }

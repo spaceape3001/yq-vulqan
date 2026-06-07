@@ -12,18 +12,25 @@
 #include <yq/tachyon/typedef/moment3.hpp>
 
 namespace yq::tachyon {
-    struct Entity³Snap : public EntitySnap {
+    class Entity³Snap : public EntitySnap {
+        YQ_OBJECT_DECLARE(Entity³Snap, EntitySnap)
+    public:
     
-        Collision³ID    collision;
-        Kinetic³ID      kinetic;
-        Moment³ID       moment;
+        TypedID         collision;
+        TypedID         kinetic;
+        TypedID         moment;
     
         Entity³Snap();
-        ~Entity³Snap();
+        virtual ~Entity³Snap();
+        static void init_meta();
     };
     
-    struct Entity³Data : public EntityData {
+    class Entity³Data : public EntityData {
+        YQ_OBJECT_DECLARE(Entity³Data, EntityData)
+    public:
+    
         Entity³Data();
-        ~Entity³Data();
+        virtual ~Entity³Data();
+        static void init_meta();
     };
 }

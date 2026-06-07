@@ -33,6 +33,27 @@ namespace yq::tachyon {
         repo().all.push_back(this);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    EntityData::EntityData() = default;
+    EntityData::~EntityData() = default;
+    
+    void EntityData::init_meta()
+    {
+        auto w = writer<EntityData>();
+        w.description("Entity Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    EntitySnap::EntitySnap() = default;
+    EntitySnap::~EntitySnap() = default;
+    
+    void EntitySnap::init_meta()
+    {
+        auto w = writer<EntitySnap>();
+        w.description("Entity Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -69,3 +90,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Entity)
 YQ_TYPE_IMPLEMENT(yq::tachyon::EntityID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::EntityData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::EntitySnap)

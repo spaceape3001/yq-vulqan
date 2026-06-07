@@ -13,11 +13,23 @@
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {
-    struct Kinetic³Snap : public KineticSnap, public ③Snap {
+    class Kinetic³Snap : public KineticSnap, public ③Snap {
+        YQ_OBJECT_DECLARE(Kinetic³Snap, KineticSnap)
+    public:
         physics::DState32       state;
+        
+        Kinetic³Snap();
+        virtual ~Kinetic³Snap();
+        static void init_meta();
     };
     
-    struct Kinetic³Data : public KineticData, public ③Data {
+    class Kinetic³Data : public KineticData, public ③Data {
+        YQ_OBJECT_DECLARE(Kinetic³Data, KineticData)
+    public:
+    
+        Kinetic³Data();
+        virtual ~Kinetic³Data();
+        static void init_meta();
     };
 }
 

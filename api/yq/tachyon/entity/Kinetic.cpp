@@ -27,18 +27,37 @@ namespace yq::tachyon {
         return repo().all;
     }
 
-    KineticMeta::KineticMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) : 
-        TachyonMeta(name, base, sl)
+    KineticMeta::KineticMeta(std::string_view name, ModelMeta& base, const std::source_location& sl) : 
+        ModelMeta(name, base, sl)
     {
         set(Flag::KINETIC);
         set(Type::Kinetic);
         repo().all.push_back(this);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    KineticData::KineticData() = default;
+    KineticData::~KineticData() = default;
+
+    void KineticData::init_meta()
+    {
+        auto w = writer<KineticData>();
+        w.description("Kinetic Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    KineticSnap::KineticSnap() = default;
+    KineticSnap::~KineticSnap() = default;
+
+    void KineticSnap::init_meta()
+    {
+        auto w = writer<KineticSnap>();
+        w.description("Kinetic Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Kinetic::Kinetic(const Param& p) : Tachyon(p)
+    Kinetic::Kinetic(const Param& p) : Model(p)
     {
     }
 
@@ -75,3 +94,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Kinetic)
 YQ_TYPE_IMPLEMENT(yq::tachyon::KineticID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::KineticData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::KineticSnap)

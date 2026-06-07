@@ -10,9 +10,19 @@
 #include <yq/tachyon/typedef/kinetic.hpp>
 
 namespace yq::tachyon {
-    struct KineticSnap : public TachyonSnap {
+    class KineticSnap : public ModelSnap {
+        YQ_OBJECT_DECLARE(KineticSnap, ModelSnap)
+    public:
+        KineticSnap();
+        virtual ~KineticSnap();
+        static void init_meta();
     };
     
-    struct KineticData : public TachyonData {
+    class KineticData : public ModelData {
+        YQ_OBJECT_DECLARE(KineticData, ModelData)
+    public:
+        KineticData();
+        virtual ~KineticData();
+        static void init_meta();
     };
 }

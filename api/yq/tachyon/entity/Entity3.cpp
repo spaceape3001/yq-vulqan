@@ -9,6 +9,9 @@
 #include "Entity3MetaWriter.hpp"
 #include <yq/meta/Init.hpp>
 
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Entity³Data)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Entity³Snap)
+
 namespace yq::tachyon {
     struct Entity³Meta::Repo {
         std::vector<const Entity³Meta*> all;
@@ -37,11 +40,22 @@ namespace yq::tachyon {
     Entity³Data::Entity³Data() = default;
     Entity³Data::~Entity³Data() = default;
 
+    void Entity³Data::init_meta()
+    {
+        auto w = writer<Entity³Data>();
+        w.description("Entity³ Frame Data");
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Entity³Snap::Entity³Snap() = default;
     Entity³Snap::~Entity³Snap() = default;
 
+    void Entity³Snap::init_meta()
+    {
+        auto w = writer<Entity³Snap>();
+        w.description("Entity³ Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

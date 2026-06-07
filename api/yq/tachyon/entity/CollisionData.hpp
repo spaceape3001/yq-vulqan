@@ -10,9 +10,21 @@
 #include <yq/tachyon/typedef/collision.hpp>
 
 namespace yq::tachyon {
-    struct CollisionSnap : public ModelSnap {
+    class CollisionSnap : public ModelSnap {
+        YQ_OBJECT_DECLARE(CollisionSnap, ModelSnap)
+    public:
+    
+        CollisionSnap();
+        virtual ~CollisionSnap();
+        static void init_meta();
     };
     
-    struct CollisionData : public ModelData {
+    class CollisionData : public ModelData {
+        YQ_OBJECT_DECLARE(CollisionData, CollisionData)
+    public:
+        
+        CollisionData();
+        virtual ~CollisionData();
+        static void init_meta();
     };
 }

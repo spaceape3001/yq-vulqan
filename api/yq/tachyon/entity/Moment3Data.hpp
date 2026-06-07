@@ -12,13 +12,19 @@
 #include <yq/units.hpp>
 
 namespace yq::tachyon {
-    struct Moment³Snap : public ModelSnap {
+    class Moment³Snap : public ModelSnap {
+        YQ_OBJECT_DECLARE(Moment³Snap, ModelSnap)
+    public:
         Moment³Snap();
-        ~Moment³Snap();
+        virtual ~Moment³Snap();
+        static void init_meta();
     };
     
-    struct Moment³Data : public ModelData {
+    class Moment³Data : public ModelData {
+        YQ_OBJECT_DECLARE(Moment³Data, ModelData)
+    public:
         Moment³Data();
-        ~Moment³Data();
+        virtual ~Moment³Data();
+        static void init_meta();
     };
 }

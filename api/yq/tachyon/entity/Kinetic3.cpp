@@ -13,6 +13,8 @@
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Kinetic³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Kinetic³ID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Kinetic³Data)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Kinetic³Snap)
 
 namespace yq::tachyon {
     Kinetic³Meta::Kinetic³Meta(std::string_view name, KineticMeta& base, const std::source_location& sl) :
@@ -24,7 +26,30 @@ namespace yq::tachyon {
     Kinetic³Meta::~Kinetic³Meta()
     {
     }
-    
+
+    ////////////////////////////////////
+
+    Kinetic³Data::Kinetic³Data() = default;
+    Kinetic³Data::~Kinetic³Data() = default;
+
+    void Kinetic³Data::init_meta()
+    {
+        auto w = writer<Kinetic³Data>();
+        w.description("Kinetic³ Frame Data");
+    }
+
+    ////////////////////////////////////
+
+    Kinetic³Snap::Kinetic³Snap() = default;
+    Kinetic³Snap::~Kinetic³Snap() = default;
+
+    void Kinetic³Snap::init_meta()
+    {
+        auto w = writer<Kinetic³Snap>();
+        w.description("Kinetic³ Snapshot");
+    }
+        
+    ////////////////////////////////////
 
     Kinetic³::Kinetic³(const Param& p) : Kinetic(p)
     {

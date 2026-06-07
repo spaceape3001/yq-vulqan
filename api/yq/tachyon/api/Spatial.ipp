@@ -13,6 +13,8 @@
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Spatial)
 YQ_TYPE_IMPLEMENT(yq::tachyon::SpatialID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SpatialData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SpatialSnap)
 
 namespace yq::tachyon {
     struct SpatialMeta::Repo {
@@ -40,6 +42,28 @@ namespace yq::tachyon {
 
     SpatialMeta::~SpatialMeta()
     {
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    SpatialData::SpatialData() = default;
+    SpatialData::~SpatialData() = default;
+    
+    void SpatialData::init_meta()
+    {
+        auto w = writer<SpatialData>();
+        w.description("Spatial Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    SpatialSnap::SpatialSnap() = default;
+    SpatialSnap::~SpatialSnap() = default;
+    
+    void SpatialSnap::init_meta()
+    {
+        auto w = writer<SpatialSnap>();
+        w.description("Spatial Snapshot");
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

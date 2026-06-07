@@ -25,19 +25,28 @@ namespace yq::tachyon {
         TachyonThreadState  state = TachyonThreadState::Normal;
     };
 
-    struct ThreadSnap : public TachyonSnap {
+    class ThreadSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(ThreadSnap, TachyonSnap)
+    public:
         bool        paused      = false;
         double      overclock   = 0.;
+        
+        ThreadSnap();
         virtual ~ThreadSnap();
+        static void init_meta();
     };
     
-    struct ThreadData : public TachyonData {
+    class ThreadData : public TachyonData {
+        YQ_OBJECT_DECLARE(ThreadData, TachyonData)
+    public:
         std::vector<TachyonFrame>       tachyons;       //! Tachyons
         std::set<TachyonID>             created, arrived, left, deleted;
         //unit::Second                    duration;       //! Time to process
         unit::Second                    time;
         
+        ThreadData();
         virtual ~ThreadData();
+        static void init_meta();
     };
 
     struct ThreadFrame {

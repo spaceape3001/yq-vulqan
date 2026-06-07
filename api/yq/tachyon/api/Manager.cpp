@@ -13,6 +13,12 @@ namespace yq::tachyon {
     ManagerData::ManagerData() = default;
     ManagerData::~ManagerData() = default;
 
+    void ManagerData::init_meta()
+    {
+        auto w = writer<ManagerData>();
+        w.description("Manager Frame Data");
+    }
+
     /////////////////////////////////////////////////////////////////////////////
 
     ManagerMeta::ManagerMeta(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
@@ -26,6 +32,12 @@ namespace yq::tachyon {
 
     ManagerSnap::ManagerSnap() = default;
     ManagerSnap::~ManagerSnap() = default;
+    
+    void ManagerSnap::init_meta()
+    {
+        auto w = writer<ManagerSnap>();
+        w.description("Manager Snapshot");
+    }
 
     /////////////////////////////////////////////////////////////////////////////
 
@@ -52,3 +64,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Manager)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ManagerID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::ManagerData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::ManagerSnap)

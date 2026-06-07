@@ -43,3 +43,5 @@ namespace yq::tachyon {
         
     };
 }
+
+YQ_TYPE_DECLARE(yq::tachyon::MasterID)

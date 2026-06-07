@@ -67,8 +67,14 @@ namespace yq::tachyon {
 
 // ------------------------------------------------------------------------
 
-    ThreadData::~ThreadData()
+    ThreadData::ThreadData() = default;
+    ThreadData::~ThreadData() = default;
+
+    void ThreadData::init_meta()
     {
+        auto w = writer<ThreadData>();
+        w.description("Thread Frame Data");
+        w.property("time", READ_ONLY, &ThreadData::time);
     }
 
 // ------------------------------------------------------------------------
@@ -80,8 +86,15 @@ namespace yq::tachyon {
 
 // ------------------------------------------------------------------------
 
-    ThreadSnap::~ThreadSnap()
+    ThreadSnap::ThreadSnap() = default;
+    ThreadSnap::~ThreadSnap() = default;
+
+    void ThreadSnap::init_meta()
     {
+        auto w = writer<ThreadSnap>();
+        w.description("Thread Snapshot");
+        w.property("paused", READ_ONLY, &ThreadSnap::paused);
+        w.property("overclock", READ_ONLY, &ThreadSnap::overclock);
     }
 
 // ------------------------------------------------------------------------
@@ -760,3 +773,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Thread)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ThreadID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::ThreadData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::ThreadSnap)

@@ -13,8 +13,25 @@
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
+    Rendered²Data::Rendered²Data() = default;
+    Rendered²Data::~Rendered²Data() = default;
+
+    void Rendered²Data::init_meta()
+    {
+        auto w = writer<Rendered²Data>();
+        w.description("Rendered² Frame Data");
+    }
+    
+    /////////////////////////////////////////////////////////////////////////////
+
     Rendered²Snap::Rendered²Snap() = default;
     Rendered²Snap::~Rendered²Snap() = default;
+
+    void Rendered²Snap::init_meta()
+    {
+        auto w = writer<Rendered²Snap>();
+        w.description("Rendered² Snapshot");
+    }
 
     /////////////////////////////////////////////////////////////////////////////
 
@@ -87,3 +104,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Rendered²)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Rendered²ID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Rendered²Data)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Rendered²Snap)

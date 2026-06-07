@@ -61,6 +61,8 @@
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Widget)
 YQ_TYPE_IMPLEMENT(yq::tachyon::WidgetID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::WidgetData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::WidgetSnap)
 
 namespace yq::tachyon {
     WidgetMeta::WidgetMeta(std::string_view zName, TachyonMeta& base, const std::source_location& sl) :
@@ -72,14 +74,25 @@ namespace yq::tachyon {
     
     /////////////////////////
     
-    WidgetData::~WidgetData()
+    WidgetData::WidgetData() = default;
+    WidgetData::~WidgetData() = default;
+
+    void WidgetData::init_meta()
     {
+        auto w = writer<WidgetData>();
+        w.description("Widget Frame Data");
     }
 
     /////////////////////////
 
-    WidgetSnap::~WidgetSnap()
+    WidgetSnap::WidgetSnap() = default;
+    WidgetSnap::~WidgetSnap() = default;
+
+    void WidgetSnap::init_meta()
     {
+        auto w = writer<WidgetSnap>();
+        w.description("Widget Snapshot");
+        w.property("viewer", READ_ONLY, &WidgetSnap::viewer);
     }
 
 

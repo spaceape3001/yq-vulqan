@@ -10,8 +10,10 @@
 #include "DomainMetaWriter.hpp"
 #include <yq/meta/Init.hpp>
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Domain);
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Domain)
 YQ_TYPE_IMPLEMENT(yq::tachyon::DomainID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::DomainData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::DomainSnap)
 
 namespace yq::tachyon {
 
@@ -75,11 +77,21 @@ namespace yq::tachyon {
     ///////////////////////////////////////
     DomainData::DomainData() = default;
     DomainData::~DomainData() = default;
+    void DomainData::init_meta()
+    {
+        auto w = writer<DomainData>();
+        w.description("Domain Frame Data");
+    }
 
     ///////////////////////////////////////
 
     DomainSnap::DomainSnap() = default;
     DomainSnap::~DomainSnap() = default;
+    void DomainSnap::init_meta()
+    {
+        auto w = writer<DomainSnap>();
+        w.description("Domain Snapshot");
+    }
 }
 
 

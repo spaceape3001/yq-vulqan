@@ -15,6 +15,8 @@
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Camera³ID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Camera³Data)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Camera³Snap)
 
 namespace yq::tachyon {
     Camera³Meta::Camera³Meta(std::string_view name, CameraMeta& base, const std::source_location& sl) :
@@ -26,12 +28,36 @@ namespace yq::tachyon {
     Camera³Meta::~Camera³Meta()
     {
     }
+
+    /////////////////////////////////////////////////////////////////////////////
+
+    Camera³Data::Camera³Data() = default;
+    Camera³Data::~Camera³Data() = default;
+    
+    void Camera³Data::init_meta()
+    {
+        auto w = writer<Camera³Data>();
+        w.description("Camera³ Frame Data");
+    }
+    
+    /////////////////////////////////////////////////////////////////////////////
+
+    Camera³Snap::Camera³Snap() = default;
+    Camera³Snap::~Camera³Snap() = default;
+    
+    void Camera³Snap::init_meta()
+    {
+        auto w = writer<Camera³Snap>();
+        w.description("Camera³ Snapshot");
+        w.property("view", READ_ONLY, &Camera³Snap::view);
+        w.property("projection", READ_ONLY, &Camera³Snap::projection);
+        w.property("screen", READ_ONLY, &Camera³Snap::screen);
+    }
     
     /////////////////////////////////////////////////////////////////////////////
 
     Camera³::Camera³(const Param& p) : Camera(p)
     {
-        
         //  total hack (for now)
         m_screen.size.x = 1920;
         m_screen.size.y = 1080;

@@ -17,7 +17,9 @@
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {
-    struct Rendered²Snap : public RenderedSnap, public ②Snap {
+    class Rendered²Snap : public RenderedSnap, public ②Snap {
+        YQ_OBJECT_DECLARE(Rendered²Snap, RenderedSnap)
+    public:
     
         //  TBD....
         Tensor44D       vm_tensor       = NAN;
@@ -29,9 +31,16 @@ namespace yq::tachyon {
         bool            vm_override     = false;
 
         Rendered²Snap();
-        ~Rendered²Snap();
+        virtual ~Rendered²Snap();
+        static void init_meta();
     };
     
-    struct Rendered²Data : public RenderedData, public ②Data {
+    class Rendered²Data : public RenderedData, public ②Data {
+        YQ_OBJECT_DECLARE(Rendered²Data, RenderedData)
+    public:
+        
+        Rendered²Data();
+        virtual ~Rendered²Data();
+        static void init_meta();
     };
 }

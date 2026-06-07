@@ -13,17 +13,24 @@
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {
-    struct Scene³Snap : public SceneSnap, public ③Snap {
+    class Scene³Snap : public SceneSnap, public ③Snap {
+        YQ_OBJECT_DECLARE(Scene³Snap, SceneSnap)
+    public:
         
         //  Move the mapping functions here...
 
         Scene³Snap();
         virtual ~Scene³Snap();
+        
+        static void init_meta();
     };
     
-    struct Scene³Data : public SceneData, public ③Data {
+    class Scene³Data : public SceneData, public ③Data {
+        YQ_OBJECT_DECLARE(Scene³Data, SceneData)
+    public:
         Scene³Data();
         virtual ~Scene³Data();
+        static void init_meta();
     };
 }
 

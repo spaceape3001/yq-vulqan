@@ -13,7 +13,9 @@
 #include <yq/tachyon/typedef/physics.hpp>
 
 namespace yq::tachyon {
-    struct DomainSnap : public TachyonSnap {
+    class DomainSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(DomainSnap, TachyonSnap)
+    public:
         //  parent domain
         //std::vector<TypedID>    cameras;
         //std::vector<TypedID>    lights;
@@ -27,10 +29,14 @@ namespace yq::tachyon {
         
         DomainSnap();
         virtual ~DomainSnap();
+        static void init_meta();
     };
     
-    struct DomainData : public TachyonData {
+    class DomainData : public TachyonData {
+        YQ_OBJECT_DECLARE(DomainData, DomainSnap)
+    public:
         DomainData();
         virtual ~DomainData();
+        static void init_meta();
     };
 }

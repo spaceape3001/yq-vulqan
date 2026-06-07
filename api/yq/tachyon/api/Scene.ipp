@@ -13,6 +13,8 @@
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene);
 YQ_TYPE_IMPLEMENT(yq::tachyon::SceneID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SceneData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::SceneSnap)
 
 namespace yq::tachyon {
 
@@ -41,7 +43,31 @@ namespace yq::tachyon {
     SceneMeta::~SceneMeta()
     {
     }
+
+    ///////////////////////////////////
+
+    SceneData::SceneData() = default;
+    SceneData::~SceneData() = default;
     
+    void SceneData::init_meta()
+    {
+        auto w = writer<SceneData>();
+        w.description("Scene Frame Data");
+    }
+
+    ///////////////////////////////////
+
+    SceneSnap::SceneSnap() = default;
+    SceneSnap::~SceneSnap() = default;
+    
+    void SceneSnap::init_meta()
+    {
+        auto w = writer<SceneSnap>();
+        w.description("Scene Snapshot");
+        w.property("bgcolor", &SceneSnap::bgcolor);
+    }
+    
+    ///////////////////////////////////
 
     Scene::Scene(const Param&p) : Tachyon(p)
     {
@@ -80,7 +106,7 @@ namespace yq::tachyon {
     {
         auto w = writer<Scene>();
         w.description("Scene");
-        w.property("bgcolor", &Scene::bgcolor).setter(&Scene::set_bgcolor).tag(kTag_Save);
+        w.property("bgcolor", &Scene::bgcolor).setter(&Scene::set_bgcolor).tag(kTag_Save).tag(kTag_Log);
         w.slot(&Scene::on_set_bg_color);
 
         auto wt = writer<SceneID>();

@@ -48,12 +48,25 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    PhysicsSnap::PhysicsSnap()
+    PhysicsData::PhysicsData() = default;
+    PhysicsData::~PhysicsData() = default;
+
+    void PhysicsData::init_meta()
     {
+        auto w = writer<PhysicsData>(); 
+        w.description("Physics Frame Data");
     }
     
-    PhysicsSnap::~PhysicsSnap()
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    PhysicsSnap::PhysicsSnap() = default;
+    PhysicsSnap::~PhysicsSnap() = default;
+
+    void PhysicsSnap::init_meta()
     {
+        auto w = writer<PhysicsSnap>();
+        w.description("Physics Snapshot");
+        w.property("enabled", &PhysicsSnap::enabled);
     }
 
     //MeterPerSecond²3D PhysicsSnap::gravity(const Meter3D& pt) const
@@ -139,3 +152,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Physics)
 YQ_TYPE_IMPLEMENT(yq::tachyon::PhysicsID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::PhysicsData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::PhysicsSnap)

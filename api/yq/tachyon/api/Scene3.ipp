@@ -13,11 +13,20 @@
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Scene³ID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Scene³Data)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Scene³Snap)
 
 namespace yq::tachyon {
 
     Scene³Data::Scene³Data() = default;
     Scene³Data::~Scene³Data() = default;
+
+    void Scene³Data::init_meta()
+    {
+        auto w = writer<Scene³Data>();
+        w.description("Scene³ Frame Data");
+    }
+
 
     /////////////////////////////////////////////////////////////////////////////
 
@@ -35,6 +44,12 @@ namespace yq::tachyon {
 
     Scene³Snap::Scene³Snap() = default;
     Scene³Snap::~Scene³Snap() = default;
+
+    void Scene³Snap::init_meta()
+    {
+        auto w = writer<Scene³Snap>();
+        w.description("Scene³ Snapshot");
+    }
 
     /////////////////////////////////////////////////////////////////////////////
 

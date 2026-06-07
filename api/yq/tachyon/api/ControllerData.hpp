@@ -10,17 +10,23 @@
 #include <yq/tachyon/typedef/controller.hpp>
 
 namespace yq::tachyon {
-    struct ControllerSnap : public TachyonSnap {
+    class ControllerSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(ControllerSnap, ControllerSnap)
+    public:
         std::set<TypedID>       controlled;
         std::set<TypedID>       listening;
         bool                    enabled = false;
         
         ControllerSnap();
         virtual ~ControllerSnap();
+        static void init_meta();
     };
     
-    struct ControllerData : public TachyonData {
+    class ControllerData : public TachyonData {
+        YQ_OBJECT_DECLARE(ControllerData, ControllerSnap)
+    public:
         ControllerData();
         virtual ~ControllerData();
+        static void init_meta();
     };
 }

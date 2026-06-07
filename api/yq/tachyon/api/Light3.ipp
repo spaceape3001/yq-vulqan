@@ -13,6 +13,8 @@
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Light³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Light³ID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Light³Data)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Light³Snap)
 
 namespace yq::tachyon {
     Light³Meta::Light³Meta(std::string_view name, LightMeta& base, const std::source_location& sl) :
@@ -25,7 +27,30 @@ namespace yq::tachyon {
     {
     }
     
+    ////////////////////////////
 
+    Light³Data::Light³Data() = default;
+    Light³Data::~Light³Data() = default;
+    
+    void Light³Data::init_meta()
+    {
+        auto w = writer<Light³Data>();
+        w.description("Light Frame Data");
+    }
+
+    ////////////////////////////
+
+    Light³Snap::Light³Snap() = default;
+    Light³Snap::~Light³Snap() = default;
+    
+    void Light³Snap::init_meta()
+    {
+        auto w = writer<Light³Snap>();
+        w.description("Light Snapshot");
+    }
+    
+    ///////////////////////
+    
     Light³::Light³(const Param& p) : Light(p)
     {
     }

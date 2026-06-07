@@ -65,6 +65,12 @@ namespace yq::tachyon {
 
 // ------------------------------------------------------------------------
 
+    void TachyonData::init_meta()
+    {
+        auto w = writer<TachyonData>();
+        w.description("Tachyon (Frame) Data");
+    }
+
     TachyonData::TachyonData()
     {
     }
@@ -318,6 +324,16 @@ namespace yq::tachyon {
     }
 
 // ------------------------------------------------------------------------
+
+    void TachyonSnap::init_meta()
+    {
+        auto w = writer<TachyonSnap>();
+        w.description("Tachyon Snapshot");
+        w.property("edit", READ_ONLY, &TachyonSnap::edit_mode);
+        w.property("name", READ_ONLY, &TachyonSnap::name);
+        w.property("revision", READ_ONLY, &TachyonSnap::revision);
+        w.property("time", READ_ONLY, &TachyonSnap::time);
+    }
 
     TachyonSnap::TachyonSnap()
     {
@@ -1684,3 +1700,6 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Tachyon)
 YQ_TYPE_IMPLEMENT(yq::tachyon::TachyonID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::TachyonData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::TachyonSnap)
+

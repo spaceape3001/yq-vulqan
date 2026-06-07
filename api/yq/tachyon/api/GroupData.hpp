@@ -12,10 +12,22 @@
 #include <yq/color/RGBA.hpp>
 
 namespace yq::tachyon {
-    struct GroupSnap : public TachyonSnap {
+    class GroupSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(GroupSnap, TachyonSnap)
+    public:
         int         order = 0;
+        
+        GroupSnap();
+        virtual ~GroupSnap();
+        static void init_meta();
     };
     
-    struct GroupData : public TachyonData {
+    class GroupData : public TachyonData {
+        YQ_OBJECT_DECLARE(GroupData, TachyonData)
+    public:
+    
+        GroupData();
+        virtual ~GroupData();
+        static void init_meta();
     };
 }

@@ -10,9 +10,21 @@
 #include <yq/tachyon/typedef/model.hpp>
 
 namespace yq::tachyon {
-    struct ModelSnap : public TachyonSnap {
+    class ModelSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(ModelSnap, TachyonSnap)
+    public:
+    
+        ModelSnap();
+        virtual ~ModelSnap();
+        
+        static void init_meta();
     };
     
-    struct ModelData : public TachyonData {
+    class ModelData : public TachyonData {
+        YQ_OBJECT_DECLARE(ModelData, TachyonData)
+    public:
+        ModelData();
+        virtual ~ModelData();
+        static void init_meta();
     };
 }

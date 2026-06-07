@@ -12,13 +12,25 @@
 #include <yq/color/RGBA.hpp>
 
 namespace yq::tachyon {
-    struct SceneSnap : public TachyonSnap {
+    class SceneSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(SceneSnap, TachyonSnap)
+    public:
         std::vector<TypedID>    cameras;
         std::vector<TypedID>    lights;
         std::vector<TypedID>    rendereds;
         RGBA4F                  bgcolor = { 0.f, 0.f, 0.f, -1.f };
+        
+        SceneSnap();
+        virtual ~SceneSnap();
+        static void init_meta();
     };
     
-    struct SceneData : public TachyonData {
+    class SceneData : public TachyonData {
+        YQ_OBJECT_DECLARE(SceneData, TachyonData)
+    public:
+
+        SceneData();
+        virtual ~SceneData();
+        static void init_meta();
     };
 }

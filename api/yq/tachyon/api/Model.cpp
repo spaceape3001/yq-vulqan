@@ -33,6 +33,27 @@ namespace yq::tachyon {
         repo().all.push_back(this);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ModelData::ModelData() = default;
+    ModelData::~ModelData() = default;
+
+    void ModelData::init_meta()
+    {
+        auto w = writer<ModelData>();
+        w.description("Model Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ModelSnap::ModelSnap() = default;
+    ModelSnap::~ModelSnap() = default;
+
+    void ModelSnap::init_meta()
+    {
+        auto w = writer<ModelSnap>();
+        w.description("Model Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -69,3 +90,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Model)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ModelID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::ModelData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::ModelSnap)

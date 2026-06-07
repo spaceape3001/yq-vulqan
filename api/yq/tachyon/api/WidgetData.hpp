@@ -11,12 +11,22 @@
 #include <yq/tachyon/typedef/viewer.hpp>
 
 namespace yq::tachyon {
-    struct WidgetSnap : public TachyonSnap {
+    class WidgetSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(WidgetSnap, TachyonSnap)
+    public:
         TypedID         viewer;
+        
+        WidgetSnap();
         virtual ~WidgetSnap();
+        
+        static void init_meta();
     };
     
-    struct WidgetData : public TachyonData {
+    class WidgetData : public TachyonData {
+        YQ_OBJECT_DECLARE(WidgetData, TachyonData)
+    public:
+        WidgetData();
         virtual ~WidgetData();
+        static void init_meta();
     };
 }

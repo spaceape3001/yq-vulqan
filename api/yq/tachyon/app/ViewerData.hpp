@@ -12,13 +12,25 @@
 #include <yq/tachyon/typedef/window.hpp>
 
 namespace yq::tachyon {
-    struct ViewerSnap : public TachyonSnap {
+    class ViewerSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(ViewerSnap, TachyonSnap)
+    public:
         TypedID         window;
         TypedID         widget;
         TypedID         focus;
         //bool            paused  = false;
+
+        ViewerSnap();
+        virtual ~ViewerSnap();
+        static void init_meta();
     };
     
-    struct ViewerData : public TachyonData {
+    class ViewerData : public TachyonData {
+        YQ_OBJECT_DECLARE(ViewerData, TachyonData)
+    public:
+    
+        ViewerData();
+        virtual ~ViewerData();
+        static void init_meta();
     };
 }

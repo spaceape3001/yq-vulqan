@@ -9,10 +9,23 @@
 #include <yq/tachyon/api/LayerMetaWriter.hpp>
 #include <yq/meta/Init.hpp>
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Layer);
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Layer)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LayerID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LayerData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LayerSnap)
 
 namespace yq::tachyon {
+
+    LayerData::LayerData() = default;
+    LayerData::~LayerData() = default;
+    
+    void LayerData::init_meta()
+    {
+        auto w = writer<LayerData>();
+        w.description("Layer Frame Data");
+    }
+    
+    ///////////////////////////////
 
     LayerMeta::LayerMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) :
         TachyonMeta(name, base, sl)
@@ -24,6 +37,18 @@ namespace yq::tachyon {
     {
     }
     
+    ///////////////////////////////
+
+    LayerSnap::LayerSnap() = default;
+    LayerSnap::~LayerSnap() = default;
+    
+    void LayerSnap::init_meta()
+    {
+        auto w = writer<LayerSnap>();
+        w.description("Layer Snapshot");
+    }
+    
+    ///////////////////////////////
 
     Layer::Layer(const Param&p) : Tachyon(p)
     {

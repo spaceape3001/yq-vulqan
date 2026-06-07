@@ -10,13 +10,21 @@
 #include <yq/tachyon/typedef/physics.hpp>
 
 namespace yq::tachyon {
-    struct PhysicsSnap : public ModelSnap {
-        bool    enabled = false;
+    class PhysicsSnap : public ModelSnap {
+        YQ_OBJECT_DECLARE(PhysicsSnap, ModelSnap)
+    public:
+        bool    enabled = false;    //<< thinking about moving this to model/tachyon
 
         PhysicsSnap();
-        ~PhysicsSnap();
+        virtual ~PhysicsSnap();
+        static void init_meta();
     };
     
-    struct PhysicsData : public ModelData {
+    class PhysicsData : public ModelData {
+        YQ_OBJECT_DECLARE(PhysicsData, ModelData);
+    public:
+        PhysicsData();
+        virtual ~PhysicsData();
+        static void init_meta();
     };
 }

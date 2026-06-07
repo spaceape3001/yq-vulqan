@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <yq/core/Object.hpp>
 #include <yq/core/Ref.hpp>
 #include <yq/core/Tristate.hpp>
 #include <yq/unit/MKS.hpp>
@@ -22,7 +23,10 @@
 namespace yq::tachyon {
     class Proxy;
     
-    struct TachyonSnap : public RefCount {
+    class TachyonSnap : public Object, public RefCount {
+        YQ_OBJECT_DECLARE(TachyonSnap, Object)
+    public:
+    
         std::vector<Proxy*>     proxies;
                 
         //! Program attributes
@@ -58,7 +62,7 @@ namespace yq::tachyon {
             return nullptr;
         }
         
-        
+        static void init_meta();
     };
 
     struct InPost {
@@ -77,7 +81,9 @@ namespace yq::tachyon {
         PostCPtr    post;
     };
 
-    struct TachyonData : public RefCount {
+    class TachyonData : public Object, public RefCount {
+        YQ_OBJECT_DECLARE(TachyonData, Object)
+    public:
         std::vector<InPost>     inbound;
         std::vector<OutPost>    outbound;
         uint64_t                tick        = 0ULL;
@@ -86,5 +92,7 @@ namespace yq::tachyon {
         
         TachyonData();
         virtual ~TachyonData();
+
+        static void init_meta();
     };
 }

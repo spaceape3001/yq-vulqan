@@ -13,7 +13,9 @@
 #include <yq/vector/Vector3.hpp>
 
 namespace yq::tachyon {
-    struct LightSnap : public TachyonSnap {
+    class  LightSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(LightSnap, TachyonSnap)
+    public:
     
             // As much as I'd love to have the lights be generic... we have limited GPU bandwidth....
     
@@ -49,8 +51,17 @@ namespace yq::tachyon {
         float       fR2         = 0.;
         
         
+        LightSnap();
+        virtual ~LightSnap();
+        static void init_meta();
     };
     
-    struct LightData : public TachyonData {
+    class LightData : public TachyonData {
+        YQ_OBJECT_DECLARE(LightData, TachyonData)
+    public:
+    
+        LightData();
+        virtual ~LightData();
+        static void init_meta();
     };
 }

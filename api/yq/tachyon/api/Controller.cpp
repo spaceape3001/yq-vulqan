@@ -20,12 +20,20 @@
 #include <yq/tachyon/command/tachyon/UnsubscribeCommand.hpp>
 #include <yq/meta/Init.hpp>
 
-YQ_TACHYON_IMPLEMENT(yq::tachyon::Controller);
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Controller)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ControllerID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::ControllerData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::ControllerSnap)
 
 namespace yq::tachyon {
     ControllerData::ControllerData() = default;
     ControllerData::~ControllerData() = default;
+
+    void ControllerData::init_meta()
+    {
+        auto w = writer<ControllerData>();
+        w.description("Controller Frame Data");
+    }
 
     /////////////////////////////////////////////////////////////////////////////
 
@@ -43,6 +51,13 @@ namespace yq::tachyon {
 
     ControllerSnap::ControllerSnap() = default;
     ControllerSnap::~ControllerSnap() = default;
+    void ControllerSnap::init_meta()
+    {
+        auto w = writer<ControllerSnap>();
+        w.description("Controller Snapshot");
+        w.property("enabled", READ_ONLY, &ControllerSnap::enabled);
+    }
+
 
     /////////////////////////////////////////////////////////////////////////////
 

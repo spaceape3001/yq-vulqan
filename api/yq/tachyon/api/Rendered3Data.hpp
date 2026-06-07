@@ -18,7 +18,10 @@
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {
-    struct Rendered³Snap : public RenderedSnap, public ③Snap {
+    
+    class Rendered³Snap : public RenderedSnap, public ③Snap {
+        YQ_OBJECT_DECLARE(Rendered³Snap, RenderedSnap)
+    public:
         Tensor44D       vm_tensor       = NAN;
         Vector3D        bias{};
         
@@ -34,9 +37,15 @@ namespace yq::tachyon {
 
         Rendered³Snap();
         ~Rendered³Snap();
+        static void init_meta();
     };
     
-    struct Rendered³Data : public RenderedData, public ③Data {
+    class Rendered³Data : public RenderedData, public ③Data {
+        YQ_OBJECT_DECLARE(Rendered³Data, RenderedData)
+    public:
+        Rendered³Data();
+        ~Rendered³Data();
+        static void init_meta();
     };
     
 /*

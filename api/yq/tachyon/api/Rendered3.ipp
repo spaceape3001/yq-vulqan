@@ -14,8 +14,25 @@
 #include <yq/meta/Init.hpp>
 
 namespace yq::tachyon {
+    Rendered³Data::Rendered³Data() = default;
+    Rendered³Data::~Rendered³Data() = default;
+
+    void Rendered³Data::init_meta()
+    {
+        auto w = writer<Rendered³Data>();
+        w.description("Rendered³ Frame Data");
+    }
+
+    /////////////////////////////////////////////////////////////////////////////
+
     Rendered³Snap::Rendered³Snap() = default;
     Rendered³Snap::~Rendered³Snap() = default;
+
+    void Rendered³Snap::init_meta()
+    {
+        auto w = writer<Rendered³Snap>();
+        w.description("Rendered³ Snapshot");
+    }
 
     /////////////////////////////////////////////////////////////////////////////
 
@@ -85,3 +102,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Rendered³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Rendered³ID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Rendered³Data)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Rendered³Snap)

@@ -11,13 +11,24 @@
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {
-    struct Spatial²Snap : public SpatialSnap {
+    class Spatial²Snap : public SpatialSnap {
+        YQ_OBJECT_DECLARE(Spatial²Snap, SpatialSnap)
+    public:
         // make sure your sub-class sets these!
 
         Tensor44D       local2domain    = IDENTITY;
         Tensor44D       domain2local    = IDENTITY;
+        
+        Spatial²Snap();
+        virtual ~Spatial²Snap();
+        static void init_meta();
     };
     
-    struct Spatial²Data : public SpatialData {
+    class Spatial²Data : public SpatialData {
+        YQ_OBJECT_DECLARE(Spatial²Data, SpatialData)
+    public:
+        Spatial²Data();
+        virtual ~Spatial²Data();
+        static void init_meta();
     };
 }

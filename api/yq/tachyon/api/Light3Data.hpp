@@ -13,11 +13,22 @@
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {
-    struct Light³Snap : public LightSnap, public ③Snap {
+    class Light³Snap : public LightSnap, public ③Snap {
+        YQ_OBJECT_DECLARE(Light³Snap, LightSnap)
+    public:
         //  Need to capture the full "light function" here...
+        
+        Light³Snap();
+        virtual ~Light³Snap();
+        static void init_meta();
     };
     
-    struct Light³Data : public LightData, public ③Data {
+    class Light³Data : public LightData, public ③Data {
+        YQ_OBJECT_DECLARE(Light³Data, LightData)
+    public:
+        Light³Data();
+        virtual ~Light³Data();
+        static void init_meta();
     };
 }
 

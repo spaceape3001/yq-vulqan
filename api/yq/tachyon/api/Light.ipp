@@ -37,6 +37,27 @@ namespace yq::tachyon {
         repo().all.push_back(this);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    LightData::LightData() = default;
+    LightData::~LightData() = default;
+    void LightData::init_meta()
+    {
+        auto w = writer<LightData>();
+        w.description("Light Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    LightSnap::LightSnap() = default;
+    LightSnap::~LightSnap() = default;
+    void LightSnap::init_meta()
+    {
+        auto w = writer<LightSnap>();
+        w.description("Light Snapshot");
+        w.property("color", &LightSnap::color);
+        w.property("intensity", &LightSnap::intensity);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -100,3 +121,6 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Light)
 YQ_TYPE_IMPLEMENT(yq::tachyon::LightID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LightData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::LightSnap)
+

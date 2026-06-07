@@ -10,9 +10,19 @@
 #include <yq/tachyon/typedef/camera.hpp>
 
 namespace yq::tachyon {
-    struct CameraSnap : public TachyonSnap {
+    class CameraSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(CameraSnap, TachyonSnap)
+    public:
+        CameraSnap();
+        virtual ~CameraSnap();
+        static void init_meta();
     };
     
-    struct CameraData : public TachyonData {
+    class CameraData : public TachyonData {
+        YQ_OBJECT_DECLARE(CameraData, TachyonData)
+    public:
+        CameraData();
+        virtual ~CameraData();
+        static void init_meta();
     };
 }

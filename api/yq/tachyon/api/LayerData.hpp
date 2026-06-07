@@ -12,10 +12,24 @@
 #include <yq/color/RGBA.hpp>
 
 namespace yq::tachyon {
-    struct LayerSnap : public TachyonSnap {
+    class LayerSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(LayerSnap, TachyonSnap)
+    public:
+    
         int         order = 0;
+        
+        LayerSnap();
+        ~LayerSnap();
+        static void init_meta();
     };
     
-    struct LayerData : public TachyonData {
+    class LayerData : public TachyonData {
+        YQ_OBJECT_DECLARE(LayerData, TachyonData)
+    public:
+    
+        LayerData();
+        ~LayerData();
+        static void init_meta();
     };
+    
 }

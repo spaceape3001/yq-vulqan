@@ -12,15 +12,29 @@
 #include <yq/tensor/Tensor44.hpp>
 
 namespace yq::tachyon {
-    struct Camera³Snap : public CameraSnap, public ③Snap {
+    class Camera³Snap : public CameraSnap, public ③Snap {
+        YQ_OBJECT_DECLARE(Camera³Snap, CameraSnap)
+    public:
+    
         //  This is to apply any corrections to get the coordinate system correct... 
         //  the spatial will be on top of this.
         Tensor44D   view        = IDENTITY;
         Tensor44D   projection  = IDENTITY;
         Rectangle2D screen      = Rectangle2D(ZERO, ONE);
+        
+        Camera³Snap();
+        ~Camera³Snap();
+        
+        static void init_meta();
     };
     
-    struct Camera³Data : public CameraData, public ③Data {
+    class Camera³Data : public CameraData, public ③Data {
+        YQ_OBJECT_DECLARE(Camera³Data, CameraData)
+    public:
+        Camera³Data();
+        ~Camera³Data();
+        
+        static void init_meta();
     };
 }
 

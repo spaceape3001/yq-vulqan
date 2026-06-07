@@ -25,7 +25,9 @@ namespace yq::tachyon {
     struct IndexDrawCall;
     struct VertexDrawCall;
     
-    struct RenderedSnap : public TachyonSnap {
+    class RenderedSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(RenderedSnap, TachyonSnap)
+    public:
         PushBuffer                  push;
         Buffered                    ibo;  //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)
         std::vector<Buffered>       ubos; //< Buffered defined in vi_buffer.hpp (as Buffer or ViBuffer)
@@ -45,13 +47,20 @@ namespace yq::tachyon {
         bool                    good            = false;
         
         RenderedSnap();
-        ~RenderedSnap();
+        virtual ~RenderedSnap();
 
         const Pipeline*         pipeline(RenderMode rm=RenderMode::Simple) const;
+        
+        static void init_meta();
     };
     
-    struct RenderedData : public TachyonData {
+    class RenderedData : public TachyonData {
+        YQ_OBJECT_DECLARE(RenderedData, TachyonData)
+    public:
+    
         RenderedData();
-        ~RenderedData();
+        virtual ~RenderedData();
+        
+        static void init_meta();
     };
 }

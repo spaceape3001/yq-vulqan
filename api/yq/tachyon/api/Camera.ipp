@@ -38,6 +38,28 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    CameraData::CameraData() = default;
+    CameraData::~CameraData() = default;
+
+    void CameraData::init_meta()
+    {
+        auto w = writer<CameraData>();
+        w.description("Camera Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    CameraSnap::CameraSnap() = default;
+    CameraSnap::~CameraSnap() = default;
+
+    void CameraSnap::init_meta()
+    {
+        auto w = writer<CameraSnap>();
+        w.description("Camera Snapshot");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     Camera::Camera(const Param& p) : Tachyon(p)
     {
     }
@@ -75,3 +97,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Camera)
 YQ_TYPE_IMPLEMENT(yq::tachyon::CameraID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::CameraData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::CameraSnap)

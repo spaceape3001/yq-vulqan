@@ -22,9 +22,24 @@ namespace yq::tachyon {
 
     RenderedData::RenderedData()    = default;
     RenderedData::~RenderedData() = default;
+    
+    void RenderedData::init_meta()
+    {
+        auto w = writer<RenderedData>();
+        w.description("Rendered Frame Data");
+    }
 
     RenderedSnap::RenderedSnap()    = default;
     RenderedSnap::~RenderedSnap() = default;
+
+    void RenderedSnap::init_meta()
+    {
+        auto w = writer<RenderedSnap>();
+        w.description("Rendered Snapshot");
+        w.property("culled", READ_ONLY, &RenderedSnap::culled);
+        w.property("good", READ_ONLY, &RenderedSnap::good);
+        w.property("wireframe", READ_ONLY, &RenderedSnap::wireframe);
+    }
 
     const Pipeline* RenderedSnap::pipeline(RenderMode rm) const
     {
@@ -286,5 +301,8 @@ namespace yq::tachyon {
     }
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::Rendered)
+YQ_TACHYON_IMPLEMENT(yq::tachyon::Rendered)
 YQ_TYPE_IMPLEMENT(yq::tachyon::RenderedID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::RenderedData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::RenderedSnap)
+

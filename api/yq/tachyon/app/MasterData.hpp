@@ -11,13 +11,19 @@
 #include <yq/tachyon/typedef/master.hpp>
 
 namespace yq::tachyon {
-    struct MasterSnap : public ManagerSnap {
+    class MasterSnap : public ManagerSnap {
+        YQ_OBJECT_DECLARE(MasterSnap, ManagerSnap)
+    public:
         MasterSnap();
         virtual ~MasterSnap();
+        static void init_meta();
     };
     
-    struct MasterData : public ManagerData {
+    class MasterData : public ManagerData {
+        YQ_OBJECT_DECLARE(MasterData, ManagerData)
+    public:
         MasterData();
         virtual ~MasterData();
+        static void init_meta();
     };
 }

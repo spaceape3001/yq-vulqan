@@ -10,13 +10,19 @@
 #include <yq/tachyon/typedef/manager.hpp>
 
 namespace yq::tachyon {
-    struct ManagerSnap : public TachyonSnap {
+    class ManagerSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(ManagerSnap, TachyonSnap)
+    public:
         ManagerSnap();
         virtual ~ManagerSnap();
+        static void init_meta();
     };
     
-    struct ManagerData : public TachyonData {
+    class ManagerData : public TachyonData {
+        YQ_OBJECT_DECLARE(ManagerData, TachyonData)
+    public:
         ManagerData();
         virtual ~ManagerData();
+        static void init_meta();
     };
 }

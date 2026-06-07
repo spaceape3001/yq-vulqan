@@ -133,6 +133,8 @@
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Viewer)
 YQ_TYPE_IMPLEMENT(yq::tachyon::ViewerID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::ViewerSnap)
 
 namespace yq::tachyon {
 
@@ -196,6 +198,28 @@ namespace yq::tachyon {
         wt.set(Meta::Flag::ID);
         wt.constructor(construct_id<Viewer>);
         wt.casts<TachyonID>();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ViewerData::ViewerData() = default;
+    ViewerData::~ViewerData() = default;
+
+    void ViewerData::init_meta()
+    {
+        auto w = writer<ViewerData>();
+        w.description("Viewer Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ViewerSnap::ViewerSnap() = default;
+    ViewerSnap::~ViewerSnap() = default;
+
+    void ViewerSnap::init_meta()
+    {
+        auto w = writer<ViewerSnap>();
+        w.description("Viewer snapshot");
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

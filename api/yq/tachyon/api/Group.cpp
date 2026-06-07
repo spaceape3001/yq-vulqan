@@ -14,6 +14,16 @@ YQ_TYPE_IMPLEMENT(yq::tachyon::GroupID)
 
 namespace yq::tachyon {
 
+    GroupData::GroupData() = default;
+    GroupData::~GroupData() = default;
+    void GroupData::init_meta()
+    {
+        auto w = writer<GroupData>();
+        w.description("Group Frame Data");
+    }
+
+    //////////////////////////////
+
     GroupMeta::GroupMeta(std::string_view name, TachyonMeta& base, const std::source_location& sl) :
         TachyonMeta(name, base, sl)
     {
@@ -24,6 +34,18 @@ namespace yq::tachyon {
     {
     }
     
+    //////////////////////////////
+
+    GroupSnap::GroupSnap() = default;
+    GroupSnap::~GroupSnap() = default;
+    void GroupSnap::init_meta()
+    {
+        auto w = writer<GroupSnap>();
+        w.description("Group Snapshot");
+        w.property("order", READ_ONLY, &GroupSnap::order);
+    }
+
+    //////////////////////////////
 
     Group::Group(const Param&p) : Tachyon(p)
     {

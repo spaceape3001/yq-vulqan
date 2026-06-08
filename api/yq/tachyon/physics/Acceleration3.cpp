@@ -36,12 +36,23 @@ namespace yq::tachyon {
 
     Acceleration³Data::Acceleration³Data() = default;
     Acceleration³Data::~Acceleration³Data() = default;
+    
+    void Acceleration³Data::init_meta()
+    {
+        auto w = writer<Acceleration³Data>();
+        w.description("Acceleration³ Frame Data");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Acceleration³Snap::Acceleration³Snap() = default;
     Acceleration³Snap::~Acceleration³Snap() = default;
 
+    void Acceleration³Snap::init_meta()
+    {
+        auto w = writer<Acceleration³Snap>();
+        w.description("Acceleration³ Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -81,3 +92,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Acceleration³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Acceleration³ID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Acceleration³Data)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Acceleration³Snap)

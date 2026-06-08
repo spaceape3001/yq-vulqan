@@ -33,6 +33,27 @@ namespace yq::tachyon {
         repo().all.push_back(this);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    GamepadData::GamepadData() = default;
+    GamepadData::~GamepadData() = default;
+    
+    void GamepadData::init_meta()
+    {
+        auto w = writer<GamepadData>();
+        w.description("Gamepad Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    GamepadSnap::GamepadSnap() = default;
+    GamepadSnap::~GamepadSnap() = default;
+    
+    void GamepadSnap::init_meta()
+    {
+        auto w = writer<GamepadSnap>();
+        w.description("Gamepad Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -67,3 +88,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Gamepad)
 YQ_TYPE_IMPLEMENT(yq::tachyon::GamepadID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::GamepadData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::GamepadSnap)

@@ -30,12 +30,23 @@ namespace yq::tachyon {
     };
     #endif
     
-    struct MonitorSnap : public TachyonSnap /* , public MonitorState */ {
+    class MonitorSnap : public TachyonSnap /* , public MonitorState */ {
+        YQ_OBJECT_DECLARE(MonitorSnap, TachyonSnap)
+    public:
         Size2MM     dimensions;
         Size2D      size;
         Vector2F    scale;
+        
+        MonitorSnap();
+        ~MonitorSnap();
+        static void init_meta();
     };
     
-    struct MonitorData : public TachyonData {
+    class MonitorData : public TachyonData {
+        YQ_OBJECT_DECLARE(MonitorData, TachyonData)
+    public:
+        MonitorData();
+        ~MonitorData();
+        static void init_meta();
     };
 }

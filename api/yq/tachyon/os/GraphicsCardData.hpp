@@ -10,11 +10,21 @@
 #include <yq/tachyon/typedef/graphics_card.hpp>
 
 namespace yq::tachyon {
-    struct GraphicsCardSnap : public TachyonSnap {
-        std::string         name;
+    class GraphicsCardSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(GraphicsCardSnap, TachyonSnap)
+    public:
         size_t              heap    = 0;
+        
+        GraphicsCardSnap();
+        ~GraphicsCardSnap();
+        static void init_meta();
     };
     
-    struct GraphicsCardData : public TachyonData {
+    class GraphicsCardData : public TachyonData {
+        YQ_OBJECT_DECLARE(GraphicsCardData, TachyonData)
+    public:
+        GraphicsCardData();
+        ~GraphicsCardData();
+        static void init_meta();
     };
 }

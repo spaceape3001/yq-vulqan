@@ -36,6 +36,28 @@ namespace yq::tachyon {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    JoystickData::JoystickData() = default;
+    JoystickData::~JoystickData() = default;
+    
+    void JoystickData::init_meta()
+    {
+        auto w = writer<JoystickData>();
+        w.description("Joystick Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    JoystickSnap::JoystickSnap() = default;
+    JoystickSnap::~JoystickSnap() = default;
+    
+    void JoystickSnap::init_meta()
+    {
+        auto w = writer<JoystickSnap>();
+        w.description("Joystick Snapshot");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     Joystick::Joystick(const Param& p) : Tachyon(p)
     {
     }
@@ -68,3 +90,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Joystick)
 YQ_TYPE_IMPLEMENT(yq::tachyon::JoystickID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::JoystickSnap)

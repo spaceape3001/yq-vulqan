@@ -37,11 +37,22 @@ namespace yq::tachyon {
     Force³Data::Force³Data() = default;
     Force³Data::~Force³Data() = default;
 
+    void Force³Data::init_meta()
+    {
+        auto w = writer<Force³Data>();
+        w.description("Force³ Frame Data");
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Force³Snap::Force³Snap() = default;
     Force³Snap::~Force³Snap() = default;
 
+    void Force³Snap::init_meta()
+    {
+        auto w = writer<Force³Snap>();
+        w.description("Force³ Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -81,3 +92,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Force³)
 YQ_TYPE_IMPLEMENT(yq::tachyon::Force³ID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Force³Data)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Force³Snap)

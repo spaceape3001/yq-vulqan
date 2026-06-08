@@ -10,9 +10,21 @@
 #include <yq/tachyon/typedef/cursor.hpp>
 
 namespace yq::tachyon {
-    struct CursorSnap : public TachyonSnap {
+    class CursorSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(CursorSnap, TachyonSnap)
+    public:
+    
+        CursorSnap();
+        virtual ~CursorSnap();
+        static void init_meta();
     };
     
-    struct CursorData : public TachyonData {
+    class CursorData : public TachyonData {
+        YQ_OBJECT_DECLARE(CursorData, TachyonData)
+    public:
+    
+        CursorData();
+        virtual ~CursorData();
+        static void init_meta();
     };
 }

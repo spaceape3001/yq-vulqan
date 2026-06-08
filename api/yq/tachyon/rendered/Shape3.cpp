@@ -25,14 +25,30 @@
 #include <yq/vector/Vector4.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Shape³)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Shape³Data)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::Shape³Snap)
 
 namespace yq::tachyon {
 
     Shape³Data::Shape³Data() = default;
     Shape³Data::~Shape³Data() = default;
 
+    void Shape³Data::init_meta()
+    {
+        auto w = writer<Shape³Data>();
+        w.description("Shape³ Frame Data");
+    }
+
     Shape³Snap::Shape³Snap() = default;
     Shape³Snap::~Shape³Snap() = default;
+
+    void Shape³Snap::init_meta()
+    {
+        auto w = writer<Shape³Snap>();
+        w.description("Shape³ Snapshot");
+        w.property("auto_center", &Shape³Snap::auto_center);
+        w.property("normalize", &Shape³Snap::normalize);
+    }
 
 ////////////////////////////////////////////////////////////////////////////////
 

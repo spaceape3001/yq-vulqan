@@ -34,6 +34,28 @@ namespace yq::tachyon {
         repo().all.push_back(this);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    GraphicsCardData::GraphicsCardData() = default;
+    GraphicsCardData::~GraphicsCardData() = default;
+
+    void GraphicsCardData::init_meta()
+    {
+        auto w = writer<GraphicsCardData>();
+        w.description("Graphics Card Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    GraphicsCardSnap::GraphicsCardSnap() = default;
+    GraphicsCardSnap::~GraphicsCardSnap() = default;
+
+    void GraphicsCardSnap::init_meta()
+    {
+        auto w = writer<GraphicsCardSnap>();
+        w.description("Graphics Card Snapshot");
+        w.property("heap", READ_ONLY, &GraphicsCardSnap::heap);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -68,3 +90,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::GraphicsCard)
 YQ_TYPE_IMPLEMENT(yq::tachyon::GraphicsCardID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::GraphicsCardData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::GraphicsCardSnap)

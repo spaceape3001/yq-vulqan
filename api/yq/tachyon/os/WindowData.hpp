@@ -13,13 +13,24 @@
 #include <yq/tachyon/typedef/window.hpp>
 
 namespace yq::tachyon {
-    struct WindowSnap : public TachyonSnap {
+    class WindowSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(WindowSnap, TachyonSnap)
+    public:
         WindowState             window;
         MouseState              mouse;
         KeyboardState           keyboard;
-        double                  time = 0.;
+        double                  time = 0.; // suspect....
+        
+        WindowSnap();
+        ~WindowSnap();
+        static void init_meta();
     };
     
-    struct WindowData : public TachyonData {
+    class WindowData : public TachyonData {
+        YQ_OBJECT_DECLARE(WindowData, TachyonData)
+    public:
+        WindowData();
+        ~WindowData();
+        static void init_meta();
     };
 }

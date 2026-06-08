@@ -38,6 +38,27 @@ namespace yq::tachyon {
         repo().all.push_back(this);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    WindowData::WindowData() = default;
+    WindowData::~WindowData() = default;
+    
+    void WindowData::init_meta()
+    {
+        auto w = writer<WindowData>();
+        w.description("Window Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    WindowSnap::WindowSnap() = default;
+    WindowSnap::~WindowSnap() = default;
+    
+    void WindowSnap::init_meta()
+    {
+        auto w = writer<WindowSnap>();
+        w.description("Window Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -88,3 +109,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Window)
 YQ_TYPE_IMPLEMENT(yq::tachyon::WindowID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::WindowSnap)

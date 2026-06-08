@@ -34,6 +34,27 @@ namespace yq::tachyon {
         repo().all.push_back(this);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    KeyboardData::KeyboardData() = default;
+    KeyboardData::~KeyboardData() = default;
+
+    void KeyboardData::init_meta()
+    {
+        auto w = writer<KeyboardData>();
+        w.description("Keyboard Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    KeyboardSnap::KeyboardSnap() = default;
+    KeyboardSnap::~KeyboardSnap() = default;
+
+    void KeyboardSnap::init_meta()
+    {
+        auto w = writer<KeyboardSnap>();
+        w.description("Keyboard Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -69,3 +90,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Keyboard)
 YQ_TYPE_IMPLEMENT(yq::tachyon::KeyboardID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::KeyboardData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::KeyboardSnap)

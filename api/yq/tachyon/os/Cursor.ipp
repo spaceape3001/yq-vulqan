@@ -34,6 +34,27 @@ namespace yq::tachyon {
         repo().all.push_back(this);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    CursorData::CursorData() = default;
+    CursorData::~CursorData() = default;
+    
+    void CursorData::init_meta()
+    {
+        auto w = writer<CursorData>();
+        w.description("Cursor Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    CursorSnap::CursorSnap() = default;
+    CursorSnap::~CursorSnap() = default;
+    
+    void CursorSnap::init_meta()
+    {
+        auto w = writer<CursorSnap>();
+        w.description("Cursor Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -69,3 +90,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Cursor)
 YQ_TYPE_IMPLEMENT(yq::tachyon::CursorID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::CursorData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::CursorSnap)

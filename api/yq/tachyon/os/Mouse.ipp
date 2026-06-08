@@ -33,6 +33,25 @@ namespace yq::tachyon {
         repo().all.push_back(this);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    MouseData::MouseData() = default;
+    MouseData::~MouseData() = default;
+    void MouseData::init_meta()
+    {
+        auto w = writer<MouseData>();
+        w.description("Mouse Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    MouseSnap::MouseSnap() = default;
+    MouseSnap::~MouseSnap() = default;
+    void MouseSnap::init_meta()
+    {
+        auto w = writer<MouseSnap>();
+        w.description("Mouse Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -68,3 +87,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Mouse)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MouseID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MouseSnap)

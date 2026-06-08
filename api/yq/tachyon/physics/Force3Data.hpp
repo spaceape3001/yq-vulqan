@@ -12,15 +12,21 @@
 #include <yq/vector/Vector3.hpp>
 
 namespace yq::tachyon {
-    struct Force³Snap : public PhysicsSnap {
+    class Force³Snap : public PhysicsSnap {
+        YQ_OBJECT_DECLARE(Force³Snap, PhysicsSnap)
+    public:
         FNForce³M       force;
         
         Force³Snap();
         ~Force³Snap();
+        static void init_meta();
     };
     
-    struct Force³Data : public PhysicsData {
+    class Force³Data : public PhysicsData {
+        YQ_OBJECT_DECLARE(Force³Snap, PhysicsSnap)
+    public:
         Force³Data();
         ~Force³Data();
+        static void init_meta();
     };
 }

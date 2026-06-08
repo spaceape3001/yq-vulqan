@@ -11,13 +11,24 @@
 #include <yq/tachyon/os/HatState.hpp>
 
 namespace yq::tachyon {
-    struct JoystickSnap : public TachyonSnap {
+    class JoystickSnap : public TachyonSnap {
+        YQ_OBJECT_DECLARE(JoystickSnap, TachyonSnap)
+    public:
         std::string             name, guid;
         std::vector<float>      axes;
         std::vector<bool>       buttons;
         std::vector<HatState>   hats;
+        
+        JoystickSnap();
+        ~JoystickSnap();
+        static void init_meta();
     };
     
-    struct JoystickData : public TachyonData {
+    class JoystickData : public TachyonData {
+        YQ_OBJECT_DECLARE(JoystickData, TachyonData)
+    public:
+        JoystickData();
+        ~JoystickData();
+        static void init_meta();
     };
 }

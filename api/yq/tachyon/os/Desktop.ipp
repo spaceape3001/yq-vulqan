@@ -34,6 +34,27 @@ namespace yq::tachyon {
         repo().all.push_back(this);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    DesktopData::DesktopData() = default;
+    DesktopData::~DesktopData() = default;
+    
+    void DesktopData::init_meta()
+    {
+        auto w = writer<DesktopData>();
+        w.description("Desktop Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    DesktopSnap::DesktopSnap() = default;
+    DesktopSnap::~DesktopSnap() = default;
+    
+    void DesktopSnap::init_meta()
+    {
+        auto w = writer<DesktopSnap>();
+        w.description("Desktop Snapshot");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -104,3 +125,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Desktop)
 YQ_TYPE_IMPLEMENT(yq::tachyon::DesktopID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::DesktopData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::DesktopSnap)

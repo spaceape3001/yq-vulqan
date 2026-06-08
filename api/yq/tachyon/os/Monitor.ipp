@@ -34,6 +34,40 @@ namespace yq::tachyon {
         repo().all.push_back(this);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    MonitorData::MonitorData()
+    {
+    }
+    
+    MonitorData::~MonitorData()
+    {
+    }
+    
+    void MonitorData::init_meta()
+    {
+        auto w = writer<MonitorData>();
+        w.description("Monitor Frame Data");
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    MonitorSnap::MonitorSnap()
+    {
+    }
+    
+    MonitorSnap::~MonitorSnap()
+    {
+    }
+    
+    void MonitorSnap::init_meta()
+    {
+        auto w = writer<MonitorSnap>();
+        w.description("Monitor Snapshot");
+        //w.property("dimensions", READ_ONLY, &MonitorSnap::dimensions);
+        w.property("size", READ_ONLY, &MonitorSnap::size);
+        w.property("scale", READ_ONLY, &MonitorSnap::scale);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -90,3 +124,5 @@ namespace yq::tachyon {
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Monitor)
 YQ_TYPE_IMPLEMENT(yq::tachyon::MonitorID)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MonitorData)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::MonitorSnap)

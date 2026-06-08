@@ -11,7 +11,7 @@
 
 namespace yq::tachyon {
     class ControllerSnap : public TachyonSnap {
-        YQ_OBJECT_DECLARE(ControllerSnap, ControllerSnap)
+        YQ_OBJECT_DECLARE(ControllerSnap, TachyonSnap)
     public:
         std::set<TypedID>       controlled;
         std::set<TypedID>       listening;
@@ -23,7 +23,7 @@ namespace yq::tachyon {
     };
     
     class ControllerData : public TachyonData {
-        YQ_OBJECT_DECLARE(ControllerData, ControllerSnap)
+        YQ_OBJECT_DECLARE(ControllerData, TachyonData)
     public:
         ControllerData();
         virtual ~ControllerData();

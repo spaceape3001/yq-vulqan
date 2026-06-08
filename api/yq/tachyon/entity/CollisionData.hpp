@@ -20,7 +20,7 @@ namespace yq::tachyon {
     };
     
     class CollisionData : public ModelData {
-        YQ_OBJECT_DECLARE(CollisionData, CollisionData)
+        YQ_OBJECT_DECLARE(CollisionData, ModelData)
     public:
         
         CollisionData();

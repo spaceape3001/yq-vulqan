@@ -38,6 +38,7 @@
 
 #include <yq/editorvk/event/CameraSelectEvent.hpp>
 #include <yq/editorvk/event/ControllerSelectEvent.hpp>
+#include <yq/editorvk/event/DomainSelectEvent.hpp>
 #include <yq/editorvk/event/LightSelectEvent.hpp>
 #include <yq/editorvk/event/ModelSelectEvent.hpp>
 #include <yq/editorvk/event/PhysicsSelectEvent.hpp>
@@ -50,6 +51,7 @@
 
 #include <yq/editorvk/table/CameraTableUI.hpp>
 #include <yq/editorvk/table/ControllerTableUI.hpp>
+#include <yq/editorvk/table/DomainTableUI.hpp>
 #include <yq/editorvk/table/LightTableUI.hpp>
 #include <yq/editorvk/table/ModelTableUI.hpp>
 #include <yq/editorvk/table/PhysicsTableUI.hpp>
@@ -72,6 +74,8 @@
 #include <yq/tachyon/api/Camera3.hpp>
 #include <yq/tachyon/api/Camera3Data.hpp>
 #include <yq/tachyon/api/Controller.hpp>
+#include <yq/tachyon/api/Domain.hpp>
+#include <yq/tachyon/api/DomainData.hpp>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/Light3.hpp>
 #include <yq/tachyon/api/Light3Data.hpp>
@@ -91,6 +95,7 @@
 
 #include <yq/tachyon/camera/NullCamera.hpp>
 #include <yq/tachyon/command/controller/ListenCommand.hpp>
+#include <yq/tachyon/command/domain/SetDomainCommand.hpp>
 #include <yq/tachyon/command/file/ImportTSXFileCommand.hpp>
 #include <yq/tachyon/command/file/OpenTSXFileCommand.hpp>
 #include <yq/tachyon/command/file/SaveAsTSXFileCommand.hpp>
@@ -202,6 +207,8 @@ void     SceneEditor::clear_thread(ThreadID owner)
         zap(c);
     for(ControllerID c : frame->ids<Controller>())
         zap(c);
+    for(DomainID c : frame->ids<Domain>())
+        zap(c);
     for(LightID c : frame->ids<Light>())
         zap(c);
     for(ModelID c : frame->ids<Model>())
@@ -247,6 +254,7 @@ void SceneEditor::init_slots()
     auto w          = writer<SceneEditor>();
     w.slot(&SceneEditor::on_camera_select_event);
     w.slot(&SceneEditor::on_controller_select_event);
+    w.slot(&SceneEditor::on_domain_select_event);
     w.slot(&SceneEditor::on_import_tsx_file_command);
     w.slot(&SceneEditor::on_load_tsx_reply);
     w.slot(&SceneEditor::on_lua_exec_file_command);
@@ -356,6 +364,22 @@ void SceneEditor::init_ui()
 
             //inspControllers.uid("ControllerInspector");
             //inspControllers.flag(SET, UIFlag::Children);
+        }
+        
+        {
+            auto csDomains          = controlTree.section("Domains").tree();
+            auto blDomains          = csDomains.section("Available").make<UIBuildableMetaList<Domain>>();
+            auto curDomains         = csDomains.section("Current").make<DomainTableUI>();
+            auto propDomains        = csDomains.section("Properties");
+            auto inspDomains        = propDomains.make<UITachyonEditor>();
+
+            blDomains.uid("DomainAvailable");
+            blDomains.flag(SET, UIFlag::EmitSignal);
+
+            curDomains.uid("DomainTable");
+
+            inspDomains.uid("DomainInspector");
+            inspDomains.flag(SET, UIFlag::Children);
         }
         
         {
@@ -575,6 +599,11 @@ void SceneEditor::init_ui()
     auto collisionMenu     = menuBar.menu("Collision");
     {
     }
+    
+    auto domainMenu         = menuBar.menu("Domains");
+    {
+        (domainMenu << new CreateMenuUI("Add/Create##AddDomainUI", meta<Domain>())).action(&SceneEditor::action_create_domain);
+    }
 
     auto kineticsMenu       = menuBar.menu("Kinetics");
     {
@@ -671,6 +700,17 @@ void    SceneEditor::_activate(ControllerID id)
         m_controller.table -> set_selected(id);
     if(m_controller.properties && (m_controller.properties->bound() != id))
         m_controller.properties -> bind(TypedID(id.id, Type::Controller));
+}
+
+void    SceneEditor::_activate(DomainID id)
+{
+    if(m_domain.selected == id)
+        return;
+    m_domain.selected   = id;
+    if(m_domain.table /* && (m_domain.table->selected() != id) */)
+        m_domain.table -> set_selected(id);
+    if(m_domain.properties && (m_domain.properties->bound() != id))
+        m_domain.properties -> bind(TypedID(id.id, Type::Domain));
 }
 
 void    SceneEditor::_activate(LightID id)
@@ -781,6 +821,41 @@ ControllerID    SceneEditor::_create(const ControllerMeta& meta)
     }
     return res->id();
 }
+
+DomainID        SceneEditor::_create(const DomainMeta& meta)
+{
+    Domain* res = Tachyon::create_on<Domain>(EDIT, meta);
+    if(!res){
+        yNotice() << "Unable to create doamin (" << meta.stem() << ")";
+        return {};
+    }
+    return res->id();
+}
+
+SceneID         SceneEditor::_create(DomainID pid, const SceneMeta& meta)
+{
+    Domain*    parent  = pointer(pid);
+    if(!parent) {
+        yNotice() << "Unable to create scene (" << meta.stem() << ") due to no corresponding domain (id " << pid.id << ")";
+        return {};
+    }
+
+    const DomainSnap*     psnap   = snapshot(pid);
+    if(!psnap){
+        yNotice() << "Unable to create scene (" << meta.stem() << ") due to no corresponding light (id " << pid.id << ") on the frame";
+        return {};
+    }
+    
+    Scene*    res  = parent->create_child_on<Scene>(EDIT, meta);
+    if(!res){
+        yNotice() << "Unable to create scene (" << meta.stem() << ") due to instantiation problem";
+        return {};
+    }
+    
+    send(new SetDomainCommand({.target=*res}, parent->id()));
+    return res->id();
+}
+
 
 LightID         SceneEditor::_create(const LightMeta& meta)
 {
@@ -982,7 +1057,14 @@ void    SceneEditor::_default()
     }
 */
 
+
         // Editor's default cameras/controllers go onto the auxillary thread
+        
+    if(!m_domain.simple){
+        m_domain.simple      = SceneApp::app()->default_domain();
+        m_domain.selected   = { m_domain.simple.id };
+    }
+    
     if(!m_scene.simple){
         m_scene.simple      = SceneApp::app()->default_scene();
         m_scene.selected    = { m_scene.simple.id };
@@ -1147,6 +1229,18 @@ void    SceneEditor::action_create_controller(const Payload& pay)
             continue;
         ControllerID  res = _create(*meta);
         if(res && !m_controller.selected)
+            _activate(res);
+    }
+}
+
+void    SceneEditor::action_create_domain(const Payload&pay)
+{
+    for(auto& itr : as_iterable(pay.m_metas.equal_range(kParam_CreateMeta))){
+        const DomainMeta*   meta    = dynamic_cast<const DomainMeta*>(itr.second);
+        if(!meta)
+            continue;
+        DomainID  res = _create(*meta);
+        if(res && !m_domain.selected)
             _activate(res);
     }
 }
@@ -1332,6 +1426,10 @@ void    SceneEditor::on_controller_select_event(const ControllerSelectEvent&evt)
     _activate(evt.controller());
 }
 
+void    SceneEditor::on_domain_select_event(const DomainSelectEvent&evt)
+{
+    _activate(evt.domain());
+}
 
 void    SceneEditor::on_import_tsx_file_command(const ImportTSXFileCommand&cmd)
 {
@@ -1381,6 +1479,8 @@ void    SceneEditor::on_meta_selection_changed_event(const MetaSelectionChangedE
         m_camera.meta       = p;
     if(const ControllerMeta* p = dynamic_cast<const ControllerMeta*>(evt.meta()))
         m_controller.meta     = p;
+    if(const DomainMeta* p = dynamic_cast<const DomainMeta*>(evt.meta()))
+        m_domain.meta     = p;
     if(const LightMeta* p = dynamic_cast<const LightMeta*>(evt.meta()))
         m_light.meta     = p;
     if(const ModelMeta* p = dynamic_cast<const ModelMeta*>(evt.meta()))
@@ -1558,6 +1658,10 @@ Execution   SceneEditor::setup(const Context&ctx)
         m_controller.properties = static_cast<UITachyonEditor*>(element(FIRST, "ControllerInspector"));
     if(!m_controller.table)
         m_controller.table      = static_cast<ControllerTableUI*>(element(FIRST, "ControllerTable"));
+    if(!m_domain.properties)
+        m_domain.properties      = static_cast<UITachyonEditor*>(element(FIRST, "DomainInspector"));
+    if(!m_domain.table)
+        m_domain.table           = static_cast<DomainTableUI*>(element(FIRST, "DomainTable"));
     if(!m_light.properties)
         m_light.properties      = static_cast<UITachyonEditor*>(element(FIRST, "LightInspector"));
     if(!m_light.table)
@@ -1593,6 +1697,7 @@ Execution   SceneEditor::setup(const Context&ctx)
     }
         
     _activate((CameraID) m_camera.space );
+    _activate((DomainID) m_domain.simple.id );
     
     if(m_scene.rebuild)
         _rebuild();

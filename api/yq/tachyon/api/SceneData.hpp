@@ -8,6 +8,7 @@
 
 #include <yq/tachyon/api/TachyonData.hpp>
 #include <yq/tachyon/api/TypedID.hpp>
+#include <yq/tachyon/typedef/domain.hpp>
 #include <yq/tachyon/typedef/scene.hpp>
 #include <yq/color/RGBA.hpp>
 
@@ -19,6 +20,7 @@ namespace yq::tachyon {
         std::vector<TypedID>    lights;
         std::vector<TypedID>    rendereds;
         RGBA4F                  bgcolor = { 0.f, 0.f, 0.f, -1.f };
+        DomainID                domain;
         
         SceneSnap();
         virtual ~SceneSnap();

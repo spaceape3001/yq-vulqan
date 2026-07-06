@@ -5,10 +5,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <yq/tachyon/tags.hpp>
+#include <yq/tachyon/api/Domain.hpp>
 #include <yq/tachyon/api/Scene.hpp>
 #include <yq/tachyon/api/SceneData.hpp>
 #include <yq/tachyon/api/SceneMetaWriter.hpp>
 #include <yq/tachyon/command/color/SetBgColorCommand.hpp>
+#include <yq/tachyon/command/domain/SetDomainCommand.hpp>
 #include <yq/meta/Init.hpp>
 
 YQ_TACHYON_IMPLEMENT(yq::tachyon::Scene);
@@ -75,6 +77,11 @@ namespace yq::tachyon {
     
     Scene::~Scene()
     {
+    }
+
+    void Scene::cmd_set_domain(DomainID d)
+    {
+        mail(new SetDomainCommand({.source=*this, .target=*this}, d));
     }
 
     void Scene::snap(SceneSnap&sn) const

@@ -7,6 +7,7 @@
 #include "SceneApp.hpp"
 #include "SceneEditor.hpp"
 #include <yq/asset/camera/SpaceCamera.hpp>
+#include <yq/asset/domain/SimpleDomain.hpp>
 #include <yq/asset/scene/SimpleScene.hpp>
 #include <yq/asset/spatial/SimpleSpatial3.hpp>
 #include <yq/tachyon/api/Frame.hpp>
@@ -46,16 +47,31 @@ bool   SceneApp::startup(SceneEditor& you)
     if(!_lock.try_acquire(m_mutex, true))
         return false;
         
+    Domain* domain  = nullptr;
+    if(!m_defDomain){
+        domain = Tachyon::create_on<SimpleDomain>(AUX);
+        domain->set_name("SceneEditor Default Domain");
+        m_defDomain  = *domain;
+        return false;
+    }
+        
+    const Frame*    frame   = Frame::current();
+    if(!frame)
+        return false;
+
+    domain = frame->object((DomainID) m_defDomain.id);
+    if(!domain)
+        return false;
+
     if(!m_defScene){
         Scene*  scene   = Tachyon::create_on<SimpleScene>(AUX);
         scene->set_name("SceneEditor Default Scene");
+        scene->cmd_set_domain((DomainID) domain->id());
+        
         m_defScene  = *scene;
         return false;
     }
     
-    const Frame*    frame   = Frame::current();
-    if(!frame)
-        return false;
     if(!frame->contains(m_defScene))
         return false;
     

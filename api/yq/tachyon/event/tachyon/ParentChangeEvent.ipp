@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <yq/tachyon/event/tachyon/ParentChangeEvent.hpp>
+#include "ParentChangeEvent.hpp"
 #include <yq/tachyon/api/EventMetaWriter.hpp>
 
 YQ_OBJECT_IMPLEMENT(yq::tachyon::ParentChangeEvent)

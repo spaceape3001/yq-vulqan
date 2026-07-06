@@ -11,6 +11,7 @@
 #include <yq/color/RGBA.hpp>
 #include <yq/tachyon/api/Tachyon.hpp>
 #include <yq/tachyon/api/Rendered.hpp>
+#include <yq/tachyon/typedef/domain.hpp>
 #include <yq/tachyon/typedef/scene.hpp>
 
 namespace yq::tachyon {
@@ -54,6 +55,8 @@ namespace yq::tachyon {
 
         const RGBA4F&   bgcolor() const { return m_bgcolor; }
         virtual void    set_bgcolor(const RGBA4F&); // override to check/reject color sets
+        
+        void    cmd_set_domain(DomainID);
 
         static constexpr const Meter    kDefaultScreenPitch  = 1._cm;
 

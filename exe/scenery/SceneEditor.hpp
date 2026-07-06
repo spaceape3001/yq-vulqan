@@ -10,6 +10,7 @@
 #include <yq/tachyon/typedef/camera.hpp>
 #include <yq/tachyon/typedef/camera3.hpp>
 #include <yq/tachyon/typedef/controller.hpp>
+#include <yq/tachyon/typedef/domain.hpp>
 #include <yq/tachyon/typedef/light.hpp>
 #include <yq/tachyon/typedef/light3.hpp>
 #include <yq/tachyon/typedef/kinetic.hpp>
@@ -44,6 +45,7 @@ namespace yq::tachyon {
 
     class CameraSelectEvent;
     class ControllerSelectEvent;
+    class DomainSelectEvent;
     class LightSelectEvent;
     class ModelSelectEvent;
     class PhysicsSelectEvent;
@@ -56,6 +58,7 @@ namespace yq::tachyon {
 
     class CameraTableUI;
     class ControllerTableUI;
+    class DomainTableUI;
     class LightTableUI;
     class ModelTableUI;
     class PhysicsTableUI;
@@ -119,6 +122,7 @@ public:
     void                action_create_camera(const Payload&);
     void                action_create_camera_spatial(const Payload&);
     void                action_create_controller(const Payload&);
+    void                action_create_domain(const Payload&);
     void                action_create_light(const Payload&);
     void                action_create_light_spatial(const Payload&);
     void                action_create_model(const Payload&);
@@ -148,6 +152,7 @@ public:
 
     CameraID            selected(camera_k) const { return m_camera.selected; }
     ControllerID        selected(controller_k) const { return m_controller.selected; }
+    DomainID            selected(domain_k) const { return m_domain.selected; }
     LightID             selected(light_k) const { return m_light.selected; }
     ModelID             selected(model_k) const { return m_model.selected; }
     PhysicsID           selected(physics_k) const { return m_physics.selected; }
@@ -194,6 +199,14 @@ private:
     struct {
         //  TODO
     } m_collision;
+    
+    struct {
+        const DomainMeta*       meta        =nullptr;
+        DomainTableUI*          table       = nullptr;
+        DomainID                selected;
+        UITachyonEditor*        properties  = nullptr;
+        TypedID                 simple;     //!< The default simple scene
+    } m_domain;
     
     struct {
         const KineticMeta*      meta        = nullptr;
@@ -267,13 +280,14 @@ private:
     void                                _default();
     Expect<TachyonPtrVector>            _default_load(std::string_view pp="exe/scenery/default.tsx");
 
-    void            _activate(SceneID);
     void            _activate(CameraID);
     void            _activate(ControllerID);
+    void            _activate(DomainID);
     void            _activate(LightID);
     void            _activate(ModelID);
     void            _activate(PhysicsID);
     void            _activate(RenderedID);
+    void            _activate(SceneID);
 
     void            _load(StdThread, const std::filesystem::path&);
 
@@ -281,6 +295,8 @@ private:
     SpatialID       _create(camera_k, const SpatialMeta&);
     SpatialID       _create(Camera³ID, const SpatialMeta&);
     ControllerID    _create(const ControllerMeta&);
+    DomainID        _create(const DomainMeta&);
+    SceneID         _create(DomainID, const SceneMeta&);
     LightID         _create(const LightMeta&);
     SpatialID       _create(light_k, const SpatialMeta&);
     SpatialID       _create(Light³ID, const SpatialMeta&);
@@ -304,6 +320,7 @@ private:
     
     void    on_camera_select_event(const CameraSelectEvent&);
     void    on_controller_select_event(const ControllerSelectEvent&);
+    void    on_domain_select_event(const DomainSelectEvent&);
     void    on_import_tsx_file_command(const ImportTSXFileCommand&);
     void    on_light_select_event(const LightSelectEvent&);
     void    on_load_tsx_reply(const LoadTSXReply&);

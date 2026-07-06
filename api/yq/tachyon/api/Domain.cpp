@@ -65,6 +65,7 @@ namespace yq::tachyon {
     void Domain::init_meta()
     {
         auto w = writer<Domain>();
+        w.abstract();
         w.description("Domain");
 
         auto wt = writer<DomainID>();

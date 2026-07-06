@@ -32,6 +32,8 @@ add_library(${PROJECT_NAME} SHARED
     debug/ValidationDebugTableUI.cpp
     debug/VulqanMsgDock.cpp
 
+    domain/SimpleDomain.cpp
+
     edit/BgColorUI.cpp
     edit/CircularSpatial3UI.cpp
     edit/ColorProfileUI.cpp

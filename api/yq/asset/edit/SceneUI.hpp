@@ -21,5 +21,6 @@ namespace yq::tachyon {
         SceneUI*  clone() const override;
         
         void    bgcolor();
+        void    domain();
     };
 }

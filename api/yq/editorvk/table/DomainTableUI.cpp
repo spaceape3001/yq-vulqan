@@ -4,45 +4,46 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "PhysicsTableUI.hpp"
+#include "DomainTableUI.hpp"
 
-#include <yq/editorvk/event/PhysicsSelectEvent.hpp>
+#include <yq/editorvk/event/DomainSelectEvent.hpp>
 #include <yq/tachyon/MyImGui.hpp>
 #include <yq/tachyon/texture.hpp>
-#include <yq/tachyon/api/Physics.hpp>
-#include <yq/tachyon/api/PhysicsData.hpp>
+#include <yq/tachyon/api/Domain.hpp>
+#include <yq/tachyon/api/DomainData.hpp>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/ui/UIElementMetaWriter.hpp>
 
 namespace yq::tachyon {
-    struct PhysicsTableUI::Row {
-        PhysicsID           physics;
-        const PhysicsMeta*  info        = nullptr;
-        std::string         sid;        // ID for selectable
-        std::string         stype;
+
+    struct DomainTableUI::Row {
+        DomainID            domain;
+        const DomainMeta*   info        = nullptr;
+        std::string        sid;        // ID for selectable
+        std::string        stype;
     };
 
-    void PhysicsTableUI::init_meta()
+    void DomainTableUI::init_meta()
     {
-        auto w = writer<PhysicsTableUI>();
-        w.description("Scene Editor's Physics Table");
+        auto w = writer<DomainTableUI>();
+        w.description("Scene Editor's Domain Table");
     }
 
-    PhysicsTableUI::PhysicsTableUI(UIFlags flags) : UIElement(flags)
-    {
-    }
-
-    PhysicsTableUI::PhysicsTableUI(const PhysicsTableUI& cp) : UIElement(cp)
+    DomainTableUI::DomainTableUI(UIFlags flags) : UIElement(flags)
     {
     }
 
-    PhysicsTableUI*   PhysicsTableUI::clone() const 
+    DomainTableUI::DomainTableUI(const DomainTableUI& cp) : UIElement(cp)
     {
-        return new PhysicsTableUI(*this);
+    }
+
+    DomainTableUI*   DomainTableUI::clone() const 
+    {
+        return new DomainTableUI(*this);
     }
 
 
-    void    PhysicsTableUI::render() 
+    void    DomainTableUI::render() 
     {
         const Frame*    frame   = Frame::current();
         if(!frame)
@@ -55,7 +56,7 @@ namespace yq::tachyon {
         if(!m_editing)
             m_editing = install(texture("openicon/icons/png/32x32/symbols/pictogram-din-e001-direction-right.png"));
             
-        if(ImGui::BeginTable("Physicss", 4)){
+        if(ImGui::BeginTable("Domains", 4)){
             ImGui::TableSetupColumn("Editing", ImGuiTableColumnFlags_WidthFixed|ImGuiTableColumnFlags_NoHeaderLabel, sz*1.2);
             ImGui::TableSetupColumn("ID", ImGuiTableColumnFlags_WidthStretch, 0.1);
             ImGui::TableSetupColumn("Type", ImGuiTableColumnFlags_WidthStretch, 0.3);
@@ -63,9 +64,9 @@ namespace yq::tachyon {
             ImGui::TableHeadersRow();
 
             for(Row& e : m_rows){
-                bool    isEdit  = (e.physics == m_selected);
+                bool    isEdit  = (e.domain == m_selected);
                 bool    wantEdit    = false;
-                const PhysicsSnap*    ss  = frame->snap(e.physics);
+                const DomainSnap*    ss  = frame->snap(e.domain);
                 if(!ss)
                     continue;
 
@@ -94,9 +95,9 @@ namespace yq::tachyon {
                 if(ImGui::TableNextColumn()){
                     std::string sname;
                     if(ss->name.empty()){
-                        sname   = std::format("(no-name)##{}.SELECT", e.physics.id); 
+                        sname   = std::format("(no-name)##{}.SELECT", e.domain.id); 
                     } else
-                       sname = std::format("{}##{}.SELECT", ss->name, e.physics.id); 
+                       sname = std::format("{}##{}.SELECT", ss->name, e.domain.id); 
 
                     if(ImGui::Selectable(sname.c_str(), isEdit) && !isEdit){
                         wantEdit    = true;
@@ -104,43 +105,43 @@ namespace yq::tachyon {
                 }
                 
                 if(wantEdit)
-                    set_selected(e.physics);
+                    set_selected(e.domain);
             }
             ImGui::EndTable();
         }
     }
 
-    void PhysicsTableUI::set_selected(PhysicsID ca)
+    void DomainTableUI::set_selected(DomainID ca)
     {
         m_selected  = ca;
-        mail(new PhysicsSelectEvent({}, ca));
+        mail(new DomainSelectEvent({}, ca));
     }
 
-    void           PhysicsTableUI::tick()
+    void           DomainTableUI::tick()
     {
         UIElement::tick();
         const Frame* frame = Frame::current();
         if(!frame)
             return;
-            
-        std::set<PhysicsID>  physics = frame->ids<Physics>();
+        
+        std::set<DomainID>  domains = frame->ids<Domain>();
         
         for(auto itr = m_rows.begin(); itr != m_rows.end(); ){
-            if(!physics.contains(itr->physics)){
-                if(itr->physics == m_selected){
+            if(!domains.contains(itr->domain)){
+                if(itr->domain == m_selected){
                     set_selected({});
                 }
                 itr = m_rows.erase(itr);
                 continue;
             }
             
-            physics.erase(itr->physics);
+            domains.erase(itr->domain);
             ++itr;
         }
         
-        for(PhysicsID c : physics){
+        for(DomainID c : domains){
             Row   en;
-            en.physics        = c;
+            en.domain        = c;
             en.info         = frame->meta(c);
             en.sid          = std::format("{}##{}.SELECT_ID", c.id, c.id);
             en.stype        = std::format("{}##{}.SELECT_TYPE", en.info->stem(), c.id);
@@ -152,10 +153,11 @@ namespace yq::tachyon {
         
     }
 
-    const char*    PhysicsTableUI::title() const 
+    const char*    DomainTableUI::title() const 
     {
-        return "Physics";
+        return "Domains";
     }
+
 }
 
-YQ_OBJECT_IMPLEMENT(yq::tachyon::PhysicsTableUI)
+YQ_OBJECT_IMPLEMENT(yq::tachyon::DomainTableUI)

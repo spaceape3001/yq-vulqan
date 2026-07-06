@@ -7,6 +7,7 @@
 add_library(yq_editorvk SHARED
     event/CameraSelectEvent.cpp
     event/ControllerSelectEvent.cpp
+    event/DomainSelectEvent.cpp
     event/LightSelectEvent.cpp
     event/ModelSelectEvent.cpp
     event/PhysicsSelectEvent.cpp
@@ -19,11 +20,13 @@ add_library(yq_editorvk SHARED
 
     table/CameraTableUI.cpp
     table/ControllerTableUI.cpp
+    table/DomainTableUI.cpp
     table/LightTableUI.cpp
     table/ModelTableUI.cpp
     table/PhysicsTableUI.cpp
     table/RenderedTableUI.cpp
     table/SceneTableUI.cpp
+    #table/TachyonTableUI.cpp
 )
 
 target_link_libraries(yq_editorvk

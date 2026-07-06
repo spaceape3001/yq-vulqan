@@ -39,6 +39,7 @@ public:
     bool        startup(SceneEditor& you);
     
     TypedID     default_scene() const { return m_defScene; }
+    TypedID     default_domain() const { return m_defDomain; }
     
 private:
     static SceneApp*    s_app;
@@ -48,6 +49,7 @@ private:
 
     std::vector<std::filesystem::path>  m_imports, m_plugins, m_vlibs, m_respath;
     std::set<ViewerID>          m_viewers;
+    TypedID                     m_defDomain;
     TypedID                     m_defScene;
     mutable mutex_t                 m_mutex;
 };

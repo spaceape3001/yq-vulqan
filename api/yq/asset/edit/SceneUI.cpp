@@ -11,6 +11,7 @@
 #include <yq/tachyon/api/SceneData.hpp>
 #include <yq/tachyon/command/color/SetBgColorCommand.hpp>
 #include <yq/tachyon/im/color.hpp>
+#include <yq/tachyon/im/text.hpp>
 #include <yq/tachyon/ui/UIEditorMetaWriter.hpp>
 #include <yq/tachyon/logging.hpp>
 
@@ -22,6 +23,7 @@ namespace yq::tachyon {
     {
         auto w = writer<SceneUI>();
         w.field("Background Color", &SceneUI::bgcolor);
+        w.field("Domain", &SceneUI::domain);
         w.edits<Scene>();
         
         //  TODO... the rendereds/lights/cameras
@@ -53,5 +55,13 @@ namespace yq::tachyon {
         if(im::color("##BgColor", v)){
             send(new SetBgColorCommand({.target=bound()}, v));
         }
+    }
+
+    void    SceneUI::domain()
+    {
+        const SceneSnap*    ss  = dynamic_cast<const SceneSnap*>(snap());
+        if(!ss)
+            return ;
+        im::text(ss->domain.id);
     }
 }

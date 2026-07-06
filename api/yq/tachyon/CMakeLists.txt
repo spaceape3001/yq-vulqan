@@ -45,6 +45,7 @@ add_library(${PROJECT_NAME} SHARED
     command_controller.cpp
     command_count.cpp
     command_cursor.cpp
+    command_domain.cpp
     command_entity.cpp
     command_file.cpp
     command_height_field.cpp
@@ -59,6 +60,7 @@ add_library(${PROJECT_NAME} SHARED
     command_range.cpp
     command_rendered.cpp
     command_scale.cpp
+    command_scene.cpp
     command_shape.cpp
     command_sim.cpp
     command_size.cpp
@@ -77,6 +79,7 @@ add_library(${PROJECT_NAME} SHARED
     event_color.cpp
     event_count.cpp
     event_cursor.cpp
+    event_domain.cpp
     event_gamepad.cpp
     event_joystick.cpp
     event_keyboard.cpp
@@ -403,6 +406,7 @@ add_library(${PROJECT_NAME} SHARED
     
 
     ui/UIAppMain.cpp
+    #ui/UIBit.cpp
     ui/UICalc.cpp
     ui/UIDock.cpp
     ui/UIDocker.cpp

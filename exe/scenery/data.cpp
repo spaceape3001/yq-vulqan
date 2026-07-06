@@ -12,6 +12,8 @@
 #include <yq/tachyon/api/Camera3Data.hpp>
 #include <yq/tachyon/api/Controller.hpp>
 #include <yq/tachyon/api/ControllerData.hpp>
+#include <yq/tachyon/api/Domain.hpp>
+#include <yq/tachyon/api/DomainData.hpp>
 #include <yq/tachyon/api/Frame.hpp>
 #include <yq/tachyon/api/Light.hpp>
 #include <yq/tachyon/api/LightData.hpp>
@@ -55,6 +57,14 @@ ControllerID            editing(controller_k)
     if(!editor)
         return {};
     return editor -> selected(CONTROLLER);
+}
+
+DomainID                 editing(domain_k)
+{
+    SceneEditor*    editor  = dynamic_cast<SceneEditor*>(UIElement::widget());
+    if(!editor)
+        return {};
+    return editor -> selected(DOMAIN);
 }
 
 LightID                 editing(yq::tachyon::light_k)
@@ -116,6 +126,11 @@ const ControllerData*   lastdata(controller_k)
     return lastdata(editing(CONTROLLER));
 }
 
+const DomainData*       lastdata(domain_k)
+{
+    return lastdata(editing(DOMAIN));
+}
+
 const LightData*        lastdata(yq::tachyon::light_k)
 {
     return lastdata(editing(LIGHT));
@@ -174,6 +189,11 @@ Controller*             pointer(controller_k)
     return pointer(editing(CONTROLLER));
 }
 
+Domain*                 pointer(domain_k)
+{
+    return pointer(editing(DOMAIN));
+}
+
 Light*                  pointer(yq::tachyon::light_k)
 {
     return pointer(editing(LIGHT));
@@ -229,6 +249,11 @@ const Camera³Snap*      snapshot(camera³_k)
 const ControllerSnap*   snapshot(controller_k)
 {
     return snapshot(editing(CONTROLLER));
+}
+
+const DomainSnap*       snapshot(domain_k)
+{
+    return snapshot(editing(DOMAIN));
 }
 
 const LightSnap*        snapshot(yq::tachyon::light_k)
